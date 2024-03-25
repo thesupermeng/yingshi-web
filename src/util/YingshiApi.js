@@ -109,7 +109,7 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
       url += "?" + getParams;
     }
   }
-
+  console.log(url);
   try {
     const response = await fetch(url, requestOption)
       .then((d) => d.json())
@@ -128,7 +128,6 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
   if(resData.code === 401){
     return;
   }
-
   return resData.data;
 };
 

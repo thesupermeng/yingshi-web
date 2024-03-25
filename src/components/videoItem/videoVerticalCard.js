@@ -1,13 +1,11 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export const VideoVerticalCard = ({ vod }) => {
 
-  useEffect(() => {
-    console.log("VOD");
-    console.log(vod);
-  }, [])
+  const router = useRouter();
 
   return (
     <>
@@ -17,11 +15,13 @@ export const VideoVerticalCard = ({ vod }) => {
           blurDataURL={vod.vod_pic}
           onClick={(e) => {
             e.preventDefault();
+            router.push(`/play/${vod.vod_id}`);
           }}
           alt='game'
           src={vod.vod_pic}
           fill
-          className='transition group-hover:scale-110 group-hover:opacity-50'
+          sizes="100%"
+          className='transition group-hover:scale-110 group-hover:opacity-50 group-hover:cursor-pointer'
           style={{
             objectFit: 'cover',
           }}

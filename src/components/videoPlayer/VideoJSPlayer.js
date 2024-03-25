@@ -65,6 +65,7 @@ export const VideoJSPlayer = forwardRef(({ link, isActive, id }, ref) => {
                 live: true,
                 fill: true,
                 preload: 'auto',
+                muted: true,
               }));
           thisPlayer.src({ src: link });
           thisPlayer.play?.();

@@ -33,14 +33,12 @@ export default function Home() {
   };
 
   const getTypePage = async () => {
-
     return YingshiApi(
       URL_YINGSHI_VOD.homeGetPages,
       {
         id: 0,
         limit: 6,
-        page: 4,
-        dj: true
+        page: 4
       },
       { method: 'GET' }
     );
@@ -51,7 +49,6 @@ export default function Home() {
       setTopNav(data);
     });
     getTypePage().then((data) => {
-      console.log(data);
       setCategories(data.categories);
     });
   }, []);
@@ -67,20 +64,11 @@ export default function Home() {
   }
   return (
     <>
-      <SWRConfig
-        value={{
-          // refreshInterval: 3000,
-          fetcher: (url) => FBApi(url),
-          // (resource, init) =>
-          //   fetch(resource, init).then((res) => res.json()),
-        }}
-      >
-      </SWRConfig>
       <div style={{ width: '100%' }}>
         <div className='flex flex-row'>
           {topNav?.map((navItem, idx) => {
             return (
-              <div id={navItem.id}>
+              <div id={navItem.id} key={idx}>
                 {navItem.name}
               </div>
             );
@@ -92,7 +80,7 @@ export default function Home() {
           {
             categories?.map((category, idx) => {
               return (
-                <div id={category.type_id}>
+                <div id={category.type_id} key={idx}>
                   <span style={{
                     fontSize: '22px',
                     fontWeight: '600',
@@ -103,7 +91,7 @@ export default function Home() {
                     {category.vod_list?.slice(0, 6).map((vod, i) => {
                         return (
                           <VideoVerticalCard 
-                            vod={vod} />
+                            vod={vod} key={i}/>
                         )
                     })}
                   </div>

@@ -97,7 +97,7 @@ export default function VideoPlayerWrapper({
       <ErrorBoundary key={`error-${id}`}>
         <VideoJSPlayer
           ref={vpRef}
-          link={src?.m3u8}
+          link={src}
           isActive={isActive}
           id={id}
         />
