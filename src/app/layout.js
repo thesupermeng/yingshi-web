@@ -114,9 +114,9 @@ export default function RootLayout({ children }) {
                 <div className='flex flex-col flex-[1_0_0] overflow-y-auto bg-[#121212]'> */}
               {children}
               {/* </div> */}
-              <H5Perpetual />
-              <LiveChat />
-              <H5LiveChat />
+              {/* <H5Perpetual /> */}
+              {/* <LiveChat /> */}
+              {/* <H5LiveChat /> */}
               {/* </div> */}
             </div>
             {/* <div className='h-[120dvh] bg-[#121212]'></div> */}

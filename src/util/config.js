@@ -1,7 +1,7 @@
 export const Config = {
   DeviceType: process.env.NEXT_PUBLIC_ENV === 'WEB' ? 3 : 4,
   MetaTitle:
-    'EastRich | Bet Smart, Win Big | Legal Betting & Slots in the Iran',
+    '鲨鱼影视',
   channel: '',
   platform: '',
   userId: '',
