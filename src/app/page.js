@@ -23,41 +23,41 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [topNav, setTopNav] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [value, setValue] = useState('');
+  const [selected, setSelected] = useState(0);
+
+  const handleChange = (event) => {
+    const newValue = event.target.value;
+    setValue(newValue);
+  };
 
   const getTopNav = async () => {
-    return YingshiApi(
-      URL_YINGSHI_VOD.homeGetNav,
-      {},
-      { method: 'GET' }
-    );
+    return YingshiApi(URL_YINGSHI_VOD.homeGetNav, {}, { method: 'GET' });
   };
 
   const getTypePage = async () => {
     return YingshiApi(
       URL_YINGSHI_VOD.homeGetPages,
       {
-        id: 0,
+        id: selected,
         limit: 6,
-        page: 4
+        page: 4,
       },
       { method: 'GET' }
     );
   };
 
   useEffect(() => {
+    setLoading(true);
     getTopNav().then((data) => {
       setTopNav(data);
-    });
-    getTypePage().then((data) => {
-      setCategories(data.categories);
+      setSelected(data.id)
+      getTypePage().then((data) => {
+        setCategories(data.categories);
+        setLoading(false);
+      });
     });
   }, []);
-
-  useEffect(() => {
-    if (pathname === '/') {
-      // router.replace('/home');
-    }
-  }, [pathname]);
 
   if (loading) {
     return <LoadingPage full={!isWeb()} />;
@@ -65,40 +65,58 @@ export default function Home() {
   return (
     <>
       <div style={{ width: '100%' }}>
-        <div className='flex flex-row'>
-          {topNav?.map((navItem, idx) => {
-            return (
-              <div id={navItem.id} key={idx}>
-                {navItem.name}
-              </div>
-            );
-          })}
+        <div className='flex flex-row justify-around py-4 items-center'>
+          <div>Logo Image</div>
+          <div>
+            {/* <input/> */}
+            <input
+              type='text'
+              placeholder={'输入搜索关键词'}
+              value={value}
+              onChange={handleChange}
+              className='border border-gray-300 text-black rounded-md px-6 py-1 focus:outline-none focus:border-blue-500'
+            />
+          </div>
+          <div className='flex flex-row space-x-4'>
+            {topNav?.map((navItem, idx) => {
+              return (
+                <div id={navItem.id} key={idx}>
+                  {navItem.name}
+                </div>
+              );
+            })}
+
+            <div>App</div>
+            <div>history</div>
+            <div>report</div>
+          </div>
         </div>
-        
+
         {/* <div className='flex flex-[1_0_0] overflow-y-auto min-y-0 pt-6 flex-col bg-transparent'> */}
         <div style={{ height: '80vh', overflowY: 'auto' }}>
-          {
+          {categories != [] &&
             categories?.map((category, idx) => {
               return (
                 <div id={category.type_id} key={idx}>
-                  <span style={{
-                    fontSize: '22px',
-                    fontWeight: '600',
-                    fontStyle: 'normal',
-                    fontFamily: 'PingFang SC'
-                  }} className='px-4'>{category.type_name}</span>
+                  <span
+                    style={{
+                      fontSize: '22px',
+                      fontWeight: '600',
+                      fontStyle: 'normal',
+                      fontFamily: 'PingFang SC',
+                    }}
+                    className='px-4'
+                  >
+                    {category.type_name}
+                  </span>
                   <div className='flex flex-row justify-between'>
                     {category.vod_list?.slice(0, 6).map((vod, i) => {
-                        return (
-                          <VideoVerticalCard 
-                            vod={vod} key={i}/>
-                        )
+                      return <VideoVerticalCard vod={vod} key={i} />;
                     })}
                   </div>
                 </div>
-              )
-            })
-          }
+              );
+            })}
         </div>
       </div>
     </>
