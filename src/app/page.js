@@ -35,11 +35,11 @@ export default function Home() {
     return YingshiApi(URL_YINGSHI_VOD.homeGetNav, {}, { method: 'GET' });
   };
 
-  const getTypePage = async () => {
+  const getTypePage = async (pageId) => {
     return YingshiApi(
       URL_YINGSHI_VOD.homeGetPages,
       {
-        id: selected,
+        id: pageId,
         limit: 6,
         page: 4,
       },
@@ -47,12 +47,19 @@ export default function Home() {
     );
   };
 
+  const changePage = (value) => {
+    setLoading(true);
+    getTypePage(value).then((data) => {
+      setCategories(data.categories);
+      setLoading(false);
+    });
+  };
+
   useEffect(() => {
     setLoading(true);
     getTopNav().then((data) => {
       setTopNav(data);
-      setSelected(data.id)
-      getTypePage().then((data) => {
+      getTypePage(data.id).then((data) => {
         setCategories(data.categories);
         setLoading(false);
       });
@@ -68,7 +75,6 @@ export default function Home() {
         <div className='flex flex-row justify-around py-4 items-center'>
           <div>Logo Image</div>
           <div>
-            {/* <input/> */}
             <input
               type='text'
               placeholder={'输入搜索关键词'}
@@ -80,7 +86,13 @@ export default function Home() {
           <div className='flex flex-row space-x-4'>
             {topNav?.map((navItem, idx) => {
               return (
-                <div id={navItem.id} key={idx}>
+                <div
+                  id={navItem.id}
+                  key={idx}
+                  onClick={() => {
+                    changePage(navItem.id);
+                  }}
+                >
                   {navItem.name}
                 </div>
               );
