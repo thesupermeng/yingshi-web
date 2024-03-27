@@ -86,7 +86,8 @@ export default function RootLayout({ children }) {
       >
         <Providers>
           <WEBOnly>
-            <div className='absolute top-0 bottom-0 left-0 right-0 bg-sideMenu w-full'>
+  
+            <div className='absolute top-0 bottom-0 left-0 right-0 bg-sideMenu container w-full '>
               {/* <Announcement /> */}
               <div className='flex flex-row h-[100vh] overflow-y-auto w-full'>
                 <div className='flex self-stretch flex-initial'>
@@ -110,7 +111,8 @@ export default function RootLayout({ children }) {
             {/* <LiveChat /> */}
           </WEBOnly>
           <H5Only>
-            <div className='h-full relative flex flex-1 flex-col justify-start overflow-auto bg-sideMenu w-full'>
+                    {/* w-full */}
+            <div className='h-full relative flex flex-1 flex-col justify-start overflow-auto bg-sideMenu container'>
               {/* <div className='flex flex-1 flex-col'>
                 <div className='flex flex-col flex-[1_0_0] overflow-y-auto bg-[#121212]'> */}
               {children}
