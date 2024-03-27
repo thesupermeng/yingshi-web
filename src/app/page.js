@@ -15,7 +15,7 @@ import { H5Only } from '@/components/Fragments/EnvComponent';
 import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
 import { isWeb } from '@/util/common';
 export const RightBetCartWidth = 'w-[32rem]';
-import { Logo } from '@/asset/icons';
+import { Logo, searchIcon } from '@/asset/icons';
 import Image from 'next/image';
 
 export default function Home() {
@@ -80,7 +80,7 @@ export default function Home() {
           <div>
             <Image alt='鲨鱼影视' src={Logo} />
           </div>
-          <div>
+          <div className='relative'>
             <input
               type='text'
               placeholder='输入搜索关键词'
@@ -88,6 +88,12 @@ export default function Home() {
               onChange={handleChange}
               className='w-96 border-0 border-gray-300 text-black rounded-md px-4 py-1 focus:outline-none '
               style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)' }}
+            />
+            <Image
+              className='h-6 w-6 absolute right-2 top-2/4 transform -translate-y-2/4 text-gray-400'
+              src={searchIcon}
+              alt='search'
+              width={20}
             />
           </div>
           <div className='flex flex-row space-x-4'>
