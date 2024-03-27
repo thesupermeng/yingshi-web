@@ -168,6 +168,7 @@ export { default as EastRichLogoWithText } from './logo/EastRichLogoWithText.svg
 export { default as EastRichWhiteRedText } from './logo/EastRichWhiteRedText.svg';
 export { default as EastRichWhiteLogoWithText } from './logo/EastRichWhiteLogoWithText.svg';
 export { default as EastRichWhiteLogo } from './logo/EastRichWhiteLogo.svg';
+export { default as Logo } from './logo/Logo.svg';
 
 //dropzone
 export { default as UploadIcon } from './dropzone/Upload.svg';
