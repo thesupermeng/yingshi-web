@@ -1,4 +1,5 @@
 import './globals.css';
+import '../asset/style/custom-bs.css';
 import { Inter } from 'next/font/google';
 import { Providers } from '@/store/Provider';
 import Sidebar from '@/components/sidebar';
