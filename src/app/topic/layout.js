@@ -10,7 +10,8 @@ export default function Layout({ children }) {
   return isWeb() ? (
     <>{children}</>
   ) : (
-    <FullPageContent>
+    
+    <FullPageContent className="overflow-auto">
 
       {children}
     </FullPageContent>

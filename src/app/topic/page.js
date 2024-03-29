@@ -76,17 +76,49 @@ export default function Page({ params }) {
 </div>
 
 {/* topic list  */}
-<div className='d-flex'>
-
+<div className='d-flex container '>
+<div className='row'>
      {topicList.map(topic => (
-          <div key={topic.topic_id}>
+          <div className="col-4 " key={topic.topic_id}>
             {/* Render topic details here */}
-            <p>{topic.topic_name}</p>
+              <div className='row'>
+              <div className='col-12 card mx-0 px-0'>
+              <div className='row'>
+              <div className='col-3 px-0'>
+              <img
+              alt='播单'
+              className={`object-cover h-auto w-full`}
+              src={topic?.vod_list[0].vod_pic_list[0]}
+            />
+                   </div>
+
+                   <div className='col-8 pl-1 pr-0'>
+
+                   <div className='row'>
+              <div className='col-12'>
+      <div className="text-base font-bold pb-2">{topic.topic_name} </div>
+      <div className="text-xs ">{topic.topic_blurb} </div>
+
+
+      <div className="btn btn-primary">查看更多 <i class="fa-solid fa-angle-right"></i></div>
+   </div>
+   </div>
+                   </div>
+                   </div>
+
+              </div>
+
+              
+              </div>
+
+          
+
+
           </div>
         ))}
 
 
-
+</div>
 
 
 </div>
