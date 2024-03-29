@@ -9,6 +9,8 @@ import { LoadingPage } from '@/components/loading';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { isWeb } from '@/util/common';
 import { YingshiApi } from '@/util/YingshiApi';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './style.module.css';
 
@@ -17,28 +19,29 @@ export default function Page({ params }) {
   const [topicList, setTopicList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
-
   const getTopicList = async () => {
-    return YingshiApi(URL_YINGSHI_VOD.playlistGetTopic + '?limit=18&page='+currentPage, {}, { method: 'GET' });
+    return YingshiApi(
+      URL_YINGSHI_VOD.playlistGetTopic + '?limit=18&page=' + currentPage,
+      {},
+      { method: 'GET' }
+    );
   };
 
   const initPage = async () => {
     setLoading(true);
     let res = await getTopicList();
-    let topicList = res.List
-    setTopicList(topicList)
-    console.log(topicList)
+    let topicList = res.List;
+    setTopicList(topicList);
+    console.log(topicList);
     setLoading(false);
   };
 
-
   useEffect(() => {
-    initPage()
+    initPage();
   }, []);
 
   // const [selected, setSelected] = useState(0);
   // const [streamerData, setStreamerData] = useState({});
-
 
   // const getStreamerData = async () => {
   //   return UserApi(
@@ -60,74 +63,67 @@ export default function Page({ params }) {
 
   return (
     <>
-  
-  <div className={styles.containerHeader}>
-  <div className="d-flex" style={{ width: '100%' }}>
-    <div className="overlay" style={{ width: '100%' }}>
-      <div className="grid grid-cols-12 pb-24 lg:px-0 md:px-0 px-4">
-        <div className="lg:col-span-1 md:col-span-1 desktop"></div>
-        <div className="lg:col-span-10 md:col-span-10 col-span-12">
-          <div className={styles.detailsTitle}>播单</div>
-          {/* <div className="pl-1">播单</div> */}
+      <div className={styles.containerHeader}>
+        <div className='d-flex' style={{ width: '100%' }}>
+          <div className='overlay' style={{ width: '100%' }}>
+            <div className='topic-container-header container px-0 d-flex  flex-column'>
+              <div className='topic-header-text'>播单</div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
 
-{/* topic list  */}
-<div className='d-flex container '>
-<div className='row'>
-     {topicList.map(topic => (
-          <div className="col-4 " key={topic.topic_id}>
-            {/* Render topic details here */}
-              <div className='row'>
-              <div className='col-12 card mx-0 px-0'>
-              <div className='row'>
-              <div className='col-3 px-0'>
-              <img
-              alt='播单'
-              className={`object-cover h-auto w-full`}
-              src={topic?.vod_list[0].vod_pic_list[0]}
-            />
-                   </div>
-
-                   <div className='col-8 pl-1 pr-0'>
-
-                   <div className='row'>
-              <div className='col-12'>
-      <div className="text-base font-bold pb-2">{topic.topic_name} </div>
-      <div className="text-xs ">{topic.topic_blurb} </div>
-
-
-      <div className="btn btn-primary">查看更多 <i class="fa-solid fa-angle-right"></i></div>
-   </div>
-   </div>
-                   </div>
-                   </div>
-
+      {/* topic list  */}
+      <div className='d-flex container'>
+        <div className='row '>
+          {topicList.map((topic) => (
+            <div className='col-4' key={topic.topic_id}>
+              {/* Render topic details here */}
+              <div className='row topic-wrap'>
+                <div className='col-12 mx-0 px-0'>
+                  <div className='d-flex topic-card'>
+                    <div className='col-4 px-0'>
+                      <div className={`object-cover h-auto w-full topic-img`}>
+                        <img
+                          alt='播单'
+                          src={topic?.vod_list[0].vod_pic_list[0]}
+                          style={{ borderRadius: '10px' }}
+                        />
+                      </div>
+                    </div>
+                    <div className='col-8 px-0 d-flex flex-column justify-content-between'>
+                      <div>
+                        <div className='text-base font-bold pb-2'>
+                          {topic.topic_name}
+                        </div>
+                        <div className='text-xs topic-blurb'>
+                          {topic.topic_blurb.length > 105
+                            ? `${topic.topic_blurb.substring(0, 105)}...`
+                            : topic.topic_blurb}
+                        </div>
+                        <div className='text-primary pt-4 text-xs'>
+                          查看更多 <FontAwesomeIcon icon={faAngleRight} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
-              
-              </div>
-
-          
-
-
-          </div>
-        ))}
-
-
-</div>
-
-
-</div>
-
-
-
-      
-
-   
+      {/* loading spinner   */}
+      <div className='d-flex container py-6 justify-center justify-items-center '>
+        <div className='row  '>
+          <img
+            alt='播单'
+            src='/img/loading-spinner.gif'
+            style={{ width: 130, height: 'auto' }}
+          />
+        </div>
+      </div>
     </>
   );
 }

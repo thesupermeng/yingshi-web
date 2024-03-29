@@ -949,7 +949,7 @@
     --bs-gutter-y: 3rem;
   }
 }
-@media (min-width: 1400px) {
+@media (min-width: 1600px) {
   .col-xxl-auto {
     flex: 0 0 auto;
     width: auto;
