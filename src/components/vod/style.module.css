@@ -1,0 +1,32 @@
+.arrowCard {
+  display: flex;
+  background-color: #A7A7A71A !important;
+  padding: 2px;
+  align-items: center;
+  border-radius: 4px;
+}
+
+.radioOptionCard {
+  display: flex;
+  padding: 8px 14px;
+  align-items: center;
+  border-radius: 4px;
+}
+
+.selectedOptionCard {
+  background-color: #0085E0 !important;
+}
+
+.unselectedOptionCard {
+  background-color: #A7A7A71A !important;
+}
+
+.dropdownContainer {
+  position: absolute;
+  z-index: 100;
+  top: 50px;
+  border-radius: 4px;
+  background-color: #171717 !important;
+  border-color: #0085E0 !important;
+  border-width: 2px;
+}

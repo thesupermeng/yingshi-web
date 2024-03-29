@@ -971,5 +971,8 @@
   "viewAll": "View all",
   "homeFeaturedGames": "Featured Games",
   "homeTopLiveMatches": "Top Live Matches",
-  "homeTopLiveStreams": "Top Live"
+  "homeTopLiveStreams": "Top Live",
+  "introduction": "Introduction",
+  "popularList": "Popular List",
+  "episode": "Episode"
 }

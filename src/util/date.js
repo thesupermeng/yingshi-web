@@ -31,11 +31,15 @@ export const formatOnlyDate = (value) => {
 };
 
 export const convertTimeStampToDateTime = (value, format12Hours = false) => {
+  if (value.toString().length === 10) {
+    value *= 1000;
+  }
+
   const date = new Date(value);
 
   return {
     year: date.getFullYear(),
-    month: addZero(date.getMonth()),
+    month: addZero(date.getMonth() + 1),
     day: addZero(date.getDate()),
     monthShort: mthShortName[date.getMonth()],
     hours: format12Hours

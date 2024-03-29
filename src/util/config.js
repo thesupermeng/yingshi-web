@@ -10,4 +10,5 @@ export const Config = {
   isHome: false,
   userGuideSlots: 50000,
   locale: 'en',
+  vodEpisodeGroupMax: 2,
 };
