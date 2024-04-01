@@ -93,7 +93,7 @@ export const PlayVod = ({ vodId }) => {
   console.log(vod)
 
   return (
-    <div ref={domElementRef} style={{ width: '100%', backgroundColor: 'pink' }}>
+    <div ref={domElementRef} className='w-[100%]'>
       {vod != null && (
         <div className='flex flex-row space-x-4'>
           <div className='flex-1 w-9/12 space-y-4'>

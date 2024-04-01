@@ -265,6 +265,7 @@ export { default as SpeechBubbleIcon } from './livechat/speechBubble.svg';
 export { default as DragChatIcon } from './livechat/dragChatIcon.svg';
 
 //arrows
+export { default as ArrowDownIcon } from './arrows/arrowDown.js';
 export { default as ArrowLeftIcon } from './arrows/arrowLeft.svg';
 export { default as ArrowRightIcon } from './arrows/arrowRight.svg';
 export { default as ArrowDownFillIcon } from './arrows/arrowDownFill.svg';

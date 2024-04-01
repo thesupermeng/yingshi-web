@@ -28,6 +28,12 @@ export default function Player({ option, getInstance, ...rest }) {
       customType: {
         m3u8: playM3U8,
       },
+      fullscreenWeb: true,
+      pip: true,
+      setting: true,
+      playbackRate: true,
+      autoPlayback: true,
+      aspectRatio: true,
     });
 
     if (getInstance && typeof getInstance === 'function') {

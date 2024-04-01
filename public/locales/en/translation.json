@@ -974,5 +974,7 @@
   "homeTopLiveStreams": "Top Live",
   "introduction": "Introduction",
   "popularList": "Popular List",
-  "episode": "Episode"
+  "episode": "Episode",
+  "synopsis": "Synopsis",
+  "expand": "Expand"
 }

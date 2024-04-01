@@ -974,5 +974,7 @@
   "homeTopLiveStreams": "热门直播",
   "introduction": "简介",
   "popularList": "热播总榜",
-  "episode": "集"
+  "episode": "集",
+  "synopsis": "剧情介绍",
+  "expand": "展开"
 }
