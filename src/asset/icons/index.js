@@ -32,6 +32,8 @@ export { default as DepositBonusIcon } from './depositBonusIcon.svg';
 export { default as Bookmark } from './bookmark.png';
 export { default as LandingPageBg } from './landingPageBg.png';
 export { default as ImportImg } from './ImportImg.svg';
+export { default as HistoryIcon } from './historyIcon.svg';
+export { default as PhoneIcon } from './phoneIcon.svg';
 
 // profiles
 export { default as AnimationTick } from './profile/animationTick.gif';
