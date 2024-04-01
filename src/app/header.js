@@ -1,13 +1,34 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Logo, searchIcon, HistoryIcon, PhoneIcon } from '@/asset/icons';
+import { YingshiApi } from '@/util/YingshiApi';
+import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 
-export const Header = ({ topNav, selected, changePage }) => {
+export const Header = ({changePage}) => {
   const [value, setValue] = useState('');
+  const [topNav, setTopNav] = useState([]);
+  const [selected, setSelected] = useState(0);
+
   const handleChange = (event) => {
     const newValue = event.target.value;
     setValue(newValue);
   };
+
+  const getTopNav = async () => {
+    return YingshiApi(URL_YINGSHI_VOD.homeGetNav, {}, { method: 'GET' });
+  };
+
+  const handleClick = (value) => {
+    setSelected(value)
+    changePage(value)
+  };
+
+  useEffect(() => {
+    getTopNav().then((data) => {
+      setTopNav(data);
+      setSelected(data[0].id);
+    });
+  }, []);
 
   return (
     <div className='flex flex-row justify-around py-4 items-center'>
@@ -20,7 +41,7 @@ export const Header = ({ topNav, selected, changePage }) => {
           placeholder='输入搜索关键词'
           value={value}
           onChange={handleChange}
-          className='w-96 border-0 border-gray-300 text-white rounded-md px-4 py-1 focus:outline-none '
+          className='flex border-0 border-gray-300 text-white rounded-md pl-4 pr-10 py-1 focus:outline-none '
           style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)' }}
         />
         <Image
@@ -38,7 +59,7 @@ export const Header = ({ topNav, selected, changePage }) => {
               id={navItem.id}
               key={id}
               onClick={() => {
-                changePage(navItem.id);
+                handleClick(navItem.id);
               }}
             >
               <span
@@ -62,11 +83,11 @@ export const Header = ({ topNav, selected, changePage }) => {
             alt='search'
             width={30}
           />
-          <div class='flex items-center px-5'>
+          <div className='flex items-center px-2'>
             <div className='border-l-2 border-white h-4' />
           </div>
           <div className='flex flex-row cursor-pointer'>
-            <Image className='px-1' src={PhoneIcon} alt='search' width={24} />
+            <Image className='mx-2' src={PhoneIcon} alt='search' width={14} />
             <div className='flex items-center'>APP</div>
           </div>
         </div>

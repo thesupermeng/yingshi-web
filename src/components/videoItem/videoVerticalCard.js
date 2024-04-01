@@ -1,10 +1,8 @@
-
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 export const VideoVerticalCard = ({ vod }) => {
-
   const router = useRouter();
 
   return (
@@ -20,16 +18,14 @@ export const VideoVerticalCard = ({ vod }) => {
           alt='game'
           src={vod.vod_pic}
           fill
-          sizes="100%"
+          sizes='100%'
           className='transition group-hover:scale-110 group-hover:opacity-50 group-hover:cursor-pointer'
           style={{
             objectFit: 'cover',
           }}
         />
       </div>
-      <div className='absolute right-3 top-3'>
-        {/* <GameFav id={id} /> */}
-      </div>
+      <div className='absolute right-3 top-3'>{/* <GameFav id={id} /> */}</div>
     </>
-  )
-}
+  );
+};

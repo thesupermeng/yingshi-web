@@ -10,7 +10,7 @@ import { YingshiApi } from '@/util/YingshiApi';
 
 import './i18n';
 import { LoadingPage } from '@/components/loading';
-import { Header} from '@/app/header';
+import { Header } from '@/app/header';
 import { FullPageContent } from '@/componentsH5/FullPageContent';
 import { H5Only } from '@/components/Fragments/EnvComponent';
 import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
@@ -22,7 +22,7 @@ export default function Home() {
   const { t } = useTranslation();
   const router = useRouter();
   const pathname = usePathname();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [topNav, setTopNav] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selected, setSelected] = useState(0);
@@ -31,11 +31,11 @@ export default function Home() {
     return YingshiApi(URL_YINGSHI_VOD.homeGetNav, {}, { method: 'GET' });
   };
 
-  const getTypePage = async (pageId) => {
+  const getTypePage = async (value) => {
     return YingshiApi(
       URL_YINGSHI_VOD.homeGetPages,
       {
-        id: pageId,
+        id: value,
         limit: 6,
         page: 4,
       },
@@ -45,7 +45,6 @@ export default function Home() {
 
   const changePage = (value) => {
     setLoading(true);
-    setSelected(value);
     getTypePage(value).then((data) => {
       setCategories(data.categories);
       setLoading(false);
@@ -54,49 +53,48 @@ export default function Home() {
 
   useEffect(() => {
     setLoading(true);
-    getTopNav().then((data) => {
-      setTopNav(data);
-      setSelected(data[0].id);
-      getTypePage(data.id).then((data) => {
-        setCategories(data.categories);
-        setLoading(false);
-      });
+    getTypePage().then((data) => {
+      setCategories(data.categories);
+      setLoading(false);
     });
   }, []);
 
-  if (loading) {
-    return <LoadingPage full={!isWeb()} />;
-  }
   return (
     <>
-      <div style={{ width: '100%' }}>
-        <Header topNav={topNav} selected={selected} changePage={changePage}/>
+      <div style={{ width: '100%'}}>
+        <Header changePage={changePage} />
         {/* <div className='flex flex-[1_0_0] overflow-y-auto min-y-0 pt-6 flex-col bg-transparent'> */}
-        <div style={{ height: 'calc(100vh - 64px)', overflowY: 'auto' }}>
-          {categories != [] &&
-            categories?.map((category, idx) => {
-              return (
-                <div id={category.type_id} key={idx}>
-                  <span
-                    style={{
-                      fontSize: '22px',
-                      fontWeight: '600',
-                      fontStyle: 'normal',
-                      fontFamily: 'PingFang SC',
-                    }}
-                    className='px-4'
-                  >
-                    {category.type_name}
-                  </span>
-                  <div className='flex flex-row justify-between'>
-                    {category.vod_list?.slice(0, 6).map((vod, i) => {
-                      return <VideoVerticalCard vod={vod} key={i} />;
-                    })}
+        {loading ? (
+          <div style={{ height: 'calc(100vh - 98px)'}}>
+            <LoadingPage full={false} />
+          </div>
+        ) : (
+          <div style={{ height: 'calc(100vh - 98px)', overflowY: 'auto' }}>
+            {categories != [] &&
+              categories?.map((category, idx) => {
+                return (
+                  <div id={category.type_id} key={idx}>
+                    <span
+                      style={{
+                        fontSize: '22px',
+                        fontWeight: '600',
+                        fontStyle: 'normal',
+                        fontFamily: 'PingFang SC',
+                      }}
+                      className='px-4'
+                    >
+                      {category.type_name}
+                    </span>
+                    <div className='flex flex-row justify-between'>
+                      {category.vod_list?.slice(0, 6).map((vod, i) => {
+                        return <VideoVerticalCard vod={vod} key={i} />;
+                      })}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-        </div>
+                );
+              })}
+          </div>
+        )}
       </div>
     </>
   );
