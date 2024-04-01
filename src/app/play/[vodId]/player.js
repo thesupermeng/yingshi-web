@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import Artplayer from 'artplayer';
 import Hls from 'hls.js';
 
-export default function Player({ option, getInstance, ...rest }) {
+export default function Player({ option, getInstance, onVideoEnd, ...rest }) {
   const artRef = useRef();
 
   const playM3U8 = (video, url, art) => {
@@ -40,12 +40,18 @@ export default function Player({ option, getInstance, ...rest }) {
       getInstance(art);
     }
 
+    art.on('video:ended', onVideoEnd);
+
     return () => {
       if (art && art.destroy) {
         art.destroy(false);
       }
+
+      if (art) {
+        art.off('video:ended', onVideoEnd);
+      }
     };
-  }, []);
+  }, [option.url]);
 
   return <div ref={artRef} {...rest}></div>;
 }

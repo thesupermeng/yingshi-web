@@ -19,7 +19,7 @@ export const PlayVod = ({ vodId }) => {
   const [vod, setVod] = useState(null);
   const [preventMutipleCall, setPreventMutipleCall] = useState(false);
   const [vodSourceSelected, setVodSourceSelected] = useState(null);
-  const [episodeSourceSelected, setEpisodeSourceSelected] = useState(null);
+  const [episodeSelected, setEpisodeSelected] = useState(null);
   const [episodeGroups, setEpisodeGroups] = useState([]);
   const [episodeGroupSelected, setEpisodeGroupSelected] = useState({});
 
@@ -34,7 +34,7 @@ export const PlayVod = ({ vodId }) => {
   };
 
   useEffect(() => {
-    if (episodeSourceSelected == null) {
+    if (episodeSelected == null) {
       getVodDetails().then((data) => {
         let res = data[0];
         setVod(res);
@@ -67,7 +67,7 @@ export const PlayVod = ({ vodId }) => {
           }
 
           if (source.vod_play_list.urls.length > 0) {
-            setEpisodeSourceSelected(source.vod_play_list.urls[0]);
+            setEpisodeSelected(source.vod_play_list.urls[0]);
           }
         }
       });
@@ -78,7 +78,7 @@ export const PlayVod = ({ vodId }) => {
     setVodSourceSelected(source);
 
     if (source.vod_play_list.urls?.length > 0) {
-      setEpisodeSourceSelected(source.vod_play_list.urls[0]);
+      setEpisodeSelected(source.vod_play_list.urls[0]);
     }
   }
 
@@ -87,10 +87,18 @@ export const PlayVod = ({ vodId }) => {
   }
 
   const onSelectEpisode = (episode) => {
-    setEpisodeSourceSelected(episode);
+    setEpisodeSelected(episode);
   }
 
-  console.log(vod)
+  const onVideoEnd = () => {
+    const indexFound = vodSourceSelected?.vod_play_list?.urls?.findIndex((urlObj) => urlObj === episodeSelected);
+
+    if (indexFound === -1 || (indexFound + 1) > (vodSourceSelected?.vod_play_list?.urls?.length ?? 0)) {
+      return;
+    }
+
+    setEpisodeSelected(vodSourceSelected?.vod_play_list?.urls[indexFound + 1]);
+  }
 
   return (
     <div ref={domElementRef} className='w-[100%]'>
@@ -99,18 +107,17 @@ export const PlayVod = ({ vodId }) => {
           <div className='flex-1 w-9/12 space-y-4'>
             <div className='aspect-[16/9]'>
               <Artplayer
+                className='aspect-[16/9]'
                 option={{
                   container: '.artplayer-app',
-                  url: episodeSourceSelected?.url ?? '',
+                  url: episodeSelected?.url ?? '',
                   fullscreen: true,
                   autoplay: true,
                   // muted: false,
                   muted: true,
                 }}
-                style={{
-                  aspectRatio: 16 / 9,
-                }}
                 getInstance={(art) => console.info(art)}
+                onVideoEnd={onVideoEnd}
               />
             </div>
 
@@ -144,7 +151,7 @@ export const PlayVod = ({ vodId }) => {
                 episodeGroups={episodeGroups}
                 episodeGroup={episodeGroupSelected}
                 vodSource={vodSourceSelected}
-                episodeSource={episodeSourceSelected}
+                episodeSource={episodeSelected}
                 onSelectEpisodeGroup={onSelectEpisodeGroup}
                 onSelectEpisode={onSelectEpisode}
                 style={{
