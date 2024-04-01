@@ -52,6 +52,17 @@ const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
 const UserURL = process.env.NEXT_PUBLIC_URL_USER_API;
 const Platform = { WEB: 1, H5: 2 }[process.env.NEXT_PUBLIC_ENV || 'WEB'];
 
+
+const getQuery = (url) => {
+  const queryParameters = 'appName=Shayu&platform=WEB&channelId=WEB&ip=165.21.14.226';
+
+  if (url.includes('?')) {
+    return '&' + queryParameters;
+  } else {
+    return '?' + queryParameters;
+  }
+}
+
 const getHeader = (
   requestBody,
   method = 'POST',
@@ -100,8 +111,11 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
   let getParams = '';
   let resData;
   url = "https://api.yingshi.tv/" + url
+
+
   
   if (method !== 'GET') {
+    url = url +  getQuery(url);
     requestOption.body = requestBody;
   } else {
     getParams = objectToGetParams(body);

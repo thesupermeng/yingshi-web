@@ -1,0 +1,54 @@
+.bg-dark-grey
+{
+  background-color: #14161a !important;
+}
+
+.topic-card
+{
+  border-radius: 12px;
+  background-color: #1D2023 !important;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  cursor: pointer;
+}
+
+.topic-card:hover
+{
+  position: relative;
+  bottom: 2px;
+  opacity: 0.9;
+  
+}
+
+.topic-wrap
+{
+  padding: 15px 10px 00px 0px;
+}
+
+.topic-img
+{
+  padding: 10px;
+  width: 143px;
+  height: 192px;
+  
+}
+
+.topic-blurb
+{
+ padding-right: 10px;
+ color: #9C9C9C;
+}
+
+.topic-header-text
+{
+  font-size: 30px;
+  align-self: flex-end;
+  font-weight: 700;
+}
+
+.topic-container-header 
+{
+  height: 140px;
+  padding-bottom: 20px;
+}

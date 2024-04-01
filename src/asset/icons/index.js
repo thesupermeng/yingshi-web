@@ -133,6 +133,7 @@ export { default as IconWarningYellow } from './general/IconWarningYellow.svg';
 export { default as AndroidIcon } from './general/android.svg';
 export { default as AppleStoreIcon } from './general/appleStore.svg';
 export { default as DocuWithMagGlassIcon } from './general/docuWithMagGlassIcon.png';
+export { default as PlaySourceIcon } from './general/playSource.svg';
 
 //socialMedia
 export { default as copyLink } from './socialMedia/copyLink.svg';
@@ -140,6 +141,15 @@ export { default as facebook } from './socialMedia/facebook.svg';
 export { default as tumblr } from './socialMedia/tumblr.svg';
 export { default as twitter } from './socialMedia/twitter.svg';
 export { default as whatsapp } from './socialMedia/whatsapp.svg';
+export { default as CameraIcon } from './socialMedia/camera.svg';
+export { default as CopyLink2Icon } from './socialMedia/copyLink2.svg';
+export { default as Facebook2Icon } from './socialMedia/facebook2.svg';
+export { default as LineIcon } from './socialMedia/line.svg';
+export { default as MessengerIcon } from './socialMedia/messenger.svg';
+export { default as QqIcon } from './socialMedia/qq.svg';
+export { default as TelegramIcon } from './socialMedia/telegram.svg';
+export { default as WechatIcon } from './socialMedia/wechat.svg';
+export { default as WeiboIcon } from './socialMedia/weibo.svg';
 
 //topUp
 export { default as GCash } from './topUp/gcash.svg';
@@ -249,6 +259,12 @@ export { default as DiceFaceSix } from './games/diceFace_six.svg';
 export { default as DicesIconWithBackground } from './games/DicesIconWithBackground.png';
 export { default as DiceResultOdd } from './games/DiceResultOdd.svg';
 export { default as DiceResultEven } from './games/DiceResultEven.svg';
+
 //livechat
 export { default as SpeechBubbleIcon } from './livechat/speechBubble.svg';
 export { default as DragChatIcon } from './livechat/dragChatIcon.svg';
+
+//arrows
+export { default as ArrowLeftIcon } from './arrows/arrowLeft.svg';
+export { default as ArrowRightIcon } from './arrows/arrowRight.svg';
+export { default as ArrowDownFillIcon } from './arrows/arrowDownFill.svg';
