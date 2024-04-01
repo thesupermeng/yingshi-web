@@ -93,9 +93,13 @@ export const PlayVod = ({ vodId }) => {
   const onVideoEnd = () => {
     const indexFound = vodSourceSelected?.vod_play_list?.urls?.findIndex((urlObj) => urlObj === episodeSelected);
 
-    if (indexFound === -1 || (indexFound + 1) > (vodSourceSelected?.vod_play_list?.urls?.length ?? 0)) {
+    if (indexFound === -1 || (indexFound + 1) >= (vodSourceSelected?.vod_play_list?.urls?.length ?? 0)) {
       return;
     }
+
+    console.log('indexFound: ', indexFound)
+    console.log(indexFound + 1)
+    console.log(vodSourceSelected?.vod_play_list?.urls?.length ?? 0)
 
     setEpisodeSelected(vodSourceSelected?.vod_play_list?.urls[indexFound + 1]);
   }
