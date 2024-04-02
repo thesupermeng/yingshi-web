@@ -9,13 +9,10 @@ import { VodEpisodeList } from '@/components/vod/vodEpisodeList.js';
 import { Config } from '@/util/config.js';
 import { VodPopularList } from '@/components/vod/vodPopularList.js';
 import { VodContent } from '@/components/vod/vodContent.js';
-
 import styles from './style.module.css';
-
 
 export const PlayVod = ({ vodId }) => {
   const domElementRef = useRef(null);
-
   const [vod, setVod] = useState(null);
   const [preventMutipleCall, setPreventMutipleCall] = useState(false);
   const [vodSourceSelected, setVodSourceSelected] = useState(null);
@@ -44,17 +41,22 @@ export const PlayVod = ({ vodId }) => {
 
           setVodSourceSelected(source);
           if (source.vod_play_list.urls.length > Config.vodEpisodeGroupMax) {
-            const tolGroup = Math.ceil(source.vod_play_list.urls.length / Config.vodEpisodeGroupMax);
+            const tolGroup = Math.ceil(
+              source.vod_play_list.urls.length / Config.vodEpisodeGroupMax
+            );
             const groups = [];
 
             for (let i = 0; i < tolGroup; i++) {
               groups.push({
-                from: (i * Config.vodEpisodeGroupMax) + 1,
-                to: tolGroup === (i + 1) ? source.vod_play_list.urls.length : (i + 1) * Config.vodEpisodeGroupMax,
-              })
+                from: i * Config.vodEpisodeGroupMax + 1,
+                to:
+                  tolGroup === i + 1
+                    ? source.vod_play_list.urls.length
+                    : (i + 1) * Config.vodEpisodeGroupMax,
+              });
             }
 
-            setEpisodeGroups(groups)
+            setEpisodeGroups(groups);
             setEpisodeGroupSelected(groups.length > 0 ? groups[0] : {});
           } else {
             const defaultGroup = {
@@ -80,29 +82,34 @@ export const PlayVod = ({ vodId }) => {
     if (source.vod_play_list.urls?.length > 0) {
       setEpisodeSelected(source.vod_play_list.urls[0]);
     }
-  }
+  };
 
   const onSelectEpisodeGroup = (group) => {
     setEpisodeGroupSelected(group);
-  }
+  };
 
   const onSelectEpisode = (episode) => {
     setEpisodeSelected(episode);
-  }
+  };
 
   const onVideoEnd = () => {
-    const indexFound = vodSourceSelected?.vod_play_list?.urls?.findIndex((urlObj) => urlObj === episodeSelected);
+    const indexFound = vodSourceSelected?.vod_play_list?.urls?.findIndex(
+      (urlObj) => urlObj === episodeSelected
+    );
 
-    if (indexFound === -1 || (indexFound + 1) >= (vodSourceSelected?.vod_play_list?.urls?.length ?? 0)) {
+    if (
+      indexFound === -1 ||
+      indexFound + 1 >= (vodSourceSelected?.vod_play_list?.urls?.length ?? 0)
+    ) {
       return;
     }
 
-    console.log('indexFound: ', indexFound)
-    console.log(indexFound + 1)
-    console.log(vodSourceSelected?.vod_play_list?.urls?.length ?? 0)
+    console.log('indexFound: ', indexFound);
+    console.log(indexFound + 1);
+    console.log(vodSourceSelected?.vod_play_list?.urls?.length ?? 0);
 
     setEpisodeSelected(vodSourceSelected?.vod_play_list?.urls[indexFound + 1]);
-  }
+  };
 
   return (
     <div ref={domElementRef} className='w-[100%]'>
@@ -128,9 +135,7 @@ export const PlayVod = ({ vodId }) => {
             <ShareHorizontal />
 
             <div className={styles.vodMetaContainer}>
-              <VodContent
-                vodContent={vod.vod_content}
-              />
+              <VodContent vodContent={vod.vod_content} />
             </div>
           </div>
 
@@ -159,7 +164,7 @@ export const PlayVod = ({ vodId }) => {
                 onSelectEpisodeGroup={onSelectEpisodeGroup}
                 onSelectEpisode={onSelectEpisode}
                 style={{
-                  height: 300
+                  height: 300,
                 }}
               />
             </div>

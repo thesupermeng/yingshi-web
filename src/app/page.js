@@ -10,62 +10,55 @@ import { YingshiApi } from '@/util/YingshiApi';
 
 import './i18n';
 import { LoadingPage } from '@/components/loading';
-import { Header } from '@/app/header';
 import { FullPageContent } from '@/componentsH5/FullPageContent';
 import { H5Only } from '@/components/Fragments/EnvComponent';
 import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
 import { isWeb } from '@/util/common';
 export const RightBetCartWidth = 'w-[32rem]';
 import Image from 'next/image';
+import { useSelector } from 'react-redux';
+
+
+const getHeaderMenuSelected = (state) => state.headerMenuSelected;
 
 export default function Home() {
   const { t } = useTranslation();
   const router = useRouter();
   const pathname = usePathname();
   const [loading, setLoading] = useState(true);
-  const [topNav, setTopNav] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [selected, setSelected] = useState(0);
+  const selectedMenu = useSelector(getHeaderMenuSelected);
 
   const getTopNav = async () => {
     return YingshiApi(URL_YINGSHI_VOD.homeGetNav, {}, { method: 'GET' });
   };
 
-  const getTypePage = async (value) => {
+  const getTypePage = async (idValue) => {
     return YingshiApi(
       URL_YINGSHI_VOD.homeGetPages,
       {
-        id: value,
+        id: idValue,
         limit: 6,
-        page: 4,
+        page: 1,
       },
       { method: 'GET' }
     );
   };
 
-  const changePage = (value) => {
-    setLoading(true);
-    getTypePage(value).then((data) => {
-      setCategories(data.categories);
-      setLoading(false);
-    });
-  };
-
   useEffect(() => {
     setLoading(true);
-    getTypePage().then((data) => {
+    getTypePage(selectedMenu.id).then((data) => {
       setCategories(data.categories);
       setLoading(false);
     });
-  }, []);
+  }, [selectedMenu]);
 
   return (
     <>
-      <div style={{ width: '100%'}}>
-        <Header changePage={changePage} />
+      <div style={{ width: '100%' }}>
         {/* <div className='flex flex-[1_0_0] overflow-y-auto min-y-0 pt-6 flex-col bg-transparent'> */}
         {loading ? (
-          <div style={{ height: 'calc(100vh - 98px)'}}>
+          <div style={{ height: 'calc(100vh - 98px)' }}>
             <LoadingPage full={false} />
           </div>
         ) : (

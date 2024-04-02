@@ -22,6 +22,7 @@ import { videoPlayerMisc } from './videoPlayerMisc';
 import { livechat } from './livechat';
 import { games } from './games';
 import { streamGame } from './streamGame';
+import { headerMenu, headerMenuSelected } from './headerData';
 
 export const store = configureStore({
   reducer: {
@@ -48,6 +49,8 @@ export const store = configureStore({
     videoPlayerMisc: videoPlayerMisc.reducer,
     streamGame: streamGame.reducer,
     livechat: livechat.reducer,
+    headerMenu: headerMenu.reducer,
+    headerMenuSelected: headerMenuSelected.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
