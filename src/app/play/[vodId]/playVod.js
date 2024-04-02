@@ -10,6 +10,8 @@ import { Config } from '@/util/config.js';
 import { VodPopularList } from '@/components/vod/vodPopularList.js';
 import { VodContent } from '@/components/vod/vodContent.js';
 import styles from './style.module.css';
+import { AdsBanner } from '@/components/ads/adsBanner.js';
+
 
 export const PlayVod = ({ vodId }) => {
   const domElementRef = useRef(null);
@@ -33,6 +35,8 @@ export const PlayVod = ({ vodId }) => {
   useEffect(() => {
     if (episodeSelected == null) {
       getVodDetails().then((data) => {
+        if (data === undefined || data.length <= 0) return;
+
         let res = data[0];
         setVod(res);
 
@@ -104,15 +108,11 @@ export const PlayVod = ({ vodId }) => {
       return;
     }
 
-    console.log('indexFound: ', indexFound);
-    console.log(indexFound + 1);
-    console.log(vodSourceSelected?.vod_play_list?.urls?.length ?? 0);
-
     setEpisodeSelected(vodSourceSelected?.vod_play_list?.urls[indexFound + 1]);
   };
 
   return (
-    <div ref={domElementRef} className='w-[100%]'>
+    <div ref={domElementRef} className='w-[100%] py-2'>
       {vod != null && (
         <div className='flex flex-row space-x-4'>
           <div className='flex-1 w-9/12 space-y-4'>
@@ -132,11 +132,17 @@ export const PlayVod = ({ vodId }) => {
               />
             </div>
 
-            <ShareHorizontal />
+            <ShareHorizontal
+              className={'w-[80%]'}
+            />
 
             <div className={styles.vodMetaContainer}>
               <VodContent vodContent={vod.vod_content} />
             </div>
+
+            <AdsBanner />
+
+            <AdsBanner />
           </div>
 
           <div className='flex-col w-3/12 space-y-4'>
@@ -172,6 +178,8 @@ export const PlayVod = ({ vodId }) => {
             <div className={styles.vodMetaContainer}>
               <VodPopularList />
             </div>
+
+            <AdsBanner height='500px' />
           </div>
         </div>
       )}
