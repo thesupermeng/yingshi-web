@@ -2300,3 +2300,10 @@ a:not([href]):not([class]):hover {
 .lh-lg {
   line-height: 2 !important;
 }
+
+
+/* @media (min-width: 1330px) {
+  .container {
+    max-width: 1520px !important;
+  }
+} */

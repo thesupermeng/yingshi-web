@@ -12,10 +12,11 @@ export default function Layout({ children }) {
     <>{children}</>
   ) : (
     <>
-    <FullPageContent className="overflow-auto bg-dark-grey">
+    {/* <FullPageContent className="overflow-auto bg-dark-grey">
 
       {children}
-    </FullPageContent>
+    </FullPageContent> */}
+    {children}
     </>
   );
 }

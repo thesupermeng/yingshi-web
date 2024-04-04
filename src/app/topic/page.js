@@ -15,11 +15,100 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import styles from './style.module.css';
 
 export default function Page({ params }) {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [topicList, setTopicList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [stillCanLoad, setStillCanLoad] = useState(true);
+let loading = false
+
+
+
+
+  // useEffect(() => {
+
+  //   if(loading)
+  //   {
+  //     return;
+  //   }
+
+  //  console.log('Fetch data from the to-do list API')
+  //   getTopicList();
+
+
+
+  // }, [currentPage]);
+
+
+  const handleScroll = () => {
+
+
+    const scrollY = window.scrollY;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+    if (scrollY + windowHeight >= documentHeight - 100) {
+     // setCurrentPage(currentPage + 1);
+  
+  
+      getTopicList();
+    }
+  };
+  
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [currentPage]);
+
+
 
   const getTopicList = async () => {
+
+    console.log("isLoading")
+    console.log(isLoading)
+
+       if(!stillCanLoad)
+    {
+      return;
+    }
+
+
+    if(loading == true)
+    {
+      return;
+    }
+    setIsLoading(true)
+    loading = true
+    setCurrentPage(currentPage+1);
+    console.log('0000000')
+    
+    let res = await getTopicListApi();
+ 
+    console.log("isLoading after")
+    console.log(isLoading)
+    let tempList = res.List;
+
+    if(currentPage == res.TotalPageCount)
+    {
+      setStillCanLoad(false)
+    }
+    console.log('111111')
+
+    await new Promise(resolve => setTimeout(resolve, 1000));
+  
+    const combinedList = [...topicList, ...tempList];
+    console.log('combinedList')
+    console.log(combinedList)
+
+    setTopicList(combinedList);
+    setIsLoading(false)
+    loading =false
+ 
+    console.log(topicList);
+  }
+
+  const getTopicListApi = async () => {
+    
     return YingshiApi(
       URL_YINGSHI_VOD.playlistGetTopic + '?limit=18&page=' + currentPage,
       {},
@@ -27,39 +116,16 @@ export default function Page({ params }) {
     );
   };
 
-  const initPage = async () => {
-    setLoading(true);
-    let res = await getTopicList();
-    let topicList = res.List;
-    setTopicList(topicList);
-    console.log(topicList);
-    setLoading(false);
-  };
+
 
   useEffect(() => {
-    initPage();
+    getTopicList();
   }, []);
 
-  // const [selected, setSelected] = useState(0);
-  // const [streamerData, setStreamerData] = useState({});
 
-  // const getStreamerData = async () => {
-  //   return UserApi(
-  //     URL_USER.getSteamer,
-  //     { id: params?.streamer_id, recommend_count: 10 },
-  //     { method: 'GET' }
-  //   );
-  // };
-
-  // useEffect(() => {
-  //   getStreamerData().then((data) => {
-  //     setStreamerData(data?.data);
-  //   });
-  // }, [params?.streamer_id]);
-
-  if (loading) {
-    return <LoadingPage full={!isWeb()} />;
-  }
+  // if (loading) {
+  //   return <LoadingPage full={!isWeb()} />;
+  // }
 
   return (
     <>
@@ -115,6 +181,8 @@ export default function Page({ params }) {
       </div>
 
       {/* loading spinner   */}
+
+      {isLoading && 
       <div className='d-flex container py-6 justify-center justify-items-center '>
         <div className='row  '>
           <img
@@ -124,6 +192,8 @@ export default function Page({ params }) {
           />
         </div>
       </div>
+    }
+
     </>
   );
 }
