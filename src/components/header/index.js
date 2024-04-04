@@ -36,7 +36,8 @@ const Header = () => {
   // const { rightBarContent } = useSelector((s) => s.common);
   //const { isLogin } = useUser();
   const containerRef = useRef(null);
-  const dropdownRefMore = useRef(null);
+  const dropdownMoreRef = useRef(null);
+  const dropdownSearchRef = useRef(null);
   const { t } = useTranslation();
 
   // const onClick = () => {
@@ -60,8 +61,8 @@ const Header = () => {
   };
 
   const handleOpenSearch = () => {
-    setOpenSearch(!openMore);
-    console.log('test')
+    setOpenSearch(true);
+    console.log('test');
   };
 
   const handleChange = (event) => {
@@ -126,21 +127,32 @@ const Header = () => {
 
   useEffect(() => {
     // Function to close the dropdown when clicking outside of it
-    function handleClickOutside(event) {
+    function handleClickOutsideDropDownMore(event) {
       if (
-        dropdownRefMore.current &&
-        !dropdownRefMore.current.contains(event.target)
+        dropdownMoreRef.current &&
+        !dropdownMoreRef.current.contains(event.target)
       ) {
-        setOpenMore(!openMore);
+        setOpenMore(false);
+      }
+    }
+
+    function handleClickOutsideSearch(event) {
+      if (
+        dropdownSearchRef.current &&
+        !dropdownSearchRef.current.contains(event.target)
+      ) {
+        setOpenSearch(false);
       }
     }
 
     // Attach event listener when the component mounts
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutsideDropDownMore);
+    document.addEventListener('mousedown', handleClickOutsideSearch);
 
     // Remove event listener when the component unmounts
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutsideDropDownMore);
+      document.removeEventListener('mousedown', handleClickOutsideSearch);
     };
   }, []);
 
@@ -154,26 +166,80 @@ const Header = () => {
         <Image alt='鲨鱼影视' src={Logo} style={{ minWidth: '156px' }} />
       </div>
       <div className='flex items-center'>
-        <div className='relative'>
-          <input
-            type='text'
-            placeholder='输入搜索关键词'
-            value={value}
-            onChange={handleChange}
-            className='flex border-0 border-gray-300 text-white rounded-md pl-4 pr-10 py-2 focus:outline-none '
-            style={{ backgroundColor: 'rgba(255, 255, 255, 0.08)' }}
-            onClick={handleOpenSearch}
-          />
-          <Image
-            className='h-6 w-6 absolute right-3 top-2/4 transform -translate-y-2/4 text-gray-400'
-            src={searchIcon}
-            alt='search'
-            width={20}
-          />
+        <div className='relative' ref={dropdownSearchRef}>
+          <div className='relative'>
+            <input
+              type='text'
+              placeholder='输入搜索关键词'
+              value={value}
+              onChange={handleChange}
+              className='flex border-0 border-gray-300 text-white rounded-md pl-4 pr-10 py-2 focus:outline-none '
+              style={{ backgroundColor: 'rgba(255, 255, 255, 0.08)' }}
+              onClick={handleOpenSearch}
+            />
+            <Image
+              className='h-6 w-6 absolute right-3 top-2/4 transform -translate-y-2/4 text-gray-400'
+              src={searchIcon}
+              alt='search'
+              width={20}
+            />
+          </div>
+          {openSearch ? (
+            <div className='absolute z-10 flex flex-col items-center pt-1 w-full'>
+              <div
+                className='py-3 px-4 flex flex-col rounded-md w-full'
+                style={{ backgroundColor: 'rgba(29, 32, 35, 0.88)' }}
+              >
+                <div className='flex flex-row justify-between'>
+                  <div>历史搜索</div>
+                  <div>清除</div>
+                </div>
+                <div className='flex flex-wrap py-2 gap-2'>
+                  <div
+                    className='py-1 px-2 rounded-lg'
+                    style={{ background: 'rgba(255, 255, 255, 0.06)' }}
+                  >
+                    hello world
+                  </div>
+                  <div
+                    className='py-1 px-2 rounded-lg'
+                    style={{ background: 'rgba(255, 255, 255, 0.06)' }}
+                  >
+                    hello 
+                  </div><div
+                    className='py-1 px-2 rounded-lg'
+                    style={{ background: 'rgba(255, 255, 255, 0.06)' }}
+                  >
+                    hello 
+                  </div><div
+                    className='py-1 px-2 rounded-lg'
+                    style={{ background: 'rgba(255, 255, 255, 0.06)' }}
+                  >
+                    hello world dwq
+                  </div><div
+                    className='py-1 px-2 rounded-lg'
+                    style={{ background: 'rgba(255, 255, 255, 0.06)' }}
+                  >
+                    hello worldd
+                  </div>
+                </div>
+                <div className='flex flex-row justify-between'>
+                  <div>热搜总榜</div>
+                </div>
+                <div className='flex flex-row justify-between pt-2'>
+                  <div className='flex flex-row'>
+                    <div>1. </div>
+                    <div>name </div>
+                  </div>
+                  <div>type</div>
+                </div>
+              </div>
+            </div>
+          ) : null}
         </div>
       </div>
       <div className='flex-1 flex items-center'>
-        <div className='flex-1 flex justify-end' ref={containerRef}>
+        <div className='w-full flex justify-end' ref={containerRef}>
           {visibleItems?.map((navItem, id) => {
             return (
               <div
@@ -205,7 +271,7 @@ const Header = () => {
           })}
           {hiddenItems.length > 0 && (
             <div className='w-14 flex flex-col items-center cursor-pointer'>
-              <div className='relative' ref={dropdownRefMore}>
+              <div className='relative' ref={dropdownMoreRef}>
                 <button onClick={handleOpenMore}>更多</button>
                 {openMore ? (
                   <div className='absolute z-10 flex flex-col items-center -left-12 pt-1'>
@@ -279,3 +345,78 @@ const Header = () => {
   );
 };
 export default Header;
+
+
+// 'use client';
+// import useUser from '@/hook/user/useUser';
+// import { useSelector, useDispatch } from 'react-redux';
+// import {
+//   hideRightBarContent,
+//   setProfileModal,
+//   showRightBarContent,
+// } from '@/store/common';
+// import Image from 'next/image';
+// import { ProfileModalType } from '../profileModal';
+// import { RightSidebarContantTypes } from '../rightSideMenu';
+// import HeaderBetSlip from './headerBetSlip';
+// import Profile from './profile';
+// import Wallet from './wallet';
+// import { useTranslation } from 'next-i18next';
+// import { EastRichRedBlackLogo, EastRichWhiteRedText } from '@/asset/icons';
+
+// const Header = () => {
+//   const dispatch = useDispatch();
+//   const { rightBarContent } = useSelector((s) => s.common);
+//   const { isLogin } = useUser();
+//   const { t } = useTranslation();
+
+//   const onClick = () => {
+//     dispatch(hideRightBarContent('All'));
+//     dispatch(showRightBarContent(RightSidebarContantTypes.BetCart));
+//   };
+
+//   return (
+//     <>
+//       <div className='flex-1 px-5 py-4'>
+//         <div style={{ display: "flex", justifyContent: "space-between" }}>
+//           <Image
+//             src={EastRichWhiteRedText}
+//             alt='Taya'
+//             className={`flex-initial h-[3.65rem] w-[9rem]`}
+//           />
+//           <div className='flex items-center flex-initial gap-5'>
+//             {isLogin && <Wallet />}
+
+//             {isLogin ? (
+//               <Profile />
+//             ) : (
+//               <>
+//                 <button
+//                   className='py-3 rounded-full px-[1.375rem] hover:bg-white/5'
+//                   onClick={() => {
+//                     dispatch(setProfileModal(ProfileModalType.LoginModal));
+//                   }}
+//                 >
+//                   {t('login')}
+//                 </button>
+//                 <button
+//                   className='py-2.5 px-[1.375rem] bg-tayaRed rounded-[6.25rem]'
+//                   onClick={() => {
+//                     dispatch(setProfileModal(ProfileModalType.SignUpModal));
+//                   }}
+//                 >
+//                   <p>Sign Up</p>
+//                 </button>
+//               </>
+//             )}
+
+//             {!rightBarContent?.[RightSidebarContantTypes.BetCart] && (
+//               <HeaderBetSlip onClick={onClick} />
+//             )}
+//           </div>
+//         </div>
+//       </div>
+//     </>
+//   );
+// };
+// export default Header;
