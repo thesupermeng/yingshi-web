@@ -29,10 +29,6 @@ export default function Home() {
   const [categories, setCategories] = useState([]);
   const selectedMenu = useSelector(getHeaderMenuSelected);
 
-  const getTopNav = async () => {
-    return YingshiApi(URL_YINGSHI_VOD.homeGetNav, {}, { method: 'GET' });
-  };
-
   const getTypePage = async (idValue) => {
     return YingshiApi(
       URL_YINGSHI_VOD.homeGetPages,
