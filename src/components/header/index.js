@@ -156,7 +156,7 @@ const Header = () => {
   const calculateItemsVisibility = () => {
     if (containerRef.current) {
       const containerWidth = containerRef.current.offsetWidth;
-      const itemWidth = 58; // Assuming each item has a fixed width
+      const itemWidth = 57; // Assuming each item has a fixed width
 
       const maxVisibleItems =
         Math.floor(containerWidth / itemWidth) < headerMenu.headerMenu?.length
@@ -235,192 +235,224 @@ const Header = () => {
   }
 
   return (
-    <div className='container flex py-3 mx-auto gap-x-5'>
-      <div className='flex-1 flex gap-x-5 justify-between'>
-        <div>
-          <Image alt='鲨鱼影视' src={Logo} style={{ minWidth: '100px' }} />
-        </div>
-        <div className='flex items-center'>
-          <div className='relative' ref={dropdownSearchRef}>
-            <div className='relative'>
-              <input
-                type='text'
-                placeholder='输入搜索关键词'
-                value={value}
-                onChange={handleChange}
-                className='flex border-0 border-gray-300 text-white rounded-md pl-4 pr-10 py-2 focus:outline-none '
-                style={{ backgroundColor: 'rgba(255, 255, 255, 0.08)' }}
-                onClick={handleOpenSearch}
-              />
-              <Image
-                className='h-6 w-6 absolute right-3 top-2/4 transform -translate-y-2/4 text-gray-400'
-                src={searchIcon}
-                alt='search'
-                width={20}
-              />
+    <div
+      className={
+        pathname.startsWith('/play/')
+          ? 'w-full z-20 bg-gradient-to-b from-black from-15%'
+          : 'absolute z-10 w-full bg-gradient-to-b from-black from-15%'
+      }
+    >
+      <div className='container flex py-3 mx-auto'>
+        <div className='flex flex-1  flex-col md:flex-row'>
+          <div className='flex-1 flex gap-x-5 justify-between'>
+            <div className='flex justify-between'>
+              <Image alt='鲨鱼影视' src={Logo} style={{ minWidth: '100px' }} />
             </div>
-            {openSearch ? (
-              <div className='absolute z-10 flex flex-col items-center pt-1 w-80'>
-                <div
-                  className='py-3 px-4 flex flex-col rounded-md w-full'
-                  style={{ backgroundColor: 'rgba(29, 32, 35, 0.88)' }}
-                >
-                  <div className='flex flex-row justify-between items-center pb-2'>
-                    <div className='text-sm'>历史搜索</div>
+            <div className='flex flex-1 items-center'>
+              <div ref={dropdownSearchRef}>
+                <div className='relative'>
+                  <input
+                    type='text'
+                    placeholder='输入搜索关键词'
+                    value={value}
+                    onChange={handleChange}
+                    className='flex border-0 border-gray-300 text-white rounded-md pl-4 pr-10 py-2 focus:outline-none'
+                    style={{ backgroundColor: 'rgba(255, 255, 255, 0.08)' }}
+                    onClick={handleOpenSearch}
+                  />
+                  <Image
+                    className='h-6 w-6 absolute right-3 top-2/4 transform -translate-y-2/4 text-gray-400'
+                    src={searchIcon}
+                    alt='search'
+                    width={20}
+                  />
+                </div>
+                {openSearch ? (
+                  <div className='absolute z-10 flex flex-col items-center pt-1 w-80 '>
                     <div
-                      className='text-xs'
-                      style={{ color: 'rgba(156, 156, 156, 1)' }}
+                      className='py-3 px-4 flex flex-col rounded-md w-full'
+                      style={{ backgroundColor: 'rgba(29, 32, 35, 0.88)' }}
                     >
-                      清除
-                    </div>
-                  </div>
-                  <div className='flex flex-wrap py-2 gap-2'>
-                    {searchHistory.map((item, index) => {
-                      return (
-                        <div
-                          className='py-1 px-2 rounded-lg'
-                          style={{
-                            background: 'rgba(255, 255, 255, 0.06)',
-                            color: 'rgba(156, 156, 156, 1)',
-                          }}
-                          key={index}
-                        >
-                          {item.name}
-                        </div>
-                      );
-                    })}
-                  </div>
-                  <div className='flex flex-row justify-between'>
-                    <div className='text-sm'>热搜总榜</div>
-                  </div>
-                  {topTen.map((item, index) => {
-                    return (
-                      <div
-                        className='flex flex-row justify-between py-2.5'
-                        key={index}
-                      >
-                        <div className='flex flex-row'>
-                          <div
-                            className='text-sm w-8 text-center font-bold'
-                            style={{
-                              color:
-                                index == 0
-                                  ? 'rgba(0, 106, 178, 1)'
-                                  : index == 1
-                                  ? 'rgba(0, 133, 224, 1)'
-                                  : index == 2
-                                  ? 'rgba(96, 191, 255, 1)'
-                                  : 'rgba(156, 156, 156, 1)',
-                            }}
-                          >
-                            {index + 1}
-                          </div>
-                          <div className='text-sm'>{item.name}</div>
-                        </div>
+                      <div className='flex flex-row justify-between items-center pb-2'>
+                        <div className='text-sm'>历史搜索</div>
                         <div
                           className='text-xs'
                           style={{ color: 'rgba(156, 156, 156, 1)' }}
                         >
-                          {item.type}
+                          清除
                         </div>
                       </div>
-                    );
-                  })}
+                      <div className='flex flex-wrap py-2 gap-2'>
+                        {searchHistory.map((item, index) => {
+                          return (
+                            <div
+                              className='py-1 px-2 rounded-lg'
+                              style={{
+                                background: 'rgba(255, 255, 255, 0.06)',
+                                color: 'rgba(156, 156, 156, 1)',
+                              }}
+                              key={index}
+                            >
+                              {item.name}
+                            </div>
+                          );
+                        })}
+                      </div>
+                      <div className='flex flex-row justify-between'>
+                        <div className='text-sm'>热搜总榜</div>
+                      </div>
+                      {topTen.map((item, index) => {
+                        return (
+                          <div
+                            className='flex flex-row justify-between py-2.5'
+                            key={index}
+                          >
+                            <div className='flex flex-row'>
+                              <div
+                                className='text-sm w-8 text-center font-bold'
+                                style={{
+                                  color:
+                                    index == 0
+                                      ? 'rgba(0, 106, 178, 1)'
+                                      : index == 1
+                                      ? 'rgba(0, 133, 224, 1)'
+                                      : index == 2
+                                      ? 'rgba(96, 191, 255, 1)'
+                                      : 'rgba(156, 156, 156, 1)',
+                                }}
+                              >
+                                {index + 1}
+                              </div>
+                              <div className='text-sm'>{item.name}</div>
+                            </div>
+                            <div
+                              className='text-xs'
+                              style={{ color: 'rgba(156, 156, 156, 1)' }}
+                            >
+                              {item.type}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+            </div>
+            <div className='flex-row flex md:hidden'>
+              <Image
+                className='cursor-pointer'
+                src={HistoryIcon}
+                alt='search'
+                width={30}
+              />
+              <div className='flex items-center px-0'>
+                <div className='h-4' />
+              </div>
+              <div className='flex flex-row cursor-pointer'>
+                <Image
+                  className='mx-2'
+                  src={PhoneIcon}
+                  alt='search'
+                  width={14}
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            className='grow flex items-center justify-end'
+            ref={containerRef}
+          >
+            {visibleItems?.map((navItem, index) => {
+              return (
+                <div
+                  className='w-14 flex flex-col items-center cursor-pointer'
+                  id={navItem.id}
+                  key={index}
+                  onClick={() => {
+                    handleClick(navItem.id);
+                  }}
+                >
+                  <span
+                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                      selectedMenu.id === navItem.id
+                        ? 'text-blue-500'
+                        : 'text-white'
+                    }`}
+                  >
+                    {navItem.name}
+                  </span>
+                  {selectedMenu.id === navItem.id ? (
+                    <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
+                  ) : null}
+                </div>
+              );
+            })}
+            {hiddenItems.length > 0 && (
+              <div className='w-14 flex flex-col items-center cursor-pointer'>
+                <div className='relative' ref={dropdownMoreRef}>
+                  <button onClick={handleOpenMore}>更多</button>
+                  {openMore ? (
+                    <div className='absolute z-10 flex flex-col md:items-center items-end md:-left-12 pt-1 right-0'>
+                      <div
+                        style={{
+                          width: 0,
+                          height: 0,
+                          top: '-10px',
+                          borderLeft: '10px solid transparent',
+                          borderRight: '10px solid transparent',
+                          borderBottom: '10px solid rgba(29, 32, 35, 0.88)',
+                        }}
+                      />
+                      <div
+                        className='py-3 flex flex-col md:rounded-md rounded-b-lg rounded-tl-lg'
+                        style={{ backgroundColor: 'rgba(29, 32, 35, 0.88)' }}
+                      >
+                        {hiddenItems?.map((navItem, index) => {
+                          return (
+                            <div
+                              className='w-32 flex flex-col cursor-pointer py-2 items-center'
+                              id={navItem.id}
+                              key={index}
+                              onClick={() => {
+                                handleClick(navItem.id);
+                                setOpenMore(!openMore);
+                              }}
+                            >
+                              <span
+                                className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                                  selectedMenu.id === navItem.id
+                                    ? 'text-blue-500'
+                                    : 'text-white'
+                                }`}
+                              >
+                                {navItem.name}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ) : null}
                 </div>
               </div>
-            ) : null}
+            )}
           </div>
-        </div>
-      </div>
-      <div className='grow flex items-center justify-end' ref={containerRef}>
-        {visibleItems?.map((navItem, index) => {
-          return (
-            <div
-              className='w-14 flex flex-col items-center cursor-pointer'
-              id={navItem.id}
-              key={index}
-              onClick={() => {
-                handleClick(navItem.id);
-              }}
-            >
-              <span
-                className={`hover:text-blue-500 transition-colors duration-300 truncate ${
-                  selectedMenu.id === navItem.id
-                    ? 'text-blue-500'
-                    : 'text-white'
-                }`}
-              >
-                {navItem.name}
-              </span>
-              {selectedMenu.id === navItem.id ? (
-                <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
-              ) : null}
+          <div className='flex-row hidden md:flex'>
+            <Image
+              className='cursor-pointer'
+              src={HistoryIcon}
+              alt='search'
+              width={30}
+            />
+            <div className='flex items-center px-2'>
+              <div className='border-l-2 border-white h-4' />
             </div>
-          );
-        })}
-        {hiddenItems.length > 0 && (
-          <div className='w-14 flex flex-col items-center cursor-pointer'>
-            <div className='relative' ref={dropdownMoreRef}>
-              <button onClick={handleOpenMore}>更多</button>
-              {openMore ? (
-                <div className='absolute z-10 flex flex-col items-center -left-12 pt-1'>
-                  <div
-                    style={{
-                      width: 0,
-                      height: 0,
-                      top: '-10px',
-                      borderLeft: '10px solid transparent',
-                      borderRight: '10px solid transparent',
-                      borderBottom: '10px solid rgba(29, 32, 35, 0.88)',
-                    }}
-                  />
-                  <div
-                    className='py-3 flex flex-col rounded-md'
-                    style={{ backgroundColor: 'rgba(29, 32, 35, 0.88)' }}
-                  >
-                    {hiddenItems?.map((navItem, index) => {
-                      return (
-                        <div
-                          className='w-32 flex flex-col cursor-pointer py-2 items-center'
-                          id={navItem.id}
-                          key={index}
-                          onClick={() => {
-                            handleClick(navItem.id);
-                            setOpenMore(!openMore);
-                          }}
-                        >
-                          <span
-                            className={`hover:text-blue-500 transition-colors duration-300 truncate ${
-                              selectedMenu.id === navItem.id
-                                ? 'text-blue-500'
-                                : 'text-white'
-                            }`}
-                          >
-                            {navItem.name}
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              ) : null}
+            <div className='flex flex-row cursor-pointer'>
+              <Image className='mx-2' src={PhoneIcon} alt='search' width={14} />
+              <div className='flex items-center'>APP</div>
             </div>
           </div>
-        )}
-      </div>
-      <div className='flex flex-row cursor-pointer'>
-        <Image
-          className='cursor-pointer'
-          src={HistoryIcon}
-          alt='search'
-          width={30}
-        />
-        <div className='flex items-center px-2'>
-          <div className='border-l-2 border-white h-4' />
-        </div>
-        <div className='flex flex-row cursor-pointer'>
-          <Image className='mx-2' src={PhoneIcon} alt='search' width={14} />
-          <div className='flex items-center'>APP</div>
         </div>
       </div>
     </div>
