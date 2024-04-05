@@ -17,6 +17,7 @@ import { isWeb } from '@/util/common';
 export const RightBetCartWidth = 'w-[32rem]';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
+import { Carousel } from '@/components/carousel/carousel';
 
 
 const getHeaderMenuSelected = (state) => state.headerMenuSelected;
@@ -27,6 +28,7 @@ export default function Home() {
   const pathname = usePathname();
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
+  const [carousel, setCarousel] = useState([]);
   const selectedMenu = useSelector(getHeaderMenuSelected);
 
   const getTypePage = async (idValue) => {
@@ -45,12 +47,13 @@ export default function Home() {
     setLoading(true);
     getTypePage(selectedMenu.id).then((data) => {
       setCategories(data.categories);
+      setCarousel(data.carousel);
       setLoading(false);
     });
   }, [selectedMenu]);
 
   return (
-    <>
+    <div className='flex flex-1 flex-col'>
       <div style={{ width: '100%' }}>
         {/* <div className='flex flex-[1_0_0] overflow-y-auto min-y-0 pt-6 flex-col bg-transparent'> */}
         {loading ? (
@@ -59,6 +62,7 @@ export default function Home() {
           </div>
         ) : (
           <div style={{ height: 'calc(100vh - 98px)', overflowY: 'auto' }}>
+            <Carousel carouselItems={carousel}/>
             {categories != [] &&
               categories?.map((category, idx) => {
                 return (
@@ -85,6 +89,6 @@ export default function Home() {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
