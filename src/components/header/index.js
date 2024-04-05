@@ -156,15 +156,13 @@ const Header = () => {
   const calculateItemsVisibility = () => {
     if (containerRef.current) {
       const containerWidth = containerRef.current.offsetWidth;
-      const itemWidth = 57; // Assuming each item has a fixed width
-
+      const itemWidth = 56; // Assuming each item has a fixed width
       const maxVisibleItems =
         Math.floor(containerWidth / itemWidth) < headerMenu.headerMenu?.length
           ? Math.floor(containerWidth / itemWidth) - 1 <= 0
             ? 0
             : Math.floor(containerWidth / itemWidth) - 1
-          : Math.floor(containerWidth / itemWidth);
-
+          : headerMenu.headerMenu?.length;
       setVisibleItems(headerMenu.headerMenu?.slice(0, maxVisibleItems));
       setHiddenItems(headerMenu.headerMenu?.slice(maxVisibleItems));
     }
@@ -239,16 +237,16 @@ const Header = () => {
       className={
         pathname.startsWith('/play/')
           ? 'w-full z-20 bg-gradient-to-b from-black from-15%'
-          : 'absolute z-10 w-full bg-gradient-to-b from-black from-15%'
+          : 'md:absolute z-10 w-full bg-gradient-to-b from-black from-15%'
       }
     >
       <div className='container flex py-3 mx-auto'>
-        <div className='flex flex-1  flex-col md:flex-row'>
-          <div className='flex-1 flex gap-x-5 justify-between'>
-            <div className='flex justify-between'>
-              <Image alt='鲨鱼影视' src={Logo} style={{ minWidth: '100px' }} />
+        <div className='gap-y-2 flex-col w-full md:flex-row flex'>
+          <div className='flex-1 flex gap-x-2 md:justify-start'>
+            <div className='flex justify-between w-24 md:w-28'>
+              <Image alt='鲨鱼影视' src={Logo} />
             </div>
-            <div className='flex flex-1 items-center'>
+            <div className='items-center'>
               <div ref={dropdownSearchRef}>
                 <div className='relative'>
                   <input
@@ -256,7 +254,7 @@ const Header = () => {
                     placeholder='输入搜索关键词'
                     value={value}
                     onChange={handleChange}
-                    className='flex border-0 border-gray-300 text-white rounded-md pl-4 pr-10 py-2 focus:outline-none'
+                    className='border-0 border-gray-300 text-white rounded-md pl-4 pr-10 py-2 focus:outline-none'
                     style={{ backgroundColor: 'rgba(255, 255, 255, 0.08)' }}
                     onClick={handleOpenSearch}
                   />
@@ -268,7 +266,7 @@ const Header = () => {
                   />
                 </div>
                 {openSearch ? (
-                  <div className='absolute z-10 flex flex-col items-center pt-1 w-80 '>
+                  <div className='absolute flex flex-col items-center pt-1 md:w-80 z-10'>
                     <div
                       className='py-3 px-4 flex flex-col rounded-md w-full'
                       style={{ backgroundColor: 'rgba(29, 32, 35, 0.88)' }}
@@ -361,12 +359,13 @@ const Header = () => {
           </div>
           <div
             className='grow flex items-center justify-end'
+            style={{ maxWidth: `${headerMenu.headerMenu?.length * 56}px` }}
             ref={containerRef}
           >
             {visibleItems?.map((navItem, index) => {
               return (
                 <div
-                  className='w-14 flex flex-col items-center cursor-pointer'
+                  className='flex flex-1 flex-col items-center cursor-pointer'
                   id={navItem.id}
                   key={index}
                   onClick={() => {
@@ -393,7 +392,7 @@ const Header = () => {
                 <div className='relative' ref={dropdownMoreRef}>
                   <button onClick={handleOpenMore}>更多</button>
                   {openMore ? (
-                    <div className='absolute z-10 flex flex-col md:items-center items-end md:-left-12 pt-1 right-0'>
+                    <div className='absolute flex flex-col md:items-center items-end md:-left-12 pt-1 right-0'>
                       <div
                         style={{
                           width: 0,
