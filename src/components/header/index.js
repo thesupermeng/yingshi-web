@@ -1,28 +1,17 @@
 'use client';
-import useUser from '@/hook/user/useUser';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  hideRightBarContent,
-  setProfileModal,
-  showRightBarContent,
-} from '@/store/common';
 import Image from 'next/image';
-import { ProfileModalType } from '../profileModal';
-import { RightSidebarContantTypes } from '../rightSideMenu';
-import HeaderBetSlip from './headerBetSlip';
-import Profile from './profile';
-import Wallet from './wallet';
 import { useTranslation } from 'next-i18next';
 import {
-  EastRichRedBlackLogo,
-  EastRichWhiteRedText,
   HistoryIcon,
   Logo,
   PhoneIcon,
   searchIcon,
+  moreIcon,
+  EmptyData,
 } from '@/asset/icons';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { use, useEffect, useRef, useState } from 'react';
 import { YingshiApi } from '@/util/YingshiApi';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { LoadingPage } from '@/components/loading';
@@ -51,81 +40,15 @@ const Header = () => {
 
   const router = useRouter();
   const pathname = usePathname();
-  const [value, setValue] = useState('');
+  const [searchInput, setSearchInput] = useState('');
   const [loading, setLoading] = useState(true);
   const [openMore, setOpenMore] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
-
-  let searchHistory = [
-    {
-      id: 1,
-      name: '海贼王',
-    },
-    {
-      id: 2,
-      name: '名侦探柯南',
-    },
-    {
-      id: 3,
-      name: '王牌御史',
-    },
-    {
-      id: 4,
-      name: '动漫',
-    },
-  ];
-  let topTen = [
-    {
-      id: 1,
-      name: '名侦探柯南',
-      type: '动漫',
-    },
-    {
-      id: 2,
-      name: '海贼王',
-      type: '动漫',
-    },
-    {
-      id: 3,
-      name: '王牌御史',
-      type: '动漫',
-    },
-    {
-      id: 4,
-      name: '狂飙',
-      type: '电影',
-    },
-    {
-      id: 5,
-      name: '子弹列车',
-      type: '电影',
-    },
-    {
-      id: 6,
-      name: '阿凡达2:水之道',
-      type: '电影',
-    },
-    {
-      id: 7,
-      name: '电锯人',
-      type: '动漫',
-    },
-    {
-      id: 8,
-      name: '妖精的尾巴',
-      type: '动漫',
-    },
-    {
-      id: 9,
-      name: '家庭教师',
-      type: '动漫',
-    },
-    {
-      id: 10,
-      name: '犬夜叉',
-      type: '动漫',
-    },
-  ];
+  const [searchHistoryList, setSearchHistoryList] = useState([]);
+  const [topTenList, setTopTenList] = useState([]);
+  const [searchingList, setSearchList] = useState([]);
+  const [timeoutId, setTimeoutId] = useState(null);
+  const [loadingSearching, setLoadingSearching] = useState(false);
 
   const handleOpenMore = () => {
     setOpenMore(!openMore);
@@ -136,12 +59,90 @@ const Header = () => {
   };
 
   const handleChange = (event) => {
+    setLoadingSearching(true);
     const newValue = event.target.value;
-    setValue(newValue);
+    setSearchInput(newValue);
+
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+
+    // Set a new timeout to call the function after 3 seconds
+    const newTimeoutId = setTimeout(async () => {
+      // Call your function here
+      // const encodedData = encodeURIComponent(newValue);
+      // console.log(encodedData)
+      if (newValue !== '') {
+        const res = await getSearchingList(newValue);
+        console.log(res);
+        setSearchList(res.List);
+        setLoadingSearching(false);
+      }
+    }, 3000);
+
+    // Update the timeoutId state
+    setTimeoutId(newTimeoutId);
+  };
+
+  const handleSearch = () => {
+    let searchHistoryData = JSON.parse(
+      localStorage.getItem('searchHistoryList')
+    );
+
+    if (searchHistoryData != null) {
+      if (searchHistoryData.indexOf(searchInput) == -1) {
+        searchHistoryData.push(searchInput);
+      }
+
+      if (searchHistoryData.length > 10) {
+        searchHistoryData.splice(0, 1);
+        console.log(searchHistoryData);
+      }
+    } else {
+      searchHistoryData = [searchInput];
+    }
+
+    localStorage.setItem(
+      'searchHistoryList',
+      JSON.stringify(searchHistoryData)
+    );
+    setSearchHistoryList(JSON.parse(localStorage.getItem('searchHistoryList')));
+  };
+
+  const handleClearSearchHistory = () => {
+    localStorage.removeItem('searchHistoryList');
+    setSearchHistoryList([]);
   };
 
   const getTopNav = async () => {
     return YingshiApi(URL_YINGSHI_VOD.homeGetNav, {}, { method: 'GET' });
+  };
+
+  const getTopTenList = async () => {
+    return YingshiApi(
+      URL_YINGSHI_VOD.topTenList,
+      {
+        // TODO, temp hardcode
+        id: 1,
+        appName: 'E7%88%B1%E9%9F%A9%E5%89%A7TV',
+        platform: 'ANDROID',
+        channelId: 'GOOGLE_PLAY',
+        ip: '211.24.92.4',
+      },
+      { method: 'GET' }
+    );
+  };
+
+  const getSearchingList = async (value) => {
+    return YingshiApi(
+      URL_YINGSHI_VOD.searchingList,
+      {
+        wd: value,
+        limit: 35,
+        page: 1,
+      },
+      { method: 'GET' }
+    );
   };
 
   const handleClick = (value) => {
@@ -169,16 +170,27 @@ const Header = () => {
   };
 
   useEffect(() => {
+    const list = JSON.parse(localStorage.getItem('searchHistoryList'));
+    if (list) {
+      setSearchHistoryList(list);
+    }
+  }, []);
+
+  useEffect(() => {
     setLoading(true);
     // Simulating asynchronous data fetching
     const fetchData = async () => {
-      let data = await getTopNav();
-      data.push({
+      let menuItem = await getTopNav();
+      const topTenItem = await getTopTenList();
+
+      setTopTenList(topTenItem.vod_list);
+
+      menuItem.push({
         id: 99,
         name: '播单',
       });
-      dispatch(setHeaderMenu(data));
-      dispatch(setSelectedId(data[0].id));
+      dispatch(setHeaderMenu(menuItem));
+      dispatch(setSelectedId(menuItem[0].id));
       setLoading(false);
     };
 
@@ -244,94 +256,142 @@ const Header = () => {
         <div className='gap-y-2 flex-col w-full md:flex-row flex'>
           <div className='flex-1 flex gap-x-2 md:justify-start'>
             <div className='flex justify-between w-24 md:w-28'>
-              <Image alt='鲨鱼影视' src={Logo} />
+              <Image alt='鲨鱼影视' src={Logo} style={{ minWidth: '96px' }} />
             </div>
-            <div className='items-center'>
-              <div ref={dropdownSearchRef}>
-                <div className='relative'>
+            <div className='items-center flex flex-1 md:flex-none'>
+              <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>
+                <div className='relative flex flex-1 md:flex-none'>
                   <input
                     type='text'
                     placeholder='输入搜索关键词'
-                    value={value}
+                    value={searchInput}
                     onChange={handleChange}
-                    className='border-0 border-gray-300 text-white rounded-md pl-4 pr-10 py-2 focus:outline-none'
+                    className='border-0 border-gray-300 text-white rounded-md pl-4 pr-10 py-2 focus:outline-none w-full md:w-60'
                     style={{ backgroundColor: 'rgba(255, 255, 255, 0.08)' }}
                     onClick={handleOpenSearch}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') handleSearch();
+                    }}
                   />
                   <Image
                     className='h-6 w-6 absolute right-3 top-2/4 transform -translate-y-2/4 text-gray-400'
                     src={searchIcon}
                     alt='search'
                     width={20}
+                    onClick={handleSearch}
                   />
                 </div>
                 {openSearch ? (
-                  <div className='absolute flex flex-col items-center pt-1 md:w-80 z-10'>
-                    <div
-                      className='py-3 px-4 flex flex-col rounded-md w-full'
-                      style={{ backgroundColor: 'rgba(29, 32, 35, 0.88)' }}
-                    >
-                      <div className='flex flex-row justify-between items-center pb-2'>
-                        <div className='text-sm'>历史搜索</div>
-                        <div
-                          className='text-xs'
-                          style={{ color: 'rgba(156, 156, 156, 1)' }}
-                        >
-                          清除
-                        </div>
-                      </div>
-                      <div className='flex flex-wrap py-2 gap-2'>
-                        {searchHistory.map((item, index) => {
-                          return (
-                            <div
-                              className='py-1 px-2 rounded-lg'
-                              style={{
-                                background: 'rgba(255, 255, 255, 0.06)',
-                                color: 'rgba(156, 156, 156, 1)',
-                              }}
-                              key={index}
-                            >
-                              {item.name}
-                            </div>
-                          );
-                        })}
-                      </div>
-                      <div className='flex flex-row justify-between'>
-                        <div className='text-sm'>热搜总榜</div>
-                      </div>
-                      {topTen.map((item, index) => {
-                        return (
-                          <div
-                            className='flex flex-row justify-between py-2.5'
-                            key={index}
-                          >
-                            <div className='flex flex-row'>
+                  <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100%_-_52px)] z-10 left-0 md:left-auto md:w-96 md:h-[500px]'>
+                    <div className='py-3 px-4 flex flex-col md:rounded-md w-full h-full overflow-scroll bg-[#1d2023] md:bg-[#1d2023e0] md:w-96 md:h-[500px]'>
+                      {!searchInput ? (
+                        !loadingSearching ? (
+                          <LoadingPage full={false} />
+                        ) : searchingList !== null ? (
+                          searchingList.map((item, index) => {
+                            return (
                               <div
-                                className='text-sm w-8 text-center font-bold'
-                                style={{
-                                  color:
-                                    index == 0
-                                      ? 'rgba(0, 106, 178, 1)'
-                                      : index == 1
-                                      ? 'rgba(0, 133, 224, 1)'
-                                      : index == 2
-                                      ? 'rgba(96, 191, 255, 1)'
-                                      : 'rgba(156, 156, 156, 1)',
+                                className='flex flex-row justify-between py-2.5'
+                                key={index}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setOpenSearch(false);
+                                  setSearchInput('');
+                                  router.push(`/play/${item.vod_id}`);
                                 }}
                               >
-                                {index + 1}
+                                <div className='flex flex-row'>
+                                  <div className='text-sm'>{item.vod_name}</div>
+                                </div>
                               </div>
-                              <div className='text-sm'>{item.name}</div>
-                            </div>
-                            <div
-                              className='text-xs'
-                              style={{ color: 'rgba(156, 156, 156, 1)' }}
-                            >
-                              {item.type}
-                            </div>
+                            );
+                          })
+                        ) : (
+                          <div className='flex items-center flex-col'>
+                            <Image
+                              className='mx-2'
+                              src={EmptyData}
+                              alt='empty'
+                              width={50}
+                            />
+                            <span>暂无播单</span>
                           </div>
-                        );
-                      })}
+                        )
+                      ) : (
+                        <>
+                          {searchHistoryList.length > 0 ? (
+                            <div>
+                              <div className='flex flex-row justify-between items-center pb-2'>
+                                <div className='text-sm'>历史搜索</div>
+                                <div
+                                  className='text-xs'
+                                  style={{ color: 'rgba(156, 156, 156, 1)' }}
+                                  onClick={handleClearSearchHistory}
+                                >
+                                  清除
+                                </div>
+                              </div>
+                              <div className='flex flex-wrap py-2 gap-2'>
+                                {searchHistoryList.map((item, index) => {
+                                  return (
+                                    <div
+                                      className='py-1 px-2 rounded-lg'
+                                      style={{
+                                        background: 'rgba(255, 255, 255, 0.06)',
+                                        color: 'rgba(156, 156, 156, 1)',
+                                      }}
+                                      key={index}
+                                    >
+                                      {item}
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          ) : null}
+                          <div className='flex flex-row justify-between'>
+                            <div className='text-sm'>热搜总榜</div>
+                          </div>
+                          {topTenList.map((item, index) => {
+                            return (
+                              <div
+                                className='flex flex-row justify-between py-2.5'
+                                key={index}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setOpenSearch(false);
+                                  router.push(`/play/${item.vod_id}`);
+                                }}
+                              >
+                                <div className='flex flex-row'>
+                                  <div
+                                    className='text-sm w-8 text-center font-bold'
+                                    style={{
+                                      color:
+                                        index == 0
+                                          ? 'rgba(0, 106, 178, 1)'
+                                          : index == 1
+                                          ? 'rgba(0, 133, 224, 1)'
+                                          : index == 2
+                                          ? 'rgba(96, 191, 255, 1)'
+                                          : 'rgba(156, 156, 156, 1)',
+                                    }}
+                                  >
+                                    {index + 1}
+                                  </div>
+                                  <div className='text-sm'>{item.vod_name}</div>
+                                </div>
+                                <div
+                                  className='text-xs'
+                                  style={{ color: 'rgba(156, 156, 156, 1)' }}
+                                >
+                                  {item.type_name}
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </>
+                      )}
                     </div>
                   </div>
                 ) : null}
@@ -341,19 +401,14 @@ const Header = () => {
               <Image
                 className='cursor-pointer'
                 src={HistoryIcon}
-                alt='search'
+                alt='history'
                 width={30}
               />
               <div className='flex items-center px-0'>
                 <div className='h-4' />
               </div>
               <div className='flex flex-row cursor-pointer'>
-                <Image
-                  className='mx-2'
-                  src={PhoneIcon}
-                  alt='search'
-                  width={14}
-                />
+                <Image className='mx-2' src={PhoneIcon} alt='app' width={14} />
               </div>
             </div>
           </div>
@@ -390,9 +445,20 @@ const Header = () => {
             {hiddenItems.length > 0 && (
               <div className='w-14 flex flex-col items-center cursor-pointer'>
                 <div className='relative' ref={dropdownMoreRef}>
-                  <button onClick={handleOpenMore}>更多</button>
+                  <button
+                    onClick={handleOpenMore}
+                    className='flex flex-row items-center'
+                  >
+                    <span>更多</span>
+                    <Image
+                      className='mx-1'
+                      alt='more'
+                      src={moreIcon}
+                      width={14}
+                    />
+                  </button>
                   {openMore ? (
-                    <div className='absolute flex flex-col md:items-center items-end md:-left-12 pt-1 right-0'>
+                    <div className='absolute flex flex-col md:items-center items-end md:-left-2 pt-1 right-0'>
                       <div
                         style={{
                           width: 0,
@@ -441,14 +507,14 @@ const Header = () => {
             <Image
               className='cursor-pointer'
               src={HistoryIcon}
-              alt='search'
+              alt='history'
               width={30}
             />
             <div className='flex items-center px-2'>
               <div className='border-l-2 border-white h-4' />
             </div>
             <div className='flex flex-row cursor-pointer'>
-              <Image className='mx-2' src={PhoneIcon} alt='search' width={14} />
+              <Image className='mx-2' src={PhoneIcon} alt='app' width={14} />
               <div className='flex items-center'>APP</div>
             </div>
           </div>
