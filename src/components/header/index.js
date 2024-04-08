@@ -284,8 +284,8 @@ const Header = () => {
                 {openSearch ? (
                   <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100%_-_52px)] z-10 left-0 md:left-auto md:w-96 md:h-[500px]'>
                     <div className='py-3 px-4 flex flex-col md:rounded-md w-full h-full overflow-scroll bg-[#1d2023] md:bg-[#1d2023e0] md:w-96 md:h-[500px]'>
-                      {!searchInput ? (
-                        !loadingSearching ? (
+                      {searchInput ? (
+                        loadingSearching ? (
                           <LoadingPage full={false} />
                         ) : searchingList !== null ? (
                           searchingList.map((item, index) => {
