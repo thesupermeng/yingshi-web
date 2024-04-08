@@ -114,7 +114,7 @@ export default function RootLayout({ children }) {
           <H5Only>
             {/* w-full */}
             <Header />
-            <div className='h-full relative flex flex-1 flex-col justify-start overflow-auto bg-sideMenu container'>
+            <div className='h-full relative flex flex-1 flex-col justify-start overflow-auto bg-sideMenu'>
               {/* <div className='flex flex-1 flex-col'>
                 <div className='flex flex-col flex-[1_0_0] overflow-y-auto bg-[#121212]'> */}
               {children}
