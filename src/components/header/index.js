@@ -8,7 +8,8 @@ import {
   PhoneIcon,
   searchIcon,
   moreIcon,
-  EmptyData,
+  searchEmptyIcon,
+  leftArrow,
 } from '@/asset/icons';
 import { usePathname, useRouter } from 'next/navigation';
 import { use, useEffect, useRef, useState } from 'react';
@@ -78,7 +79,7 @@ const Header = () => {
         setSearchList(res.List);
         setLoadingSearching(false);
       }
-    }, 3000);
+    }, 2000);
 
     // Update the timeoutId state
     setTimeoutId(newTimeoutId);
@@ -149,6 +150,8 @@ const Header = () => {
     dispatch(setSelectedId(value));
     if (value == 99) {
       router.push('/topic');
+    }else if(value == 999){
+      router.push('/filmLibrary');
     } else {
       router.push('/');
     }
@@ -184,11 +187,15 @@ const Header = () => {
       const topTenItem = await getTopTenList();
 
       setTopTenList(topTenItem.vod_list);
-
+      console.log(menuItem)
       menuItem.push({
         id: 99,
         name: '播单',
       });
+      menuItem.push({
+        id: 999,
+        name: '片库',
+      })
       dispatch(setHeaderMenu(menuItem));
       dispatch(setSelectedId(menuItem[0].id));
       setLoading(false);
@@ -255,12 +262,31 @@ const Header = () => {
       <div className='container flex py-3 mx-auto'>
         <div className='gap-y-2 flex-col w-full md:flex-row flex'>
           <div className='flex-1 flex gap-x-2 md:justify-start'>
-            <div className='flex justify-between w-24 md:w-28'>
+            <div
+              className={`flex justify-between w-24 md:w-28 ${
+                openSearch ? 'hidden md:flex' : ''
+              }`}
+            >
               <Image alt='鲨鱼影视' src={Logo} style={{ minWidth: '96px' }} />
             </div>
             <div className='items-center flex flex-1 md:flex-none'>
               <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>
                 <div className='relative flex flex-1 md:flex-none'>
+                  <div
+                    className={`flex justify-between pr-2 ${
+                      openSearch ? 'flex md:hidden' : 'hidden'
+                    }`}
+                  >
+                    <Image
+                      alt='back'
+                      src={leftArrow}
+                      style={{ width: '25px' }}
+                      onClick={() => {
+                        setOpenSearch(false);
+                        setSearchInput('');
+                      }}
+                    />
+                  </div>
                   <input
                     type='text'
                     placeholder='输入搜索关键词'
@@ -287,7 +313,7 @@ const Header = () => {
                       {searchInput ? (
                         loadingSearching ? (
                           <LoadingPage full={false} />
-                        ) : searchingList !== null ? (
+                        ) : searchingList.length > 0 ? (
                           searchingList.map((item, index) => {
                             return (
                               <div
@@ -307,12 +333,12 @@ const Header = () => {
                             );
                           })
                         ) : (
-                          <div className='flex items-center flex-col'>
+                          <div className='flex items-center justify-center flex-col h-full'>
                             <Image
                               className='mx-2'
-                              src={EmptyData}
+                              src={searchEmptyIcon}
                               alt='empty'
-                              width={50}
+                              width={120}
                             />
                             <span>暂无播单</span>
                           </div>
@@ -397,20 +423,27 @@ const Header = () => {
                 ) : null}
               </div>
             </div>
-            <div className='flex-row flex md:hidden'>
-              <Image
-                className='cursor-pointer'
-                src={HistoryIcon}
-                alt='history'
-                width={30}
-              />
-              <div className='flex items-center px-0'>
-                <div className='h-4' />
+            {!openSearch ? (
+              <div className='flex-row flex md:hidden'>
+                <Image
+                  className='cursor-pointer'
+                  src={HistoryIcon}
+                  alt='history'
+                  width={30}
+                />
+                <div className='flex items-center px-0'>
+                  <div className='h-4' />
+                </div>
+                <div className='flex flex-row cursor-pointer'>
+                  <Image
+                    className='mx-2'
+                    src={PhoneIcon}
+                    alt='app'
+                    width={15}
+                  />
+                </div>
               </div>
-              <div className='flex flex-row cursor-pointer'>
-                <Image className='mx-2' src={PhoneIcon} alt='app' width={14} />
-              </div>
-            </div>
+            ) : null}
           </div>
           <div
             className='grow flex items-center justify-end'
