@@ -35,6 +35,8 @@ export { default as ImportImg } from './ImportImg.svg';
 export { default as HistoryIcon } from './historyIcon.svg';
 export { default as PhoneIcon } from './phoneIcon.svg';
 export { default as moreIcon } from './more.svg';
+export { default as searchEmptyIcon } from './searchEmptyIcon.svg';
+export { default as leftArrow } from './leftArrow.svg';
 
 // profiles
 export { default as AnimationTick } from './profile/animationTick.gif';

@@ -87,9 +87,21 @@ export default function RootLayout({ children }) {
         }`}
       >
         <Providers>
-          <WEBOnly>
+        <div className='w-full h-screen flex flex-col'>
+              <Header />
+              <div className='h-full overflow-y-scroll flex flex-col'>
+                {children}
+                {/* </div> */}
+                {/* <H5Perpetual /> */}
+                {/* <LiveChat /> */}
+                {/* <H5LiveChat /> */}
+                {/* </div> */}
+                {/* </div> */}
+              </div>
+            </div>
+          {/* <WEBOnly>
             <div className='absolute top-0 bottom-0 left-0 right-0 bg-sideMenu container w-full '>
-              {/* <Announcement /> */}
+              <Announcement />
               <div className='flex flex-row h-[100vh] overflow-y-auto w-full'>
                 <div className='flex self-stretch flex-initial'>
                   <Sidebar />
@@ -101,31 +113,30 @@ export default function RootLayout({ children }) {
                   <div className='flex flex-1 bg-[#121212] overflow-x-auto mt-20 xl:mt-0'>
                     {children}
                   </div>
-                  {/* <div className='bg-[#121212] overflow-x-auto mt-20 xl:mt-0'>
+                  <div className='bg-[#121212] overflow-x-auto mt-20 xl:mt-0'>
                     {children}
-                  </div> */}
+                  </div> 
                 </div>
                 <RightSideMenu />
               </div>
             </div>
-            {/* <WebPerpetual /> */}
-            {/* <LiveChat /> */}
+            <WebPerpetual />
+            <LiveChat /> 
           </WEBOnly>
           <H5Only>
-            {/* w-full */}
-            <Header />
-            <div className='h-full relative flex flex-1 flex-col justify-start overflow-auto bg-sideMenu'>
-              {/* <div className='flex flex-1 flex-col'>
-                <div className='flex flex-col flex-[1_0_0] overflow-y-auto bg-[#121212]'> */}
-              {children}
-              {/* </div> */}
-              {/* <H5Perpetual /> */}
-              {/* <LiveChat /> */}
-              {/* <H5LiveChat /> */}
-              {/* </div> */}
+            <div className='w-full h-screen flex flex-col'>
+              <Header />
+              <div className='h-full overflow-y-scroll flex flex-col'>
+                {children}
+                {/* </div>
+                {/* <H5Perpetual />
+                {/* <LiveChat />
+                {/* <H5LiveChat />
+                {/* </div>
+                {/* </div>
+              </div>
             </div>
-            {/* <div className='h-[120dvh] bg-[#121212]'></div> */}
-          </H5Only>
+          </H5Only> */}
           {/* <ChatMessages />
           <NotifyMessages /> */}
         </Providers>
