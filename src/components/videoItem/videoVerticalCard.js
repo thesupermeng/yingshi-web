@@ -4,28 +4,37 @@ import { useRouter } from 'next/navigation';
 
 export const VideoVerticalCard = ({ vod }) => {
   const router = useRouter();
-
+  console.log(vod);
   return (
-    <>
-      <div className='relative flex w-full aspect-[530/726] overflow-hidden group mx-4 my-3 rounded-lg'>
-        <Image
-          placeholder='blur'
-          blurDataURL={vod.vod_pic}
-          onClick={(e) => {
-            e.preventDefault();
-            router.push(`/play/${vod.vod_id}`);
-          }}
-          alt='game'
-          src={vod.vod_pic}
-          fill
-          sizes='100%'
-          className='transition group-hover:scale-110 group-hover:opacity-50 group-hover:cursor-pointer'
-          style={{
-            objectFit: 'cover',
-          }}
-        />
+    <div className='flex flex-col items-center'>
+      <div className='relative flex w-full aspect-[530/726] group mx-4 my-3 rounded-lg'>
+        <div>
+          <Image
+            placeholder='blur'
+            blurDataURL={vod.vod_pic}
+            onClick={(e) => {
+              e.preventDefault();
+              router.push(`/play/${vod.vod_id}`);
+            }}
+            alt='game'
+            src={vod.vod_pic}
+            fill
+            sizes='100%'
+            className='rounded-lg transition group-hover:scale-150 
+            group-hover:cursor-pointer group-hover:rounded-none group-hover:z-10'
+            style={{
+              objectFit: 'cover',
+            }}
+          />
+          <div
+            className='flex m-1 p-1 rounded-md absolute right-1 bottom-1'
+            style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}
+          >
+            <span className='text-sm'>{vod.vod_remarks}</span>
+          </div>
+        </div>
       </div>
-      <div className='absolute right-3 top-3'>{/* <GameFav id={id} /> */}</div>
-    </>
+      <span className='text-center text-sm mt-3'>{vod.vod_name}</span>
+    </div>
   );
 };

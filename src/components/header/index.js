@@ -75,7 +75,6 @@ const Header = () => {
       // console.log(encodedData)
       if (newValue !== '') {
         const res = await getSearchingList(newValue);
-        console.log(res);
         setSearchList(res.List);
         setLoadingSearching(false);
       }
@@ -97,7 +96,6 @@ const Header = () => {
 
       if (searchHistoryData.length > 10) {
         searchHistoryData.splice(0, 1);
-        console.log(searchHistoryData);
       }
     } else {
       searchHistoryData = [searchInput];
@@ -187,7 +185,6 @@ const Header = () => {
       const topTenItem = await getTopTenList();
 
       setTopTenList(topTenItem.vod_list);
-      console.log(menuItem)
       menuItem.push({
         id: 99,
         name: '播单',
@@ -255,11 +252,11 @@ const Header = () => {
     <div
       className={
         pathname.startsWith('/play/')
-          ? 'w-full z-20 bg-gradient-to-b from-black from-15%'
-          : 'md:absolute z-10 w-full bg-gradient-to-b from-black from-15%'
+          ? 'w-screen z-20 bg-gradient-to-b from-black from-15%'
+          : 'md:absolute z-10 w-screen bg-gradient-to-b from-black from-15%'
       }
     >
-      <div className='container flex py-3 mx-auto'>
+      <div className='flex py-3 md:mx-20 mx-2.5'>
         <div className='gap-y-2 flex-col w-full md:flex-row flex'>
           <div className='flex-1 flex gap-x-2 md:justify-start'>
             <div
@@ -267,7 +264,7 @@ const Header = () => {
                 openSearch ? 'hidden md:flex' : ''
               }`}
             >
-              <Image alt='鲨鱼影视' src={Logo} style={{ minWidth: '96px' }} />
+              <Image alt='鲨鱼影视' src={Logo} />
             </div>
             <div className='items-center flex flex-1 md:flex-none'>
               <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>

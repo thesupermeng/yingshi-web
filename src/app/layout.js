@@ -113,18 +113,18 @@ export default function RootLayout({ children }) {
           </WEBOnly>
           <H5Only>
             {/* w-full */}
-            <Header />
-            <div className='h-full relative flex flex-1 flex-col justify-start overflow-auto bg-sideMenu'>
-              {/* <div className='flex flex-1 flex-col'>
-                <div className='flex flex-col flex-[1_0_0] overflow-y-auto bg-[#121212]'> */}
-              {children}
-              {/* </div> */}
-              {/* <H5Perpetual /> */}
-              {/* <LiveChat /> */}
-              {/* <H5LiveChat /> */}
-              {/* </div> */}
+            <div className='w-full h-screen flex flex-col'>
+              <Header />
+              <div className='h-full overflow-y-scroll flex flex-col'>
+                {children}
+                {/* </div> */}
+                {/* <H5Perpetual /> */}
+                {/* <LiveChat /> */}
+                {/* <H5LiveChat /> */}
+                {/* </div> */}
+                {/* </div> */}
+              </div>
             </div>
-            {/* <div className='h-[120dvh] bg-[#121212]'></div> */}
           </H5Only>
           {/* <ChatMessages />
           <NotifyMessages /> */}

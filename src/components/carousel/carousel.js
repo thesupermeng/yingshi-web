@@ -7,7 +7,7 @@ export const Carousel = ({ carouselItems }) => {
   useEffect(() => {
     const autoSwipeCarousel = setTimeout(() => {
       setCarouselIndex((prevIndex) => (prevIndex + 1) % carouselItems.length);
-    }, 2000);
+    }, 3000);
 
     return () => {
       clearTimeout(autoSwipeCarousel);
