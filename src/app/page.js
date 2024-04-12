@@ -75,7 +75,7 @@ export default function Home() {
                     >
                       {category.type_name}
                     </span>
-                    <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-4'>
+                    <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
                       {category.vod_list?.slice(0, 6).map((vod, i) => {
                         return <VideoVerticalCard vod={vod} key={i} />;
                       })}

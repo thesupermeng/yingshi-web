@@ -34,7 +34,7 @@ export const VideoVerticalCard = ({ vod }) => {
           </div>
         </div>
       </div>
-      <span className='text-center text-sm mt-3'>{vod.vod_name}</span>
+      <span className='text-center text-sm mx-1'>{vod.vod_name}</span>
     </div>
   );
 };
