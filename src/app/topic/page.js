@@ -12,14 +12,16 @@ import { YingshiApi } from '@/util/YingshiApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { debounce } from 'lodash';
+import { usePathname, useRouter } from 'next/navigation';
 
 import styles from './style.module.css';
 
 export default function Page({ params }) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [topicList, setTopicList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [stillCanLoad, setStillCanLoad] = useState(true);
+  let totalPage = 0 
   let loading = false;
 
   // useEffect(() => {
@@ -47,6 +49,20 @@ export default function Page({ params }) {
     }
   };
 
+
+  const router = useRouter()
+  const goToTopicDetails = (topic) => {
+
+    console.log(topic)
+    console.log(topic.topic_id)
+    const jsonString = JSON.stringify(topic);
+    // Store the stringified JSON object in sessionStorage
+    
+    localStorage.setItem('topicItem', jsonString);
+
+    router.push('/topic/' + topic.topic_id)
+  };
+
   const debouncedHandleScroll = debounce(handleScroll, 600);
   
   useEffect(() => {
@@ -58,18 +74,10 @@ export default function Page({ params }) {
 
   const getTopicList = async () => {
 
-
-
-
-    console.log('isLoading');
-    console.log(isLoading);
-
-
-
-    if (loading == true || !stillCanLoad) {
+    if (loading == true || !stillCanLoad || (currentPage > totalPage-1 && totalPage !=0)) {
       return
     }
-    setIsLoading(true);
+   
     loading = true;
     await new Promise((resolve) => setTimeout(resolve, 600));
     setCurrentPage(currentPage + 1);
@@ -83,26 +91,27 @@ export default function Page({ params }) {
     if (res.List) {
       let tempList = res.List;
 
-      if (currentPage == res.TotalPageCount) {
+      if(totalPage == 0)
+      {
+        totalPage = res.TotalPageCount
+      }
+
+      if (currentPage == totalPage) {
         setStillCanLoad(false);
+        setIsLoading(false);
+        return
       }
       console.log('111111');
 
-
-
-
       const combinedList = [...topicList, ...tempList];
    
-      
       console.log('combinedList');
       console.log(combinedList);
    
       setTopicList(prevTopicList => [...prevTopicList, ...tempList]);
 
-
-
       loading = false;
-      setIsLoading(false);
+    //  setIsLoading(false);
       console.log(topicList);
     }
     else
@@ -148,7 +157,7 @@ export default function Page({ params }) {
           {topicList.map((topic) => (
             <div className='col-4' key={topic.topic_id}>
               {/* Render topic details here */}
-              <div className='row topic-wrap'>
+              <div className='row topic-wrap' onClick={() => goToTopicDetails(topic)}>
                 <div className='col-12 mx-0 px-0'>
                   <div className='d-flex topic-card'>
                     <div className='col-4 px-0'>
