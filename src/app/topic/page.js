@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { debounce } from 'lodash';
 import { usePathname, useRouter } from 'next/navigation';
+import {Spinner} from './../../components/spinner'
 
 import styles from './style.module.css';
 
@@ -40,6 +41,7 @@ export default function Page({ params }) {
     const scrollY = window.scrollY;
     const windowHeight = window.innerHeight;
     const documentHeight = document.documentElement.scrollHeight;
+    console.log('000')
     if (scrollY + windowHeight >= documentHeight - 100) {
       // setCurrentPage(currentPage + 1);
 
@@ -108,10 +110,13 @@ export default function Page({ params }) {
       console.log('combinedList');
       console.log(combinedList);
    
-      setTopicList(prevTopicList => [...prevTopicList, ...tempList]);
-
+      // setTopicList(prevTopicList => [...prevTopicList, ...tempList]);
+      console.log('pre');
+      console.log(topicList);
+       setTopicList(combinedList)
       loading = false;
     //  setIsLoading(false);
+
       console.log(topicList);
     }
     else
@@ -196,15 +201,7 @@ export default function Page({ params }) {
       {/* loading spinner   */}
 
       {isLoading && (
-        <div className='d-flex container py-6 justify-center justify-items-center '>
-          <div className='row  '>
-            <img
-              alt='播单'
-              src='/img/loading-spinner.gif'
-              style={{ width: 130, height: 'auto' }}
-            />
-          </div>
-        </div>
+        <Spinner></Spinner>
       )}
     </>
   );
