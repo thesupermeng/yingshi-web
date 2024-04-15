@@ -75,7 +75,11 @@ const Header = () => {
       // console.log(encodedData)
       if (newValue !== '') {
         const res = await getSearchingList(newValue);
-        setSearchList(res.List);
+        if (res.List != null) {
+          setSearchList(res.List);
+        } else {
+          setSearchList([]);
+        }
         setLoadingSearching(false);
       }
     }, 2000);
@@ -85,6 +89,10 @@ const Header = () => {
   };
 
   const handleSearch = () => {
+    handleAddSearchHistory();
+  };
+
+  const handleAddSearchHistory = () => {
     let searchHistoryData = JSON.parse(
       localStorage.getItem('searchHistoryList')
     );
@@ -148,7 +156,7 @@ const Header = () => {
     dispatch(setSelectedId(value));
     if (value == 99) {
       router.push('/topic');
-    }else if(value == 999){
+    } else if (value == 999) {
       router.push('/filmLibrary');
     } else {
       router.push('/');
@@ -192,7 +200,7 @@ const Header = () => {
       menuItem.push({
         id: 999,
         name: '片库',
-      })
+      });
       dispatch(setHeaderMenu(menuItem));
       dispatch(setSelectedId(menuItem[0].id));
       setLoading(false);
@@ -320,6 +328,7 @@ const Header = () => {
                                   e.preventDefault();
                                   setOpenSearch(false);
                                   setSearchInput('');
+                                  handleAddSearchHistory();
                                   router.push(`/play/${item.vod_id}`);
                                 }}
                               >
