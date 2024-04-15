@@ -30,13 +30,14 @@ export const VodEpisodeList = ({
 
   return <div className="flex flex-col space-y-4" style={style}>
     <div className='relative'>
-      <div id="episodeGroup-selected" className={`${styles.radioOptionCard} ${styles.unselectedOptionCard}`} onClick={onEpisodeGroupDropBtnPress}>
+      <div id="episodeGroup-selected" style={{ width: 'fit-content' }} className={`${styles.radioOptionCard} ${styles.unselectedOptionCard}`} onClick={onEpisodeGroupDropBtnPress}>
         <label for="episodeGroup-selected" className="flex flex-row space-x-1">
-          <span className="text-lg">{episodeGroup.from}</span>
-          <span className="text-lg">-</span>
-          <span className="text-lg">{episodeGroup.to}</span>
-          <span className="text-lg">{t('episode')}</span>
+          <span className="text-md">{episodeGroup.from}</span>
+          <span className="text-md">-</span>
+          <span className="text-md">{episodeGroup.to}</span>
+          <span className="text-md">{t('集')}</span>
           <Image
+            style={{ paddingLeft: '4px' }}
             src={ArrowDownFillIcon}
             alt="Icon"
           />
@@ -48,10 +49,10 @@ export const VodEpisodeList = ({
           {episodeGroups.map((group, index) => (
             <li key={`key-episodeGroup-${index}`} id={`episodeGroup-${index}`} className={`${styles.radioOptionCard} ${episodeGroup === group ? styles.selectedOptionCard : styles.unselectedOptionCard}`} onClick={() => onEpisodeGroupPress(group)}>
               <label for={`episodeGroup-${index}`} className="flex flex-row space-x-1">
-                <span className="text-lg">{group.from}</span>
-                <span className="text-lg">-</span>
-                <span className="text-lg">{group.to}</span>
-                <span className="text-lg">{t('episode')}</span>
+                <span className="text-md">{group.from}</span>
+                <span className="text-md">-</span>
+                <span className="text-md">{group.to}</span>
+                <span className="text-md">{t('集')}</span>
               </label>
             </li>
           ))}
@@ -59,11 +60,11 @@ export const VodEpisodeList = ({
       }
     </div>
 
-    <ul className="grid grid-flow-row-dense grid-cols-2 gap-4 overflow-y-scroll">
+    <ul className="flex flex-column" style={{ flexWrap: 'wrap', overflowX: 'auto' }}>
       {vodSource?.vod_play_list?.urls?.map((episode) => (
-        <li key={`key-episode-${episode.nid}`} id={`episode-${episode.nid}`} className={`${styles.radioOptionCard} ${episodeSource.nid === episode.nid ? styles.selectedOptionCard : styles.unselectedOptionCard}`} onClick={() => onSelectEpisode(episode)}>
+        <li style={{ padding: '10px', margin: '4px', minWidth: '70px', justifyContent: 'center' }} key={`key-episode-${episode.nid}`} id={`episode-${episode.nid}`} className={`${styles.radioOptionCard} ${episodeSource.nid === episode.nid ? styles.selectedOptionCard : styles.unselectedOptionCard}`} onClick={() => onSelectEpisode(episode)}>
           <label for={`episode-${episode.nid}`}>
-            <div className="text-lg">{episode.name}</div>
+            <div className="text-sm">{episode.name}</div>
           </label>
         </li>
       ))}

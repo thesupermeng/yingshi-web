@@ -170,7 +170,7 @@ export const PlayVod = ({ vodId }) => {
                 onSelectEpisodeGroup={onSelectEpisodeGroup}
                 onSelectEpisode={onSelectEpisode}
                 style={{
-                  height: 300,
+                  maxHeight: 300,
                 }}
               />
             </div>
