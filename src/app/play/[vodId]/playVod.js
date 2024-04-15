@@ -90,6 +90,8 @@ export const PlayVod = ({ vodId }) => {
 
   const onSelectEpisodeGroup = (group) => {
     setEpisodeGroupSelected(group);
+    console.log("GORUPPP");
+    console.log(group);
   };
 
   const onSelectEpisode = (episode) => {
@@ -112,10 +114,10 @@ export const PlayVod = ({ vodId }) => {
   };
 
   return (
-    <div ref={domElementRef} className='w-[100%] py-2'>
+    <div ref={domElementRef} className='w-[85%] py-2'>
       {vod != null && (
         <div className='flex flex-row space-x-4'>
-          <div className='flex-1 w-9/12 space-y-4'>
+          <div className='flex-1 space-y-4' style={{ width: '78%' }}>
             <div className='aspect-[16/9]'>
               <Artplayer
                 className='aspect-[16/9]'
@@ -145,7 +147,7 @@ export const PlayVod = ({ vodId }) => {
             <AdsBanner />
           </div>
 
-          <div className='flex-col w-3/12 space-y-4'>
+          <div className='flex-col space-y-4' style={{ width: '22%' }}>
             <div className={`space-y-4 ${styles.vodMetaContainer}`}>
               <VodCard
                 imgSource={vod.vod_pic}
@@ -170,7 +172,7 @@ export const PlayVod = ({ vodId }) => {
                 onSelectEpisodeGroup={onSelectEpisodeGroup}
                 onSelectEpisode={onSelectEpisode}
                 style={{
-                  height: 300,
+                  maxHeight: 300,
                 }}
               />
             </div>

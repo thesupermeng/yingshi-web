@@ -89,7 +89,7 @@ export default function RootLayout({ children }) {
         <Providers>
         <div className='w-full h-screen flex flex-col'>
               <Header />
-              <div className='h-full overflow-y-scroll flex flex-col'>
+              <div className='h-full overflow-y-scroll flex flex-col' style={{ alignItems: 'center' }}>
                 {children}
                 {/* </div> */}
                 {/* <H5Perpetual /> */}
