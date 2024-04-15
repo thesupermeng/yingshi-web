@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 
 export const VideoVerticalCard = ({ vod }) => {
   const router = useRouter();
-  console.log(vod);
   return (
     <div className='flex flex-col items-center'>
       <div className='relative flex w-full aspect-[530/726] group mx-4 my-3 rounded-lg'>
