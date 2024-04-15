@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { usePathname, useParams } from 'next/navigation';
+import { usePathname, useParams ,useRouter } from 'next/navigation';
 import { useTranslation } from 'next-i18next';
 import React, { useEffect, useState } from 'react';
 import styles from './../style.module.css';
@@ -12,6 +12,7 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons'
 export default function Page() {
   const { topicId } = useParams();
   const [topicObj, setTopicObj] = useState(null);
+  const router = useRouter()
 
   const getTopicDetailsApi = async () => {
     return YingshiApi(
@@ -66,9 +67,11 @@ export default function Page() {
             <div className='row'>
               {topicObj.vod_list.map((vod) => (
                 <div className='col-6 mt-2 mb-2'>
-                <div className='topic-details-card'>
+                <div className='topic-details-card'     onClick={(e) => {
+              e.preventDefault();
+              router.push(`/play/${vod.vod_id}`);
+            }}>
 
-              
                   <div className='row '>
                     <div className='col-12'>
                       <div className='row'>
@@ -96,18 +99,14 @@ export default function Page() {
                           </div>
                           <div className='topic-details-title-sub text-secondary '>
                             {' '}
-                            主演: {vod.vod_actor}
+                            主演:            
+                                 {vod.vod_actor.length > 38 ? vod.vod_actor.substring(0, 35) + '...' : vod.vod_blurb}
                           </div>
                           <div className='topic-details-title-sub text-secondary '>
-                            {' '}
-                            {vod.vod_blurb}
+                          {vod.vod_blurb.length > 75 ? vod.vod_blurb.substring(0, 73) + '...' : vod.vod_blurb}
                           </div>
-
-
                           <button className='btn btn-topic-play'>
                           <FontAwesomeIcon icon={faPlay} />  <span className='ml-2'> 立即播放 </span>
-
-
                           </button>
                         </div>
                       </div>
