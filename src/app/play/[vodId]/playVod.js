@@ -32,6 +32,18 @@ export const PlayVod = ({ vodId }) => {
     );
   };
 
+  const getSuggestedVodType = async () => {
+    return YingshiApi(
+      URL_YINGSHI_VOD.searchingList,
+      {
+        category: vod?.vod_class?.split(",").shift(),
+        tid: vod?.type_id.toString() ?? "",
+        limit: 6,
+      },
+      { method: 'GET' }
+    );
+  }
+
   useEffect(() => {
     if (episodeSelected == null) {
       getVodDetails().then((data) => {
@@ -79,6 +91,13 @@ export const PlayVod = ({ vodId }) => {
       });
     }
   }, []);
+
+  useEffect(() => {
+    getSuggestedVodType().then((data) => {
+      console.log("ADAS");
+      console.log(data);
+    })
+  }, [vod])
 
   const onSelectSource = (source) => {
     setVodSourceSelected(source);

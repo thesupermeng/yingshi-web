@@ -22,8 +22,9 @@ export const ShareHorizontal = ({
     <span>{t('share')}:</span>
 
     <div className={`flex flex-1 space-x-2`}>
-      <div className="flex-1 min-w-[30px]">
+      <div className="">
         <Image
+          width={ '3px' }
           src={WhatsappIcon}
           alt="Icon"
           style={{
@@ -31,55 +32,55 @@ export const ShareHorizontal = ({
           }}
         />
       </div>
-      <div className="flex-1 min-w-[30px]">
+      <div className="">
         <Image
           src={MessengerIcon}
           alt="Icon"
         />
       </div>
-      <div className="flex-1 min-w-[30px]">
+      <div className="">
         <Image
           src={TelegramIcon}
           alt="Icon"
         />
       </div>
-      <div className="flex-1 min-w-[30px]">
+      <div className="">
         <Image
           src={LineIcon}
           alt="Icon"
         />
       </div>
-      <div className="flex-1 min-w-[30px]">
+      <div className="">
         <Image
           src={WechatIcon}
           alt="Icon"
         />
       </div>
-      <div className="flex-1 min-w-[30px]">
+      <div className="">
         <Image
           src={CameraIcon}
           alt="Icon"
         />
       </div>
-      <div className="flex-1 min-w-[30px]">
+      <div className="">
         <Image
           src={WeiboIcon}
           alt="Icon"
         />
       </div>
-      <div className="flex-1 min-w-[30px]">
+      <div className="">
         <Image
           src={QqIcon}
           alt="Icon"
         />
       </div>
-      <div className="flex-1 min-w-[30px]">
+      <div className="">
         <Image
           src={Facebook2Icon}
           alt="Icon"
         />
       </div>
-      <div className="flex-1 min-w-[30px]">
+      <div className="">
         <Image
           src={CopyLink2Icon}
           alt="Icon"
