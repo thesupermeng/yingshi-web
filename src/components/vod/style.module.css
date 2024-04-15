@@ -35,3 +35,9 @@
 .primaryText {
   color: #FAC33D;
 }
+
+.vodMetaContainer {
+  background-color: #1D2023 !important;
+  padding: 8px 10px;
+  border-radius: 12px;
+}

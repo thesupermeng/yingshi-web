@@ -112,7 +112,7 @@ export const PlayVod = ({ vodId }) => {
 
     setEpisodeSelected(vodSourceSelected?.vod_play_list?.urls[indexFound + 1]);
   };
-
+  
   return (
     <div ref={domElementRef} className='w-[85%] py-2'>
       {vod != null && (
@@ -138,11 +138,7 @@ export const PlayVod = ({ vodId }) => {
               className={'w-[80%]'}
             />
 
-            <div className={styles.vodMetaContainer}>
-              <VodContent vodContent={vod.vod_content} />
-            </div>
-
-            <AdsBanner />
+            <VodContent vodContent={vod.vod_content} vodEpisodeSelected={episodeSelected} vodEpisodeInfo={vod.vod_episode_info} />
 
             <AdsBanner />
           </div>
