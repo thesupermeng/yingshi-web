@@ -27,7 +27,7 @@ export const VodContent = ({
   }
 
   return <div className="space-y-4">
-    <span className="">{t('synopsis')}</span>
+    <span className="">{t('分集剧情')}</span>
     <p ref={qqqref} className={`${isCollapse ? 'line-clamp-2' : ''} text-white/75`}>{vodContent}</p>
 
     {isLineExceed &&

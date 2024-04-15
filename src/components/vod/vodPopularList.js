@@ -25,7 +25,7 @@ export const VodPopularList = () => {
     return YingshiApi(URL_YINGSHI_VOD.playlistGetTopicDetail + '?id=1', {}, { method: 'GET' });
   }
 
-  return <div className="p-2 space-y-4">
+  return <div className="p-4 space-y-4">
     <span className="text-lg">{topic?.topic_name ?? t('popularList')}</span>
 
     {topic?.vod_list?.map((vod, index) => (
@@ -38,8 +38,8 @@ export const VodPopularList = () => {
               ? 'text-yellow-500'
               : 'text-inherit'
         }>{index + 1}</span>
-        <span className="flex-1">{vod.vod_name}</span>
-        <span className="text-white/75 text-sm">{vod.type_name}</span>
+        <span className="text-sm flex-1">{vod.vod_name}</span>
+        <span className="text-xs text-white/75 text-sm">{vod.type_name}</span>
       </div>
     ))}
   </div>

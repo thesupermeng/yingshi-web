@@ -61,13 +61,15 @@ export const VodEpisodeList = ({
     </div>
 
     <ul className="flex flex-column" style={{ flexWrap: 'wrap', overflowX: 'auto' }}>
-      {vodSource?.vod_play_list?.urls?.map((episode) => (
-        <li style={{ padding: '10px', margin: '4px', minWidth: '70px', justifyContent: 'center' }} key={`key-episode-${episode.nid}`} id={`episode-${episode.nid}`} className={`${styles.radioOptionCard} ${episodeSource.nid === episode.nid ? styles.selectedOptionCard : styles.unselectedOptionCard}`} onClick={() => onSelectEpisode(episode)}>
-          <label for={`episode-${episode.nid}`}>
-            <div className="text-sm">{episode.name}</div>
-          </label>
-        </li>
-      ))}
+      {vodSource?.vod_play_list?.urls?.slice(episodeGroup.from - 1, episodeGroup.to).map((episode) => {
+        return (
+          <li style={{ padding: '10px', margin: '4px', minWidth: '70px', justifyContent: 'center' }} key={`key-episode-${episode.nid}`} id={`episode-${episode.nid}`} className={`${styles.radioOptionCard} ${episodeSource.nid === episode.nid ? styles.selectedOptionCard : styles.unselectedOptionCard}`} onClick={() => onSelectEpisode(episode)}>
+            <label for={`episode-${episode.nid}`}>
+              <div className="text-sm">{episode.name}</div>
+            </label>
+          </li>
+        )
+      })}
     </ul>
   </div>
 }
