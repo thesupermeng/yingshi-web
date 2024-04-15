@@ -137,7 +137,7 @@ const Header = () => {
       URL_YINGSHI_VOD.searchingList,
       {
         wd: value,
-        limit: 35,
+        limit: 15,
         page: 1,
       },
       { method: 'GET' }
@@ -251,7 +251,7 @@ const Header = () => {
   return (
     <div
       className={
-        pathname.startsWith('/play/')
+        pathname.startsWith('/play/') || pathname.startsWith('/filmLibrary')
           ? 'w-screen z-20 bg-gradient-to-b from-black from-15%'
           : 'md:absolute z-10 w-screen bg-gradient-to-b from-black from-15%'
       }
