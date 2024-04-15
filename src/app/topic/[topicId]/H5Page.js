@@ -100,7 +100,7 @@ export default function Page() {
                           <div className='topic-details-title-sub text-secondary '>
                             {' '}
                             主演:            
-                                 {vod.vod_actor.length > 38 ? vod.vod_actor.substring(0, 35) + '...' : vod.vod_blurb}
+                                  {vod.vod_actor.length > 38 ? vod.vod_actor.substring(0, 35) + '...' : vod.vod_actor}
                           </div>
                           <div className='topic-details-title-sub text-secondary '>
                           {vod.vod_blurb.length > 75 ? vod.vod_blurb.substring(0, 73) + '...' : vod.vod_blurb}
