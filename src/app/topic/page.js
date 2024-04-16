@@ -3,7 +3,7 @@ import Gallery from '@/components/gallery';
 import { StreamerInfo } from '@/components/streamer/StreamerInfo';
 import { URL_USER } from '@/config/url';
 import { UserApi } from '@/util/UserApi';
-import React, { useEffect, useState , useRef} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'next-i18next';
 import { LoadingPage } from '@/components/loading';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
@@ -13,57 +13,60 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { debounce } from 'lodash';
 import { usePathname, useRouter } from 'next/navigation';
-import {Spinner} from './../../components/spinner'
+import { Spinner } from './../../components/spinner';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './style.module.css';
 
 export default function Page({ params }) {
   const [isLoading, setIsLoading] = useState(true);
   const [topicList, setTopicList] = useState([]);
-  let topicListTotal  = [];
+  let topicListTotal = [];
   let currentPage = 0;
   const [stillCanLoad, setStillCanLoad] = useState(true);
   // const [isVisible, setIsVisible] = useState(false);
-  let totalPage = 0 
+  let totalPage = 0;
   let loading = false;
   const targetRef = useRef(null);
 
-  const router = useRouter()
+  const router = useRouter();
   const goToTopicDetails = (topic) => {
-    router.push('/topic/' + topic.topic_id)
+    router.push('/topic/' + topic.topic_id);
   };
 
   const getTopicList = async () => {
-    if (loading == true || !stillCanLoad || (currentPage > totalPage-1 && totalPage !=0)) {
-      return
+    if (
+      loading == true ||
+      !stillCanLoad ||
+      (currentPage > totalPage - 1 && totalPage != 0)
+    ) {
+      return;
     }
     loading = true;
     await new Promise((resolve) => setTimeout(resolve, 600));
-    currentPage = currentPage +1;
+    currentPage = currentPage + 1;
     let res = await getTopicListApi();
 
     if (res.List) {
       let tempList = res.List;
 
-      if(totalPage == 0)
-      {
-        totalPage = res.TotalPageCount
+      if (totalPage == 0) {
+        totalPage = res.TotalPageCount;
       }
 
       if (currentPage == totalPage) {
         setStillCanLoad(false);
         setIsLoading(false);
-        return
+        return;
       }
-      topicListTotal = [...topicListTotal, ...tempList] 
-      let combinedList  = topicListTotal;
-       setTopicList(combinedList)
+      topicListTotal = [...topicListTotal, ...tempList];
+      let combinedList = topicListTotal;
+      console.log(combinedList);
+      setTopicList(combinedList);
       loading = false;
       console.log(topicList);
-    }
-    else
-    { 
-      setStillCanLoad(false)
+    } else {
+      setStillCanLoad(false);
       await new Promise((resolve) => setTimeout(resolve, 2000));
       loading = false;
       setIsLoading(false);
@@ -88,9 +91,9 @@ export default function Page({ params }) {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-       // setIsVisible(entry.intersectionRatio >= 0.5);
+        // setIsVisible(entry.intersectionRatio >= 0.5);
         if (entry.intersectionRatio >= 0.5) {
-          getTopicList()
+          getTopicList();
           console.log('Element is at least 50% visible.');
         } else {
           console.log('Element is not yet 50% visible.');
@@ -114,76 +117,122 @@ export default function Page({ params }) {
 
   return (
     <>
-
-      {/* topic list  */}
+      {/* desktop view  */}
       <div className='desktop'>
-      <div className={styles.containerHeader}>
-        <div className='d-flex' style={{ width: '100%' }}>
-          <div className='overlay' style={{ width: '100%' }}>
-            <div className='topic-container-header container px-0 d-flex  flex-column'>
-              <div className='topic-header-text'>播单</div>
+        <div className={styles.containerHeader}>
+          <div className='d-flex' style={{ width: '100%' }}>
+            <div className='overlay' style={{ width: '100%' }}>
+              <div className='topic-container-header container px-0 d-flex  flex-column'>
+                <div className='topic-header-text'>播单</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* topic list  */}
-      <div className='d-flex container pb-6'>
-        <div className='row '>
-          {topicList.map((topic) => (
-            <div className='col-lg-4 col-md-6' key={topic.topic_id}>
-              {/* Render topic details here */}
-              <div className='row topic-wrap' onClick={() => goToTopicDetails(topic)}>
-                <div className='col-12 mx-0 px-0'>
-                  <div className='d-flex topic-card'>
-                    <div className='col-lg-4 col-md-2.5 px-0'>
-                      <div className={`object-cover topic-img`}>
-                        <img
-                          alt='topic items'
-                          className={`object-cover`}
-                          src={topic?.vod_list[0].vod_pic_list[0]}
-                          style={{ borderRadius: '10px' , width: '123px' , height:'170px' }}
-                        />
+        {/* topic list  */}
+        <div className='d-flex container pb-6'>
+          <div className='row '>
+            {topicList.map((topic) => (
+              <div className='col-lg-4 col-md-6' key={topic.topic_id}>
+                {/* Render topic details here */}
+                <div
+                  className='row topic-wrap'
+                  onClick={() => goToTopicDetails(topic)}
+                >
+                  <div className='col-12 mx-0 px-0'>
+                    <div className='d-flex topic-card'>
+                      <div className='col-lg-4 col-md-2.5 px-0'>
+                        <div className={`object-cover topic-img`}>
+                          <img
+                            alt='topic items'
+                            className={`object-cover`}
+                            src={topic?.vod_list[0].vod_pic_list[0]}
+                            style={{
+                              borderRadius: '10px',
+                              width: '123px',
+                              height: '170px',
+                            }}
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className='col-lg-8 col-md-9 px-0 d-flex flex-column justify-content-between'>
-                      <div>
-                        <div className='text-base font-bold pb-2'>
-                          {topic.topic_name}
-                        </div>
-                        <div className='text-xs topic-blurb'>
-                          {topic.topic_blurb.length > 105
-                            ? `${topic.topic_blurb.substring(0, 105)}...`
-                            : topic.topic_blurb}
-                        </div>
-                        <div className='text-primary pt-4 text-xs'>
-                          查看更多 <FontAwesomeIcon icon={faAngleRight} />
+                      <div className='col-lg-8 col-md-9 px-0 d-flex flex-column justify-content-between'>
+                        <div>
+                          <div className='text-base font-bold pb-2'>
+                            {topic.topic_name}
+                          </div>
+                          <div className='text-xs topic-blurb'>
+                            {topic.topic_blurb.length > 105
+                              ? `${topic.topic_blurb.substring(0, 105)}...`
+                              : topic.topic_blurb}
+                          </div>
+                          <div className='text-primary pt-4 text-xs'>
+                            查看更多 <FontAwesomeIcon icon={faAngleRight} />
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* mobile  view  */}
+
+      <div className='mobile'>
+        <div className='row'>
+          {topicList.map((topic) => (
+            <div className='mb-2' key={topic.topic_id}>
+              <div className='col-12 pt-2 px-4 d-flex justify-content-between align-items-center pb-1 font-semibold'>
+                <span>{topic.topic_name}</span>
+                <span className='mr-2'>
+                  {' '}
+                  <FontAwesomeIcon icon={faAngleRight} />
+                </span>
+              </div>
+
+              <div className='col-12 mobile-topic-desc px-4'>
+                {topic.topic_blurb.length > 52
+                  ? `${topic.topic_blurb.slice(0, 52)}...`
+                  : topic.topic_blurb}
+              </div>
+
+              <div className='col-12 px-4' key={topic.topic_id}>
+                <div className='row g-0'>
+                  {topic?.vod_list?.slice(0, 3).map((vod) => (
+                    <div
+                      className='col-4 px-1 cursor-pointer'
+                      key={vod.id}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        router.push(`/play/${vod.vod_id}`);
+                      }}
+                    >
+                      {' '}
+                      {/* Add px-1 class for horizontal padding */}
+                      <img
+                        alt='topic items'
+                        className={`object-cover w-100`}
+                        src={vod?.vod_pic_list[0]}
+                        style={{
+                          borderRadius: '10px',
+                          aspectRatio: '5/7',
+                          width: '100%',
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           ))}
         </div>
       </div>
-      </div>
-
-
-
-     <div className='mobile '>
-
-      <p>mobile 1234</p>
-      </div>
 
       {/* loading spinner   */}
-
-       <div ref={targetRef}>
-         {isLoading && (
-           <Spinner></Spinner>
-         )}
-       </div>
+      <div ref={targetRef}>{isLoading && <Spinner></Spinner>}</div>
     </>
   );
 }

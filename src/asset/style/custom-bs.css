@@ -2301,13 +2301,11 @@ a:not([href]):not([class]):hover {
   line-height: 2 !important;
 }
 
-
 /* @media (min-width: 1330px) {
   .container {
     max-width: 1520px !important;
   }
 } */
-
 
 /* For desktop */
 .desktop {
@@ -2323,12 +2321,12 @@ a:not([href]):not([class]):hover {
 
 /* For mobile */
 .mobile {
-  display: none; /* Default display */
+  display: block; /* Default display */
 }
 
 /* Hide on desktop */
 @media (min-width: 769px) {
   .mobile {
-    display: none;
+    display: block;
   }
 }
