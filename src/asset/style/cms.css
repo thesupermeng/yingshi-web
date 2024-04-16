@@ -114,3 +114,10 @@ bottom: 1px;
   background-image: linear-gradient(to right, #094EFF , #4F80FF);
 }
 
+.search-count
+{
+  color: #fac33d !important;  
+  padding: 0px 3px;
+
+}
+
