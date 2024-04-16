@@ -2,16 +2,20 @@ import { useEffect, useState } from "react";
 import styles from './style.module.css';
 import Image from 'next/image';
 import { PlayRightIcon } from '@/asset/icons';
+import { useRouter } from 'next/navigation';
 
 export const Carousel = ({ carouselItems }) => {
+  const router = useRouter();
 
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [currentlyHover, setCurrentlyHover] = useState(false);
+  const [carouselVodId, setCarouselVodId] = useState(0);
 
   useEffect(() => {
     if(!currentlyHover){
       const autoSwipeCarousel = setTimeout(() => {
         setCarouselIndex((prevIndex) => (prevIndex + 1) % carouselItems.length);
+        setCarouselVodId()
       }, 3000);
   
       return () => {
@@ -21,13 +25,11 @@ export const Carousel = ({ carouselItems }) => {
   }, [carouselIndex, carouselItems, currentlyHover]);
 
   const onHover = (index) => {
-    console.log('ITEM_____', index);
     setCarouselIndex(index);
     setCurrentlyHover(true);
   }
 
   const onUnhover = (index) => {
-    console.log("???", index)
     setCurrentlyHover(false);
   }
 
@@ -61,7 +63,11 @@ export const Carousel = ({ carouselItems }) => {
                 <img
                   src={item.carousel_pic_pc}
                   alt={`Slide ${index}`}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'pointer' }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    router.push(`/play/${item.vod.vod_id}`);
+                  }}
                 />
                 {/* <div style={{ position: 'absolute', bottom: '10px', left: '10px', color: '#fff', zIndex: 1, display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                   <div>
@@ -82,8 +88,8 @@ export const Carousel = ({ carouselItems }) => {
                       <div className="grid grid-cols-8 gap-4" style={{ paddingBottom: '5rem' }}>
                         <div class="col-span-2 mr-3">
                           <p className="text-lg">{item.carousel_name}</p>
-                          <p className="text-sm" style={{ fontWeight: '200' }}>{item.vod.vod_year}{desc}</p>
-                          <p className="text-sm" style={{ fontWeight: '200' }}>{item.vod.vod_remarks}</p>
+                          <p className="text-sm pt-1" style={{ fontWeight: '200' }}>{item.vod.vod_year}{desc}</p>
+                          <p className="text-sm pt-1" style={{ fontWeight: '200' }}>{item.vod.vod_remarks}</p>
                           <div className="flex flex-row flex-wrap" style={{ background: '#FFFFFF2E', width: 'fit-content', padding: '0.5rem 1rem', borderRadius: '100px', marginTop: '0.5rem' }}>
                             <Image
                               style={{ paddingRight: '0.5rem' }}
@@ -114,8 +120,8 @@ export const Carousel = ({ carouselItems }) => {
                         justifySelf: 'center',
                         height: '100%',
                         width: '6rem',
-                        marginRight: '0.5rem',
-                        cursor: 'pointer'
+                        marginRight: '1.5rem',
+                        cursor: 'pointer',
                       }}
                       key={previewIndex}
                       onMouseEnter={() => onHover(previewIndex)}

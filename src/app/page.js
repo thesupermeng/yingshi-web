@@ -60,29 +60,31 @@ export default function Home() {
       ) : (
         <div className='flex flex-col w-full'>
           <Carousel carouselItems={carousel} />
-          <div className='pt-4 md:mx-20 mx-2.5'>
-            {categories != [] &&
-              categories?.map((category, idx) => {
-                return (
-                  <div id={category.type_id} key={idx}>
-                    <span
-                      style={{
-                        fontSize: '20px',
-                        fontWeight: '600',
-                        fontStyle: 'normal',
-                        fontFamily: 'PingFang SC',
-                      }}
-                    >
-                      {category.type_name}
-                    </span>
-                    <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
-                      {category.vod_list?.slice(0, 6).map((vod, i) => {
-                        return <VideoVerticalCard vod={vod} key={i} />;
-                      })}
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div className='pt-4 md:mx-20 mx-2.5' style={{ width: '80%' }}>
+              {categories != [] &&
+                categories?.map((category, idx) => {
+                  return (
+                    <div id={category.type_id} key={idx}>
+                      <span
+                        style={{
+                          fontSize: '20px',
+                          fontWeight: '600',
+                          fontStyle: 'normal',
+                          fontFamily: 'PingFang SC',
+                        }}
+                      >
+                        {category.type_name}
+                      </span>
+                      <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
+                        {category.vod_list?.slice(0, 6).map((vod, i) => {
+                          return <VideoVerticalCard vod={vod} key={i} />;
+                        })}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+            </div>
           </div>
         </div>
       )}
