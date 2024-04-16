@@ -56,29 +56,35 @@ export const Carousel = ({ carouselItems }) => {
                       <div className="">
                         {item.carousel_name}
                       </div>
-                      <div className="col-span-2 mr-3">
-                        <div style={{ display: 'flex', flexDirection: 'row' }}>
-                          {carouselItems.map((previewItem, previewIndex) => (
-                            <div key={previewIndex} style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                justifySelf: 'center',
-                                height: '100%',
-                            }}>
-                                <div style={{ width: '60px', aspectRatio: '3/5', textAlign: 'center' }}>
-                                    <img
-                                        src={previewItem.vod.vod_pic}
-                                        alt={`Slide ${previewIndex}`}
-                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                    />
-                                </div>
-                                <div key={previewIndex} style={{ paddingRight: '10px', paddingLeft: '10px', textAlign: 'center', fontSize: '12px' }}>
-                                    {previewItem.carousel_name}
-                                </div>
-                            </div>
-                          ))}
+                      <div class="col-span-6 mr-3" style={{ position: 'absolute', right: '0', bottom: '0' }}>
+                        <div className="grid grid-cols-12 gap-4">
+                          <div className="col-span-3"></div>
+                          <div className="col-span-8" style={{ display: 'flex', flexDirection: 'row' }}>
+                            {carouselItems.map((previewItem, previewIndex) => (
+                              <div style={{
+                                  display: 'flex',
+                                  flexDirection: 'column',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                  justifySelf: 'center',
+                                  height: '100%',
+                                  width: '100px',
+                                  marginRight: '0.5rem',
+                              }}>
+                                  <div style={{ width: '100%', textAlign: 'center' }}>
+                                      <img
+                                          src={previewItem.vod.vod_pic}
+                                          alt={`Slide ${previewIndex}`}
+                                          style={{ width: '100%', aspectRatio: '5/7', objectFit: 'cover', borderRadius: '12px' }}
+                                      />
+                                  </div>
+                                  <div key={previewIndex} style={{ paddingRight: '10px', paddingLeft: '10px', textAlign: 'center', fontSize: '12px' }}>
+                                      {previewItem.carousel_name}
+                                  </div>
+                              </div>
+                            ))}
+                          </div>
+                          <div className="col-span-1"></div>
                         </div>
                       </div>
                     </div>

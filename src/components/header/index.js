@@ -57,6 +57,7 @@ const Header = () => {
 
   const handleOpenSearch = () => {
     setOpenSearch(true);
+
   };
 
   const handleChange = (event) => {
@@ -114,6 +115,9 @@ const Header = () => {
       JSON.stringify(searchHistoryData)
     );
     setSearchHistoryList(JSON.parse(localStorage.getItem('searchHistoryList')));
+    setOpenSearch(false);
+    router.push('/search/' + searchInput);
+
   };
 
   const handleClearSearchHistory = () => {
