@@ -49,17 +49,17 @@ export const Carousel = ({ carouselItems }) => {
                 </div>
               </div> */}
               <div style={{ position: 'absolute', bottom: '10px', left: '10px', color: '#fff', zIndex: 1, width: '100%' }}>
-                <div class="grid grid-cols-12 gap-4">
+                <div className="grid grid-cols-12 gap-4">
                   <div></div>
                   <div className="col-span-10">
-                    <div class="grid grid-cols-3 gap-4">
-                      <div class="">
+                    <div className="grid grid-cols-3 gap-4">
+                      <div className="">
                         {item.carousel_name}
                       </div>
-                      <div class="col-span-2 mr-3">
+                      <div className="col-span-2 mr-3">
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
                           {carouselItems.map((previewItem, previewIndex) => (
-                            <div style={{
+                            <div key={previewIndex} style={{
                                 display: 'flex',
                                 flexDirection: 'column',
                                 justifyContent: 'center',

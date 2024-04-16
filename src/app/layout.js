@@ -87,18 +87,21 @@ export default function RootLayout({ children }) {
         }`}
       >
         <Providers>
-        <div className='w-full h-screen flex flex-col'>
-              <Header />
-              <div className='h-full overflow-y-scroll flex flex-col' style={{ alignItems: 'center' }}>
-                {children}
-                {/* </div> */}
-                {/* <H5Perpetual /> */}
-                {/* <LiveChat /> */}
-                {/* <H5LiveChat /> */}
-                {/* </div> */}
-                {/* </div> */}
-              </div>
+          <div className='w-full h-screen flex flex-col'>
+            <Header />
+            <div
+              className='flex-1 overflow-y-scroll flex flex-col'
+              style={{ alignItems: 'center' }}
+            >
+              {children}
+              {/* </div> */}
+              {/* <H5Perpetual /> */}
+              {/* <LiveChat /> */}
+              {/* <H5LiveChat /> */}
+              {/* </div> */}
+              {/* </div> */}
             </div>
+          </div>
           {/* <WEBOnly>
             <div className='absolute top-0 bottom-0 left-0 right-0 bg-sideMenu container w-full '>
               <Announcement />

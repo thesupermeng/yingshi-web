@@ -6,6 +6,7 @@ import { YingshiApi } from '@/util/YingshiApi';
 import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
 import { Spinner } from '@/components/spinner';
+import { debounce } from 'lodash';
 
 export const FilmLibrary = ({}) => {
   const [loading, setLoading] = useState(true);
@@ -14,8 +15,7 @@ export const FilmLibrary = ({}) => {
   const [videoList, setVideoList] = useState(null);
   const [loadingVideoList, setLoadingVideoList] = useState(true);
   const [totalPage, setTotalPage] = useState(0);
-
- 
+  const [currentPage, setCurrentPage] = useState(1);
 
   const advanceFilterItem = [
     {
@@ -36,13 +36,13 @@ export const FilmLibrary = ({}) => {
     return YingshiApi(URL_YINGSHI_VOD.filteringTypeList, {}, { method: 'GET' });
   };
 
-  const getSearchingList = async (params) => {
+  const getSearchingListApi = async (params) => {
     return YingshiApi(
       URL_YINGSHI_VOD.searchingList,
       {
         order: 'desc',
         limit: 30,
-        page: params.page,
+        page: currentPage,
         tid: params.typeId,
         class: params.class == '全部类型' ? '' : params.class,
         by: params.by,
@@ -54,6 +54,27 @@ export const FilmLibrary = ({}) => {
     );
   };
 
+  const getSearchingList = async () => {
+    if (currentPage > totalPage - 1 && totalPage != 0) {
+      return;
+    }
+
+    setLoadingVideoList(true);
+    await new Promise((resolve) => setTimeout(resolve, 600));
+    setCurrentPage(currentPage + 1);
+
+    const videoListing = await getSearchingListApi(paramsFilter);
+
+    if (currentPage > 1) {
+      setVideoList((prev) => [...prev, ...videoListing.List]);
+    } else {
+      setVideoList(videoListing.List);
+      setTotalPage(videoListing?.TotalPageCount);
+    }
+
+    // setLoadingVideoList(false);
+  };
+
   useEffect(() => {
     setLoading(true);
     // Simulating asynchronous data fetching
@@ -62,7 +83,6 @@ export const FilmLibrary = ({}) => {
       setFilterTypeList(filteringTypeList);
       setParamsFilter({
         order: 'desc',
-        page: 1,
         typeId: filteringTypeList[0].type_id,
         by: advanceFilterItem[0].value,
         class: '全部类型',
@@ -72,45 +92,35 @@ export const FilmLibrary = ({}) => {
       });
 
       setLoading(false);
+      return true;
     };
 
     fetchData();
   }, []);
 
-  useEffect(() => {
-    setLoadingVideoList(true);
-    const fetchData = async () => {
-      if (paramsFilter !== null) {
-        const videoListing = await getSearchingList(paramsFilter);
-
-        console.log(videoListing);
-        if (paramsFilter.page > 1) {
-          const combinedList = [...videoList, ...videoListing.List];
-          setVideoList(combinedList);
-        } else {
-          setVideoList(videoListing.List);
-          setTotalPage(videoListing?.TotalPageCount);
-        }
-
-        setLoadingVideoList(false);
-      }
-    };
-
-    fetchData();
-  }, [paramsFilter]);
+  const childRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      console.log('test');
+      const { scrollTop, clientHeight, scrollHeight } = childRef.current;
+      if (scrollTop + clientHeight === scrollHeight) {
+        console.log('Scrolled to bottom');
+        // Call your function or load more data here
+      }
     };
 
-    // Add event listener when component mounts
-    window.addEventListener('scroll', handleScroll);
+    childRef.current.addEventListener('scroll', handleScroll);
+
     return () => {
-      // Remove event listener when component unmounts
-      window.removeEventListener('scroll', handleScroll);
+      childRef.current.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  });
+
+  useEffect(() => {
+    if (paramsFilter !== null) {
+      getSearchingList();
+    }
+  }, [paramsFilter]);
 
   const listConverter = (type) => {
     let list = [];
@@ -153,7 +163,6 @@ export const FilmLibrary = ({}) => {
 
   const filterVideoList = (value, type) => {
     let params = { ...paramsFilter };
-    params.page = 1;
 
     if (type == 'type') {
       params.typeId = value;
@@ -171,11 +180,12 @@ export const FilmLibrary = ({}) => {
     setParamsFilter(params);
     setVideoList([]);
     setTotalPage(0);
+    setCurrentPage(1);
   };
 
   return (
     <>
-      <div className='flex flex-1 justify-center'>
+      <div ref={childRef} className='flex flex-1 justify-center'>
         {loading ? (
           <LoadingPage full={false} />
         ) : (
@@ -342,7 +352,7 @@ export const FilmLibrary = ({}) => {
               </div>
             </div>
             <div className='w-screen flex flex-1 flex-col'>
-              {totalPage > 0 ? (
+              {videoList !== null ? (
                 <div className=' md:mx-20 mx-2.5 grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-4'>
                   {videoList.map((vod, i) => {
                     return <VideoVerticalCard vod={vod} key={i} />;

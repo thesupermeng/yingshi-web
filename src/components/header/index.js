@@ -202,7 +202,15 @@ const Header = () => {
         name: '片库',
       });
       dispatch(setHeaderMenu(menuItem));
-      dispatch(setSelectedId(menuItem[0].id));
+      if (pathname.startsWith('/filmLibrary'))
+        dispatch(setSelectedId(999));
+      else if (pathname.startsWith('/topic'))
+        dispatch(setSelectedId(99));
+      else if (pathname.startsWith('/play/'))
+        dispatch(setSelectedId(-1));
+      else 
+        dispatch(setSelectedId(menuItem[0].id));
+
       setLoading(false);
     };
 

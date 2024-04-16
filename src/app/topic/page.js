@@ -68,6 +68,7 @@ export default function Page({ params }) {
   const debouncedHandleScroll = debounce(handleScroll, 600);
   
   useEffect(() => {
+    console.log('hello')
     window.addEventListener('scroll', debouncedHandleScroll);
     return () => {
       window.removeEventListener('scroll', debouncedHandleScroll);
