@@ -3,7 +3,7 @@ import Gallery from '@/components/gallery';
 import { StreamerInfo } from '@/components/streamer/StreamerInfo';
 import { URL_USER } from '@/config/url';
 import { UserApi } from '@/util/UserApi';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState , useRef} from 'react';
 import { useTranslation } from 'next-i18next';
 import { LoadingPage } from '@/components/loading';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
@@ -20,22 +20,13 @@ import styles from './style.module.css';
 export default function Page({ params }) {
   const [isLoading, setIsLoading] = useState(true);
   const [topicList, setTopicList] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  let topicListTotal  = [];
+let currentPage = 0;
   const [stillCanLoad, setStillCanLoad] = useState(true);
+  // const [isVisible, setIsVisible] = useState(false);
   let totalPage = 0 
   let loading = false;
-
-  // useEffect(() => {
-
-  //   if(loading)
-  //   {
-  //     return;
-  //   }
-
-  //  console.log('Fetch data from the to-do list API')
-  //   getTopicList();
-
-  // }, [currentPage]);
+  const targetRef = useRef(null);
 
   const handleScroll = () => {
     const scrollY = window.scrollY;
@@ -43,7 +34,6 @@ export default function Page({ params }) {
     const documentHeight = document.documentElement.scrollHeight;
     console.log('000')
     if (scrollY + windowHeight >= documentHeight - 100) {
-      // setCurrentPage(currentPage + 1);
 
       console.log('111')
 
@@ -67,22 +57,19 @@ export default function Page({ params }) {
 
   const debouncedHandleScroll = debounce(handleScroll, 600);
   
-  useEffect(() => {
-    window.addEventListener('scroll', debouncedHandleScroll);
-    return () => {
-      window.removeEventListener('scroll', debouncedHandleScroll);
-    };
-  }, [currentPage]);
+
 
   const getTopicList = async () => {
-
+console.log('calling getTopicList')
     if (loading == true || !stillCanLoad || (currentPage > totalPage-1 && totalPage !=0)) {
       return
     }
    
     loading = true;
     await new Promise((resolve) => setTimeout(resolve, 600));
-    setCurrentPage(currentPage + 1);
+    console.log('currentPage')
+    console.log(currentPage)
+    currentPage = currentPage +1;
     console.log('0000000');
 
     let res = await getTopicListApi();
@@ -105,7 +92,9 @@ export default function Page({ params }) {
       }
       console.log('111111');
 
-      const combinedList = [...topicList, ...tempList];
+      
+      topicListTotal = [...topicListTotal, ...tempList] 
+      let combinedList  = topicListTotal;
    
       console.log('combinedList');
       console.log(combinedList);
@@ -143,6 +132,32 @@ export default function Page({ params }) {
   // if (loading) {
   //   return <LoadingPage full={!isWeb()} />;
   // }
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+       // setIsVisible(entry.intersectionRatio >= 0.5);
+        if (entry.intersectionRatio >= 0.5) {
+          getTopicList()
+          console.log('Element is at least 50% visible.');
+        } else {
+          console.log('Element is not yet 50% visible.');
+        }
+      },
+      {
+        threshold: 0.5, // 50% visibility threshold
+      }
+    );
+
+    if (targetRef.current) {
+      observer.observe(targetRef.current);
+    }
+
+    return () => {
+      if (targetRef.current) {
+        observer.unobserve(targetRef.current);
+      }
+    };
+  }, []);
 
   return (
     <>
@@ -200,9 +215,11 @@ export default function Page({ params }) {
 
       {/* loading spinner   */}
 
+<div ref={targetRef}>
       {isLoading && (
         <Spinner></Spinner>
       )}
+</div>
     </>
   );
 }
