@@ -21,61 +21,26 @@ export default function Page({ params }) {
   const [isLoading, setIsLoading] = useState(true);
   const [topicList, setTopicList] = useState([]);
   let topicListTotal  = [];
-let currentPage = 0;
+  let currentPage = 0;
   const [stillCanLoad, setStillCanLoad] = useState(true);
   // const [isVisible, setIsVisible] = useState(false);
   let totalPage = 0 
   let loading = false;
   const targetRef = useRef(null);
 
-  const handleScroll = () => {
-    const scrollY = window.scrollY;
-    const windowHeight = window.innerHeight;
-    const documentHeight = document.documentElement.scrollHeight;
-    console.log('000')
-    if (scrollY + windowHeight >= documentHeight - 100) {
-
-      console.log('111')
-
-      getTopicList();
-    }
-  };
-
-
   const router = useRouter()
   const goToTopicDetails = (topic) => {
-
-    console.log(topic)
-    console.log(topic.topic_id)
-    const jsonString = JSON.stringify(topic);
-    // Store the stringified JSON object in sessionStorage
-    
-    localStorage.setItem('topicItem', jsonString);
-
     router.push('/topic/' + topic.topic_id)
   };
 
-  const debouncedHandleScroll = debounce(handleScroll, 600);
-  
-
-
   const getTopicList = async () => {
-console.log('calling getTopicList')
     if (loading == true || !stillCanLoad || (currentPage > totalPage-1 && totalPage !=0)) {
       return
     }
-   
     loading = true;
     await new Promise((resolve) => setTimeout(resolve, 600));
-    console.log('currentPage')
-    console.log(currentPage)
     currentPage = currentPage +1;
-    console.log('0000000');
-
     let res = await getTopicListApi();
-
-    console.log('isLoading after');
-    console.log(isLoading);
 
     if (res.List) {
       let tempList = res.List;
@@ -90,22 +55,10 @@ console.log('calling getTopicList')
         setIsLoading(false);
         return
       }
-      console.log('111111');
-
-      
       topicListTotal = [...topicListTotal, ...tempList] 
       let combinedList  = topicListTotal;
-   
-      console.log('combinedList');
-      console.log(combinedList);
-   
-      // setTopicList(prevTopicList => [...prevTopicList, ...tempList]);
-      console.log('pre');
-      console.log(topicList);
        setTopicList(combinedList)
       loading = false;
-    //  setIsLoading(false);
-
       console.log(topicList);
     }
     else
@@ -215,11 +168,11 @@ console.log('calling getTopicList')
 
       {/* loading spinner   */}
 
-<div ref={targetRef}>
-      {isLoading && (
-        <Spinner></Spinner>
-      )}
-</div>
+       <div ref={targetRef}>
+         {isLoading && (
+           <Spinner></Spinner>
+         )}
+       </div>
     </>
   );
 }
