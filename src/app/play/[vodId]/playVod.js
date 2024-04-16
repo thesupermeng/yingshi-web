@@ -168,7 +168,7 @@ export const PlayVod = ({ vodId }) => {
             <div style={{ marginTop: '30px', marginBottom: '10px' }}>
               <span className="text-xl" style={{ fontWeight: '500' }}>{t('相关推荐')}</span>
             </div>
-            <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5' style={{ marginTop: '0px' }}>
+            <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5' style={{ marginTop: '0px', marginBottom: '5rem' }}>
               {suggestedVods.length > 0 && suggestedVods?.slice(0, 12).map((vod, i) => {
                 return <VideoVerticalCard vod={vod} key={i} />;
               })}

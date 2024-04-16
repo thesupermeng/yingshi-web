@@ -52,11 +52,11 @@ export const Carousel = ({ carouselItems }) => {
                 <div class="grid grid-cols-12 gap-4">
                   <div></div>
                   <div className="col-span-10">
-                    <div class="grid grid-cols-3 gap-4">
-                      <div class="">
+                    <div class="grid grid-cols-8 gap-4">
+                      <div class="col-span-2 mr-3">
                         {item.carousel_name}
                       </div>
-                      <div class="col-span-2 mr-3">
+                      <div class="col-span-6 mr-3">
                         <div style={{ display: 'flex', flexDirection: 'row' }}>
                           {carouselItems.map((previewItem, previewIndex) => (
                             <div style={{
@@ -66,12 +66,13 @@ export const Carousel = ({ carouselItems }) => {
                                 alignItems: 'center',
                                 justifySelf: 'center',
                                 height: '100%',
+                                marginRight: '0.5rem',
                             }}>
-                                <div style={{ width: '60px', aspectRatio: '3/5', textAlign: 'center' }}>
+                                <div style={{ width: '100%', textAlign: 'center' }}>
                                     <img
                                         src={previewItem.vod.vod_pic}
                                         alt={`Slide ${previewIndex}`}
-                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                        style={{ width: '100%', aspectRatio: '5/7', objectFit: 'cover', borderRadius: '12px' }}
                                     />
                                 </div>
                                 <div key={previewIndex} style={{ paddingRight: '10px', paddingLeft: '10px', textAlign: 'center', fontSize: '12px' }}>
