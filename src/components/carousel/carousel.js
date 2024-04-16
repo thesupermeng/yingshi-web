@@ -86,7 +86,7 @@ export const Carousel = ({ carouselItems }) => {
                     <div></div>
                     <div className="col-span-10">
                       <div className="grid grid-cols-8 gap-4" style={{ paddingBottom: '5rem' }}>
-                        <div class="col-span-2 mr-3">
+                        <div className="col-span-2 mr-3">
                           <p className="text-lg">{item.carousel_name}</p>
                           <p className="text-sm pt-1" style={{ fontWeight: '200' }}>{item.vod.vod_year}{desc}</p>
                           <p className="text-sm pt-1" style={{ fontWeight: '200' }}>{item.vod.vod_remarks}</p>
@@ -107,7 +107,7 @@ export const Carousel = ({ carouselItems }) => {
               </div>
             )
           })}
-          <div class="col-span-6 mr-3" style={{ position: 'absolute', right: '0', bottom: '3rem' }}>
+          <div className="col-span-6 mr-3" style={{ position: 'absolute', right: '0', bottom: '3rem' }}>
             <div className="grid grid-cols-12 gap-4">
               <div className="col-span-3"></div>
               <div className="col-span-8" style={{ display: 'flex', flexDirection: 'row', zIndex: '100' }}>
