@@ -272,3 +272,4 @@ export { default as ArrowDownIcon } from './arrows/arrowDown.js';
 export { default as ArrowLeftIcon } from './arrows/arrowLeft.svg';
 export { default as ArrowRightIcon } from './arrows/arrowRight.svg';
 export { default as ArrowDownFillIcon } from './arrows/arrowDownFill.svg';
+export { default as PlayRightIcon } from './arrows/playRight.svg';
