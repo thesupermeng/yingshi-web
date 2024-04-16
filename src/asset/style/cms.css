@@ -121,3 +121,6 @@ bottom: 1px;
 
 }
 
+.header-tab:hover .text-white {
+  color: rgb(51, 162, 244) !important;
+}

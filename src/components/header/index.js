@@ -471,7 +471,7 @@ const Header = () => {
             {visibleItems?.map((navItem, index) => {
               return (
                 <div
-                  className='flex flex-1 flex-col items-center cursor-pointer'
+                  className='flex flex-1 flex-col items-center cursor-pointer header-tab'
                   id={navItem.id}
                   key={index}
                   onClick={() => {
