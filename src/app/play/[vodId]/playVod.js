@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useEffect, useState, useRef } from 'react';
 import { YingshiApi } from '@/util/YingshiApi';
 import Artplayer from './player.js';
@@ -11,9 +12,13 @@ import { VodPopularList } from '@/components/vod/vodPopularList.js';
 import { VodContent } from '@/components/vod/vodContent.js';
 import styles from './style.module.css';
 import { AdsBanner } from '@/components/ads/adsBanner.js';
+import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
 
 
 export const PlayVod = ({ vodId }) => {
+
+  const { t } = useTranslation();
+
   const domElementRef = useRef(null);
   const [vod, setVod] = useState(null);
   const [preventMutipleCall, setPreventMutipleCall] = useState(false);
@@ -21,6 +26,7 @@ export const PlayVod = ({ vodId }) => {
   const [episodeSelected, setEpisodeSelected] = useState(null);
   const [episodeGroups, setEpisodeGroups] = useState([]);
   const [episodeGroupSelected, setEpisodeGroupSelected] = useState({});
+  const [suggestedVods, setSuggestedVods] = useState([]);
 
   const getVodDetails = async () => {
     return YingshiApi(
@@ -38,7 +44,7 @@ export const PlayVod = ({ vodId }) => {
       {
         category: vod?.vod_class?.split(",").shift(),
         tid: vod?.type_id.toString() ?? "",
-        limit: 6,
+        limit: 12,
       },
       { method: 'GET' }
     );
@@ -94,8 +100,7 @@ export const PlayVod = ({ vodId }) => {
 
   useEffect(() => {
     getSuggestedVodType().then((data) => {
-      console.log("ADAS");
-      console.log(data);
+      setSuggestedVods(data.List);
     })
   }, [vod])
 
@@ -160,6 +165,14 @@ export const PlayVod = ({ vodId }) => {
             <VodContent vodContent={vod.vod_content} vodEpisodeSelected={episodeSelected} vodEpisodeInfo={vod.vod_episode_info} />
 
             <AdsBanner />
+            <div style={{ marginTop: '30px', marginBottom: '10px' }}>
+              <span className="text-xl" style={{ fontWeight: '500' }}>{t('相关推荐')}</span>
+            </div>
+            <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5' style={{ marginTop: '0px' }}>
+              {suggestedVods.length > 0 && suggestedVods?.slice(0, 12).map((vod, i) => {
+                return <VideoVerticalCard vod={vod} key={i} />;
+              })}
+            </div>
           </div>
 
           <div className='flex-col space-y-4' style={{ width: '22%' }}>
@@ -196,7 +209,7 @@ export const PlayVod = ({ vodId }) => {
               <VodPopularList />
             </div>
 
-            <AdsBanner height='500px' />
+            {/* <AdsBanner height='500px' /> */}
           </div>
         </div>
       )}

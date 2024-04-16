@@ -19,7 +19,7 @@ export const ShareHorizontal = ({
   const { t } = useTranslation();
 
   return <div className={`flex space-x-4 items-center ${className}`}>
-    <span>{t('share')}:</span>
+    <span>{t('分享')}:</span>
 
     <div className={`flex flex-1 space-x-2`}>
       <div className="">
