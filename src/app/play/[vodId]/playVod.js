@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useEffect, useState, useRef } from 'react';
 import { YingshiApi } from '@/util/YingshiApi';
 import Artplayer from './player.js';
@@ -11,9 +12,13 @@ import { VodPopularList } from '@/components/vod/vodPopularList.js';
 import { VodContent } from '@/components/vod/vodContent.js';
 import styles from './style.module.css';
 import { AdsBanner } from '@/components/ads/adsBanner.js';
+import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
 
 
 export const PlayVod = ({ vodId }) => {
+
+  const { t } = useTranslation();
+
   const domElementRef = useRef(null);
   const [vod, setVod] = useState(null);
   const [preventMutipleCall, setPreventMutipleCall] = useState(false);
@@ -21,6 +26,7 @@ export const PlayVod = ({ vodId }) => {
   const [episodeSelected, setEpisodeSelected] = useState(null);
   const [episodeGroups, setEpisodeGroups] = useState([]);
   const [episodeGroupSelected, setEpisodeGroupSelected] = useState({});
+  const [suggestedVods, setSuggestedVods] = useState([]);
 
   const getVodDetails = async () => {
     return YingshiApi(
@@ -31,6 +37,18 @@ export const PlayVod = ({ vodId }) => {
       { method: 'GET' }
     );
   };
+
+  const getSuggestedVodType = async () => {
+    return YingshiApi(
+      URL_YINGSHI_VOD.searchingList,
+      {
+        category: vod?.vod_class?.split(",").shift(),
+        tid: vod?.type_id.toString() ?? "",
+        limit: 12,
+      },
+      { method: 'GET' }
+    );
+  }
 
   useEffect(() => {
     if (episodeSelected == null) {
@@ -80,6 +98,12 @@ export const PlayVod = ({ vodId }) => {
     }
   }, []);
 
+  useEffect(() => {
+    getSuggestedVodType().then((data) => {
+      setSuggestedVods(data.List);
+    })
+  }, [vod])
+
   const onSelectSource = (source) => {
     setVodSourceSelected(source);
 
@@ -90,6 +114,8 @@ export const PlayVod = ({ vodId }) => {
 
   const onSelectEpisodeGroup = (group) => {
     setEpisodeGroupSelected(group);
+    console.log("GORUPPP");
+    console.log(group);
   };
 
   const onSelectEpisode = (episode) => {
@@ -110,12 +136,12 @@ export const PlayVod = ({ vodId }) => {
 
     setEpisodeSelected(vodSourceSelected?.vod_play_list?.urls[indexFound + 1]);
   };
-
+  
   return (
-    <div ref={domElementRef} className='w-[100%] py-2'>
+    <div ref={domElementRef} className='w-[85%] py-2'>
       {vod != null && (
         <div className='flex flex-row space-x-4'>
-          <div className='flex-1 w-9/12 space-y-4'>
+          <div className='flex-1 space-y-4' style={{ width: '78%' }}>
             <div className='aspect-[16/9]'>
               <Artplayer
                 className='aspect-[16/9]'
@@ -136,16 +162,20 @@ export const PlayVod = ({ vodId }) => {
               className={'w-[80%]'}
             />
 
-            <div className={styles.vodMetaContainer}>
-              <VodContent vodContent={vod.vod_content} />
+            <VodContent vodContent={vod.vod_content} vodEpisodeSelected={episodeSelected} vodEpisodeInfo={vod.vod_episode_info} />
+
+            <AdsBanner />
+            <div style={{ marginTop: '30px', marginBottom: '10px' }}>
+              <span className="text-xl" style={{ fontWeight: '500' }}>{t('相关推荐')}</span>
             </div>
-
-            <AdsBanner />
-
-            <AdsBanner />
+            <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5' style={{ marginTop: '0px', marginBottom: '5rem' }}>
+              {suggestedVods.length > 0 && suggestedVods?.slice(0, 12).map((vod, i) => {
+                return <VideoVerticalCard vod={vod} key={i} />;
+              })}
+            </div>
           </div>
 
-          <div className='flex-col w-3/12 space-y-4'>
+          <div className='flex-col space-y-4' style={{ width: '22%' }}>
             <div className={`space-y-4 ${styles.vodMetaContainer}`}>
               <VodCard
                 imgSource={vod.vod_pic}
@@ -170,7 +200,7 @@ export const PlayVod = ({ vodId }) => {
                 onSelectEpisodeGroup={onSelectEpisodeGroup}
                 onSelectEpisode={onSelectEpisode}
                 style={{
-                  height: 300,
+                  maxHeight: 300,
                 }}
               />
             </div>
@@ -179,7 +209,7 @@ export const PlayVod = ({ vodId }) => {
               <VodPopularList />
             </div>
 
-            <AdsBanner height='500px' />
+            {/* <AdsBanner height='500px' /> */}
           </div>
         </div>
       )}

@@ -8,7 +8,7 @@
 
 .radioOptionCard {
   display: flex;
-  padding: 8px 14px;
+  padding: 8px 18px 8px 14px;
   align-items: center;
   border-radius: 4px;
 }
@@ -19,6 +19,7 @@
 
 .unselectedOptionCard {
   background-color: #A7A7A71A !important;
+  color: #9C9C9C !important;
 }
 
 .dropdownContainer {
@@ -33,4 +34,10 @@
 
 .primaryText {
   color: #FAC33D;
+}
+
+.vodMetaContainer {
+  background-color: #1D2023 !important;
+  padding: 8px 10px;
+  border-radius: 12px;
 }
