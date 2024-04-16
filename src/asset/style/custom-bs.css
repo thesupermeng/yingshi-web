@@ -2307,3 +2307,28 @@ a:not([href]):not([class]):hover {
     max-width: 1520px !important;
   }
 } */
+
+
+/* For desktop */
+.desktop {
+  display: block; /* Default display */
+}
+
+/* Hide on mobile */
+@media (max-width: 768px) {
+  .desktop {
+    display: none;
+  }
+}
+
+/* For mobile */
+.mobile {
+  display: none; /* Default display */
+}
+
+/* Hide on desktop */
+@media (min-width: 769px) {
+  .mobile {
+    display: none;
+  }
+}

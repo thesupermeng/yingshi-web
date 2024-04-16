@@ -114,6 +114,9 @@ export default function Page({ params }) {
 
   return (
     <>
+
+      {/* topic list  */}
+      <div className='desktop'>
       <div className={styles.containerHeader}>
         <div className='d-flex' style={{ width: '100%' }}>
           <div className='overlay' style={{ width: '100%' }}>
@@ -128,12 +131,12 @@ export default function Page({ params }) {
       <div className='d-flex container pb-6'>
         <div className='row '>
           {topicList.map((topic) => (
-            <div className='col-4' key={topic.topic_id}>
+            <div className='col-lg-4 col-md-6' key={topic.topic_id}>
               {/* Render topic details here */}
               <div className='row topic-wrap' onClick={() => goToTopicDetails(topic)}>
                 <div className='col-12 mx-0 px-0'>
                   <div className='d-flex topic-card'>
-                    <div className='col-4 px-0'>
+                    <div className='col-lg-4 col-md-2.5 px-0'>
                       <div className={`object-cover topic-img`}>
                         <img
                           alt='topic items'
@@ -143,7 +146,7 @@ export default function Page({ params }) {
                         />
                       </div>
                     </div>
-                    <div className='col-8 px-0 d-flex flex-column justify-content-between'>
+                    <div className='col-lg-8 col-md-9 px-0 d-flex flex-column justify-content-between'>
                       <div>
                         <div className='text-base font-bold pb-2'>
                           {topic.topic_name}
@@ -164,6 +167,14 @@ export default function Page({ params }) {
             </div>
           ))}
         </div>
+      </div>
+      </div>
+
+
+
+     <div className='mobile '>
+
+      <p>mobile 1234</p>
       </div>
 
       {/* loading spinner   */}
