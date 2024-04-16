@@ -17,6 +17,8 @@ export const FilmLibrary = ({}) => {
   const [totalPage, setTotalPage] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const targetRef = useRef(null);
+
   const advanceFilterItem = [
     {
       text: '新上线',
@@ -56,24 +58,49 @@ export const FilmLibrary = ({}) => {
 
   const getSearchingList = async () => {
     if (currentPage > totalPage - 1 && totalPage != 0) {
-      return;
+      setLoadingVideoList(false);
     }
 
     setLoadingVideoList(true);
-    await new Promise((resolve) => setTimeout(resolve, 600));
-    setCurrentPage(currentPage + 1);
 
     const videoListing = await getSearchingListApi(paramsFilter);
 
     if (currentPage > 1) {
-      setVideoList((prev) => [...prev, ...videoListing.List]);
+      //setVideoList((prev) => [...prev, ...videoListing.List]);
     } else {
       setVideoList(videoListing.List);
       setTotalPage(videoListing?.TotalPageCount);
     }
 
-    // setLoadingVideoList(false);
+    
   };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // setIsVisible(entry.intersectionRatio >= 0.5);
+        if (entry.intersectionRatio >= 0.5) {
+          getSearchingList();
+          console.log('Element is at least 50% visible.');
+        } else {
+          console.log('Element is not yet 50% visible.');
+        }
+      },
+      {
+        threshold: 0.5, // 50% visibility threshold
+      }
+    );
+
+    if (targetRef.current) {
+      observer.observe(targetRef.current);
+    }
+
+    return () => {
+      if (targetRef.current) {
+        observer.unobserve(targetRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -97,24 +124,6 @@ export const FilmLibrary = ({}) => {
 
     fetchData();
   }, []);
-
-  const childRef = useRef(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const { scrollTop, clientHeight, scrollHeight } = childRef.current;
-      if (scrollTop + clientHeight === scrollHeight) {
-        console.log('Scrolled to bottom');
-        // Call your function or load more data here
-      }
-    };
-
-    childRef.current.addEventListener('scroll', handleScroll);
-
-    return () => {
-      childRef.current.removeEventListener('scroll', handleScroll);
-    };
-  });
 
   useEffect(() => {
     if (paramsFilter !== null) {
@@ -185,7 +194,7 @@ export const FilmLibrary = ({}) => {
 
   return (
     <>
-      <div ref={childRef} className='flex flex-1 justify-center'>
+      <div className='flex flex-1 justify-center'>
         {loading ? (
           <LoadingPage full={false} />
         ) : (
@@ -369,11 +378,11 @@ export const FilmLibrary = ({}) => {
                   <span>暂无播单</span>
                 </div>
               ) : null}
-              {loadingVideoList ? <Spinner /> : null}
             </div>
           </div>
         )}
       </div>
+      <div ref={targetRef}>{loadingVideoList && <Spinner></Spinner>}</div>
     </>
   );
 };
