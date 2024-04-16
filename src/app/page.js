@@ -52,7 +52,7 @@ export default function Home() {
   }, [selectedMenu]);
 
   return (
-    <div className='flex flex-1 justify-center'>
+    <div className='flex flex-1 justify-center' style={{ width: '100%' }}>
       {loading ? (
         <div>
           <LoadingPage full={false} />
