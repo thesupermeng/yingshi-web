@@ -2321,12 +2321,12 @@ a:not([href]):not([class]):hover {
 
 /* For mobile */
 .mobile {
-  display: none; /* Default display */
+  display: block; /* Default display */
 }
 
 /* Hide on desktop */
 @media (min-width: 769px) {
   .mobile {
-    display: block !important;
+    display: none !important;
   }
 }
