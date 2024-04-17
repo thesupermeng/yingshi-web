@@ -1,3 +1,4 @@
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState, useRef } from 'react';
 import { YingshiApi } from '@/util/YingshiApi';
@@ -13,7 +14,6 @@ import { VodContent } from '@/components/vod/vodContent.js';
 import styles from './style.module.css';
 import { AdsBanner } from '@/components/ads/adsBanner.js';
 import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
-
 
 export const PlayVod = ({ vodId }) => {
 
@@ -138,7 +138,7 @@ export const PlayVod = ({ vodId }) => {
   };
   
   return (
-    <div ref={domElementRef} className='w-[85%] py-2'>
+    <div ref={domElementRef} className='lg:w-[85%] w-screen py-2'>
       {vod != null && (
         <div className='flex flex-row space-x-4'>
           <div className='flex-1 space-y-4' style={{ width: '78%' }}>
@@ -161,10 +161,41 @@ export const PlayVod = ({ vodId }) => {
             <ShareHorizontal
               className={'w-[80%]'}
             />
-
             <VodContent vodContent={vod.vod_content} vodEpisodeSelected={episodeSelected} vodEpisodeInfo={vod.vod_episode_info} />
 
-            <AdsBanner />
+            <div className='lg:hidden flex flex-col space-y-4' style={{ width: '100%' }}>
+              <div className="">
+                <div className={`space-y-4 ${styles.vodMetaContainer}`}>
+                  <VodCard
+                    imgSource={vod.vod_pic}
+                    vodName={vod.vod_name}
+                    vodUpdateDate={vod.vod_time}
+                    vodYear={vod.vod_year}
+                    vodClass={vod.vod_class}
+                    vodRemark={vod.vod_remarks}
+                  />
+
+                  <VodSourceList
+                    vodSources={vod.vod_sources}
+                    vodSourceSelected={vodSourceSelected}
+                    onSelectSource={onSelectSource}
+                  />
+
+                  <VodEpisodeList
+                    episodeGroups={episodeGroups}
+                    episodeGroup={episodeGroupSelected}
+                    vodSource={vodSourceSelected}
+                    episodeSource={episodeSelected}
+                    onSelectEpisodeGroup={onSelectEpisodeGroup}
+                    onSelectEpisode={onSelectEpisode}
+                    style={{
+                      maxHeight: 300,
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
             <div style={{ marginTop: '30px', marginBottom: '10px' }}>
               <span className="text-xl" style={{ fontWeight: '500' }}>{t('相关推荐')}</span>
             </div>
@@ -175,34 +206,36 @@ export const PlayVod = ({ vodId }) => {
             </div>
           </div>
 
-          <div className='flex-col space-y-4' style={{ width: '22%' }}>
-            <div className={`space-y-4 ${styles.vodMetaContainer}`}>
-              <VodCard
-                imgSource={vod.vod_pic}
-                vodName={vod.vod_name}
-                vodUpdateDate={vod.vod_time}
-                vodYear={vod.vod_year}
-                vodClass={vod.vod_class}
-                vodRemark={vod.vod_remarks}
-              />
+          <div className='lg:flex hidden flex-col space-y-4' style={{ width: '22%' }}>
+            <div className="">
+              <div className={`space-y-4 ${styles.vodMetaContainer}`}>
+                <VodCard
+                  imgSource={vod.vod_pic}
+                  vodName={vod.vod_name}
+                  vodUpdateDate={vod.vod_time}
+                  vodYear={vod.vod_year}
+                  vodClass={vod.vod_class}
+                  vodRemark={vod.vod_remarks}
+                />
 
-              <VodSourceList
-                vodSources={vod.vod_sources}
-                vodSourceSelected={vodSourceSelected}
-                onSelectSource={onSelectSource}
-              />
+                <VodSourceList
+                  vodSources={vod.vod_sources}
+                  vodSourceSelected={vodSourceSelected}
+                  onSelectSource={onSelectSource}
+                />
 
-              <VodEpisodeList
-                episodeGroups={episodeGroups}
-                episodeGroup={episodeGroupSelected}
-                vodSource={vodSourceSelected}
-                episodeSource={episodeSelected}
-                onSelectEpisodeGroup={onSelectEpisodeGroup}
-                onSelectEpisode={onSelectEpisode}
-                style={{
-                  maxHeight: 300,
-                }}
-              />
+                <VodEpisodeList
+                  episodeGroups={episodeGroups}
+                  episodeGroup={episodeGroupSelected}
+                  vodSource={vodSourceSelected}
+                  episodeSource={episodeSelected}
+                  onSelectEpisodeGroup={onSelectEpisodeGroup}
+                  onSelectEpisode={onSelectEpisode}
+                  style={{
+                    maxHeight: 300,
+                  }}
+                />
+              </div>
             </div>
 
             <div className={styles.vodMetaContainer}>

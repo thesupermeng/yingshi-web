@@ -38,8 +38,8 @@ export default function RootLayout({ children }) {
       lang='en'
       className={`bg-sideMenu notranslate ${
         isWeb()
-          ? 'webcontent min-w-[768px] min-h-[500px] h-full overflow-x-auto overflow-y-hidden'
-          : 'h5content overscroll-none min-h-[100svh]'
+          ? 'webcontent h-full overflow-x-auto overflow-y-hidden'
+          : 'h5content overscroll-none'
       } relative w-[100vw]`}
       // className={`bg-sideMenu ${
       //   isWeb() ? 'webcontent min-w-[1360px] min-h-[500px]' : 'h5content'
