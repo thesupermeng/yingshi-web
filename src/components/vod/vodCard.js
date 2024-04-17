@@ -23,10 +23,19 @@ export const VodCard = ({
     </div>
 
     <div className="flex flex-col lg:w-2/3">
-      <span className="text-lg">{vodName}</span>
+      <div className="flex flex-row">
+        <span className="text-lg pr-5">{vodName}</span>
+        <div className="lg:hidden flex flex-row space-x-2 py-1">
+          <span className="text-sm text-white/75" style={{ fontWeight: '300' }}>{t('简介')}</span>
+          <Image
+            src={ArrowRightIcon}
+            alt="Icon"
+          />
+        </div>
+      </div>
       <span className="text-sm text-white/75 py-1 pt-3" style={{ fontWeight: '300' }}>{t('更新')}: {_vodUpdateDate.year}-{_vodUpdateDate.month}-{_vodUpdateDate.day}</span>
       <span className="text-sm text-white/75 py-1" style={{ fontWeight: '300' }}>{vodYear} {vodClass}</span>
-      <div className="flex flex-row space-x-2 py-1">
+      <div className="lg:flex hidden flex-row space-x-2 py-1">
         <span className="text-sm text-white/75" style={{ fontWeight: '300' }}>{t('简介')}</span>
         <Image
           src={ArrowRightIcon}
