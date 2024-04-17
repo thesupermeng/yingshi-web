@@ -280,7 +280,7 @@ const Header = () => {
           : 'md:absolute z-30 w-screen bg-gradient-to-b from-black from-15%'
       }
     >
-      <div className='flex py-3 md:mx-20 mx-2.5 justify-center'>
+      <div className='flex pb-4 py-3 md:mx-20 mx-2.5 justify-center'>
         <div className='gap-y-2 flex-col w-full xl:w-11/12 md:flex-row flex'>
           <div className='flex-1 flex gap-x-2 md:justify-start'>
             <div
@@ -624,7 +624,7 @@ const Header = () => {
                   <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>
                     <div className='relative flex flex-1 md:flex-none'>
                       <div
-                        className={`flex justify-between pr-2 ${
+                        className={`flex justify-between px-2 ${
                           openSearchMobile ? 'flex md:hidden' : 'hidden'
                         }`}
                       >
@@ -649,6 +649,7 @@ const Header = () => {
                           style={{
                             backgroundColor:
                               'rgba(255, 255, 255, 0.08) !important',
+                              height:'35px',
                           }}
                           onClick={handleOpenSearchMobile}
                           onKeyDown={(e) => {
@@ -666,8 +667,9 @@ const Header = () => {
                         </div>
                       </div>
                     </div>
+                       {/* topic search bar */}
                     {openSearchMobile ? (
-                      <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100%_-_52px)] z-10 left-0 md:left-auto md:w-96 md:h-[500px]'>
+                      <div className='mt-2 absolute flex flex-col items-center pt-1 w-full h-[calc(100%_-_52px)] z-10 left-0 md:left-auto md:w-96 md:h-[500px]'>
                         <div className='py-3 px-4 flex flex-col md:rounded-md w-full h-full overflow-scroll bg-[#1d2023] md:bg-[#1d2023e0] md:w-96 md:h-[500px]'>
                           {searchInput ? (
                             loadingSearching ? (

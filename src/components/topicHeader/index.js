@@ -22,7 +22,7 @@ const TopicHeader = ({ topicName }) => {
         className='flex'
         style={{
           position: 'absolute',
-          left: '16px',
+          left: '12px',
         }}
       >
         <FontAwesomeIcon icon={faAngleLeft} />
