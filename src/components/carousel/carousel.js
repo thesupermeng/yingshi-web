@@ -110,7 +110,7 @@ export const Carousel = ({ carouselItems }) => {
           <div className="col-span-6 mr-3" style={{ position: 'absolute', right: '0', bottom: '3rem' }}>
             <div className="grid grid-cols-12 gap-4">
               <div className="col-span-3"></div>
-              <div className="col-span-8" style={{ display: 'flex', flexDirection: 'row', zIndex: '100' }}>
+              <div className="col-span-8" style={{ display: 'flex', flexDirection: 'row', zIndex: '10' }}>
                 {carouselItems.map((previewItem, previewIndex) => (
                   <div style={{
                         display: 'flex',

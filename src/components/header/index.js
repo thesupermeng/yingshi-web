@@ -272,8 +272,8 @@ const Header = () => {
     <div
       className={
         pathname.startsWith('/play/') || pathname.startsWith('/filmLibrary')
-          ? 'w-screen z-20 bg-gradient-to-b from-black from-15%'
-          : 'md:absolute z-10 w-screen bg-gradient-to-b from-black from-15%'
+          ? 'w-screen z-30 bg-gradient-to-b from-black from-15%'
+          : 'md:absolute z-30 w-screen bg-gradient-to-b from-black from-15%'
       }
     >
       <div className='flex py-3 md:mx-20 mx-2.5'>
