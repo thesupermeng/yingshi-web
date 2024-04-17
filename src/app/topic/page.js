@@ -14,7 +14,6 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { debounce } from 'lodash';
 import { usePathname, useRouter } from 'next/navigation';
 import { Spinner } from './../../components/spinner';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './style.module.css';
 
@@ -184,7 +183,11 @@ export default function Page({ params }) {
       <div className='mobile'>
         <div className='row'>
           {topicList.map((topic) => (
-            <div className='mb-2' key={topic.topic_id}>
+            <div
+              className='mb-2 cursor-pointer'
+              key={topic.topic_id}
+              onClick={() => goToTopicDetails(topic)}
+            >
               <div className='col-12 pt-2 px-4 d-flex justify-content-between align-items-center pb-1 font-semibold'>
                 <span>{topic.topic_name}</span>
                 <span className='mr-2'>
@@ -204,7 +207,7 @@ export default function Page({ params }) {
                   {topic?.vod_list?.slice(0, 3).map((vod) => (
                     <div
                       className='col-4 px-1 cursor-pointer'
-                      key={vod.id}
+                      key={vod.vod_id}
                       onClick={(e) => {
                         e.preventDefault();
                         router.push(`/play/${vod.vod_id}`);

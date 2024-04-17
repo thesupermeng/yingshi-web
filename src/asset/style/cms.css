@@ -59,6 +59,11 @@
   font-weight: 700;
 }
 
+.topic-details-title-mobile {
+  font-size: 13px;
+  font-weight: 700;
+}
+
 .topic-details-title-sub {
   font-size: 12px;
   padding-top: 12px;
