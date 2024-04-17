@@ -15,7 +15,7 @@ export const FilmLibrary = ({}) => {
   const [videoList, setVideoList] = useState(null);
   const [loadingVideoList, setLoadingVideoList] = useState(true);
   const [totalPage, setTotalPage] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [stillCanLoad, setStillCanLoad] = useState(true);
 
   const targetRef = useRef(null);
 
@@ -44,7 +44,7 @@ export const FilmLibrary = ({}) => {
       {
         order: 'desc',
         limit: 30,
-        page: currentPage,
+        page: params.page,
         tid: params.typeId,
         class: params.class == '全部类型' ? '' : params.class,
         by: params.by,
@@ -56,31 +56,72 @@ export const FilmLibrary = ({}) => {
     );
   };
 
-  const getSearchingList = async () => {
-    if (currentPage > totalPage - 1 && totalPage != 0) {
-      setLoadingVideoList(false);
+  useEffect(() => {
+    setLoading(true);
+    // Simulating asynchronous data fetching
+    const fetchData = async () => {
+      const filteringTypeList = await getFilterTypeList();
+      setFilterTypeList(filteringTypeList);
+      setParamsFilter({
+        order: 'desc',
+        page: 1,
+        typeId: filteringTypeList[0].type_id,
+        by: advanceFilterItem[0].value,
+        class: '全部类型',
+        area: '全部地区',
+        lang: '全部语言',
+        year: '全部时间',
+      });
+
+      setLoading(false);
+      return true;
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (paramsFilter.page > totalPage - 1 && totalPage != 0) {
+        return;
+      }
+      setLoadingVideoList(true);
+
+      const videoListing = await getSearchingListApi(paramsFilter);
+
+      if (paramsFilter.page > 1) {
+        setVideoList((prev) => [...prev, ...videoListing.List]);
+      } else {
+        setVideoList(videoListing.List);
+        setTotalPage(videoListing.TotalPageCount);
+        console.log(paramsFilter);
+        setParamsFilter(paramsFilter);
+      }
+    };
+
+    if (paramsFilter !== null) {
+      fetchData();
     }
+  }, [paramsFilter]);
 
-    setLoadingVideoList(true);
-
-    const videoListing = await getSearchingListApi(paramsFilter);
-
-    if (currentPage > 1) {
-      //setVideoList((prev) => [...prev, ...videoListing.List]);
-    } else {
-      setVideoList(videoListing.List);
-      setTotalPage(videoListing?.TotalPageCount);
+  const loadMore = async () => {
+    console.log(paramsFilter);
+    if (paramsFilter !== null) {
+      let params = { ...paramsFilter };
+      console.log('load');
+      params.page = +1;
+      console.log(params);
+      setParamsFilter(params);
     }
-
-    
   };
 
   useEffect(() => {
+    console.log(paramsFilter);
     const observer = new IntersectionObserver(
       ([entry]) => {
         // setIsVisible(entry.intersectionRatio >= 0.5);
         if (entry.intersectionRatio >= 0.5) {
-          getSearchingList();
+          loadMore();
           console.log('Element is at least 50% visible.');
         } else {
           console.log('Element is not yet 50% visible.');
@@ -101,35 +142,6 @@ export const FilmLibrary = ({}) => {
       }
     };
   }, []);
-
-  useEffect(() => {
-    setLoading(true);
-    // Simulating asynchronous data fetching
-    const fetchData = async () => {
-      const filteringTypeList = await getFilterTypeList();
-      setFilterTypeList(filteringTypeList);
-      setParamsFilter({
-        order: 'desc',
-        typeId: filteringTypeList[0].type_id,
-        by: advanceFilterItem[0].value,
-        class: '全部类型',
-        area: '全部地区',
-        lang: '全部语言',
-        year: '全部时间',
-      });
-
-      setLoading(false);
-      return true;
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (paramsFilter !== null) {
-      getSearchingList();
-    }
-  }, [paramsFilter]);
 
   const listConverter = (type) => {
     let list = [];
@@ -172,6 +184,7 @@ export const FilmLibrary = ({}) => {
 
   const filterVideoList = (value, type) => {
     let params = { ...paramsFilter };
+    params.page = 1;
 
     if (type == 'type') {
       params.typeId = value;
@@ -189,7 +202,6 @@ export const FilmLibrary = ({}) => {
     setParamsFilter(params);
     setVideoList([]);
     setTotalPage(0);
-    setCurrentPage(1);
   };
 
   return (

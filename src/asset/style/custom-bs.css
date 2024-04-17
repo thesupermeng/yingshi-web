@@ -2301,9 +2301,32 @@ a:not([href]):not([class]):hover {
   line-height: 2 !important;
 }
 
-
 /* @media (min-width: 1330px) {
   .container {
     max-width: 1520px !important;
   }
 } */
+
+/* For desktop */
+.desktop {
+  display: block; /* Default display */
+}
+
+/* Hide on mobile */
+@media (max-width: 768px) {
+  .desktop {
+    display: none;
+  }
+}
+
+/* For mobile */
+.mobile {
+  display: block; /* Default display */
+}
+
+/* Hide on desktop */
+@media (min-width: 769px) {
+  .mobile {
+    display: block;
+  }
+}
