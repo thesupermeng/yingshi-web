@@ -90,40 +90,5 @@ export default function Home() {
         </div>
       )}
     </div>
-    // <div className='flex flex-1 justify-center'>
-    //     {/* <div className='flex flex-[1_0_0] overflow-y-auto min-y-0 pt-6 flex-col bg-transparent'> */}
-    //     {loading ? (
-    //       <div>
-    //         <LoadingPage full={false} />
-    //       </div>
-    //     ) : (
-    //       <div style={{ height: 'calc(100vh - 50px)', width: '100%', overflowY: 'auto' }}>
-    //         <Carousel carouselItems={carousel}/>
-    //         {categories != [] &&
-    //           categories?.map((category, idx) => {
-    //             return (
-    //               <div id={category.type_id} key={idx}>
-    //                 <span
-    //                   style={{
-    //                     fontSize: '22px',
-    //                     fontWeight: '600',
-    //                     fontStyle: 'normal',
-    //                     fontFamily: 'PingFang SC',
-    //                   }}
-    //                   className='px-4'
-    //                 >
-    //                   {category.type_name}
-    //                 </span>
-    //                 <div className='flex flex-row justify-between'>
-    //                   {category.vod_list?.slice(0, 6).map((vod, i) => {
-    //                     return <VideoVerticalCard vod={vod} key={i} />;
-    //                   })}
-    //                 </div>
-    //               </div>
-    //             );
-    //           })}
-    //       </div>
-    //     )}
-    // </div>
   );
 }
