@@ -588,7 +588,7 @@ const Header = () => {
   );
 
 
-  if (pathname.startsWith('/topic/')) {
+  if (pathname.startsWith('/topic/') || pathname.startsWith('/play')) {
     return (<></>)
   };
 
