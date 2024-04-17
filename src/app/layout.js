@@ -90,7 +90,7 @@ export default function RootLayout({ children }) {
           <div className='w-full h-screen flex flex-col'>
             <Header />
             <div
-              className='flex-1 overflow-y-scroll flex flex-col'
+              className=''
               style={{ alignItems: 'center' }}
             >
               {children}
