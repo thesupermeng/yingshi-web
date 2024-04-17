@@ -588,9 +588,18 @@ const Header = () => {
   );
 
 
-  if (pathname.startsWith('/topic/') || pathname.startsWith('/play')) {
+  if (pathname.startsWith('/topic/')) {
     return (<></>)
   };
+
+  if (pathname.startsWith('/play')) {
+    return (
+      <div className={'desktop'}>
+{defaultHeader}
+    </div>)
+  };
+
+ 
 
   if (pathname.startsWith('/topic')) {
     return (
