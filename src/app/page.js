@@ -61,7 +61,7 @@ export default function Home() {
         <div className='flex flex-col w-full'>
           <Carousel carouselItems={carousel} />
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <div className='pt-4 md:mx-20 mx-2.5' style={{ width: '80%' }}>
+            <div className='pt-4 md:mx-20 mx-2.5'>
               {categories != [] &&
                 categories?.map((category, idx) => {
                   return (
