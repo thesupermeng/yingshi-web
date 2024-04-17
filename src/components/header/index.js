@@ -10,6 +10,7 @@ import {
   moreIcon,
   searchEmptyIcon,
   leftArrow,
+  clear,
 } from '@/asset/icons';
 import { usePathname, useRouter } from 'next/navigation';
 import { use, useEffect, useRef, useState } from 'react';
@@ -57,7 +58,6 @@ const Header = () => {
 
   const handleOpenSearch = () => {
     setOpenSearch(true);
-
   };
 
   const handleChange = (event) => {
@@ -117,7 +117,6 @@ const Header = () => {
     setSearchHistoryList(JSON.parse(localStorage.getItem('searchHistoryList')));
     setOpenSearch(false);
     router.push('/search/' + searchInput);
-
   };
 
   const handleClearSearchHistory = () => {
@@ -182,6 +181,12 @@ const Header = () => {
     }
   };
 
+  useEffect(()=> {
+    if (pathname.startsWith('/filmLibrary')) dispatch(setSelectedId(999));
+      else if (pathname.startsWith('/topic')) dispatch(setSelectedId(99));
+      else if (pathname.startsWith('/play/')) dispatch(setSelectedId(-1));
+  }, [pathname])
+
   useEffect(() => {
     const list = JSON.parse(localStorage.getItem('searchHistoryList'));
     if (list) {
@@ -206,14 +211,7 @@ const Header = () => {
         name: '片库',
       });
       dispatch(setHeaderMenu(menuItem));
-      if (pathname.startsWith('/filmLibrary'))
-        dispatch(setSelectedId(999));
-      else if (pathname.startsWith('/topic'))
-        dispatch(setSelectedId(99));
-      else if (pathname.startsWith('/play/'))
-        dispatch(setSelectedId(-1));
-      else 
-        dispatch(setSelectedId(menuItem[0].id));
+      dispatch(setSelectedId(menuItem[0].id));
 
       setLoading(false);
     };
@@ -284,10 +282,12 @@ const Header = () => {
                 openSearch ? 'hidden md:flex' : ''
               }`}
             >
-              <Image alt='鲨鱼影视' src={Logo}
+              <Image
+                alt='鲨鱼影视'
+                src={Logo}
                 style={{ cursor: 'pointer' }}
                 onClick={() => {
-                  router.push('/');
+                  handleClick(headerMenu.headerMenu[0].id)
                 }}
               />
             </div>
@@ -295,14 +295,14 @@ const Header = () => {
               <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>
                 <div className='relative flex flex-1 md:flex-none'>
                   <div
-                    className={`flex justify-between pr-2 ${
+                    className={`flex justify-between pr-4 pl-2 ${
                       openSearch ? 'flex md:hidden' : 'hidden'
                     }`}
                   >
                     <Image
                       alt='back'
                       src={leftArrow}
-                      style={{ width: '25px' }}
+                      style={{ width: '12px' }}
                       onClick={() => {
                         setOpenSearch(false);
                         setSearchInput('');
@@ -314,7 +314,7 @@ const Header = () => {
                     placeholder='输入搜索关键词'
                     value={searchInput}
                     onChange={handleChange}
-                    className='border-0 border-gray-300 text-white rounded-md pl-4 pr-10 py-2 focus:outline-none w-full md:w-60'
+                    className='border-0 border-gray-300 text-white md:rounded-md rounded-full pl-4 pr-10 py-2 focus:outline-none w-full md:w-60'
                     style={{ backgroundColor: 'rgba(255, 255, 255, 0.08)' }}
                     onClick={handleOpenSearch}
                     onKeyDown={(e) => {
@@ -331,7 +331,7 @@ const Header = () => {
                 </div>
                 {openSearch ? (
                   <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100%_-_52px)] z-10 left-0 md:left-auto md:w-96 md:h-[500px]'>
-                    <div className='py-3 px-4 flex flex-col md:rounded-md w-full h-full overflow-scroll bg-[#1d2023] md:bg-[#1d2023e0] md:w-96 md:h-[500px]'>
+                    <div className='py-3 px-4 flex flex-col md:rounded-md w-full h-full md:h-fit overflow-scroll bg-[#1d2023] md:bg-[#1d2023e0] md:w-96'>
                       {searchInput ? (
                         loadingSearching ? (
                           <LoadingPage full={false} />
@@ -372,12 +372,19 @@ const Header = () => {
                             <div>
                               <div className='flex flex-row justify-between items-center pb-2'>
                                 <div className='text-sm'>历史搜索</div>
-                                <div
-                                  className='text-xs'
-                                  style={{ color: 'rgba(156, 156, 156, 1)' }}
-                                  onClick={handleClearSearchHistory}
-                                >
-                                  清除
+                                <div className='flex flex-row' onClick={handleClearSearchHistory}>
+                                  <span
+                                    className='text-xs'
+                                    style={{ color: 'rgba(156, 156, 156, 1)' }}
+                                  >
+                                    清除
+                                  </span>
+                                  <Image
+                                    className='mx-1'
+                                    src={clear}
+                                    alt='clear'
+                                    width={10}
+                                  />
                                 </div>
                               </div>
                               <div className='flex flex-wrap py-2 gap-2'>
@@ -431,7 +438,7 @@ const Header = () => {
                                   <div className='text-sm'>{item.vod_name}</div>
                                 </div>
                                 <div
-                                  className='text-xs'
+                                  className='text-xs pr-4'
                                   style={{ color: 'rgba(156, 156, 156, 1)' }}
                                 >
                                   {item.type_name}
