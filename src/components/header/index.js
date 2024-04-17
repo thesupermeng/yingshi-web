@@ -276,7 +276,7 @@ const Header = () => {
       }
     >
       <div className='flex py-3 md:mx-20 mx-2.5 justify-center'>
-        <div className='gap-y-2 flex-col w-full xl:w-4/5 md:flex-row flex'>
+        <div className='gap-y-2 flex-col w-full xl:w-11/12 md:flex-row flex'>
           <div className='flex-1 flex gap-x-2 md:justify-start'>
             <div
               className={`flex justify-between w-24 md:w-28 ${
