@@ -2309,19 +2309,19 @@ a:not([href]):not([class]):hover {
 
 /* For desktop */
 .desktop {
-  display: block !important;; /* Default display */
+  display: block; /* Default display */
 }
 
 /* Hide on mobile */
 @media (max-width: 768px) {
   .desktop {
-    display: none  !important;;
+    display: none !important;
   }
 }
 
 /* For mobile */
 .mobile {
-  display: block  !important; /* Default display */
+  display: none; /* Default display */
 }
 
 /* Hide on desktop */
