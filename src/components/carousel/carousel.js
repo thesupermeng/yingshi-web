@@ -70,12 +70,13 @@ export const Carousel = ({ carouselItems }) => {
                   left: 0,
                   opacity: index === carouselIndex ? 1 : 0,
                   transition: 'opacity 0.5s ease-in-out',
+                  backgroundColor: 'rgba(0, 0, 0, 0.9)',
                 }}
               >
                 <img
                   src={item.carousel_pic_pc}
                   alt={`Slide ${index}`}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'pointer' }}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'pointer', opacity: 0.9, position: 'relative'}}
                   onClick={(e) => {
                     e.preventDefault();
                     router.push(`/play/${item.vod.vod_id}`);
