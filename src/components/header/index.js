@@ -19,6 +19,7 @@ import { YingshiApi } from '@/util/YingshiApi';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { LoadingPage } from '@/components/loading';
 import { setHeaderMenu, setSelectedId } from '@/store/headerData';
+import TopicHeader from './../../components/topicHeader';
 
 const getHeaderMenu = (state) => state.headerMenu;
 const getHeaderMenuSelected = (state) => state.headerMenuSelected;
@@ -187,11 +188,11 @@ const Header = () => {
     }
   };
 
-  useEffect(()=> {
+  useEffect(() => {
     if (pathname.startsWith('/filmLibrary')) dispatch(setSelectedId(999));
-      else if (pathname.startsWith('/topic')) dispatch(setSelectedId(99));
-      else if (pathname.startsWith('/play/')) dispatch(setSelectedId(-1));
-  }, [pathname])
+    else if (pathname.startsWith('/topic')) dispatch(setSelectedId(99));
+    else if (pathname.startsWith('/play/')) dispatch(setSelectedId(-1));
+  }, [pathname]);
 
   useEffect(() => {
     const list = JSON.parse(localStorage.getItem('searchHistoryList'));
@@ -293,7 +294,7 @@ const Header = () => {
                 src={Logo}
                 style={{ cursor: 'pointer' }}
                 onClick={() => {
-                  handleClick(headerMenu.headerMenu[0].id)
+                  handleClick(headerMenu.headerMenu[0].id);
                 }}
               />
             </div>
@@ -378,7 +379,10 @@ const Header = () => {
                             <div>
                               <div className='flex flex-row justify-between items-center pb-2'>
                                 <div className='text-sm'>历史搜索</div>
-                                <div className='flex flex-row' onClick={handleClearSearchHistory}>
+                                <div
+                                  className='flex flex-row'
+                                  onClick={handleClearSearchHistory}
+                                >
                                   <span
                                     className='text-xs'
                                     style={{ color: 'rgba(156, 156, 156, 1)' }}
@@ -592,24 +596,30 @@ const Header = () => {
     </div>
   );
 
-
   if (pathname.startsWith('/topic/')) {
-    return (<></>)
-  };
+    return <></>;
+  }
+
+  if (pathname.startsWith('/filmLibrary')) {
+    return (
+      <>
+        <div className={'mobile'}>
+          <TopicHeader topicName={'片库'} />
+        </div>
+
+        <div className={'desktop'}>{defaultHeader}</div>
+      </>
+    );
+  }
 
   if (pathname.startsWith('/play')) {
-    return (
-      <div className={'desktop'}>
-{defaultHeader}
-    </div>)
-  };
-
- 
+    return <div className={'desktop'}>{defaultHeader}</div>;
+  }
 
   if (pathname.startsWith('/topic')) {
     return (
       <>
-       <div className={'md:absolute z-30 w-screen mobile'}>
+        <div className={'md:absolute z-30 w-screen mobile'}>
           <div className='flex py-3 md:mx-20 mx-2.5'>
             <div className='gap-y-2 flex-col w-full md:flex-row flex'>
               <div className='flex-1 flex gap-x-2 md:justify-start'>
@@ -631,7 +641,7 @@ const Header = () => {
                         <Image
                           alt='back'
                           src={leftArrow}
-                         // style={{ width: '25px' }} 
+                          // style={{ width: '25px' }}
                           onClick={() => {
                             setOpenSearchMobile(false);
                             setSearchInput('');
@@ -649,7 +659,7 @@ const Header = () => {
                           style={{
                             backgroundColor:
                               'rgba(255, 255, 255, 0.08) !important',
-                              height:'35px',
+                            height: '35px',
                           }}
                           onClick={handleOpenSearchMobile}
                           onKeyDown={(e) => {
@@ -667,7 +677,7 @@ const Header = () => {
                         </div>
                       </div>
                     </div>
-                       {/* topic search bar */}
+                    {/* topic search bar */}
                     {openSearchMobile ? (
                       <div className='mt-2 absolute flex flex-col items-center pt-1 w-full h-[calc(100%_-_52px)] z-10 left-0 md:left-auto md:w-96 md:h-[500px]'>
                         <div className='py-3 px-4 flex flex-col md:rounded-md w-full h-full overflow-scroll bg-[#1d2023] md:bg-[#1d2023e0] md:w-96 md:h-[500px]'>
@@ -822,7 +832,7 @@ const Header = () => {
         <div className='desktop'>{defaultHeader}</div>
       </>
     );
-  };
+  }
 
   return defaultHeader;
 };
