@@ -2309,24 +2309,24 @@ a:not([href]):not([class]):hover {
 
 /* For desktop */
 .desktop {
-  display: block; /* Default display */
+  display: block !important;; /* Default display */
 }
 
 /* Hide on mobile */
 @media (max-width: 768px) {
   .desktop {
-    display: none;
+    display: none  !important;;
   }
 }
 
 /* For mobile */
 .mobile {
-  display: block; /* Default display */
+  display: block  !important; /* Default display */
 }
 
 /* Hide on desktop */
 @media (min-width: 769px) {
   .mobile {
-    display: block;
+    display: block !important;
   }
 }
