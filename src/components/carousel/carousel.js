@@ -33,6 +33,18 @@ export const Carousel = ({ carouselItems }) => {
     setCurrentlyHover(false);
   }
 
+  const renderShortString = (str) => {
+    if (str == null || str == undefined) {
+      return str
+    }
+
+    if (str.length > 5) {
+      return str.substring(0, 5) + '...'
+    }
+
+    return str
+  }
+
   return (
     <div style={{ position: 'relative', width: '100%', aspectRatio: '5/2', overflow: 'hidden' }}>
       {carouselItems && carouselItems.length > 0 && (
@@ -136,7 +148,7 @@ export const Carousel = ({ carouselItems }) => {
                           />
                       </div>
                       <div key={previewIndex} style={{ paddingRight: '10px', paddingLeft: '10px', textAlign: 'center', fontSize: '12px' }}>
-                          {previewItem.carousel_name}
+                        {renderShortString(previewItem.carousel_name)}
                       </div>
                   </div>
                 ))}
