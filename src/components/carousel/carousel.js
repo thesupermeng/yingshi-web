@@ -70,12 +70,13 @@ export const Carousel = ({ carouselItems }) => {
                   left: 0,
                   opacity: index === carouselIndex ? 1 : 0,
                   transition: 'opacity 0.5s ease-in-out',
+                  backgroundColor: 'rgba(0, 0, 0, 0.9)',
                 }}
               >
                 <img
                   src={item.carousel_pic_pc}
                   alt={`Slide ${index}`}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'pointer' }}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'pointer', opacity: 0.9, position: 'relative'}}
                   onClick={(e) => {
                     e.preventDefault();
                     router.push(`/play/${item.vod.vod_id}`);
@@ -122,7 +123,7 @@ export const Carousel = ({ carouselItems }) => {
           <div className="col-span-6 mr-3" style={{ position: 'absolute', right: '0', bottom: '3rem' }}>
             <div className="grid grid-cols-12 gap-4">
               <div className="col-span-3"></div>
-              <div className="col-span-8" style={{ display: 'flex', flexDirection: 'row', zIndex: '100' }}>
+              <div className="col-span-8" style={{ display: 'flex', flexDirection: 'row', zIndex: '10' }}>
                 {carouselItems.map((previewItem, previewIndex) => (
                   <div style={{
                         display: 'flex',
@@ -145,6 +146,10 @@ export const Carousel = ({ carouselItems }) => {
                               src={previewItem.vod.vod_pic}
                               alt={`Slide ${previewIndex}`}
                               style={{ width: '100%', aspectRatio: '5/7', objectFit: 'cover', borderRadius: '12px' }}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                router.push(`/play/${previewItem.vod.vod_id}`);
+                              }}
                           />
                       </div>
                       <div key={previewIndex} style={{ paddingRight: '10px', paddingLeft: '10px', textAlign: 'center', fontSize: '12px' }}>

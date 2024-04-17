@@ -44,7 +44,7 @@ export default function Page() {
           {/* desktop view */}
           <div className='desktop'>
             <div className={styles.containerHeader}>
-              <div className='d-flex' style={{ width: '100%' }}>
+              <div className='d-flexx' style={{ width: '100%' }}>
                 <div className='overlay' style={{ width: '100%' }}>
                   <div className='row px-0 d-flex flex-column '>
                     <div className='topic-container-header container content-end'>
@@ -69,7 +69,7 @@ export default function Page() {
             <div className='d-flex container pt-3' style={{ width: '100%' }}>
               <div className='row'>
                 {topicObj.vod_list.map((vod) => (
-                  <div className='col-lg-6 col-md-12 mt-2 mb-2'>
+                  <div className='col-lg-6 col-md-12 mt-2 mb-2 cursor-pointer'>
                     <div
                       className='topic-details-card'
                       onClick={(e) => {
@@ -130,14 +130,20 @@ export default function Page() {
           </div>
 
           {/* mobile view */}
-          <div className='mobile mt-2 px-4'>
+          <div className='mobile mt-2 px-4 pb-6'>
             {/* sticky  header  */}
-            <div className='flex items-center justify-center'>
+            <div
+              className='flex items-center justify-center cursor-pointer'
+              onClick={(e) => {
+                e.preventDefault();
+                history.back();
+              }}
+            >
               <span
                 className='flex'
                 style={{
                   position: 'absolute',
-                  left: '24px',
+                  left: '16px',
                 }}
               >
                 <FontAwesomeIcon icon={faAngleLeft} />
@@ -145,17 +151,17 @@ export default function Page() {
               <span className='flex'>{topicObj.topic_name}</span>
             </div>
             {/* mobile content */}
-            <div className='topic-header-text-sub mt-2'>
+            <div className='topic-header-text-sub mt-3'>
               {topicObj.topic_blurb}
             </div>
 
-            <div className='topic-header-text-sub mt-2'>
+            <div className='topic-header-text-sub mt-3'>
               (共{topicObj.vod_list.length}部)
             </div>
             {/* mobile vod list  */}
             <div className='row mt-2'>
               {topicObj.vod_list.map((vod) => (
-                <div className='col-lg-6 col-md-12 mt-2 mb-2'>
+                <div className='col-lg-6 col-md-12 pt-3 pb-3 cursor-pointer'>
                   <div
                     onClick={(e) => {
                       e.preventDefault();
