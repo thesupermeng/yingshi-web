@@ -626,7 +626,7 @@ const Header = () => {
                         <Image
                           alt='back'
                           src={leftArrow}
-                          style={{ width: '25px' }}
+                         // style={{ width: '25px' }}
                           onClick={() => {
                             setOpenSearch(false);
                             setSearchInput('');
