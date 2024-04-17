@@ -18,6 +18,7 @@ export const RightBetCartWidth = 'w-[32rem]';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
 import { Carousel } from '@/components/carousel/carousel';
+import { ArrowRightIcon } from "@/asset/icons";
 
 const getHeaderMenuSelected = (state) => state.headerMenuSelected;
 
