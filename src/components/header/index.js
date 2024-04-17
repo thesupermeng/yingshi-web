@@ -609,7 +609,7 @@ const Header = () => {
             <div className='gap-y-2 flex-col w-full md:flex-row flex'>
               <div className='flex-1 flex gap-x-2 md:justify-start'>
                 <div
-                  className={`flex justify-between w-24 md:w-28 ${
+                  className={`flex justify-between w-22 pl-3 ${
                     openSearch ? 'hidden md:flex' : ''
                   }`}
                 >
@@ -626,7 +626,7 @@ const Header = () => {
                         <Image
                           alt='back'
                           src={leftArrow}
-                         // style={{ width: '25px' }}
+                         // style={{ width: '25px' }} 
                           onClick={() => {
                             setOpenSearch(false);
                             setSearchInput('');
