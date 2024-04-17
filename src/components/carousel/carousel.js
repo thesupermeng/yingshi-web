@@ -146,6 +146,10 @@ export const Carousel = ({ carouselItems }) => {
                               src={previewItem.vod.vod_pic}
                               alt={`Slide ${previewIndex}`}
                               style={{ width: '100%', aspectRatio: '5/7', objectFit: 'cover', borderRadius: '12px' }}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                router.push(`/play/${previewItem.vod.vod_id}`);
+                              }}
                           />
                       </div>
                       <div key={previewIndex} style={{ paddingRight: '10px', paddingLeft: '10px', textAlign: 'center', fontSize: '12px' }}>
