@@ -234,7 +234,7 @@ export default function Page({ params }) {
         </div>
       </div>
 
-      {/* loading spinner   */}
+      {/* loading spinner  */}
       <div ref={targetRef}>{isLoading && <Spinner></Spinner>}</div>
     </>
   );

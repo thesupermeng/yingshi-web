@@ -60,6 +60,7 @@
 }
 
 .topic-details-title-mobile {
+  margin-top: 10px;
   font-size: 13px;
   font-weight: 700;
 }
@@ -112,4 +113,17 @@
   line-height: 20px !important;
   margin-bottom: 10px;
   color: #9c9c9c !important;
+}
+
+.mobile-topic-search-img {
+  position: absolute !important;
+  left: 10px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+
+.text-topic-title {
+  width: 48px !important;
+  font-weight: 700 !important;
+  font-size: 20px !important;
 }
