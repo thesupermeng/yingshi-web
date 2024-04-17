@@ -279,7 +279,12 @@ const Header = () => {
                 openSearch ? 'hidden md:flex' : ''
               }`}
             >
-              <Image alt='鲨鱼影视' src={Logo} />
+              <Image alt='鲨鱼影视' src={Logo}
+                style={{ cursor: 'pointer' }}
+                onClick={() => {
+                  router.push('/');
+                }}
+              />
             </div>
             <div className='items-center flex flex-1 md:flex-none'>
               <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>

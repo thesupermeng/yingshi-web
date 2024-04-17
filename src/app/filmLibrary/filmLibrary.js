@@ -6,7 +6,6 @@ import { YingshiApi } from '@/util/YingshiApi';
 import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
 import { Spinner } from '@/components/spinner';
-import { debounce } from 'lodash';
 
 export const FilmLibrary = ({}) => {
   const [loading, setLoading] = useState(true);
@@ -14,8 +13,9 @@ export const FilmLibrary = ({}) => {
   const [paramsFilter, setParamsFilter] = useState(null);
   const [videoList, setVideoList] = useState(null);
   const [loadingVideoList, setLoadingVideoList] = useState(true);
+  const [stillCanLoad, setStillCanLoad] = useState(false);
+  const [nextPage, setNextPage] = useState(0);
   const [totalPage, setTotalPage] = useState(0);
-  const [stillCanLoad, setStillCanLoad] = useState(true);
 
   const targetRef = useRef(null);
 
@@ -44,7 +44,7 @@ export const FilmLibrary = ({}) => {
       {
         order: 'desc',
         limit: 30,
-        page: params.page,
+        page: nextPage,
         tid: params.typeId,
         class: params.class == '全部类型' ? '' : params.class,
         by: params.by,
@@ -56,15 +56,36 @@ export const FilmLibrary = ({}) => {
     );
   };
 
+  const getSearchingList = async () => {
+    let currentPage = nextPage;
+    const videoListing = await getSearchingListApi(paramsFilter);
+    if (nextPage > 1) {
+      setVideoList((prev) => [...prev, ...videoListing.List]);
+    } else {
+      setTotalPage(videoListing.TotalPageCount);
+      setVideoList(videoListing.List);
+    }
+    if (nextPage > videoListing.TotalPageCount - 1) {
+      setLoadingVideoList(false);
+      setStillCanLoad(false);
+    } else {
+      setStillCanLoad(true);
+      setNextPage(currentPage + 1);
+      setLoadingVideoList(false);
+    }
+
+    console.log(loadingVideoList, stillCanLoad);
+  };
+
   useEffect(() => {
     setLoading(true);
     // Simulating asynchronous data fetching
     const fetchData = async () => {
       const filteringTypeList = await getFilterTypeList();
       setFilterTypeList(filteringTypeList);
+      setNextPage(1);
       setParamsFilter({
         order: 'desc',
-        page: 1,
         typeId: filteringTypeList[0].type_id,
         by: advanceFilterItem[0].value,
         class: '全部类型',
@@ -81,67 +102,44 @@ export const FilmLibrary = ({}) => {
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (paramsFilter.page > totalPage - 1 && totalPage != 0) {
-        return;
-      }
-      setLoadingVideoList(true);
-
-      const videoListing = await getSearchingListApi(paramsFilter);
-
-      if (paramsFilter.page > 1) {
-        setVideoList((prev) => [...prev, ...videoListing.List]);
-      } else {
-        setVideoList(videoListing.List);
-        setTotalPage(videoListing.TotalPageCount);
-        console.log(paramsFilter);
-        setParamsFilter(paramsFilter);
-      }
-    };
-
     if (paramsFilter !== null) {
-      fetchData();
+      getSearchingList();
     }
   }, [paramsFilter]);
 
-  const loadMore = async () => {
-    console.log(paramsFilter);
-    if (paramsFilter !== null) {
-      let params = { ...paramsFilter };
-      console.log('load');
-      params.page = +1;
-      console.log(params);
-      setParamsFilter(params);
-    }
+  const loadMore = () => {
+    getSearchingList();
   };
 
   useEffect(() => {
-    console.log(paramsFilter);
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        // setIsVisible(entry.intersectionRatio >= 0.5);
-        if (entry.intersectionRatio >= 0.5) {
-          loadMore();
-          console.log('Element is at least 50% visible.');
-        } else {
-          console.log('Element is not yet 50% visible.');
+    console.log(nextPage, stillCanLoad);
+    if (stillCanLoad) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          // setIsVisible(entry.intersectionRatio >= 0.5);
+          if (entry.intersectionRatio >= 0.5) {
+            loadMore();
+            console.log('Element is at least 50% visible.');
+          } else {
+            console.log('Element is not yet 50% visible.');
+          }
+        },
+        {
+          threshold: 0.5, // 50% visibility threshold
         }
-      },
-      {
-        threshold: 0.5, // 50% visibility threshold
-      }
-    );
+      );
 
-    if (targetRef.current) {
-      observer.observe(targetRef.current);
-    }
-
-    return () => {
       if (targetRef.current) {
-        observer.unobserve(targetRef.current);
+        observer.observe(targetRef.current);
       }
-    };
-  }, []);
+
+      return () => {
+        if (targetRef.current) {
+          observer.unobserve(targetRef.current);
+        }
+      };
+    }
+  }, [nextPage, stillCanLoad]);
 
   const listConverter = (type) => {
     let list = [];
@@ -183,25 +181,29 @@ export const FilmLibrary = ({}) => {
   };
 
   const filterVideoList = (value, type) => {
-    let params = { ...paramsFilter };
-    params.page = 1;
+    if (!loadingVideoList){
+      let params = { ...paramsFilter };
 
-    if (type == 'type') {
-      params.typeId = value;
-    } else if (type == 'by') {
-      params.by = value;
-    } else if (type == 'class') {
-      params.class = value;
-    } else if (type == 'area') {
-      params.area = value;
-    } else if (type == 'lang') {
-      params.lang = value;
-    } else if (type == 'year') {
-      params.year = value;
+      if (type == 'type') {
+        params.typeId = value;
+      } else if (type == 'by') {
+        params.by = value;
+      } else if (type == 'class') {
+        params.class = value;
+      } else if (type == 'area') {
+        params.area = value;
+      } else if (type == 'lang') {
+        params.lang = value;
+      } else if (type == 'year') {
+        params.year = value;
+      }
+      setParamsFilter(params);
+      setNextPage(1);
+      setVideoList([]);
+      setTotalPage(0);
+      setStillCanLoad(false);
+      setLoadingVideoList(true);
     }
-    setParamsFilter(params);
-    setVideoList([]);
-    setTotalPage(0);
   };
 
   return (
@@ -394,7 +396,9 @@ export const FilmLibrary = ({}) => {
           </div>
         )}
       </div>
-      <div ref={targetRef}>{loadingVideoList && <Spinner></Spinner>}</div>
+      <div ref={targetRef}>
+        {(stillCanLoad || loadingVideoList) && <Spinner></Spinner>}
+      </div>
     </>
   );
 };
