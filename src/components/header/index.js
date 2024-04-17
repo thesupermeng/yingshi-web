@@ -47,6 +47,7 @@ const Header = () => {
   const [loading, setLoading] = useState(true);
   const [openMore, setOpenMore] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
+  const [openSearchMobile, setOpenSearchMobile] = useState(false);
   const [searchHistoryList, setSearchHistoryList] = useState([]);
   const [topTenList, setTopTenList] = useState([]);
   const [searchingList, setSearchList] = useState([]);
@@ -59,6 +60,10 @@ const Header = () => {
 
   const handleOpenSearch = () => {
     setOpenSearch(true);
+  };
+
+  const handleOpenSearchMobile = () => {
+    setOpenSearchMobile(true);
   };
 
   const handleChange = (event) => {
@@ -604,13 +609,13 @@ const Header = () => {
   if (pathname.startsWith('/topic')) {
     return (
       <>
-        <div className={'md:absolute z-30 w-screen mobile'}>
+       <div className={'md:absolute z-30 w-screen mobile'}>
           <div className='flex py-3 md:mx-20 mx-2.5'>
             <div className='gap-y-2 flex-col w-full md:flex-row flex'>
               <div className='flex-1 flex gap-x-2 md:justify-start'>
                 <div
                   className={`flex justify-between w-22 pl-3 ${
-                    openSearch ? 'hidden md:flex' : ''
+                    openSearchMobile ? 'hidden md:flex' : ''
                   }`}
                 >
                   <span className='text-topic-title'> 播单 </span>
@@ -620,7 +625,7 @@ const Header = () => {
                     <div className='relative flex flex-1 md:flex-none'>
                       <div
                         className={`flex justify-between pr-2 ${
-                          openSearch ? 'flex md:hidden' : 'hidden'
+                          openSearchMobile ? 'flex md:hidden' : 'hidden'
                         }`}
                       >
                         <Image
@@ -628,7 +633,7 @@ const Header = () => {
                           src={leftArrow}
                          // style={{ width: '25px' }} 
                           onClick={() => {
-                            setOpenSearch(false);
+                            setOpenSearchMobile(false);
                             setSearchInput('');
                           }}
                         />
@@ -645,7 +650,7 @@ const Header = () => {
                             backgroundColor:
                               'rgba(255, 255, 255, 0.08) !important',
                           }}
-                          onClick={handleOpenSearch}
+                          onClick={handleOpenSearchMobile}
                           onKeyDown={(e) => {
                             if (e.key === 'Enter') handleSearch();
                           }}
@@ -661,7 +666,7 @@ const Header = () => {
                         </div>
                       </div>
                     </div>
-                    {openSearch ? (
+                    {openSearchMobile ? (
                       <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100%_-_52px)] z-10 left-0 md:left-auto md:w-96 md:h-[500px]'>
                         <div className='py-3 px-4 flex flex-col md:rounded-md w-full h-full overflow-scroll bg-[#1d2023] md:bg-[#1d2023e0] md:w-96 md:h-[500px]'>
                           {searchInput ? (
@@ -675,7 +680,7 @@ const Header = () => {
                                     key={index}
                                     onClick={(e) => {
                                       e.preventDefault();
-                                      setOpenSearch(false);
+                                      setOpenSearchMobile(false);
                                       setSearchInput('');
                                       handleAddSearchHistory();
                                       router.push(`/play/${item.vod_id}`);
@@ -745,7 +750,7 @@ const Header = () => {
                                     key={index}
                                     onClick={(e) => {
                                       e.preventDefault();
-                                      setOpenSearch(false);
+                                      setOpenSearchMobile(false);
                                       router.push(`/play/${item.vod_id}`);
                                     }}
                                   >
@@ -787,7 +792,7 @@ const Header = () => {
                     ) : null}
                   </div>
                 </div>
-                {!openSearch ? (
+                {!openSearchMobile ? (
                   <div className='flex-row flex md:hidden'>
                     <Image
                       className='cursor-pointer'
