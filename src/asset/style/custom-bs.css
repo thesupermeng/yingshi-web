@@ -2324,9 +2324,17 @@ a:not([href]):not([class]):hover {
   display: block; /* Default display */
 }
 
+.main-container
+{
+  margin-bottom: 70px;
+}
 /* Hide on desktop */
 @media (min-width: 769px) {
   .mobile {
     display: none !important;
   }
+  .main-container
+{
+  margin-bottom: 30px;
+}
 }

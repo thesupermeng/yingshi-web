@@ -91,7 +91,7 @@ export default function RootLayout({ children }) {
         }`}
       >
         <Providers>
-          <div className='w-screen h-screen flex flex-col'>
+          <div className='w-screen h-screen flex flex-col main-container'>
             <Header />
             <div
               className='flex-1 overflow-y-scroll flex flex-col'

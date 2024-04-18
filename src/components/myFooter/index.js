@@ -41,36 +41,36 @@ const MyFooter = () => {
   };
   return (
     <div className='mobile'>
-    <div className='footer row '>
-      <div className='col flex-col d-flex justify-center align-center items-center'
-        onClick={() => {
-          handleClick(0);
-        }}>
-        <div className='d-flex' >
-          <Image
-            alt='鲨鱼影视'
-            src={(selectedMenu.id === 0 && pathname == '/') ? homeTabActive : homeTab}
-            width={22}
-            style={{ cursor: 'pointer' }}
-          />
+      <div className='my-footer row'>
+        <div className='col flex-col d-flex justify-center align-center items-center'
+          onClick={() => {
+            handleClick(0);
+          }}>
+          <div className='d-flex' >
+            <Image
+              alt='鲨鱼影视'
+              src={(selectedMenu.id === 0 && pathname == '/') ? homeTabActive : homeTab}
+              width={22}
+              style={{ cursor: 'pointer' }}
+            />
+          </div>
+          <div>首首</div>
         </div>
-        <div>首首</div>
-      </div>
 
-      <div className='col flex-col d-flex justify-center align-center items-center' onClick={() => {
-        handleClick(998);
-      }}>
-        <div className='d-flex'>
-          <Image
-            alt='鲨鱼影视'
-            src={pathname.startsWith('/topic') ? topicTabActive : topicTab}
-            width={22}
-            style={{ cursor: 'pointer' }}
-          />
+        <div className='col flex-col d-flex justify-center align-center items-center' onClick={() => {
+          handleClick(998);
+        }}>
+          <div className='d-flex'>
+            <Image
+              alt='鲨鱼影视'
+              src={pathname.startsWith('/topic') ? topicTabActive : topicTab}
+              width={22}
+              style={{ cursor: 'pointer' }}
+            />
+          </div>
+          <div>播单</div>
         </div>
-        <div>播单</div>
       </div>
-    </div>
     </div>
   );
 };
