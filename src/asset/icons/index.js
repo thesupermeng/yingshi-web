@@ -37,7 +37,13 @@ export { default as PhoneIcon } from './phoneIcon.svg';
 export { default as moreIcon } from './more.svg';
 export { default as searchEmptyIcon } from './searchEmptyIcon.svg';
 export { default as leftArrow } from './leftArrow.svg';
-export { default as clear } from './clear.svg'
+export { default as clear } from './clear.svg';
+export { default as userIcon } from './userIcon.svg';
+export { default as vipIcon } from './vipIcon.svg';
+export { default as glyph } from './glyph.svg';
+export { default as noADIcon } from './noADIcon.svg';
+export { default as subtractIcon } from './subtractIcon.svg'
+export { default as vipLightIcon } from './vipLightIcon.svg';
 
 // profiles
 export { default as AnimationTick } from './profile/animationTick.gif';

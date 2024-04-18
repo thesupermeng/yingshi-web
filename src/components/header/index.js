@@ -11,6 +11,12 @@ import {
   searchEmptyIcon,
   leftArrow,
   clear,
+  userIcon,
+  vipIcon,
+  vipLightIcon,
+  glyph,
+  noADIcon,
+  subtractIcon,
 } from '@/asset/icons';
 
 import { usePathname, useRouter } from 'next/navigation';
@@ -31,6 +37,7 @@ const Header = () => {
   const containerRef = useRef(null);
   const dropdownMoreRef = useRef(null);
   const dropdownSearchRef = useRef(null);
+  const dropdownVipRef = useRef(null);
   const { t } = useTranslation();
 
   // const onClick = () => {
@@ -48,6 +55,7 @@ const Header = () => {
   const [loading, setLoading] = useState(true);
   const [openMore, setOpenMore] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
+  const [openVip, setOpenVip] = useState(false);
   const [openSearchMobile, setOpenSearchMobile] = useState(false);
   const [searchHistoryList, setSearchHistoryList] = useState([]);
   const [topTenList, setTopTenList] = useState([]);
@@ -57,6 +65,10 @@ const Header = () => {
 
   const handleOpenMore = () => {
     setOpenMore(!openMore);
+  };
+
+  const handleOpenVip = () => {
+    setOpenVip(!openVip);
   };
 
   const handleOpenSearch = () => {
@@ -258,14 +270,25 @@ const Header = () => {
       }
     }
 
+    function handleClickOutsideDropDownVip(event) {
+      if (
+        dropdownVipRef.current &&
+        !dropdownVipRef.current.contains(event.target)
+      ) {
+        setOpenVip(false);
+      }
+    }
+
     // Attach event listener when the component mounts
     document.addEventListener('mousedown', handleClickOutsideDropDownMore);
     document.addEventListener('mousedown', handleClickOutsideSearch);
+    document.addEventListener('mousedown', handleClickOutsideDropDownVip);
 
     // Remove event listener when the component unmounts
     return () => {
       document.removeEventListener('mousedown', handleClickOutsideDropDownMore);
       document.removeEventListener('mousedown', handleClickOutsideSearch);
+      document.removeEventListener('mousedown', handleClickOutsideDropDownVip);
     };
   }, []);
 
@@ -464,23 +487,95 @@ const Header = () => {
               </div>
             </div>
             {!openSearch ? (
-              <div className='flex-row flex md:hidden'>
-                <Image
-                  className='cursor-pointer'
-                  src={HistoryIcon}
-                  alt='history'
-                  width={30}
-                />
-                <div className='flex items-center px-0'>
-                  <div className='h-4' />
-                </div>
-                <div className='flex flex-row cursor-pointer'>
-                  <Image
-                    className='mx-2'
-                    src={PhoneIcon}
-                    alt='app'
-                    width={15}
-                  />
+              <div className='flex-row flex hidden'> {/* add on md: infront of hidden */}
+                <div className='relative' ref={dropdownVipRef}>
+                  <div
+                    onClick={handleOpenVip}
+                    className='flex h-full flex-row cursor-pointer rounded-full'
+                  >
+                    <Image
+                      className='mr-2'
+                      src={vipIcon}
+                      alt='vip'
+                      width={25}
+                    />
+                    <div className='flex items-center'>
+                      <span className='text-[#F4DBBA]'>VIP会员</span>
+                    </div>
+                  </div>
+                  {openVip ? (
+                    <div className='absolute flex flex-col md:items-center items-end pt-1 w-80 md:-left-24 z-10 right-0'>
+                      <div
+                        style={{
+                          width: 0,
+                          height: 0,
+                          top: '-10px',
+                          borderLeft: '10px solid transparent',
+                          borderRight: '10px solid transparent',
+                          borderBottom: '10px solid rgba(29, 32, 35, 1)',
+                        }}
+                      />
+                      <div
+                        className='p-3 w-full flex flex-col md:rounded-md rounded-b-lg rounded-tl-lg'
+                        style={{ backgroundColor: 'rgba(29, 32, 35, 1)' }}
+                      >
+                        <span className='text-center font-bold text-lg text-[#E2BE95]'>
+                          VIP特权
+                        </span>
+                        <div className='py-2 grid grid-rows-2 grid-flow-col gap-2'>
+                          <div className='flex items-center'>
+                            <Image
+                              className='mr-2'
+                              src={vipLightIcon}
+                              alt='vip'
+                              width={24}
+                            />
+                            <span className='text-sm text-[#F4DBBA]'>
+                              VIP尊贵标识
+                            </span>
+                          </div>
+                          <div className='flex items-center'>
+                            <Image
+                              className='mr-2'
+                              src={noADIcon}
+                              alt='noAD'
+                              width={24}
+                            />
+                            <span className='text-sm text-[#F4DBBA]'>
+                              纯净广告
+                            </span>
+                          </div>
+                          <div className='flex items-center'>
+                            <Image
+                              className='mr-2'
+                              src={glyph}
+                              alt='glyph'
+                              width={24}
+                            />
+                            <span className='text-sm text-[#F4DBBA]'>
+                              解锁全部影视内容
+                            </span>
+                          </div>
+                          <div className='flex items-center'>
+                            <Image
+                              className='mr-2'
+                              src={subtractIcon}
+                              alt='noAD'
+                              width={24}
+                            />
+                            <span className='text-sm text-[#F4DBBA]'>
+                              畅享离线下载
+                            </span>
+                          </div>
+                        </div>
+                        <div className='flex bg-gradient-to-r from-[#FFCD92] to-[#B58C63] rounded p-1 justify-center'>
+                          <span className='text-[#000000] text-center font-bold'>
+                            开通会员权益
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             ) : null}
@@ -589,6 +684,97 @@ const Header = () => {
             <div className='flex flex-row cursor-pointer'>
               <Image className='mx-2' src={PhoneIcon} alt='app' width={14} />
               <div className='flex items-center'>APP</div>
+            </div>
+            <div className='relative hidden' ref={dropdownVipRef}> {/* remove hidden to show*/}
+              <div
+                onClick={handleOpenVip}
+                className='flex h-full flex-row cursor-pointer bg-[#1D2023] px-4 ml-2 rounded-full'
+              >
+                <Image className='mr-2' src={vipIcon} alt='vip' width={25} />
+                <div className='flex items-center'>
+                  <span className='text-[#F4DBBA]'>VIP会员</span>
+                </div>
+              </div>
+              {openVip ? (
+                <div className='absolute flex flex-col items-center pt-1 w-80 -left-24'>
+                  <div
+                    style={{
+                      width: 0,
+                      height: 0,
+                      top: '-10px',
+                      borderLeft: '10px solid transparent',
+                      borderRight: '10px solid transparent',
+                      borderBottom: '10px solid rgba(29, 32, 35, 0.88)',
+                    }}
+                  />
+                  <div
+                    className='p-3 w-full flex flex-col md:rounded-md rounded-b-lg rounded-tl-lg'
+                    style={{ backgroundColor: 'rgba(29, 32, 35, 0.88)' }}
+                  >
+                    <span className='text-center font-bold text-lg text-[#E2BE95]'>
+                      VIP特权
+                    </span>
+                    <div className='py-2 grid grid-rows-2 grid-flow-col gap-2'>
+                      <div className='flex items-center'>
+                        <Image
+                          className='mr-2'
+                          src={vipLightIcon}
+                          alt='vip'
+                          width={24}
+                        />
+                        <span className='text-sm text-[#F4DBBA]'>
+                          VIP尊贵标识
+                        </span>
+                      </div>
+                      <div className='flex items-center'>
+                        <Image
+                          className='mr-2'
+                          src={noADIcon}
+                          alt='noAD'
+                          width={24}
+                        />
+                        <span className='text-sm text-[#F4DBBA]'>纯净广告</span>
+                      </div>
+                      <div className='flex items-center'>
+                        <Image
+                          className='mr-2'
+                          src={glyph}
+                          alt='glyph'
+                          width={24}
+                        />
+                        <span className='text-sm text-[#F4DBBA]'>
+                          解锁全部影视内容
+                        </span>
+                      </div>
+                      <div className='flex items-center'>
+                        <Image
+                          className='mr-2'
+                          src={subtractIcon}
+                          alt='noAD'
+                          width={24}
+                        />
+                        <span className='text-sm text-[#F4DBBA]'>
+                          畅享离线下载
+                        </span>
+                      </div>
+                    </div>
+                    <div className='cursor-pointer flex bg-gradient-to-r from-[#FFCD92] to-[#B58C63] rounded p-1 justify-center'>
+                      <span className='text-[#000000] text-center font-bold'>
+                        开通会员权益
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+            </div>
+            <div className='flex-row hidden pl-4'>
+              {/* md:flex */}
+              <Image
+                className='cursor-pointer'
+                src={userIcon}
+                alt='user'
+                width={25}
+              />
             </div>
           </div>
         </div>
