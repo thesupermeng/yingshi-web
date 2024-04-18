@@ -143,6 +143,7 @@
   width: 100%;
 
   color: white; /* Set your desired text color */
+  width: calc(100% + 2rem) !important;
   
 
 }
