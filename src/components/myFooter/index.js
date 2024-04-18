@@ -40,7 +40,8 @@ const MyFooter = () => {
     }
   };
   return (
-    <div className='footer row'>
+    <div className='mobile'>
+    <div className='footer row '>
       <div className='col flex-col d-flex justify-center align-center items-center'
         onClick={() => {
           handleClick(0);
@@ -69,6 +70,7 @@ const MyFooter = () => {
         </div>
         <div>播单</div>
       </div>
+    </div>
     </div>
   );
 };
