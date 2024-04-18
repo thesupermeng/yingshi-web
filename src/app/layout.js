@@ -146,8 +146,9 @@ export default function RootLayout({ children }) {
           </H5Only> */}
           {/* <ChatMessages />
           <NotifyMessages /> */}
+                  <MyFooter />
         </Providers>
-        <MyFooter />
+
    
 
 
