@@ -48,9 +48,9 @@ export default function Home() {
     setLoading(true);
     if (selectedMenu.id !== 998 && selectedMenu.id !== 999) {
       getTypePage(selectedMenu.id).then((data) => {
-      console.log(data.categories);
+        console.log(data.categories);
         setCategories(data.categories);
-      setYunying(data.yunying);
+        setYunying(data.yunying);
         setCarousel(data.carousel);
         setLoading(false);
       });
@@ -71,7 +71,11 @@ export default function Home() {
               {yunying != [] &&
                 yunying?.map((yy, idx) => {
                   return (
-                    <div id={yy.type_id} key={idx} style={{ paddingTop: '3rem' }}>
+                    <div
+                      id={yy.type_id}
+                      key={idx}
+                      style={{ paddingTop: '3rem' }}
+                    >
                       <span
                         style={{
                           fontSize: '20px',
@@ -93,7 +97,11 @@ export default function Home() {
               {categories != [] &&
                 categories?.map((category, idx) => {
                   return (
-                    <div id={category.type_id} key={idx} style={{ paddingTop: '3rem' }}>
+                    <div
+                      id={category.type_id}
+                      key={idx}
+                      style={{ paddingTop: '3rem' }}
+                    >
                       <span
                         style={{
                           fontSize: '20px',
