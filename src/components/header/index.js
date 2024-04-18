@@ -464,10 +464,10 @@ const Header = () => {
                                         index == 0
                                           ? 'rgba(0, 106, 178, 1)'
                                           : index == 1
-                                          ? 'rgba(0, 133, 224, 1)'
-                                          : index == 2
-                                          ? 'rgba(96, 191, 255, 1)'
-                                          : 'rgba(156, 156, 156, 1)',
+                                            ? 'rgba(0, 133, 224, 1)'
+                                            : index == 2
+                                              ? 'rgba(96, 191, 255, 1)'
+                                              : 'rgba(156, 156, 156, 1)',
                                     }}
                                   >
                                     {index + 1}
@@ -586,8 +586,35 @@ const Header = () => {
               </div>
             ) : null}
           </div>
+          <div className='flex gap-4 overflow-scroll md:hidden'>
+            {headerMenu.headerMenu?.map((navItem, index) => {
+              return (
+                <div
+                  className='flex flex-1 flex-col items-center cursor-pointer header-tab'
+                  id={navItem.id}
+                  key={index}
+                  onClick={() => {
+                    handleClick(navItem.id);
+                  }}
+                >
+                  <span
+                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                      selectedMenu.id === navItem.id
+                        ? 'text-blue-500'
+                        : 'text-white'
+                    }`}
+                  >
+                    {navItem.name}
+                  </span>
+                  {selectedMenu.id === navItem.id ? (
+                    <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
+                  ) : null}
+                </div>
+              );
+            })}
+          </div>
           <div
-            className='grow flex items-center justify-end'
+            className='grow md:flex items-center justify-end hidden'
             style={{ maxWidth: `${headerMenu.headerMenu?.length * 56}px` }}
             ref={containerRef}
           >
@@ -968,10 +995,10 @@ const Header = () => {
                                             index == 0
                                               ? 'rgba(0, 106, 178, 1)'
                                               : index == 1
-                                              ? 'rgba(0, 133, 224, 1)'
-                                              : index == 2
-                                              ? 'rgba(96, 191, 255, 1)'
-                                              : 'rgba(156, 156, 156, 1)',
+                                                ? 'rgba(0, 133, 224, 1)'
+                                                : index == 2
+                                                  ? 'rgba(96, 191, 255, 1)'
+                                                  : 'rgba(156, 156, 156, 1)',
                                         }}
                                       >
                                         {index + 1}
