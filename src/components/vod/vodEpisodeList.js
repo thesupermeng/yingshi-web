@@ -115,9 +115,9 @@ export const VodEpisodeList = ({
       }}
       backdropComponent={renderBackdrop}
       >
-        <ul className="flex flex-column overflow-auto">
+        <ul className="flex flex-column overflow-auto no-scrollbar">
           {episodeGroups.map((group, index) => (
-            <li key={`key-episodeGroup-${index}`} id={`episodeGroup-${index}`} className={`${styles.radioOptionCard} ${episodeGroup === group ? styles.selectedOptionCard : styles.unselectedOptionCard}`} onClick={() => onEpisodeGroupPress(group)}>
+            <li key={`key-episodeGroup-${index}`} id={`episodeGroup-${index}`} className={`${styles.radioOptionCard} ${episodeGroup === group ? styles.selectedOptionDetailsCard : styles.unselectedOptionDetailsCard}`} onClick={() => onEpisodeGroupPress(group)}>
               <label for={`episodeGroup-${index}`} className="flex flex-row space-x-1">
                 <span className="text-md">{group.from}</span>
                 <span className="text-md">-</span>
@@ -128,7 +128,7 @@ export const VodEpisodeList = ({
           ))}
         </ul>
         <div style={{ height: '300px', margin: '20px' }}>
-          <ul className="flex flex-column " style={{ flexWrap: 'wrap', overflowX: 'auto', height: '100%', justifyContent: 'center' }}>
+          <ul className="flex flex-column no-scrollbar" style={{ flexWrap: 'wrap', overflowX: 'auto', height: '100%', justifyContent: 'center' }}>
             {vodSource?.vod_play_list?.urls?.slice(episodeGroup.from - 1, episodeGroup.to).map((episode) => {
               return (
                 <li style={{ padding: '10px', margin: '4px', minWidth: '70px', justifyContent: 'center' }} key={`key-episode-${episode.nid}`} id={`episode-${episode.nid}`} className={`${styles.radioOptionCard} ${episodeSource.nid === episode.nid ? styles.selectedOptionCard : styles.unselectedOptionCard}`} onClick={() => onSelectEpisode(episode)}>
@@ -142,7 +142,7 @@ export const VodEpisodeList = ({
         </div>
       </BottomSheet>
     </div>
-    <ul className="lg:hidden flex flex-column overflow-auto">
+    <ul className="lg:hidden flex flex-column overflow-auto no-scrollbar">
       {vodSource?.vod_play_list?.urls?.slice(episodeGroup.from - 1, episodeGroup.to).map((episode) => {
         return (
           <li style={{ padding: '10px', margin: '4px', minWidth: '70px', justifyContent: 'center' }} key={`key-episode-${episode.nid}`} id={`episode-${episode.nid}`} className={`${styles.radioOptionCard} ${episodeSource.nid === episode.nid ? styles.selectedOptionCard : styles.unselectedOptionCard}`} onClick={() => onSelectEpisode(episode)}>
