@@ -174,9 +174,13 @@ const Header = () => {
     );
   };
 
+  useEffect(() => {
+    console.log(pathname);
+  }, [pathname]);
+
   const handleClick = (value) => {
     dispatch(setSelectedId(value));
-    if (value == 99) {
+    if (value == 998) {
       router.push('/topic');
     } else if (value == 999) {
       router.push('/filmLibrary');
@@ -202,7 +206,7 @@ const Header = () => {
 
   useEffect(() => {
     if (pathname.startsWith('/filmLibrary')) dispatch(setSelectedId(999));
-    else if (pathname.startsWith('/topic')) dispatch(setSelectedId(99));
+    else if (pathname.startsWith('/topic')) dispatch(setSelectedId(998));
     else if (pathname.startsWith('/play/')) dispatch(setSelectedId(-1));
   }, [pathname]);
 
@@ -222,7 +226,7 @@ const Header = () => {
 
       setTopTenList(topTenItem.vod_list);
       menuItem.push({
-        id: 99,
+        id: 998,
         name: '播单',
       });
       menuItem.push({
@@ -487,7 +491,9 @@ const Header = () => {
               </div>
             </div>
             {!openSearch ? (
-              <div className='flex-row flex hidden'> {/* add on md: infront of hidden */}
+              <div className='flex-row flex hidden'>
+                {' '}
+                {/* add on md: infront of hidden */}
                 <div className='relative' ref={dropdownVipRef}>
                   <div
                     onClick={handleOpenVip}
@@ -685,7 +691,9 @@ const Header = () => {
               <Image className='mx-2' src={PhoneIcon} alt='app' width={14} />
               <div className='flex items-center'>APP</div>
             </div>
-            <div className='relative hidden' ref={dropdownVipRef}> {/* remove hidden to show*/}
+            <div className='relative hidden' ref={dropdownVipRef}>
+              {' '}
+              {/* remove hidden to show*/}
               <div
                 onClick={handleOpenVip}
                 className='flex h-full flex-row cursor-pointer bg-[#1D2023] px-4 ml-2 rounded-full'

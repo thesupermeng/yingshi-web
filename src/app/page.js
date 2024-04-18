@@ -18,7 +18,7 @@ export const RightBetCartWidth = 'w-[32rem]';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
 import { Carousel } from '@/components/carousel/carousel';
-import { ArrowRightIcon } from "@/asset/icons";
+import { ArrowRightIcon } from '@/asset/icons';
 
 const getHeaderMenuSelected = (state) => state.headerMenuSelected;
 
@@ -45,11 +45,13 @@ export default function Home() {
 
   useEffect(() => {
     setLoading(true);
-    getTypePage(selectedMenu.id).then((data) => {
-      setCategories(data.categories);
-      setCarousel(data.carousel);
-      setLoading(false);
-    });
+    if (selectedMenu.id !== 998 && selectedMenu.id !== 999) {
+      getTypePage(selectedMenu.id).then((data) => {
+        setCategories(data.categories);
+        setCarousel(data.carousel);
+        setLoading(false);
+      });
+    }
   }, [selectedMenu]);
 
   return (
