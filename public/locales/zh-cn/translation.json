@@ -997,10 +997,10 @@
   "promotionRules": "促销规则",
   "myBalance": "我的余额",
   "todayDepositAmount": "今日存款金额",
-  "topUpAmountToRedeem": "存款 {{amount}} {{unit}} 即可兑换",
+  "topUpAmountToRedeem": "存款 {{amount}} 即可兑换",
   "pendingFirstTopUp": "待定首次存款",
   "pendingTopUpAmount": "待定：存款 {{amount}} {{unit}}",
-  "claimAmountBetInsuranceVoucher": "领取 {{amount}} {{unit}} 投注保险券",
+  "claimAmountBetInsuranceVoucher": "领取 {{amount}} 投注保险券",
   "unavailable": "不可用",
   "withdrawConfirmMessage1": "任何发送到非 TRC20 兼容地址的代币将丢失。",
   "withdrawConfirmMessage2": "提款可能需要 1-2 个工作日。",
@@ -1026,7 +1026,7 @@
   "claimYourFirstDepositBonus": "立即领取您的首次存款奖金！",
   "claimAmountReloadBonus": "领取 {{amount}} {{unit}} 再次存款奖金",
   "applyYourVoucherInBetSlip": "*在投注单中使用您的优惠券即可立即使用。",
-  "claimAmountBetInsurance": "领取 {{amount}} {{unit}} 投注保险",
+  "claimAmountBetInsurance": "领取 {{amount}} 投注保险",
   "promotion_reset_daily": "每日重置",
   "promotion_reset_sun": "每周日重置",
   "promotion_reset_mon": "每周一重置",
@@ -1084,5 +1084,8 @@
   "BtnView": "查看",
   "AlliancePromoSuccessText": "共赢奖励已成功领取已转到您的钱包",
   "promotionInvitationHistory": "邀请记录",
-  "promotionInvitationCopiedCode": "已为您复制邀请码您也可以通过分享链接邀请好友"
+  "promotionInvitationCopiedCode": "已为您复制邀请码您也可以通过分享链接邀请好友",
+  "bindMobileForNewPassword": "请先绑定手机号，才能创建新密码",
+  "bindMobileForPin": "请先绑定手机号，才能设置aha PIN",
+  "vipLevel": "VIP等级"
 }
