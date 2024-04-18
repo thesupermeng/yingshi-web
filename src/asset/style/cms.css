@@ -129,3 +129,21 @@
   color: rgb(51, 162, 244);
   align-content : center;
 }
+
+
+.footer
+{
+  background: rgba(22, 22, 22, 0.92);
+  text-align: center;
+  height: 60px;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+
+  color: white; /* Set your desired text color */
+  width: calc(100% + 2rem) !important;
+  
+
+}

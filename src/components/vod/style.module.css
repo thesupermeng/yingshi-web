@@ -22,6 +22,14 @@
   color: #9C9C9C !important;
 }
 
+.selectedOptionDetailsCard {
+  color: #FFF !important;
+}
+
+.unselectedOptionDetailsCard {
+  color: #9C9C9C !important;
+}
+
 .dropdownContainer {
   position: absolute;
   z-index: 100;
@@ -40,4 +48,14 @@
   background-color: #1D2023 !important;
   padding: 8px 10px;
   border-radius: 12px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
