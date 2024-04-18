@@ -19,11 +19,9 @@ const MyFooter = () => {
   const router = useRouter();
   const selectedMenu = useSelector(getHeaderMenuSelected);
 
-
   // useEffect(() => {
   //   console.log("pathname")
   //   console.log(pathname)
-
   //   console.log("selectedMenu")
   //   console.log(selectedMenu.id)
   //   if (pathname.startsWith('/filmLibrary')) dispatch(setSelectedId(999));
@@ -31,10 +29,9 @@ const MyFooter = () => {
   //   else if (pathname.startsWith('/play/')) dispatch(setSelectedId(-1));
   // }, [selectedMenu]);
 
-
   const handleClick = (value) => {
     dispatch(setSelectedId(value));
-    if (value == 99) {
+    if (value == 998) {
       router.push('/topic');
     } else if (value == 999) {
       router.push('/filmLibrary');
@@ -43,28 +40,26 @@ const MyFooter = () => {
     }
   };
   return (
-    <div className='footer row'>
-      <div className='col flex-col d-flex justify-center align-center items-center'  
-      onClick={() => {
-                  handleClick(0);
-                }}>
+    <div className='mobile'>
+    <div className='footer row '>
+      <div className='col flex-col d-flex justify-center align-center items-center'
+        onClick={() => {
+          handleClick(0);
+        }}>
         <div className='d-flex' >
-
           <Image
             alt='鲨鱼影视'
-            src={(selectedMenu.id === 0 && pathname == '/')? homeTabActive : homeTab}
+            src={(selectedMenu.id === 0 && pathname == '/') ? homeTabActive : homeTab}
             width={22}
             style={{ cursor: 'pointer' }}
           />
-
         </div>
-
         <div>首首</div>
       </div>
 
-      <div className='col flex-col d-flex justify-center align-center items-center'   onClick={() => {
-                  handleClick(99);
-                }}>
+      <div className='col flex-col d-flex justify-center align-center items-center' onClick={() => {
+        handleClick(998);
+      }}>
         <div className='d-flex'>
           <Image
             alt='鲨鱼影视'
@@ -73,9 +68,9 @@ const MyFooter = () => {
             style={{ cursor: 'pointer' }}
           />
         </div>
-
         <div>播单</div>
       </div>
+    </div>
     </div>
   );
 };
