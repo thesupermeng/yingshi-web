@@ -38,6 +38,10 @@ export { default as moreIcon } from './more.svg';
 export { default as searchEmptyIcon } from './searchEmptyIcon.svg';
 export { default as leftArrow } from './leftArrow.svg';
 export { default as clear } from './clear.svg'
+export { default as homeTab } from './homeTab.svg';
+export { default as homeTabActive } from './homeTabActive.svg';
+export { default as topicTab } from './topicTab.svg';
+export { default as topicTabActive } from './topicTabActive.svg';
 
 // profiles
 export { default as AnimationTick } from './profile/animationTick.gif';
