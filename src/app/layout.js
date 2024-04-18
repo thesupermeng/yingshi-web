@@ -6,6 +6,8 @@ import { Inter } from 'next/font/google';
 import { Providers } from '@/store/Provider';
 import Sidebar from '@/components/sidebar';
 import Header from '@/components/header';
+
+import MyFooter from '@/components/myFooter';
 import Announcement from '@/components/announcement';
 //import FullBetSlip from '@/components/betSlip/FullBetSlip';
 import RightSideMenu from '@/components/rightSideMenu';
@@ -18,6 +20,8 @@ import WebPerpetual from '@/components/Perpetual/WebPerpetual';
 import { NotifyMessages } from '@/components/Perpetual/NotifyMessages';
 
 import Head from 'next/head';
+
+
 import { H5LiveChat } from '@/componentsH5/H5LiveChat';
 import { Config } from '@/util/config';
 
@@ -142,7 +146,12 @@ export default function RootLayout({ children }) {
           </H5Only> */}
           {/* <ChatMessages />
           <NotifyMessages /> */}
+                  <MyFooter />
         </Providers>
+
+   
+
+
       </body>
     </html>
   );
