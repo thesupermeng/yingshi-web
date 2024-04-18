@@ -619,13 +619,13 @@ const Header = () => {
   if (pathname.startsWith('/topic')) {
     return (
       <>
-        <div className={'md:absolute z-30 w-screen mobile'}>
-          <div className='flex py-3 md:mx-20 mx-2.5'>
+        <div className={'z-30 w-screen mobile'}>
+          <div className='flex py-3 mx-2.5'>
             <div className='gap-y-2 flex-col w-full md:flex-row flex'>
               <div className='flex-1 flex gap-x-2 md:justify-start'>
                 <div
                   className={`flex justify-between w-22 pl-3 ${
-                    openSearchMobile ? 'hidden md:flex' : ''
+                    openSearchMobile ? 'hidden' : ''
                   }`}
                 >
                   <span className='text-topic-title'> 播单 </span>
@@ -635,7 +635,7 @@ const Header = () => {
                     <div className='relative flex flex-1 md:flex-none'>
                       <div
                         className={`flex justify-between px-2 ${
-                          openSearchMobile ? 'flex md:hidden' : 'hidden'
+                          openSearchMobile ? 'flex ' : 'hidden'
                         }`}
                       >
                         <Image
@@ -805,7 +805,7 @@ const Header = () => {
                   </div>
                 </div>
                 {!openSearchMobile ? (
-                  <div className='flex-row flex md:hidden'>
+                  <div className='flex-row flex'>
                     <Image
                       className='cursor-pointer'
                       src={HistoryIcon}
