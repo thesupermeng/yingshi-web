@@ -837,6 +837,214 @@ const Header = () => {
     return <div className={'desktop'}>{defaultHeader}</div>;
   }
 
+  if (pathname.startsWith('/search/')) {
+    return (
+      <>
+        <div className={'z-30 w-screen mobile'}>
+          <div className='flex py-3 mx-2.5'>
+            <div className='gap-y-2 flex-col w-full md:flex-row flex'>
+              <div className='flex-1 flex gap-x-2 md:justify-start'>
+                <div
+                  className={`flex justify-between w-22 pl-3 ${
+                    openSearchMobile ? 'hidden' : ''
+                  }`}
+                >
+              <Image
+                      alt='back'
+                      src={leftArrow}
+                     //  style={{ width: '12px' }}
+                      onClick={() => {
+                        setOpenSearch(false);
+                        setSearchInput('');
+                      }}
+                    />
+              
+                </div>
+                <div className='items-center flex flex-1 md:flex-none'>
+                  <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>
+                    <div className='relative flex flex-1 md:flex-none'>
+                      <div
+                        className={`flex justify-between px-2 ${
+                          openSearchMobile ? 'flex ' : 'hidden'
+                        }`}
+                      >
+                        <Image
+                          alt='back'
+                          src={leftArrow}
+                          // style={{ width: '25px' }}
+                          onClick={() => {
+                            setOpenSearchMobile(false);
+                            setSearchInput('');
+                          }}
+                        />
+                      </div>
+                      {/* search result search bar */}
+                      <div className='relative flex-1'>
+                        <input
+                          type='text'
+                          placeholder='输入搜索关键词'
+                          value={searchInput}
+                          onChange={handleChange}
+                          className='border-0 border-gray-300 text-white rounded-full pl-10 pr-10 py-2 focus:outline-none w-full'
+                          style={{
+                            backgroundColor:
+                              'rgba(255, 255, 255, 0.08) !important',
+                            height: '35px',
+                          }}
+                          onClick={handleOpenSearchMobile}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') handleSearch();
+                          }}
+                        />
+                        <div className='absolute inset-y-0 left-3 flex items-center justify-center'>
+                          <Image
+                            src={searchIcon}
+                            alt='search'
+                            width={20}
+                            className='text-gray-400'
+                            onClick={handleSearch}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    {/* topic search bar */}
+                    {openSearchMobile ? (
+                      <div className='mt-2 absolute flex flex-col items-center pt-1 w-full h-[calc(100%_-_52px)] z-10 left-0 md:left-auto md:w-96 md:h-[500px]'>
+                        <div className='py-3 px-4 flex flex-col md:rounded-md w-full h-full overflow-scroll bg-[#1d2023] md:bg-[#1d2023e0] md:w-96 md:h-[500px]'>
+                          {searchInput ? (
+                            loadingSearching ? (
+                              <LoadingPage full={false} />
+                            ) : searchingList.length > 0 ? (
+                              searchingList.map((item, index) => {
+                                return (
+                                  <div
+                                    className='flex flex-row justify-between py-2.5'
+                                    key={index}
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      setOpenSearchMobile(false);
+                                      setSearchInput('');
+                                      handleAddSearchHistory();
+                                      router.push(`/play/${item.vod_id}`);
+                                    }}
+                                  >
+                                    <div className='flex flex-row'>
+                                      <div className='text-sm'>
+                                        {item.vod_name}
+                                      </div>
+                                    </div>
+                                  </div>
+                                );
+                              })
+                            ) : (
+                              <div className='flex items-center justify-center flex-col h-full'>
+                                <Image
+                                  className='mx-2'
+                                  src={searchEmptyIcon}
+                                  alt='empty'
+                                  width={120}
+                                />
+                                <span>暂无播单</span>
+                              </div>
+                            )
+                          ) : (
+                            <>
+                              {searchHistoryList.length > 0 ? (
+                                <div>
+                                  <div className='flex flex-row justify-between items-center pb-2'>
+                                    <div className='text-sm'>历史搜索</div>
+                                    <div
+                                      className='text-xs'
+                                      style={{
+                                        color: 'rgba(156, 156, 156, 1)',
+                                      }}
+                                      onClick={handleClearSearchHistory}
+                                    >
+                                      清除
+                                    </div>
+                                  </div>
+                                  <div className='flex flex-wrap py-2 gap-2'>
+                                    {searchHistoryList.map((item, index) => {
+                                      return (
+                                        <div
+                                          className='py-1 px-2 rounded-lg'
+                                          style={{
+                                            background:
+                                              'rgba(255, 255, 255, 0.06)',
+                                            color: 'rgba(156, 156, 156, 1)',
+                                          }}
+                                          key={index}
+                                        >
+                                          {item}
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              ) : null}
+                              <div className='flex flex-row justify-between'>
+                                <div className='text-sm'>热搜总榜</div>
+                              </div>
+                              {/* search result  */}
+                              {topTenList.map((item, index) => {
+                                return (
+                                  <div
+                                    className='flex flex-row justify-between py-2.5'
+                                    key={index}
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      setOpenSearchMobile(false);
+                                      router.push(`/play/${item.vod_id}`);
+                                    }}
+                                  >
+                                    <div className='flex flex-row'>
+                                      <div
+                                        className='text-sm w-8 text-center font-bold'
+                                        style={{
+                                          color:
+                                            index == 0
+                                              ? 'rgba(0, 106, 178, 1)'
+                                              : index == 1
+                                                ? 'rgba(0, 133, 224, 1)'
+                                                : index == 2
+                                                  ? 'rgba(96, 191, 255, 1)'
+                                                  : 'rgba(156, 156, 156, 1)',
+                                        }}
+                                      >
+                                        {index + 1}
+                                      </div>
+                                      <div className='text-sm'>
+                                        {item.vod_name}
+                                      </div>
+                                    </div>
+                                    <div
+                                      className='text-xs'
+                                      style={{
+                                        color: 'rgba(156, 156, 156, 1)',
+                                      }}
+                                    >
+                                      {item.type_name}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+            
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='desktop'>{defaultHeader}</div>
+      </>
+    );
+  }
+
   if (pathname.startsWith('/topic')) {
     return (
       <>
