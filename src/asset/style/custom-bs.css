@@ -2315,7 +2315,7 @@ a:not([href]):not([class]):hover {
 /* Hide on mobile */
 @media (max-width: 768px) {
   .desktop {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -2327,6 +2327,6 @@ a:not([href]):not([class]):hover {
 /* Hide on desktop */
 @media (min-width: 769px) {
   .mobile {
-    display: block;
+    display: none !important;
   }
 }

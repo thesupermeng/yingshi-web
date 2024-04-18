@@ -10,6 +10,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+
+import  TopicHeader  from './../../../components/topicHeader';
+
 export default function Page() {
   const { topicId } = useParams();
   const [topicObj, setTopicObj] = useState(null);
@@ -69,7 +72,7 @@ export default function Page() {
             <div className='d-flex container pt-3' style={{ width: '100%' }}>
               <div className='row'>
                 {topicObj.vod_list.map((vod) => (
-                  <div className='col-lg-6 col-md-12 mt-2 mb-2 cursor-pointer'>
+                  <div className='col-lg-6 col-md-12 mt-2 mb-2 cursor-pointer' key={vod.vod_id}>
                     <div
                       className='topic-details-card'
                       onClick={(e) => {
@@ -132,7 +135,7 @@ export default function Page() {
           {/* mobile view */}
           <div className='mobile mt-2 px-4 pb-6'>
             {/* sticky  header  */}
-            <div
+            {/* <div
               className='flex items-center justify-center cursor-pointer'
               onClick={(e) => {
                 e.preventDefault();
@@ -149,7 +152,9 @@ export default function Page() {
                 <FontAwesomeIcon icon={faAngleLeft} />
               </span>
               <span className='flex'>{topicObj.topic_name}</span>
-            </div>
+            </div> */}
+
+            <TopicHeader topicName={topicObj.topic_name} />
             {/* mobile content */}
             <div className='topic-header-text-sub mt-3'>
               {topicObj.topic_blurb}

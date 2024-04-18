@@ -19,6 +19,7 @@ import { YingshiApi } from '@/util/YingshiApi';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { LoadingPage } from '@/components/loading';
 import { setHeaderMenu, setSelectedId } from '@/store/headerData';
+import TopicHeader from './../../components/topicHeader';
 
 const getHeaderMenu = (state) => state.headerMenu;
 const getHeaderMenuSelected = (state) => state.headerMenuSelected;
@@ -47,6 +48,7 @@ const Header = () => {
   const [loading, setLoading] = useState(true);
   const [openMore, setOpenMore] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
+  const [openSearchMobile, setOpenSearchMobile] = useState(false);
   const [searchHistoryList, setSearchHistoryList] = useState([]);
   const [topTenList, setTopTenList] = useState([]);
   const [searchingList, setSearchList] = useState([]);
@@ -59,6 +61,10 @@ const Header = () => {
 
   const handleOpenSearch = () => {
     setOpenSearch(true);
+  };
+
+  const handleOpenSearchMobile = () => {
+    setOpenSearchMobile(true);
   };
 
   const handleChange = (event) => {
@@ -182,11 +188,11 @@ const Header = () => {
     }
   };
 
-  useEffect(()=> {
+  useEffect(() => {
     if (pathname.startsWith('/filmLibrary')) dispatch(setSelectedId(999));
-      else if (pathname.startsWith('/topic')) dispatch(setSelectedId(99));
-      else if (pathname.startsWith('/play/')) dispatch(setSelectedId(-1));
-  }, [pathname])
+    else if (pathname.startsWith('/topic')) dispatch(setSelectedId(99));
+    else if (pathname.startsWith('/play/')) dispatch(setSelectedId(-1));
+  }, [pathname]);
 
   useEffect(() => {
     const list = JSON.parse(localStorage.getItem('searchHistoryList'));
@@ -275,7 +281,7 @@ const Header = () => {
           : 'md:absolute z-30 w-screen bg-gradient-to-b from-black from-15%'
       }
     >
-      <div className='flex py-3 md:mx-20 mx-2.5 justify-center'>
+      <div className='flex pb-4 py-3 md:mx-20 mx-2.5 justify-center'>
         <div className='gap-y-2 flex-col w-full xl:w-11/12 md:flex-row flex'>
           <div className='flex-1 flex gap-x-2 md:justify-start'>
             <div
@@ -288,7 +294,7 @@ const Header = () => {
                 src={Logo}
                 style={{ cursor: 'pointer' }}
                 onClick={() => {
-                  handleClick(headerMenu.headerMenu[0].id)
+                  handleClick(headerMenu.headerMenu[0].id);
                 }}
               />
             </div>
@@ -373,7 +379,10 @@ const Header = () => {
                             <div>
                               <div className='flex flex-row justify-between items-center pb-2'>
                                 <div className='text-sm'>历史搜索</div>
-                                <div className='flex flex-row' onClick={handleClearSearchHistory}>
+                                <div
+                                  className='flex flex-row'
+                                  onClick={handleClearSearchHistory}
+                                >
                                   <span
                                     className='text-xs'
                                     style={{ color: 'rgba(156, 156, 156, 1)' }}
@@ -587,21 +596,36 @@ const Header = () => {
     </div>
   );
 
+  if (pathname.startsWith('/topic/')) {
+    return <></>;
+  }
 
-  if (pathname.startsWith('/topic/') || pathname.startsWith('/play')) {
-    return (<></>)
-  };
+  if (pathname.startsWith('/filmLibrary')) {
+    return (
+      <>
+        <div className={'mobile'}>
+          <TopicHeader topicName={'片库'} />
+        </div>
+
+        <div className={'desktop'}>{defaultHeader}</div>
+      </>
+    );
+  }
+
+  if (pathname.startsWith('/play')) {
+    return <div className={'desktop'}>{defaultHeader}</div>;
+  }
 
   if (pathname.startsWith('/topic')) {
     return (
       <>
-        <div className={'md:absolute z-30 w-screen mobile'}>
-          <div className='flex py-3 md:mx-20 mx-2.5'>
+        <div className={'z-30 w-screen mobile'}>
+          <div className='flex py-3 mx-2.5'>
             <div className='gap-y-2 flex-col w-full md:flex-row flex'>
               <div className='flex-1 flex gap-x-2 md:justify-start'>
                 <div
-                  className={`flex justify-between w-24 md:w-28 ${
-                    openSearch ? 'hidden md:flex' : ''
+                  className={`flex justify-between w-22 pl-3 ${
+                    openSearchMobile ? 'hidden' : ''
                   }`}
                 >
                   <span className='text-topic-title'> 播单 </span>
@@ -610,16 +634,16 @@ const Header = () => {
                   <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>
                     <div className='relative flex flex-1 md:flex-none'>
                       <div
-                        className={`flex justify-between pr-2 ${
-                          openSearch ? 'flex md:hidden' : 'hidden'
+                        className={`flex justify-between px-2 ${
+                          openSearchMobile ? 'flex ' : 'hidden'
                         }`}
                       >
                         <Image
                           alt='back'
                           src={leftArrow}
-                          style={{ width: '25px' }}
+                          // style={{ width: '25px' }}
                           onClick={() => {
-                            setOpenSearch(false);
+                            setOpenSearchMobile(false);
                             setSearchInput('');
                           }}
                         />
@@ -635,8 +659,9 @@ const Header = () => {
                           style={{
                             backgroundColor:
                               'rgba(255, 255, 255, 0.08) !important',
+                            height: '35px',
                           }}
-                          onClick={handleOpenSearch}
+                          onClick={handleOpenSearchMobile}
                           onKeyDown={(e) => {
                             if (e.key === 'Enter') handleSearch();
                           }}
@@ -652,8 +677,9 @@ const Header = () => {
                         </div>
                       </div>
                     </div>
-                    {openSearch ? (
-                      <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100%_-_52px)] z-10 left-0 md:left-auto md:w-96 md:h-[500px]'>
+                    {/* topic search bar */}
+                    {openSearchMobile ? (
+                      <div className='mt-2 absolute flex flex-col items-center pt-1 w-full h-[calc(100%_-_52px)] z-10 left-0 md:left-auto md:w-96 md:h-[500px]'>
                         <div className='py-3 px-4 flex flex-col md:rounded-md w-full h-full overflow-scroll bg-[#1d2023] md:bg-[#1d2023e0] md:w-96 md:h-[500px]'>
                           {searchInput ? (
                             loadingSearching ? (
@@ -666,7 +692,7 @@ const Header = () => {
                                     key={index}
                                     onClick={(e) => {
                                       e.preventDefault();
-                                      setOpenSearch(false);
+                                      setOpenSearchMobile(false);
                                       setSearchInput('');
                                       handleAddSearchHistory();
                                       router.push(`/play/${item.vod_id}`);
@@ -736,7 +762,7 @@ const Header = () => {
                                     key={index}
                                     onClick={(e) => {
                                       e.preventDefault();
-                                      setOpenSearch(false);
+                                      setOpenSearchMobile(false);
                                       router.push(`/play/${item.vod_id}`);
                                     }}
                                   >
@@ -778,8 +804,8 @@ const Header = () => {
                     ) : null}
                   </div>
                 </div>
-                {!openSearch ? (
-                  <div className='flex-row flex md:hidden'>
+                {!openSearchMobile ? (
+                  <div className='flex-row flex'>
                     <Image
                       className='cursor-pointer'
                       src={HistoryIcon}
@@ -806,7 +832,7 @@ const Header = () => {
         <div className='desktop'>{defaultHeader}</div>
       </>
     );
-  };
+  }
 
   return defaultHeader;
 };
