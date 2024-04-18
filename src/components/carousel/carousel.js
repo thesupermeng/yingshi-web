@@ -79,7 +79,7 @@ export const Carousel = ({ carouselItems }) => {
                   style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'pointer', opacity: 0.9, position: 'relative'}}
                   onClick={(e) => {
                     e.preventDefault();
-                    router.push(`/play/${item.vod.vod_id}`);
+                    router.push(`/play/${carouselItems[carouselIndex].vod.vod_id}`);
                   }}
                 />
                 {/* <div style={{ position: 'absolute', bottom: '10px', left: '10px', color: '#fff', zIndex: 1, display: 'flex', justifyContent: 'space-between', width: '100%' }}>
@@ -94,16 +94,29 @@ export const Carousel = ({ carouselItems }) => {
                     </p>
                   </div>
                 </div> */}
-                <div style={{ position: 'absolute', bottom: '10px', left: '10px', color: '#fff', zIndex: 1, width: '100%' }}>
+                <div className="lg:flex hidden" style={{ position: 'absolute', bottom: '10px', left: '10px', color: '#fff', zIndex: 1, width: '100%' }}>
                   <div className="grid grid-cols-12 gap-4">
-                    <div></div>
-                    <div className="col-span-10">
+                    <div className="col-span-2"></div>
+                    <div className="col-span-9">
                       <div className="grid grid-cols-8 gap-4" style={{ paddingBottom: '5rem' }}>
                         <div className="col-span-2 mr-3">
                           <p className="text-lg">{item.carousel_name}</p>
                           <p className="text-sm pt-1" style={{ fontWeight: '200' }}>{item.vod.vod_year}{desc}</p>
                           <p className="text-sm pt-1" style={{ fontWeight: '200' }}>{item.vod.vod_remarks}</p>
-                          <div className="flex flex-row flex-wrap" style={{ background: '#FFFFFF2E', width: 'fit-content', padding: '0.5rem 1rem', borderRadius: '100px', marginTop: '0.5rem' }}>
+                          <div 
+                            style={{
+                              cursor: 'pointer',
+                              background: '#FFFFFF2E', 
+                              width: 'fit-content',
+                              padding: '0.5rem 1rem',
+                              borderRadius: '100px',
+                              marginTop: '0.5rem'
+                            }}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              router.push(`/play/${carouselItems[carouselIndex].vod.vod_id}`);
+                            }}
+                            className="flex flex-row flex-wrap">
                             <Image
                               style={{ paddingRight: '0.5rem' }}
                               src={PlayRightIcon}
@@ -120,7 +133,7 @@ export const Carousel = ({ carouselItems }) => {
               </div>
             )
           })}
-          <div className="col-span-6 mr-3" style={{ position: 'absolute', right: '0', bottom: '3rem' }}>
+          <div className="lg:flex hidden col-span-6 mr-3" style={{ position: 'absolute', right: '0', bottom: '3rem' }}>
             <div className="grid grid-cols-12 gap-4">
               <div className="col-span-3"></div>
               <div className="col-span-8" style={{ display: 'flex', flexDirection: 'row', zIndex: '10' }}>
