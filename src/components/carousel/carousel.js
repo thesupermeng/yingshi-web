@@ -3,6 +3,9 @@ import styles from './style.module.css';
 import Image from 'next/image';
 import { PlayRightIcon } from '@/asset/icons';
 import { useRouter } from 'next/navigation';
+import Slider from "react-slick";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 export const Carousel = ({ carouselItems }) => {
   const router = useRouter();
@@ -10,6 +13,14 @@ export const Carousel = ({ carouselItems }) => {
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [currentlyHover, setCurrentlyHover] = useState(false);
   const [carouselVodId, setCarouselVodId] = useState(0);
+
+  var settings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+  };
 
   useEffect(() => {
     if(!currentlyHover){
@@ -47,8 +58,23 @@ export const Carousel = ({ carouselItems }) => {
 
   return (
     <div style={{ position: 'relative', width: '100%', aspectRatio: '5/2', overflow: 'hidden' }}>
+      <div className="lg:hidden block">
+        <Slider {...settings}>
+          {carouselItems != null && carouselItems.length > 0 && carouselItems.map((item, index) => {
+            return (
+              <div>
+                <img
+                  src={item.carousel_pic_mobile}
+                  alt={`Slide ${index}`}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'pointer', opacity: 0.9, position: 'relative'}}
+                />
+              </div>
+            )
+          })}
+        </Slider>
+      </div>
       {carouselItems && carouselItems.length > 0 && (
-        <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
+        <div className="lg:block hidden" style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
           {carouselItems.map((item, index) => {
             let desc = " | " + item.vod.vod_area
             let vodClass = []
@@ -146,7 +172,7 @@ export const Carousel = ({ carouselItems }) => {
                         justifySelf: 'center',
                         height: '100%',
                         width: '6rem',
-                        marginRight: '1.5rem',
+                        marginRight: '1rem',
                         cursor: 'pointer',
                       }}
                       key={previewIndex}

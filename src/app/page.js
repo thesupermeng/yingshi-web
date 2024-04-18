@@ -28,6 +28,7 @@ export default function Home() {
   const pathname = usePathname();
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
+  const [yunying, setYunying] = useState([]);
   const [carousel, setCarousel] = useState([]);
   const selectedMenu = useSelector(getHeaderMenuSelected);
 
@@ -36,7 +37,7 @@ export default function Home() {
       URL_YINGSHI_VOD.homeGetPages,
       {
         id: idValue,
-        limit: 6,
+        limit: 3,
         page: 1,
       },
       { method: 'GET' }
@@ -46,7 +47,9 @@ export default function Home() {
   useEffect(() => {
     setLoading(true);
     getTypePage(selectedMenu.id).then((data) => {
+      console.log(data.categories);
       setCategories(data.categories);
+      setYunying(data.yunying);
       setCarousel(data.carousel);
       setLoading(false);
     });
@@ -63,10 +66,32 @@ export default function Home() {
           <Carousel carouselItems={carousel} />
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <div className='pt-4 md:mx-20 mx-2.5 lg:w-[80%] w-[100%]'>
+              {yunying != [] &&
+                yunying?.map((yy, idx) => {
+                  return (
+                    <div id={yy.type_id} key={idx} style={{ paddingTop: '3rem' }}>
+                      <span
+                        style={{
+                          fontSize: '20px',
+                          fontWeight: '600',
+                          fontStyle: 'normal',
+                          fontFamily: 'PingFang SC',
+                        }}
+                      >
+                        {yy.type_name}
+                      </span>
+                      <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
+                        {yy.vod_list?.slice(0, 6).map((vod, i) => {
+                          return <VideoVerticalCard vod={vod} key={i} />;
+                        })}
+                      </div>
+                    </div>
+                  );
+                })}
               {categories != [] &&
                 categories?.map((category, idx) => {
                   return (
-                    <div id={category.type_id} key={idx}>
+                    <div id={category.type_id} key={idx} style={{ paddingTop: '3rem' }}>
                       <span
                         style={{
                           fontSize: '20px',
