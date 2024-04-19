@@ -870,8 +870,9 @@ const Header = () => {
                       src={leftArrow}
                      //  style={{ width: '12px' }}
                       onClick={() => {
-                        setOpenSearch(false);
-                        setSearchInput('');
+                        router.back();
+                        // setOpenSearch(false);
+                        // setSearchInput('');
                       }}
                     />
               
