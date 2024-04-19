@@ -847,6 +847,7 @@ const Header = () => {
       <>
         <div className={'mobile'}>
           <TopicHeader topicName={'片库'} />
+          <div style={{height:'52px'}}></div>
         </div>
 
         <div className={'desktop'}>{defaultHeader}</div>
