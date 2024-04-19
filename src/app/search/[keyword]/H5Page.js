@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import VodItemMobile from './../../../components/vodItemMobile'
+import { Spinner } from './../../../components/spinner';
 import Image from 'next/image';
 
 import {
@@ -62,6 +63,14 @@ export default function Page() {
 
   return (
     <>
+
+      {/* loading spinner  */}
+      <div className='mobile'>
+        <div>{isSearching && <Spinner></Spinner>}</div>
+      </div>
+
+
+
       <div className='desktop'>
         <div className={styles.containerHeader}>
           <div className='d-flex' style={{ width: '100%' }}>

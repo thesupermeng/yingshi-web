@@ -38,6 +38,7 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html
+    translate="no"
       lang='en'
       className={`bg-sideMenu notranslate ${
         isWeb()
