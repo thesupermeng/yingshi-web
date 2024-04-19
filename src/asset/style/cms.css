@@ -130,20 +130,49 @@
   align-content : center;
 }
 
-
 .my-footer
 {
   background: rgba(22, 22, 22, 0.92);
   text-align: center;
   height: 60px;
-
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-
   color: white; /* Set your desired text color */
   width: calc(100% + 2rem) !important;
-  
+}
 
+.slick-dots li button::before {
+  color: rgb(51, 162, 244) !important;
+
+}
+.slick-dots {
+z-index: 10;
+}
+
+.slick-dots li {
+  width: 12px !important;
+  height: 12px !important;
+  margin: 0 2px !important;
+}
+
+.slick-dots li button:before {
+  font-size: 7px !important;
+}
+
+
+.slider-container {
+  position: relative;
+  display: inline-block;
+}
+
+.slider-container:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20%;
+  background: linear-gradient(180deg, rgba(0,0,0,0), black);
 }

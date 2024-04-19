@@ -20,6 +20,20 @@ export const Carousel = ({ carouselItems }) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
+    dots: true, // Add dots
+    appendDots: (dots) => (
+      <div
+        style={{
+          position: "absolute",
+          bottom: "20px",
+          left: "50%",
+          transform: "translateX(-50%)",
+        }}
+      >
+        <ul style={{ margin: "0px" }}> {dots} </ul>
+      </div>
+    ),
+    
   };
 
   useEffect(() => {
@@ -58,24 +72,28 @@ export const Carousel = ({ carouselItems }) => {
 
   return (
     <>
-      <div className="lg:hidden block" style={{ position: 'relative', width: '100%', aspectRatio: '2/1', overflow: 'hidden' }}>
+      <div className="lg:hidden block " style={{ position: 'relative', width: '100%', aspectRatio: '2/1', overflow: 'hidden' }}>
         <div className="lg:hidden block">
           <Slider {...settings}>
             {carouselItems != null && carouselItems.length > 0 && carouselItems.map((item, index) => {
               return (
-                <div style={{ position: 'relative' }} onClick={(e) => {
+                <>
+                 <div style={{ zIndex: '1', position: 'absolute', bottom: '0', paddingLeft: '1.2rem', paddingBottom: '2rem' }}>
+                    {item.vod.vod_name}
+                  </div>
+                <div      className="slider-container" style={{ position: 'relative' }} onClick={(e) => {
                   e.preventDefault();
                   router.push(`/play/${item.vod.vod_id}`);
                 }}>
-                  <div style={{ zIndex: '1', position: 'absolute', bottom: '0', paddingLeft: '1.2rem', paddingBottom: '2rem' }}>
-                    {item.vod.vod_name}
-                  </div>
                   <img
+               
                     src={item.carousel_pic_mobile}
                     alt={`Slide ${index}`}
                     style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'pointer', opacity: 0.9, position: 'relative'}}
                   />
+                    <div className="gradient-overlay"></div> 
                 </div>
+                </>
               )
             })}
           </Slider>
