@@ -13,7 +13,7 @@ export const VideoVerticalCard = ({ vod }) => {
           blurDataURL={vod.vod_pic}
           onClick={(e) => {
             e.preventDefault();
-            router.psh(`/play/${vod.vod_id}`);
+            router.push(`/play/${vod.vod_id}`);
           }}
           alt='game'
           src={vod.vod_pic}
@@ -32,7 +32,7 @@ export const VideoVerticalCard = ({ vod }) => {
             blurDataURL={vod.vod_pic}
             onClick={(e) => {
               e.preventDefault();
-              router.psh(`/play/${vod.vod_id}`);
+              router.push(`/play/${vod.vod_id}`);
             }}
             alt='game'
             src={vod.vod_pic}
