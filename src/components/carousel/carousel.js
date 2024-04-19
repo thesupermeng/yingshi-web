@@ -33,16 +33,16 @@ export const Carousel = ({ carouselItems }) => {
         <ul style={{ margin: "0px" }}> {dots} </ul>
       </div>
     ),
-    
+
   };
 
   useEffect(() => {
-    if(!currentlyHover){
+    if (!currentlyHover) {
       const autoSwipeCarousel = setTimeout(() => {
         setCarouselIndex((prevIndex) => (prevIndex + 1) % carouselItems.length);
         setCarouselVodId()
       }, 3000);
-  
+
       return () => {
         clearTimeout(autoSwipeCarousel);
       };
@@ -78,21 +78,21 @@ export const Carousel = ({ carouselItems }) => {
             {carouselItems != null && carouselItems.length > 0 && carouselItems.map((item, index) => {
               return (
                 <>
-                 <div style={{ zIndex: '1', position: 'absolute', bottom: '0', paddingLeft: '1.2rem', paddingBottom: '2rem' }}>
+                  <div style={{ zIndex: '1', position: 'absolute', bottom: '0', paddingLeft: '1.2rem', paddingBottom: '2rem' }}>
                     {item.vod.vod_name}
                   </div>
-                <div      className="slider-container" style={{ position: 'relative' }} onClick={(e) => {
-                  e.preventDefault();
-                  router.push(`/play/${item.vod.vod_id}`);
-                }}>
-                  <img
-               
-                    src={item.carousel_pic_mobile}
-                    alt={`Slide ${index}`}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'pointer', opacity: 0.9, position: 'relative'}}
-                  />
-                    <div className="gradient-overlay"></div> 
-                </div>
+                  <div className="slider-container" style={{ position: 'relative' }} onClick={(e) => {
+                    e.preventDefault();
+                    router.push(`/play/${item.vod.vod_id}`);
+                  }}>
+                    <img
+
+                      src={item.carousel_pic_mobile}
+                      alt={`Slide ${index}`}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'pointer', opacity: 0.9, position: 'relative' }}
+                    />
+                    <div className="gradient-overlay"></div>
+                  </div>
                 </>
               )
             })}
@@ -105,12 +105,12 @@ export const Carousel = ({ carouselItems }) => {
             {carouselItems.map((item, index) => {
               let desc = " | " + item.vod.vod_area
               let vodClass = []
-              if(item.vod.vod_class != null){
+              if (item.vod.vod_class != null) {
                 vodClass = item.vod.vod_class.split(",");
               }
               vodClass = vodClass.slice(0, 2);
               vodClass.forEach((item, i) => {
-                  desc += " | " + item
+                desc += " | " + item
               })
               return (
                 <div
@@ -129,7 +129,7 @@ export const Carousel = ({ carouselItems }) => {
                   <img
                     src={item.carousel_pic_pc}
                     alt={`Slide ${index}`}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'pointer', opacity: 0.9, position: 'relative'}}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'pointer', opacity: 0.9, position: 'relative' }}
                     onClick={(e) => {
                       e.preventDefault();
                       router.push(`/play/${carouselItems[carouselIndex].vod.vod_id}`);
@@ -156,10 +156,10 @@ export const Carousel = ({ carouselItems }) => {
                             <p className="text-lg">{item.carousel_name}</p>
                             <p className="text-sm pt-1" style={{ fontWeight: '200' }}>{item.vod.vod_year}{desc}</p>
                             <p className="text-sm pt-1" style={{ fontWeight: '200' }}>{item.vod.vod_remarks}</p>
-                            <div 
+                            <div
                               style={{
                                 cursor: 'pointer',
-                                background: '#FFFFFF2E', 
+                                background: '#FFFFFF2E',
                                 width: 'fit-content',
                                 padding: '0.5rem 1rem',
                                 borderRadius: '100px',
@@ -192,35 +192,35 @@ export const Carousel = ({ carouselItems }) => {
                 <div className="col-span-8" style={{ display: 'flex', flexDirection: 'row', zIndex: '10' }}>
                   {carouselItems.map((previewItem, previewIndex) => (
                     <div style={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          justifySelf: 'center',
-                          height: '100%',
-                          width: '6rem',
-                          marginRight: '1rem',
-                          cursor: 'pointer',
-                        }}
-                        key={previewIndex}
-                        onMouseEnter={() => onHover(previewIndex)}
-                        onMouseLeave={() => onUnhover(previewIndex)}
-                        >
-                        <div style={{ width: '100%', textAlign: 'center' }}>
-                            <img
-                                className={styles.carousel_item_card}
-                                src={previewItem.vod.vod_pic}
-                                alt={`Slide ${previewIndex}`}
-                                style={{ width: '100%', aspectRatio: '5/7', objectFit: 'cover', borderRadius: '12px' }}
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  router.push(`/play/${previewItem.vod.vod_id}`);
-                                }}
-                            />
-                        </div>
-                        <div key={previewIndex} style={{ paddingRight: '10px', paddingLeft: '10px', textAlign: 'center', fontSize: '12px' }}>
-                          {renderShortString(previewItem.carousel_name)}
-                        </div>
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      justifySelf: 'center',
+                      height: '100%',
+                      width: '6rem',
+                      marginRight: '1rem',
+                      cursor: 'pointer',
+                    }}
+                      key={previewIndex}
+                      onMouseEnter={() => onHover(previewIndex)}
+                      onMouseLeave={() => onUnhover(previewIndex)}
+                    >
+                      <div style={{ width: '100%', textAlign: 'center' }}>
+                        <img
+                          className={styles.carousel_item_card}
+                          src={previewItem.vod.vod_pic}
+                          alt={`Slide ${previewIndex}`}
+                          style={{ width: '100%', aspectRatio: '5/7', objectFit: 'cover', borderRadius: '12px' }}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            router.push(`/play/${previewItem.vod.vod_id}`);
+                          }}
+                        />
+                      </div>
+                      <div key={previewIndex} style={{ paddingRight: '10px', paddingLeft: '10px', textAlign: 'center', fontSize: '12px' }}>
+                        {renderShortString(previewItem.carousel_name)}
+                      </div>
                     </div>
                   ))}
                 </div>
