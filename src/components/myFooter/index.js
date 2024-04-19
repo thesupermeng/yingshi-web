@@ -56,7 +56,7 @@ const MyFooter = () => {
 
   return (
     <div className='mobile'>
-      <div className='footer row '>
+      <div className='flex mb-2'>
         <div
           className='col flex-col d-flex justify-center align-center items-center'
           onClick={() => {

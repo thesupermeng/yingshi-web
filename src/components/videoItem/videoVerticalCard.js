@@ -24,19 +24,15 @@ export const VideoVerticalCard = ({ vod }) => {
             objectFit: 'cover',
           }}
         />
-        {/* <div className='flex absolute w-full bottom-1 px-1'>
-          <div className='w-full bg-[#0ff00099] rounded-md p-0.5'>
-            <span line className='text-xs truncate'>
-              {vod.vod_remarks}
-            </span>
+        {vod.vod_remarks !== undefined ? (
+          <div className='flex absolute w-full bottom-1 px-1.5 justify-end'>
+            <div className='bg-[#00000099] rounded-md p-1 max-w-full'>
+              <p className='text-xs truncate'>
+                {vod.vod_remarks}
+              </p>
+            </div>
           </div>
-        </div> */}
-        <div
-            className='flex  p-1 rounded-md absolute right-1 bottom-1'
-            style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}
-          >
-            <span line className='text-xs truncate'>{vod.vod_remarks}</span>
-          </div>
+        ) : null}
       </div>
       <span className='text-center text-sm mx-1'>{vod.vod_name}</span>
     </div>
