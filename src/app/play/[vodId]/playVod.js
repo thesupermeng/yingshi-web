@@ -14,14 +14,20 @@ import { VodContent } from '@/components/vod/vodContent.js';
 import styles from './style.module.css';
 import { AdsBanner } from '@/components/ads/adsBanner.js';
 import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
+import { ArrowLeftIcon } from '@/asset/icons';
+import Image from "next/image";
+import { useRouter } from 'next/navigation';
 
 export const PlayVod = ({ vodId }) => {
+  const router = useRouter();
 
   const { t } = useTranslation();
 
   const domElementRef = useRef(null);
+  const playerDivRef = useRef(null);
   const [vod, setVod] = useState(null);
   const [preventMutipleCall, setPreventMutipleCall] = useState(false);
+  const [playerDivHeight, setPlayerDivHeight] = useState(0);
   const [vodSourceSelected, setVodSourceSelected] = useState(null);
   const [episodeSelected, setEpisodeSelected] = useState(null);
   const [episodeGroups, setEpisodeGroups] = useState([]);
@@ -114,8 +120,6 @@ export const PlayVod = ({ vodId }) => {
 
   const onSelectEpisodeGroup = (group) => {
     setEpisodeGroupSelected(group);
-    console.log("GORUPPP");
-    console.log(group);
   };
 
   const onSelectEpisode = (episode) => {
@@ -136,13 +140,29 @@ export const PlayVod = ({ vodId }) => {
 
     setEpisodeSelected(vodSourceSelected?.vod_play_list?.urls[indexFound + 1]);
   };
+
+  useEffect(() => {
+    if (playerDivRef.current) {
+      const playerDivHeight = playerDivRef.current.offsetHeight;
+      setPlayerDivHeight(playerDivHeight);
+    }
+  });
   
   return (
-    <div ref={domElementRef} className='lg:w-[85%] w-screen py-2'>
+    <div ref={domElementRef} className='lg:w-[85%] w-screen'>
       {vod != null && (
         <div className='flex flex-row space-x-4'>
-          <div className='flex-1 space-y-4' style={{ width: '78%' }}>
-            <div className='aspect-[16/9]'>
+          <div className='flex-1 space-y-4 no-scrollbar' style={{ width: '78%' }}>
+            <div ref={playerDivRef} className='aspect-[16/9] absolute w-screen lg:relative lg:w-[100%]' style={{ zIndex: '10' }}>
+              <div className="p-3 lg:hidden block" onClick={() => router.back()} style={{ background: 'black', textAlign: 'center', position: 'relative' }}>
+                {vod.vod_name}
+                <div className="p-3" style={{ position: 'absolute', top: '0', marginTop: '0.4rem' }}>
+                  <Image
+                    src={ArrowLeftIcon}
+                    alt="Icon"
+                  />
+                </div>
+              </div>
               <Artplayer
                 className='aspect-[16/9]'
                 option={{
@@ -157,7 +177,9 @@ export const PlayVod = ({ vodId }) => {
                 onVideoEnd={onVideoEnd}
               />
             </div>
+            <div className="lg:hidden block" style={{ height: `${playerDivHeight}px` }}>
 
+            </div>
             <ShareHorizontal
               className={'w-[80%]'}
             />
