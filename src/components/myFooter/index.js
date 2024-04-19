@@ -48,6 +48,12 @@ const MyFooter = () => {
       router.push('/');
     }
   };
+
+
+  if (pathname.startsWith('/play')) {
+    return <></>;
+  }
+
   return (
     <div className='mobile'>
       <div className='footer row '>
