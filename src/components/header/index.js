@@ -321,9 +321,8 @@ const Header = () => {
         <div className='gap-y-2 flex-col w-full xl:w-11/12 md:flex-row flex'>
           <div className='flex-1 flex gap-x-2 md:justify-start'>
             <div
-              className={`flex justify-between w-24 md:w-28 ${
-                openSearch ? 'hidden md:flex' : ''
-              }`}
+              className={`flex justify-between w-24 md:w-28 ${openSearch ? 'hidden md:flex' : ''
+                }`}
             >
               <Image
                 alt='鲨鱼影视'
@@ -338,9 +337,8 @@ const Header = () => {
               <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>
                 <div className='relative flex flex-1 md:flex-none'>
                   <div
-                    className={`flex justify-between pr-4 pl-2 ${
-                      openSearch ? 'flex md:hidden' : 'hidden'
-                    }`}
+                    className={`flex justify-between pr-4 pl-2 ${openSearch ? 'flex md:hidden' : 'hidden'
+                      }`}
                   >
                     <Image
                       alt='back'
@@ -607,19 +605,18 @@ const Header = () => {
                   }}
                 >
                   <span
-                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${
-                      selectedSpecialMenu.id === -1 &&
-                      selectedMenu.id === navItem.id
+                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${selectedSpecialMenu.id === -1 &&
+                        selectedMenu.id === navItem.id
                         ? 'text-blue-500'
                         : selectedSpecialMenu.id === navItem.id
                           ? 'text-blue-500'
                           : 'text-white'
-                    }`}
+                      }`}
                   >
                     {navItem.name}
                   </span>
                   {selectedSpecialMenu.id === -1 &&
-                  selectedMenu.id === navItem.id ? (
+                    selectedMenu.id === navItem.id ? (
                     <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
                   ) : selectedSpecialMenu.id === navItem.id ? (
                     <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
@@ -644,19 +641,18 @@ const Header = () => {
                   }}
                 >
                   <span
-                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${
-                      selectedSpecialMenu.id === -1 &&
-                      selectedMenu.id === navItem.id
+                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${selectedSpecialMenu.id === -1 &&
+                        selectedMenu.id === navItem.id
                         ? 'text-blue-500'
                         : selectedSpecialMenu.id === navItem.id
                           ? 'text-blue-500'
                           : 'text-white'
-                    }`}
+                      }`}
                   >
                     {navItem.name}
                   </span>
                   {selectedSpecialMenu.id === -1 &&
-                  selectedMenu.id === navItem.id ? (
+                    selectedMenu.id === navItem.id ? (
                     <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
                   ) : selectedSpecialMenu.id === navItem.id ? (
                     <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
@@ -707,11 +703,10 @@ const Header = () => {
                               }}
                             >
                               <span
-                                className={`hover:text-blue-500 transition-colors duration-300 truncate ${
-                                  selectedMenu.id === navItem.id
+                                className={`hover:text-blue-500 transition-colors duration-300 truncate ${selectedMenu.id === navItem.id
                                     ? 'text-blue-500'
                                     : 'text-white'
-                                }`}
+                                  }`}
                               >
                                 {navItem.name}
                               </span>
@@ -866,28 +861,25 @@ const Header = () => {
             <div className='gap-y-2 flex-col w-full md:flex-row flex'>
               <div className='flex-1 flex gap-x-2 md:justify-start'>
                 <div
-                  className={`flex justify-between w-22 pl-3 ${
-                    openSearchMobile ? 'hidden' : ''
-                  }`}
+                  className={`flex justify-between w-22 pl-3 ${openSearchMobile ? 'hidden' : ''
+                    }`}
                 >
-              <Image
-                      alt='back'
-                      src={leftArrow}
-                     //  style={{ width: '12px' }}
-                      onClick={() => {
-                        setOpenSearch(false);
-                        setSearchInput('');
-                      }}
-                    />
-              
+                  <Image
+                    alt='back'
+                    src={leftArrow}
+                    //  style={{ width: '12px' }}
+                    onClick={() => {
+                      router.back();
+                    }}
+                  />
+
                 </div>
                 <div className='items-center flex flex-1 md:flex-none'>
                   <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>
                     <div className='relative flex flex-1 md:flex-none'>
                       <div
-                        className={`flex justify-between px-2 ${
-                          openSearchMobile ? 'flex ' : 'hidden'
-                        }`}
+                        className={`flex justify-between px-2 ${openSearchMobile ? 'flex ' : 'hidden'
+                          }`}
                       >
                         <Image
                           alt='back'
@@ -1056,7 +1048,7 @@ const Header = () => {
                     ) : null}
                   </div>
                 </div>
-            
+
               </div>
             </div>
           </div>
@@ -1074,9 +1066,8 @@ const Header = () => {
             <div className='gap-y-2 flex-col w-full md:flex-row flex'>
               <div className='flex-1 flex gap-x-2 md:justify-start'>
                 <div
-                  className={`flex justify-between w-22 pl-3 ${
-                    openSearchMobile ? 'hidden' : ''
-                  }`}
+                  className={`flex justify-between w-22 pl-3 ${openSearchMobile ? 'hidden' : ''
+                    }`}
                 >
                   <span className='text-topic-title'> 播单 </span>
                 </div>
@@ -1084,9 +1075,8 @@ const Header = () => {
                   <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>
                     <div className='relative flex flex-1 md:flex-none'>
                       <div
-                        className={`flex justify-between px-2 ${
-                          openSearchMobile ? 'flex ' : 'hidden'
-                        }`}
+                        className={`flex justify-between px-2 ${openSearchMobile ? 'flex ' : 'hidden'
+                          }`}
                       >
                         <Image
                           alt='back'
