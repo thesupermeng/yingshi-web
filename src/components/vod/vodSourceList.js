@@ -13,11 +13,13 @@ export const VodSourceList = ({
   onSelectSource,
 }) => {
   return <div className="flex justify-between space-x-2">
-    <div id="control-left" name="control" className={styles.arrowCard}>
-      <Image
-        src={ArrowLeftIcon}
-        alt="Icon"
-      />
+    <div className="lg:flex hidden">
+      <div id="control-left" name="control" className={styles.arrowCard}>
+        <Image
+          src={ArrowLeftIcon}
+          alt="Icon"
+        />
+      </div>
     </div>
 
     <ul className="flex flex-1 overflow-x-scroll space-x-2">
@@ -38,12 +40,13 @@ export const VodSourceList = ({
         </>
       ))}
     </ul>
-
-    <div id="control-left" name="control" className={styles.arrowCard}>
-      <Image
-        src={ArrowRightIcon}
-        alt="Icon"
-      />
+    <div className="lg:flex hidden">
+      <div id="control-left" name="control" className={styles.arrowCard}>
+        <Image
+          src={ArrowRightIcon}
+          alt="Icon"
+        />
+      </div>
     </div>
   </div>
 }
