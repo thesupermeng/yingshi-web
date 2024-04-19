@@ -85,6 +85,9 @@ const Header = () => {
     setOpenSearchMobile(true);
   };
 
+
+
+
   const handleChange = (event) => {
     setLoadingSearching(true);
     const newValue = event.target.value;
@@ -153,6 +156,9 @@ const Header = () => {
     return YingshiApi(URL_YINGSHI_VOD.homeGetNav, {}, { method: 'GET' });
   };
 
+
+  
+
   const getTopTenList = async () => {
     return YingshiApi(
       URL_YINGSHI_VOD.topTenList,
@@ -182,6 +188,7 @@ const Header = () => {
 
   useEffect(() => {
     console.log(pathname);
+    setSearchInput('');
   }, [pathname]);
 
   const handleClick = (value) => {
@@ -839,10 +846,10 @@ const Header = () => {
   );
 
   if (pathname.startsWith('/topic/')) {
-    return <></>;
+    return <div className={'desktop'}>{defaultHeader}</div>;
   }
 
-  if (pathname.startsWith('/filmLibrary')) {
+  if (pathname.startsWith('/filmLibrary') || pathname.startsWith('/topic/')) {
     return (
       <>
         <div className={'mobile'}>
