@@ -21,7 +21,6 @@ import { NotifyMessages } from '@/components/Perpetual/NotifyMessages';
 
 import Head from 'next/head';
 
-
 import { H5LiveChat } from '@/componentsH5/H5LiveChat';
 import { Config } from '@/util/config';
 
@@ -105,6 +104,7 @@ export default function RootLayout({ children }) {
               {/* </div> */}
               {/* </div> */}
             </div>
+            <MyFooter />
           </div>
           {/* <WEBOnly>
             <div className='absolute top-0 bottom-0 left-0 right-0 bg-sideMenu container w-full '>
@@ -146,12 +146,7 @@ export default function RootLayout({ children }) {
           </H5Only> */}
           {/* <ChatMessages />
           <NotifyMessages /> */}
-                  <MyFooter />
         </Providers>
-
-   
-
-
       </body>
     </html>
   );

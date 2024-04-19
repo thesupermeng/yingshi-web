@@ -605,9 +605,10 @@ const Header = () => {
                   onClick={() => {
                     handleClick(navItem.id);
                   }}
+                  
                 >
                   <span
-                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                    className={`truncate ${
                       selectedSpecialMenu.id === -1 &&
                       selectedMenu.id === navItem.id
                         ? 'text-blue-500'
