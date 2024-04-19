@@ -24,11 +24,16 @@ import { use, useEffect, useRef, useState } from 'react';
 import { YingshiApi } from '@/util/YingshiApi';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { LoadingPage } from '@/components/loading';
-import { setHeaderMenu, setSelectedId } from '@/store/headerData';
+import {
+  setHeaderMenu,
+  setSelectedId,
+  setSpecialSelectedId,
+} from '@/store/headerData';
 import TopicHeader from './../../components/topicHeader';
 
 const getHeaderMenu = (state) => state.headerMenu;
 const getHeaderMenuSelected = (state) => state.headerMenuSelected;
+const getSpecialHeaderMenuSelected = (state) => state.specialHeaderMenuSelected;
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -46,6 +51,7 @@ const Header = () => {
   // };
   const headerMenu = useSelector(getHeaderMenu);
   const selectedMenu = useSelector(getHeaderMenuSelected);
+  const selectedSpecialMenu = useSelector(getSpecialHeaderMenuSelected);
   const [visibleItems, setVisibleItems] = useState([]);
   const [hiddenItems, setHiddenItems] = useState([]);
 
@@ -179,12 +185,15 @@ const Header = () => {
   }, [pathname]);
 
   const handleClick = (value) => {
-    dispatch(setSelectedId(value));
     if (value == 998) {
+      dispatch(setSpecialSelectedId(value));
       router.push('/topic');
     } else if (value == 999) {
+      dispatch(setSpecialSelectedId(value));
       router.push('/filmLibrary');
     } else {
+      dispatch(setSpecialSelectedId(-1));
+      dispatch(setSelectedId(value));
       router.push('/');
     }
   };
@@ -599,14 +608,20 @@ const Header = () => {
                 >
                   <span
                     className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                      selectedSpecialMenu.id === -1 &&
                       selectedMenu.id === navItem.id
                         ? 'text-blue-500'
-                        : 'text-white'
+                        : selectedSpecialMenu.id === navItem.id
+                          ? 'text-blue-500'
+                          : 'text-white'
                     }`}
                   >
                     {navItem.name}
                   </span>
-                  {selectedMenu.id === navItem.id ? (
+                  {selectedSpecialMenu.id === -1 &&
+                  selectedMenu.id === navItem.id ? (
+                    <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
+                  ) : selectedSpecialMenu.id === navItem.id ? (
                     <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
                   ) : null}
                 </div>
@@ -630,14 +645,20 @@ const Header = () => {
                 >
                   <span
                     className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                      selectedSpecialMenu.id === -1 &&
                       selectedMenu.id === navItem.id
                         ? 'text-blue-500'
-                        : 'text-white'
+                        : selectedSpecialMenu.id === navItem.id
+                          ? 'text-blue-500'
+                          : 'text-white'
                     }`}
                   >
                     {navItem.name}
                   </span>
-                  {selectedMenu.id === navItem.id ? (
+                  {selectedSpecialMenu.id === -1 &&
+                  selectedMenu.id === navItem.id ? (
+                    <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
+                  ) : selectedSpecialMenu.id === navItem.id ? (
                     <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
                   ) : null}
                 </div>

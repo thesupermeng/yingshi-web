@@ -46,15 +46,13 @@ export default function Home() {
 
   useEffect(() => {
     setLoading(true);
-    if (selectedMenu.id !== 998 && selectedMenu.id !== 999) {
-      getTypePage(selectedMenu.id).then((data) => {
-        console.log(data.categories);
-        setCategories(data.categories);
-        setYunying(data.yunying);
-        setCarousel(data.carousel);
-        setLoading(false);
-      });
-    }
+    getTypePage(selectedMenu.id).then((data) => {
+      console.log(data.categories);
+      setCategories(data.categories);
+      setYunying(data.yunying);
+      setCarousel(data.carousel);
+      setLoading(false);
+    });
   }, [selectedMenu]);
 
   return (

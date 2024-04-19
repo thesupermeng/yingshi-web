@@ -22,7 +22,11 @@ import { videoPlayerMisc } from './videoPlayerMisc';
 import { livechat } from './livechat';
 import { games } from './games';
 import { streamGame } from './streamGame';
-import { headerMenu, headerMenuSelected } from './headerData';
+import {
+  headerMenu,
+  headerMenuSelected,
+  specialHeaderMenuSelected,
+} from './headerData';
 
 export const store = configureStore({
   reducer: {
@@ -51,6 +55,7 @@ export const store = configureStore({
     livechat: livechat.reducer,
     headerMenu: headerMenu.reducer,
     headerMenuSelected: headerMenuSelected.reducer,
+    specialHeaderMenuSelected: specialHeaderMenuSelected.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
