@@ -54,7 +54,7 @@ export const VodContent = ({
             <p ref={qqqref} className={`${isCollapse ? 'line-clamp-2' : ''} text-white/75`}>{episodeInfo.gpt_content}</p>
             {isLineExceed &&
               <div className="flex flex-row space-x-2 items-center" onClick={onExpandPress}>
-                <span className={styles.primaryText}>{t('expand')}</span>
+                <span className={styles.primaryText}>{t('更多')}</span>
                 <ArrowDownIcon
                   color={'#FAC33D'}
                 />

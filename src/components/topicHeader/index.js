@@ -10,8 +10,14 @@ const TopicHeader = ({ topicName }) => {
 
   return (
     <div
-      className='flex items-center justify-center cursor-pointer py-3.5 sticky'
-      style={{ backgroundColor:'rgb(16, 18, 21) !important'}}
+    className='flex items-center justify-center cursor-pointer py-3.5 sticky'
+    style={{
+      backgroundColor: 'rgb(16, 18, 21)',
+      position: 'fixed',
+      top: 0,
+      width: '100%',
+      zIndex: 999, // Ensure it's above other content
+    }}
       onClick={(e) => {
         e.preventDefault();
        // history.goBack();

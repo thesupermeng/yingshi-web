@@ -2338,3 +2338,9 @@ a:not([href]):not([class]):hover {
   margin-bottom: 30px;
 }
 }
+
+.hover-effect:hover
+{
+  opacity: 0.85;
+  cursor: pointer !important;
+}
