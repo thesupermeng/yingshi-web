@@ -457,7 +457,7 @@ const Header = () => {
                           {topTenList.map((item, index) => {
                             return (
                               <div
-                                className='flex flex-row justify-between py-2.5'
+                                className='flex flex-row justify-between py-2.5 cursor-pointer'
                                 key={index}
                                 onClick={(e) => {
                                   e.preventDefault();
@@ -1006,7 +1006,7 @@ const Header = () => {
                               {topTenList.map((item, index) => {
                                 return (
                                   <div
-                                    className='flex flex-row justify-between py-2.5'
+                                    className='flex flex-row justify-between py-2.5 cursor-pointer'
                                     key={index}
                                     onClick={(e) => {
                                       e.preventDefault();
@@ -1204,7 +1204,7 @@ const Header = () => {
                               {topTenList.map((item, index) => {
                                 return (
                                   <div
-                                    className='flex flex-row justify-between py-2.5'
+                                    className='flex flex-row justify-between py-2.5 cursor-pointer'
                                     key={index}
                                     onClick={(e) => {
                                       e.preventDefault();
