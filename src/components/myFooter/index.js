@@ -50,13 +50,13 @@ const MyFooter = () => {
   };
 
 
-  if (pathname.startsWith('/play')) {
+  if (pathname.startsWith('/play') || pathname.startsWith('/search/')  ) {
     return <></>;
   }
 
   return (
     <div className='mobile'>
-      <div className='footer row '>
+      <div className='flex mb-2'>
         <div
           className='col flex-col d-flex justify-center align-center items-center'
           onClick={() => {
@@ -75,7 +75,7 @@ const MyFooter = () => {
               style={{ cursor: 'pointer' }}
             />
           </div>
-          <div>首首</div>
+          <div>首页</div>
         </div>
 
         <div

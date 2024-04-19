@@ -43,7 +43,7 @@
 
 .dropdownContainer {
   position: absolute;
-  z-index: 100;
+  z-index: 10;
   top: 50px;
   border-radius: 4px;
   background-color: #171717 !important;

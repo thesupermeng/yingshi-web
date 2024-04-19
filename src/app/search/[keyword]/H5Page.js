@@ -10,6 +10,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import VodItemMobile from './../../../components/vodItemMobile'
+import Image from 'next/image';
+
+import {
+
+  searchEmptyIcon,
+
+} from '@/asset/icons';
 
 export default function Page() {
   const { keyword } = useParams();
@@ -89,7 +96,7 @@ export default function Page() {
           <div className='desktop'>
             <div className='d-flex container pt-3 ' style={{ width: '100%' }}>
               <div className='row'>
-                {searchResults.List.map((vod) => (
+                {searchResults?.List?.map((vod) => (
                   <div className='col-6 mt-2 mb-2'>
                     <div
                       className='topic-details-card'
@@ -156,12 +163,34 @@ export default function Page() {
           <div className='mobile'>
             <div className='d-flex container pt-3' style={{ width: '100%' }}>
               <div className='row'>
-                {searchResults.List.map((vod) => (
+                {searchResults?.List?.map((vod) => (
                   <VodItemMobile vod={vod} />
                 ))}
               </div>
             </div>
           </div>
+
+
+          {searchResults?.List == null &&
+
+            <div className='flex items-center justify-center flex-col h-full'>
+              <Image
+                className='mx-2'
+                src={searchEmptyIcon}
+                alt='empty'
+                width={120}
+              />
+              <span>暂无数据</span>
+
+              <span className="text-xs pt-2">    抱歉没有搜索到"{keyword}"的相关视频</span>
+
+
+
+            </div>
+
+
+          }
+
         </>
       )}
       {/* topic list  */}
