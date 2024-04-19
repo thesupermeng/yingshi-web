@@ -2,6 +2,7 @@ import Image from "next/image"
 import { useTranslation } from "react-i18next"
 import { ArrowRightIcon } from "@/asset/icons";
 import { convertTimeStampToDateTime } from "@/util/date";
+import { ShareHorizontal } from '@/components/shareHorizontal';
 
 export const VodCard = ({
   imgSource,
@@ -33,13 +34,19 @@ export const VodCard = ({
           />
         </div>
       </div>
-      <span className="text-sm text-white/75 py-1 pt-3" style={{ fontWeight: '300' }}>{t('更新')}: {_vodUpdateDate.year}-{_vodUpdateDate.month}-{_vodUpdateDate.day}</span>
-      <span className="text-sm text-white/75 py-1" style={{ fontWeight: '300' }}>{vodYear} {vodClass}</span>
+      <span className="text-sm text-white/75 py-1 pt-3" style={{ fontWeight: '300' }}>{vodYear} {vodClass}</span>
+      <span className="text-sm text-white/75 py-1" style={{ fontWeight: '300' }}>{t('更新')}: {_vodUpdateDate.year}-{_vodUpdateDate.month}-{_vodUpdateDate.day}</span>
       <div className="lg:flex hidden flex-row space-x-2 py-1">
         <span className="text-sm text-white/75" style={{ fontWeight: '300' }}>{t('简介')}</span>
         <Image
           src={ArrowRightIcon}
           alt="Icon"
+        />
+      </div>
+      {/* H5 Share Horizontal */}
+      <div className="lg:hidden flex">
+        <ShareHorizontal
+          className={'w-[90%]'}
         />
       </div>
     </div>

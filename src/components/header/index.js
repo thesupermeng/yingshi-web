@@ -85,6 +85,9 @@ const Header = () => {
     setOpenSearchMobile(true);
   };
 
+
+
+
   const handleChange = (event) => {
     setLoadingSearching(true);
     const newValue = event.target.value;
@@ -153,6 +156,9 @@ const Header = () => {
     return YingshiApi(URL_YINGSHI_VOD.homeGetNav, {}, { method: 'GET' });
   };
 
+
+  
+
   const getTopTenList = async () => {
     return YingshiApi(
       URL_YINGSHI_VOD.topTenList,
@@ -182,6 +188,7 @@ const Header = () => {
 
   useEffect(() => {
     console.log(pathname);
+    setSearchInput('');
   }, [pathname]);
 
   const handleClick = (value) => {
@@ -197,6 +204,12 @@ const Header = () => {
       router.push('/');
     }
   };
+
+
+  const goToSeachResult = (query) => {
+    router.push('/search/' + query);
+  }
+
 
   const calculateItemsVisibility = () => {
     if (containerRef.current) {
@@ -305,6 +318,7 @@ const Header = () => {
     };
   }, []);
 
+
   if (loading) {
     return <LoadingPage full={true} />;
   }
@@ -321,9 +335,8 @@ const Header = () => {
         <div className='gap-y-2 flex-col w-full xl:w-11/12 md:flex-row flex'>
           <div className='flex-1 flex gap-x-2 md:justify-start'>
             <div
-              className={`flex justify-between w-24 md:w-28 ${
-                openSearch ? 'hidden md:flex' : ''
-              }`}
+              className={`flex justify-between w-24 md:w-28 ${openSearch ? 'hidden md:flex' : ''
+                }`}
             >
               <Image
                 alt='鲨鱼影视'
@@ -338,9 +351,8 @@ const Header = () => {
               <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>
                 <div className='relative flex flex-1 md:flex-none'>
                   <div
-                    className={`flex justify-between pr-4 pl-2 ${
-                      openSearch ? 'flex md:hidden' : 'hidden'
-                    }`}
+                    className={`flex justify-between pr-4 pl-2 ${openSearch ? 'flex md:hidden' : 'hidden'
+                      }`}
                   >
                     <Image
                       alt='back'
@@ -374,7 +386,7 @@ const Header = () => {
                 </div>
                 {openSearch ? (
                   <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100%_-_52px)] z-20 left-0 md:left-auto md:w-96 md:h-[500px]'>
-                    <div className='py-3 px-4 flex flex-col md:rounded-md w-full h-full md:h-fit overflow-scroll bg-[#1d2023] md:bg-[#1d2023e0] md:w-96'>
+                    <div style={{ background: 'black' }} className='py-3 px-4 flex flex-col md:rounded-md w-full h-full md:h-fit overflow-scroll bg-[#1d2023] md:bg-[#1d2023e0] md:w-96'>
                       {searchInput ? (
                         loadingSearching ? (
                           <LoadingPage full={false} />
@@ -437,12 +449,15 @@ const Header = () => {
                                 {searchHistoryList.map((item, index) => {
                                   return (
                                     <div
-                                      className='py-1 px-2 rounded-lg'
+                                      className='py-1 px-2 rounded-lg cursor-pointer hover-effect'
                                       style={{
                                         background: 'rgba(255, 255, 255, 0.06)',
                                         color: 'rgba(156, 156, 156, 1)',
                                       }}
                                       key={index}
+                                      onClick={() => {
+                                        goToSeachResult(item);
+                                      }}
                                     >
                                       {item}
                                     </div>
@@ -457,7 +472,7 @@ const Header = () => {
                           {topTenList.map((item, index) => {
                             return (
                               <div
-                                className='flex flex-row justify-between py-2.5'
+                                className='flex flex-row justify-between py-2.5 cursor-pointer'
                                 key={index}
                                 onClick={(e) => {
                                   e.preventDefault();
@@ -605,17 +620,16 @@ const Header = () => {
                   onClick={() => {
                     handleClick(navItem.id);
                   }}
-                  
+
                 >
                   <span
-                    className={`truncate ${
-                      selectedSpecialMenu.id === -1 &&
-                      selectedMenu.id === navItem.id
+                    className={`truncate ${selectedSpecialMenu.id === -1 &&
+                        selectedMenu.id === navItem.id
                         ? 'text-blue-500'
                         : selectedSpecialMenu.id === navItem.id
                           ? 'text-blue-500'
                           : 'text-white'
-                    }`}
+                      }`}
                   >
                     {navItem.name}
                   </span>
@@ -639,19 +653,18 @@ const Header = () => {
                   }}
                 >
                   <span
-                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${
-                      selectedSpecialMenu.id === -1 &&
-                      selectedMenu.id === navItem.id
+                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${selectedSpecialMenu.id === -1 &&
+                        selectedMenu.id === navItem.id
                         ? 'text-blue-500'
                         : selectedSpecialMenu.id === navItem.id
                           ? 'text-blue-500'
                           : 'text-white'
-                    }`}
+                      }`}
                   >
                     {navItem.name}
                   </span>
                   {selectedSpecialMenu.id === -1 &&
-                  selectedMenu.id === navItem.id ? (
+                    selectedMenu.id === navItem.id ? (
                     <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
                   ) : selectedSpecialMenu.id === navItem.id ? (
                     <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
@@ -702,11 +715,10 @@ const Header = () => {
                               }}
                             >
                               <span
-                                className={`hover:text-blue-500 transition-colors duration-300 truncate ${
-                                  selectedMenu.id === navItem.id
+                                className={`hover:text-blue-500 transition-colors duration-300 truncate ${selectedMenu.id === navItem.id
                                     ? 'text-blue-500'
                                     : 'text-white'
-                                }`}
+                                  }`}
                               >
                                 {navItem.name}
                               </span>
@@ -834,14 +846,15 @@ const Header = () => {
   );
 
   if (pathname.startsWith('/topic/')) {
-    return <></>;
+    return <div className={'desktop'}>{defaultHeader}</div>;
   }
 
-  if (pathname.startsWith('/filmLibrary')) {
+  if (pathname.startsWith('/filmLibrary') || pathname.startsWith('/topic/')) {
     return (
       <>
         <div className={'mobile'}>
           <TopicHeader topicName={'片库'} />
+          <div style={{height:'52px'}}></div>
         </div>
 
         <div className={'desktop'}>{defaultHeader}</div>
@@ -861,29 +874,27 @@ const Header = () => {
             <div className='gap-y-2 flex-col w-full md:flex-row flex'>
               <div className='flex-1 flex gap-x-2 md:justify-start'>
                 <div
-                  className={`flex justify-between w-22 pl-3 ${
-                    openSearchMobile ? 'hidden' : ''
-                  }`}
+                  className={`flex justify-between w-22 pl-3 ${openSearchMobile ? 'hidden' : ''
+                    }`}
                 >
-              <Image
-                      alt='back'
-                      src={leftArrow}
-                     //  style={{ width: '12px' }}
-                      onClick={() => {
-                        router.back();
-                        // setOpenSearch(false);
-                        // setSearchInput('');
-                      }}
-                    />
-              
+                  <Image
+                    alt='back'
+                    src={leftArrow}
+                    //  style={{ width: '12px' }}
+                    onClick={() => {
+                      router.back();
+                      // setOpenSearch(false);
+                      // setSearchInput('');
+                    }}
+                  />
+
                 </div>
                 <div className='items-center flex flex-1 md:flex-none'>
                   <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>
                     <div className='relative flex flex-1 md:flex-none'>
                       <div
-                        className={`flex justify-between px-2 ${
-                          openSearchMobile ? 'flex ' : 'hidden'
-                        }`}
+                        className={`flex justify-between px-2 ${openSearchMobile ? 'flex ' : 'hidden'
+                          }`}
                       >
                         <Image
                           alt='back'
@@ -984,13 +995,17 @@ const Header = () => {
                                     {searchHistoryList.map((item, index) => {
                                       return (
                                         <div
-                                          className='py-1 px-2 rounded-lg'
+                                          className='py-1 px-2 rounded-lg cursor-pointer hover-effect'
                                           style={{
                                             background:
                                               'rgba(255, 255, 255, 0.06)',
                                             color: 'rgba(156, 156, 156, 1)',
                                           }}
                                           key={index}
+                                          onClick={() => {
+                                            goToSeachResult(item);
+                                          }}
+
                                         >
                                           {item}
                                         </div>
@@ -1006,7 +1021,7 @@ const Header = () => {
                               {topTenList.map((item, index) => {
                                 return (
                                   <div
-                                    className='flex flex-row justify-between py-2.5'
+                                    className='flex flex-row justify-between py-2.5 cursor-pointer'
                                     key={index}
                                     onClick={(e) => {
                                       e.preventDefault();
@@ -1052,7 +1067,7 @@ const Header = () => {
                     ) : null}
                   </div>
                 </div>
-            
+
               </div>
             </div>
           </div>
@@ -1070,9 +1085,8 @@ const Header = () => {
             <div className='gap-y-2 flex-col w-full md:flex-row flex'>
               <div className='flex-1 flex gap-x-2 md:justify-start'>
                 <div
-                  className={`flex justify-between w-22 pl-3 ${
-                    openSearchMobile ? 'hidden' : ''
-                  }`}
+                  className={`flex justify-between w-22 pl-3 ${openSearchMobile ? 'hidden' : ''
+                    }`}
                 >
                   <span className='text-topic-title'> 播单 </span>
                 </div>
@@ -1080,9 +1094,8 @@ const Header = () => {
                   <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>
                     <div className='relative flex flex-1 md:flex-none'>
                       <div
-                        className={`flex justify-between px-2 ${
-                          openSearchMobile ? 'flex ' : 'hidden'
-                        }`}
+                        className={`flex justify-between px-2 ${openSearchMobile ? 'flex ' : 'hidden'
+                          }`}
                       >
                         <Image
                           alt='back'
@@ -1183,13 +1196,16 @@ const Header = () => {
                                     {searchHistoryList.map((item, index) => {
                                       return (
                                         <div
-                                          className='py-1 px-2 rounded-lg'
+                                          className='py-1 px-2 rounded-lg cursor-pointer hover-effect'
                                           style={{
                                             background:
                                               'rgba(255, 255, 255, 0.06)',
                                             color: 'rgba(156, 156, 156, 1)',
                                           }}
                                           key={index}
+                                          onClick={() => {
+                                            goToSeachResult(item);
+                                          }}
                                         >
                                           {item}
                                         </div>
@@ -1204,7 +1220,7 @@ const Header = () => {
                               {topTenList.map((item, index) => {
                                 return (
                                   <div
-                                    className='flex flex-row justify-between py-2.5'
+                                    className='flex flex-row justify-between py-2.5 cursor-pointer'
                                     key={index}
                                     onClick={(e) => {
                                       e.preventDefault();
