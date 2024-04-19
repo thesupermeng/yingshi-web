@@ -595,7 +595,7 @@ const Header = () => {
               </div>
             ) : null}
           </div>
-          <div className='flex gap-4 overflow-scroll md:hidden'>
+          <div className='flex gap-4 overflow-scroll md:hidden no-scrollbar'>
             {headerMenu.headerMenu?.map((navItem, index) => {
               return (
                 <div

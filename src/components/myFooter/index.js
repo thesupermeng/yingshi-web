@@ -50,7 +50,7 @@ const MyFooter = () => {
   };
 
 
-  if (pathname.startsWith('/play')) {
+  if (pathname.startsWith('/play') || pathname.startsWith('/search/')  ) {
     return <></>;
   }
 
@@ -75,7 +75,7 @@ const MyFooter = () => {
               style={{ cursor: 'pointer' }}
             />
           </div>
-          <div>首首</div>
+          <div>首页</div>
         </div>
 
         <div
