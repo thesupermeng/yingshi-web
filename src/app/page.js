@@ -72,7 +72,7 @@ export default function Home() {
                     <div
                       id={yy.type_id}
                       key={idx}
-                      style={{ paddingTop: '3rem' }}
+                      className='lg:pt-3'
                     >
                       <span
                         style={{

@@ -57,12 +57,18 @@ export const Carousel = ({ carouselItems }) => {
   }
 
   return (
-    <div style={{ position: 'relative', width: '100%', aspectRatio: '5/2', overflow: 'hidden' }}>
+    <div style={{ position: 'relative', width: '100%', aspectRatio: '2/1', overflow: 'hidden' }}>
       <div className="lg:hidden block">
         <Slider {...settings}>
           {carouselItems != null && carouselItems.length > 0 && carouselItems.map((item, index) => {
             return (
-              <div>
+              <div style={{ position: 'relative' }} onClick={(e) => {
+                e.preventDefault();
+                router.push(`/play/${item.vod.vod_id}`);
+              }}>
+                <div style={{ zIndex: '1', position: 'absolute', bottom: '0', paddingLeft: '1.2rem', paddingBottom: '2rem' }}>
+                  {item.vod.vod_name}
+                </div>
                 <img
                   src={item.carousel_pic_mobile}
                   alt={`Slide ${index}`}
