@@ -59,9 +59,8 @@ export const PlayVod = ({ vodId }) => {
   useEffect(() => {
     if (episodeSelected == null) {
       getVodDetails().then((data) => {
-        if (data === undefined || data.length <= 0) return;
-
-        let res = data[0];
+        if (data === undefined || data.length <= 0 || data.List === undefined || data.List.length <= 0) return;
+        let res = data.List[0];
         setVod(res);
 
         if (res.vod_sources.length > 0) {
@@ -156,7 +155,7 @@ export const PlayVod = ({ vodId }) => {
             <div ref={playerDivRef} className='aspect-[16/9] absolute w-screen lg:relative lg:w-[100%]' style={{ zIndex: '10' }}>
               <div className="p-3 lg:hidden block" onClick={() => router.back()} style={{ background: 'black', textAlign: 'center', position: 'relative' }}>
                 {vod.vod_name}
-                <div className="p-3" style={{ position: 'absolute', top: '0', marginTop: '0.4rem' }}>
+                <div className="pt-3" style={{ position: 'absolute', top: '0', marginTop: '0.4rem' }}>
                   <Image
                     src={ArrowLeftIcon}
                     alt="Icon"
@@ -180,11 +179,14 @@ export const PlayVod = ({ vodId }) => {
             <div className="lg:hidden block" style={{ height: `${playerDivHeight}px` }}>
 
             </div>
-            <ShareHorizontal
-              className={'w-[80%]'}
-            />
+            {/* Web Share Horizontal */}
+            <div className="lg:flex hidden">
+              <ShareHorizontal
+                className={'w-[80%]'}
+              />
+            </div>
             <VodContent vodContent={vod.vod_content} vodEpisodeSelected={episodeSelected} vodEpisodeInfo={vod.vod_episode_info} />
-
+            
             <div className='lg:hidden flex flex-col space-y-4' style={{ width: '100%' }}>
               <div className="">
                 <div className={`space-y-4 ${styles.vodMetaContainer}`}>
