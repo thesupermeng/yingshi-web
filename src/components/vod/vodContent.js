@@ -64,7 +64,7 @@ export const VodContent = ({
                   :
 
                   <div className="flex flex-row space-x-2 items-center" onClick={onExpandPress}>
-                    <span className={styles.primaryText}>{t('更少')}</span>
+                    <span className={styles.primaryText}>{t('收起')}</span>
                     <div style={{ transform: 'rotate(180deg)' }}>
                       <ArrowDownIcon
                         color={'#FAC33D'}
