@@ -48,6 +48,11 @@ export { default as homeTab } from './homeTab.svg';
 export { default as homeTabActive } from './homeTabActive.svg';
 export { default as topicTab } from './topicTab.svg';
 export { default as topicTabActive } from './topicTabActive.svg';
+export { default as profileTab } from './me.svg';
+export { default as profileTabActive } from './meActive.svg';
+export { default as profileIcon } from './profile_icon.svg';
+export { default as vipProfileIcon } from './ysVIPIcon.svg';
+export { default as editIcon } from './ysEdit.svg';
 
 // profiles
 export { default as AnimationTick } from './profile/animationTick.gif';
