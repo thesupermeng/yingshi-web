@@ -12,6 +12,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import VodItemMobile from './../../../components/vodItemMobile'
 import { Spinner } from './../../../components/spinner';
 import Image from 'next/image';
+import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
 
 import {
 
@@ -24,7 +25,7 @@ export default function Page() {
   const [searchResults, setSearchResults] = useState();
   const [isSearching, setIsSearching] = useState(true);
   const router = useRouter();
-
+  const [yunying, setYunying] = useState([]);
 
 
   //todo remove this 
@@ -48,8 +49,29 @@ export default function Page() {
 
     console.log('result is ')
     console.log(res)
+    if (res?.Total == 0) {
+      let res2 = await getTypePageApi()
+      console.log('result 2  is ')
+      console.log(res2)
+      setYunying(res2.yunying);
+
+    }
+
     setSearchResults(res);
     setIsSearching(false)
+  };
+
+  // if empty seatch result 
+  const getTypePageApi = async (idValue) => {
+    return YingshiApi(
+      URL_YINGSHI_VOD.homeGetPages,
+      {
+        id: idValue,
+        limit: 3,
+        page: 1,
+      },
+      { method: 'GET' }
+    );
   };
 
   useEffect(() => {
@@ -182,16 +204,17 @@ export default function Page() {
 
           {searchResults?.List == null &&
 
-            <div className='flex items-center justify-center flex-col h-full'>
+            <div className='flex items-center justify-center flex-col h-full pt-6 mt-6'>
               <Image
                 className='mx-2'
                 src={searchEmptyIcon}
                 alt='empty'
                 width={120}
               />
-              <span>暂无数据</span>
+
 
               <span className="text-xs pt-2">    抱歉没有搜索到"{keyword}"的相关视频</span>
+              <span className="text-xs pt-2">  为你推荐更多精彩内容</span>
 
 
 
@@ -206,6 +229,39 @@ export default function Page() {
       {/* <div className='d-flex container pb-6'>
         <div className='row '></div>
       </div> */}
+      {yunying != [] &&
+        <div className='flex flex-col w-full mt-8 mt-8 px-1.5'>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div className='pt-8 mt-8 md:mx-20 mx-2.5 lg:w-[80%] w-[100%]'>
+              {yunying?.map((yy, idx) => {
+                return (
+                  <div id={yy.type_id} key={idx} className='lg:pt-3'>
+                    <div className='flex justify-between'>
+                      <span
+                        style={{
+                          fontSize: '20px',
+                          fontWeight: '600',
+                          fontStyle: 'normal',
+                          fontFamily: 'PingFang SC',
+                        }}
+                      >
+                        {yy.type_name}
+                      </span>
+                    </div>
+
+                    <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
+                      {yy.vod_list?.slice(0, 6).map((vod, i) => {
+                        return <VideoVerticalCard vod={vod} key={i} />;
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      }
+
     </>
   );
 }
