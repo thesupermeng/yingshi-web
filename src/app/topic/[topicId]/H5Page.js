@@ -87,7 +87,7 @@ export default function Page() {
             <div style={{height:'52px'}}></div>
 
 
-            <div  className='px-.5'>
+            <div  className='px-2.5'>
             {/* mobile content */}
             <div className='topic-header-text-sub mt-3'>
               {topicObj.topic_blurb}
