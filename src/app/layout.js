@@ -114,7 +114,7 @@ export default function RootLayout({ children }) {
               {/* <H5LiveChat /> */}
               {/* </div> */}
               {/* </div> */}
-              <div className="px-8 py-3"
+              <div className="px-8 py-3 desktop"
                 // ref={footerRef}
                 style={{
                   marginTop: '5rem',
