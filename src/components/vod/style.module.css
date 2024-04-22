@@ -8,7 +8,7 @@
 
 .radioOptionCard {
   display: flex;
-  padding: 8px 18px 8px 14px;
+  padding: 8px 18px 8px 18px;
   align-items: center;
   border-radius: 4px;
 }
@@ -56,7 +56,7 @@
 }
 
 .vodMetaContainer {
-  background-color: #1D2023 !important;
+  /* background-color: #1D2023 !important; */
   padding: 8px 10px;
   border-radius: 12px;
 }

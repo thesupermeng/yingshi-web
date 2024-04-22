@@ -91,6 +91,14 @@ const Header = () => {
   const handleChange = (event) => {
     setLoadingSearching(true);
     const newValue = event.target.value;
+
+      // Check if the first character is a space
+  if (newValue.trim().length === 0) {
+    setSearchInput('');
+    return; // Exit early if the first character is a space
+  }
+
+  
     setSearchInput(newValue);
 
     if (timeoutId) {

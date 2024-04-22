@@ -36,6 +36,16 @@ export const viewport = {
   themeColor: '#000000',
 };
 export default function RootLayout({ children }) {
+
+  // const footerRef = useRef(null);
+  // const [mainDivMarginOffset, setMainDivMarginOffset] = useState(0);
+
+  // useEffect(() => {
+  //   if(footerRef.current){
+  //     setMainDivMarginOffset(selectedEpisodeGroupRef.current.offsetHeight);
+  //   }
+  // })
+
   return (
     <html
     translate="no"
@@ -104,6 +114,23 @@ export default function RootLayout({ children }) {
               {/* <H5LiveChat /> */}
               {/* </div> */}
               {/* </div> */}
+              <div className="px-8 py-3"
+                // ref={footerRef}
+                style={{
+                  marginTop: '5rem',
+                  width: '100%',
+                  textAlign: 'center',
+                  backgroundColor: '#1D2023',
+                  fontSize: '14px',
+                  borderTop: '1px solid hsla(0, 0%, 100%, .05)'
+                }}
+              >
+                <div 
+                  style={{ color: '#6B6B6B !important', lineHeight: '24px' }}
+                >
+                    版权声明：鲨鱼影视内容均来自互联网，不提供存储/录制/上传。<br/>如果鲨鱼影视提供内容侵犯了您的版权，请发送电子邮件至<a href="mailto:contactus@yingshi.tv">contactus@yingshi.tv</a>进行说明，我们将立即删除内容，保护版权所有者的权益。<br/><br/>隐私协议&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;用户服务协议<br/>Copyright © 2024 shayutv.com All Rights Reserved
+                </div>
+              </div>
             </div>
             <MyFooter />
           </div>

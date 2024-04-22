@@ -21,7 +21,7 @@ export const ShareHorizontal = ({
   return <div className={`flex space-x-4 items-center ${className} m-0`}>
     
     <div className="lg:hidden flex">
-      <span className="text-sm text-white/75 py-1" style={{ fontWeight: '300' }}>{t('分享')}:</span>
+      <span className="text-sm text-white/75 py-1" style={{ fontWeight: '300', color: '#9C9C9C' }}>{t('分享')}:</span>
     </div>
     <div className="lg:flex hidden">
       <span>{t('分享')}:</span>

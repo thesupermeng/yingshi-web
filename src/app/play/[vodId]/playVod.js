@@ -197,6 +197,8 @@ export const PlayVod = ({ vodId }) => {
                     vodYear={vod.vod_year}
                     vodClass={vod.vod_class}
                     vodRemark={vod.vod_remarks}
+                    vodEpisodeSelected={episodeSelected}
+                    vodEpisodeInfo={vod.vod_episode_info}
                   />
 
                   <VodSourceList
@@ -243,6 +245,7 @@ export const PlayVod = ({ vodId }) => {
                   vodYear={vod.vod_year}
                   vodClass={vod.vod_class}
                   vodRemark={vod.vod_remarks}
+                  vod={vod}
                 />
 
                 <VodSourceList
