@@ -5,7 +5,7 @@ export default function useYingshiUser() {
     const getYingshiUser = (s) => s.yingshiUser
     const {userInfo} = useSelector(getYingshiUser);
 
-    const isVip = userInfo && (userInfo.userCurrentTimestamp < userInfo.userMemberExpired)
+    const isVip = !!(userInfo && (userInfo.current_timestamp < userInfo.vip_end_time))
 
     return {
         userInfo,
