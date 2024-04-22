@@ -114,7 +114,7 @@ export default function RootLayout({ children }) {
               {/* <H5LiveChat /> */}
               {/* </div> */}
               {/* </div> */}
-              <div className="px-8 py-3"
+              <div className="px-8 py-3 desktop"
                 // ref={footerRef}
                 style={{
                   marginTop: '5rem',
@@ -129,7 +129,7 @@ export default function RootLayout({ children }) {
                   className='hidden md:block'
                   style={{ color: '#6B6B6B !important', lineHeight: '24px' }}
                 >
-                    版权声明：鲨鱼影视内容均来自互联网，不提供存储/录制/上传。<br/>如果鲨鱼影视提供内容侵犯了您的版权，请发送电子邮件至<a href="mailto:contactus@yingshi.tv">contactus@yingshi.tv</a>进行说明，我们将立即删除内容，保护版权所有者的权益。<br/><br/>隐私协议&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;用户服务协议<br/>Copyright © 2024 shayutv.com All Rights Reserved
+                    版权声明：鲨鱼影视内容均来自互联网，不提供存储/录制/上传。<br/>如果鲨鱼影视提供内容侵犯了您的版权，请发送电子邮件至<a href="mailto:shayuyingshi@gmail.com">shayuyingshi@gmail.com</a>进行说明，我们将立即删除内容，保护版权所有者的权益。<br/><br/>隐私协议&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;用户服务协议<br/>Copyright © 2024 shayuyingshi.com All Rights Reserved
                 </div>
               </div>
             </div>
