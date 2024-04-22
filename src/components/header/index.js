@@ -363,7 +363,7 @@ const Header = () => {
               <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>
                 <div className='relative flex flex-1 md:flex-none'>
                   <div
-                    className={`flex justify-between pr-4 pl-2 ${openSearch ? 'flex md:hidden' : 'hidden'
+                    className={`flex justify-between pr-4 pl-2 self-center ${openSearch ? 'flex md:hidden' : 'hidden'
                       }`}
                   >
                     <Image
@@ -903,7 +903,7 @@ const Header = () => {
                   <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>
                     <div className='relative flex flex-1 md:flex-none'>
                       <div
-                        className={`flex justify-between px-2 ${openSearchMobile ? 'flex ' : 'hidden'
+                        className={`flex justify-between px-2 self-center ${openSearchMobile ? 'flex ' : 'hidden'
                           }`}
                       >
                         <Image
@@ -1103,7 +1103,7 @@ const Header = () => {
                   <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>
                     <div className='relative flex flex-1 md:flex-none'>
                       <div
-                        className={`flex justify-between px-2 ${openSearchMobile ? 'flex ' : 'hidden'
+                        className={`flex justify-between px-2 self-center ${openSearchMobile ? 'flex ' : 'hidden'
                           }`}
                       >
                         <Image
