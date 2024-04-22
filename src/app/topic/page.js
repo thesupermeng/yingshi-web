@@ -215,7 +215,7 @@ export default function Page({ params }) {
               </div>
 
               <div className='col-12' key={topic.topic_id}>
-                <div className='row g-0'>
+                <div className='row g-2'>
                   {topic?.vod_list?.slice(0, 3).map((vod) => (
                     <div
                       className='col-4 cursor-pointer'
