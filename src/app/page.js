@@ -55,8 +55,10 @@ export default function Home() {
     });
   }, [selectedMenu]);
 
-  const handleClick = () => {
-    router.push(`/filmLibrary`)
+  const handleClick = (item) => {
+    localStorage.setItem('videoTypeId', item.type_id);
+    localStorage.setItem('videoClass', item.type_name);
+    router.push(`/filmLibrary`);
   };
 
   return (
@@ -85,18 +87,6 @@ export default function Home() {
                         >
                           {yy.type_name}
                         </span>
-                        {/* <span
-                          className='cursor-pointer'
-                          style={{
-                            fontSize: '12px',
-                            fontWeight: '400',
-                            fontStyle: 'normal',
-                            fontFamily: 'PingFang SC',
-                          }}
-                          onClick={handleClick}
-                        >
-                          更多
-                        </span> */}
                       </div>
 
                       <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
@@ -134,7 +124,7 @@ export default function Home() {
                             fontStyle: 'normal',
                             fontFamily: 'PingFang SC',
                           }}
-                          onClick={handleClick}
+                          onClick={() => handleClick(category)}
                         >
                           更多
                         </span>

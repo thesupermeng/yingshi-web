@@ -59,9 +59,8 @@ export const PlayVod = ({ vodId }) => {
   useEffect(() => {
     if (episodeSelected == null) {
       getVodDetails().then((data) => {
-        if (data === undefined || data.length <= 0) return;
-
-        let res = data[0];
+        if (data === undefined || data.length <= 0 || data.List === undefined || data.List.length <= 0) return;
+        let res = data.List[0];
         setVod(res);
 
         if (res.vod_sources.length > 0) {
@@ -198,6 +197,8 @@ export const PlayVod = ({ vodId }) => {
                     vodYear={vod.vod_year}
                     vodClass={vod.vod_class}
                     vodRemark={vod.vod_remarks}
+                    vodEpisodeSelected={episodeSelected}
+                    vodEpisodeInfo={vod.vod_episode_info}
                   />
 
                   <VodSourceList
@@ -244,6 +245,7 @@ export const PlayVod = ({ vodId }) => {
                   vodYear={vod.vod_year}
                   vodClass={vod.vod_class}
                   vodRemark={vod.vod_remarks}
+                  vod={vod}
                 />
 
                 <VodSourceList
