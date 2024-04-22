@@ -59,9 +59,8 @@ export const PlayVod = ({ vodId }) => {
   useEffect(() => {
     if (episodeSelected == null) {
       getVodDetails().then((data) => {
-        if (data === undefined || data.length <= 0) return;
-
-        let res = data[0];
+        if (data === undefined || data.length <= 0 || data.List === undefined || data.List.length <= 0) return;
+        let res = data.List[0];
         setVod(res);
 
         if (res.vod_sources.length > 0) {
