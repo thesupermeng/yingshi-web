@@ -79,3 +79,11 @@ export const logout = async () => {
         }
     )
 }
+
+export const queryUserInfo = async () => {
+    return YingshiApi(
+        URL_YINGSHI_USER.userInfo,
+        {},
+        {method: 'GET'}
+    )
+}
