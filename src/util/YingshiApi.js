@@ -68,7 +68,7 @@ const getHeader = (
   method = 'POST',
   token = '',
 ) => {
-  
+
   // config.headers['Authorization'] = `Bearer ${this.bearerToken}`;
   // config.headers['Device-Id'] = "";
   // config.headers['Platform-OS'] = "WEB";
@@ -86,8 +86,9 @@ const getHeader = (
     'IP-Address': '165.21.14.226',
     'App-Version': '',
     'Access-Control-Allow-Origin': '*',
+    'Authorization': `Bearer ${token}`
   };
-  
+
   return obj;
 };
 
@@ -105,22 +106,22 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
   const requestBody = JSON.stringify(body);
   const requestOption = {
     method,
-    headers: getHeader(requestBody, method, ''),
+    headers: getHeader(requestBody, method, localStorage.getItem(LocalStorageKeys.AuthToken)),
   };
 
   let getParams = '';
   let resData;
-  url = "https://api.yingshi.tv/" + url
+  url = 'https://api.yingshi.tv/' + url
 
 
-  
+
   if (method !== 'GET') {
     url = url +  getQuery(url);
     requestOption.body = requestBody;
   } else {
     getParams = objectToGetParams(body);
     if(getParams != ''){
-      url += "?" + getParams;
+      url += '?' + getParams;
     }
   }
   console.log(url);
@@ -141,6 +142,13 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
   }
   if(resData.code === 401){
     return;
+  } else if (resData.code === 0 || resData.code === 201) {
+    if (saveUserToken) {
+      updateLocalstorage(LocalStorageKeys.AuthToken, resData.data.access_token)
+    }
+    if (removeToken) {
+      updateLocalstorage(LocalStorageKeys.AuthToken, undefined);
+    }
   }
   return resData.data;
 };
@@ -172,25 +180,25 @@ const objectToGetParams = (paramsObject) => {
 //   return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
 // };
 
-// export const updateLocalstorage = (key, val, isSessionStorage = false) => {
-//   const storage = isSessionStorage ? sessionStorage : localStorage;
-//   if (storage.getItem(key) == val) {
-//     return;
-//   }
-//   if (val !== undefined) {
-//     storage.setItem(key, val);
-//   } else {
-//     storage.removeItem(key);
-//   }
-//   const toDispatch = () => {
-//     if (storage.getItem(key) == val) {
-//       window.dispatchEvent(new Event('storage-' + key));
-//     } else {
-//       return setTimeout(toDispatch);
-//     }
-//   };
-//   return toDispatch();
-// };
+export const updateLocalstorage = (key, val, isSessionStorage = false) => {
+  const storage = isSessionStorage ? sessionStorage : localStorage;
+  if (storage.getItem(key) == val) {
+    return;
+  }
+  if (val !== undefined) {
+    storage.setItem(key, val);
+  } else {
+    storage.removeItem(key);
+  }
+  const toDispatch = () => {
+    if (storage.getItem(key) == val) {
+      window.dispatchEvent(new Event('storage-' + key));
+    } else {
+      return setTimeout(toDispatch);
+    }
+  };
+  return toDispatch();
+};
 
 // const checkServerTime = async (url) => {
 //   const timepass = async (res) => {
