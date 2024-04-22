@@ -98,7 +98,7 @@ const Header = () => {
     return; // Exit early if the first character is a space
   }
 
-  
+
     setSearchInput(newValue);
 
     if (timeoutId) {
@@ -217,6 +217,8 @@ const Header = () => {
 
 
   const goToSeachResult = (query) => {
+         setOpenSearch(false);
+         setOpenSearchMobile(false);
     router.push('/search/' + query);
   }
 
