@@ -22,6 +22,7 @@ import {
 
 export default function Page() {
   const { keyword } = useParams();
+  const decodedKeyword = decodeURIComponent(keyword);
   const [searchResults, setSearchResults] = useState();
   const [isSearching, setIsSearching] = useState(true);
   const router = useRouter();
@@ -44,6 +45,9 @@ export default function Page() {
     setIsSearching(true)
     console.log('keyword');
     console.log(keyword);
+    console.log('decodedKeyword');
+    console.log(decodedKeyword);
+    
 
     let res = await getSearchResultApi();
 
@@ -99,11 +103,11 @@ export default function Page() {
             <div className='overlay' style={{ width: '100%' }}>
               <div className='row px-0 d-flex flex-column '>
                 <div className='topic-container-header container content-end'>
-                  <div className='topic-header-text'>{keyword}</div>
+                  <div className='topic-header-text'>{decodedKeyword}</div>
                   <div className='topic-header-text-sub'>
 
 
-                    搜索"{keyword}" ，找到
+                    搜索"{decodedKeyword}" ，找到
                     <span className='search-count'>
                       {isSearching === false ? (
                         <span>{searchResults?.List?.length}</span>
@@ -213,7 +217,7 @@ export default function Page() {
               />
 
 
-              <span className="text-xs pt-2">    抱歉没有搜索到"{keyword}"的相关视频</span>
+              <span className="text-xs pt-2">    抱歉没有搜索到"{decodedKeyword}"的相关视频</span>
               <span className="text-xs pt-2">  为你推荐更多精彩内容</span>
 
 
@@ -230,7 +234,7 @@ export default function Page() {
         <div className='row '></div>
       </div> */}
       {yunying != [] &&
-        <div className='flex flex-col w-full mt-8 mt-8 px-1.5'>
+        <div className='flex flex-col w-full mb-8 mb-8 px-1.5'>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <div className='pt-8 mt-8 md:mx-20 mx-2.5 lg:w-[80%] w-[100%]'>
               {yunying?.map((yy, idx) => {
