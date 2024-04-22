@@ -91,6 +91,14 @@ const Header = () => {
   const handleChange = (event) => {
     setLoadingSearching(true);
     const newValue = event.target.value;
+
+      // Check if the first character is a space
+  if (newValue.trim().length === 0) {
+    setSearchInput('');
+    return; // Exit early if the first character is a space
+  }
+
+  
     setSearchInput(newValue);
 
     if (timeoutId) {
@@ -197,6 +205,8 @@ const Header = () => {
       router.push('/topic');
     } else if (value == 999) {
       dispatch(setSpecialSelectedId(value));
+      localStorage.removeItem('videoTypeId');
+      localStorage.removeItem('videoClass');
       router.push('/filmLibrary');
     } else {
       dispatch(setSpecialSelectedId(-1));
@@ -620,7 +630,6 @@ const Header = () => {
                   onClick={() => {
                     handleClick(navItem.id);
                   }}
-
                 >
                   <span
                     className={`truncate ${selectedSpecialMenu.id === -1 &&
@@ -887,7 +896,6 @@ const Header = () => {
                       // setSearchInput('');
                     }}
                   />
-
                 </div>
                 <div className='items-center flex flex-1 md:flex-none'>
                   <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>
@@ -1067,7 +1075,6 @@ const Header = () => {
                     ) : null}
                   </div>
                 </div>
-
               </div>
             </div>
           </div>

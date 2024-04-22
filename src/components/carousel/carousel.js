@@ -76,7 +76,6 @@ export const Carousel = ({ carouselItems }) => {
         <div className="lg:hidden block">
           <Slider {...settings}>
             {carouselItems != null && carouselItems.length > 0 && carouselItems.map((item, index) => {
-              console.log(item.vod.vod_id);
               return (
                 <>
                   <div style={{ zIndex: '1', position: 'absolute', bottom: '0', paddingLeft: '1.2rem', paddingBottom: '2rem' }}>
