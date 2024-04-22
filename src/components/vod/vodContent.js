@@ -43,15 +43,14 @@ export const VodContent = ({
   const onExpandPress = () => {
     setCollapse(!isCollapse);
   }
-  console.log(vodEpisodeInfo);
-  console.log(vodEpisodeSelected);
+  
   return (
     <>
       {episodeInfo != null &&
         <div className={styles.vodMetaContainer}>
           <div className="space-y-4">
             <span className="">{t('分集剧情 : ')}{episodeInfo.title}</span>
-            <p ref={qqqref} className={`${isCollapse ? 'line-clamp-2' : ''} text-white/75`}>{episodeInfo.gpt_content}</p>
+            <p ref={qqqref} className={`${isCollapse ? 'line-clamp-2' : ''} text-white/75 text-sm`} style={{ color: '#9C9C9C' }}>{episodeInfo.gpt_content}</p>
             {isLineExceed &&
               <div className="flex flex-row space-x-2 items-center" onClick={onExpandPress}>
                 <span className={styles.primaryText}>{t('更多')}</span>
