@@ -42,12 +42,13 @@ export { default as userIcon } from './userIcon.svg';
 export { default as vipIcon } from './vipIcon.svg';
 export { default as glyph } from './glyph.svg';
 export { default as noADIcon } from './noADIcon.svg';
-export { default as subtractIcon } from './subtractIcon.svg'
+export { default as subtractIcon } from './subtractIcon.svg';
 export { default as vipLightIcon } from './vipLightIcon.svg';
 export { default as homeTab } from './homeTab.svg';
 export { default as homeTabActive } from './homeTabActive.svg';
 export { default as topicTab } from './topicTab.svg';
 export { default as topicTabActive } from './topicTabActive.svg';
+export { default as arrowRight } from './arrowRight.svg';
 
 // profiles
 export { default as AnimationTick } from './profile/animationTick.gif';
