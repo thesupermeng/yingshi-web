@@ -7,6 +7,7 @@ import { ShareHorizontal } from '@/components/shareHorizontal';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import 'react-spring-bottom-sheet/dist/style.css'
 import styles from './style.module.css';
+import { CloseX } from '@/asset/icons';
 
 export const VodCard = ({
   imgSource,
@@ -17,7 +18,10 @@ export const VodCard = ({
   vodRemark,
   vod,
   vodEpisodeInfo,
-  vodEpisodeSelected
+  vodEpisodeSelected,
+  vodDirector,
+  vodActor,
+  vodBlurb
 }) => {
   const { t } = useTranslation();
 
@@ -40,7 +44,13 @@ export const VodCard = ({
       }
     }
   }, [vodEpisodeInfo, vodEpisodeSelected]);
-
+  if(vod != undefined){
+    console.log(vod);
+    console.log(vod.vod_director);
+  }
+  if(episodeInfo){
+    console.log(episodeInfo);
+  }
   return <div className="flex flex-row space-x-4">
     {/* Bottom Sheet Intro H5*/}
     <BottomSheet
@@ -49,11 +59,26 @@ export const VodCard = ({
       }}
       open={openIntroBottomSheet}
     >
-      <span className="text-md text-white" style={{ fontWeight: '300' }}>{t('简介')}</span>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div>
+          <span className="text-md text-white px-2" style={{ fontWeight: '300' }}>{t('简介')}</span>
+        </div>
+        <div style={{ paddingRight: '0.8rem' }}>
+          <Image
+            src={CloseX}
+            alt="Icon"
+          />
+        </div>
+      </div>
       {episodeInfo != null &&
         <div className={styles.vodMetaContainer}>
           <div className="space-y-4">
             <span className="">{t('分集剧情 : ')}{episodeInfo.title}</span>
+              <>
+                <span>导演 : {vod?.vod_director}</span>
+                <span>演员 : {vod?.vod_actor}</span>
+                <span>演员 : {vod?.type_name}</span>
+              </>
             <p className={`text-white/75 text-sm`} style={{ color: '#9C9C9C' }}>{episodeInfo.gpt_content}</p>
           </div>
         </div>
