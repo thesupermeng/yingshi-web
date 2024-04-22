@@ -73,8 +73,6 @@ export const FilmLibrary = ({}) => {
       setNextPage(currentPage + 1);
       setLoadingVideoList(false);
     }
-
-    console.log(loadingVideoList, stillCanLoad);
   };
 
   useEffect(() => {
@@ -84,15 +82,55 @@ export const FilmLibrary = ({}) => {
       const filteringTypeList = await getFilterTypeList();
       setFilterTypeList(filteringTypeList);
       setNextPage(1);
-      setParamsFilter({
-        order: 'desc',
-        typeId: filteringTypeList[0].type_id,
-        by: advanceFilterItem[0].value,
-        class: '全部类型',
-        area: '全部地区',
-        lang: '全部语言',
-        year: '全部时间',
-      });
+
+      console.log(localStorage.getItem('videoTypeId'))
+      if (
+        localStorage.getItem('videoTypeId') == null &&
+        localStorage.getItem('videoClass') == null
+      ) {
+        setParamsFilter({
+          order: 'desc',
+          typeId: filteringTypeList[0].type_id,
+          by: advanceFilterItem[0].value,
+          class: '全部类型',
+          area: '全部地区',
+          lang: '全部语言',
+          year: '全部时间',
+        });
+      } else {
+        const home_video_type_id = parseInt(
+          localStorage.getItem('videoTypeId')
+        );
+        const home_video_class = localStorage.getItem('videoClass');
+
+        if (
+          filteringTypeList[
+            filteringTypeList.findIndex(
+              (item) => item.type_id === home_video_type_id
+            )
+          ].type_extend_obj.class.includes(home_video_class) == true
+        ) {
+          setParamsFilter({
+            order: 'desc',
+            typeId: home_video_type_id,
+            by: advanceFilterItem[0].value,
+            class: home_video_class,
+            area: '全部地区',
+            lang: '全部语言',
+            year: '全部时间',
+          });
+        } else {
+          setParamsFilter({
+            order: 'desc',
+            typeId: home_video_type_id,
+            by: advanceFilterItem[0].value,
+            class: '全部类型',
+            area: '全部地区',
+            lang: '全部语言',
+            year: '全部时间',
+          });
+        }
+      }
 
       setLoading(false);
       return true;
@@ -112,7 +150,6 @@ export const FilmLibrary = ({}) => {
   };
 
   useEffect(() => {
-    console.log(nextPage, stillCanLoad);
     if (stillCanLoad) {
       const observer = new IntersectionObserver(
         ([entry]) => {
@@ -181,7 +218,7 @@ export const FilmLibrary = ({}) => {
   };
 
   const filterVideoList = (value, type) => {
-    if (!loadingVideoList){
+    if (!loadingVideoList) {
       let params = { ...paramsFilter };
 
       if (type == 'type') {

@@ -190,6 +190,8 @@ const Header = () => {
       router.push('/topic');
     } else if (value == 999) {
       dispatch(setSpecialSelectedId(value));
+      localStorage.removeItem('videoTypeId');
+      localStorage.removeItem('videoClass');
       router.push('/filmLibrary');
     } else {
       dispatch(setSpecialSelectedId(-1));
@@ -605,7 +607,6 @@ const Header = () => {
                   onClick={() => {
                     handleClick(navItem.id);
                   }}
-                  
                 >
                   <span
                     className={`truncate ${
@@ -865,17 +866,16 @@ const Header = () => {
                     openSearchMobile ? 'hidden' : ''
                   }`}
                 >
-              <Image
-                      alt='back'
-                      src={leftArrow}
-                     //  style={{ width: '12px' }}
-                      onClick={() => {
-                        router.back();
-                        // setOpenSearch(false);
-                        // setSearchInput('');
-                      }}
-                    />
-              
+                  <Image
+                    alt='back'
+                    src={leftArrow}
+                    //  style={{ width: '12px' }}
+                    onClick={() => {
+                      router.back();
+                      // setOpenSearch(false);
+                      // setSearchInput('');
+                    }}
+                  />
                 </div>
                 <div className='items-center flex flex-1 md:flex-none'>
                   <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>
@@ -1052,7 +1052,6 @@ const Header = () => {
                     ) : null}
                   </div>
                 </div>
-            
               </div>
             </div>
           </div>
