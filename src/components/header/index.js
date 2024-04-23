@@ -126,6 +126,10 @@ const Header = () => {
   };
 
   const handleSearch = () => {
+    if(searchInput == '')
+    {
+      return;
+    }
     handleAddSearchHistory();
   };
 
@@ -413,7 +417,7 @@ const Header = () => {
                                   setOpenSearch(false);
                                   setSearchInput('');
                                   handleAddSearchHistory();
-                                  router.push(`/play/${item.vod_id}`);
+                                  router.push(`/play/${item.type_id}/1/${item.vod_id}`);
                                 }}
                               >
                                 <div className='flex flex-row'>
@@ -489,7 +493,7 @@ const Header = () => {
                                 onClick={(e) => {
                                   e.preventDefault();
                                   setOpenSearch(false);
-                                  router.push(`/play/${item.vod_id}`);
+                                  router.push(`/play/${item.type_id}/1/${item.vod_id}`);
                                 }}
                               >
                                 <div className='flex flex-row'>
@@ -963,7 +967,7 @@ const Header = () => {
                                       setOpenSearchMobile(false);
                                       setSearchInput('');
                                       handleAddSearchHistory();
-                                      router.push(`/play/${item.vod_id}`);
+                                      router.push(`/play/${item.type_id}/1/${item.vod_id}`);
                                     }}
                                   >
                                     <div className='flex flex-row'>
@@ -1036,7 +1040,7 @@ const Header = () => {
                                     onClick={(e) => {
                                       e.preventDefault();
                                       setOpenSearchMobile(false);
-                                      router.push(`/play/${item.vod_id}`);
+                                      router.push(`/play/${item.type_id}/1/${item.vod_id}`);
                                     }}
                                   >
                                     <div className='flex flex-row'>
@@ -1163,7 +1167,7 @@ const Header = () => {
                                       setOpenSearchMobile(false);
                                       setSearchInput('');
                                       handleAddSearchHistory();
-                                      router.push(`/play/${item.vod_id}`);
+                                      router.push(`/play/${item.type_id}/1/${item.vod_id}`);
                                     }}
                                   >
                                     <div className='flex flex-row'>
@@ -1234,7 +1238,7 @@ const Header = () => {
                                     onClick={(e) => {
                                       e.preventDefault();
                                       setOpenSearchMobile(false);
-                                      router.push(`/play/${item.vod_id}`);
+                                      router.push(`/play/${item.type_id}/1/${item.vod_id}`);
                                     }}
                                   >
                                     <div className='flex flex-row'>

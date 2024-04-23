@@ -48,8 +48,8 @@ export default function RootLayout({ children }) {
 
   return (
     <html
-    translate="no"
-      lang='en'
+    class="notranslate" translate="no"
+      lang='cn'
       className={`bg-sideMenu notranslate ${
         isWeb()
           ? 'webcontent h-full overflow-x-auto overflow-y-hidden'
@@ -60,6 +60,7 @@ export default function RootLayout({ children }) {
       // } overflow-x-auto overflow-y-hidden relative w-[100vw] h-[100vh]`}
     >
       <Head>
+        <meta name="google" content="notranslate" />
         <meta name='apple-mobile-web-app-capable' content='yes' />
         <link rel='icon' href='/icon.png' sizes='any' />
         <link
@@ -96,7 +97,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${
           inter.className
-        } h-full bg-sideMenu text-white flex flex-col w-full overscroll-none overflow-auto ${
+        } h-dvh bg-sideMenu text-white flex flex-col w-full overscroll-none overflow-auto ${
           isWeb() ? '' : 'min-h-[100svh]'
         }`}
       >
@@ -126,7 +127,6 @@ export default function RootLayout({ children }) {
                 }}
               >
                 <div 
-                  className='hidden md:block'
                   style={{ color: '#6B6B6B !important', lineHeight: '24px' }}
                 >
                     版权声明：鲨鱼影视内容均来自互联网，不提供存储/录制/上传。<br/>如果鲨鱼影视提供内容侵犯了您的版权，请发送电子邮件至<a href="mailto:shayuyingshi@gmail.com">shayuyingshi@gmail.com</a>进行说明，我们将立即删除内容，保护版权所有者的权益。<br/><br/>隐私协议&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;用户服务协议<br/>Copyright © 2024 shayuyingshi.com All Rights Reserved

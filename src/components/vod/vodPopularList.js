@@ -34,7 +34,7 @@ export const VodPopularList = () => {
       <div 
         onClick={(e) => {
           e.preventDefault();
-          router.push(`/play/${vod.vod_id}`);
+          router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);
         }}
         key={`key-vodTopic-${index}`} className="flex flex-row space-x-4 items-center cursor-pointer">
         <span className={index === 0

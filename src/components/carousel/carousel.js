@@ -83,7 +83,7 @@ export const Carousel = ({ carouselItems }) => {
                   </div>
                   <div className="slider-container" style={{ position: 'relative' }} onClick={(e) => {
                     e.preventDefault();
-                    router.push(`/play/${item.vod.vod_id}`);
+                    router.push(`/play/${item.vod.type_id}/1/${item.vod.vod_id}`);
                   }}>
                     <img
 
@@ -132,7 +132,7 @@ export const Carousel = ({ carouselItems }) => {
                     style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'pointer', opacity: 0.9, position: 'relative' }}
                     onClick={(e) => {
                       e.preventDefault();
-                      router.push(`/play/${carouselItems[carouselIndex].vod.vod_id}`);
+                      router.push(`/play/${carouselItems[carouselIndex].vod.type_id}/1/${carouselItems[carouselIndex].vod.vod_id}`);
                     }}
                   />
                   {/* <div style={{ position: 'absolute', bottom: '10px', left: '10px', color: '#fff', zIndex: 1, display: 'flex', justifyContent: 'space-between', width: '100%' }}>
@@ -167,7 +167,7 @@ export const Carousel = ({ carouselItems }) => {
                               }}
                               onClick={(e) => {
                                 e.preventDefault();
-                                router.push(`/play/${carouselItems[carouselIndex].vod.vod_id}`);
+                                router.push(`/play/${carouselItems[carouselIndex].vod.type_id}/1/${carouselItems[carouselIndex].vod.vod_id}`);
                               }}
                               className="flex flex-row flex-wrap">
                               <Image
@@ -214,7 +214,7 @@ export const Carousel = ({ carouselItems }) => {
                           style={{ width: '100%', aspectRatio: '5/7', objectFit: 'cover', borderRadius: '12px' }}
                           onClick={(e) => {
                             e.preventDefault();
-                            router.push(`/play/${previewItem.vod.vod_id}`);
+                            router.push(`/play/${previewItem.vod.type_id}/1/${previewItem.vod.vod_id}`);
                           }}
                         />
                       </div>
