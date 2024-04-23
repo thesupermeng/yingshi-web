@@ -1,8 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 export const setYingshiUserInfo = (d) => yingshiUser.actions.setUserInfo(d)
-
 export const setYingshiUserToken = (d) => yingshiUser.actions.setToken(d)
+export const setYingshiUserLoginParam = (d) => yingshiUser.actions.setLoginParam(d)
+
 
 export const yingshiUser = createSlice( {
     name: 'yingshiUser',
@@ -27,7 +28,8 @@ export const yingshiUser = createSlice( {
          *     userPaidVipList: any;
          */
         userInfo: null,
-        token: null
+        token: null,
+        loginParam: null,
     },
     reducers: {
         setUserInfo: (state, action) => {
@@ -35,6 +37,9 @@ export const yingshiUser = createSlice( {
         },
         setToken: (state, action) => {
             state.token = action.payload;
+        },
+        setLoginParam: (state, action) => {
+            state.loginParam = action.payload;
         }
     }
 })
