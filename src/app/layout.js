@@ -83,7 +83,7 @@ export default function RootLayout({ children }) {
       //   isWeb() ? 'webcontent min-w-[1360px] min-h-[500px]' : 'h5content'
       // } overflow-x-auto overflow-y-hidden relative w-[100vw] h-[100vh]`}
     >
-       <DynamicComponentWithNoSSR />
+       {/* <DynamicComponentWithNoSSR /> */}
       <Head>
         
 
