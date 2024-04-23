@@ -182,3 +182,7 @@
   background-color: rgba(255, 255, 255, 0.08) !important;
   height: 35px !important;
 }
+
+.hover-blue:hover{
+  color: rgb(51, 162, 244) !important;
+}

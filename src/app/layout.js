@@ -6,7 +6,7 @@ import { Inter } from 'next/font/google';
 import { Providers } from '@/store/Provider';
 import Sidebar from '@/components/sidebar';
 import Header from '@/components/header';
-
+import Script from 'next/script';
 import MyFooter from '@/components/myFooter';
 import Announcement from '@/components/announcement';
 //import FullBetSlip from '@/components/betSlip/FullBetSlip';
@@ -24,6 +24,13 @@ import Head from 'next/head';
 import { H5LiveChat } from '@/componentsH5/H5LiveChat';
 import { Config } from '@/util/config';
 
+import dynamic from 'next/dynamic';
+
+// const DynamicComponentWithNoSSR = dynamic(
+//   () => import('./GoogleAnalyticComponent'),
+//   { ssr: false }
+// );
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
@@ -36,6 +43,7 @@ export const viewport = {
   themeColor: '#000000',
 };
 export default function RootLayout({ children }) {
+  
 
   // const footerRef = useRef(null);
   // const [mainDivMarginOffset, setMainDivMarginOffset] = useState(0);
@@ -47,6 +55,22 @@ export default function RootLayout({ children }) {
   // })
 
   return (
+
+    <>
+    <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-2562H7TH3Z"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-2562H7TH3Z');
+        `}
+      </Script>
+
     <html
     class="notranslate" translate="no"
       lang='cn'
@@ -59,7 +83,11 @@ export default function RootLayout({ children }) {
       //   isWeb() ? 'webcontent min-w-[1360px] min-h-[500px]' : 'h5content'
       // } overflow-x-auto overflow-y-hidden relative w-[100vw] h-[100vh]`}
     >
+       {/* <DynamicComponentWithNoSSR /> */}
       <Head>
+        
+
+        
         <meta name="google" content="notranslate" />
         <meta name='apple-mobile-web-app-capable' content='yes' />
         <link rel='icon' href='/icon.png' sizes='any' />
@@ -178,5 +206,6 @@ export default function RootLayout({ children }) {
         </Providers>
       </body>
     </html>
+    </>
   );
 }
