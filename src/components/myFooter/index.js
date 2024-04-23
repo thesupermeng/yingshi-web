@@ -7,6 +7,8 @@ import {
   homeTabActive,
   topicTab,
   topicTabActive,
+  profileTab,
+  profileTabActive,
 } from '@/asset/icons';
 import { use, useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
@@ -42,6 +44,9 @@ const MyFooter = () => {
     } else if (value == 999) {
       dispatch(setSpecialSelectedId(value));
       router.push('/filmLibrary');
+    }  else if (value == 990) {
+      dispatch(setSpecialSelectedId(value));
+      router.push('/myprofile');
     } else {
       dispatch(setSpecialSelectedId(-1));
       dispatch(setSelectedId(value));
@@ -93,6 +98,22 @@ const MyFooter = () => {
             />
           </div>
           <div>播单</div>
+        </div>
+        <div
+          className='col flex-col d-flex justify-center align-center items-center'
+          onClick={() => {
+            handleClick(990);
+          }}
+        >
+          <div className='d-flex'>
+            <Image
+              alt='鲨鱼影视'
+              src={pathname.startsWith('/myprofile') ? profileTabActive : profileTab}
+              width={22}
+              style={{ cursor: 'pointer' }}
+            />
+          </div>
+          <div>我的</div>
         </div>
       </div>
     </div>

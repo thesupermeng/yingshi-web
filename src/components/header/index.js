@@ -98,7 +98,7 @@ const Header = () => {
     return; // Exit early if the first character is a space
   }
 
-  
+
     setSearchInput(newValue);
 
     if (timeoutId) {
@@ -217,6 +217,8 @@ const Header = () => {
 
 
   const goToSeachResult = (query) => {
+         setOpenSearch(false);
+         setOpenSearchMobile(false);
     router.push('/search/' + query);
   }
 
@@ -361,7 +363,7 @@ const Header = () => {
               <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>
                 <div className='relative flex flex-1 md:flex-none'>
                   <div
-                    className={`flex justify-between pr-4 pl-2 ${openSearch ? 'flex md:hidden' : 'hidden'
+                    className={`flex justify-between pr-4 pl-2 self-center ${openSearch ? 'flex md:hidden' : 'hidden'
                       }`}
                   >
                     <Image
@@ -379,7 +381,7 @@ const Header = () => {
                     placeholder='输入搜索关键词'
                     value={searchInput}
                     onChange={handleChange}
-                    className='border-0 border-gray-300 text-white md:rounded-md rounded-full pl-4 pr-10 py-2 focus:outline-none w-full md:w-60'
+                    className='border-0 border-gray-300 text-white md:rounded-md rounded-full pl-4 pr-10 py-2 focus:outline-none w-full md:w-60 header-search-input'
                     style={{ backgroundColor: 'rgba(255, 255, 255, 0.08)' }}
                     onClick={handleOpenSearch}
                     onKeyDown={(e) => {
@@ -883,7 +885,7 @@ const Header = () => {
             <div className='gap-y-2 flex-col w-full md:flex-row flex'>
               <div className='flex-1 flex gap-x-2 md:justify-start'>
                 <div
-                  className={`flex justify-between w-22 pl-3 ${openSearchMobile ? 'hidden' : ''
+                  className={`flex justify-between w-22 pl-3 self-center ${openSearchMobile ? 'hidden' : ''
                     }`}
                 >
                   <Image
@@ -901,7 +903,7 @@ const Header = () => {
                   <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>
                     <div className='relative flex flex-1 md:flex-none'>
                       <div
-                        className={`flex justify-between px-2 ${openSearchMobile ? 'flex ' : 'hidden'
+                        className={`flex justify-between px-2 self-center ${openSearchMobile ? 'flex ' : 'hidden'
                           }`}
                       >
                         <Image
@@ -921,7 +923,7 @@ const Header = () => {
                           placeholder='输入搜索关键词'
                           value={searchInput}
                           onChange={handleChange}
-                          className='border-0 border-gray-300 text-white rounded-full pl-10 pr-10 py-2 focus:outline-none w-full'
+                          className='border-0 border-gray-300 text-white rounded-full pl-10 pr-10 py-2 focus:outline-none w-full header-search-input'
                           style={{
                             backgroundColor:
                               'rgba(255, 255, 255, 0.08) !important',
@@ -1101,7 +1103,7 @@ const Header = () => {
                   <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>
                     <div className='relative flex flex-1 md:flex-none'>
                       <div
-                        className={`flex justify-between px-2 ${openSearchMobile ? 'flex ' : 'hidden'
+                        className={`flex justify-between px-2 self-center ${openSearchMobile ? 'flex ' : 'hidden'
                           }`}
                       >
                         <Image
@@ -1121,7 +1123,7 @@ const Header = () => {
                           placeholder='输入搜索关键词'
                           value={searchInput}
                           onChange={handleChange}
-                          className='border-0 border-gray-300 text-white rounded-full pl-10 pr-10 py-2 focus:outline-none w-full'
+                          className='border-0 border-gray-300 text-white rounded-full pl-10 pr-10 py-2 focus:outline-none w-full header-search-input'
                           style={{
                             backgroundColor:
                               'rgba(255, 255, 255, 0.08) !important',

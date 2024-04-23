@@ -15,7 +15,6 @@ export const FilmLibrary = ({}) => {
   const [loadingVideoList, setLoadingVideoList] = useState(true);
   const [stillCanLoad, setStillCanLoad] = useState(false);
   const [nextPage, setNextPage] = useState(0);
-  const [totalPage, setTotalPage] = useState(0);
 
   const targetRef = useRef(null);
 
@@ -62,7 +61,6 @@ export const FilmLibrary = ({}) => {
     if (nextPage > 1) {
       setVideoList((prev) => [...prev, ...videoListing.List]);
     } else {
-      setTotalPage(videoListing.TotalPageCount);
       setVideoList(videoListing.List);
     }
     if (nextPage > videoListing.TotalPageCount - 1) {
@@ -83,7 +81,7 @@ export const FilmLibrary = ({}) => {
       setFilterTypeList(filteringTypeList);
       setNextPage(1);
 
-      console.log(localStorage.getItem('videoTypeId'))
+      console.log(localStorage.getItem('videoTypeId'));
       if (
         localStorage.getItem('videoTypeId') == null &&
         localStorage.getItem('videoClass') == null
@@ -237,7 +235,6 @@ export const FilmLibrary = ({}) => {
       setParamsFilter(params);
       setNextPage(1);
       setVideoList([]);
-      setTotalPage(0);
       setStillCanLoad(false);
       setLoadingVideoList(true);
     }

@@ -27,6 +27,7 @@ import {
   headerMenuSelected,
   specialHeaderMenuSelected,
 } from './headerData';
+import { yingshiUser } from '@/store/yingshiUser';
 
 export const store = configureStore({
   reducer: {
@@ -56,6 +57,7 @@ export const store = configureStore({
     headerMenu: headerMenu.reducer,
     headerMenuSelected: headerMenuSelected.reducer,
     specialHeaderMenuSelected: specialHeaderMenuSelected.reducer,
+    yingshiUser: yingshiUser.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
