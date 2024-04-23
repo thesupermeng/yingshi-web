@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
-import { ArrowRightIcon } from "@/asset/icons";
 import { convertTimeStampToDateTime } from "@/util/date";
 import { ShareHorizontal } from '@/components/shareHorizontal';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import 'react-spring-bottom-sheet/dist/style.css'
 import styles from './style.module.css';
 import { CloseX } from '@/asset/icons';
+import { ArrowLeftIcon, ArrowRightIcon } from '@/asset/icons';
 
 export const VodCard = ({
   imgSource,
@@ -21,17 +21,39 @@ export const VodCard = ({
   vodEpisodeSelected,
   vodDirector,
   vodActor,
-  vodBlurb
+  vodBlurb,
+  openJianJie,
 }) => {
   const { t } = useTranslation();
 
   const _vodUpdateDate = convertTimeStampToDateTime(vodUpdateDate);
   const [openIntroBottomSheet, setOpenIntroBottomSheet] = useState(false);
   const [episodeInfo, setEpisodeInfo] = useState(null);
+  const [desc, setDesc] = useState("");
 
   const selectIntro = () => {
     setOpenIntroBottomSheet(true);
   }
+
+  const webOpenJianJie = () => {
+    openJianJie();
+  }
+
+  useEffect(() => {
+    if(vod){
+      let desc = vod.vod_year + " " + vod.vod_area
+      let vodClass = []
+      if (vod.vod_class != null) {
+        vodClass = vod.vod_class.split(",");
+      }
+      vodClass = vodClass.slice(0, 2);
+      vodClass.forEach((item, i) => {
+        desc += " " + item
+      })
+
+      setDesc(desc);
+    }
+  }, [vod])
   
   useEffect(() => {
     if(vodEpisodeInfo != null && vodEpisodeSelected != null){
@@ -44,13 +66,10 @@ export const VodCard = ({
       }
     }
   }, [vodEpisodeInfo, vodEpisodeSelected]);
-  if(vod != undefined){
-    console.log(vod);
-    console.log(vod.vod_director);
-  }
   if(episodeInfo){
     console.log(episodeInfo);
   }
+  console.log(vod?.vod_director);
   return <div className="flex flex-row space-x-4">
     {/* Bottom Sheet Intro H5*/}
     <BottomSheet
@@ -59,30 +78,38 @@ export const VodCard = ({
       }}
       open={openIntroBottomSheet}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }} className='pb-3'>
         <div>
           <span className="text-md text-white px-2" style={{ fontWeight: '300' }}>{t('简介')}</span>
         </div>
-        <div style={{ paddingRight: '0.8rem' }}>
+        <div style={{ paddingRight: '0.8rem' }} onClick={() => {
+          setOpenIntroBottomSheet(false);
+        }}>
           <Image
             src={CloseX}
             alt="Icon"
           />
         </div>
       </div>
-      {episodeInfo != null &&
-        <div className={styles.vodMetaContainer}>
-          <div className="space-y-4">
-            <span className="">{t('分集剧情 : ')}{episodeInfo.title}</span>
-              <>
-                <span>导演 : {vod?.vod_director}</span>
-                <span>演员 : {vod?.vod_actor}</span>
-                <span>演员 : {vod?.type_name}</span>
-              </>
-            <p className={`text-white/75 text-sm`} style={{ color: '#9C9C9C' }}>{episodeInfo.gpt_content}</p>
+      <div className={styles.vodMetaContainer} style={{ overflowY: 'auto', maxHeight: '50vh', marginBottom: '1rem' }}>
+        <div className="space-y-4">
+          <div className="pb-3" style={{ color: '#9C9C9C' }}>
+            <div className="text-sm pt-1">{desc}</div>
+            <div className="text-sm pt-1">导演: {vod.vod_director}</div>
+            <div className="text-sm pt-1">主演: {vod.vod_actor}</div>
+            <div className="text-sm pt-3">
+              <p>{vod.vod_content}</p>
+            </div>
           </div>
+
+          {episodeInfo &&
+            <div>
+              <span className="">{t('分集剧情 : ')}{episodeInfo.title}</span>
+              <p className={`text-white/75 text-sm`} style={{ color: '#9C9C9C' }}>{episodeInfo.gpt_content}</p>
+            </div>
+          }
         </div>
-      }
+      </div>
     </BottomSheet>
     <div className="relative hidden lg:w-1/3 lg:flex rounded-xl">
       <img className="rounded-xl" src={imgSource} />
@@ -102,7 +129,7 @@ export const VodCard = ({
       </div>
       <span className="text-sm text-white/75 py-1 pt-3" style={{ fontWeight: '300', color: '#9C9C9C' }}>{vodYear} {vodClass}</span>
       <span className="text-sm text-white/75 py-1" style={{ fontWeight: '300', color: '#9C9C9C' }}>{t('更新')}: {_vodUpdateDate.year}-{_vodUpdateDate.month}-{_vodUpdateDate.day}</span>
-      <div className="lg:flex hidden flex-row space-x-2 py-1">
+      <div className="lg:flex hidden flex-row space-x-2 py-1 cursor-pointer" onClick={webOpenJianJie}>
         <span className="text-sm text-white/75" style={{ fontWeight: '300', color: '#9C9C9C' }}>{t('简介')}</span>
         <Image
           src={ArrowRightIcon}
