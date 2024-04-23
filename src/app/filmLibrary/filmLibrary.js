@@ -302,110 +302,134 @@ export const FilmLibrary = ({}) => {
                     );
                   })}
                 </div>
-                <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll'>
-                  {listConverter('class').map((item, index) => {
-                    return (
-                      <div
-                        className={`flex flex-col items-center cursor-pointer ${
-                          paramsFilter.class === item ? 'bg-[#0085E01f]' : ''
-                        } p-2 rounded-md`}
-                        id={item}
-                        key={index}
-                        onClick={() => {
-                          filterVideoList(item, 'class');
-                        }}
-                      >
-                        <span
-                          className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
-                            paramsFilter.class === item
-                              ? 'text-blue-500'
-                              : 'text-white'
-                          }`}
+                {filterTypeList[
+                  filterTypeList.findIndex(
+                    (item) => item.type_id === paramsFilter.typeId
+                  )
+                ].type_extend_obj.class != '' && (
+                  <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll'>
+                    {listConverter('class').map((item, index) => {
+                      return (
+                        <div
+                          className={`flex flex-col items-center cursor-pointer ${
+                            paramsFilter.class === item ? 'bg-[#0085E01f]' : ''
+                          } p-2 rounded-md`}
+                          id={item}
+                          key={index}
+                          onClick={() => {
+                            filterVideoList(item, 'class');
+                          }}
                         >
-                          {item}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll'>
-                  {listConverter('area').map((item, index) => {
-                    return (
-                      <div
-                        className={`flex flex-col items-center cursor-pointer ${
-                          paramsFilter.area === item ? 'bg-[#0085E01f]' : ''
-                        } p-2 rounded-md`}
-                        id={item}
-                        key={index}
-                        onClick={() => {
-                          filterVideoList(item, 'area');
-                        }}
-                      >
-                        <span
-                          className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
-                            paramsFilter.area === item
-                              ? 'text-blue-500'
-                              : 'text-white'
-                          }`}
+                          <span
+                            className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                              paramsFilter.class === item
+                                ? 'text-blue-500'
+                                : 'text-white'
+                            }`}
+                          >
+                            {item}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+                {filterTypeList[
+                  filterTypeList.findIndex(
+                    (item) => item.type_id === paramsFilter.typeId
+                  )
+                ].type_extend_obj.area != '' && (
+                  <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll'>
+                    {listConverter('area').map((item, index) => {
+                      return (
+                        <div
+                          className={`flex flex-col items-center cursor-pointer ${
+                            paramsFilter.area === item ? 'bg-[#0085E01f]' : ''
+                          } p-2 rounded-md`}
+                          id={item}
+                          key={index}
+                          onClick={() => {
+                            filterVideoList(item, 'area');
+                          }}
                         >
-                          {item}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll'>
-                  {listConverter('lang').map((item, index) => {
-                    return (
-                      <div
-                        className={`flex flex-col items-center cursor-pointer ${
-                          paramsFilter.lang === item ? 'bg-[#0085E01f]' : ''
-                        } p-2 rounded-md`}
-                        id={item}
-                        key={index}
-                        onClick={() => {
-                          filterVideoList(item, 'lang');
-                        }}
-                      >
-                        <span
-                          className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
-                            paramsFilter.lang === item
-                              ? 'text-blue-500'
-                              : 'text-white'
-                          }`}
+                          <span
+                            className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                              paramsFilter.area === item
+                                ? 'text-blue-500'
+                                : 'text-white'
+                            }`}
+                          >
+                            {item}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+                {filterTypeList[
+                  filterTypeList.findIndex(
+                    (item) => item.type_id === paramsFilter.typeId
+                  )
+                ].type_extend_obj.lang != '' && (
+                  <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll'>
+                    {listConverter('lang').map((item, index) => {
+                      return (
+                        <div
+                          className={`flex flex-col items-center cursor-pointer ${
+                            paramsFilter.lang === item ? 'bg-[#0085E01f]' : ''
+                          } p-2 rounded-md`}
+                          id={item}
+                          key={index}
+                          onClick={() => {
+                            filterVideoList(item, 'lang');
+                          }}
                         >
-                          {item}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll'>
-                  {listConverter('year').map((item, index) => {
-                    return (
-                      <div
-                        className={`flex flex-col items-center cursor-pointer ${
-                          paramsFilter.year === item ? 'bg-[#0085E01f]' : ''
-                        } p-2 rounded-md`}
-                        id={item}
-                        key={index}
-                        onClick={() => {
-                          filterVideoList(item, 'year');
-                        }}
-                      >
-                        <span
-                          className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
-                            paramsFilter.year === item
-                              ? 'text-blue-500'
-                              : 'text-white'
-                          }`}
+                          <span
+                            className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                              paramsFilter.lang === item
+                                ? 'text-blue-500'
+                                : 'text-white'
+                            }`}
+                          >
+                            {item}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+                {filterTypeList[
+                  filterTypeList.findIndex(
+                    (item) => item.type_id === paramsFilter.typeId
+                  )
+                ].type_extend_obj.year != '' && (
+                  <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll'>
+                    {listConverter('year').map((item, index) => {
+                      return (
+                        <div
+                          className={`flex flex-col items-center cursor-pointer ${
+                            paramsFilter.year === item ? 'bg-[#0085E01f]' : ''
+                          } p-2 rounded-md`}
+                          id={item}
+                          key={index}
+                          onClick={() => {
+                            filterVideoList(item, 'year');
+                          }}
                         >
-                          {item}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
+                          <span
+                            className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                              paramsFilter.year === item
+                                ? 'text-blue-500'
+                                : 'text-white'
+                            }`}
+                          >
+                            {item}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </div>
             <div className='w-screen flex flex-1 flex-col'>
