@@ -67,9 +67,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
 
         if (res.vod_sources.length > 0) {
           let source = res.vod_sources[0];
-          // if(nId){
-          //   source = res.vod_sources[nId];
-          // }
 
           setVodSourceSelected(source);
           if (source.vod_play_list.urls.length > Config.vodEpisodeGroupMax) {
@@ -101,7 +98,11 @@ export const PlayVod = ({ vodId, tId, nId }) => {
           }
 
           if (source.vod_play_list.urls.length > 0) {
-            setEpisodeSelected(source.vod_play_list.urls[0]);
+            if(nId && nId > 0){
+              setEpisodeSelected(source.vod_play_list.urls[nId - 1]);
+            }else{
+              setEpisodeSelected(source.vod_play_list.urls[0]);
+            }
           }
         }
       });
