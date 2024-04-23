@@ -87,7 +87,7 @@ export const VodCard = ({
           />
         </div>
       </div>
-      <div className={styles.vodMetaContainer} style={{ overflowY: 'auto', maxHeight: '50vh', marginBottom: '1rem' }}>
+      <div className={styles.vodMetaContainer} style={{ overflowY: 'auto', maxHeight: '40vh', marginBottom: '1rem' }}>
         <div className="space-y-4">
           <div className="pb-3" style={{ color: '#9C9C9C' }}>
             <div className="text-sm pt-1">{desc}</div>
