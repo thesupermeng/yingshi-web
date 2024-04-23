@@ -14,9 +14,10 @@ import { VodContent } from '@/components/vod/vodContent.js';
 import styles from './style.module.css';
 import { AdsBanner } from '@/components/ads/adsBanner.js';
 import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
-import { ArrowLeftIcon } from '@/asset/icons';
+import { ArrowLeftIcon, ArrowRightIcon } from '@/asset/icons';
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
+import { convertTimeStampToDateTime } from "@/util/date";
 
 export const PlayVod = ({ vodId, tId, nId }) => {
   const router = useRouter();
@@ -33,16 +34,28 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   const [episodeGroups, setEpisodeGroups] = useState([]);
   const [episodeGroupSelected, setEpisodeGroupSelected] = useState({});
   const [suggestedVods, setSuggestedVods] = useState([]);
+  const [toggleJianJie, setToggleJianJie] = useState(false);
+  const [desc, setDesc] = useState("");
 
   const getVodDetails = async () => {
-    return YingshiApi(
-      URL_YINGSHI_VOD.getVodDetails,
-      {
-        id: vodId,
-        tid: tId
-      },
-      { method: 'GET' }
-    );
+    if(tId == 0){
+      return YingshiApi(
+        URL_YINGSHI_VOD.getVodDetails,
+        {
+          id: vodId
+        },
+        { method: 'GET' }
+      );
+    }else{
+      return YingshiApi(
+        URL_YINGSHI_VOD.getVodDetails,
+        {
+          id: vodId,
+          tid: tId
+        },
+        { method: 'GET' }
+      );
+    }
   };
 
   const getSuggestedVodType = async () => {
@@ -58,10 +71,25 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   }
 
   useEffect(() => {
+    if(vod){
+      let desc = vod.vod_year + " " + vod.vod_area
+      let vodClass = []
+      if (vod.vod_class != null) {
+        vodClass = vod.vod_class.split(",");
+      }
+      vodClass = vodClass.slice(0, 2);
+      vodClass.forEach((item, i) => {
+        desc += " " + item
+      })
+
+      setDesc(desc);
+    }
+  }, [vod])
+
+  useEffect(() => {
     if (episodeSelected == null) {
       getVodDetails().then((data) => {
-        console.log(data);
-        if (data === undefined || data.length <= 0 || data.List === undefined || data.List.length <= 0) return;
+        if (data === undefined || data.length <= 0 || data.List === undefined || data.List?.length <= 0) return;
         let res = data.List[0];
         setVod(res);
 
@@ -98,9 +126,9 @@ export const PlayVod = ({ vodId, tId, nId }) => {
           }
 
           if (source.vod_play_list.urls.length > 0) {
-            if(nId && nId > 0){
+            if (nId && nId > 0) {
               setEpisodeSelected(source.vod_play_list.urls[nId - 1]);
-            }else{
+            } else {
               setEpisodeSelected(source.vod_play_list.urls[0]);
             }
           }
@@ -152,6 +180,10 @@ export const PlayVod = ({ vodId, tId, nId }) => {
       setPlayerDivHeight(playerDivHeight);
     }
   });
+
+  const openJianJie = () => {
+    setToggleJianJie(!toggleJianJie)
+  }
   
   return (
     <div ref={domElementRef} className='lg:w-[85%] w-screen'>
@@ -175,8 +207,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                   url: episodeSelected?.url ?? '',
                   fullscreen: true,
                   autoplay: true,
-                  // muted: false,
-                  muted: true,
+                  muted: false,
                 }}
                 getInstance={(art) => console.info(art)}
                 onVideoEnd={onVideoEnd}
@@ -192,7 +223,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
               />
             </div>
             <VodContent vodContent={vod.vod_content} vodEpisodeSelected={episodeSelected} vodEpisodeInfo={vod.vod_episode_info} />
-            
+
             <div className='lg:hidden flex flex-col space-y-4' style={{ width: '100%' }}>
               <div className="">
                 <div className={`space-y-4 ${styles.vodMetaContainer}`}>
@@ -205,6 +236,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                     vodRemark={vod.vod_remarks}
                     vodEpisodeSelected={episodeSelected}
                     vodEpisodeInfo={vod.vod_episode_info}
+                    vod={vod}
                   />
 
                   <VodSourceList
@@ -243,35 +275,64 @@ export const PlayVod = ({ vodId, tId, nId }) => {
 
           <div className='lg:flex hidden flex-col space-y-4' style={{ width: '22%' }}>
             <div className="">
-              <div className={`space-y-4 ${styles.vodMetaContainer}`}>
-                <VodCard
-                  imgSource={vod.vod_pic}
-                  vodName={vod.vod_name}
-                  vodUpdateDate={vod.vod_time}
-                  vodYear={vod.vod_year}
-                  vodClass={vod.vod_class}
-                  vodRemark={vod.vod_remarks}
-                  vod={vod}
-                />
+              {!toggleJianJie ?
+                <div className={`space-y-4 ${styles.vodMetaContainer}`}>
+                  <VodCard
+                    imgSource={vod.vod_pic}
+                    vodName={vod.vod_name}
+                    vodUpdateDate={vod.vod_time}
+                    vodYear={vod.vod_year}
+                    vodClass={vod.vod_class}
+                    vodRemark={vod.vod_remarks}
+                    vod={vod}
+                    openJianJie={openJianJie}
+                  />
 
-                <VodSourceList
-                  vodSources={vod.vod_sources}
-                  vodSourceSelected={vodSourceSelected}
-                  onSelectSource={onSelectSource}
-                />
+                  <VodSourceList
+                    vodSources={vod.vod_sources}
+                    vodSourceSelected={vodSourceSelected}
+                    onSelectSource={onSelectSource}
+                  />
 
-                <VodEpisodeList
-                  episodeGroups={episodeGroups}
-                  episodeGroup={episodeGroupSelected}
-                  vodSource={vodSourceSelected}
-                  episodeSource={episodeSelected}
-                  onSelectEpisodeGroup={onSelectEpisodeGroup}
-                  onSelectEpisode={onSelectEpisode}
-                  style={{
-                    maxHeight: 300,
-                  }}
-                />
-              </div>
+                  <VodEpisodeList
+                    episodeGroups={episodeGroups}
+                    episodeGroup={episodeGroupSelected}
+                    vodSource={vodSourceSelected}
+                    episodeSource={episodeSelected}
+                    onSelectEpisodeGroup={onSelectEpisodeGroup}
+                    onSelectEpisode={onSelectEpisode}
+                    style={{
+                      maxHeight: 300,
+                    }}
+                  />
+                </div>
+
+                :
+
+                <div className={`space-y-4 ${styles.vodMetaContainer}`}>
+                  <div className="flex flex-row cursor-pointer" onClick={openJianJie}>
+                    <div className="mx-3" style={{ margin: 'auto' }}>
+                      <Image
+                        src={ArrowLeftIcon}
+                        alt="Icon"
+                      />
+                    </div>
+                    <div>{vod.vod_name}</div>
+                  </div>
+                  <div>
+                    
+                  </div>
+                  <div className="pb-6" style={{ color: '#9C9C9C' }}>
+                    <div className="text-sm pt-1">{desc}</div>
+                    <div className="text-sm pt-1">更新: {convertTimeStampToDateTime(vod.vod_time).year}-{convertTimeStampToDateTime(vod.vod_time).month}-{convertTimeStampToDateTime(vod.vod_time).day}</div>
+                    <div className="text-sm pt-1">主演: {vod.vod_actor}</div>
+                    <div className="text-md pt-3 py-2" style={{ color: 'rgb(33 150 243 / var(--tw-text-opacity))' }}>简介</div>
+                    <div className="text-sm">
+                      <p>平静的沿海小城三平市，缉毒大队在一次行动中意外缴获一批新型冰毒，其规模和纯度都极为罕见，三平公安立即展开调查。部队转业女警赵友男（姚安娜 饰）凭着敏锐的嗅觉和洞察力，将目标锁定在了做化工买卖的黄宗伟身上。诡计多端的黄宗伟（张颂文 饰）让初出茅庐的赵友男燃起了斗志，她死盯黄宗伟，不管对方藏在何处，不管假像如何高级，她都能挖到线索，发现真相，义无反顾奔赴抓捕。 以赵友男为首的公安队伍和以黄宗伟为首的制毒贩毒份，一个穷追不舍死咬不放，一个诡计多端擅于隐藏，就这样上演了一出“猫鼠大战”。</p>
+                    </div>
+                  </div>
+                </div>
+              }
             </div>
 
             <div className={styles.vodMetaContainer}>

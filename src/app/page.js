@@ -21,6 +21,9 @@ import { Carousel } from '@/components/carousel/carousel';
 import { arrowRight, ArrowRightIcon } from '@/asset/icons';
 import { Spinner } from '@/components/spinner';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+
 const getHeaderMenuSelected = (state) => state.headerMenuSelected;
 
 export default function Home() {
@@ -184,9 +187,9 @@ export default function Home() {
                         >
                           {category.type_name}
                         </span>
-                        <div className='flex w-fit items-center'>
+                        <div className='flex w-fit items-center cursor-pointer hover-blue'>
                           <span
-                            className='cursor-pointer'
+className='mr-1'
                             style={{
                               fontSize: '12px',
                               fontWeight: '400',
@@ -197,12 +200,12 @@ export default function Home() {
                           >
                             更多
                           </span>
-                          <Image
-                            className='mx-2'
-                            src={arrowRight}
-                            alt='arrow'
-                            width={8}
-                          />
+                          <FontAwesomeIcon style={{
+                            fontSize: '14px',
+                            fontWeight: '400',
+                            fontStyle: 'normal',
+                            fontFamily: 'PingFang SC',
+                          }} icon={faAngleRight} />
                         </div>
                       </div>
                       <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
@@ -232,10 +235,11 @@ export default function Home() {
                         >
                           {topic.topic_name}
                         </span>
-                        <div className='flex w-fit items-center'>
+                        <div className='flex w-fit items-center cursor-pointer hover-blue'>
                           <span
-                            className='cursor-pointer'
+                          className='mr-1'
                             style={{
+                              
                               fontSize: '12px',
                               fontWeight: '400',
                               fontStyle: 'normal',
@@ -247,6 +251,12 @@ export default function Home() {
                           >
                             更多
                           </span>
+                          <FontAwesomeIcon style={{
+                            fontSize: '14px',
+                            fontWeight: '400',
+                            fontStyle: 'normal',
+                            fontFamily: 'PingFang SC',
+                          }} icon={faAngleRight} />
                           <Image
                             className='mx-2'
                             src={arrowRight}

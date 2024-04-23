@@ -132,7 +132,7 @@ export default function Page() {
             <div className='d-flex container pt-3 ' style={{ width: '100%' }}>
               <div className='row'>
                 {searchResults?.List?.map((vod) => (
-                  <div className='col-6 mt-2 mb-2'>
+                  <div className='col-md-6 mt-2 mb-2'>
                     <div
                       className='topic-details-card'
                       onClick={(e) => {
@@ -178,8 +178,8 @@ export default function Page() {
                                   : vod.vod_blurb}
                               </div>
                               <button className='btn btn-topic-play'>
-                                <FontAwesomeIcon icon={faPlay} />{' '}
-                                <span className='ml-2'> 立即播放 </span>
+                                <FontAwesomeIcon className='text-white' icon={faPlay} />{' '}
+                                <span className='ml-2 text-white'> 立即播放 </span>
                               </button>
                             </div>
                           </div>
