@@ -401,8 +401,8 @@ const Header = () => {
                   />
                 </div>
                 {openSearch ? (
-                  <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100%_-_52px)] z-20 left-0 md:left-auto md:w-96 md:h-[500px]'>
-                    <div style={{ background: 'black' }} className='py-3 px-4 flex flex-col md:rounded-md w-full h-full md:h-fit overflow-scroll bg-[#1d2023] md:bg-[#1d2023e0] md:w-96'>
+                  <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100%_-_52px)]  z-20 left-0 md:left-auto md:w-96 md:h-[500px]'>
+                    <div style={{ background: 'black' }} className='py-3 px-4 flex flex-col md:rounded-md w-full h-full md:h-fit overflow-scroll-hidden bg-[#1d2023] md:bg-[#1d2023e0] md:w-96'>
                       {searchInput ? (
                         loadingSearching ? (
                           <LoadingPage full={false} />
