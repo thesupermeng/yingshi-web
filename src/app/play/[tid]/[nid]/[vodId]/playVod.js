@@ -98,9 +98,9 @@ export const PlayVod = ({ vodId, tId, nId }) => {
           }
 
           if (source.vod_play_list.urls.length > 0) {
-            if(nId && nId > 0){
+            if (nId && nId > 0) {
               setEpisodeSelected(source.vod_play_list.urls[nId - 1]);
-            }else{
+            } else {
               setEpisodeSelected(source.vod_play_list.urls[0]);
             }
           }
@@ -152,7 +152,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
       setPlayerDivHeight(playerDivHeight);
     }
   });
-  
+
   return (
     <div ref={domElementRef} className='lg:w-[85%] w-screen'>
       {vod != null && (
@@ -175,8 +175,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                   url: episodeSelected?.url ?? '',
                   fullscreen: true,
                   autoplay: true,
-                  // muted: false,
-                  muted: true,
+                  muted: false,
                 }}
                 getInstance={(art) => console.info(art)}
                 onVideoEnd={onVideoEnd}
@@ -192,7 +191,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
               />
             </div>
             <VodContent vodContent={vod.vod_content} vodEpisodeSelected={episodeSelected} vodEpisodeInfo={vod.vod_episode_info} />
-            
+
             <div className='lg:hidden flex flex-col space-y-4' style={{ width: '100%' }}>
               <div className="">
                 <div className={`space-y-4 ${styles.vodMetaContainer}`}>
