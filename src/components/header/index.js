@@ -16,7 +16,7 @@ import {
   vipLightIcon,
   glyph,
   noADIcon,
-  subtractIcon,
+  subtractIcon, ArrowLeftIcon,
 } from '@/asset/icons';
 
 import { usePathname, useRouter } from 'next/navigation';
@@ -1315,6 +1315,20 @@ const Header = () => {
         <div className='gap-y-2 flex-col w-full md:flex-row flex'>
           <div className='flex-1 flex gap-x-2 md:justify-start'>
             <span className='text-topic-title'> 我的 </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  if (pathname.startsWith('/otp')) {
+    return <div className={'z-30 w-screen mobile'}>
+      <div className='flex py-3 mx-2.5'>
+        <div className='gap-y-2 flex-col w-full md:flex-row flex'>
+          <div className='flex-1 flex gap-x-2 md:justify-start'>
+            <div className={'flex w-[30px] h-[30px] justify-center items-center'}>
+              <Image src={ArrowLeftIcon} alt={'back button'} onClick={() => router.back()} height={16}/>
+            </div>
           </div>
         </div>
       </div>
