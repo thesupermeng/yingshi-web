@@ -24,6 +24,13 @@ import Head from 'next/head';
 import { H5LiveChat } from '@/componentsH5/H5LiveChat';
 import { Config } from '@/util/config';
 
+import dynamic from 'next/dynamic';
+
+const DynamicComponentWithNoSSR = dynamic(
+  () => import('./GoogleAnalyticComponent'),
+  { ssr: false }
+);
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
@@ -36,6 +43,7 @@ export const viewport = {
   themeColor: '#000000',
 };
 export default function RootLayout({ children }) {
+  
 
   // const footerRef = useRef(null);
   // const [mainDivMarginOffset, setMainDivMarginOffset] = useState(0);
@@ -59,7 +67,11 @@ export default function RootLayout({ children }) {
       //   isWeb() ? 'webcontent min-w-[1360px] min-h-[500px]' : 'h5content'
       // } overflow-x-auto overflow-y-hidden relative w-[100vw] h-[100vh]`}
     >
+       <DynamicComponentWithNoSSR />
       <Head>
+        
+
+        
         <meta name="google" content="notranslate" />
         <meta name='apple-mobile-web-app-capable' content='yes' />
         <link rel='icon' href='/icon.png' sizes='any' />
