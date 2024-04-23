@@ -6,7 +6,7 @@ import { Inter } from 'next/font/google';
 import { Providers } from '@/store/Provider';
 import Sidebar from '@/components/sidebar';
 import Header from '@/components/header';
-
+import Script from 'next/script';
 import MyFooter from '@/components/myFooter';
 import Announcement from '@/components/announcement';
 //import FullBetSlip from '@/components/betSlip/FullBetSlip';
@@ -26,10 +26,10 @@ import { Config } from '@/util/config';
 
 import dynamic from 'next/dynamic';
 
-const DynamicComponentWithNoSSR = dynamic(
-  () => import('./GoogleAnalyticComponent'),
-  { ssr: false }
-);
+// const DynamicComponentWithNoSSR = dynamic(
+//   () => import('./GoogleAnalyticComponent'),
+//   { ssr: false }
+// );
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -55,6 +55,22 @@ export default function RootLayout({ children }) {
   // })
 
   return (
+
+    <>
+    <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-2562H7TH3Z"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-2562H7TH3Z');
+        `}
+      </Script>
+
     <html
     class="notranslate" translate="no"
       lang='cn'
@@ -190,5 +206,6 @@ export default function RootLayout({ children }) {
         </Providers>
       </body>
     </html>
+    </>
   );
 }
