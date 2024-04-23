@@ -126,6 +126,10 @@ const Header = () => {
   };
 
   const handleSearch = () => {
+    if(searchInput == '')
+    {
+      return;
+    }
     handleAddSearchHistory();
   };
 
