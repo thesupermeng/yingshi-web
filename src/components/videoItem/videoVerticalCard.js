@@ -13,7 +13,7 @@ export const VideoVerticalCard = ({ vod }) => {
             blurDataURL={vod.vod_pic}
             onClick={(e) => {
               e.preventDefault();
-              router.push(`/play/${vod.vod_id}`);
+              router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);
             }}
             alt='video'
             src={vod.vod_pic}

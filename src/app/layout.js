@@ -48,8 +48,8 @@ export default function RootLayout({ children }) {
 
   return (
     <html
-    translate="no"
-      lang='en'
+    class="notranslate" translate="no"
+      lang='cn'
       className={`bg-sideMenu notranslate ${
         isWeb()
           ? 'webcontent h-full overflow-x-auto overflow-y-hidden'
@@ -60,6 +60,7 @@ export default function RootLayout({ children }) {
       // } overflow-x-auto overflow-y-hidden relative w-[100vw] h-[100vh]`}
     >
       <Head>
+        <meta name="google" content="notranslate" />
         <meta name='apple-mobile-web-app-capable' content='yes' />
         <link rel='icon' href='/icon.png' sizes='any' />
         <link
