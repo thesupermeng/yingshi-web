@@ -52,11 +52,26 @@ export const VodContent = ({
             <span className="">{t('分集剧情 : ')}{episodeInfo.title}</span>
             <p ref={qqqref} className={`${isCollapse ? 'line-clamp-2' : ''} text-white/75 text-sm`} style={{ color: '#9C9C9C' }}>{episodeInfo.gpt_content}</p>
             {isLineExceed &&
-              <div className="flex flex-row space-x-2 items-center" onClick={onExpandPress}>
-                <span className={styles.primaryText}>{t('更多')}</span>
-                <ArrowDownIcon
-                  color={'#FAC33D'}
-                />
+              <div>
+                {isCollapse ?
+                  <div className="flex flex-row space-x-2 items-center" onClick={onExpandPress}>
+                    <span className={styles.primaryText}>{t('更多')}</span>
+                    <ArrowDownIcon
+                      color={'#FAC33D'}
+                    />
+                  </div>
+
+                  :
+
+                  <div className="flex flex-row space-x-2 items-center" onClick={onExpandPress}>
+                    <span className={styles.primaryText}>{t('收起')}</span>
+                    <div style={{ transform: 'rotate(180deg)' }}>
+                      <ArrowDownIcon
+                        color={'#FAC33D'}
+                      />
+                    </div>
+                  </div>
+                }
               </div>
             }
           </div>
