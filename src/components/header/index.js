@@ -169,7 +169,7 @@ const Header = () => {
   };
 
 
-  
+
 
   const getTopTenList = async () => {
     return YingshiApi(
@@ -417,7 +417,7 @@ const Header = () => {
                                   setOpenSearch(false);
                                   setSearchInput('');
                                   handleAddSearchHistory();
-                                  router.push(`/play/${item.vod_id}`);
+                                  router.push(`/play/${item.type_id}/1/${item.vod_id}`);
                                 }}
                               >
                                 <div className='flex flex-row'>
@@ -493,7 +493,7 @@ const Header = () => {
                                 onClick={(e) => {
                                   e.preventDefault();
                                   setOpenSearch(false);
-                                  router.push(`/play/${item.vod_id}`);
+                                  router.push(`/play/${item.type_id}/1/${item.vod_id}`);
                                 }}
                               >
                                 <div className='flex flex-row'>
@@ -967,7 +967,7 @@ const Header = () => {
                                       setOpenSearchMobile(false);
                                       setSearchInput('');
                                       handleAddSearchHistory();
-                                      router.push(`/play/${item.vod_id}`);
+                                      router.push(`/play/${item.type_id}/1/${item.vod_id}`);
                                     }}
                                   >
                                     <div className='flex flex-row'>
@@ -1040,7 +1040,7 @@ const Header = () => {
                                     onClick={(e) => {
                                       e.preventDefault();
                                       setOpenSearchMobile(false);
-                                      router.push(`/play/${item.vod_id}`);
+                                      router.push(`/play/${item.type_id}/1/${item.vod_id}`);
                                     }}
                                   >
                                     <div className='flex flex-row'>
@@ -1167,7 +1167,7 @@ const Header = () => {
                                       setOpenSearchMobile(false);
                                       setSearchInput('');
                                       handleAddSearchHistory();
-                                      router.push(`/play/${item.vod_id}`);
+                                      router.push(`/play/${item.type_id}/1/${item.vod_id}`);
                                     }}
                                   >
                                     <div className='flex flex-row'>
@@ -1238,7 +1238,7 @@ const Header = () => {
                                     onClick={(e) => {
                                       e.preventDefault();
                                       setOpenSearchMobile(false);
-                                      router.push(`/play/${item.vod_id}`);
+                                      router.push(`/play/${item.type_id}/1/${item.vod_id}`);
                                     }}
                                   >
                                     <div className='flex flex-row'>
@@ -1307,6 +1307,18 @@ const Header = () => {
         <div className='desktop'>{defaultHeader}</div>
       </>
     );
+  }
+
+  if (pathname.startsWith('/myprofile')) {
+    return <div className={'z-30 w-screen mobile'}>
+      <div className='flex py-3 mx-2.5'>
+        <div className='gap-y-2 flex-col w-full md:flex-row flex'>
+          <div className='flex-1 flex gap-x-2 md:justify-start'>
+            <span className='text-topic-title'> 我的 </span>
+          </div>
+        </div>
+      </div>
+    </div>
   }
 
   return defaultHeader;

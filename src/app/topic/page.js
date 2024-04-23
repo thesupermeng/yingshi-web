@@ -222,7 +222,7 @@ export default function Page({ params }) {
                       key={vod.vod_id}
                       onClick={(e) => {
                         e.preventDefault();
-                        router.push(`/play/${vod.vod_id}`);
+                        router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);
                       }}
                     >
                       {' '}

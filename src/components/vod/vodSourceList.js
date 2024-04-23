@@ -23,7 +23,7 @@ export const VodSourceList = ({
     </div>
 
     <ul className="flex flex-1 overflow-x-scroll space-x-2">
-    {vodSources?.map((source) => (
+      {vodSources?.map((source) => (
         <li key={`key-vodSource-${source.source_id}`} id={`vodSource-${source.source_id}`} className={`${styles.radioOptionCard} ${vodSourceSelected.source_id === source.source_id ? styles.selectedOptionCard : styles.unselectedOptionCard}`} onClick={() => onSelectSource(source)}>
           <div htmlFor={`vodSource-${source.source_id}`} className={`flex flex-row space-x-1 items-center`}>
             <div className="w-6 h-6 flex justify-center items-center">
