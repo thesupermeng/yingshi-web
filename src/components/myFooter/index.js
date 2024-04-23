@@ -55,7 +55,10 @@ const MyFooter = () => {
   };
 
 
-  if (pathname.startsWith('/play') || pathname.startsWith('/search/')  ) {
+  if (pathname.startsWith('/play') ||
+      pathname.startsWith('/search/') ||
+      pathname.startsWith('/otp')
+  ) {
     return <></>;
   }
 

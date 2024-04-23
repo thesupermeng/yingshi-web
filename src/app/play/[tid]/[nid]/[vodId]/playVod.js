@@ -187,7 +187,18 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   
   return (
     <div ref={domElementRef} className='lg:w-[85%] w-screen'>
-      {vod != null && (
+      {vod == null
+
+      ?
+
+      (
+        <div style={{ height: '80vh' }}>
+
+        </div>
+      )
+      
+      :
+      (
         <div className='flex flex-row space-x-4'>
           <div className='flex-1 space-y-4 no-scrollbar' style={{ width: '78%' }}>
             <div ref={playerDivRef} className='aspect-[16/9] absolute w-screen lg:relative lg:w-[100%]' style={{ zIndex: '10' }}>

@@ -56,6 +56,8 @@ export { default as profileIcon } from './profile_icon.svg';
 export { default as vipProfileIcon } from './ysVIPIcon.svg';
 export { default as editIcon } from './ysEdit.svg';
 export { default as arrowRight } from './arrowRight.svg';
+export { default as Stopwatch } from './stopwatch.svg'
+
 
 // profiles
 export { default as AnimationTick } from './profile/animationTick.gif';
@@ -293,3 +295,6 @@ export { default as ArrowRightIcon } from './arrows/arrowRight.svg';
 export { default as ArrowDownFillIcon } from './arrows/arrowDownFill.svg';
 export { default as PlayRightIcon } from './arrows/playRight.svg';
 export { default as CloseX } from './close.svg';
+
+//countries
+export { default as CNFlag } from './countryIcons/cn.png'
