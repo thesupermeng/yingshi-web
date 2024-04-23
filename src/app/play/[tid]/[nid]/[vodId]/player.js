@@ -1,8 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import Artplayer from 'artplayer';
 import Hls from 'hls.js';
 
 export default function Player({ option, getInstance, onVideoEnd, ...rest }) {
+  const artContainerRef = useRef();
   const artRef = useRef();
 
   const playM3U8 = (video, url, art) => {
@@ -20,10 +21,10 @@ export default function Player({ option, getInstance, onVideoEnd, ...rest }) {
     }
   };
 
-  useEffect(() => {
-    const art = new Artplayer({
+  useLayoutEffect(() => {
+    artRef.current = new Artplayer({
       ...option,
-      container: artRef.current,
+      container: artContainerRef.current,
       type: 'm3u8',
       customType: {
         m3u8: playM3U8,
@@ -47,21 +48,27 @@ export default function Player({ option, getInstance, onVideoEnd, ...rest }) {
     });
 
     if (getInstance && typeof getInstance === 'function') {
-      getInstance(art);
+      getInstance(artRef.current);
     }
 
-    art.on('video:ended', onVideoEnd);
 
     return () => {
-      if (art && art.destroy) {
-        art.destroy(false);
+      if (artRef.current && artRef.current.destroy) {
+        artRef.current.destroy();
       }
+    }
+  }, [])
 
-      if (art) {
-        art.off('video:ended', onVideoEnd);
+  useEffect(() => {
+    artRef.current.switchUrl(option.url)
+    artRef.current.on('video:ended', onVideoEnd);
+
+    return () => {
+      if (artRef.current) {
+        artRef.current.off('video:ended', onVideoEnd);
       }
-    };
+    }
   }, [option.url]);
 
-  return <div ref={artRef} {...rest}></div>;
+  return <div ref={artContainerRef} {...rest}></div>;
 }
