@@ -2,12 +2,19 @@ import {BottomSheet} from 'react-spring-bottom-sheet';
 import React, {useState} from 'react';
 import {loginRequestEmailOtp} from '@/services/yingshiUser';
 import TextInput from '@/componentsH5/yingshiLoginBottomSheet/input';
+import {useRouter} from 'next/navigation';
+import {useDispatch} from 'react-redux';
+import {setYingshiUserLoginParam} from '@/store/yingshiUser';
 
 export default function YingshiLoginBottomSheet({visible, onDismiss}) {
+    const router = useRouter()
     const [formData, setFormData] = useState({})
+    const dispatch = useDispatch()
 
     const handleRegister = () => {
         console.log('register', formData)
+        router.push('/otp')
+        dispatch(setYingshiUserLoginParam(formData))
         // loginRequestEmailOtp(formData).then(response => {
         //     if (response.error) {
         //         console.log(response.error)
