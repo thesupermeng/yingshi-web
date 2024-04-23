@@ -137,7 +137,7 @@ export default function Page() {
                       className='topic-details-card'
                       onClick={(e) => {
                         e.preventDefault();
-                        router.push(`/play/${vod.vod_id}`);
+                        router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);
                       }}
                     >
                       <div className='row '>

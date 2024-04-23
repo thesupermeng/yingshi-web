@@ -18,7 +18,7 @@ import { ArrowLeftIcon } from '@/asset/icons';
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
 
-export const PlayVod = ({ vodId }) => {
+export const PlayVod = ({ vodId, tId, nId }) => {
   const router = useRouter();
 
   const { t } = useTranslation();
@@ -39,6 +39,7 @@ export const PlayVod = ({ vodId }) => {
       URL_YINGSHI_VOD.getVodDetails,
       {
         id: vodId,
+        tid: tId
       },
       { method: 'GET' }
     );
@@ -59,12 +60,16 @@ export const PlayVod = ({ vodId }) => {
   useEffect(() => {
     if (episodeSelected == null) {
       getVodDetails().then((data) => {
+        console.log(data);
         if (data === undefined || data.length <= 0 || data.List === undefined || data.List.length <= 0) return;
         let res = data.List[0];
         setVod(res);
 
         if (res.vod_sources.length > 0) {
           let source = res.vod_sources[0];
+          // if(nId){
+          //   source = res.vod_sources[nId];
+          // }
 
           setVodSourceSelected(source);
           if (source.vod_play_list.urls.length > Config.vodEpisodeGroupMax) {
