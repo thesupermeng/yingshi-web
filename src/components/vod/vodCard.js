@@ -66,10 +66,6 @@ export const VodCard = ({
       }
     }
   }, [vodEpisodeInfo, vodEpisodeSelected]);
-  if(episodeInfo){
-    console.log(episodeInfo);
-  }
-  console.log(vod?.vod_director);
   return <div className="flex flex-row space-x-4">
     {/* Bottom Sheet Intro H5*/}
     <BottomSheet
@@ -78,9 +74,9 @@ export const VodCard = ({
       }}
       open={openIntroBottomSheet}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between' }} className='pb-3'>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }} className='pb-1'>
         <div>
-          <span className="text-md text-white px-2" style={{ fontWeight: '300' }}>{t('简介')}</span>
+          <span className="text-md text-white px-2" style={{ fontWeight: '500' }}>{t('简介')}</span>
         </div>
         <div style={{ paddingRight: '0.8rem' }} onClick={() => {
           setOpenIntroBottomSheet(false);
