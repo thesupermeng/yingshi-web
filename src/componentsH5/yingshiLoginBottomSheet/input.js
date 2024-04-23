@@ -3,7 +3,7 @@ import {CrossRed, TickBlue} from '@/asset/icons';
 import Image from 'next/image';
 import {debounce} from 'lodash';
 
-export default function TextInput({name, placeholder, validator, onChange, errorMessage, isShowIcon}) {
+export default function TextInput({name, placeholder, validator, onChange, errorMessage, isShowIcon, prefixText}) {
     const [isError, setIsError] = useState(false);
     const [_value, _setValue] = useState(''); // for condition checking only
 
@@ -34,10 +34,13 @@ export default function TextInput({name, placeholder, validator, onChange, error
     const icon = isError ? CrossRed : TickBlue
 
     return (
-        <div className='flex-col'>
+        <div className='flex-col flex-1'>
             <div
-                className={`h-[47px] px-[9px] py-[22px] rounded-[10px] flex items-center ${inputBackground}`}
+                className={`h-[47px] px-[9px] py-[22px] rounded-[10px] flex items-center gap-[12px] ${inputBackground}`}
             >
+                {prefixText &&
+                    <span className={'text-white text-[15px] bg-transparent'}>{prefixText}</span>
+                }
                 <input
                     name={name}
                     placeholder={placeholder}

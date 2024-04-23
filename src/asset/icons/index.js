@@ -295,3 +295,6 @@ export { default as ArrowRightIcon } from './arrows/arrowRight.svg';
 export { default as ArrowDownFillIcon } from './arrows/arrowDownFill.svg';
 export { default as PlayRightIcon } from './arrows/playRight.svg';
 export { default as CloseX } from './close.svg';
+
+//countries
+export { default as CNFlag } from './countryIcons/cn.png'
