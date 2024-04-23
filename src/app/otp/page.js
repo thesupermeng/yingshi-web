@@ -98,11 +98,22 @@ export default function OTP () {
             // full width and full height
             <>
                 <div className={'h-screen w-screen flex flex-col align-center absolute bg-red'}>
-                    <p className={'text-center text-[22px] mb-[13px] mt-[40px]'}>输入邮箱验证码</p>
-                    <p className={'text-center text-[14px]'}>验证码已发送至 <span className={'text-[#0085E0]'}>{loginParam.email}</span></p>
-                    <p className={'text-center text-[14px] mb-[26px]'}>如果没有收到邮件，请检查垃圾邮箱</p>
+                    {loginParam.loginMode === 'email' && <>
+                        <p className={'text-center text-[22px] mb-[13px] mt-[40px]'}>输入邮箱验证码</p>
+                        <p className={'text-center text-[14px]'}>验证码已发送至 <span
+                            className={'text-[#0085E0]'}>{loginParam.email}</span></p>
+                        <p className={'text-center text-[14px] mb-[26px]'}>如果没有收到邮件，请检查垃圾邮箱</p>
+                    </>
+                    }
+                    {loginParam.loginMode === 'sms' && <>
+                        <p className={'text-center text-[22px] mb-[13px] mt-[40px]'}>输入OTP验证码</p>
+                        <p className={'text-center text-[14px] mb-[26px]'}>
+                            验证码已发送至 <span className={'text-[#0085E0]'}>{loginParam.phone}</span>
+                        </p>
+                    </>
+                    }
                     <div className={'flex justify-between px-[32px]'}>
-                        {[1,2,3,4,5,6].map((item, index) => (
+                        {[1, 2, 3, 4, 5, 6].map((item, index) => (
                             <OtpInput
                                 key={index}
                                 onKeyPress={(e) => handleBackspace(e, index)}
