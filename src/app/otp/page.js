@@ -86,7 +86,8 @@ export default function OTP () {
                     loginSms({...loginParam, otp: otpRef.current.join('')})
                         .then(res => {
                             if (res) {
-                                dispatch(setYingshiUserLoginParam(null))
+                                router.push('/myprofile')
+                                dispatch(setYingshiUserLoginParam({success: true}))
                             } else {
                                 setErrorMessage('验证码错误')
                             }
@@ -96,7 +97,8 @@ export default function OTP () {
                         .then(res => {
                             // success
                             if (res){ // on success
-                                dispatch(setYingshiUserLoginParam(null))
+                                router.push('/myprofile')
+                                dispatch(setYingshiUserLoginParam({success: true}))
                             } else {
                                 setErrorMessage('验证码错误')
 
@@ -113,7 +115,7 @@ export default function OTP () {
         // full width and full height
         <>
             {loginParam &&
-                <div className={'h-screen w-screen flex flex-col align-center absolute bg-red'}>
+                <div className={'h-screen w-screen flex flex-col align-center absolute'}>
                     {loginParam.loginMode === 'email' && <>
                         <p className={'text-center text-[22px] mb-[13px] mt-[40px]'}>输入邮箱验证码</p>
                         <p className={'text-center text-[14px]'}>验证码已发送至 <span

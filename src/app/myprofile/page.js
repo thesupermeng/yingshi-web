@@ -25,6 +25,9 @@ import { BottomSheet } from 'react-spring-bottom-sheet';
 import 'react-spring-bottom-sheet/dist/style.css'
 import {loginRequestEmailOtp} from '@/services/yingshiUser';
 import YingshiLoginBottomSheet from '@/componentsH5/yingshiLoginBottomSheet';
+import {TickAnimation} from '@/asset/gif';
+import {useDispatch, useSelector} from 'react-redux';
+import {setYingshiUserLoginParam} from '@/store/yingshiUser';
 
 
 // import styles from './style.module.css';
@@ -39,9 +42,23 @@ export default function Page({ params }) {
 
   // const router = useRouter()
   const [openSignInUp, setOpenSignInUp] = useState(false);
+  const [openLoginSuccess, setOpenLoginSuccess] = useState(false);
   const [signIn, setSignIn] = useState(false);
 
-  // router.push(`/`);
+  const dispatch = useDispatch()
+  const getLoginParam = (s) => s.yingshiUser.loginParam
+  const loginParam = useSelector(getLoginParam)
+
+  useEffect(() => {
+    if (loginParam && loginParam.success){
+      setOpenLoginSuccess(true)
+
+      setTimeout(() => {
+        setOpenLoginSuccess(false)
+        dispatch(setYingshiUserLoginParam(null))
+      }, 2000)
+    }
+  }, [loginParam])
 
   return (
     <div>
@@ -49,6 +66,14 @@ export default function Page({ params }) {
         WEB
       </div>
       <div className='mobile w-screen p-4'>
+        {openLoginSuccess &&
+          <div className={'absolute top-0 left-0 flex justify-center items-center w-full h-full'} onClick={() => setOpenSignInUp(false)}>
+            <div className={'w-[270px] h-[195px] rounded-[14px] bg-[#222222CC] flex flex-col items-center justify-center'}>
+              <Image src={TickAnimation} alt={'Login success'} width={95} height={95} />
+              <span className={'text-[17px]'}>登录成功</span>
+            </div>
+          </div>
+        }
         <YingshiLoginBottomSheet
           visible={openSignInUp}
           onDismiss={() => setOpenSignInUp(false)}
