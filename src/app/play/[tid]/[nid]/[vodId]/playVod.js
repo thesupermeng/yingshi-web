@@ -201,7 +201,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
       (
         <div className='flex flex-row space-x-4'>
           <div className='flex-1 space-y-4 no-scrollbar' style={{ width: '78%' }}>
-            <div ref={playerDivRef} className='aspect-[16/9] absolute w-screen lg:relative lg:w-[100%]' style={{ zIndex: '10' }}>
+            <div ref={playerDivRef} className='aspect-[16/9] absolute w-screen lg:relative lg:w-[100%]' style={{ zIndex: '1' }}>
               <div className="p-3 lg:hidden block" onClick={() => router.back()} style={{ background: 'black', textAlign: 'center', position: 'relative' }}>
                 {vod.vod_name}
                 <div className="pt-3" style={{ position: 'absolute', top: '0', marginTop: '0.4rem' }}>
