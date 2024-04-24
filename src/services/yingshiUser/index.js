@@ -17,13 +17,13 @@ export const loginRequestEmailOtp = async ({email, referralCode}) => {
     )
 }
 
-export const loginRequestSmsOtp = async ({phone, countryId, referralCode}) => {
+export const loginRequestSmsOtp = async ({phoneNumber, countryId, referralCode}) => {
     return YingshiApi(
         URL_YINGSHI_USER.signInUp,
         {
             request_otp_by: 'SMS',
             is_social_login: false,
-            phone: phone,
+            phone_number: phoneNumber,
             country_id: countryId,
             referral_code: referralCode,
             platform_id: platformId
@@ -50,13 +50,13 @@ export const loginEmail = async ({email, referralCode, otp}) => {
     )
 }
 
-export const loginSms = async ({phone, countryId, referralCode, otp}) => {
+export const loginSms = async ({phoneNumber, countryId, referralCode, otp}) => {
     return YingshiApi(
         URL_YINGSHI_USER.signInUp,
         {
             request_otp_by: 'SMS',
             is_social_login: false,
-            phone: phone,
+            phone_number: phoneNumber,
             country_id: countryId,
             referral_code: referralCode,
             platform_id: platformId,
@@ -83,6 +83,14 @@ export const logout = async () => {
 export const queryUserInfo = async () => {
     return YingshiApi(
         URL_YINGSHI_USER.userInfo,
+        {},
+        {method: 'GET'}
+    )
+}
+
+export const getCountryList = async () => {
+    return YingshiApi(
+        URL_YINGSHI_USER.countryList,
         {},
         {method: 'GET'}
     )

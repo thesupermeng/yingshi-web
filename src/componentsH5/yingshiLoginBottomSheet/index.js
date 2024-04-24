@@ -1,6 +1,6 @@
 import {BottomSheet} from 'react-spring-bottom-sheet';
-import React, {useState} from 'react';
-import {loginRequestEmailOtp} from '@/services/yingshiUser';
+import React, {useEffect, useState} from 'react';
+import {loginRequestEmailOtp, loginRequestSmsOtp} from '@/services/yingshiUser';
 import TextInput from '@/componentsH5/yingshiLoginBottomSheet/input';
 import {useRouter} from 'next/navigation';
 import {useDispatch} from 'react-redux';
@@ -13,14 +13,39 @@ export default function YingshiLoginBottomSheet({visible, onDismiss}) {
     const dispatch = useDispatch()
     const [loginMode, setLoginMode] = useState('sms')
 
+    useEffect(() => {
+        setFormData({})
+    }, [loginMode])
+
     const handleRegister = () => {
-        const loginParam = {
-            ...formData,
-            loginMode
+
+        // const loginParam = loginMode === 'sms' ?
+        //     {
+        //         loginMode,
+        //         ...formData,
+        //     }
+        //     :
+        //     {
+        //         loginMode,
+        //         ...formData
+        //     }
+        const loginParam = {...formData, loginMode}
+
+        if (loginMode === 'sms') {
+            loginRequestSmsOtp(loginParam)
+                .then(() => {
+                    dispatch(setYingshiUserLoginParam(loginParam))
+                    router.push('/otp')
+                })
+        } else {
+            loginRequestEmailOtp(loginParam)
+                .then((res) => {
+                    dispatch(setYingshiUserLoginParam(loginParam))
+                    router.push('/otp')
+                })
         }
-        // console.log('register', loginParam)
-        dispatch(setYingshiUserLoginParam(loginParam))
-        router.push('/otp')
+
+
     }
 
     const handleInput = (e) => {
@@ -80,18 +105,14 @@ export default function YingshiLoginBottomSheet({visible, onDismiss}) {
                             isShowIcon={true}
                         />}
                         {loginMode === 'sms' &&
-                            <div className={'flex'}>
-                                <CountryInput/>
-                                <TextInput
-                                    name="phone"
+                                <CountryInput
+                                    name="phoneNumber"
                                     placeholder={'2 345 6789'}
                                     onChange={handleInput}
                                     errorMessage={'手机号码格式错误'}
                                     validator={isPhoneValid}
                                     isShowIcon={true}
-                                    prefixText={'+86'} // TODO dynamic
                                 />
-                            </div>
                         }
                         <TextInput
                             name="referralCode"

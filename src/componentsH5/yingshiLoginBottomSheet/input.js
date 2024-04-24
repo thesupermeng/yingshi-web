@@ -3,7 +3,7 @@ import {CrossRed, TickBlue} from '@/asset/icons';
 import Image from 'next/image';
 import {debounce} from 'lodash';
 
-export default function TextInput({name, placeholder, validator, onChange, errorMessage, isShowIcon, prefixText}) {
+export default function TextInput({name, placeholder, validator, onChange, errorMessage, isShowIcon, prefixText, inputType='text'}) {
     const [isError, setIsError] = useState(false);
     const [_value, _setValue] = useState(''); // for condition checking only
 
@@ -46,6 +46,7 @@ export default function TextInput({name, placeholder, validator, onChange, error
                     placeholder={placeholder}
                     onChange={debouncedOnChange}
                     className={'text-white text-[15px] w-full bg-transparent'}
+                    type={inputType}
                 />
                 {validator && // if validator exist
                     _value && // if value is not empty
