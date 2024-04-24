@@ -408,7 +408,7 @@ const Header = () => {
               }}
             />
           </div>
-          <div className='relative flex-1 ml-16'>
+          <div className='relative flex-1 md:ml-16'>
             <input
               type='text'
               placeholder='输入搜索关键词'
@@ -442,7 +442,7 @@ const Header = () => {
           </div>
         </div>
         {openSearch ? (
-          <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100%_-_52px)] z-20 left-0 md:left-auto md:w-96 ml-16'>
+          <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100%_-_52px)] z-20 left-0 md:left-auto md:w-96 md:ml-16'>
             <div
               className='py-3 px-4 flex flex-col md:rounded-md w-full h-full md:h-fit overflow-scroll-hidden bg-[#1d2023] md:bg-[#1d2023e0] md:w-96'
             >
@@ -764,8 +764,8 @@ const Header = () => {
           : 'md:absolute z-30 w-screen bg-blur-header'
       }
     >
-      <div className='flex pb-2.5 md:pb-4 pt-3 md:mx-20 mx-2.5 justify-center'>
-        <div className='gap-y-2 flex-col w-full xl:w-11/12 md:flex-row flex'>
+      <div className='flex pb-2.5 md:pb-4 pt-3 justify-center container pl-0'>
+        <div className='gap-y-2 flex-col w-full md:flex-row flex'>
           <div className='flex-1 flex gap-x-2 md:justify-start '>
             <div
               className={`flex justify-between w-24 md:w-28 ${

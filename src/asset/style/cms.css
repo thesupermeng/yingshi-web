@@ -184,9 +184,8 @@
 
 .header-search-input-desktop
 {
-  background-color: rgba(255, 255, 255, 0.44) !important;
+  background-color: rgba(255, 255, 255, 0.08) !important;
   height: 35px !important;
-  border-radius: 10px !important;
 }
 
 .hover-blue:hover{

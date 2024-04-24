@@ -238,7 +238,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   };
 
   return (
-    <div ref={domElementRef} className='lg:w-[85%] w-screen'>
+    <div ref={domElementRef} className='container'>
       {vod == null
 
       ?
