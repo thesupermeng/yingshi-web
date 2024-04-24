@@ -57,6 +57,10 @@ export default function OTP () {
         }
     }, [])
 
+    useEffect(() => {
+        if (!loginParam) router.push('/')
+    })
+
 
     const handleBackspace = (e, index) => {
         if(e.key === 'Backspace' && !e.target.value && index > 0){
@@ -91,60 +95,56 @@ export default function OTP () {
             }
         }
     }
-    if (!loginParam) {
-        router.push('/')
-    } else {
-        return (
-            // full width and full height
-            <>
-                <div className={'h-screen w-screen flex flex-col align-center absolute bg-red'}>
-                    {loginParam.loginMode === 'email' && <>
-                        <p className={'text-center text-[22px] mb-[13px] mt-[40px]'}>输入邮箱验证码</p>
-                        <p className={'text-center text-[14px]'}>验证码已发送至 <span
-                            className={'text-[#0085E0]'}>{loginParam.email}</span></p>
-                        <p className={'text-center text-[14px] mb-[26px]'}>如果没有收到邮件，请检查垃圾邮箱</p>
-                    </>
+    return (
+        // full width and full height
+        <>
+            <div className={'h-screen w-screen flex flex-col align-center absolute bg-red'}>
+                {loginParam && loginParam.loginMode === 'email' && <>
+                    <p className={'text-center text-[22px] mb-[13px] mt-[40px]'}>输入邮箱验证码</p>
+                    <p className={'text-center text-[14px]'}>验证码已发送至 <span
+                        className={'text-[#0085E0]'}>{loginParam.email}</span></p>
+                    <p className={'text-center text-[14px] mb-[26px]'}>如果没有收到邮件，请检查垃圾邮箱</p>
+                </>
+                }
+                {loginParam && loginParam.loginMode === 'sms' && <>
+                    <p className={'text-center text-[22px] mb-[13px] mt-[40px]'}>输入OTP验证码</p>
+                    <p className={'text-center text-[14px] mb-[26px]'}>
+                        验证码已发送至 <span className={'text-[#0085E0]'}>{loginParam.phone}</span>
+                    </p>
+                </>
+                }
+                <div className={'flex justify-between px-[32px]'}>
+                    {[1, 2, 3, 4, 5, 6].map((item, index) => (
+                        <OtpInput
+                            key={index}
+                            onKeyPress={(e) => handleBackspace(e, index)}
+                            onChange={(e) => handleChange(e, index)}
+                            ref={(el) => (inputRefs.current[index] = el)
+                            }
+                            isError={!!errorMessage}
+                        />
+                    ))}
+                </div>
+                {errorMessage && <p className={'text-[#FF1010] text-[13px] px-[32px]'}>{errorMessage}</p>}
+                <div className={'flex my-12 justify-center'}>
+                    {countdownTimer === 0 &&
+                        <button className={'text-[17px] font-semibold text-[#0085E0]'} onClick={handleResendOTP}>重新发送验证码</button>
                     }
-                    {loginParam.loginMode === 'sms' && <>
-                        <p className={'text-center text-[22px] mb-[13px] mt-[40px]'}>输入OTP验证码</p>
-                        <p className={'text-center text-[14px] mb-[26px]'}>
-                            验证码已发送至 <span className={'text-[#0085E0]'}>{loginParam.phone}</span>
-                        </p>
-                    </>
-                    }
-                    <div className={'flex justify-between px-[32px]'}>
-                        {[1, 2, 3, 4, 5, 6].map((item, index) => (
-                            <OtpInput
-                                key={index}
-                                onKeyPress={(e) => handleBackspace(e, index)}
-                                onChange={(e) => handleChange(e, index)}
-                                ref={(el) => (inputRefs.current[index] = el)
-                                }
-                                isError={!!errorMessage}
-                            />
-                        ))}
-                    </div>
-                    {errorMessage && <p className={'text-[#FF1010] text-[13px] px-[32px]'}>{errorMessage}</p>}
-                    <div className={'flex my-12 justify-center'}>
-                        {countdownTimer === 0 &&
-                            <button className={'text-[17px] font-semibold text-[#0085E0]'} onClick={handleResendOTP}>重新发送验证码</button>
-                        }
-                        {countdownTimer !== 0 &&
-                            <div className={'flex gap-[3px] justify-center items-center'}>
-                                <Image src={Stopwatch} width={26} height={26} alt={'timer icon'}/>
-                                <span
-                                    className={'text-[#9C9C9C] font-semibold w-[50px]'}>
+                    {countdownTimer !== 0 &&
+                        <div className={'flex gap-[3px] justify-center items-center'}>
+                            <Image src={Stopwatch} width={26} height={26} alt={'timer icon'}/>
+                            <span
+                                className={'text-[#9C9C9C] font-semibold w-[50px]'}>
                                 {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
                             </span>
-                            </div>
-                        }
-                    </div>
-
+                        </div>
+                    }
                 </div>
-            </>
 
-        )
-    }
+            </div>
+        </>
+
+    )
 }
 
 const OtpInput = forwardRef(function OtpInput({onKeyPress, onChange, isError}, ref) {

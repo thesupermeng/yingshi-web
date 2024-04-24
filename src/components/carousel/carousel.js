@@ -80,7 +80,7 @@ export const Carousel = ({ carouselItems }) => {
               return (
                 <>
                   <div style={{ zIndex: '1', position: 'absolute', bottom: '0', paddingLeft: '1.2rem', paddingBottom: '2rem' }}>
-                    {item.vod.vod_name}
+                    {item.carousel_name}
                   </div>
                   <div className="slider-container" style={{ position: 'relative' }} onClick={(e) => {
                     e.preventDefault();

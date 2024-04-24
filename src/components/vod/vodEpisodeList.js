@@ -19,7 +19,9 @@ export const VodEpisodeList = ({
 }) => {
 
   const selectedEpisodeGroupRef = useRef(null);
+  const episodeContainerRef = useRef(null);
   const [selectedEpisodeGroupDivWidth, setSelectedEpisodeGroupDivWidth] = useState(0);
+  const [episodeContainerHeight, setEpisodeContainerHeight] = useState(0);
 
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -39,7 +41,12 @@ export const VodEpisodeList = ({
     if(selectedEpisodeGroupRef.current){
       setSelectedEpisodeGroupDivWidth(selectedEpisodeGroupRef.current.offsetWidth);
     }
-  })
+
+    if(episodeContainerRef.current){
+      console.log(episodeContainerRef.current.offsetHeight);
+      setEpisodeContainerHeight(episodeContainerRef.current.offsetHeight);
+    }
+  }, [open])
 
   const selectEpisode = (episode) => {
     setOpen(false);
@@ -134,11 +141,11 @@ export const VodEpisodeList = ({
             </li>
           ))}
         </ul>
-        <div className='px-2' style={{ maxHeight: '50vh', minHeight: '30vh', paddingBottom: '5rem' }}>
-          <ul className="flex flex-column no-scrollbar" style={{ flexWrap: 'wrap', overflowX: 'auto', height: '100%' }}>
+        <div className='px-4' ref={episodeContainerRef} style={{ height: '320px', marginTop: '0.5rem' }}>
+          <ul className="flex flex-column no-scrollbar" style={{ flexWrap: 'wrap', overflowX: 'auto', minHeight: '150px', maxHeight: '300px' }}>
             {vodSource?.vod_play_list?.urls?.slice(episodeGroup.from - 1, episodeGroup.to).map((episode) => {
               return (
-                <div className="py-1" style={{ marginRight: '0.4rem' }} key={`key-episode-${episode.nid}`} >
+                <div className="py-1" style={{ marginRight: '0.4rem', height: 'fit-content' }} key={`key-episode-${episode.nid}`} >
                   <li style={{ justifyContent: 'center' }} key={`key-episode-${episode.nid}`} id={`episode-${episode.nid}`} className={`${styles.radioOptionCard} ${episodeSource.nid === episode.nid ? styles.selectedOptionCard : styles.unselectedOptionCard}`} onClick={() => selectEpisode(episode)}>
                     <label htmlFor={`episode-${episode.nid}`}>
                       <div className="text-sm">{episode.name}</div>
