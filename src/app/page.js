@@ -38,6 +38,7 @@ export default function Home() {
   const [stillCanLoad, setStillCanLoad] = useState(false);
   const [topicList, setTopicList] = useState(null);
   const [nextPage, setNextPage] = useState(0);
+  const [scrollY, setScrollY] = useState(0);
 
   const targetRef = useRef(null);
 
@@ -129,10 +130,15 @@ export default function Home() {
     router.push(`/filmLibrary`);
   };
 
+  const handleScroll = () => {
+    console.log(window.scrollY);
+  }
+
   return (
     <div
       className='flex flex-1 justify-center flex-col'
       style={{ width: '100%' }}
+      onScroll={handleScroll}
     >
       {loading ? (
         <div>
