@@ -72,6 +72,9 @@ export const VodCard = ({
       onDismiss={() => {
         setOpenIntroBottomSheet(false);
       }}
+      style={{
+        zIndex: '10'
+      }}
       open={openIntroBottomSheet}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between' }} className='pb-1'>
