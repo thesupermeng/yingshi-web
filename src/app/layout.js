@@ -141,10 +141,10 @@ export default function RootLayout({ children }) {
                     <br />
                     <br />
 
-                  <a className='hover-blue'     href={'/privacy'}>隐私协议</a>  
+                  <a className='hover-blue custom-link'     href={'/privacy'}>隐私协议</a>  
                     
                     &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a className='hover-blue'  href={'/service'}>用户服务协议</a>  
+                    <a className='hover-blue custom-link'  href={'/service'}>用户服务协议</a>  
                     
                     <br />
                     Copyright © 2024 shayuyingshi.com All Rights Reserved
