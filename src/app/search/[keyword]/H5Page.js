@@ -108,9 +108,9 @@ export default function Page() {
 
 
                     搜索"{decodedKeyword}" ，找到
-                    <span className='search-count'>
+                    <span className='search-count text-theme'>
                       {isSearching === false ? (
-                        <span>{searchResults?.List?.length}</span>
+                    <span>{searchResults?.List ? searchResults.List.length : 0}</span>
                       ) : (
                         <FontAwesomeIcon icon={faSpinner} spin />
                       )}</span>
@@ -206,7 +206,7 @@ export default function Page() {
           </div>
 
 
-          {searchResults?.List == null &&
+          {!searchResults?.List && 
 
             <div className='flex items-center justify-center flex-col h-full pt-6 mt-6'>
               <Image

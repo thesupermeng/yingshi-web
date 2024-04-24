@@ -72,13 +72,12 @@ export const Carousel = ({ carouselItems }) => {
 
   return (
     <>
-      <div className="lg:hidden block " style={{ position: 'relative', width: '100%', aspectRatio: '2/1', overflow: 'hidden' }}>
-        <div className="lg:hidden block">
+      <div className="mobile" style={{ position: 'relative', width: '100%', aspectRatio: '2/1', overflow: 'hidden' }}>
+        <div className="mobile">
           <Slider {...settings}>
             {carouselItems != null && carouselItems.length > 0 && carouselItems.map((item, index) => {
-              // console.log(item);
               return (
-                <div className="w-full" key={index}>
+                <div key={index}>
                   <div style={{ zIndex: '1', position: 'absolute', bottom: '0', paddingLeft: '1.2rem', paddingBottom: '2rem' }}>
                     {item.carousel_name}
                   </div>
@@ -100,9 +99,9 @@ export const Carousel = ({ carouselItems }) => {
           </Slider>
         </div>
       </div>
-      <div className="lg:block hidden" style={{ position: 'relative', width: '100%', aspectRatio: '5/2', overflow: 'hidden' }}>
+      <div className="desktop" style={{ position: 'relative', width: '100%', aspectRatio: '5/2', overflow: 'hidden' }}>
         {carouselItems && carouselItems.length > 0 && (
-          <div className="lg:block hidden" style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
+          <div className="desktop" style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
             {carouselItems.map((item, index) => {
               let desc = " | " + item.vod.vod_area
               let vodClass = []
@@ -148,11 +147,11 @@ export const Carousel = ({ carouselItems }) => {
                       </p>
                     </div>
                   </div> */}
-                  <div className="lg:flex hidden" style={{ position: 'absolute', bottom: '10px', left: '10px', color: '#fff', zIndex: 1, width: '100%' }}>
+                  <div className="desktop" style={{ position: 'absolute', bottom: '10px', left: '10px', color: '#fff', zIndex: 1, width: '100%' }}>
                     <div className="grid grid-cols-12 gap-4">
-                      <div className="col-span-2"></div>
-                      <div className="col-span-9">
-                        <div className="grid grid-cols-8 gap-4" style={{ paddingBottom: '5rem' }}>
+                      <div className="col-span-1"></div>
+                      <div className="col-span-11">
+                        <div className="grid grid-cols-10 gap-4" style={{ paddingBottom: '2rem' }}>
                           <div className="col-span-2 mr-3">
                             <p className="text-lg">{item.carousel_name}</p>
                             <p className="text-sm pt-1" style={{ fontWeight: '200' }}>{item.vod.vod_year}{desc}</p>
@@ -187,7 +186,7 @@ export const Carousel = ({ carouselItems }) => {
                 </div>
               )
             })}
-            <div className="lg:flex hidden col-span-6 mr-3" style={{ position: 'absolute', right: '0', bottom: '3rem' }}>
+            <div className="desktop col-span-6 mr-3" style={{ position: 'absolute', right: '0', bottom: '2rem' }}>
               <div className="grid grid-cols-12 gap-4">
                 <div className="col-span-3"></div>
                 <div className="col-span-8" style={{ display: 'flex', flexDirection: 'row', zIndex: '10' }}>
@@ -219,7 +218,7 @@ export const Carousel = ({ carouselItems }) => {
                           }}
                         />
                       </div>
-                      <div key={previewIndex} style={{ paddingRight: '10px', paddingLeft: '10px', textAlign: 'center', fontSize: '12px' }}>
+                      <div key={previewIndex} style={{ paddingRight: '10px', paddingLeft: '10px', textAlign: 'center', fontSize: '12px', paddingTop: '6px' }}>
                         {renderShortString(previewItem.carousel_name)}
                       </div>
                     </div>

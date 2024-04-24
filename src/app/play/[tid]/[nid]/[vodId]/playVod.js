@@ -17,7 +17,10 @@ import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
 import { ArrowLeftIcon, ArrowRightIcon } from '@/asset/icons';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { convertTimeStampToDateTime } from '@/util/date';
+import { convertTimeStampToDateTime } from "@/util/date";
+import { FullPageContent } from '@/componentsH5/FullPageContent';
+import { LottieAnimation } from '../../../../../../src/components/lottie';
+import { IrrLoading } from '@/asset/lottie';
 
 export const PlayVod = ({ vodId, tId, nId }) => {
   const router = useRouter();
@@ -236,9 +239,24 @@ export const PlayVod = ({ vodId, tId, nId }) => {
 
   return (
     <div ref={domElementRef} className='lg:w-[85%] w-screen'>
-      {vod == null ? (
-        <div style={{ height: '80vh' }}></div>
-      ) : (
+      {vod == null
+
+      ?
+
+      (
+        <FullPageContent>
+          <div className='flex flex-1 w-full h-full items-center justify-center'>
+            <LottieAnimation
+              src={IrrLoading}
+              tw={`w-[${80}px] h-[${80}px]`}
+              isLoop={true}
+            />
+          </div>
+        </FullPageContent>
+      )
+      
+      :
+      (
         <div className='flex flex-row space-x-4'>
           <div
             className='flex-1 space-y-4 no-scrollbar'

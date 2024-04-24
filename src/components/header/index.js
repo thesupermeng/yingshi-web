@@ -534,7 +534,7 @@ const Header = () => {
                   {topTenList.map((item, index) => {
                     return (
                       <div
-                        className='flex flex-row justify-between py-2.5 cursor-pointer'
+                        className='flex flex-row justify-between py-2.5 cursor-pointer search-hot-item '
                         key={index}
                         onClick={(e) => {
                           e.preventDefault();

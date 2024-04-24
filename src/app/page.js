@@ -38,6 +38,7 @@ export default function Home() {
   const [stillCanLoad, setStillCanLoad] = useState(false);
   const [topicList, setTopicList] = useState(null);
   const [nextPage, setNextPage] = useState(0);
+  const [scrollY, setScrollY] = useState(0);
 
   const targetRef = useRef(null);
 
@@ -129,10 +130,15 @@ export default function Home() {
     router.push(`/filmLibrary`);
   };
 
+  const handleScroll = () => {
+    console.log(window.scrollY);
+  }
+
   return (
     <div
       className='flex flex-1 justify-center flex-col'
       style={{ width: '100%' }}
+      onScroll={handleScroll}
     >
       {loading ? (
         <div>
@@ -159,7 +165,6 @@ export default function Home() {
                           {yy.type_name}
                         </span>
                       </div>
-
                       <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
                         {yy.vod_list?.slice(0, 6).map((vod, i) => {
                           return <VideoVerticalCard vod={vod} key={i} />;
@@ -189,7 +194,7 @@ export default function Home() {
                         </span>
                         <div className='flex w-fit items-center cursor-pointer hover-blue'>
                           <span
-className='mr-1'
+                            className='mr-1'
                             style={{
                               fontSize: '12px',
                               fontWeight: '400',
@@ -237,9 +242,9 @@ className='mr-1'
                         </span>
                         <div className='flex w-fit items-center cursor-pointer hover-blue'>
                           <span
-                          className='mr-1'
+                            className='mr-1'
                             style={{
-                              
+
                               fontSize: '12px',
                               fontWeight: '400',
                               fontStyle: 'normal',

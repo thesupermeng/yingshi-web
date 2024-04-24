@@ -100,7 +100,6 @@
 }
 
 .search-count {
-  color: #fac33d !important;
   padding: 0px 3px;
 }
 
@@ -185,4 +184,20 @@
 
 .hover-blue:hover{
   color: rgb(51, 162, 244) !important;
+  cursor: pointer;
 }
+
+.text-theme
+{
+  color: rgb(51, 162, 244) !important;
+}
+
+
+.search-hot-item:hover{
+  background-color: rgba(64, 74, 102, 0.12) !important;
+}
+
+.search-hot-item:hover{
+  border-radius: 12px;
+}
+
