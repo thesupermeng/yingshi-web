@@ -114,7 +114,7 @@ export default function RootLayout({ children }) {
                 style={{ alignItems: 'center' }}
               >
                 {children}
-                <div className='fixed bottom-0 w-full bg-[#161616eb]'>
+                <div className='fixed bottom-0 w-full bg-[#161616eb] pt-2'>
                   <MyFooter />
                 </div>
                 <div
