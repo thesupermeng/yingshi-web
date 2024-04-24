@@ -114,7 +114,7 @@ export default function RootLayout({ children }) {
                 style={{ alignItems: 'center' }}
               >
                 {children}
-                <div className='fixed bottom-0 w-full bg-[#161616eb]'>
+                <div className='fixed bottom-0 w-full bg-[#161616eb] pt-2'>
                   <MyFooter />
                 </div>
                 <div
@@ -140,7 +140,12 @@ export default function RootLayout({ children }) {
                     进行说明，我们将立即删除内容，保护版权所有者的权益。
                     <br />
                     <br />
-                    隐私协议&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;用户服务协议
+
+                  <a className='hover-blue'     href={'/privacy'}>隐私协议</a>  
+                    
+                    &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a className='hover-blue'  href={'/service'}>用户服务协议</a>  
+                    
                     <br />
                     Copyright © 2024 shayuyingshi.com All Rights Reserved
                   </div>
