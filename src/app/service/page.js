@@ -8,7 +8,7 @@ export default function Page({ params }) {
 
   return (
     <>
-      <div class="grid grid-cols-12 mt-4 mb-2" style={{ color: 'white', important: true }}
+      <div class="grid grid-cols-12 mt-4 mb-2" style={{ color: 'white', important: true , paddingTop :'90px' , backgroundColor:'rgb(16, 18, 21)' }}
       >
         <div class="col-span-1"></div>
         <div class="col-span-10">
