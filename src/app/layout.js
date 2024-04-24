@@ -114,7 +114,7 @@ export default function RootLayout({ children }) {
                 style={{ alignItems: 'center' }}
               >
                 {children}
-                <div className='fixed bottom-0 w-full bg-[#161616eb] pt-2'>
+                <div className='fixed bottom-0 w-full bg-[#161616eb] pt-2' style={{ backdropFilter: 'blur(3px)' }}>
                   <MyFooter />
                 </div>
                 <div
