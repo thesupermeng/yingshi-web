@@ -148,8 +148,8 @@ export default function Home() {
         <div className='flex flex-col w-full'>
           <Carousel carouselItems={carousel} />
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-          {/* md:mx-20 mx-2.5 */}
-            <div className='pt-4 container lg:w-[80%] w-[100%]'>
+          {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
+            <div className='pt-4 container  w-[100%]'>
               {yunying != [] &&
                 yunying?.map((yy, idx) => {
                   return (
