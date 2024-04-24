@@ -102,7 +102,7 @@ export default function RootLayout({ children }) {
         <body
           className={`${
             inter.className
-          } h-full bg-sideMenu text-white flex flex-col w-full overscroll-none overflow-auto ${
+          } h-full bg-sideMenu text-white flex flex-col w-full overscroll-none overflow-x-hidden ${
             isWeb() ? '' : 'min-h-[100svh]'
           }`}
         >
