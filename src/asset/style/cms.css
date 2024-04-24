@@ -97,6 +97,7 @@
   border-radius: 20px;
   padding: 7px 24px;
   background-image: linear-gradient(to right, #094eff, #4f80ff);
+  color: #fff !important;
 }
 
 .search-count {
