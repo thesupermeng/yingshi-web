@@ -13,14 +13,17 @@ export const VodSourceList = ({
   onSelectSource,
 }) => {
   return <div className="flex justify-between space-x-2">
-    <div className="lg:flex hidden">
-      <div id="control-left" name="control" className={styles.arrowCard}>
-        <Image
-          src={ArrowLeftIcon}
-          alt="Icon"
-        />
+
+    {vodSources?.length > 3 &&
+      <div className="lg:flex hidden">
+        <div id="control-left" name="control" className={styles.arrowCard}>
+          <Image
+            src={ArrowLeftIcon}
+            alt="Icon"
+          />
+        </div>
       </div>
-    </div>
+    }
 
     <ul className="flex flex-1 overflow-x-scroll space-x-2">
       {vodSources?.map((source) => (
@@ -38,13 +41,16 @@ export const VodSourceList = ({
         </li>
       ))}
     </ul>
-    <div className="lg:flex hidden">
-      <div id="control-left" name="control" className={styles.arrowCard}>
-        <Image
-          src={ArrowRightIcon}
-          alt="Icon"
-        />
+
+    {vodSources?.length > 3 &&
+      <div className="lg:flex hidden">
+        <div id="control-left" name="control" className={styles.arrowCard}>
+          <Image
+            src={ArrowRightIcon}
+            alt="Icon"
+          />
+        </div>
       </div>
-    </div>
+    }
   </div>
 }
