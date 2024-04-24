@@ -182,6 +182,13 @@
   height: 35px !important;
 }
 
+.header-search-input-desktop
+{
+  background-color: rgba(255, 255, 255, 0.44) !important;
+  height: 35px !important;
+  border-radius: 10px !important;
+}
+
 .hover-blue:hover{
   color: rgb(51, 162, 244) !important;
   cursor: pointer;
@@ -192,12 +199,20 @@
   color: rgb(51, 162, 244) !important;
 }
 
-
 .search-hot-item:hover{
-  background-color: rgba(64, 74, 102, 0.12) !important;
-}
-
-.search-hot-item:hover{
+  background-color: rgba(64, 74, 102, 0.42) !important;
   border-radius: 12px;
 }
 
+.search-hot-item{
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+
+.bg-blur-header
+{
+  /* background-image: linear-gradient(to bottom, black 15%, transparent 15%); */
+  background-image: linear-gradient(black, transparent);
+  backdrop-filter: blur(3px); 
+}
