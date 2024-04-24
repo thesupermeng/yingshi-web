@@ -18,6 +18,9 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@/asset/icons';
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
 import { convertTimeStampToDateTime } from "@/util/date";
+import { FullPageContent } from '@/componentsH5/FullPageContent';
+import { LottieAnimation } from '../../../../../../src/components/lottie';
+import { IrrLoading } from '@/asset/lottie';
 
 export const PlayVod = ({ vodId, tId, nId }) => {
   const router = useRouter();
@@ -192,9 +195,15 @@ export const PlayVod = ({ vodId, tId, nId }) => {
       ?
 
       (
-        <div style={{ height: '80vh' }}>
-
-        </div>
+        <FullPageContent>
+          <div className='flex flex-1 w-full h-full items-center justify-center'>
+            <LottieAnimation
+              src={IrrLoading}
+              tw={`w-[${80}px] h-[${80}px]`}
+              isLoop={true}
+            />
+          </div>
+        </FullPageContent>
       )
       
       :

@@ -128,8 +128,9 @@ export const VodEpisodeList = ({
         onDismiss={() => {
           setOpen(false);
         }}
+        data-body-scroll-lock-ignore="true"
       >
-        <ul className="flex flex-column overflow-auto no-scrollbar">
+        <ul className="flex flex-column overflow-auto no-scrollbar" style={{ overflowY: 'scroll' }}>
           {episodeGroups.map((group, index) => (
             <li key={`key-episodeGroup-${index}`} id={`episodeGroup-${index}`} className={`${styles.radioOptionCard} ${episodeGroup === group ? styles.selectedOptionDetailsCard : styles.unselectedOptionDetailsCard}`} onClick={() => onEpisodeGroupPress(group)}>
               <label htmlFor={`episodeGroup-${index}`} className="flex flex-row space-x-1">
@@ -142,10 +143,10 @@ export const VodEpisodeList = ({
           ))}
         </ul>
         <div className='px-4' ref={episodeContainerRef} style={{ height: '320px', marginTop: '0.5rem' }}>
-          <ul className="flex flex-column no-scrollbar" style={{ flexWrap: 'wrap', overflowX: 'auto', minHeight: '150px', maxHeight: '300px' }}>
+          <ul className="flex flex-column no-scrollbar" style={{ flexWrap: 'wrap', overflowY: 'scroll', minHeight: '150px', maxHeight: '300px' }}>
             {vodSource?.vod_play_list?.urls?.slice(episodeGroup.from - 1, episodeGroup.to).map((episode) => {
               return (
-                <div className="py-1" style={{ marginRight: '0.4rem', height: 'fit-content' }} key={`key-episode-${episode.nid}`} >
+                <div className="py-1" style={{ marginRight: '0.4rem', height: 'fit-content', minWidth: '5rem', maxWidth: '11rem' }} key={`key-episode-${episode.nid}`} >
                   <li style={{ justifyContent: 'center' }} key={`key-episode-${episode.nid}`} id={`episode-${episode.nid}`} className={`${styles.radioOptionCard} ${episodeSource.nid === episode.nid ? styles.selectedOptionCard : styles.unselectedOptionCard}`} onClick={() => selectEpisode(episode)}>
                     <label htmlFor={`episode-${episode.nid}`}>
                       <div className="text-sm">{episode.name}</div>
