@@ -1,5 +1,5 @@
 export const URL_YINGSHI_USER = {
-  signInUp: 'users/v2/signinup',
+  signInUp: 'users/v1/signinup',
   logout: 'users/v2/logout',
   userInfo: 'users/v1/me',
   countryList: 'country/v1/country'
