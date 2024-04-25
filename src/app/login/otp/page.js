@@ -191,11 +191,12 @@ const OtpInput = forwardRef(function OtpInput({onKeyPress, onChange, isError}, r
         const colorClasses = isError ? `border border-[#FF1010] bg-[#FF10101A]` : `border border-transparent focus:border-[#0085E0]`
 
         return <input
-            onKeyUp={onKeyPress}
+            onKeyDown={onKeyPress}
             onChange={onChange}
             ref={ref}
             className={`w-[53px] h-[53px] rounded-[10px] bg-[#1D2023] text-[30px] text-center outline-none ${colorClasses}`}
             maxLength={1}
+            type={'tel'}
         />
     }
 )
