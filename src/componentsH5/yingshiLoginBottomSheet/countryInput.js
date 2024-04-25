@@ -28,7 +28,7 @@ export default function CountryInput ({name, placeholder, validator, onChange, e
 
     return (
         <div className={'flex gap-[14px]'}>
-            <div className='flex px-[12px] py-[14px] gap-[10px] items-center bg-[#1D2023] rounded-[6px] w-fit' onClick={handleClick}>
+            <div className='flex px-[12px] py-[14px] gap-[10px] items-center bg-[#1D2023] rounded-[6px] w-fit h-[47px]' onClick={handleClick}>
                 <Image src={flag} alt={'country flag'} width={20} height={20} />
                 <Image src={CaretDown} alt={'more'}/>
             </div>
@@ -38,7 +38,7 @@ export default function CountryInput ({name, placeholder, validator, onChange, e
             />
             <BottomSheet open={openCountry} onDismiss={() => setOpenCountry(false)}>
                 <p className={'text-xl text-center'}>选择国家电话代码</p>
-                <div className={'flex flex-col '}>
+                <div className={'flex flex-col p-[20px]'}>
                     {countryList && countryList.map(country => {
                         return <CountrySelectItem
                             country={country}

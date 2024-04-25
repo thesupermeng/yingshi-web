@@ -65,6 +65,7 @@ export { default as FavouriteIconGrey } from './favourites_icon_grey.svg';
 export { default as ArrowRigthGrey } from './arrowRightGrey.svg';
 export { default as Favicon } from './../../app/yingshi.tv_logo-32x32.png';
 
+export { default as GoogleIcon} from './googleIcon.png'
 export { default as AppIcon } from './appIcon.svg';
 export { default as AppImage } from './appImage.png';
 

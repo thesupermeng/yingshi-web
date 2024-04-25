@@ -1,4 +1,4 @@
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {CrossRed, TickBlue} from '@/asset/icons';
 import Image from 'next/image';
 import {debounce} from 'lodash';
@@ -8,6 +8,7 @@ export default function TextInput({name, placeholder, validator, onChange, error
     const [_value, _setValue] = useState(''); // for condition checking only
 
     const internalOnChange = useCallback((e) => {
+        let err = false;
         if (validator){
             if (!e.target.value) {
                 setIsError(false)
@@ -17,13 +18,14 @@ export default function TextInput({name, placeholder, validator, onChange, error
 
                 if (!isValidInput){
                     setIsError(true)
+                    err = true
                 } else {
                     setIsError(false)
                 }
             }
         }
 
-        onChange(e);
+        onChange(e, err);
         _setValue(e.target.value)
     }, [validator, onChange]);
 
@@ -45,7 +47,7 @@ export default function TextInput({name, placeholder, validator, onChange, error
                     name={name}
                     placeholder={placeholder}
                     onChange={debouncedOnChange}
-                    className={'text-white text-[15px] w-full bg-transparent'}
+                    className={'text-white text-[15px] w-full bg-transparent outline-none pl-2'}
                     type={inputType}
                 />
                 {validator && // if validator exist
@@ -53,9 +55,11 @@ export default function TextInput({name, placeholder, validator, onChange, error
                     isShowIcon && // prop
                 <Image
                     src={icon}
+                    alt="Icon"
                 />}
             </div>
             {isError && <p className={'text-[13px] text-[#FF1010]'}>{errorMessage}</p>}
+            {!isError && <p className={'text-[13px] text-transparent'}>placeholder</p>}
         </div>
     )
 }

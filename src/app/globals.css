@@ -19,6 +19,7 @@
 :root {
 	--rsbs-bg: #171717;
   --rsbs-backdrop-bg: rgba(0, 0, 0, 0.8);
+  --rsbs-handle-bg: #9C9C9C !important;
 }
 
 body {

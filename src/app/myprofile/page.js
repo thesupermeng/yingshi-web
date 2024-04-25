@@ -30,11 +30,11 @@ import {
 import { BottomSheet } from 'react-spring-bottom-sheet';
 
 import 'react-spring-bottom-sheet/dist/style.css'
-import {loginRequestEmailOtp} from '@/services/yingshiUser';
+import {loginRequestEmailOtp, logout} from '@/services/yingshiUser';
 import YingshiLoginBottomSheet from '@/componentsH5/yingshiLoginBottomSheet';
 import {TickAnimation} from '@/asset/gif';
 import {useDispatch, useSelector} from 'react-redux';
-import {setYingshiUserLoginParam} from '@/store/yingshiUser';
+import {setYingshiUserInfo, setYingshiUserLoginParam} from '@/store/yingshiUser';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import {formatDateCN} from '@/util/date';
 import {Card} from '@material-tailwind/react';
@@ -127,6 +127,10 @@ export default function Page({ params }) {
                 <Image
                   src={editIcon}
                   alt="edit"
+                  onClick={() => {
+                    logout()
+                    dispatch(setYingshiUserInfo(null))
+                  }}
                 />
               }
               {!userInfo &&
