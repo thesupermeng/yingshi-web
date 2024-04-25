@@ -6,12 +6,17 @@ import {useRouter} from 'next/navigation';
 import {useDispatch} from 'react-redux';
 import {setYingshiUserLoginParam} from '@/store/yingshiUser';
 import CountryInput from '@/componentsH5/yingshiLoginBottomSheet/countryInput';
+import Image from 'next/image';
+import {GoogleIcon} from '@/asset/icons';
 
 export default function YingshiLoginBottomSheet({visible, onDismiss}) {
     const router = useRouter()
     const [formData, setFormData] = useState({})
     const dispatch = useDispatch()
     const [loginMode, setLoginMode] = useState('sms')
+    const [isInputError, setIsInputError] = useState(false);
+    const [isAgreementChecked, setIsAgreementChecked] = useState(false);
+    const isInputEmpty = !formData.phoneNumber && !formData.email
 
     useEffect(() => {
         setFormData({})
@@ -33,26 +38,21 @@ export default function YingshiLoginBottomSheet({visible, onDismiss}) {
 
         if (loginMode === 'sms') {
             loginRequestSmsOtp(loginParam)
-                .then(() => {
-                    dispatch(setYingshiUserLoginParam(loginParam))
-                    router.push('/otp')
-                })
         } else {
             loginRequestEmailOtp(loginParam)
-                .then((res) => {
-                    dispatch(setYingshiUserLoginParam(loginParam))
-                    router.push('/otp')
-                })
         }
+        dispatch(setYingshiUserLoginParam(loginParam))
+        router.push('/login/otp')
 
 
     }
 
-    const handleInput = (e) => {
+    const handleInput = (e, isError) => {
         setFormData((prev) => ({
             ...prev,
             [e.target.name]: e.target.value
         }))
+        setIsInputError(isError)
     }
 
     const isEmailValid = (value) => {
@@ -83,16 +83,15 @@ export default function YingshiLoginBottomSheet({visible, onDismiss}) {
         <BottomSheet
             onDismiss={onDismiss}
             open={visible}
-            snapPoints={({ minHeight, maxHeight }) => [minHeight, maxHeight / 0.6]}
-
+            snapPoints={({ minHeight, maxHeight }) => minHeight}
         >
-            <div className={'flex-col items-center'}>
+            <div className={'flex-col items-center pb-20'}>
                 <p className={'text-xl text-center'}>注册/登录</p>
-                <p className={'text-sm text-center text-[#9C9C9C]'}>登录后可管理您的账号，多端同步观看历史和收藏夹。</p>
-                <div>
-                    <div>
-                        <button onClick={handleClickPhone}>手机号码</button>
-                        <button onClick={handleClickEmail}>电邮地址</button>
+                <p className={'text-sm text-center text-[#9C9C9C] mt-2.5'}>登录后可管理您的账号，多端同步观看历史和收藏夹。</p>
+                <div className={'px-[23px] mt-[22px]'}>
+                    <div className={'flex'}>
+                      <Tabs title={'手机号码'} onClick={handleClickPhone} isSelected={loginMode==='sms'} />
+                      <Tabs title={'电邮地址'} onClick={handleClickEmail} isSelected={loginMode==='email'} />
                     </div>
                     <div className={'flex flex-col'}>
                         {loginMode === 'email' &&
@@ -120,12 +119,35 @@ export default function YingshiLoginBottomSheet({visible, onDismiss}) {
                             onChange={handleInput}
                             isShowIcon={false}
                             />
-                        {/*<input name={'email'} placeholder={'输入邮箱账号'} onChange={handleInput} className={'bg-[#1D2023]'}/>*/}
-                        {/*<input name={'referralCode'} placeholder={'邀请码（选填）'} onChange={handleInput} className={'bg-[#1D2023]'}/>*/}
-                        <button onClick={handleRegister}>注册</button>
+                        <input type={'button'} value={'注册'} className={'h-12 w-full rounded-[10px] disabled:bg-[#1D2023] enabled:bg-[#0085E0] disabled:text-[#9C9C9C] enabled:text-white'} onClick={handleRegister} disabled={isInputError || isInputEmpty || !isAgreementChecked}/>
+                        <div className={'flex items-center justify-center mt-[20px]'}>
+                            <div className={`w-3 h-3 rounded-lg border border-[#9c9c9c] m-1 ${isAgreementChecked ? 'bg-[#0085E0]' : ''}`} onClick={()=> setIsAgreementChecked(x => !x)}/>
+                            <span className={'text-[13px] text-[#9C9C9C]'}>我已阅读并同意
+                                <span className={'text-[#0085E0]'}>用户协议</span>
+                                和
+                                <span className={'text-[#0085E0]'}>隐私协议</span>
+                            </span>
+                        </div>
+                        {/*<div className={'flex flex-col gap-[12px] mt-[20px]'} >*/}
+                        {/*    <p className={'text-[#9C9C9C] text-[13px] text-center'}>使用以下方式登录</p>*/}
+                        {/*    <button className={'w-full h-12 flex items-center bg-[#1D2023] rounded-lg px-[20px]'}>*/}
+                        {/*        <Image src={GoogleIcon} alt={'Google Icon'} width={24} height={24} />*/}
+                        {/*        <span className={'font-semibold text-[17px] text-white flex-1'}>使用Google账号登录</span>*/}
+                        {/*    </button>*/}
+                        {/*</div>*/}
                     </div>
                 </div>
             </div>
         </BottomSheet>
     )
+}
+
+function Tabs({title, isSelected, onClick}) {
+    const color = isSelected ? '#0085E0' : 'transparent'
+    const textStyle = isSelected ? 'text-white font-semibold' : 'text-[#FFFFFF80] '
+
+    return (<div className={'p-2.5 flex flex-col items-center justify-center'} onClick={onClick}>
+      <span className={textStyle}>{title}</span>
+      <div className={`rounded h-[3px] w-[22px] bg-[${color}]`}></div>
+    </div>)
 }

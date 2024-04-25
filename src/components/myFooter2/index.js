@@ -35,7 +35,7 @@ const MyFooter2 = () => {
 
   if (pathname.startsWith('/play') ||
     pathname.startsWith('/search/') ||
-    pathname.startsWith('/otp')
+    pathname.startsWith('/login')
   ) {
     return <></>;
   }
@@ -68,9 +68,9 @@ const MyFooter2 = () => {
 
   return (
     <div className='mobile' style={{ display: 'flex', justifyContent: 'center' }}>
-      <div 
+      <div
         className='flex'
-        style={{ 
+        style={{
           color: '#FFF',
           position: 'absolute',
           bottom:'2rem',

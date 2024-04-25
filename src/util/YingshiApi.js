@@ -101,6 +101,7 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
     removeToken,
     isFormdata,
     excludeInSignature,
+    returnFullResponse,
   } = options;
 
   const requestBody = JSON.stringify(body);
@@ -124,7 +125,7 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
       url += '?' + getParams;
     }
   }
-  
+
   try {
     const response = await fetch(url, requestOption)
       .then((d) => d.json())
@@ -149,6 +150,9 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
     if (removeToken) {
       updateLocalstorage(LocalStorageKeys.AuthToken, undefined);
     }
+  }
+  if (returnFullResponse) {
+    return resData
   }
   return resData.data;
 };
