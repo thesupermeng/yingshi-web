@@ -135,6 +135,10 @@ export const FilmLibrary = ({}) => {
     };
 
     fetchData();
+
+    return () => {
+      dispatch(setSpecialSelectedId(0));
+    }
   }, []);
 
   useEffect(() => {
