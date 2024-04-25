@@ -88,8 +88,15 @@ const Header = () => {
           const watchedTimes = getObjectValue(artPlayerData, item.vodurl);
           if (watchedTimes !== 0) {
             return { ...item, watchtimes: watchedTimes };
+          } else {
+            if (item.watchtimes !== 0) {
+              return { ...item };
+            } else {
+              return { ...item, watchtimes: watchedTimes };
+            }
           }
         });
+
         localStorage.setItem(
           'watchHistoryList',
           JSON.stringify(updatedWatchHistoryData)
@@ -445,10 +452,8 @@ const Header = () => {
           </div>
         </div>
         {openSearch ? (
-          <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100%_-_52px)] z-20 left-0 md:left-auto md:w-96'>
-            <div
-              className='py-3 px-4 flex flex-col md:rounded-md w-full h-full md:h-fit overflow-scroll-hidden bg-[#1d2023] md:bg-[#1d2023e0] md:w-96'
-            >
+          <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100%_-_52px)] z-20 left-0 md:left-auto md:w-96 md:h-[500px]'>
+            <div className='py-3 px-4 flex flex-col md:rounded-md w-full h-full h-full overflow-y-scroll bg-[#1d2023] md:bg-[#1d2023e0] md:w-96'>
               {searchInput ? (
                 loadingSearching ? (
                   <LoadingPage full={false} />
@@ -688,19 +693,35 @@ const Header = () => {
               className='p-3 w-full flex flex-col md:rounded-md rounded-b-lg rounded-tl-lg'
               style={{ backgroundColor: '#1d2023e0' }}
             >
+              <div className='flex pb-3 pl-2'>
+                <span
+                  className='text-lg'
+                  style={{ color: 'rgba(255, 255, 255, 1)' }}
+                >
+                  播放历史
+                </span>
+              </div>
               {watchHistoryList.length > 0 ? (
-                <div className='w-full max-h-96 overflow-hidden'>
-                  {watchHistoryList.map((item, index) => {
-                    return (
-                      <div>
-                        <div className='w-28 h-16'>
-                          <img className='rounded-sm w-28 h-16 object-cover' src={item.vodpic} />
+                <div className='w-full max-h-96 overflow-y-scroll grid gap-4'>
+                  {watchHistoryList
+                    .slice()
+                    .reverse()
+                    .map((item, index) => {
+                      return (
+                        <div key={index} className='flex flex-row gap-x-2'>
+                          <div className='w-28 h-16'>
+                            <img
+                              className='rounded-md w-28 h-16 object-cover'
+                              src={item.vodpic}
+                            />
+                          </div>
+                          <div>
+                            <p className='text-sm truncate'>{item.vodname}</p>
+                            <span className='text-xs'>{secondsToHHMMSS(item.watchtimes)}</span>
+                          </div>
                         </div>
-                        <p>{item.vodname}</p>
-                        <span>{secondsToHHMMSS(item.watchtimes)}</span>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
                 </div>
               ) : (
                 <div className='flex-col items-center flex'>
@@ -720,7 +741,7 @@ const Header = () => {
               )}
 
               <div
-                className={`flex-row justify-center cursor-pointer ${watchHistoryList.length > 0 ? 'flex' : 'hidden'}`}
+                className={`flex-row justify-center cursor-pointer pt-2 ${watchHistoryList.length > 0 ? 'flex' : 'hidden'}`}
                 onClick={() => {
                   handleClearWatchHistory();
                 }}
@@ -991,7 +1012,7 @@ const Header = () => {
                   <span className='text-topic-title'> 播单 </span>
                 </div>
                 {searchContainer}
-                {!openSearch ? historyContainer : null}
+                {/* {!openSearch ? historyContainer : null} */}
               </div>
             </div>
           </div>
