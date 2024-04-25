@@ -85,24 +85,45 @@ export default function OTP () {
                 if (loginParam.loginMode === 'sms') {
                     loginSms({...loginParam, otp: otpRef.current.join('')})
                         .then(res => {
-                            if (res) {
+                            // login = res.code = 0
+                            // signup = res.code = 201
+
+                            if (res.code === -1){
+                                setErrorMessage(res.message)
+                                return
+                            }
+
+                            dispatch(setYingshiUserLoginParam({success: true}))
+                            if (res.code === 0) {
+                                //signup
                                 router.push('/myprofile')
-                                dispatch(setYingshiUserLoginParam({success: true}))
-                            } else {
-                                setErrorMessage('验证码错误')
+                            }
+                            if (res.code === 201) {
+                                //login
+                                router.push('/login/nickname')
                             }
                         })
                 } else {
                     loginEmail({...loginParam, otp: otpRef.current.join('')})
                         .then(res => {
-                            // success
-                            if (res){ // on success
-                                router.push('/myprofile')
-                                dispatch(setYingshiUserLoginParam({success: true}))
-                            } else {
-                                setErrorMessage('验证码错误')
+                            // login = res.code = 0
+                            // signup = res.code = 201
 
+                            if (res.code === -1){
+                                setErrorMessage(res.message)
+                                return
                             }
+
+                            dispatch(setYingshiUserLoginParam({success: true}))
+                            if (res.code === 0) {
+                                //signup
+                                router.push('/myprofile')
+                            }
+                            if (res.code === 201) {
+                                //login
+                                router.push('/login/nickname')
+                            }
+
                         })
                 }
 

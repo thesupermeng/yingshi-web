@@ -45,7 +45,8 @@ export const loginEmail = async ({email, referralCode, otp}) => {
         },
         {
             method: 'POST',
-            saveUserToken: true
+            saveUserToken: true,
+            returnFullResponse: true
         }
     )
 }
@@ -64,7 +65,9 @@ export const loginSms = async ({phoneNumber, countryId, referralCode, otp}) => {
         },
         {
             method: 'POST',
-            saveUserToken: true
+            saveUserToken: true,
+            returnFullResponse: true
+
         }
     )
 }
@@ -93,5 +96,16 @@ export const getCountryList = async () => {
         URL_YINGSHI_USER.countryList,
         {},
         {method: 'GET'}
+    )
+}
+
+export const updateUserInfo = async (data) =>{
+    return YingshiApi(
+        URL_YINGSHI_USER.updateUser,
+        data,
+        {
+          method: 'POST',
+          returnFullResponse: true
+        }
     )
 }

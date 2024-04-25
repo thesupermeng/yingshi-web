@@ -1,8 +1,9 @@
 export const URL_YINGSHI_USER = {
   signInUp: 'users/v1/signinup',
-  logout: 'users/v2/logout',
+  logout: 'users/v1/logout',
   userInfo: 'users/v1/me',
-  countryList: 'country/v1/country'
+  countryList: 'country/v1/country',
+  updateUser: 'users/v1/update'
 };
 
 export const URL_YINGSHI_VOD = {
