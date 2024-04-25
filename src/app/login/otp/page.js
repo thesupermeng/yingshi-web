@@ -85,24 +85,45 @@ export default function OTP () {
                 if (loginParam.loginMode === 'sms') {
                     loginSms({...loginParam, otp: otpRef.current.join('')})
                         .then(res => {
-                            if (res) {
+                            // login = res.code = 0
+                            // signup = res.code = 201
+
+                            if (res.code === -1){
+                                setErrorMessage(res.message)
+                                return
+                            }
+
+                            dispatch(setYingshiUserLoginParam({success: true}))
+                            if (res.code === 0) {
+                                //signup
                                 router.push('/myprofile')
-                                dispatch(setYingshiUserLoginParam({success: true}))
-                            } else {
-                                setErrorMessage('验证码错误')
+                            }
+                            if (res.code === 201) {
+                                //login
+                                router.push('/login/nickname')
                             }
                         })
                 } else {
                     loginEmail({...loginParam, otp: otpRef.current.join('')})
                         .then(res => {
-                            // success
-                            if (res){ // on success
-                                router.push('/myprofile')
-                                dispatch(setYingshiUserLoginParam({success: true}))
-                            } else {
-                                setErrorMessage('验证码错误')
+                            // login = res.code = 0
+                            // signup = res.code = 201
 
+                            if (res.code === -1){
+                                setErrorMessage(res.message)
+                                return
                             }
+
+                            dispatch(setYingshiUserLoginParam({success: true}))
+                            if (res.code === 0) {
+                                //signup
+                                router.push('/myprofile')
+                            }
+                            if (res.code === 201) {
+                                //login
+                                router.push('/login/nickname')
+                            }
+
                         })
                 }
 
@@ -170,11 +191,12 @@ const OtpInput = forwardRef(function OtpInput({onKeyPress, onChange, isError}, r
         const colorClasses = isError ? `border border-[#FF1010] bg-[#FF10101A]` : `border border-transparent focus:border-[#0085E0]`
 
         return <input
-            onKeyUp={onKeyPress}
+            onKeyDown={onKeyPress}
             onChange={onChange}
             ref={ref}
             className={`w-[53px] h-[53px] rounded-[10px] bg-[#1D2023] text-[30px] text-center outline-none ${colorClasses}`}
             maxLength={1}
+            type={'tel'}
         />
     }
 )

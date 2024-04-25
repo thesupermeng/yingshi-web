@@ -31,6 +31,7 @@ import {
   setSpecialSelectedId,
 } from '@/store/headerData';
 import TopicHeader from './../../components/topicHeader';
+import {updateUserInfo} from '@/services/yingshiUser';
 
 const getHeaderMenu = (state) => state.headerMenu;
 const getHeaderMenuSelected = (state) => state.headerMenuSelected;
@@ -254,7 +255,7 @@ const Header = () => {
       dispatch(setSpecialSelectedId(value));
       router.push('/topic');
     } else if (value == 999) {
-      dispatch(setSpecialSelectedId(value));
+      dispatch(setSpecialSelectedId(0));
       localStorage.removeItem('videoTypeId');
       localStorage.removeItem('videoClass');
       router.push('/filmLibrary');
@@ -422,6 +423,7 @@ const Header = () => {
               value={searchInput}
               onChange={handleChange}
               className='border-0 border-gray-300 text-white rounded-full pl-10 md:pl-4 md:pr-10 pr-4 py-2 focus:outline-none w-full md:w-60 header-search-input-desktop'
+
               onClick={handleOpenSearch}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') handleSearch();
@@ -1056,7 +1058,7 @@ const Header = () => {
     );
   }
 
-  if (pathname.startsWith('/otp')) {
+  if (pathname.startsWith('/login/otp')) {
     return (
       <div className={'z-30 w-screen mobile'}>
         <div className='flex py-3 mx-2.5'>
@@ -1072,6 +1074,38 @@ const Header = () => {
                   height={16}
                 />
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (pathname.startsWith('/login/nickname')) {
+    return (
+      <div className={'z-30 w-screen mobile'}>
+        <div className='flex py-3 mx-2.5'>
+          <div className='gap-y-2 flex-col w-full md:flex-row flex'>
+            <div className="flex-1 flex gap-x-2 md:justify-start">
+              {/*<div*/}
+              {/*  className={'flex w-[30px] h-[30px] justify-center items-center'}*/}
+              {/*>*/}
+              {/*  <Image*/}
+              {/*    src={ArrowLeftIcon}*/}
+              {/*    alt={'back button'}*/}
+              {/*    onClick={() => router.push('/myprofile')}*/}
+              {/*    height={16}*/}
+              {/*  />*/}
+              {/*</div>*/}
+              <div
+                className={'flex-1 flex justify-end items-center px-2'}
+                onClick={() => {
+                  updateUserInfo() // will assign default username
+                  router.push('/myprofile')
+                }}>
+                <span className={'text-[16px]'}>跳过</span>
+              </div>
+
             </div>
           </div>
         </div>
