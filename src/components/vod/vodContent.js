@@ -47,7 +47,7 @@ export const VodContent = ({
   return (
     <>
       {episodeInfo != null &&
-        <div className="desktop" style={{ padding: '1rem 1.5rem', borderRadius: '12px' }}>
+        <div className="desktop bg-[#1d2023] bg-[#1d2023e0]" style={{ padding: '1rem 1.5rem', borderRadius: '12px' }}>
           <div className="space-y-4">
             <span className="">{t('分集剧情 : ')}{episodeInfo.title}</span>
             <p ref={qqqref} className={`${isCollapse ? 'line-clamp-2' : ''} text-white/75 text-sm`} style={{ color: '#9C9C9C' }}>{episodeInfo.gpt_content}</p>

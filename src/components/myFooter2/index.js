@@ -1,6 +1,7 @@
 'use client';
 import { useSelector, useDispatch } from 'react-redux';
 import Image from 'next/image';
+import { Favicon } from '@/asset/icons';
 import { useTranslation } from 'next-i18next';
 import {
   homeTab,
@@ -56,7 +57,7 @@ const MyFooter2 = () => {
   const downloadApp = () => {
     const os = getOperatingSystem();
     if (os === "Android") {
-      window.location.href = app_download_link; // Make sure app_download_link is defined
+      window.location.href = "https://play.google.com/store/apps/details?id=com.yingshitv&hl=en"; // Make sure app_download_link is defined
     } else if (os === "iOS" || os === "MacOS") {
       window.location.href = "https://apps.apple.com/cn/app/id6474402534";
       // Additional iOS handling code here if needed
@@ -66,17 +67,22 @@ const MyFooter2 = () => {
   }
 
   return (
-    <div className='mobile'>
-      <div className='flex mb-2 justify-center hover-effect' onClick={downloadApp}>
-
-        <div class="download-badge d-flex">
-
-          <Image
-            src={AppIcon}
-            style={{ width: 30, height: 'auto', display: 'flex' }}
-          />
-          <span className='d-flex ml-2'>下载鲨鱼影视APP，看精彩流畅视频</span>
-        </div>
+    <div className='mobile' style={{ display: 'flex', justifyContent: 'center' }}>
+      <div 
+        className='flex'
+        style={{ 
+          color: '#FFF',
+          position: 'absolute',
+          bottom:'2rem',
+          background: '#0085E0',
+          fontSize: '0.9rem',
+          padding: '0.4rem 1.5rem',
+          borderRadius: '1rem'
+        }}
+        onClick={downloadApp}
+      >
+        <div><Image src={Favicon} alt='icon' width={22} /></div>
+        <div className='pl-2'>打开影视APP，看精彩流畅视频</div>
       </div>
     </div>
   );
