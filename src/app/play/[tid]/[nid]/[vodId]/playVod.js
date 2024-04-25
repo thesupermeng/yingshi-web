@@ -238,7 +238,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   };
 
   return (
-    <div ref={domElementRef} className='container'>
+    <div ref={domElementRef} className='container' style={{ padding: '0px' }}>
       {vod == null
 
       ?
