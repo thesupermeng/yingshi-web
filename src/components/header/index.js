@@ -254,7 +254,7 @@ const Header = () => {
       dispatch(setSpecialSelectedId(value));
       router.push('/topic');
     } else if (value == 999) {
-      dispatch(setSpecialSelectedId(value));
+      dispatch(setSpecialSelectedId(0));
       localStorage.removeItem('videoTypeId');
       localStorage.removeItem('videoClass');
       router.push('/filmLibrary');
