@@ -130,6 +130,10 @@ export default function Home() {
     router.push(`/filmLibrary`);
   };
 
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+  })
+
   const handleScroll = () => {
     console.log(window.scrollY);
   }

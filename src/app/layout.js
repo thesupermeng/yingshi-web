@@ -6,6 +6,7 @@ import { Inter } from 'next/font/google';
 import { Providers } from '@/store/Provider';
 import Sidebar from '@/components/sidebar';
 import Header from '@/components/header';
+import FloatingPill from '@/components/floatingPill';
 import Script from 'next/script';
 import MyFooter from '@/components/myFooter';
 import Announcement from '@/components/announcement';
@@ -22,6 +23,8 @@ import Head from 'next/head';
 import { H5LiveChat } from '@/componentsH5/H5LiveChat';
 import { Config } from '@/util/config';
 import dynamic from 'next/dynamic';
+import { Favicon } from '@/asset/icons';
+import Image from 'next/image';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -114,6 +117,7 @@ export default function RootLayout({ children }) {
                 style={{ alignItems: 'center' }}
               >
                 {children}
+                <FloatingPill />
                 <div className='fixed bottom-0 w-full bg-[#161616eb] pt-2' style={{ backdropFilter: 'blur(3px)' }}>
                   <MyFooter />
                 </div>
