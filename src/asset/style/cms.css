@@ -97,6 +97,7 @@
   border-radius: 20px;
   padding: 7px 24px;
   background-image: linear-gradient(to right, #094eff, #4f80ff);
+  color: #fff !important;
 }
 
 .search-count {
@@ -182,6 +183,12 @@
   height: 35px !important;
 }
 
+.header-search-input-desktop
+{
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  height: 35px !important;
+}
+
 .hover-blue:hover{
   color: rgb(51, 162, 244) !important;
   cursor: pointer;
@@ -192,12 +199,41 @@
   color: rgb(51, 162, 244) !important;
 }
 
-
 .search-hot-item:hover{
-  background-color: rgba(64, 74, 102, 0.12) !important;
-}
-
-.search-hot-item:hover{
+  background-color: rgba(64, 74, 102, 0.42) !important;
   border-radius: 12px;
 }
 
+.search-hot-item{
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+
+.bg-blur-header
+{
+  /* background-image: linear-gradient(to bottom, black 15%, transparent 15%); */
+  background-image: linear-gradient(black, transparent);
+  backdrop-filter: blur(3px); 
+}
+.custom-link
+{
+  color: inherit !important;
+  text-decoration:none !important;
+}
+
+.download-badge {
+  justify-content: center;
+  display: inline-block;
+  padding: 8px 22px;
+  border-radius: 20px;
+  background-color: rgb(51, 162, 244);
+  color: #fff;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 360px;
+  align-items: center;
+}
