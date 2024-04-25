@@ -42,7 +42,7 @@ export default function YingshiLoginBottomSheet({visible, onDismiss}) {
             loginRequestEmailOtp(loginParam)
         }
         dispatch(setYingshiUserLoginParam(loginParam))
-        router.push('/otp')
+        router.push('/login/otp')
 
 
     }
