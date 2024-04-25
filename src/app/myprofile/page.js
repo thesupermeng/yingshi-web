@@ -37,20 +37,41 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setYingshiUserInfo, setYingshiUserLoginParam} from '@/store/yingshiUser';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import {formatDateCN} from '@/util/date';
-import {Card} from '@material-tailwind/react';
+import NavCard from '@/components/myprofile/NavCard';
+import VipCard from '@/components/myprofile/VipCard';
 
-
-// import styles from './style.module.css';
+const navs = [
+  {
+    title: '我的收藏',
+    icon: FavouriteIconGrey,
+    onClick: () => {},
+    isSelected: false,
+    platform: 'mobile'
+  },
+  {
+    title: '播放历史',
+    icon: HistoryIconGrey,
+    onClick: () => {},
+    isSelected: false,
+    platform: 'mobile'
+  },
+  {
+    title: '我要反馈',
+    icon: FeedbackIconGrey,
+    onClick: () => {},
+    isSelected: false,
+    platform: 'mobile'
+  },
+  {
+    title: '关于我们',
+    icon: AboutusIconGrey,
+    onClick: () => {},
+    isSelected: false,
+    platform: 'mobile'
+  },
+]
 
 export default function Page({ params }) {
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [topicList, setTopicList] = useState([]);
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [stillCanLoad, setStillCanLoad] = useState(true);
-  // let totalPage = 0
-  // let loading = false;
-
-  // const router = useRouter()
   const [openSignInUp, setOpenSignInUp] = useState(false);
   const [openLoginSuccess, setOpenLoginSuccess] = useState(false);
 
@@ -142,21 +163,11 @@ export default function Page({ params }) {
               }
             </div>
             <div className={'col-span-12 mt-3'}>
-              <div className={'flex h-[58px] bg-[#D1AC7D] rounded-lg p-1.5 items-center gap-2'}>
-                <div className={'w-12 h-12 flex justify-center items-center'}>
-                  <Image src={VipBlackIcon} alt={'VIP icon'}/>
-                </div>
-                <div className={'flex flex-col flex-1'}>
-                  <span className={'text-[15px] text-[#1D2023] font-semibold'}>成为VIP</span>
-                  <span className={'text-[13px] text-[#1D2023]'}>去广告 看完整视频</span>
-                </div>
-                <div className={'h-12 w-24 rounded-[10px] bg-[#1D2023] flex items-center justify-center'}>
-                  <span className={'text-[#D1AC7D] text-[15px] font-semibold'}>立即解锁</span>
-                </div>
-              </div>
+              <VipCard/>
             </div>
           </div>
         </div>
+
          {/*aha iframe */}
         <div style={{background: '#1D2023', borderRadius: '12px', marginBottom:'16px'}}>
           <iframe
@@ -165,38 +176,12 @@ export default function Page({ params }) {
           />
         </div>
 
-        {/* 我的收藏 */}
-        <div style={{background: '#1D2023', borderRadius: '12px', marginBottom:'16px'}}>
-          <PageCard title={'我的收藏'} icon={FavouriteIconGrey}/>
-        </div>
-        {/* 播放历史 */}
-        <div style={{background: '#1D2023', borderRadius: '12px', marginBottom:'16px'}}>
-          <PageCard title={'播放历史'} icon={HistoryIconGrey}/>
-        </div>
-        {/* 我要反馈 */}
-        <div style={{background: '#1D2023', borderRadius: '12px', marginBottom:'16px'}}>
-          <PageCard title={'我要反馈'} icon={FeedbackIconGrey}/>
-        </div>
-        {/* 关于我们 */}
-        <div style={{background: '#1D2023', borderRadius: '12px', marginBottom:'16px'}}>
-          <PageCard title={'关于我们'} icon={AboutusIconGrey}/>
-        </div>
+        {navs.map((x, idx) => {
+          return <NavCard key={idx} {...x} />
+        })}
+
       </div>
     </div>
   );
 }
 
-function PageCard({icon, title}) {
-  return (
-    <button className={'bg-[#1D2023] rounded-[10px] w-full h-12 flex items-center p-3 gap-3'}>
-      <div className={'w-[24px] h-[24px] flex items-center justify-center'}>
-        <Image src={icon} alt={'Icon'}/>
-      </div>
-      <span className={'font-semibold text-[15px] leading-[15px] text-[#9C9C9C] flex-1 text-left'}>{title}</span>
-      <div className={'w-[30px] h-[30px] flex items-center justify-center'}>
-        <Image src={ArrowRigthGrey} alt={'Arrow'} height={16} color={'#9C9C9C'} />
-      </div>
-
-    </button>
-  )
-}
