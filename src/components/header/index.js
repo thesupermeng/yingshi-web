@@ -42,6 +42,7 @@ const Header = () => {
   const dropdownMoreRef = useRef(null);
   const dropdownSearchRef = useRef(null);
   const dropdownVipRef = useRef(null);
+  const dropdownHistoryRef = useRef(null);
   const { t } = useTranslation();
 
   const headerMenu = useSelector(getHeaderMenu);
@@ -57,8 +58,9 @@ const Header = () => {
   const [openMore, setOpenMore] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
   const [openVip, setOpenVip] = useState(false);
-  const [openSearchMobile, setOpenSearchMobile] = useState(false);
+  const [openHistory, setOpenHistory] = useState(false);
   const [searchHistoryList, setSearchHistoryList] = useState([]);
+  const [watchHistoryList, setWatchHistoryList] = useState([]);
   const [topTenList, setTopTenList] = useState([]);
   const [searchingList, setSearchList] = useState([]);
   const [timeoutId, setTimeoutId] = useState(null);
@@ -72,12 +74,68 @@ const Header = () => {
     setOpenVip(!openVip);
   };
 
+  const handleOpenHistory = () => {
+    if (!openHistory == true) {
+      let watchHistoryData = JSON.parse(
+        localStorage.getItem('watchHistoryList')
+      );
+      let artPlayerData = JSON.parse(
+        localStorage.getItem('artplayer_settings')
+      );
+
+      if (watchHistoryData !== null) {
+        const updatedWatchHistoryData = watchHistoryData.map((item) => {
+          const watchedTimes = getObjectValue(artPlayerData, item.vodurl);
+          if (watchedTimes !== 0) {
+            return { ...item, watchtimes: watchedTimes };
+          } else {
+            if (item.watchtimes !== 0) {
+              return { ...item };
+            } else {
+              return { ...item, watchtimes: watchedTimes };
+            }
+          }
+        });
+
+        localStorage.setItem(
+          'watchHistoryList',
+          JSON.stringify(updatedWatchHistoryData)
+        );
+        setWatchHistoryList(
+          JSON.parse(localStorage.getItem('watchHistoryList'))
+        );
+      }
+    }
+
+    setOpenHistory(!openHistory);
+  };
+
   const handleOpenSearch = () => {
     setOpenSearch(true);
   };
 
-  const handleOpenSearchMobile = () => {
-    setOpenSearchMobile(true);
+  const getObjectValue = (obj, targetKey) => {
+    // Check if the object is defined and if it contains the 'times' key
+    if (obj && obj.times && obj.times[targetKey]) {
+      return obj.times[targetKey];
+    } else {
+      return 0; // Return null if the key is not found
+    }
+  };
+
+  const secondsToHHMMSS = (seconds) => {
+    // Convert seconds to integer
+    seconds = parseInt(seconds);
+
+    // Calculate hours, minutes, and remaining seconds
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+
+    // Format hours, minutes, and remaining seconds as HH:MM:SS
+    const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+
+    return formattedTime;
   };
 
   const handleChange = (event) => {
@@ -154,6 +212,12 @@ const Header = () => {
     setSearchHistoryList([]);
   };
 
+  const handleClearWatchHistory = () => {
+    localStorage.removeItem('artplayer_settings');
+    localStorage.removeItem('watchHistoryList');
+    setWatchHistoryList([]);
+  };
+
   const getTopNav = async () => {
     return YingshiApi(URL_YINGSHI_VOD.homeGetNav, {}, { method: 'GET' });
   };
@@ -185,11 +249,6 @@ const Header = () => {
     );
   };
 
-  useEffect(() => {
-    console.log(pathname);
-    setSearchInput('');
-  }, [pathname]);
-
   const handleClick = (value) => {
     if (value == 998) {
       dispatch(setSpecialSelectedId(value));
@@ -208,7 +267,6 @@ const Header = () => {
 
   const goToSeachResult = (query) => {
     setOpenSearch(false);
-    setOpenSearchMobile(false);
     router.push('/search/' + query);
   };
 
@@ -228,6 +286,8 @@ const Header = () => {
   };
 
   useEffect(() => {
+    setSearchInput('');
+
     if (pathname.startsWith('/filmLibrary')) dispatch(setSelectedId(999));
     else if (pathname.startsWith('/topic')) dispatch(setSelectedId(998));
     else if (pathname.startsWith('/play/')) dispatch(setSelectedId(-1));
@@ -306,16 +366,30 @@ const Header = () => {
       }
     }
 
+    function handleClickOutsideDropDownHistory(event) {
+      if (
+        dropdownHistoryRef.current &&
+        !dropdownHistoryRef.current.contains(event.target)
+      ) {
+        setOpenHistory(false);
+      }
+    }
+
     // Attach event listener when the component mounts
     document.addEventListener('mousedown', handleClickOutsideDropDownMore);
     document.addEventListener('mousedown', handleClickOutsideSearch);
     document.addEventListener('mousedown', handleClickOutsideDropDownVip);
+    document.addEventListener('mousedown', handleClickOutsideDropDownHistory);
 
     // Remove event listener when the component unmounts
     return () => {
       document.removeEventListener('mousedown', handleClickOutsideDropDownMore);
       document.removeEventListener('mousedown', handleClickOutsideSearch);
       document.removeEventListener('mousedown', handleClickOutsideDropDownVip);
+      document.removeEventListener(
+        'mousedown',
+        handleClickOutsideDropDownHistory
+      );
     };
   }, []);
 
@@ -341,17 +415,14 @@ const Header = () => {
               }}
             />
           </div>
-          <div className='relative flex-1'>
+          <div className='relative flex-1 md:ml-16'>
             <input
               type='text'
               placeholder='输入搜索关键词'
               value={searchInput}
               onChange={handleChange}
-              className='border-0 border-gray-300 text-white rounded-full pl-10 md:pl-4 md:pr-10 pr-4 py-2 focus:outline-none w-full md:w-60 header-search-input'
-              style={{
-                backgroundColor: 'rgba(255, 255, 255, 0.08) !important',
-                height: '35px',
-              }}
+              className='border-0 border-gray-300 text-white rounded-full pl-10 md:pl-4 md:pr-10 pr-4 py-2 focus:outline-none w-full md:w-60 header-search-input-desktop'
+           
               onClick={handleOpenSearch}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') handleSearch();
@@ -378,9 +449,8 @@ const Header = () => {
           </div>
         </div>
         {openSearch ? (
-          <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100%_-_52px)] z-20 left-0 md:left-auto md:w-96'>
+          <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100%_-_52px)] z-20 left-0 md:left-auto md:w-96 md:ml-16'>
             <div
-              style={{ background: 'black' }}
               className='py-3 px-4 flex flex-col md:rounded-md w-full h-full md:h-fit overflow-scroll-hidden bg-[#1d2023] md:bg-[#1d2023e0] md:w-96'
             >
               {searchInput ? (
@@ -468,7 +538,7 @@ const Header = () => {
                   {topTenList.map((item, index) => {
                     return (
                       <div
-                        className='flex flex-row justify-between py-2.5 cursor-pointer search-hot-item '
+                        className='flex flex-row justify-between py-2.5 cursor-pointer search-hot-item'
                         key={index}
                         onClick={(e) => {
                           e.preventDefault();
@@ -593,20 +663,109 @@ const Header = () => {
   );
 
   let historyContainer = (
-    <div className='flex-row hidden md:flex'>
-      <Image
-        className='cursor-pointer'
-        src={HistoryIcon}
-        alt='history'
-        width={30}
-      />
+    <div className='flex-row flex'>
+      <div className='relative' ref={dropdownHistoryRef}>
+        <div className='h-full flex justify-center'>
+          <Image
+            className='cursor-pointer'
+            src={HistoryIcon}
+            alt='history'
+            width={30}
+            onClick={() => {
+              handleOpenHistory();
+            }}
+          />
+        </div>
+        {openHistory ? (
+          <div className='absolute flex flex-col md:items-center items-end pt-1 w-80 z-10 md:-left-44'>
+            <div
+              style={{
+                width: 0,
+                height: 0,
+                top: '-10px',
+                borderLeft: '10px solid transparent',
+                borderRight: '10px solid transparent',
+                borderBottom: '10px solid #1d2023e0',
+              }}
+            />
+            <div
+              className='p-3 w-full flex flex-col md:rounded-md rounded-b-lg rounded-tl-lg'
+              style={{ backgroundColor: '#1d2023e0' }}
+            >
+              <div className='flex pb-3 pl-2'>
+                <span
+                  className='text-lg'
+                  style={{ color: 'rgba(255, 255, 255, 1)' }}
+                >
+                  播放历史
+                </span>
+              </div>
+              {watchHistoryList.length > 0 ? (
+                <div className='w-full max-h-96 overflow-y-scroll grid gap-4'>
+                  {watchHistoryList
+                    .slice()
+                    .reverse()
+                    .map((item, index) => {
+                      return (
+                        <div key={index} className='flex flex-row gap-x-2'>
+                          <div className='w-28 h-16'>
+                            <img
+                              className='rounded-md w-28 h-16 object-cover'
+                              src={item.vodpic}
+                            />
+                          </div>
+                          <div>
+                            <p className='text-sm truncate'>{item.vodname}</p>
+                            <span className='text-xs'>{secondsToHHMMSS(item.watchtimes)}</span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
+              ) : (
+                <div className='flex-col items-center flex'>
+                  <Image
+                    className='mx-2'
+                    src={searchEmptyIcon}
+                    alt='empty'
+                    width={120}
+                  />
+                  <span
+                    className='text-sm'
+                    style={{ color: 'rgba(156, 156, 156, 1)' }}
+                  >
+                    您还没有观看视频哦
+                  </span>
+                </div>
+              )}
+
+              <div
+                className={`flex-row justify-center cursor-pointer pt-2 ${watchHistoryList.length > 0 ? 'flex' : 'hidden'}`}
+                onClick={() => {
+                  handleClearWatchHistory();
+                }}
+              >
+                <span
+                  className='text-sm'
+                  style={{ color: 'rgba(156, 156, 156, 1)' }}
+                >
+                  清除记录
+                </span>
+                <Image className='mx-1' src={clear} alt='clear' width={10} />
+              </div>
+            </div>
+          </div>
+        ) : null}
+      </div>
       <div className='flex items-center px-2'>
         <div className='border-l-2 border-white h-4' />
       </div>
+
       <div className='flex flex-row cursor-pointer'>
         <Image className='mx-2' src={PhoneIcon} alt='app' width={14} />
-        <div className='flex items-center'>APP</div>
+        <div className='flex items-center md:flex hidden'>APP</div>
       </div>
+
       <div className='hidden'>{vipContainer}</div>
       <div className='flex-row hidden pl-4'>
         {/* md:flex */}
@@ -624,13 +783,13 @@ const Header = () => {
     <div
       className={
         pathname.startsWith('/play/') || pathname.startsWith('/filmLibrary')
-          ? 'w-screen z-30 bg-gradient-to-b from-black from-15%'
-          : 'md:absolute z-30 w-screen bg-gradient-to-b from-black from-15%'
+          ? 'w-screen z-30  bg-blur-header'
+          : 'md:absolute z-30 w-screen bg-blur-header'
       }
     >
-      <div className='flex pb-2.5 md:pb-4 pt-3 md:mx-20 mx-2.5 justify-center'>
-        <div className='gap-y-2 flex-col w-full xl:w-11/12 md:flex-row flex'>
-          <div className='flex-1 flex gap-x-2 md:justify-start'>
+      <div className='flex pb-2.5 md:pb-4 pt-3 justify-center container pl-0'>
+        <div className='gap-y-2 flex-col w-full md:flex-row flex'>
+          <div className='flex-1 flex gap-x-2 md:justify-start '>
             <div
               className={`flex justify-between w-24 md:w-28 ${
                 openSearch ? 'hidden md:flex' : ''
@@ -777,7 +936,7 @@ const Header = () => {
               </div>
             )}
           </div>
-          {historyContainer}
+          <div className='hidden md:flex'>{historyContainer}</div>
         </div>
       </div>
     </div>
@@ -852,27 +1011,7 @@ const Header = () => {
                   <span className='text-topic-title'> 播单 </span>
                 </div>
                 {searchContainer}
-                {!openSearch ? (
-                  <div className='flex-row flex'>
-                    <Image
-                      className='cursor-pointer'
-                      src={HistoryIcon}
-                      alt='history'
-                      width={30}
-                    />
-                    <div className='flex items-center px-0'>
-                      <div className='h-4' />
-                    </div>
-                    <div className='flex flex-row cursor-pointer'>
-                      <Image
-                        className='mx-2'
-                        src={PhoneIcon}
-                        alt='app'
-                        width={15}
-                      />
-                    </div>
-                  </div>
-                ) : null}
+                {/* {!openSearch ? historyContainer : null} */}
               </div>
             </div>
           </div>

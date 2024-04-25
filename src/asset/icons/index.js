@@ -64,8 +64,7 @@ export { default as FeedbackIconGrey} from './feedback_icon_grey.svg'
 export { default as FavouriteIconGrey} from './favourites_icon_grey.svg'
 export { default as ArrowRigthGrey} from './arrowRightGrey.svg'
 export { default as GoogleIcon} from './googleIcon.png'
-
-
+export { default as AppIcon } from './appIcon.svg'
 
 
 
