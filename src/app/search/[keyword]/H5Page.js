@@ -236,7 +236,8 @@ export default function Page() {
       {yunying != [] &&
         <div className='flex flex-col w-full mb-8 mb-8 px-1.5'>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <div className='pt-8 mt-8 md:mx-20 mx-2.5 lg:w-[80%] w-[100%]'>
+          {/* md:mx-20 mx-2.5  */}
+            <div className='pt-8 mt-8 lg:w-[80%] w-[100%] container'>
               {yunying?.map((yy, idx) => {
                 return (
                   <div id={yy.type_id} key={idx} className='lg:pt-3'>

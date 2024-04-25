@@ -248,7 +248,8 @@ export const FilmLibrary = ({}) => {
         ) : (
           <div className='flex w-screen flex-col items-center'>
             <div className='bg-[#1D2023] w-screen p-1'>
-              <div className='flex flex-col divide-y divide-gray-800 py-2 md:mx-20 mx-2.5'>
+            {/* md:mx-20 mx-2.5 */}
+              <div className='flex flex-col divide-y divide-gray-800 py-2 container'>
                 <div className='flex md:flex-wrap gap-x-4 gap-y-2 pl-2 py-2'>
                   {filterTypeList.map((item, index) => {
                     return (
@@ -434,7 +435,8 @@ export const FilmLibrary = ({}) => {
             </div>
             <div className='w-screen flex flex-1 flex-col'>
               {videoList !== null ? (
-                <div className=' md:mx-20 mx-2.5 grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-4'>
+                //  md:mx-20 mx-2.5 
+                <div className='container grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-4'>
                   {videoList.map((vod, i) => {
                     return <VideoVerticalCard vod={vod} key={i} />;
                   })}

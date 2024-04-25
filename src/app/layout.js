@@ -8,6 +8,7 @@ import Sidebar from '@/components/sidebar';
 import Header from '@/components/header';
 import Script from 'next/script';
 import MyFooter from '@/components/myFooter';
+import MyFooter2 from '@/components/myFooter2';
 import Announcement from '@/components/announcement';
 //import FullBetSlip from '@/components/betSlip/FullBetSlip';
 import RightSideMenu from '@/components/rightSideMenu';
@@ -54,14 +55,13 @@ export default function RootLayout({ children }) {
       <html
         translate='no'
         lang='cn'
-        className={`bg-sideMenu notranslate ${
-          isWeb()
+        className={`bg-sideMenu notranslate ${isWeb()
             ? 'webcontent h-full overflow-x-auto overflow-y-hidden'
             : 'h5content overscroll-none'
-        } relative w-[100vw]`}
-        // className={`bg-sideMenu ${
-        //   isWeb() ? 'webcontent min-w-[1360px] min-h-[500px]' : 'h5content'
-        // } overflow-x-auto overflow-y-hidden relative w-[100vw] h-[100vh]`}
+          } relative w-[100vw]`}
+      // className={`bg-sideMenu ${
+      //   isWeb() ? 'webcontent min-w-[1360px] min-h-[500px]' : 'h5content'
+      // } overflow-x-auto overflow-y-hidden relative w-[100vw] h-[100vh]`}
       >
         {/* <DynamicComponentWithNoSSR /> */}
         <Head>
@@ -100,11 +100,9 @@ export default function RootLayout({ children }) {
           />
         </Head>
         <body
-          className={`${
-            inter.className
-          } h-full bg-sideMenu text-white flex flex-col w-full overscroll-none overflow-x-hidden ${
-            isWeb() ? '' : 'min-h-[100svh]'
-          }`}
+          className={`${inter.className
+            } h-full bg-sideMenu text-white flex flex-col w-full overscroll-none overflow-x-hidden ${isWeb() ? '' : 'min-h-[100svh]'
+            }`}
         >
           <Providers>
             <div className='w-screen h-[100dvh] flex flex-col bg-[#000000]'>
@@ -114,9 +112,15 @@ export default function RootLayout({ children }) {
                 style={{ alignItems: 'center' }}
               >
                 {children}
+
+                <div className='fixed bottom-[60px] w-full justify-center'>
+                  <MyFooter2 />
+                </div>
+
                 <div className='fixed bottom-0 w-full bg-[#161616eb] pt-2' style={{ backdropFilter: 'blur(3px)' }}>
                   <MyFooter />
                 </div>
+
                 <div
                   className='px-8 py-3 desktop'
                   style={{
@@ -141,11 +145,11 @@ export default function RootLayout({ children }) {
                     <br />
                     <br />
 
-                  <a className='hover-blue'     href={'/privacy'}>隐私协议</a>  
-                    
+                    <a className='hover-blue custom-link' href={'/privacy'}>隐私协议</a>
+
                     &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a className='hover-blue'  href={'/service'}>用户服务协议</a>  
-                    
+                    <a className='hover-blue custom-link' href={'/service'}>用户服务协议</a>
+
                     <br />
                     Copyright © 2024 shayuyingshi.com All Rights Reserved
                   </div>

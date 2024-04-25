@@ -2312,11 +2312,12 @@ a:not([href]):not([class]):hover {
   display: block; /* Default display */
 }
 
-/* Hide on mobile */
+/* mobile */
 @media (max-width: 768px) {
   .desktop {
     display: none !important;
   }
+
 }
 
 /* For mobile */
@@ -2328,7 +2329,7 @@ a:not([href]):not([class]):hover {
 {
   margin-bottom: 70px;
 }
-/* Hide on desktop */
+/*  desktop */
 @media (min-width: 769px) {
   .mobile {
     display: none !important;
@@ -2337,6 +2338,14 @@ a:not([href]):not([class]):hover {
 {
   margin-bottom: 30px;
 }
+
+
+.header-search-input-desktop
+{
+  border-radius: 10px !important;
+}
+
+
 }
 
 .hover-effect:hover
