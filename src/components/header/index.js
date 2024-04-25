@@ -1058,6 +1058,35 @@ const Header = () => {
     );
   }
 
+  if (pathname.startsWith('/login/nickname')) {
+    return (
+      <div className={'z-30 w-screen mobile'}>
+        <div className='flex py-3 mx-2.5'>
+          <div className='gap-y-2 flex-col w-full md:flex-row flex'>
+            <div className="flex-1 flex gap-x-2 md:justify-start">
+              <div
+                className={'flex w-[30px] h-[30px] justify-center items-center'}
+              >
+                <Image
+                  src={ArrowLeftIcon}
+                  alt={'back button'}
+                  onClick={() => router.push('/myprofile')}
+                  height={16}
+                />
+              </div>
+              <div
+                className={'flex-1 flex justify-end items-center px-2'}
+                onClick={() => router.push('/myprofile')}>
+                <span className={'text-[16px]'}>跳过</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return defaultHeader;
 };
 export default Header;
