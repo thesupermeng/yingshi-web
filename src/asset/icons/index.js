@@ -56,18 +56,17 @@ export { default as profileIcon } from './profile_icon.svg';
 export { default as vipProfileIcon } from './ysVIPIcon.svg';
 export { default as editIcon } from './ysEdit.svg';
 export { default as arrowRight } from './arrowRight.svg';
-export { default as Stopwatch } from './stopwatch.svg'
-export { default as VipBlackIcon} from './vipBlack.svg'
-export { default as HistoryIconGrey} from './history_icon_grey.svg'
-export { default as AboutusIconGrey} from './aboutus_icon_grey.svg'
-export { default as FeedbackIconGrey} from './feedback_icon_grey.svg'
-export { default as FavouriteIconGrey} from './favourites_icon_grey.svg'
-export { default as ArrowRigthGrey} from './arrowRightGrey.svg'
-export { default as Favicon} from './../../app/yingshi.tv_logo-32x32.png'
+export { default as Stopwatch } from './stopwatch.svg';
+export { default as VipBlackIcon } from './vipBlack.svg';
+export { default as HistoryIconGrey } from './history_icon_grey.svg';
+export { default as AboutusIconGrey } from './aboutus_icon_grey.svg';
+export { default as FeedbackIconGrey } from './feedback_icon_grey.svg';
+export { default as FavouriteIconGrey } from './favourites_icon_grey.svg';
+export { default as ArrowRigthGrey } from './arrowRightGrey.svg';
+export { default as Favicon } from './../../app/yingshi.tv_logo-32x32.png';
 
-export { default as AppIcon } from './appIcon.svg'
-
-
+export { default as AppIcon } from './appIcon.svg';
+export { default as AppImage } from './appImage.png';
 
 // profiles
 export { default as AnimationTick } from './profile/animationTick.gif';
@@ -307,4 +306,4 @@ export { default as PlayRightIcon } from './arrows/playRight.svg';
 export { default as CloseX } from './close.svg';
 
 //countries
-export { default as CNFlag } from './countryIcons/cn.png'
+export { default as CNFlag } from './countryIcons/cn.png';
