@@ -38,17 +38,11 @@ export default function YingshiLoginBottomSheet({visible, onDismiss}) {
 
         if (loginMode === 'sms') {
             loginRequestSmsOtp(loginParam)
-                .then(() => {
-                    dispatch(setYingshiUserLoginParam(loginParam))
-                    router.push('/otp')
-                })
         } else {
             loginRequestEmailOtp(loginParam)
-                .then((res) => {
-                    dispatch(setYingshiUserLoginParam(loginParam))
-                    router.push('/otp')
-                })
         }
+        dispatch(setYingshiUserLoginParam(loginParam))
+        router.push('/otp')
 
 
     }
