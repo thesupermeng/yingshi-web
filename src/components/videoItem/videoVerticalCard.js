@@ -1,6 +1,19 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import {
+  profileIcon,
+  vipProfileIcon,
+  editIcon,
+  VipBlackIcon,
+  ArrowRightIcon,
+  FavouriteIconGrey,
+  AboutusIconGrey,
+  FeedbackIconGrey,
+  HistoryIconGrey,
+  ArrowRigthGrey,
+  Placeholder,
+} from '@/asset/icons';
 
 export const VideoVerticalCard = ({ vod }) => {
   const router = useRouter();
@@ -10,7 +23,7 @@ export const VideoVerticalCard = ({ vod }) => {
 
         <Image
           placeholder='blur'
-          blurDataURL={vod.vod_pic}
+          blurDataURL={Placeholder.src}
           onClick={(e) => {
             e.preventDefault();
             router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);
