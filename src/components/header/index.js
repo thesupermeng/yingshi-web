@@ -450,10 +450,8 @@ const Header = () => {
           </div>
         </div>
         {openSearch ? (
-          <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100%_-_52px)] z-20 left-0 md:left-auto md:w-96 md:ml-16'>
-            <div
-              className='py-3 px-4 flex flex-col md:rounded-md w-full h-full md:h-fit overflow-scroll-hidden bg-[#1d2023] md:bg-[#1d2023e0] md:w-96'
-            >
+          <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100vh_-_52px)] md:h-[calc(50vh_-_52px)] z-20 left-0 md:left-auto md:w-96 md:ml-16'>
+            <div className='no-scrollbar py-3 px-4 flex flex-col md:rounded-md w-full h-full overflow-y-scroll bg-[#1d2023] md:bg-[#1d2023e0] md:w-96'>
               {searchInput ? (
                 loadingSearching ? (
                   <LoadingPage full={false} />
@@ -678,7 +676,7 @@ const Header = () => {
           />
         </div>
         {openHistory ? (
-          <div className='absolute flex flex-col md:items-center items-end pt-1 w-80 z-10 md:-left-44'>
+          <div className='absolute flex flex-col items-center pt-1 w-80 z-10 -left-44'>
             <div
               style={{
                 width: 0,
@@ -690,7 +688,7 @@ const Header = () => {
               }}
             />
             <div
-              className='p-3 w-full flex flex-col md:rounded-md rounded-b-lg rounded-tl-lg'
+              className='p-3 w-full flex-col rounded-md'
               style={{ backgroundColor: '#1d2023e0' }}
             >
               <div className='flex pb-3 pl-2'>
@@ -702,24 +700,48 @@ const Header = () => {
                 </span>
               </div>
               {watchHistoryList.length > 0 ? (
-                <div className='w-full max-h-96 overflow-y-scroll grid gap-4'>
+                <div className='flex flex-col max-h-96 overflow-y-scroll overflow-x-hidden gap-4 no-scrollbar'>
                   {watchHistoryList
                     .slice()
                     .reverse()
                     .map((item, index) => {
                       return (
-                        <div key={index} className='flex flex-row gap-x-2'>
-                          <div className='w-28 h-16'>
+                        <div
+                          className='flex flex-row hover:text-[#0085E0] gap-x-2 cursor-pointer'
+                          onClick={() => {
+                            router.push(
+                              `/play/${item.tid}/${item.nid}/${item.vodid}`
+                            );
+                            setOpenHistory(false);
+                          }}
+                        >
+                          <div className='w-28 flex-none'>
                             <img
                               className='rounded-md w-28 h-16 object-cover'
                               src={item.vodpic}
                             />
                           </div>
-                          <div>
-                            <p className='text-sm truncate'>{item.vodname}</p>
-                            <span className='text-xs'>{secondsToHHMMSS(item.watchtimes)}</span>
+                          <div className='flex-1 flex flex-col truncate'>
+                            <span className='text-sm truncate'>
+                              {item.vodname}
+                            </span>
+                            <span className='text-xs text-white'>
+                              观看至 {secondsToHHMMSS(item.watchtimes)}
+                            </span>
                           </div>
                         </div>
+                        // <div
+                        //   key={index}
+                        //   className='flex w-full flex-row gap-x-2 '
+                        // >
+                        //   <div className='flex w-28 h-16'>
+
+                        //   </div>
+                        //   <div className='flex flex-1 flex-col gap-1'>
+                        //     <span className='text-sm truncate'>{item.vodname}</span>
+                        //     <span className='text-xs text-white'>观看至 {secondsToHHMMSS(item.watchtimes)}</span>
+                        //   </div>
+                        // </div>
                       );
                     })}
                 </div>
@@ -784,7 +806,7 @@ const Header = () => {
     <div
       className={
         pathname.startsWith('/play/') || pathname.startsWith('/filmLibrary')
-          ? 'w-screen z-30  bg-blur-header'
+          ? 'w-screen z-30  bg-blur-header '
           : 'md:absolute z-30 w-screen bg-blur-header'
       }
     >
@@ -944,7 +966,7 @@ const Header = () => {
   );
 
   if (pathname.startsWith('/topic/')) {
-    return <div className={'desktop'}>{defaultHeader}</div>;
+    return <div className={'desktop z-50'}>{defaultHeader}</div>;
   }
 
   if (pathname.startsWith('/filmLibrary') || pathname.startsWith('/topic/')) {
@@ -955,13 +977,13 @@ const Header = () => {
           <div style={{ height: '52px' }}></div>
         </div>
 
-        <div className={'desktop'}>{defaultHeader}</div>
+        <div className={'desktop z-50'}>{defaultHeader}</div>
       </>
     );
   }
 
   if (pathname.startsWith('/play')) {
-    return <div className={'desktop'}>{defaultHeader}</div>;
+    return <div className={'desktop z-50'}>{defaultHeader}</div>;
   }
 
   if (pathname.startsWith('/search/')) {
@@ -992,7 +1014,7 @@ const Header = () => {
             </div>
           </div>
         </div>
-        <div className='desktop'>{defaultHeader}</div>
+        <div className='desktop z-50'>{defaultHeader}</div>
       </>
     );
   }
@@ -1017,7 +1039,7 @@ const Header = () => {
             </div>
           </div>
         </div>
-        <div className='desktop'>{defaultHeader}</div>
+        <div className='desktop z-50'>{defaultHeader}</div>
       </>
     );
   }

@@ -21,7 +21,7 @@ export const VideoVerticalCard = ({ vod }) => {
           fill
           sizes='100%'
           className='rounded-lg md:transition md:group-hover:scale-125 
-  md:group-hover:cursor-pointer md:group-hover:rounded-lg md:group-hover:z-10 md:group-hover:rounded-lg'
+  md:group-hover:cursor-pointer group-hover:rounded-lg md:group-hover:z-10 md:group-hover:rounded-lg'
         />
 
 
