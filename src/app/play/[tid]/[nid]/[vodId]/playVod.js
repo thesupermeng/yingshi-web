@@ -43,6 +43,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   const [desc, setDesc] = useState('');
   const [toggleShowShareBoxStatus, setToggleShowShareBoxStatus] = useState(false);
   const [vodShareContent, setVodShareContent] = useState('');
+  const [showToastMessage, setShowToastMessage] = useState(false);
 
   const getVodDetails = async () => {
     if (tId == 0) {
@@ -254,22 +255,34 @@ export const PlayVod = ({ vodId, tId, nId }) => {
     console.log(e?.target?.id);
     if(typeof e == 'undefined'){
       setToggleShowShareBoxStatus(true);
+      return;
     }
 
     if(e?.target?.id === "parentBg" || e?.target?.id === "parentBgMobile" ){
-      console.log(false);
       setToggleShowShareBoxStatus(false);
+      return;
     }
   }
 
   const copyContentToClipboard = () => {
     let content = vodShareContent.replaceAll("</br>", " ");
-    console.log(content);
     navigator.clipboard.writeText(content);
+    setShowToastMessage(true);
+    setToggleShowShareBoxStatus(false);
+    const timeout = setTimeout(() => setShowToastMessage(false), 2000)
   }
 
   return (
     <div ref={domElementRef} className='container' style={{ padding: '0px', position: 'relative' }}>
+      <div className={`${showToastMessage ? 'flex' : 'hidden'} items-center justify-center`} style={{ width: '100%', height: '100%', position: 'absolute' }}>
+        <div
+          className={`fixed top-0 z-[9999] flex items-center justify-center w-full h-full pointer-events-none text-white transition-opacity duration-300 opacity-100`}
+        >
+          <div className='text-white px-6 py-3 rounded-[12px] text-sm flex gap-3' style={{ background: '#1D2023CC' }}>
+            已复制链接
+          </div>
+        </div>
+      </div>
       <div className='desktop'>
         <div className={`${toggleShowShareBoxStatus ? 'block' : 'hidden'} fixed z-50 top-0 bottom-0 left-0 right-0 bg-black opacity-60`}></div>
         <div className={`${toggleShowShareBoxStatus ? 'block' : 'hidden'} h-screen fixed z-50 top-0 bottom-0 left-0 right-0 bg-transparent backdrop-blur-sm`}>
@@ -319,7 +332,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                   </div>
                   <div
                     style={{ 
-                      padding: '0.5rem 1.2rem',
+                      padding: '0.3rem 1.2rem',
                       background: '#0085E0',
                       borderRadius: '12px',
                       margin: '0.5rem',
