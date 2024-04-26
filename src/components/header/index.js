@@ -686,7 +686,7 @@ const Header = () => {
           />
         </div>
         {openHistory ? (
-          <div className='absolute flex flex-col items-center pt-1 w-80 z-10 -left-36'>
+          <div className='absolute flex flex-col items-center w-80 z-20 -left-36'>
             <div
               style={{
                 width: 0,
@@ -989,12 +989,12 @@ const Header = () => {
                           top: '-10px',
                           borderLeft: '10px solid transparent',
                           borderRight: '10px solid transparent',
-                          borderBottom: '10px solid rgba(29, 32, 35, 0.88)',
+                          borderBottom: '10px solid #2c313ae6',
                         }}
                       />
                       <div
                         className='py-3 flex flex-col md:rounded-md rounded-b-lg rounded-tl-lg'
-                        style={{ backgroundColor: 'rgba(29, 32, 35, 0.88)' }}
+                        style={{ backgroundColor: '#2c313ae6' }}
                       >
                         {hiddenItems?.map((navItem, index) => {
                           return (
@@ -1030,6 +1030,7 @@ const Header = () => {
         </div>
       </div>
     </div>
+    
   );
 
   if (pathname.startsWith('/topic/')) {
