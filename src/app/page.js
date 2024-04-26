@@ -267,12 +267,6 @@ export default function Home() {
                             fontStyle: 'normal',
                             fontFamily: 'PingFang SC',
                           }} icon={faAngleRight} />
-                          <Image
-                            className='mx-2'
-                            src={arrowRight}
-                            alt='arrow'
-                            width={8}
-                          />
                         </div>
                       </div>
                       <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
