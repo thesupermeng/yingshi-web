@@ -451,7 +451,7 @@ const Header = () => {
         </div>
         {openSearch ? (
           <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100vh_-_52px)] md:h-[calc(50vh_-_52px)] z-20 left-0 md:left-auto md:w-96 md:ml-16'>
-            <div className='no-scrollbar py-3 px-4 flex flex-col md:rounded-md w-full h-full overflow-y-scroll bg-[#1d2023] md:bg-[#1d2023e0] md:w-96'>
+            <div className='no-scrollbar py-3 px-4 flex flex-col md:rounded-md w-full h-full overflow-y-scroll bg-[#1d2023] md:bg-[#2c313ae6] md:w-96'>
               {searchInput ? (
                 loadingSearching ? (
                   <LoadingPage full={false} />
@@ -694,12 +694,12 @@ const Header = () => {
                 top: '-10px',
                 borderLeft: '10px solid transparent',
                 borderRight: '10px solid transparent',
-                borderBottom: '10px solid #1d2023e0',
+                borderBottom: '10px solid #2c313ae6',
               }}
             />
             <div
               className='p-3 w-full rounded-md'
-              style={{ backgroundColor: '#1d2023e0' }}
+              style={{ backgroundColor: '#2c313ae6' }}
             >
               <div className='flex pb-3 pl-2'>
                 <span
@@ -808,12 +808,12 @@ const Header = () => {
                 top: '-10px',
                 borderLeft: '10px solid transparent',
                 borderRight: '10px solid transparent',
-                borderBottom: '10px solid #1d2023e0',
+                borderBottom: '10px solid #2c313ae6',
               }}
             />
             <div
               className='p-2 flex flex-row rounded-md rounded-tr-none'
-              style={{ backgroundColor: '#1d2023e0' }}
+              style={{ backgroundColor: '#2c313ae6' }}
             >
               <div className='flex-none w-[200px]'>
                 <Image src={AppImage} alt='AppImage' width={200} />
