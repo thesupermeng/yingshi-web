@@ -39,6 +39,7 @@ import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import {formatDateCN} from '@/util/date';
 import NavCard from '@/components/myprofile/NavCard';
 import VipCard from '@/components/myprofile/VipCard';
+import ProfileCard from '@/components/myprofile/ProfileCard';
 
 const navs = [
   {
@@ -110,55 +111,16 @@ export default function H5Page({params}) {
       />
       {/* user profile */}
       <div style={{background: '#1D2023', borderRadius: '12px', marginBottom: '16px'}}>
-        <div className="grid grid-cols-12 p-2">
-          <div className="col-span-2 flex justify-center">
-            <Image
-              src={profileIcon}
-              alt="profile"
-              height={50}
+        <div className="flex flex-col p-[12px] gap-[12px]">
+          <div>
+            <ProfileCard
+              userInfo={userInfo}
+              isVip={isVip}
+              isH5={true}
+              onSignin={() => setOpenSignInUp(true)}
             />
           </div>
-          <div className="col-span-8 text-xs gap-2.5"
-               style={{margin: 'auto', marginLeft: '0px'}}>
-            <div className={'flex items-center'}>
-              {/*<div className='text-bold text-lg' style={{ width: 'wrap-content' }}>贝贝</div>*/}
-              <span className="text-bold text-lg font-semibold">
-                  {userInfo ? userInfo.user_name : '游客您好'}
-                </span>
-              {isVip &&
-                <Image
-                  src={vipProfileIcon}
-                  alt="profile"
-                  width={22}
-                  height={22}
-                />
-              }
-            </div>
-            {/*<p style={{ color: '#D1AC7D' }}>VIP会员有效日期至2023年9月19日</p>*/}
-            {userInfo && isVip && <span
-              className={'text-[#D1AC7D] text-[13px]'}>VIP会员有效日期至{formatDateCN(userInfo.vip_end_time)}</span>}
-            {!userInfo && !isVip && <span className={'text-[14px]'}>登录可享更多服务</span>}
-          </div>
-          <div className="col-span-2 flex items-center justify-center">
-            {userInfo &&
-              <Image
-                src={editIcon}
-                alt="edit"
-                onClick={() => {
-                  logout()
-                  dispatch(setYingshiUserInfo(null))
-                }}
-              />
-            }
-            {!userInfo &&
-              <button className={'bg-[#0085E0] color-white w-20 h-8 rounded-md border-2 border-[#0085E033] text-sm'}
-                      onClick={() => setOpenSignInUp(true)}>
-                登录
-              </button>
-
-            }
-          </div>
-          <div className={'col-span-12 mt-3'}>
+          <div>
             <VipCard/>
           </div>
         </div>
