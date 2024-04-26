@@ -21,11 +21,13 @@ import { convertTimeStampToDateTime } from "@/util/date";
 import { FullPageContent } from '@/componentsH5/FullPageContent';
 import { LottieAnimation } from '../../../../../../src/components/lottie';
 import { IrrLoading } from '@/asset/lottie';
+import FullScreenModal from '@/components/FullScreenModal';
 
 export const PlayVod = ({ vodId, tId, nId }) => {
   const router = useRouter();
 
   const { t } = useTranslation();
+  const shareContentRef = useRef(null);
 
   const domElementRef = useRef(null);
   const playerDivRef = useRef(null);
@@ -39,6 +41,8 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   const [suggestedVods, setSuggestedVods] = useState([]);
   const [toggleJianJie, setToggleJianJie] = useState(false);
   const [desc, setDesc] = useState('');
+  const [toggleShowShareBoxStatus, setToggleShowShareBoxStatus] = useState(false);
+  const [vodShareContent, setVodShareContent] = useState('');
 
   const getVodDetails = async () => {
     if (tId == 0) {
@@ -74,6 +78,9 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   };
 
   useEffect(() => {
+
+    let content = "";
+
     if (vod) {
       let desc = vod.vod_year + ' ' + vod.vod_area;
       let vodClass = [];
@@ -86,6 +93,12 @@ export const PlayVod = ({ vodId, tId, nId }) => {
       });
 
       setDesc(desc);
+
+      content += "《" + vod.vod_name + "》高清播放";
+      content += "</br>" + window.location.href;
+      content += "</br>鲨鱼TV-海量高清视频在线观看";
+
+      setVodShareContent(content)
     }
   }, [vod]);
 
@@ -237,8 +250,146 @@ export const PlayVod = ({ vodId, tId, nId }) => {
     setToggleJianJie(!toggleJianJie);
   };
 
+  const toggleShowShareBox = (e) => {
+    console.log(e?.target?.id);
+    if(typeof e == 'undefined'){
+      setToggleShowShareBoxStatus(true);
+    }
+
+    if(e?.target?.id === "parentBg" || e?.target?.id === "parentBgMobile" ){
+      setToggleShowShareBoxStatus(!toggleShowShareBoxStatus);
+    }
+  }
+
+  const copyContentToClipboard = () => {
+    let content = vodShareContent.replaceAll("</br>", " ");
+    console.log(content);
+    navigator.clipboard.writeText(content);
+  }
+
   return (
-    <div ref={domElementRef} className='container' style={{ padding: '0px' }}>
+    <div ref={domElementRef} className='container' style={{ padding: '0px', position: 'relative' }}>
+      <div className={`${toggleShowShareBoxStatus ? 'flex' : 'hidden'} fixed z-50 top-0 bottom-0 left-0 right-0 bg-black opacity-60 desktop`}></div>
+      <div className={`${toggleShowShareBoxStatus ? 'flex' : 'hidden'} h-screen desktop fixed z-50 top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-transparent backdrop-blur-sm desktop`}
+        id="parentBg"
+        onClick={toggleShowShareBox}
+      >
+        <div
+            // className={`${toggleShowShareBoxStatus ? 'flex' : 'hidden'} h-screen desktop`}
+            style={{
+              flexDirection: 'column',
+              position: 'absolute',
+              justifyContent: 'center',
+              alignItems: 'center',
+              display: 'flex',
+            }}
+          >
+            <div
+              className=''
+              style={{
+                width: '400px',
+                height: '30%',
+                zIndex: '999',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column',
+                background: '#1D2023',
+                padding: '1rem 1rem 0rem 1rem',
+                borderRadius: '12px'
+              }}
+            >
+              <span className='text-md' style={{ fontWeight: '500' }}>分享视频</span>
+              <div style={{ width: '100%', paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
+                <span className='text-sm'>复制下方链接，去粘贴给好友吧：</span>
+              </div>
+              <div
+                className=''
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  background: 'rgba(137, 149, 181, 0.08)',
+                  padding: '1rem'
+                }}
+              >
+                <div className='text-sm' ref={shareContentRef} dangerouslySetInnerHTML={{__html: vodShareContent}}>
+                </div>
+              </div>
+              <div
+                style={{ 
+                  padding: '0.5rem 1.2rem',
+                  background: '#0085E0',
+                  borderRadius: '12px',
+                  margin: '0.5rem',
+                }}
+                onClick={copyContentToClipboard}
+              >
+                <span className='text-sm cursor-pointer'>一键复制</span>
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <div 
+        className={`${toggleShowShareBoxStatus ? 'flex' : 'hidden'} fixed z-10 top-0 bottom-0 left-0 right-0 bg-black opacity-60 mobile`}></div>
+      <div
+        className={`${toggleShowShareBoxStatus ? 'flex' : 'hidden'} w-screen h-screen mobile z-50`}
+        style={{
+          flexDirection: 'column',
+          position: 'absolute',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        id='parentBgMobile'
+        onClick={toggleShowShareBox}
+      >
+        <div
+          id='mobileShareContent'
+          className=''
+          style={{
+            width: '90%',
+            height: '30%',
+            zIndex: '1',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+            background: '#1D2023',
+            padding: '1rem 1rem 0rem 1rem',
+            borderRadius: '12px'
+          }}
+          onClick={toggleShowShareBox}
+        >
+          <span className='text-md' style={{ fontWeight: '500' }}>分享视频</span>
+          <div style={{ width: '100%', paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
+            <span className='text-sm'>复制下方链接，去粘贴给好友吧：</span>
+          </div>
+          <div
+            className=''
+            style={{
+              width: '100%',
+              height: '100%',
+              background: 'rgba(137, 149, 181, 0.08)',
+              padding: '1rem'
+            }}
+          >
+            <div className='text-sm' ref={shareContentRef} dangerouslySetInnerHTML={{__html: vodShareContent}}>
+            </div>
+          </div>
+          <div
+            style={{ 
+              padding: '0.5rem 1.2rem',
+              background: '#0085E0',
+              borderRadius: '12px',
+              margin: '0.5rem',
+            }}
+            onClick={copyContentToClipboard}
+          >
+            <span className='text-sm'>一键复制</span>
+          </div>
+        </div>
+      </div>
+      
       {vod == null
 
       ?
@@ -307,7 +458,10 @@ export const PlayVod = ({ vodId, tId, nId }) => {
             ></div>
             {/* Web Share Horizontal */}
             <div className='lg:flex hidden'>
-              <ShareHorizontal className={'w-[80%]'} />
+              <ShareHorizontal className={'w-[80%]'} setShowShareBox={() => {
+                console.log('ASDA');
+                setToggleShowShareBoxStatus(true);
+              }}/>
             </div>
             <VodContent
               vodContent={vod.vod_content}
@@ -331,6 +485,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                     vodEpisodeSelected={episodeSelected}
                     vodEpisodeInfo={vod.vod_episode_info}
                     vod={vod}
+                    setShowShareBox={toggleShowShareBox}
                   />
 
                   <VodSourceList
@@ -389,6 +544,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                     vodRemark={vod.vod_remarks}
                     vod={vod}
                     openJianJie={openJianJie}
+                    setShowShareBox={toggleShowShareBox}
                   />
 
                   <VodSourceList
@@ -439,7 +595,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                     </div>
                     <div className='text-sm'>
                       <p>
-                        平静的沿海小城三平市，缉毒大队在一次行动中意外缴获一批新型冰毒，其规模和纯度都极为罕见，三平公安立即展开调查。部队转业女警赵友男（姚安娜 饰）凭着敏锐的嗅觉和洞察力，将目标锁定在了做化工买卖的黄宗伟身上。诡计多端的黄宗伟（张颂文 饰）让初出茅庐的赵友男燃起了斗志，她死盯黄宗伟，不管对方藏在何处，不管假像如何高级，她都能挖到线索，发现真相，义无反顾奔赴抓捕。 以赵友男为首的公安队伍和以黄宗伟为首的制毒贩毒份，一个穷追不舍死咬不放，一个诡计多端擅于隐藏，就这样上演了一出“猫鼠大战”。
+                        {vod.vod_content}
                       </p>
                     </div>
                   </div>
