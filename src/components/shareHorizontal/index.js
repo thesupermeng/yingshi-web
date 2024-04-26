@@ -15,8 +15,17 @@ import {
 
 export const ShareHorizontal = ({
   className = '',
+  setShowShareBox,
 }) => {
   const { t } = useTranslation();
+
+  const share = () => {
+    setShowShareBox();
+  }
+
+  const closeShare = () => {
+    setShowShareBox();
+  }
 
   return <div className={`flex space-x-4 items-center ${className} m-0`}>
     
@@ -27,7 +36,7 @@ export const ShareHorizontal = ({
       <span>{t('分享')}:</span>
     </div>
 
-    <div className={`flex flex-1 space-x-2`}>
+    <div className={`flex flex-1 space-x-2`} onClick={share} style={{ cursor: 'pointer' }}>
       <div className="">
         <Image
           width={ '3px' }

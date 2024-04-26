@@ -6,15 +6,8 @@ import { YingshiApi } from '@/util/YingshiApi';
 import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
 import { Spinner } from '@/components/spinner';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  setHeaderMenu,
-  setSelectedId,
-  setSpecialSelectedId,
-} from '@/store/headerData';
 
 export const FilmLibrary = ({}) => {
-  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [filterTypeList, setFilterTypeList] = useState(null);
   const [paramsFilter, setParamsFilter] = useState(null);

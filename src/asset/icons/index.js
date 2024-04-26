@@ -67,7 +67,7 @@ export { default as Favicon} from './../../app/yingshi.tv_logo-32x32.png'
 export { default as PersonIconGrey} from './personGrey.svg'
 export { default as LogoutGrey} from './logoutGrey.svg'
 export { default as Placeholder } from './../../app/placeholder.png';
-
+export { default as backtoTopIcon } from './backtoTopIcon.svg'
 export { default as GoogleIcon} from './googleIcon.png'
 export { default as AppIcon } from './appIcon.svg';
 export { default as AppImage } from './appImage.png';
