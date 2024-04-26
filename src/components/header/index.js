@@ -296,14 +296,6 @@ const Header = () => {
   };
 
   useEffect(() => {
-    setSearchInput('');
-
-    if (pathname.startsWith('/filmLibrary')) dispatch(setSelectedId(999));
-    else if (pathname.startsWith('/topic')) dispatch(setSelectedId(998));
-    else if (pathname.startsWith('/play/')) dispatch(setSelectedId(-1));
-  }, [pathname]);
-
-  useEffect(() => {
     const list = JSON.parse(localStorage.getItem('searchHistoryList'));
     if (list) {
       setSearchHistoryList(list);
@@ -338,17 +330,19 @@ const Header = () => {
   useEffect(() => {
     if (pathname.startsWith('/topic')) {
       dispatch(setSpecialSelectedId(998));
+      dispatch(setSelectedId(0));
       
     } else if (pathname.startsWith('/filmLibrary')) {
       dispatch(setSpecialSelectedId(999));
+      dispatch(setSelectedId(0));
     } 
     else if (pathname.startsWith('/play/')){
       dispatch(setSpecialSelectedId(-1));
-      dispatch(setSelectedId(-1));
+      dispatch(setSelectedId(0));
     }
     else {
       dispatch(setSpecialSelectedId(-1));
-      dispatch(setSelectedId(0));
+      dispatch(setSelectedId(selectedMenu.id));
     }
   }, [pathname])
 

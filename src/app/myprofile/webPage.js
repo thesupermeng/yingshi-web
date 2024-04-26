@@ -12,6 +12,9 @@ import Image from 'next/image';
 import React, {useState} from 'react';
 import ProfileCard from '@/components/myprofile/ProfileCard';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
+import LoginModal from '@/components/login';
+import {Button, Popover, PopoverContent, PopoverHandler} from '@material-tailwind/react';
+import OtpModal from '@/components/login/otpModal';
 
 
 const navs = [
@@ -49,11 +52,17 @@ export default function WebPage () {
 
   const [selected, setSelected] = useState(0)
   const {isVip, userInfo} = useYingshiUser()
+  const [isLoginOpen, setIsLoginOpen] = useState(false)
 
 
   return (
     <div className={'grid grid-cols-4 px-[110px]'}>
-      <div className={'w-full flex flex-col gap-[15px]'}>
+      {/*<LoginModal open={isLoginOpen} handler={() => setIsLoginOpen(x => !x)}/>*/}
+      <OtpModal open={isLoginOpen} handler={() => setIsLoginOpen(x => !x)}/>
+      <div className={'w-full flex flex-col gap-[15px] min-w-[300px]'}>
+
+        <button onClick={() => setIsLoginOpen(true)}>login</button>
+
         <div className={'h-[80px] rounded-[12px] bg-[#1A1F24] flex items-center px-[21px] py-[12px]'}>
           <ProfileCard
             userInfo={userInfo}
