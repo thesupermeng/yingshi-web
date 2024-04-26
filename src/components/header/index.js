@@ -78,11 +78,11 @@ const Header = () => {
     setOpenMore(!openMore);
   };
 
-  const handleOpenVip = () => {
-    setOpenVip(!openVip);
+  const handleOpenVip = (value) => {
+    setOpenVip(value);
   };
 
-  const handleOpenHistory = () => {
+  const handleOpenHistory = (value) => {
     if (!openHistory == true) {
       let watchHistoryData = JSON.parse(
         localStorage.getItem('watchHistoryList')
@@ -114,12 +114,11 @@ const Header = () => {
         );
       }
     }
-
-    setOpenHistory(!openHistory);
+    setOpenHistory(value);
   };
 
-  const handleOpenApp = () => {
-    setOpenApp(!openApp);
+  const handleOpenApp = (value) => {
+    setOpenApp(value);
   };
 
   const handleOpenSearch = () => {
@@ -268,7 +267,7 @@ const Header = () => {
       dispatch(setSpecialSelectedId(value));
       router.push('/topic');
     } else if (value == 999) {
-      dispatch(setSpecialSelectedId(value));
+      dispatch(setSpecialSelectedId(0));
       localStorage.removeItem('videoTypeId');
       localStorage.removeItem('videoClass');
       router.push('/filmLibrary');
@@ -371,50 +370,14 @@ const Header = () => {
       }
     }
 
-    function handleClickOutsideDropDownVip(event) {
-      if (
-        dropdownVipRef.current &&
-        !dropdownVipRef.current.contains(event.target)
-      ) {
-        setOpenVip(false);
-      }
-    }
-
-    function handleClickOutsideDropDownHistory(event) {
-      if (
-        dropdownHistoryRef.current &&
-        !dropdownHistoryRef.current.contains(event.target)
-      ) {
-        setOpenHistory(false);
-      }
-    }
-
-    function handleClickOutsideDropDownApp(event) {
-      if (
-        dropdownAppRef.current &&
-        !dropdownAppRef.current.contains(event.target)
-      ) {
-        setOpenApp(false);
-      }
-    }
-
     // Attach event listener when the component mounts
     document.addEventListener('mousedown', handleClickOutsideDropDownMore);
     document.addEventListener('mousedown', handleClickOutsideSearch);
-    document.addEventListener('mousedown', handleClickOutsideDropDownVip);
-    document.addEventListener('mousedown', handleClickOutsideDropDownHistory);
-    document.addEventListener('mousedown', handleClickOutsideDropDownApp);
 
     // Remove event listener when the component unmounts
     return () => {
       document.removeEventListener('mousedown', handleClickOutsideDropDownMore);
       document.removeEventListener('mousedown', handleClickOutsideSearch);
-      document.removeEventListener('mousedown', handleClickOutsideDropDownVip);
-      document.removeEventListener(
-        'mousedown',
-        handleClickOutsideDropDownHistory
-      );
-      document.removeEventListener('mousedown', handleClickOutsideDropDownApp);
     };
   }, []);
 
@@ -606,13 +569,17 @@ const Header = () => {
 
   let vipContainer = (
     <div className='flex-row flex'>
-      <div className='relative' ref={dropdownVipRef}>
-        <div
-          onClick={() => {
-            handleOpenVip();
-          }}
-          className='flex h-full flex-row cursor-pointer rounded-full md:bg-[#1D2023] md:px-4 md:ml-2 md:rounded-full'
-        >
+      <div
+        className='relative'
+        ref={dropdownVipRef}
+        onMouseEnter={() => {
+          handleOpenHistory(true);
+        }}
+        onMouseLeave={() => {
+          handleOpenHistory(false);
+        }}
+      >
+        <div className='flex h-full flex-row cursor-pointer rounded-full md:bg-[#1D2023] md:px-4 md:ml-2 md:rounded-full'>
           <Image className='mr-2' src={vipIcon} alt='vip' width={25} />
           <div className='flex items-center'>
             <span className='text-[#F4DBBA]'>VIP会员</span>
@@ -686,16 +653,22 @@ const Header = () => {
 
   let historyContainer = (
     <div className='flex-row flex'>
-      <div className='relative' ref={dropdownHistoryRef}>
+      <div
+        className='relative'
+        ref={dropdownHistoryRef}
+        onMouseEnter={() => {
+          handleOpenHistory(true);
+        }}
+        onMouseLeave={() => {
+          handleOpenHistory(false);
+        }}
+      >
         <div className='h-full flex justify-center'>
           <Image
             className='cursor-pointer'
             src={HistoryIcon}
             alt='history'
             width={30}
-            onClick={() => {
-              handleOpenHistory();
-            }}
           />
         </div>
         {openHistory ? (
@@ -798,11 +771,17 @@ const Header = () => {
         <div className='border-l-2 border-white h-4' />
       </div>
 
-      <div className='relative' ref={dropdownAppRef}>
-        <div
-          className='h-full flex flex-row cursor-pointer'
-          onClick={() => handleOpenApp()}
-        >
+      <div
+        className='relative'
+        ref={dropdownAppRef}
+        onMouseEnter={() => {
+          handleOpenApp(true);
+        }}
+        onMouseLeave={() => {
+          handleOpenApp(false);
+        }}
+      >
+        <div className='h-full flex flex-row cursor-pointer'>
           <Image className='mx-2' src={PhoneIcon} alt='app' width={14} />
           <div className='flex items-center md:flex hidden'>APP</div>
         </div>
