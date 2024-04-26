@@ -111,7 +111,7 @@ export default function RootLayout({ children }) {
             <div className='w-screen h-[100dvh] flex flex-col bg-[#000000]'>
               <Header />
               <div
-                className='flex-1 overflow-y-scroll flex flex-col md:pb-0 pb-[55px]'
+                className='flex-1 overflow-y-scroll overflow-x-hidden overscroll-none flex flex-col md:pb-0 pb-[55px]'
                 style={{ alignItems: 'center' }}
               >
                 {children}

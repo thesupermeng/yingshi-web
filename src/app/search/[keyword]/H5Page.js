@@ -101,7 +101,7 @@ export default function Page() {
         <div className={styles.containerHeader}>
           <div className='d-flex' style={{ width: '100%' }}>
             <div className='overlay' style={{ width: '100%' }}>
-              <div className='row px-0 d-flex flex-column '>
+              <div className='px-0 d-flex flex-column '>
                 <div className='topic-container-header container content-end'>
                   <div className='topic-header-text'>{decodedKeyword}</div>
                   <div className='topic-header-text-sub'>

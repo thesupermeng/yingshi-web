@@ -23,6 +23,7 @@ export const VodCard = ({
   vodActor,
   vodBlurb,
   openJianJie,
+  setShowShareBox,
 }) => {
   const { t } = useTranslation();
 
@@ -139,6 +140,7 @@ export const VodCard = ({
       <div className="lg:hidden flex">
         <ShareHorizontal
           className={'w-[90%]'}
+          setShowShareBox={setShowShareBox}
         />
       </div>
     </div>

@@ -52,7 +52,7 @@ export default function Page() {
             <div className={styles.containerHeader}>
               <div className='d-flexx' style={{ width: '100%' }}>
                 <div className='overlay' style={{ width: '100%' }}>
-                  <div className='row px-0 d-flex flex-column '>
+                  <div className='row px-0 d-flex flex-column w-screen'>
                     <div className='topic-container-header container content-end'>
                       <div className='topic-header-text'>
                         {topicObj.topic_name}
