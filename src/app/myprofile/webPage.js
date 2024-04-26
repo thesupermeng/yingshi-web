@@ -1,6 +1,16 @@
 import VipCard from '@/components/myprofile/VipCard';
-import {FeedbackIconGrey, HistoryIconGrey, LogoutGrey, PersonIconGrey} from '@/asset/icons';
+import {
+  FeedbackIconGrey,
+  HistoryIconGrey,
+  LogoutGrey,
+  PersonIconGrey,
+  profileIcon,
+  vipProfileIcon,
+} from '@/asset/icons';
 import NavCard from '@/components/myprofile/NavCard';
+import Image from 'next/image';
+import React, {useState} from 'react';
+import ProfileCard from '@/components/myprofile/ProfileCard';
 
 
 const navs = [
@@ -36,16 +46,27 @@ const navs = [
 
 export default function WebPage () {
 
+  const [selected, setSelected] = useState(0)
+
   return (
     <div className={'grid grid-cols-4 px-[110px]'}>
-        <div className={'w-full'}>
-          <VipCard/>
-          {navs.map((nav, index) => {
-            return <NavCard key={index} {...nav}/>
-          })
-          }
+      <div className={'w-full flex flex-col gap-[15px]'}>
+        <div className={'h-[80px] rounded-[12px] bg-[#1A1F24] flex items-center px-[21px] py-[12px]'}>
+          <ProfileCard
+            userInfo={null}
+            isVip={false}
+            isH5={false}
+          />
         </div>
-
+        <VipCard/>
+        {navs.map((nav, index) => {
+          return <NavCard key={index} {...nav} onClick={() => setSelected(nav.title)}/>
+        })
+        }
+      </div>
+      <div className={'col-span-3 w-full flex flex-col gap-[15px] items-center'}>
+        {selected}
+      </div>
     </div>
   )
 }

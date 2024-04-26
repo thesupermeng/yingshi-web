@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function NavCard({icon, title, isSelected, onClick}) {
   return (
-    <div className={'bg-[#1D2023] rounded-[12px] mb-[16px]'}>
+    <div className={'bg-[#1D2023] rounded-[12px]'}>
       <button className={'bg-[#1D2023] rounded-[10px] w-full h-12 flex items-center p-3 gap-3'} onClick={onClick}>
         <div className={'w-[24px] h-[24px] flex items-center justify-center'}>
           <Image src={icon} alt={'Icon'}/>
