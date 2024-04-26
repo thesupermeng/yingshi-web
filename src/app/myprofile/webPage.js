@@ -57,7 +57,7 @@ export default function WebPage () {
   return (
     <div className={'grid grid-cols-4 px-[110px]'}>
       <LoginModal open={isLoginOpen} handler={() => setIsLoginOpen(x => !x)}/>
-      <div className={'w-full flex flex-col gap-[15px]'}>
+      <div className={'w-full flex flex-col gap-[15px] min-w-[300px]'}>
 
         <button onClick={() => setIsLoginOpen(true)}>login</button>
 

@@ -4,6 +4,7 @@ import {updateUserInfo} from '@/services/yingshiUser';
 import {useRouter} from 'next/navigation';
 import {useDispatch, useSelector} from 'react-redux';
 import {setYingshiUserInfo} from '@/store/yingshiUser';
+import {Button} from '@material-tailwind/react';
 
 export default function Nickname () {
   const dispatch = useDispatch()
@@ -70,11 +71,11 @@ export default function Nickname () {
             </div>
           </div>
 
-          <button onClick={handleConfirm}
-                  className={'enabled:text-white enabled:bg-shayuBlue disabled:text-[#9C9C9C] disabled:bg-[#1D2023] w-full rounded-[10px] py-3 mt-[32px] h-[48px]'}
+          <Button onClick={handleConfirm}
+                  className={'text-[17px] enabled:text-white enabled:bg-shayuBlue disabled:text-[#9C9C9C] disabled:bg-[#1D2023] w-full rounded-[10px] py-3 mt-[32px] h-[48px]'}
                   disabled={!canSubmit}>
             确定
-          </button>
+          </Button>
         </div>
       </div>
     </div>
