@@ -14,6 +14,7 @@ import ProfileCard from '@/components/myprofile/ProfileCard';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import LoginModal from '@/components/login';
 import {Button, Popover, PopoverContent, PopoverHandler} from '@material-tailwind/react';
+import OtpModal from '@/components/login/otpModal';
 
 
 const navs = [
@@ -56,7 +57,8 @@ export default function WebPage () {
 
   return (
     <div className={'grid grid-cols-4 px-[110px]'}>
-      <LoginModal open={isLoginOpen} handler={() => setIsLoginOpen(x => !x)}/>
+      {/*<LoginModal open={isLoginOpen} handler={() => setIsLoginOpen(x => !x)}/>*/}
+      <OtpModal open={isLoginOpen} handler={() => setIsLoginOpen(x => !x)}/>
       <div className={'w-full flex flex-col gap-[15px] min-w-[300px]'}>
 
         <button onClick={() => setIsLoginOpen(true)}>login</button>
