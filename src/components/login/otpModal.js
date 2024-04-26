@@ -115,7 +115,7 @@ export default function OtpModal ({open, handler}) {
   }
 
   return (
-    <Dialog open={open} handler={handler} className={'w-[500px] bg-[#121212] rounded-[28px] px-[85px] py-[25px]'} size={'xs'}>
+    <Dialog open={open} handler={handler} className={'w-[500px] bg-[#121212] rounded-[28px] px-[85px] py-[25px] overflow-scroll'} size={'xs'}>
       <DialogBody className={'p-0 w-full h-full'}>
         <div className={'flex flex-col items-center]'}>
           <p className={'text-white font-semibold text-[20px] text-center mb-[54px]'}>输入验证码</p>
