@@ -587,10 +587,10 @@ const Header = () => {
         className='relative'
         ref={dropdownVipRef}
         onMouseEnter={() => {
-          handleOpenHistory(true);
+          handleOpenVip(true);
         }}
         onMouseLeave={() => {
-          handleOpenHistory(false);
+          handleOpenVip(false);
         }}
       >
         <div className='flex h-full flex-row cursor-pointer rounded-full md:bg-[#1D2023] md:px-4 md:ml-2 md:rounded-full'>
