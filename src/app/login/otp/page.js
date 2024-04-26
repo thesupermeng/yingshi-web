@@ -135,7 +135,7 @@ export default function OTP () {
     return (
         // full width and full height
         <>
-            {loginParam &&
+            {loginParam && loginParam.loginMode &&
                 <div className={'h-screen w-screen flex flex-col align-center absolute'}>
                     {loginParam.loginMode === 'email' && <>
                         <p className={'text-center text-[22px] mb-[13px] mt-[40px]'}>输入邮箱验证码</p>

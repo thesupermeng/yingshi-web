@@ -11,6 +11,7 @@ import NavCard from '@/components/myprofile/NavCard';
 import Image from 'next/image';
 import React, {useState} from 'react';
 import ProfileCard from '@/components/myprofile/ProfileCard';
+import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 
 
 const navs = [
@@ -47,14 +48,16 @@ const navs = [
 export default function WebPage () {
 
   const [selected, setSelected] = useState(0)
+  const {isVip, userInfo} = useYingshiUser()
+
 
   return (
     <div className={'grid grid-cols-4 px-[110px]'}>
       <div className={'w-full flex flex-col gap-[15px]'}>
         <div className={'h-[80px] rounded-[12px] bg-[#1A1F24] flex items-center px-[21px] py-[12px]'}>
           <ProfileCard
-            userInfo={null}
-            isVip={false}
+            userInfo={userInfo}
+            isVip={isVip}
             isH5={false}
           />
         </div>
