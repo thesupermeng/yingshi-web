@@ -257,7 +257,8 @@ export const PlayVod = ({ vodId, tId, nId }) => {
     }
 
     if(e?.target?.id === "parentBg" || e?.target?.id === "parentBgMobile" ){
-      setToggleShowShareBoxStatus(!toggleShowShareBoxStatus);
+      console.log(false);
+      setToggleShowShareBoxStatus(false);
     }
   }
 
@@ -269,123 +270,128 @@ export const PlayVod = ({ vodId, tId, nId }) => {
 
   return (
     <div ref={domElementRef} className='container' style={{ padding: '0px', position: 'relative' }}>
-      <div className={`${toggleShowShareBoxStatus ? 'flex' : 'hidden'} fixed z-50 top-0 bottom-0 left-0 right-0 bg-black opacity-60 desktop`}></div>
-      <div className={`${toggleShowShareBoxStatus ? 'flex' : 'hidden'} h-screen desktop fixed z-50 top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-transparent backdrop-blur-sm desktop`}
-        id="parentBg"
-        onClick={toggleShowShareBox}
-      >
-        <div
-            // className={`${toggleShowShareBoxStatus ? 'flex' : 'hidden'} h-screen desktop`}
-            style={{
-              flexDirection: 'column',
-              position: 'absolute',
-              justifyContent: 'center',
-              alignItems: 'center',
-              display: 'flex',
-            }}
-          >
+      <div className='desktop'>
+        <div className={`${toggleShowShareBoxStatus ? 'block' : 'hidden'} fixed z-50 top-0 bottom-0 left-0 right-0 bg-black opacity-60`}></div>
+        <div className={`${toggleShowShareBoxStatus ? 'block' : 'hidden'} h-screen fixed z-50 top-0 bottom-0 left-0 right-0 bg-transparent backdrop-blur-sm`}>
+          <div className='items-center justify-center' style={{ display: 'flex', width: '100%', height: '100%' }} id="parentBg"
+          onClick={toggleShowShareBox}>
             <div
-              className=''
-              style={{
-                width: '400px',
-                height: '30%',
-                zIndex: '999',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexDirection: 'column',
-                background: '#1D2023',
-                padding: '1rem 1rem 0rem 1rem',
-                borderRadius: '12px'
-              }}
-            >
-              <span className='text-md' style={{ fontWeight: '500' }}>分享视频</span>
-              <div style={{ width: '100%', paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
-                <span className='text-sm'>复制下方链接，去粘贴给好友吧：</span>
-              </div>
-              <div
-                className=''
+                // className={`${toggleShowShareBoxStatus ? 'flex' : 'hidden'} h-screen desktop`}
                 style={{
-                  width: '100%',
-                  height: '100%',
-                  background: 'rgba(137, 149, 181, 0.08)',
-                  padding: '1rem'
+                  display: 'flex',
+                  flexDirection: 'column',
+                  position: 'absolute',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  display: 'flex',
                 }}
               >
-                <div className='text-sm' ref={shareContentRef} dangerouslySetInnerHTML={{__html: vodShareContent}}>
+                <div
+                  className=''
+                  style={{
+                    width: '400px',
+                    height: '30%',
+                    zIndex: '999',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                    background: '#1D2023',
+                    padding: '1rem 1rem 0rem 1rem',
+                    borderRadius: '12px'
+                  }}
+                >
+                  <span className='text-md' style={{ fontWeight: '500' }}>分享视频</span>
+                  <div style={{ width: '100%', paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
+                    <span className='text-sm'>复制下方链接，去粘贴给好友吧：</span>
+                  </div>
+                  <div
+                    className=''
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      background: 'rgba(137, 149, 181, 0.08)',
+                      padding: '1rem'
+                    }}
+                  >
+                    <div className='text-sm' ref={shareContentRef} dangerouslySetInnerHTML={{__html: vodShareContent}}>
+                    </div>
+                  </div>
+                  <div
+                    style={{ 
+                      padding: '0.5rem 1.2rem',
+                      background: '#0085E0',
+                      borderRadius: '12px',
+                      margin: '0.5rem',
+                    }}
+                    onClick={copyContentToClipboard}
+                  >
+                    <span className='text-sm cursor-pointer'>一键复制</span>
+                  </div>
                 </div>
-              </div>
-              <div
-                style={{ 
-                  padding: '0.5rem 1.2rem',
-                  background: '#0085E0',
-                  borderRadius: '12px',
-                  margin: '0.5rem',
-                }}
-                onClick={copyContentToClipboard}
-              >
-                <span className='text-sm cursor-pointer'>一键复制</span>
-              </div>
             </div>
+          </div>
         </div>
       </div>
 
-      <div 
-        className={`${toggleShowShareBoxStatus ? 'flex' : 'hidden'} fixed z-10 top-0 bottom-0 left-0 right-0 bg-black opacity-60 mobile`}></div>
-      <div
-        className={`${toggleShowShareBoxStatus ? 'flex' : 'hidden'} w-screen h-screen mobile z-50`}
-        style={{
-          flexDirection: 'column',
-          position: 'absolute',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-        id='parentBgMobile'
-        onClick={toggleShowShareBox}
-      >
+      <div className='mobile'>
+        <div 
+          className={`${toggleShowShareBoxStatus ? 'flex' : 'hidden'} fixed z-10 top-0 bottom-0 left-0 right-0 bg-black opacity-60`}></div>
         <div
-          id='mobileShareContent'
-          className=''
+          className={`${toggleShowShareBoxStatus ? 'flex' : 'hidden'} w-screen h-screen z-50`}
           style={{
-            width: '90%',
-            height: '30%',
-            zIndex: '1',
-            display: 'flex',
+            flexDirection: 'column',
+            position: 'absolute',
             justifyContent: 'center',
             alignItems: 'center',
-            flexDirection: 'column',
-            background: '#1D2023',
-            padding: '1rem 1rem 0rem 1rem',
-            borderRadius: '12px'
           }}
+          id='parentBgMobile'
           onClick={toggleShowShareBox}
         >
-          <span className='text-md' style={{ fontWeight: '500' }}>分享视频</span>
-          <div style={{ width: '100%', paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
-            <span className='text-sm'>复制下方链接，去粘贴给好友吧：</span>
-          </div>
           <div
+            id='mobileShareContent'
             className=''
             style={{
-              width: '100%',
-              height: '100%',
-              background: 'rgba(137, 149, 181, 0.08)',
-              padding: '1rem'
+              width: '90%',
+              height: '30%',
+              zIndex: '1',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+              background: '#1D2023',
+              padding: '1rem 1rem 0rem 1rem',
+              borderRadius: '12px'
             }}
+            onClick={toggleShowShareBox}
           >
-            <div className='text-sm' ref={shareContentRef} dangerouslySetInnerHTML={{__html: vodShareContent}}>
+            <span className='text-md' style={{ fontWeight: '500' }}>分享视频</span>
+            <div style={{ width: '100%', paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
+              <span className='text-sm'>复制下方链接，去粘贴给好友吧：</span>
             </div>
-          </div>
-          <div
-            style={{ 
-              padding: '0.5rem 1.2rem',
-              background: '#0085E0',
-              borderRadius: '12px',
-              margin: '0.5rem',
-            }}
-            onClick={copyContentToClipboard}
-          >
-            <span className='text-sm'>一键复制</span>
+            <div
+              className=''
+              style={{
+                width: '100%',
+                height: '100%',
+                background: 'rgba(137, 149, 181, 0.08)',
+                padding: '1rem'
+              }}
+            >
+              <div className='text-sm' ref={shareContentRef} dangerouslySetInnerHTML={{__html: vodShareContent}}>
+              </div>
+            </div>
+            <div
+              style={{ 
+                padding: '0.5rem 1.2rem',
+                background: '#0085E0',
+                borderRadius: '12px',
+                margin: '0.5rem',
+              }}
+              onClick={copyContentToClipboard}
+            >
+              <span className='text-sm'>一键复制</span>
+            </div>
           </div>
         </div>
       </div>
