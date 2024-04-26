@@ -1,12 +1,11 @@
-'use client'
-import React, {useEffect, useState} from 'react';
-import {updateUserInfo} from '@/services/yingshiUser';
-import {useRouter} from 'next/navigation';
+import {Button, Dialog, DialogBody} from '@material-tailwind/react';
 import {useDispatch, useSelector} from 'react-redux';
+import {useRouter} from 'next/navigation';
+import {useEffect, useState} from 'react';
 import {setYingshiUserInfo} from '@/store/yingshiUser';
-import {Button} from '@material-tailwind/react';
+import {updateUserInfo} from '@/services/yingshiUser';
 
-export default function Nickname () {
+export default function NicknameModal({open, handler}) {
   const dispatch = useDispatch()
   const router = useRouter()
   const [nickname, setNickname] = useState('')
@@ -14,10 +13,6 @@ export default function Nickname () {
 
   const getLoginParam = (s) => s.yingshiUser.loginParam
   const loginParam = useSelector(getLoginParam)
-
-  useEffect(() => {
-    if (!loginParam) router.push('/')
-  })
 
   useEffect(() => {
     // when first load this page, invalidate user info in redux, prevent stale data
@@ -49,19 +44,17 @@ export default function Nickname () {
 
   const canSubmit = validator(nickname)
 
-
   return (
-    <div>
-      <div className="desktop" style={{paddingTop: '100px', minHeight: '80vh'}}>
-        WEB
-      </div>
-      <div className="mobile w-screen p-4">
-        <div className={'flex flex-col items-center w-full px-[23px] pt-10'}>
-          <p className={'text-[22px] text-center font-medium'}>输入属于您的昵称</p>
-          <p className={'text-[14px] text-center mt-[23px]'}>请输入2-18个字符</p>
+    <Dialog open={open} handler={handler} className={'w-[500px] bg-[#121212] rounded-[28px] p-[30px]'} size={'xs'}>
+      <DialogBody className={'p-0 w-full h-full'}>
+        <div className={'flex flex-col items-center w-full px-[23px]'}>
+          <p className={'text-[22px] text-white text-center font-medium'}>输入属于您的昵称</p>
+          <p className={'text-[16px] text-[#9C9C9C] text-center mt-[15px]'}>请输入2-18个字符</p>
 
-          <div className={'flex flex-col mt-[32px] w-full'}>
-            <div className={`bg-[#1D2023] rounded-[10px] px-[20px] h-[48px] flex items-center border border-transparent ${errorMsg ? 'border-[#FF0000]' : ''}`}>
+          <div className={'flex flex-col mt-[19px] w-full'}>
+            <span className={'text-[15px] text-[#9C9C9C] self-start'}>输入昵称</span>
+            <div
+              className={`mt-[15px] bg-[#1D2023] rounded-[10px] px-[20px] h-[48px] flex items-center border border-transparent ${errorMsg ? 'border-[#FF0000]' : ''}`}>
               <input onChange={handleChange} className={'text-white text-[15px] outline-none bg-inherit w-full'}
                      maxLength={18}/>
             </div>
@@ -72,13 +65,12 @@ export default function Nickname () {
           </div>
 
           <Button onClick={handleConfirm}
-                  className={'text-[17px] enabled:text-white enabled:bg-shayuBlue disabled:text-[#9C9C9C] disabled:bg-[#1D2023] w-full rounded-[10px] py-3 mt-[32px] h-[48px]'}
+                  className={'text-[17px] enabled:text-white enabled:bg-shayuBlue disabled:text-[#9C9C9C] disabled:bg-[#1D2023] w-full rounded-[10px] py-3 mt-[15px] h-[48px]'}
                   disabled={!canSubmit}>
             确定
           </Button>
         </div>
-      </div>
-    </div>
-
+      </DialogBody>
+    </Dialog>
   )
 }
