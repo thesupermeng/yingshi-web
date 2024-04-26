@@ -47,7 +47,7 @@ export default function TextInput({name, placeholder, validator, onChange, error
                     name={name}
                     placeholder={placeholder}
                     onChange={debouncedOnChange}
-                    className={'text-white text-[15px] w-full bg-transparent outline-none pl-2'}
+                    className={'text-white text-[15px] w-full bg-transparent outline-none pl-2 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'}
                     type={inputType}
                 />
                 {validator && // if validator exist
