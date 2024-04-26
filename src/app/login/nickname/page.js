@@ -2,7 +2,7 @@
 import React, {useEffect, useState} from 'react';
 import {updateUserInfo} from '@/services/yingshiUser';
 import {useRouter} from 'next/navigation';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {setYingshiUserInfo} from '@/store/yingshiUser';
 
 export default function Nickname () {
@@ -10,6 +10,13 @@ export default function Nickname () {
   const router = useRouter()
   const [nickname, setNickname] = useState('')
   const [errorMsg, setErrorMsg] = useState(null)
+
+  const getLoginParam = (s) => s.yingshiUser.loginParam
+  const loginParam = useSelector(getLoginParam)
+
+  useEffect(() => {
+    if (!loginParam) router.push('/')
+  })
 
   useEffect(() => {
     // when first load this page, invalidate user info in redux, prevent stale data
