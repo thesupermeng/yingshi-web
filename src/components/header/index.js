@@ -18,6 +18,9 @@ import {
   noADIcon,
   subtractIcon,
   ArrowLeftIcon,
+  AppImage,
+  AppleStoreIcon,
+  AndroidIcon,
 } from '@/asset/icons';
 
 import { usePathname, useRouter } from 'next/navigation';
@@ -31,7 +34,8 @@ import {
   setSpecialSelectedId,
 } from '@/store/headerData';
 import TopicHeader from './../../components/topicHeader';
-import {updateUserInfo} from '@/services/yingshiUser';
+import { updateUserInfo } from '@/services/yingshiUser';
+import QRCode from 'qrcode.react';
 
 const getHeaderMenu = (state) => state.headerMenu;
 const getHeaderMenuSelected = (state) => state.headerMenuSelected;
@@ -44,6 +48,8 @@ const Header = () => {
   const dropdownSearchRef = useRef(null);
   const dropdownVipRef = useRef(null);
   const dropdownHistoryRef = useRef(null);
+  const dropdownAppRef = useRef(null);
+
   const { t } = useTranslation();
 
   const headerMenu = useSelector(getHeaderMenu);
@@ -60,6 +66,7 @@ const Header = () => {
   const [openSearch, setOpenSearch] = useState(false);
   const [openVip, setOpenVip] = useState(false);
   const [openHistory, setOpenHistory] = useState(false);
+  const [openApp, setOpenApp] = useState(false);
   const [searchHistoryList, setSearchHistoryList] = useState([]);
   const [watchHistoryList, setWatchHistoryList] = useState([]);
   const [topTenList, setTopTenList] = useState([]);
@@ -71,11 +78,11 @@ const Header = () => {
     setOpenMore(!openMore);
   };
 
-  const handleOpenVip = () => {
-    setOpenVip(!openVip);
+  const handleOpenVip = (value) => {
+    setOpenVip(value);
   };
 
-  const handleOpenHistory = () => {
+  const handleOpenHistory = (value) => {
     if (!openHistory == true) {
       let watchHistoryData = JSON.parse(
         localStorage.getItem('watchHistoryList')
@@ -107,8 +114,11 @@ const Header = () => {
         );
       }
     }
+    setOpenHistory(value);
+  };
 
-    setOpenHistory(!openHistory);
+  const handleOpenApp = (value) => {
+    setOpenApp(value);
   };
 
   const handleOpenSearch = () => {
@@ -134,7 +144,9 @@ const Header = () => {
     const remainingSeconds = seconds % 60;
 
     // Format hours, minutes, and remaining seconds as HH:MM:SS
-    const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+    const formattedTime = `${String(hours).padStart(2, '0')}:${String(
+      minutes
+    ).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
 
     return formattedTime;
   };
@@ -252,15 +264,12 @@ const Header = () => {
 
   const handleClick = (value) => {
     if (value == 998) {
-      dispatch(setSpecialSelectedId(value));
       router.push('/topic');
     } else if (value == 999) {
-      dispatch(setSpecialSelectedId(value));
       localStorage.removeItem('videoTypeId');
       localStorage.removeItem('videoClass');
       router.push('/filmLibrary');
     } else {
-      dispatch(setSpecialSelectedId(-1));
       dispatch(setSelectedId(value));
       router.push('/');
     }
@@ -327,6 +336,23 @@ const Header = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    if (pathname.startsWith('/topic')) {
+      dispatch(setSpecialSelectedId(998));
+      
+    } else if (pathname.startsWith('/filmLibrary')) {
+      dispatch(setSpecialSelectedId(999));
+    } 
+    else if (pathname.startsWith('/play/')){
+      dispatch(setSpecialSelectedId(-1));
+      dispatch(setSelectedId(-1));
+    }
+    else {
+      dispatch(setSpecialSelectedId(-1));
+      dispatch(setSelectedId(0));
+    }
+  }, [pathname])
+
+  useEffect(() => {
     calculateItemsVisibility();
     const resizeListener = () => {
       calculateItemsVisibility();
@@ -358,39 +384,14 @@ const Header = () => {
       }
     }
 
-    function handleClickOutsideDropDownVip(event) {
-      if (
-        dropdownVipRef.current &&
-        !dropdownVipRef.current.contains(event.target)
-      ) {
-        setOpenVip(false);
-      }
-    }
-
-    function handleClickOutsideDropDownHistory(event) {
-      if (
-        dropdownHistoryRef.current &&
-        !dropdownHistoryRef.current.contains(event.target)
-      ) {
-        setOpenHistory(false);
-      }
-    }
-
     // Attach event listener when the component mounts
     document.addEventListener('mousedown', handleClickOutsideDropDownMore);
     document.addEventListener('mousedown', handleClickOutsideSearch);
-    document.addEventListener('mousedown', handleClickOutsideDropDownVip);
-    document.addEventListener('mousedown', handleClickOutsideDropDownHistory);
 
     // Remove event listener when the component unmounts
     return () => {
       document.removeEventListener('mousedown', handleClickOutsideDropDownMore);
       document.removeEventListener('mousedown', handleClickOutsideSearch);
-      document.removeEventListener('mousedown', handleClickOutsideDropDownVip);
-      document.removeEventListener(
-        'mousedown',
-        handleClickOutsideDropDownHistory
-      );
     };
   }, []);
 
@@ -423,7 +424,6 @@ const Header = () => {
               value={searchInput}
               onChange={handleChange}
               className='border-0 border-gray-300 text-white rounded-full pl-10 md:pl-4 md:pr-10 pr-4 py-2 focus:outline-none w-full md:w-60 header-search-input-desktop'
-
               onClick={handleOpenSearch}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') handleSearch();
@@ -553,10 +553,10 @@ const Header = () => {
                                 index == 0
                                   ? 'rgba(0, 106, 178, 1)'
                                   : index == 1
-                                    ? 'rgba(0, 133, 224, 1)'
-                                    : index == 2
-                                      ? 'rgba(96, 191, 255, 1)'
-                                      : 'rgba(156, 156, 156, 1)',
+                                  ? 'rgba(0, 133, 224, 1)'
+                                  : index == 2
+                                  ? 'rgba(96, 191, 255, 1)'
+                                  : 'rgba(156, 156, 156, 1)',
                             }}
                           >
                             {index + 1}
@@ -583,13 +583,17 @@ const Header = () => {
 
   let vipContainer = (
     <div className='flex-row flex'>
-      <div className='relative' ref={dropdownVipRef}>
-        <div
-          onClick={() => {
-            handleOpenVip();
-          }}
-          className='flex h-full flex-row cursor-pointer rounded-full md:bg-[#1D2023] md:px-4 md:ml-2 md:rounded-full'
-        >
+      <div
+        className='relative'
+        ref={dropdownVipRef}
+        onMouseEnter={() => {
+          handleOpenHistory(true);
+        }}
+        onMouseLeave={() => {
+          handleOpenHistory(false);
+        }}
+      >
+        <div className='flex h-full flex-row cursor-pointer rounded-full md:bg-[#1D2023] md:px-4 md:ml-2 md:rounded-full'>
           <Image className='mr-2' src={vipIcon} alt='vip' width={25} />
           <div className='flex items-center'>
             <span className='text-[#F4DBBA]'>VIP会员</span>
@@ -663,20 +667,26 @@ const Header = () => {
 
   let historyContainer = (
     <div className='flex-row flex'>
-      <div className='relative' ref={dropdownHistoryRef}>
+      <div
+        className='relative'
+        ref={dropdownHistoryRef}
+        onMouseEnter={() => {
+          handleOpenHistory(true);
+        }}
+        onMouseLeave={() => {
+          handleOpenHistory(false);
+        }}
+      >
         <div className='h-full flex justify-center'>
           <Image
             className='cursor-pointer'
             src={HistoryIcon}
             alt='history'
             width={30}
-            onClick={() => {
-              handleOpenHistory();
-            }}
           />
         </div>
         {openHistory ? (
-          <div className='absolute flex flex-col items-center pt-1 w-80 z-10 -left-44'>
+          <div className='absolute flex flex-col items-center pt-1 w-80 z-10 -left-36'>
             <div
               style={{
                 width: 0,
@@ -688,7 +698,7 @@ const Header = () => {
               }}
             />
             <div
-              className='p-3 w-full flex-col rounded-md'
+              className='p-3 w-full rounded-md'
               style={{ backgroundColor: '#1d2023e0' }}
             >
               <div className='flex pb-3 pl-2'>
@@ -707,6 +717,7 @@ const Header = () => {
                     .map((item, index) => {
                       return (
                         <div
+                          key={index}
                           className='flex flex-row hover:text-[#0085E0] gap-x-2 cursor-pointer'
                           onClick={() => {
                             router.push(
@@ -721,7 +732,7 @@ const Header = () => {
                               src={item.vodpic}
                             />
                           </div>
-                          <div className='flex-1 flex flex-col truncate'>
+                          <div className='flex-1 flex flex-col truncate gap-y-2'>
                             <span className='text-sm truncate'>
                               {item.vodname}
                             </span>
@@ -730,18 +741,6 @@ const Header = () => {
                             </span>
                           </div>
                         </div>
-                        // <div
-                        //   key={index}
-                        //   className='flex w-full flex-row gap-x-2 '
-                        // >
-                        //   <div className='flex w-28 h-16'>
-
-                        //   </div>
-                        //   <div className='flex flex-1 flex-col gap-1'>
-                        //     <span className='text-sm truncate'>{item.vodname}</span>
-                        //     <span className='text-xs text-white'>观看至 {secondsToHHMMSS(item.watchtimes)}</span>
-                        //   </div>
-                        // </div>
                       );
                     })}
                 </div>
@@ -763,7 +762,9 @@ const Header = () => {
               )}
 
               <div
-                className={`flex-row justify-center cursor-pointer pt-2 ${watchHistoryList.length > 0 ? 'flex' : 'hidden'}`}
+                className={`flex-row justify-center cursor-pointer pt-2 ${
+                  watchHistoryList.length > 0 ? 'flex' : 'hidden'
+                }`}
                 onClick={() => {
                   handleClearWatchHistory();
                 }}
@@ -784,9 +785,75 @@ const Header = () => {
         <div className='border-l-2 border-white h-4' />
       </div>
 
-      <div className='flex flex-row cursor-pointer'>
-        <Image className='mx-2' src={PhoneIcon} alt='app' width={14} />
-        <div className='flex items-center md:flex hidden'>APP</div>
+      <div
+        className='relative'
+        ref={dropdownAppRef}
+        onMouseEnter={() => {
+          handleOpenApp(true);
+        }}
+        onMouseLeave={() => {
+          handleOpenApp(false);
+        }}
+      >
+        <div className='h-full flex flex-row cursor-pointer'>
+          <Image className='mx-2' src={PhoneIcon} alt='app' width={14} />
+          <div className='flex items-center md:flex hidden'>APP</div>
+        </div>
+        {openApp ? (
+          <div className='absolute flex flex-col items-end pt-1 z-10 right-2'>
+            <div
+              style={{
+                width: 0,
+                height: 0,
+                top: '-10px',
+                borderLeft: '10px solid transparent',
+                borderRight: '10px solid transparent',
+                borderBottom: '10px solid #1d2023e0',
+              }}
+            />
+            <div
+              className='p-2 flex flex-row rounded-md rounded-tr-none'
+              style={{ backgroundColor: '#1d2023e0' }}
+            >
+              <div className='flex-none w-[200px]'>
+                <Image src={AppImage} alt='AppImage' width={200} />
+              </div>
+              <div className='flex-1 flex flex-col justify-center items-center pr-2 gap-y-2'>
+                <Image alt='鲨鱼影视' src={Logo} width={120} />
+                <span className='text-sm'>您每一天的影视平台</span>
+                <div className='flex flex-row gap-x-5 pt-2'>
+                  <div className='flex flex-col items-center gap-2'>
+                    <div className='flex flex-row  items-center'>
+                      <Image alt='appleStore' src={AppleStoreIcon} width={25} />
+                      <span className='text-xs'>iOS App 下载</span>
+                    </div>
+                    <QRCode
+                      className='rounded-md'
+                      value='https://apps.apple.com/cn/app/id6474402534'
+                      renderAs='canvas'
+                      size={120}
+                      includeMargin={true}
+                    />
+                  </div>
+                  <div className='flex flex-col items-center gap-2'>
+                    <div className='flex flex-row items-center'>
+                      <Image alt='playStore' src={AndroidIcon} width={25} />
+                      <span className='text-xs'>安卓 App 下载</span>
+                    </div>
+                    <QRCode
+                      className='rounded-md'
+                      value='https://play.google.com/store/apps/details?id=com.yingshitv'
+                      renderAs='canvas'
+                      size={120}
+                      includeMargin={true}
+                    />
+                  </div>
+                </div>
+                <span className='text-sm'>扫码即可下载手机APP</span>
+              </div>
+            </div>
+          </div>
+        ) : null}
       </div>
 
       <div className='hidden'>{vipContainer}</div>
@@ -810,7 +877,7 @@ const Header = () => {
           : 'md:absolute z-30 w-screen bg-blur-header'
       }
     >
-      <div className='flex pb-2.5 md:pb-4 pt-3 justify-center container pl-0'>
+      <div className='flex pb-2.5 md:pb-4 pt-3 justify-center container md:pl-0'>
         <div className='gap-y-2 flex-col w-full md:flex-row flex'>
           <div className='flex-1 flex gap-x-2 md:justify-start '>
             <div
@@ -852,8 +919,8 @@ const Header = () => {
                       selectedMenu.id === navItem.id
                         ? 'text-blue-500'
                         : selectedSpecialMenu.id === navItem.id
-                          ? 'text-blue-500'
-                          : 'text-white'
+                        ? 'text-blue-500'
+                        : 'text-white'
                     }`}
                   >
                     {navItem.name}
@@ -883,8 +950,8 @@ const Header = () => {
                       selectedMenu.id === navItem.id
                         ? 'text-blue-500'
                         : selectedSpecialMenu.id === navItem.id
-                          ? 'text-blue-500'
-                          : 'text-white'
+                        ? 'text-blue-500'
+                        : 'text-white'
                     }`}
                   >
                     {navItem.name}
@@ -1086,7 +1153,7 @@ const Header = () => {
       <div className={'z-30 w-screen mobile'}>
         <div className='flex py-3 mx-2.5'>
           <div className='gap-y-2 flex-col w-full md:flex-row flex'>
-            <div className="flex-1 flex gap-x-2 md:justify-start">
+            <div className='flex-1 flex gap-x-2 md:justify-start'>
               {/*<div*/}
               {/*  className={'flex w-[30px] h-[30px] justify-center items-center'}*/}
               {/*>*/}
@@ -1100,12 +1167,12 @@ const Header = () => {
               <div
                 className={'flex-1 flex justify-end items-center px-2'}
                 onClick={() => {
-                  updateUserInfo() // will assign default username
-                  router.push('/myprofile')
-                }}>
+                  updateUserInfo(); // will assign default username
+                  router.push('/myprofile');
+                }}
+              >
                 <span className={'text-[16px]'}>跳过</span>
               </div>
-
             </div>
           </div>
         </div>
