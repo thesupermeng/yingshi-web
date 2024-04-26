@@ -264,15 +264,12 @@ const Header = () => {
 
   const handleClick = (value) => {
     if (value == 998) {
-      dispatch(setSpecialSelectedId(value));
       router.push('/topic');
     } else if (value == 999) {
-      dispatch(setSpecialSelectedId(0));
       localStorage.removeItem('videoTypeId');
       localStorage.removeItem('videoClass');
       router.push('/filmLibrary');
     } else {
-      dispatch(setSpecialSelectedId(-1));
       dispatch(setSelectedId(value));
       router.push('/');
     }
@@ -337,6 +334,23 @@ const Header = () => {
 
     fetchData();
   }, [dispatch]);
+
+  useEffect(() => {
+    if (pathname.startsWith('/topic')) {
+      dispatch(setSpecialSelectedId(998));
+      
+    } else if (pathname.startsWith('/filmLibrary')) {
+      dispatch(setSpecialSelectedId(999));
+    } 
+    else if (pathname.startsWith('/play/')){
+      dispatch(setSpecialSelectedId(-1));
+      dispatch(setSelectedId(-1));
+    }
+    else {
+      dispatch(setSpecialSelectedId(-1));
+      dispatch(setSelectedId(0));
+    }
+  }, [pathname])
 
   useEffect(() => {
     calculateItemsVisibility();
