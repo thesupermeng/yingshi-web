@@ -34,7 +34,7 @@ import {
   setSpecialSelectedId,
 } from '@/store/headerData';
 import TopicHeader from './../../components/topicHeader';
-import {updateUserInfo} from '@/services/yingshiUser';
+import { updateUserInfo } from '@/services/yingshiUser';
 import QRCode from 'qrcode.react';
 
 const getHeaderMenu = (state) => state.headerMenu;
@@ -145,7 +145,9 @@ const Header = () => {
     const remainingSeconds = seconds % 60;
 
     // Format hours, minutes, and remaining seconds as HH:MM:SS
-    const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+    const formattedTime = `${String(hours).padStart(2, '0')}:${String(
+      minutes
+    ).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
 
     return formattedTime;
   };
@@ -445,7 +447,6 @@ const Header = () => {
               value={searchInput}
               onChange={handleChange}
               className='border-0 border-gray-300 text-white rounded-full pl-10 md:pl-4 md:pr-10 pr-4 py-2 focus:outline-none w-full md:w-60 header-search-input-desktop'
-
               onClick={handleOpenSearch}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') handleSearch();
@@ -575,10 +576,10 @@ const Header = () => {
                                 index == 0
                                   ? 'rgba(0, 106, 178, 1)'
                                   : index == 1
-                                    ? 'rgba(0, 133, 224, 1)'
-                                    : index == 2
-                                      ? 'rgba(96, 191, 255, 1)'
-                                      : 'rgba(156, 156, 156, 1)',
+                                  ? 'rgba(0, 133, 224, 1)'
+                                  : index == 2
+                                  ? 'rgba(96, 191, 255, 1)'
+                                  : 'rgba(156, 156, 156, 1)',
                             }}
                           >
                             {index + 1}
@@ -698,7 +699,7 @@ const Header = () => {
           />
         </div>
         {openHistory ? (
-          <div className='absolute flex flex-col items-center pt-1 w-80 z-10 -left-44'>
+          <div className='absolute flex flex-col items-center pt-1 w-80 z-10 -left-36'>
             <div
               style={{
                 width: 0,
@@ -729,6 +730,7 @@ const Header = () => {
                     .map((item, index) => {
                       return (
                         <div
+                          key={index}
                           className='flex flex-row hover:text-[#0085E0] gap-x-2 cursor-pointer'
                           onClick={() => {
                             router.push(
@@ -773,7 +775,9 @@ const Header = () => {
               )}
 
               <div
-                className={`flex-row justify-center cursor-pointer pt-2 ${watchHistoryList.length > 0 ? 'flex' : 'hidden'}`}
+                className={`flex-row justify-center cursor-pointer pt-2 ${
+                  watchHistoryList.length > 0 ? 'flex' : 'hidden'
+                }`}
                 onClick={() => {
                   handleClearWatchHistory();
                 }}
@@ -828,17 +832,29 @@ const Header = () => {
                   <div className='flex flex-col items-center gap-2'>
                     <div className='flex flex-row  items-center'>
                       <Image alt='appleStore' src={AppleStoreIcon} width={25} />
-                        <span className='text-xs'>iOS App 下载</span>
-                      </div>
-                      <QRCode className='rounded-md' value="https://apps.apple.com/cn/app/id6474402534" renderAs="canvas" size={120} includeMargin={true} />
+                      <span className='text-xs'>iOS App 下载</span>
                     </div>
-                    <div className='flex flex-col items-center gap-2'>
-                      <div className='flex flex-row items-center'>
-                        <Image alt='playStore' src={AndroidIcon} width={25} />
-                        <span className='text-xs'>安卓 App 下载</span>
-                      </div>
-                      <QRCode className='rounded-md' value="https://play.google.com/store/apps/details?id=com.yingshitv" renderAs="canvas" size={120} includeMargin={true} />
+                    <QRCode
+                      className='rounded-md'
+                      value='https://apps.apple.com/cn/app/id6474402534'
+                      renderAs='canvas'
+                      size={120}
+                      includeMargin={true}
+                    />
+                  </div>
+                  <div className='flex flex-col items-center gap-2'>
+                    <div className='flex flex-row items-center'>
+                      <Image alt='playStore' src={AndroidIcon} width={25} />
+                      <span className='text-xs'>安卓 App 下载</span>
                     </div>
+                    <QRCode
+                      className='rounded-md'
+                      value='https://play.google.com/store/apps/details?id=com.yingshitv'
+                      renderAs='canvas'
+                      size={120}
+                      includeMargin={true}
+                    />
+                  </div>
                 </div>
                 <span className='text-sm'>扫码即可下载手机APP</span>
               </div>
@@ -910,8 +926,8 @@ const Header = () => {
                       selectedMenu.id === navItem.id
                         ? 'text-blue-500'
                         : selectedSpecialMenu.id === navItem.id
-                          ? 'text-blue-500'
-                          : 'text-white'
+                        ? 'text-blue-500'
+                        : 'text-white'
                     }`}
                   >
                     {navItem.name}
@@ -941,8 +957,8 @@ const Header = () => {
                       selectedMenu.id === navItem.id
                         ? 'text-blue-500'
                         : selectedSpecialMenu.id === navItem.id
-                          ? 'text-blue-500'
-                          : 'text-white'
+                        ? 'text-blue-500'
+                        : 'text-white'
                     }`}
                   >
                     {navItem.name}
@@ -1144,7 +1160,7 @@ const Header = () => {
       <div className={'z-30 w-screen mobile'}>
         <div className='flex py-3 mx-2.5'>
           <div className='gap-y-2 flex-col w-full md:flex-row flex'>
-            <div className="flex-1 flex gap-x-2 md:justify-start">
+            <div className='flex-1 flex gap-x-2 md:justify-start'>
               {/*<div*/}
               {/*  className={'flex w-[30px] h-[30px] justify-center items-center'}*/}
               {/*>*/}
@@ -1158,12 +1174,12 @@ const Header = () => {
               <div
                 className={'flex-1 flex justify-end items-center px-2'}
                 onClick={() => {
-                  updateUserInfo() // will assign default username
-                  router.push('/myprofile')
-                }}>
+                  updateUserInfo(); // will assign default username
+                  router.push('/myprofile');
+                }}
+              >
                 <span className={'text-[16px]'}>跳过</span>
               </div>
-
             </div>
           </div>
         </div>
