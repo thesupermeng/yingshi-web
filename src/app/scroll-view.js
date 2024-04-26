@@ -5,17 +5,15 @@ import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsScroll } from '@/store/scrollView';
 
-const getIsScroll = (state) => state.isScroll
 export const ScrollView = ({ children }) => {
   const dispatch = useDispatch();
   const scrollableDivRef = useRef(null);
   const [showScrollUpButton, setShowScrollUpButton] = useState(false);
-  const isScrolling = useSelector(getIsScroll);
+
 
   const handleScroll = () => {
     if (scrollableDivRef.current.scrollTop > 200) {
       if (!showScrollUpButton) { // prevent keep updating the state
-        console.log('helll')
         dispatch(setIsScroll(true));
         setShowScrollUpButton(true);
       }
