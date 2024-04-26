@@ -1,7 +1,7 @@
 import {BottomSheet} from 'react-spring-bottom-sheet';
 import React, {useEffect, useState} from 'react';
 import {loginRequestEmailOtp, loginRequestSmsOtp} from '@/services/yingshiUser';
-import TextInput from '@/componentsH5/yingshiLoginBottomSheet/input';
+import TextInput from '@/components/login/input';
 import {useRouter} from 'next/navigation';
 import {useDispatch} from 'react-redux';
 import {setYingshiUserLoginParam} from '@/store/yingshiUser';
