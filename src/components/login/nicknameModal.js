@@ -16,8 +16,10 @@ export default function NicknameModal({open, handler, onSuccess}) {
 
   useEffect(() => {
     // when first load this page, invalidate user info in redux, prevent stale data
-    dispatch(setYingshiUserInfo(null))
-  }, [])
+    if (open) {
+      dispatch(setYingshiUserInfo(null))
+    }
+  }, [open])
 
   const validator = (val) => {
     // check whether val is between 2 and 18 characters
