@@ -6,7 +6,7 @@ import {Dialog, DialogBody} from '@material-tailwind/react';
 export default function LoginSuccess({open, handler}) {
   return <>
   {open &&
-    <Dialog open={open} handler={handler} className={'w-[500px] bg-[#121212] rounded-[28px] p-[30px]'} size={'xs'}>
+    <Dialog open={open} handler={handler} className={'w-[500px] bg-[#121212] rounded-[28px] p-[30px] outline-none'} size={'xs'}>
       <DialogBody className={'p-0 w-full h-full'}>
         <div
           className={'w-full h-full rounded-[14px] flex flex-col items-center justify-center'}>
