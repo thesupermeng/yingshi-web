@@ -23,11 +23,12 @@ import {setYingshiUserInfo, setYingshiUserToken} from '@/store/yingshiUser';
 import LogoutModal from '@/components/login/logoutModal';
 import UserCenter from '@/components/myprofile/UserCenter';
 import FeedbackForm from '@/components/myprofile/FeedbackForm';
+import HistoryPage from '@/components/myprofile/HistoryPage';
 
 export default function WebPage () {
 
   const dispatch = useDispatch();
-  const [selected, setSelected] = useState(0)
+  const [selected, setSelected] = useState(1)
   const {isVip, userInfo, token} = useYingshiUser()
   const router = useRouter();
   const [openLogout, setOpenLogout] = useState(false)
@@ -99,6 +100,9 @@ export default function WebPage () {
       <div className={'col-span-3 w-full flex flex-col gap-[15px] items-center px-[60px]'}>
         {selected === 0 &&
           <UserCenter/>
+        }
+        {selected === 1 &&
+          <HistoryPage/>
         }
         {selected === 2 &&
           <FeedbackForm/>
