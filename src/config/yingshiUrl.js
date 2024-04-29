@@ -3,7 +3,8 @@ export const URL_YINGSHI_USER = {
   logout: 'users/v1/logout',
   userInfo: 'users/v1/me',
   countryList: 'country/v1/country',
-  updateUser: 'users/v1/update'
+  updateUser: 'users/v1/update',
+  feedback: 'feedback/v2/submit'
 };
 
 export const URL_YINGSHI_VOD = {

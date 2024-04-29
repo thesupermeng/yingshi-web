@@ -22,6 +22,7 @@ import {useDispatch} from 'react-redux';
 import {setYingshiUserInfo, setYingshiUserToken} from '@/store/yingshiUser';
 import LogoutModal from '@/components/login/logoutModal';
 import UserCenter from '@/components/myprofile/UserCenter';
+import FeedbackForm from '@/components/myprofile/FeedbackForm';
 
 export default function WebPage () {
 
@@ -98,6 +99,9 @@ export default function WebPage () {
       <div className={'col-span-3 w-full flex flex-col gap-[15px] items-center px-[60px]'}>
         {selected === 0 &&
           <UserCenter/>
+        }
+        {selected === 2 &&
+          <FeedbackForm/>
         }
       </div>
       <LogoutModal
