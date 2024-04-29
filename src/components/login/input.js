@@ -3,11 +3,11 @@ import {CrossRed, TickBlue} from '@/asset/icons';
 import Image from 'next/image';
 import {debounce} from 'lodash';
 
-export default function TextInput({name, placeholder, validator, onChange, errorMessage, isShowIcon, prefixText, inputType='text'}) {
+export default function TextInput({name, placeholder, validator, onChange, errorMessage, isShowIcon, prefixText, inputType='text', initValue = ''}) {
     const [isError, setIsError] = useState(false);
-    const [_value, _setValue] = useState(''); // for condition checking only
+    const [_value, _setValue] = useState(initValue); // for condition checking only
 
-    const internalOnChange = useCallback((e) => {
+    const valueValidator = useCallback((e) => {
         let err = false;
         if (validator){
             if (!e.target.value) {
@@ -26,10 +26,14 @@ export default function TextInput({name, placeholder, validator, onChange, error
         }
 
         onChange(e, err);
-        _setValue(e.target.value)
     }, [validator, onChange]);
 
-    const debouncedOnChange = debounce(internalOnChange, 100)
+    const debouncedValidator = debounce(valueValidator, 100)
+
+    const internalOnChange = (e) =>{
+        debouncedValidator(e)
+        _setValue(e.target.value)
+    }
 
     const inputBackground = isError ? 'bg-[#FF10101A] border border-[#FF1010]' : 'bg-[#1D2023]'
 
@@ -46,9 +50,10 @@ export default function TextInput({name, placeholder, validator, onChange, error
                 <input
                     name={name}
                     placeholder={placeholder}
-                    onChange={debouncedOnChange}
+                    onChange={internalOnChange}
                     className={'text-white text-[15px] w-full bg-transparent outline-none pl-2 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'}
                     type={inputType}
+                    value={_value}
                 />
                 {validator && // if validator exist
                     _value && // if value is not empty
