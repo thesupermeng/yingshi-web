@@ -41,6 +41,7 @@ export default function useYingshiUser() {
 
     return {
         userInfo,
-        isVip
+        isVip,
+        token
     }
 }

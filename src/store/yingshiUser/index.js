@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {LocalStorageKeys} from '@/config/common';
 
 export const setYingshiUserInfo = (d) => yingshiUser.actions.setUserInfo(d)
 export const setYingshiUserToken = (d) => yingshiUser.actions.setToken(d)
@@ -28,7 +29,7 @@ export const yingshiUser = createSlice( {
          *     userPaidVipList: any;
          */
         userInfo: null,
-        token: null,
+        token: localStorage.getItem(LocalStorageKeys.AuthToken),
         loginParam: null,
     },
     reducers: {

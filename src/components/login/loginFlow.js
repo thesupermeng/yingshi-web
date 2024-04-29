@@ -3,12 +3,14 @@ import OtpModal from '@/components/login/otpModal';
 import NicknameModal from '@/components/login/nicknameModal';
 import LoginSuccess from '@/components/login/loginSuccess';
 import {forwardRef, useImperativeHandle, useState} from 'react';
+import {useRouter} from 'next/navigation';
 
 const LoginFlow = forwardRef(function LoginFlow(props, ref) {
   const [openLogin, setOpenLogin] = useState(false);
   const [openOTP, setOpenOTP] = useState(false);
   const [openLoginSuccess, setOpenLoginSuccess] = useState(false);
   const [openNickname, setOpenNickname] = useState(false);
+  const router = useRouter();
 
   const handleOpenLogin = () => {
     setOpenLogin(x => !x);
@@ -63,13 +65,13 @@ const LoginFlow = forwardRef(function LoginFlow(props, ref) {
           setOpenLoginSuccess(true)
           setTimeout(() => {
             setOpenLoginSuccess(false)
+            router.refresh()
           }, 2000)
         }}
       />
       <LoginSuccess
         open={openLoginSuccess}
         handler={handleOpenLoginSuccess}
-        onDismiss={() => setOpenLoginSuccess(false)}
       />
     </>
   )

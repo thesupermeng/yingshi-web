@@ -37,7 +37,7 @@ import TopicHeader from './../../components/topicHeader';
 import { updateUserInfo } from '@/services/yingshiUser';
 import QRCode from 'qrcode.react';
 import LoginFlow from '@/components/login/loginFlow';
-import loginFlow from '@/components/login/loginFlow';
+import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 
 const getHeaderMenu = (state) => state.headerMenu;
 const getHeaderMenuSelected = (state) => state.headerMenuSelected;
@@ -60,6 +60,7 @@ const Header = () => {
   const selectedSpecialMenu = useSelector(getSpecialHeaderMenuSelected);
   const [visibleItems, setVisibleItems] = useState([]);
   const [hiddenItems, setHiddenItems] = useState([]);
+  const {isVip, userInfo} = useYingshiUser();
 
   const router = useRouter();
   const pathname = usePathname();
@@ -858,7 +859,11 @@ const Header = () => {
         {/* md:flex */}
         <div
           onClick={() => {
-            loginFlowRef.current.start()
+            if (userInfo) {
+              router.push('/myprofile')
+            } else {
+              loginFlowRef.current.start()
+            }
           }}
         >
           <Image

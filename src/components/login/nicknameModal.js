@@ -14,12 +14,12 @@ export default function NicknameModal({open, handler, onSuccess}) {
   const getLoginParam = (s) => s.yingshiUser.loginParam
   const loginParam = useSelector(getLoginParam)
 
-  useEffect(() => {
-    // when first load this page, invalidate user info in redux, prevent stale data
-    if (open) {
-      dispatch(setYingshiUserInfo(null))
-    }
-  }, [open])
+  // useEffect(() => {
+  //   // when first load this page, invalidate user info in redux, prevent stale data
+  //   if (open) {
+  //     dispatch(setYingshiUserInfo(null))
+  //   }
+  // }, [open])
 
   const validator = (val) => {
     // check whether val is between 2 and 18 characters

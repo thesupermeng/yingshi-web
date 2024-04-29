@@ -9,12 +9,13 @@ import {
 } from '@/asset/icons';
 import NavCard from '@/components/myprofile/NavCard';
 import Image from 'next/image';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ProfileCard from '@/components/myprofile/ProfileCard';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import LoginModal from '@/components/login';
 import {Button, Popover, PopoverContent, PopoverHandler} from '@material-tailwind/react';
 import OtpModal from '@/components/login/otpModal';
+import {useRouter} from 'next/navigation';
 
 
 const navs = [
@@ -51,8 +52,14 @@ const navs = [
 export default function WebPage () {
 
   const [selected, setSelected] = useState(0)
-  const {isVip, userInfo} = useYingshiUser()
+  const {isVip, userInfo, token} = useYingshiUser()
+  const router = useRouter();
 
+  useEffect(() => {
+    if (!token) {
+      router.push('/')
+    }
+  }, [token])
 
   return (
     <div className={'grid grid-cols-4 px-[110px]'}>
