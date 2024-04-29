@@ -36,10 +36,8 @@ import {
 import TopicHeader from './../../components/topicHeader';
 import { updateUserInfo } from '@/services/yingshiUser';
 import QRCode from 'qrcode.react';
-import LoginModal from '@/components/login';
-import OtpModal from '@/components/login/otpModal';
-import LoginSuccess from '@/components/login/loginSuccess';
-import NicknameModal from '@/components/login/nicknameModal';
+import LoginFlow from '@/components/login/loginFlow';
+import loginFlow from '@/components/login/loginFlow';
 
 const getHeaderMenu = (state) => state.headerMenu;
 const getHeaderMenuSelected = (state) => state.headerMenuSelected;
@@ -53,6 +51,7 @@ const Header = () => {
   const dropdownVipRef = useRef(null);
   const dropdownHistoryRef = useRef(null);
   const dropdownAppRef = useRef(null);
+  const loginFlowRef = useRef(null);
 
   const { t } = useTranslation();
 
@@ -77,26 +76,6 @@ const Header = () => {
   const [searchingList, setSearchList] = useState([]);
   const [timeoutId, setTimeoutId] = useState(null);
   const [loadingSearching, setLoadingSearching] = useState(false);
-  const [openLogin, setOpenLogin] = useState(false);
-  const [openOTP, setOpenOTP] = useState(false);
-  const [openLoginSuccess, setOpenLoginSuccess] = useState(false);
-  const [openNickname, setOpenNickname] = useState(false);
-
-  const handleOpenLogin = () => {
-    setOpenLogin(x => !x);
-  }
-
-  const handleOpenOTP = () => {
-    setOpenOTP(x => !x);
-  }
-
-  const handleOpenLoginSuccess = () => {
-    setOpenLoginSuccess(x => !x);
-  }
-
-  const handleOpenNickname = () => {
-    setOpenNickname(x => !x);
-  }
 
   const handleOpenMore = () => {
     setOpenMore(!openMore);
@@ -878,7 +857,9 @@ const Header = () => {
       <div className='flex flex-row pl-4 items-center'>
         {/* md:flex */}
         <div
-          onClick={handleOpenLogin}
+          onClick={() => {
+            loginFlowRef.current.start()
+          }}
         >
           <Image
             className='cursor-pointer'
@@ -887,45 +868,7 @@ const Header = () => {
             width={25}
           />
         </div>
-        <LoginModal
-          open={openLogin}
-          handler={handleOpenLogin}
-          onRegsiter={() => {
-            setOpenLogin(false)
-            setOpenOTP(true)
-          }}
-        />
-        <OtpModal
-          open={openOTP}
-          handler={handleOpenOTP}
-          onLogin={() => {
-            setOpenOTP(false)
-            setOpenLoginSuccess(true)
-            setTimeout(() => {
-              setOpenLoginSuccess(false)
-            }, 2000)
-          }}
-          onRegister={() => {
-            setOpenOTP(false)
-            setOpenNickname(true)
-          }}
-        />
-        <NicknameModal
-          open={openNickname}
-          handler={handleOpenNickname}
-          onSuccess={() => {
-            setOpenNickname(false)
-            setOpenLoginSuccess(true)
-            setTimeout(() => {
-              setOpenLoginSuccess(false)
-            }, 2000)
-          }}
-        />
-        <LoginSuccess
-          open={openLoginSuccess}
-          handler={handleOpenLoginSuccess}
-          onDismiss={() => setOpenLoginSuccess(false)}
-        />
+        <LoginFlow ref={loginFlowRef}/>
       </div>
     </div>
   );

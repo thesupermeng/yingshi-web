@@ -81,6 +81,7 @@ export default function OtpModal ({open, handler, onLogin, onRegister}) {
               if (res.code === 201) {
                 onRegister()
               }
+              inputRefs.current[inputRefs.current.length - 1].blur()
             })
         } else {
           loginEmail({...loginParam, otp: otpRef.current.join('')})
@@ -100,7 +101,7 @@ export default function OtpModal ({open, handler, onLogin, onRegister}) {
               if (res.code === 201) {
                 onRegister()
               }
-
+              inputRefs.current[inputRefs.current.length - 1].blur()
             })
         }
 
@@ -121,7 +122,7 @@ export default function OtpModal ({open, handler, onLogin, onRegister}) {
                 <p className={'text-shayuBlue text-center font-medium font-[18px]'}>{loginParam.loginMode === 'sms' ? `+${loginParam.phonecode} ${loginParam.phoneNumber}` : loginParam.email}</p>
               </div>
 
-              <div className={'flex justify-between mt-[13px] mb-[26px]'}>
+              <div className={'flex justify-between mt-[13px]'}>
                 {[1, 2, 3, 4, 5, 6].map((item, index) => (
                   <OtpInput
                     key={index}
@@ -133,6 +134,8 @@ export default function OtpModal ({open, handler, onLogin, onRegister}) {
                   />
                 ))}
               </div>
+              {errorMessage && <p className={'text-[#FF1010] text-[13px] mb-[13px]'}>{errorMessage}</p>}
+              {!errorMessage && <p className={'text-transparent text-[13px] mb-[13px]'}>placeholder</p>}
 
               <Button className={'bg-shayuBlue text-[15px] font-semibold normal-case'} disabled={countdownTimer > 0}>从新发送验证码 {countdownTimer > 0 && `${countdownTimer}s`}</Button>
             </div>
