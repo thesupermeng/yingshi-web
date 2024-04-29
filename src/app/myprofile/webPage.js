@@ -1,8 +1,9 @@
 import VipCard from '@/components/myprofile/VipCard';
 import {
-  FeedbackIconGrey,
-  HistoryIconGrey,
-  LogoutGrey,
+  FeedbackIconBlue,
+  FeedbackIconGrey, HistoryIconBlue,
+  HistoryIconGrey, LogoutBlue,
+  LogoutGrey, PersonIconBlue,
   PersonIconGrey,
   profileIcon,
   vipProfileIcon,
@@ -16,44 +17,56 @@ import LoginModal from '@/components/login';
 import {Button, Popover, PopoverContent, PopoverHandler} from '@material-tailwind/react';
 import OtpModal from '@/components/login/otpModal';
 import {useRouter} from 'next/navigation';
-
-
-const navs = [
-  {
-    title: '个人中心',
-    icon: PersonIconGrey,
-    onClick: () => {},
-    isSelected: false,
-    platform: 'web'
-  },
-  {
-    title: '播放历史',
-    icon: HistoryIconGrey,
-    onClick: () => {},
-    isSelected: false,
-    platform: 'web'
-  },
-  {
-    title: '我要反馈',
-    icon: FeedbackIconGrey,
-    onClick: () => {},
-    isSelected: false,
-    platform: 'web'
-  },
-  {
-    title: '登出',
-    icon: LogoutGrey,
-    onClick: () => {},
-    isSelected: false,
-    platform: 'web'
-  },
-]
+import {logout} from '@/services/yingshiUser';
+import {useDispatch} from 'react-redux';
+import {setYingshiUserInfo, setYingshiUserToken} from '@/store/yingshiUser';
+import LogoutModal from '@/components/login/logoutModal';
+import UserCenter from '@/components/myprofile/UserCenter';
 
 export default function WebPage () {
 
+  const dispatch = useDispatch();
   const [selected, setSelected] = useState(0)
   const {isVip, userInfo, token} = useYingshiUser()
   const router = useRouter();
+  const [openLogout, setOpenLogout] = useState(false)
+
+  const handleLogout = () => {
+    setOpenLogout(x => !x)
+  }
+
+  const navs = [
+    {
+      title: '个人中心',
+      icon: PersonIconGrey,
+      iconSelected: PersonIconBlue,
+      onClick: () => {},
+      platform: 'web'
+    },
+    {
+      title: '播放历史',
+      icon: HistoryIconGrey,
+      iconSelected: HistoryIconBlue,
+      onClick: () => {},
+      platform: 'web'
+    },
+    {
+      title: '我要反馈',
+      icon: FeedbackIconGrey,
+      iconSelected: FeedbackIconBlue,
+      onClick: () => {},
+      platform: 'web'
+    },
+    {
+      title: '登出',
+      icon: LogoutGrey,
+      iconSelected: LogoutBlue,
+      onClick: () => {
+        setOpenLogout(true)
+      },
+      platform: 'web'
+    },
+  ]
 
   useEffect(() => {
     if (!token) {
@@ -73,13 +86,31 @@ export default function WebPage () {
         </div>
         <VipCard/>
         {navs.map((nav, index) => {
-          return <NavCard key={index} {...nav} onClick={() => setSelected(nav.title)}/>
+          return <NavCard key={index} {...nav} isSelected={index === selected} onClick={() => {
+            if (nav.title !== '登出') {
+              setSelected(index)
+            }
+            nav.onClick()
+          }}/>
         })
         }
       </div>
-      <div className={'col-span-3 w-full flex flex-col gap-[15px] items-center'}>
-        {selected}
+      <div className={'col-span-3 w-full flex flex-col gap-[15px] items-center px-[60px]'}>
+        {selected === 0 &&
+          <UserCenter/>
+        }
       </div>
+      <LogoutModal
+        open={openLogout}
+        handler={handleLogout}
+        onConfirm={() => {
+          logout()
+          dispatch(setYingshiUserToken(null))
+          dispatch(setYingshiUserInfo(null))
+          router.push('/')
+        }}
+        onCancel={()=> setOpenLogout(false)}
+      />
     </div>
   )
 }

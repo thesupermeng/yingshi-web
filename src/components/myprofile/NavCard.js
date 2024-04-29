@@ -1,18 +1,18 @@
 import Image from 'next/image';
-import {ArrowRigthGrey} from '@/asset/icons';
+import {ArrowRightBlue, ArrowRigthGrey} from '@/asset/icons';
 import React from 'react';
 import {Button} from '@material-tailwind/react';
 
-export default function NavCard({icon, title, isSelected, onClick}) {
+export default function NavCard({icon, iconSelected, title, isSelected, onClick}) {
   return (
     <div className={'bg-[#1D2023] rounded-[12px]'}>
-      <Button className={'bg-[#1D2023] rounded-[10px] w-full h-12 flex items-center p-3 gap-3'} onClick={onClick}>
+      <Button className={`${isSelected ? 'bg-[#0085E00D]' :'bg-[#1D2023]'} rounded-[10px] w-full h-12 flex items-center p-3 gap-3`} onClick={onClick}>
         <div className={'w-[24px] h-[24px] flex items-center justify-center'}>
-          <Image src={icon} alt={'Icon'}/>
+          <Image src={isSelected ? iconSelected : icon} alt={'Icon'}/>
         </div>
-        <span className={'font-semibold text-[15px] leading-[15px] text-[#9C9C9C] flex-1 text-left'}>{title}</span>
+        <span className={`font-semibold text-[15px] leading-[15px] ${isSelected ? 'text-[#0085E0]': 'text-[#9C9C9C]'} flex-1 text-left`}>{title}</span>
         <div className={'w-[30px] h-[30px] flex items-center justify-center'}>
-          <Image src={ArrowRigthGrey} alt={'Arrow'} height={16} color={'#9C9C9C'}/>
+          <Image src={isSelected ? ArrowRightBlue: ArrowRigthGrey} alt={'Arrow'} height={16}/>
         </div>
       </Button>
     </div>
