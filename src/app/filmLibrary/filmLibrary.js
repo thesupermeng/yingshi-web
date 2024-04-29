@@ -6,6 +6,12 @@ import { YingshiApi } from '@/util/YingshiApi';
 import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
 import { Spinner } from '@/components/spinner';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { useSelector } from 'react-redux';
+
+const getIsScroll = (state) => state.isScroll;
+const getIsTop = (state) => state.isTop;
 
 export const FilmLibrary = ({}) => {
   const [loading, setLoading] = useState(true);
@@ -15,6 +21,10 @@ export const FilmLibrary = ({}) => {
   const [loadingVideoList, setLoadingVideoList] = useState(true);
   const [stillCanLoad, setStillCanLoad] = useState(false);
   const [nextPage, setNextPage] = useState(0);
+  const [collapse, setCollapse] = useState(false);
+
+  const isScrolling = useSelector(getIsScroll);
+  const isAtTop = useSelector(getIsTop);
 
   const targetRef = useRef(null);
 
@@ -74,6 +84,16 @@ export const FilmLibrary = ({}) => {
   };
 
   useEffect(() => {
+    if (isScrolling.res) {
+      if (isAtTop.res) {
+        setCollapse(false);
+      } else {
+        setCollapse(true);
+      }
+    }
+  }, [isScrolling, isAtTop]);
+
+  useEffect(() => {
     setLoading(true);
     // Simulating asynchronous data fetching
     const fetchData = async () => {
@@ -81,7 +101,6 @@ export const FilmLibrary = ({}) => {
       setFilterTypeList(filteringTypeList);
       setNextPage(1);
 
-      console.log(localStorage.getItem('videoTypeId'));
       if (
         localStorage.getItem('videoTypeId') == null &&
         localStorage.getItem('videoClass') == null
@@ -247,36 +266,40 @@ export const FilmLibrary = ({}) => {
           <LoadingPage full={false} />
         ) : (
           <div className='flex w-screen flex-col items-center'>
-            <div className='bg-[#1D2023] w-screen p-1'>
-            {/* md:mx-20 mx-2.5 */}
-              <div className='flex flex-col divide-y divide-gray-800 py-2 container'>
-                <div className='flex md:flex-wrap gap-x-4 gap-y-2 pl-2 py-2'>
-                  {filterTypeList.map((item, index) => {
-                    return (
-                      <div
-                        className='flex flex-col items-center cursor-pointer'
-                        id={item.type_id}
-                        key={index}
-                        onClick={() => {
-                          filterVideoList(item.type_id, 'type');
-                        }}
+            <div className={`bg-[#1D2023] w-screen p-1 z-20 ${collapse? 'fixed': 'sticky -top-0.5'} md:static `} >
+              {/* md:mx-20 mx-2.5 */}
+              <div className='flex md:flex-wrap gap-x-4 gap-y-2 pl-4 py-2 container'>
+                {filterTypeList.map((item, index) => {
+                  return (
+                    <div
+                      className='flex flex-col items-center cursor-pointer'
+                      id={item.type_id}
+                      key={index}
+                      onClick={() => {
+                        filterVideoList(item.type_id, 'type');
+                      }}
+                    >
+                      <span
+                        className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                          paramsFilter.typeId === item.type_id
+                            ? 'text-blue-500'
+                            : 'text-white'
+                        }`}
                       >
-                        <span
-                          className={`hover:text-blue-500 transition-colors duration-300 truncate ${
-                            paramsFilter.typeId === item.type_id
-                              ? 'text-blue-500'
-                              : 'text-white'
-                          }`}
-                        >
-                          {item.type_name}
-                        </span>
-                        {paramsFilter.typeId === item.type_id ? (
-                          <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
-                        ) : null}
-                      </div>
-                    );
-                  })}
-                </div>
+                        {item.type_name}
+                      </span>
+                      {paramsFilter.typeId === item.type_id ? (
+                        <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
+                      ) : null}
+                    </div>
+                  );
+                })}
+              </div>
+              <div
+                className={`flex flex-col divide-y divide-gray-800 py-2 container md:flex ${
+                  collapse && 'hidden'
+                }`}
+              >
                 <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2'>
                   {advanceFilterItem.map((item, index) => {
                     return (
@@ -432,10 +455,41 @@ export const FilmLibrary = ({}) => {
                   </div>
                 )}
               </div>
+              <div
+                className={`flex justify-between items-center px-4 py-2 container text-sm md:hidden ${
+                  !collapse && 'hidden'
+                }`}
+              >
+                <div>
+                  {
+                    advanceFilterItem.find(
+                      (item) => item.value === paramsFilter.by
+                    ).text
+                  }
+                </div>
+                <div className='rounded-full w-1 h-1 bg-blue-500'></div>
+                <div>{paramsFilter.class}</div>
+                <div className='rounded-full w-1 h-1 bg-blue-500'></div>
+                <div>{paramsFilter.area}</div>
+                <div className='rounded-full w-1 h-1 bg-blue-500'></div>
+                <div>{paramsFilter.lang}</div>
+                <div className='rounded-full w-1 h-1 bg-blue-500'></div>
+                <div>{paramsFilter.year}</div>
+                <div
+                  onClick={() => {
+                    setCollapse(false);
+                  }}
+                >
+                  <FontAwesomeIcon
+                    className='text-blue-500 '
+                    icon={faAngleDown}
+                  />
+                </div>
+              </div>
             </div>
             <div className='w-screen flex flex-1 flex-col'>
               {videoList !== null ? (
-                //  md:mx-20 mx-2.5 
+                //  md:mx-20 mx-2.5
                 <div className='container grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-4'>
                   {videoList.map((vod, i) => {
                     return <VideoVerticalCard vod={vod} key={i} />;
