@@ -40,6 +40,7 @@ import {formatDateCN} from '@/util/date';
 import NavCard from '@/components/myprofile/NavCard';
 import VipCard from '@/components/myprofile/VipCard';
 import ProfileCard from '@/components/myprofile/ProfileCard';
+import LoginSuccess from '@/components/login/loginSuccess';
 
 const navs = [
   {

@@ -5,7 +5,7 @@ import {useEffect, useState} from 'react';
 import {setYingshiUserInfo} from '@/store/yingshiUser';
 import {updateUserInfo} from '@/services/yingshiUser';
 
-export default function NicknameModal({open, handler}) {
+export default function NicknameModal({open, handler, onSuccess}) {
   const dispatch = useDispatch()
   const router = useRouter()
   const [nickname, setNickname] = useState('')
@@ -35,7 +35,7 @@ export default function NicknameModal({open, handler}) {
       .then(res => {
         if (res.code === 0) {
           // success
-          router.push('/myprofile')
+          onSuccess()
         } else if (res.code === -1) {
           setErrorMsg(res?.errors?.username ?? '昵称格式不正确')
         }

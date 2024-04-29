@@ -36,6 +36,10 @@ import {
 import TopicHeader from './../../components/topicHeader';
 import { updateUserInfo } from '@/services/yingshiUser';
 import QRCode from 'qrcode.react';
+import LoginModal from '@/components/login';
+import OtpModal from '@/components/login/otpModal';
+import LoginSuccess from '@/components/login/loginSuccess';
+import NicknameModal from '@/components/login/nicknameModal';
 
 const getHeaderMenu = (state) => state.headerMenu;
 const getHeaderMenuSelected = (state) => state.headerMenuSelected;
@@ -73,6 +77,26 @@ const Header = () => {
   const [searchingList, setSearchList] = useState([]);
   const [timeoutId, setTimeoutId] = useState(null);
   const [loadingSearching, setLoadingSearching] = useState(false);
+  const [openLogin, setOpenLogin] = useState(false);
+  const [openOTP, setOpenOTP] = useState(false);
+  const [openLoginSuccess, setOpenLoginSuccess] = useState(false);
+  const [openNickname, setOpenNickname] = useState(false);
+
+  const handleOpenLogin = () => {
+    setOpenLogin(x => !x);
+  }
+
+  const handleOpenOTP = () => {
+    setOpenOTP(x => !x);
+  }
+
+  const handleOpenLoginSuccess = () => {
+    setOpenLoginSuccess(x => !x);
+  }
+
+  const handleOpenNickname = () => {
+    setOpenNickname(x => !x);
+  }
 
   const handleOpenMore = () => {
     setOpenMore(!openMore);
@@ -331,11 +355,11 @@ const Header = () => {
     if (pathname.startsWith('/topic')) {
       dispatch(setSpecialSelectedId(998));
       dispatch(setSelectedId(0));
-      
+
     } else if (pathname.startsWith('/filmLibrary')) {
       dispatch(setSpecialSelectedId(999));
       dispatch(setSelectedId(0));
-    } 
+    }
     else if (pathname.startsWith('/play/')){
       dispatch(setSpecialSelectedId(-1));
       dispatch(setSelectedId(0));
@@ -851,13 +875,56 @@ const Header = () => {
       </div>
 
       <div className='hidden'>{vipContainer}</div>
-      <div className='flex-row hidden pl-4'>
+      <div className='flex flex-row pl-4 items-center'>
         {/* md:flex */}
-        <Image
-          className='cursor-pointer'
-          src={userIcon}
-          alt='user'
-          width={25}
+        <div
+          onClick={handleOpenLogin}
+        >
+          <Image
+            className='cursor-pointer'
+            src={userIcon}
+            alt='user'
+            width={25}
+          />
+        </div>
+        <LoginModal
+          open={openLogin}
+          handler={handleOpenLogin}
+          onRegsiter={() => {
+            setOpenLogin(false)
+            setOpenOTP(true)
+          }}
+        />
+        <OtpModal
+          open={openOTP}
+          handler={handleOpenOTP}
+          onLogin={() => {
+            setOpenOTP(false)
+            setOpenLoginSuccess(true)
+            setTimeout(() => {
+              setOpenLoginSuccess(false)
+            }, 2000)
+          }}
+          onRegister={() => {
+            setOpenOTP(false)
+            setOpenNickname(true)
+          }}
+        />
+        <NicknameModal
+          open={openNickname}
+          handler={handleOpenNickname}
+          onSuccess={() => {
+            setOpenNickname(false)
+            setOpenLoginSuccess(true)
+            setTimeout(() => {
+              setOpenLoginSuccess(false)
+            }, 2000)
+          }}
+        />
+        <LoginSuccess
+          open={openLoginSuccess}
+          handler={handleOpenLoginSuccess}
+          onDismiss={() => setOpenLoginSuccess(false)}
         />
       </div>
     </div>
@@ -1024,7 +1091,7 @@ const Header = () => {
         </div>
       </div>
     </div>
-    
+
   );
 
   if (pathname.startsWith('/topic/')) {
@@ -1108,15 +1175,19 @@ const Header = () => {
 
   if (pathname.startsWith('/myprofile')) {
     return (
-      <div className={'z-30 w-screen mobile'}>
-        <div className='flex py-3 mx-2.5'>
-          <div className='gap-y-2 flex-col w-full md:flex-row flex'>
-            <div className='flex-1 flex gap-x-2 md:justify-start'>
-              <span className='text-topic-title'> 我的 </span>
+      <>
+        <div className={'z-30 w-screen mobile'}>
+          <div className='flex py-3 mx-2.5'>
+            <div className='gap-y-2 flex-col w-full md:flex-row flex'>
+              <div className='flex-1 flex gap-x-2 md:justify-start'>
+                <span className='text-topic-title'> 我的 </span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+        <div className={'desktop z-50'}>{defaultHeader}</div>
+      </>
+
     );
   }
 
