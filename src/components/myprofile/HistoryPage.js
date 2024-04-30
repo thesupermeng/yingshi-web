@@ -1,4 +1,4 @@
-import {clear} from '@/asset/icons'
+import {clear, searchEmptyIcon} from '@/asset/icons'
 import Image from 'next/image';
 import {useEffect, useState} from 'react';
 import {Button, Dialog, DialogBody, Progress} from '@material-tailwind/react';
@@ -79,10 +79,8 @@ export default function HistoryPage() {
     }
   }, [])
 
-  console.log(watchHistoryList)
-
   return (
-    <div className={`flex-col gap-[36px] w-full ${watchHistoryList.length === 0 ? 'hidden' : 'flex'}`}>
+    <div className={`flex flex-col gap-[36px] w-full`}>
       <ConfirmClearHistoryModal
         open={openConfirmClearHistory}
         handler={handleOpenConfirmClearHistory}
@@ -96,7 +94,7 @@ export default function HistoryPage() {
         <span className={'text-[28px] font-semibold text-center text-white'}>播放历史</span>
         <div className={'absolute right-0'}>
           <div
-            className={`flex flex-row justify-center cursor-pointer`}
+            className={`flex-row justify-center cursor-pointer ${watchHistoryList.length === 0 ? 'hidden' : 'flex'}`}
             onClick={() => {
               setOpenConfirmClearHistory(true);
             }}
@@ -111,15 +109,36 @@ export default function HistoryPage() {
           </div>
         </div>
       </div>
-      <div className={'flex flex-wrap justify-start gap-x-2'}>
-        {
-          watchHistoryList.map((vod, idx) => {
-            return <HistoryCard key={idx} vod={vod} onClick={() => {
-              router.push(
-                `/play/${vod.tid}/${vod.nid}/${vod.vodid}`,
-              );
-            }}/>
-          })
+      <div>
+        <div className={'flex flex-wrap justify-start gap-x-2'}>
+          {
+            watchHistoryList
+              .slice()
+              .reverse()
+              .map((vod, idx) => {
+              return <HistoryCard key={idx} vod={vod} onClick={() => {
+                router.push(
+                  `/play/${vod.tid}/${vod.nid}/${vod.vodid}`,
+                );
+              }}/>
+            })
+          }
+        </div>
+        {watchHistoryList.length === 0 &&
+          <div className="flex-col items-center flex">
+            <Image
+              className="mx-2"
+              src={searchEmptyIcon}
+              alt="empty"
+              width={120}
+            />
+            <span
+              className="text-sm font-semibold text-white"
+            >
+                    暂无播放历史
+                  </span>
+          </div>
+
         }
       </div>
     </div>
@@ -137,7 +156,7 @@ export default function HistoryPage() {
 // }
 
 
-function HistoryCard ({vod, onClick}) {
+function HistoryCard({vod, onClick}) {
   if (!vod) return null
   else {
     return (
