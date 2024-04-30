@@ -1,9 +1,22 @@
 import Image from 'next/image';
 import {editIcon, profileIcon} from '@/asset/icons';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
+import EditNicknameModal from '@/components/myprofile/editNicknameModal';
+import {useState} from 'react';
+import LoginSuccess from '@/components/login/loginSuccess';
 
 export default function UserCenter() {
-  const { userInfo } = useYingshiUser()
+  const { userInfo, refreshUserInfo } = useYingshiUser()
+  const [openEditNickname, setOpenEditNickname] = useState(false)
+  const [openSuccessAlert, setOpenSuccessAlert] = useState(false)
+
+  const handleOpenEditNickname = () => {
+    setOpenEditNickname(x => !x)
+  }
+
+  const handleOpenSuccessAlert = () => {
+    setOpenSuccessAlert(x => !x)
+  }
 
   return (
     <div className={'flex flex-col gap-[36px] w-full'}>
@@ -13,7 +26,7 @@ export default function UserCenter() {
         <div className={'flex bg-[#1D2023] rounded-[10px] px-[20px] py-[17px] items-center gap-[12px] mt-[14px]'}>
           <Image src={profileIcon} alt={'profile icon'} width={56}/>
           <span className={'text-white text-[15px] font-semibold flex-1'}>{userInfo?.user_name}</span>
-          <Image src={editIcon} alt={'edit'} width={30}/>
+          <Image src={editIcon} alt={'edit'} width={30} onClick={handleOpenEditNickname} className={'cursor-pointer'}/>
         </div>
       </div>
       <div>
@@ -31,7 +44,23 @@ export default function UserCenter() {
           </div>
         }
       </div>
-
+    <EditNicknameModal
+      open={openEditNickname}
+      handler={handleOpenEditNickname}
+      onSuccess={() => {
+        setOpenEditNickname(false)
+        setOpenSuccessAlert(true)
+        refreshUserInfo()
+        setTimeout(() => {
+          setOpenSuccessAlert(false)
+        }, 2000)
+      }}
+    />
+      <LoginSuccess
+        open={openSuccessAlert}
+        handler={handleOpenSuccessAlert}
+        msg={'昵称修改成功'}
+      />
     </div>
   )
 }

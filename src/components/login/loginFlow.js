@@ -72,6 +72,7 @@ const LoginFlow = forwardRef(function LoginFlow(props, ref) {
       <LoginSuccess
         open={openLoginSuccess}
         handler={handleOpenLoginSuccess}
+        msg={'登录成功'}
       />
     </>
   )
