@@ -28,7 +28,6 @@ export const ScrollView = ({ children }) => {
     // Set isScrolling to true
     if (!isScrolling.res) {
       dispatch(setIsScroll(true));
-      console.log('get');
     }
 
     // Store the current scroll position
@@ -36,14 +35,11 @@ export const ScrollView = ({ children }) => {
 
     // Check if the scroll position has changed since the last event
     if (currentScrollPosition !== lastScrollPosition) {
-      console.log('test1');
       setLastScrollPosition(currentScrollPosition);
       // Start a new timer to check if scrolling has stopped after 200ms
       const id = setTimeout(() => {
-        console.log('test2');
         if (isScrolling.res) {
           dispatch(setIsScroll(false));
-          console.log('delete');
         }
       }, 200);
       setTimerId(id);
