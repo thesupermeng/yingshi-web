@@ -23,7 +23,7 @@ import { LottieAnimation } from '../../../../../../src/components/lottie';
 import { IrrLoading } from '@/asset/lottie';
 import FullScreenModal from '@/components/FullScreenModal';
 
-export const PlayVod = ({ vodId, tId, nId }) => {
+export const PlayXVod = ({ vodId, tId, nId }) => {
   const router = useRouter();
 
   const { t } = useTranslation();
@@ -45,21 +45,23 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   const [vodShareContent, setVodShareContent] = useState('');
   const [showToastMessage, setShowToastMessage] = useState(false);
 
-  const getVodDetails = async () => {
+  const getXVodDetails = async () => {
     if (tId == 0) {
       return YingshiApi(
-        URL_YINGSHI_VOD.getVodDetails,
+        URL_YINGSHI_VOD.getXVodDetails,
         {
           id: vodId,
+          xMode: true,
         },
         { method: 'GET' }
       );
     } else {
       return YingshiApi(
-        URL_YINGSHI_VOD.getVodDetails,
+        URL_YINGSHI_VOD.getXVodDetails,
         {
           id: vodId,
           tid: tId,
+          xMode: true,
         },
         { method: 'GET' }
       );
@@ -105,7 +107,9 @@ export const PlayVod = ({ vodId, tId, nId }) => {
 
   useEffect(() => {
     if (episodeSelected == null) {
-      getVodDetails().then((data) => {
+      getXVodDetails().then((data) => {
+        console.log('xData');
+        console.log(data);
         if (
           data === undefined ||
           data.length <= 0 ||
@@ -116,7 +120,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         let res = data.List[0];
         setVod(res);
 
-        if (res.vod_sources.length > 0) {
+        if (res.vod_sources?.length > 0) {
           let source = res.vod_sources[0];
 
           setVodSourceSelected(source);
@@ -538,7 +542,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                   className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5'
                   style={{ marginTop: '0px', marginBottom: '5rem' }}
                 >
-                  {suggestedVods.length > 0 &&
+                  {suggestedVods?.length > 0 &&
                     suggestedVods?.slice(0, 12).map((vod, i) => {
                       return <VideoVerticalCard vod={vod} key={i} />;
                     })}

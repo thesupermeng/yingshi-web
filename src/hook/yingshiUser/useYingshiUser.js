@@ -37,10 +37,18 @@ export default function useYingshiUser() {
 
     }, [token])
 
+    const refreshUserInfo = () => {
+        queryUserInfo().then(res => {
+            dispatch(setYingshiUserInfo(res.user))
+        })
+    }
+
     const isVip = !!(userInfo && (userInfo.current_timestamp < userInfo.vip_end_time))
 
     return {
         userInfo,
-        isVip
+        isVip,
+        token,
+        refreshUserInfo
     }
 }

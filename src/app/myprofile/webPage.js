@@ -1,68 +1,82 @@
 import VipCard from '@/components/myprofile/VipCard';
 import {
-  FeedbackIconGrey,
-  HistoryIconGrey,
-  LogoutGrey,
+  FeedbackIconBlue,
+  FeedbackIconGrey, HistoryIconBlue,
+  HistoryIconGrey, LogoutBlue,
+  LogoutGrey, PersonIconBlue,
   PersonIconGrey,
-  profileIcon,
-  vipProfileIcon,
 } from '@/asset/icons';
 import NavCard from '@/components/myprofile/NavCard';
-import Image from 'next/image';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ProfileCard from '@/components/myprofile/ProfileCard';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
-import LoginModal from '@/components/login';
-import {Button, Popover, PopoverContent, PopoverHandler} from '@material-tailwind/react';
-import OtpModal from '@/components/login/otpModal';
+import {usePathname, useRouter} from 'next/navigation';
+import {logout} from '@/services/yingshiUser';
+import {useDispatch} from 'react-redux';
+import {setYingshiUserInfo, setYingshiUserToken} from '@/store/yingshiUser';
+import LogoutModal from '@/components/login/logoutModal';
+import {LocalStorageKeys} from '@/config/common';
 
+export default function WebPage ({subMenus}) {
 
-const navs = [
-  {
-    title: '个人中心',
-    icon: PersonIconGrey,
-    onClick: () => {},
-    isSelected: false,
-    platform: 'web'
-  },
-  {
-    title: '播放历史',
-    icon: HistoryIconGrey,
-    onClick: () => {},
-    isSelected: false,
-    platform: 'web'
-  },
-  {
-    title: '我要反馈',
-    icon: FeedbackIconGrey,
-    onClick: () => {},
-    isSelected: false,
-    platform: 'web'
-  },
-  {
-    title: '登出',
-    icon: LogoutGrey,
-    onClick: () => {},
-    isSelected: false,
-    platform: 'web'
-  },
-]
+  const dispatch = useDispatch();
+  const {isVip, userInfo, token} = useYingshiUser()
+  const router = useRouter();
+  const pathname = usePathname();
+  const [openLogout, setOpenLogout] = useState(false)
 
-export default function WebPage () {
+  const handleLogout = () => {
+    setOpenLogout(x => !x)
+  }
 
-  const [selected, setSelected] = useState(0)
-  const {isVip, userInfo} = useYingshiUser()
-  const [isLoginOpen, setIsLoginOpen] = useState(false)
+  const navs = [
+    {
+      title: '个人中心',
+      icon: PersonIconGrey,
+      iconSelected: PersonIconBlue,
+      onClick: () => {},
+      platform: 'web',
+      href:'/myprofile/userCenter'
+    },
+    {
+      title: '播放历史',
+      icon: HistoryIconGrey,
+      iconSelected: HistoryIconBlue,
+      onClick: () => {},
+      platform: 'web',
+      href:'/myprofile/watchHistory'
+    },
+    {
+      title: '我要反馈',
+      icon: FeedbackIconGrey,
+      iconSelected: FeedbackIconBlue,
+      onClick: () => {},
+      platform: 'web',
+      href:'/myprofile/feedback'
+    },
+    {
+      title: '登出',
+      icon: LogoutGrey,
+      iconSelected: LogoutBlue,
+      onClick: () => {
+        setOpenLogout(true)
+      },
+      platform: 'web',
+      // href:'/myprofile/logout'
+    },
+  ]
 
+  useEffect(() => {
+    const localStorageToken = localStorage.getItem(LocalStorageKeys.AuthToken)
+
+    if (!token && !localStorageToken) {
+      router.push('/')
+    }
+  }, [token])
 
   return (
     <div className={'grid grid-cols-4 px-[110px]'}>
-      {/*<LoginModal open={isLoginOpen} handler={() => setIsLoginOpen(x => !x)}/>*/}
-      <OtpModal open={isLoginOpen} handler={() => setIsLoginOpen(x => !x)}/>
       <div className={'w-full flex flex-col gap-[15px] min-w-[300px]'}>
-
-        <button onClick={() => setIsLoginOpen(true)}>login</button>
-
         <div className={'h-[80px] rounded-[12px] bg-[#1A1F24] flex items-center px-[21px] py-[12px]'}>
           <ProfileCard
             userInfo={userInfo}
@@ -72,13 +86,24 @@ export default function WebPage () {
         </div>
         <VipCard/>
         {navs.map((nav, index) => {
-          return <NavCard key={index} {...nav} onClick={() => setSelected(nav.title)}/>
+          return <NavCard key={index} {...nav} isSelected={pathname === nav.href}/>
         })
         }
       </div>
-      <div className={'col-span-3 w-full flex flex-col gap-[15px] items-center'}>
-        {selected}
+      <div className={'col-span-3 w-full flex flex-col gap-[15px] items-center px-[60px]'}>
+        {subMenus}
       </div>
+      <LogoutModal
+        open={openLogout}
+        handler={handleLogout}
+        onConfirm={() => {
+          logout()
+          dispatch(setYingshiUserToken(null))
+          dispatch(setYingshiUserInfo(null))
+          router.push('/')
+        }}
+        onCancel={()=> setOpenLogout(false)}
+      />
     </div>
   )
 }

@@ -1,5 +1,6 @@
 'use client';
 import { PlayVod } from './playVod';
+import { PlayXVod } from './playXVod';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -11,5 +12,5 @@ export default function Home() {
   const tId = params.tid;
   const nId = params.nid;
 
-  return <PlayVod vodId={vodId} tId={tId} nId={nId}/>;
+  return nId != 9999 ? <PlayVod vodId={vodId} tId={tId} nId={nId}/> : <PlayXVod vodId={vodId} tId={tId} nId={nId}/>;
 }

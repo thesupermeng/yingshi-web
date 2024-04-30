@@ -3,11 +3,12 @@ export const URL_YINGSHI_USER = {
   logout: 'users/v1/logout',
   userInfo: 'users/v1/me',
   countryList: 'country/v1/country',
-  updateUser: 'users/v1/update'
+  updateUser: 'users/v1/update',
+  feedback: 'feedback/v2/submit'
 };
 
 export const URL_YINGSHI_VOD = {
-  homeGetNav: 'nav/v1/navItems',
+  homeGetNav: 'nav/v1/navItems?channelId=WEB&page=1&limit=10',
   homeGetPages: 'page/v4/typepage',
   getVodDetails: 'vod/v3/vod',
   playlistGetTopic: 'topic/v1/topic',
@@ -15,4 +16,5 @@ export const URL_YINGSHI_VOD = {
   topTenList: 'topic/v1/topic/detail',
   searchingList: 'vod/v3/vod',
   filteringTypeList: 'type/v2/type',
+  getXVodDetails: 'svod/v2/vod',
 };
