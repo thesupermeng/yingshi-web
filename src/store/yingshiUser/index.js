@@ -29,7 +29,7 @@ export const yingshiUser = createSlice( {
          *     userPaidVipList: any;
          */
         userInfo: null,
-        token: localStorage.getItem(LocalStorageKeys.AuthToken),
+        token: null,
         loginParam: null,
     },
     reducers: {

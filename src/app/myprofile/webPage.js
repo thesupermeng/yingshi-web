@@ -24,6 +24,7 @@ import LogoutModal from '@/components/login/logoutModal';
 import UserCenter from '@/components/myprofile/UserCenter';
 import FeedbackForm from '@/components/myprofile/FeedbackForm';
 import HistoryPage from '@/components/myprofile/HistoryPage';
+import {LocalStorageKeys} from '@/config/common';
 
 export default function WebPage () {
 
@@ -71,7 +72,9 @@ export default function WebPage () {
   ]
 
   useEffect(() => {
-    if (!token) {
+    const localStorageToken = localStorage.getItem(LocalStorageKeys.AuthToken)
+
+    if (!token && !localStorageToken) {
       router.push('/')
     }
   }, [token])
