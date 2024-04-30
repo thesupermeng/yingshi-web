@@ -77,7 +77,7 @@ export default function H5Page({params}) {
   const [openSignInUp, setOpenSignInUp] = useState(false);
   const [openLoginSuccess, setOpenLoginSuccess] = useState(false);
 
-  const {isVip, userInfo} = useYingshiUser()
+  const {isVip, userInfo, token} = useYingshiUser()
 
   const dispatch = useDispatch()
   const getLoginParam = (s) => s.yingshiUser.loginParam
@@ -131,7 +131,7 @@ export default function H5Page({params}) {
       <div style={{background: '#1D2023', borderRadius: '12px', marginBottom: '16px'}}>
         <iframe
           className={'h-[74px] w-full'}
-          src={'https://iframe-m.ggsimida.com/wallet'}
+          src={`https://iframe-m.ggsimida.com/wallet?authToken=${token}`}
         />
       </div>
 
