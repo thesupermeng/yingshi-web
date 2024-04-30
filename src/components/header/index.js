@@ -856,11 +856,11 @@ const Header = () => {
 
       <div className="hidden">{vipContainer}</div>
 
-      <div className="flex items-center px-2">
+      <div className="hidden flex items-center px-2">
         <div className="border-l-2 border-white h-4"/>
       </div>
-      
-      <div className="flex flex-row pl-4 items-center">
+
+      <div className="hidden flex flex-row pl-4 items-center">
         {/* md:flex */}
         <div
           onClick={() => {
