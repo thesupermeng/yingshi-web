@@ -1,8 +1,5 @@
 import {Button, Dialog, DialogBody} from '@material-tailwind/react';
-import {useDispatch, useSelector} from 'react-redux';
-import {useRouter} from 'next/navigation';
-import {useEffect, useState} from 'react';
-import {setYingshiUserInfo} from '@/store/yingshiUser';
+import {useState} from 'react';
 import {updateUserInfo} from '@/services/yingshiUser';
 import Image from 'next/image';
 import {profileIcon} from '@/asset/icons';
@@ -10,7 +7,7 @@ import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 
 export default function EditNicknameModal({open, handler, onSuccess}) {
   const {userInfo} = useYingshiUser()
-  const [nickname, setNickname] = useState(userInfo.user_name)
+  const [nickname, setNickname] = useState(userInfo ? userInfo.user_name : '')
   const [errorMsg, setErrorMsg] = useState(null)
 
 

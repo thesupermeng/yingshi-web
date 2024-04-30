@@ -5,33 +5,24 @@ import {
   HistoryIconGrey, LogoutBlue,
   LogoutGrey, PersonIconBlue,
   PersonIconGrey,
-  profileIcon,
-  vipProfileIcon,
 } from '@/asset/icons';
 import NavCard from '@/components/myprofile/NavCard';
-import Image from 'next/image';
 import React, {useEffect, useState} from 'react';
 import ProfileCard from '@/components/myprofile/ProfileCard';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
-import LoginModal from '@/components/login';
-import {Button, Popover, PopoverContent, PopoverHandler} from '@material-tailwind/react';
-import OtpModal from '@/components/login/otpModal';
-import {useRouter} from 'next/navigation';
+import {usePathname, useRouter} from 'next/navigation';
 import {logout} from '@/services/yingshiUser';
 import {useDispatch} from 'react-redux';
 import {setYingshiUserInfo, setYingshiUserToken} from '@/store/yingshiUser';
 import LogoutModal from '@/components/login/logoutModal';
-import UserCenter from '@/components/myprofile/UserCenter';
-import FeedbackForm from '@/components/myprofile/FeedbackForm';
-import HistoryPage from '@/components/myprofile/HistoryPage';
 import {LocalStorageKeys} from '@/config/common';
 
-export default function WebPage () {
+export default function WebPage ({subMenus}) {
 
   const dispatch = useDispatch();
-  const [selected, setSelected] = useState(1)
   const {isVip, userInfo, token} = useYingshiUser()
   const router = useRouter();
+  const pathname = usePathname();
   const [openLogout, setOpenLogout] = useState(false)
 
   const handleLogout = () => {
@@ -44,21 +35,24 @@ export default function WebPage () {
       icon: PersonIconGrey,
       iconSelected: PersonIconBlue,
       onClick: () => {},
-      platform: 'web'
+      platform: 'web',
+      href:'/myprofile/userCenter'
     },
     {
       title: '播放历史',
       icon: HistoryIconGrey,
       iconSelected: HistoryIconBlue,
       onClick: () => {},
-      platform: 'web'
+      platform: 'web',
+      href:'/myprofile/watchHistory'
     },
     {
       title: '我要反馈',
       icon: FeedbackIconGrey,
       iconSelected: FeedbackIconBlue,
       onClick: () => {},
-      platform: 'web'
+      platform: 'web',
+      href:'/myprofile/feedback'
     },
     {
       title: '登出',
@@ -67,7 +61,8 @@ export default function WebPage () {
       onClick: () => {
         setOpenLogout(true)
       },
-      platform: 'web'
+      platform: 'web',
+      // href:'/myprofile/logout'
     },
   ]
 
@@ -91,25 +86,12 @@ export default function WebPage () {
         </div>
         <VipCard/>
         {navs.map((nav, index) => {
-          return <NavCard key={index} {...nav} isSelected={index === selected} onClick={() => {
-            if (nav.title !== '登出') {
-              setSelected(index)
-            }
-            nav.onClick()
-          }}/>
+          return <NavCard key={index} {...nav} isSelected={pathname === nav.href}/>
         })
         }
       </div>
       <div className={'col-span-3 w-full flex flex-col gap-[15px] items-center px-[60px]'}>
-        {selected === 0 &&
-          <UserCenter/>
-        }
-        {selected === 1 &&
-          <HistoryPage/>
-        }
-        {selected === 2 &&
-          <FeedbackForm/>
-        }
+        {subMenus}
       </div>
       <LogoutModal
         open={openLogout}
