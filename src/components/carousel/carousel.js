@@ -38,13 +38,18 @@ export const Carousel = ({ carouselItems }) => {
 
   useEffect(() => {
     if (!currentlyHover) {
-      const autoSwipeCarousel = setTimeout(() => {
-        setCarouselIndex((prevIndex) => (prevIndex + 1) % carouselItems.length);
-        setCarouselVodId()
-      }, 3000);
+      let autoSwipeCarousel = null;
+      if(carouselItems != null){
+        autoSwipeCarousel = setTimeout(() => {
+          setCarouselIndex((prevIndex) => (prevIndex + 1) % carouselItems.length);
+          setCarouselVodId()
+        }, 3000);
+      }
 
       return () => {
-        clearTimeout(autoSwipeCarousel);
+        if(autoSwipeCarousel != null){
+          clearTimeout(autoSwipeCarousel);
+        }
       };
     }
   }, [carouselIndex, carouselItems, currentlyHover]);
