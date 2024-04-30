@@ -3,6 +3,7 @@ import Image from 'next/image';
 import {useEffect, useState} from 'react';
 import {Button, Dialog, DialogBody, Progress} from '@material-tailwind/react';
 import {useRouter} from 'next/navigation';
+import {PlaceholderImage} from '@/asset/image';
 
 const getObjectValue = (obj, targetKey) => {
   // Check if the object is defined and if it contains the 'times' key
@@ -162,6 +163,7 @@ function HistoryCard({vod, onClick}) {
     return (
       <div className={'flex flex-col w-[224px] mb-2 cursor-pointer hover:text-shayuBlue'} onClick={onClick}>
         <div className={'h-[126px] rounded-[12px] overflow-hidden relative mb-2'}>
+          <Image src={PlaceholderImage} alt={`Image for ${vod.vodname}`} fill={true} objectFit={'cover'} className={'absolute'}/>
           <Image src={vod.vodpic} alt={`Image for ${vod.vodname}`} fill={true} objectFit={'cover'}/>
           {/* add placeholder  */}
         </div>
