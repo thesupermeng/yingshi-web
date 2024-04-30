@@ -1,29 +1,77 @@
 'use client';
 import { backtoTopIcon } from '@/asset/icons';
 import Image from 'next/image';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsScroll } from '@/store/scrollView';
+import { setIsScroll, setIsTop } from '@/store/scrollView';
+
+const getIsTop = (state) => state.isTop;
+const getIsScroll = (state) => state.isScroll;
 
 export const ScrollView = ({ children }) => {
   const dispatch = useDispatch();
   const scrollableDivRef = useRef(null);
   const [showScrollUpButton, setShowScrollUpButton] = useState(false);
+  const [lastScrollPosition, setLastScrollPosition] = useState(0);
+  const [timerId, setTimerId] = useState(null);
 
+  const isAtTop = useSelector(getIsTop);
+  const isScrolling = useSelector(getIsScroll);
 
   const handleScroll = () => {
+    // Clear the previous timer
+    if (timerId != null) {
+      clearTimeout(timerId);
+      setTimerId(null);
+    }
+
+    // Set isScrolling to true
+    if (!isScrolling.res) {
+      dispatch(setIsScroll(true));
+    }
+
+    // Store the current scroll position
+    const currentScrollPosition = scrollableDivRef.current.scrollTop;
+
+    // Check if the scroll position has changed since the last event
+    if (currentScrollPosition !== lastScrollPosition) {
+      setLastScrollPosition(currentScrollPosition);
+      // Start a new timer to check if scrolling has stopped after 200ms
+      const id = setTimeout(() => {
+        if (isScrolling.res) {
+          dispatch(setIsScroll(false));
+        }
+      }, 200);
+      setTimerId(id);
+    }
+
     if (scrollableDivRef.current.scrollTop > 200) {
-      if (!showScrollUpButton) { // prevent keep updating the state
-        dispatch(setIsScroll(true));
+      if (!showScrollUpButton) {
+        // prevent keep updating the state
         setShowScrollUpButton(true);
       }
     } else {
       if (showScrollUpButton) {
-        dispatch(setIsScroll(false));
         setShowScrollUpButton(false);
       }
     }
   };
+
+  useEffect(() => {
+    if (isScrolling.res) {
+      if (scrollableDivRef.current.scrollTop > 0) {
+        if (isAtTop.res) {
+          dispatch(setIsTop(false));
+        }
+      }
+    } else {
+      if (scrollableDivRef.current.scrollTop == 0) {
+        if (!isAtTop.res) {
+          dispatch(setIsTop(true));
+        }
+      }
+    }
+  }, [isScrolling]);
 
   const scrollToTop = () => {
     const scrollableDiv = scrollableDivRef.current;

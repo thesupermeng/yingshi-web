@@ -27,7 +27,7 @@ import {
   headerMenuSelected,
   specialHeaderMenuSelected,
 } from './headerData';
-import { isScroll } from './scrollView';
+import { isScroll, isTop } from './scrollView';
 import { yingshiUser } from '@/store/yingshiUser';
 
 export const store = configureStore({
@@ -59,6 +59,7 @@ export const store = configureStore({
     headerMenuSelected: headerMenuSelected.reducer,
     specialHeaderMenuSelected: specialHeaderMenuSelected.reducer,
     isScroll: isScroll.reducer,
+    isTop: isTop.reducer,
     yingshiUser: yingshiUser.reducer,
   },
   middleware: (getDefaultMiddleware) =>

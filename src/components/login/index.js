@@ -9,7 +9,7 @@ import {useDispatch} from 'react-redux';
 import {loginRequestEmailOtp, loginRequestSmsOtp} from '@/services/yingshiUser';
 import {setYingshiUserLoginParam} from '@/store/yingshiUser';
 
-export default function LoginModal({open, handler}) {
+export default function LoginModal({open, handler, onRegsiter}) {
   const router = useRouter()
   const [formData, setFormData] = useState({})
   const dispatch = useDispatch()
@@ -45,7 +45,7 @@ export default function LoginModal({open, handler}) {
     console.log(loginParam)
     dispatch(setYingshiUserLoginParam(loginParam))
     // router.push('/login/otp')
-
+    onRegsiter()
   }
 
   const handleClickEmail = () => {
