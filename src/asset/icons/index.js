@@ -72,6 +72,13 @@ export { default as GoogleIcon} from './googleIcon.png'
 export { default as AppIcon } from './appIcon.svg';
 export { default as AppImage } from './appImage.png';
 
+export { default as HistoryIconBlue} from './history_icon_blue.svg'
+export { default as FeedbackIconBlue} from './feedback_icon_blue.svg'
+export { default as PersonIconBlue} from './personBlue.svg'
+export { default as LogoutBlue} from './logoutBlue.svg'
+export { default as ArrowRightBlue } from './arrowRightBlue.svg'
+
+
 // profiles
 export { default as AnimationTick } from './profile/animationTick.gif';
 export { default as Arrow } from './profile/arrow.svg';

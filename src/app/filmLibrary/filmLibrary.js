@@ -8,7 +8,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Spinner } from '@/components/spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const getIsScroll = (state) => state.isScroll;
 const getIsTop = (state) => state.isTop;
@@ -22,7 +22,9 @@ export const FilmLibrary = ({}) => {
   const [stillCanLoad, setStillCanLoad] = useState(false);
   const [nextPage, setNextPage] = useState(0);
   const [collapse, setCollapse] = useState(false);
+  const [buttonUncollapse, setButtonUncollapse] = useState(false);
 
+  const dispatch = useDispatch();
   const isScrolling = useSelector(getIsScroll);
   const isAtTop = useSelector(getIsTop);
 
@@ -84,14 +86,22 @@ export const FilmLibrary = ({}) => {
   };
 
   useEffect(() => {
+    if (!isAtTop.res) {
+      setCollapse(true);
+    } else {
+      setCollapse(false);
+    }
+  }, [isAtTop]);
+
+  useEffect(() => {
+    console.log(isScrolling, buttonUncollapse);
     if (isScrolling.res) {
-      if (isAtTop.res) {
-        setCollapse(false);
-      } else {
+      if (buttonUncollapse) {
         setCollapse(true);
+        setButtonUncollapse(false);
       }
     }
-  }, [isScrolling, isAtTop]);
+  }, [isScrolling]);
 
   useEffect(() => {
     setLoading(true);
@@ -266,7 +276,9 @@ export const FilmLibrary = ({}) => {
           <LoadingPage full={false} />
         ) : (
           <div className='flex w-screen flex-col items-center'>
-            <div className={`bg-[#1D2023] w-screen p-1 z-20 ${collapse? 'fixed': 'sticky -top-0.5'} md:static `} >
+            <div
+              className={`bg-[#1D2023] w-screen h-auto p-1 z-20 sticky -top-0.5 md:static `}
+            >
               {/* md:mx-20 mx-2.5 */}
               <div className='flex md:flex-wrap gap-x-4 gap-y-2 pl-4 py-2 container'>
                 {filterTypeList.map((item, index) => {
@@ -296,11 +308,13 @@ export const FilmLibrary = ({}) => {
                 })}
               </div>
               <div
-                className={`flex flex-col divide-y divide-gray-800 py-2 container md:flex ${
-                  collapse && 'hidden'
-                }`}
+                className={`transition-all duration-500 md:h-fit md:visible md:py-2 
+                ease-out ${
+                  collapse ? 'opacity-0 h-0 collapse' : 'h-[280px] py-2'
+                }
+                flex flex-col divide-y divide-gray-800 container md:flex md:opacity-100`}
               >
-                <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2'>
+                <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll'>
                   {advanceFilterItem.map((item, index) => {
                     return (
                       <div
@@ -456,9 +470,9 @@ export const FilmLibrary = ({}) => {
                 )}
               </div>
               <div
-                className={`flex justify-between items-center px-4 py-2 container text-sm md:hidden ${
-                  !collapse && 'hidden'
-                }`}
+                className={`transition-all duration-500 md:h-fit
+                ease-out ${!collapse ? 'opacity-0 h-0 z-10' : 'h-[36px] py-2'}
+                flex justify-between items-center px-4 container text-sm md:hidden`}
               >
                 <div>
                   {
@@ -476,8 +490,12 @@ export const FilmLibrary = ({}) => {
                 <div className='rounded-full w-1 h-1 bg-blue-500'></div>
                 <div>{paramsFilter.year}</div>
                 <div
+                  className='cursor-pointer'
                   onClick={() => {
                     setCollapse(false);
+                    setTimeout(() => {
+                      setButtonUncollapse(true);
+                    }, 300);
                   }}
                 >
                   <FontAwesomeIcon

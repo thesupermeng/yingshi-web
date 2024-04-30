@@ -109,3 +109,17 @@ export const updateUserInfo = async (data) =>{
         }
     )
 }
+
+export const submitFeedback = async ({email, feedback}) => {
+    return YingshiApi(
+        URL_YINGSHI_USER.feedback,
+        {
+          email,
+          feedback,
+          platformId
+        },
+        {
+            method: 'POST',
+        }
+    )
+}

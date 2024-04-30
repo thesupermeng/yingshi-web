@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {LocalStorageKeys} from '@/config/common';
 
 export const setYingshiUserInfo = (d) => yingshiUser.actions.setUserInfo(d)
 export const setYingshiUserToken = (d) => yingshiUser.actions.setToken(d)
