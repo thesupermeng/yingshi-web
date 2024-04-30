@@ -5,17 +5,48 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsScroll, setIsTop } from '@/store/scrollView';
 
+const getIsTop = (state) => state.isTop;
+const getIsScroll = (state) => state.isScroll;
+
 export const ScrollView = ({ children }) => {
   const dispatch = useDispatch();
   const scrollableDivRef = useRef(null);
   const [showScrollUpButton, setShowScrollUpButton] = useState(false);
   const [lastScrollPosition, setLastScrollPosition] = useState(0);
+  const [timerId, setTimerId] = useState(null);
+
+  const isAtTop = useSelector(getIsTop);
+  const isScrolling = useSelector(getIsScroll);
 
   const handleScroll = () => {
-    if (scrollableDivRef.current.scrollTop > 0) {
-      dispatch(setIsTop(false));
-    } else {
-      dispatch(setIsTop(true));
+    // Clear the previous timer
+    if (timerId != null) {
+      clearTimeout(timerId);
+      setTimerId(null);
+    }
+
+    // Set isScrolling to true
+    if (!isScrolling.res) {
+      dispatch(setIsScroll(true));
+      console.log('get');
+    }
+
+    // Store the current scroll position
+    const currentScrollPosition = scrollableDivRef.current.scrollTop;
+
+    // Check if the scroll position has changed since the last event
+    if (currentScrollPosition !== lastScrollPosition) {
+      console.log('test1');
+      setLastScrollPosition(currentScrollPosition);
+      // Start a new timer to check if scrolling has stopped after 200ms
+      const id = setTimeout(() => {
+        console.log('test2');
+        if (isScrolling.res) {
+          dispatch(setIsScroll(false));
+          console.log('delete');
+        }
+      }, 200);
+      setTimerId(id);
     }
 
     if (scrollableDivRef.current.scrollTop > 200) {
@@ -30,6 +61,22 @@ export const ScrollView = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    if (isScrolling.res) {
+      if (scrollableDivRef.current.scrollTop > 0) {
+        if (isAtTop.res) {
+          dispatch(setIsTop(false));
+        }
+      }
+    } else {
+      if (scrollableDivRef.current.scrollTop == 0) {
+        if (!isAtTop.res) {
+          dispatch(setIsTop(true));
+        }
+      }
+    }
+  }, [isScrolling]);
+
   const scrollToTop = () => {
     const scrollableDiv = scrollableDivRef.current;
     const scrollStep = -scrollableDiv.scrollTop / 20;
@@ -41,35 +88,6 @@ export const ScrollView = ({ children }) => {
       }
     }, 15);
   };
-
-  useEffect(() => {
-    let scrollTimer;
-
-    const handleScrolling = () => {
-      // Clear the previous timer
-      clearTimeout(scrollTimer);
-      // Set isScrolling to true
-      dispatch(setIsScroll(true));
-      // Store the current scroll position
-      const currentScrollPosition = scrollableDivRef.current.scrollTop;
-      // Check if the scroll position has changed since the last event
-      if (currentScrollPosition !== lastScrollPosition) {
-        setLastScrollPosition(currentScrollPosition);
-        // Start a new timer to check if scrolling has stopped after 200ms
-        scrollTimer = setTimeout(() => {
-          dispatch(setIsScroll(false));
-        }, 200);
-      }
-    };
-
-    // Attach scroll event listener to the div
-    scrollableDivRef.current.addEventListener('scroll', handleScrolling);
-
-    // Clean up event listener on component unmount
-    return () => {
-      scrollableDivRef.current.removeEventListener('scroll', handleScrolling);
-    };
-  }, [lastScrollPosition]);
 
   return (
     <div
