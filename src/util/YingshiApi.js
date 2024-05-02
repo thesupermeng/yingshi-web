@@ -121,6 +121,10 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
     requestOption.body = requestBody;
   } else {
     getParams = objectToGetParams(body);
+
+    if(body.class){
+      getParams = getParams.replace(encodeURIComponent(body.class), decodeURIComponent(body.class));
+    }
     if(getParams != ''){
       url += '?' + getParams;
     }
