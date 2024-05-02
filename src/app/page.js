@@ -303,34 +303,10 @@ export default function Home() {
             </div>
           ) : (
             <>
-              <div className='flex flex-col w-full'>
+              <div className='desktop flex flex-col w-full'>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                 {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
                   <div className='pt-4 container  w-[100%]'>
-                    {yunying != [] &&
-                      yunying?.map((yy, idx) => {
-                        return (
-                          <div id={yy.type_id} key={idx} className='lg:pt-3'>
-                            <div className='flex justify-between'>
-                              <span
-                                style={{
-                                  fontSize: '20px',
-                                  fontWeight: '600',
-                                  fontStyle: 'normal',
-                                  fontFamily: 'PingFang SC',
-                                }}
-                              >
-                                {yy.type_name}
-                              </span>
-                            </div>
-                            <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
-                              {yy.vod_list?.slice(0, 6).map((vod, i) => {
-                                return <VideoHorizontalCard vod={vod} key={i} typepage_id={selectedMenu.id} />;
-                              })}
-                            </div>
-                          </div>
-                        );
-                      })}
                     {categories != [] &&
                       categories?.map((category, idx) => {
                         return (
@@ -380,12 +356,20 @@ export default function Home() {
                             </div>
                           </div>
                         );
-                      })}
-                    {topicList != null &&
-                      topicList?.map((topic, idx) => {
+                      })
+                    }
+                  </div>
+                </div>
+              </div>
+              <div className='mobile flex flex-col w-full'>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
+                  <div className='pt-4 container  w-[100%]'>
+                    {categories != [] &&
+                      categories?.map((category, idx) => {
                         return (
                           <div
-                            id={topic.topic_id}
+                            id={category.type_id}
                             key={idx}
                             style={{ paddingTop: '3rem' }}
                           >
@@ -398,20 +382,19 @@ export default function Home() {
                                   fontFamily: 'PingFang SC',
                                 }}
                               >
-                                {topic.topic_name}
+                                {category.type_name}
                               </span>
                               <div className='flex w-fit items-center cursor-pointer hover-blue'>
                                 <span
                                   className='mr-1'
                                   style={{
-      
                                     fontSize: '12px',
                                     fontWeight: '400',
                                     fontStyle: 'normal',
                                     fontFamily: 'PingFang SC',
                                   }}
-                                  onClick={() => {
-                                    router.push('/topic/' + topic.topic_id);
+                                  onClick={(e) => {
+                                    router.push(`/xvod/${category.vod_source_name}/${category.type_name}`);
                                   }}
                                 >
                                   更多
@@ -425,13 +408,14 @@ export default function Home() {
                               </div>
                             </div>
                             <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
-                              {topic.vod_list?.slice(0, 6).map((vod, i) => {
+                              {category.vod_list?.slice(0, 6).map((vod, i) => {
                                 return <VideoHorizontalCard vod={vod} key={i} typepage_id={selectedMenu.id} />;
                               })}
                             </div>
                           </div>
                         );
-                      })}
+                      })
+                    }
                   </div>
                 </div>
               </div>
