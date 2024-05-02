@@ -36,7 +36,8 @@ export default function WebPage ({subMenus}) {
       iconSelected: PersonIconBlue,
       onClick: () => {},
       platform: 'web',
-      href:'/myprofile/userCenter'
+      href:'/myprofile/userCenter',
+      isRequireLogin: true
     },
     {
       title: '播放历史',
@@ -44,7 +45,8 @@ export default function WebPage ({subMenus}) {
       iconSelected: HistoryIconBlue,
       onClick: () => {},
       platform: 'web',
-      href:'/myprofile/watchHistory'
+      href:'/myprofile/watchHistory',
+      isRequireLogin: false
     },
     {
       title: '我要反馈',
@@ -52,7 +54,8 @@ export default function WebPage ({subMenus}) {
       iconSelected: FeedbackIconBlue,
       onClick: () => {},
       platform: 'web',
-      href:'/myprofile/feedback'
+      href:'/myprofile/feedback',
+      isRequireLogin: false
     },
     {
       title: '登出',
@@ -62,17 +65,18 @@ export default function WebPage ({subMenus}) {
         setOpenLogout(true)
       },
       platform: 'web',
-      // href:'/myprofile/logout'
+      // href:'/myprofile/logout',
+      isRequireLogin: true
     },
   ]
 
-  useEffect(() => {
-    const localStorageToken = localStorage.getItem(LocalStorageKeys.AuthToken)
-
-    if (!token && !localStorageToken) {
-      router.push('/')
-    }
-  }, [token])
+  // useEffect(() => {
+  //   const localStorageToken = localStorage.getItem(LocalStorageKeys.AuthToken)
+  //
+  //   if (!token && !localStorageToken && window.innerWidth > 768) {
+  //     router.push('/')
+  //   }
+  // }, [token])
 
   return (
     <div className={'grid grid-cols-4 px-[110px]'}>
@@ -85,7 +89,15 @@ export default function WebPage ({subMenus}) {
           />
         </div>
         <VipCard/>
-        {navs.map((nav, index) => {
+        {navs
+          .filter (x => {
+            if (userInfo) { // is logged in
+              return true // show all
+            } else {
+              return x.isRequireLogin === false // show only those that don't require login
+            }
+          })
+          .map((nav, index) => {
           return <NavCard key={index} {...nav} isSelected={pathname === nav.href}/>
         })
         }

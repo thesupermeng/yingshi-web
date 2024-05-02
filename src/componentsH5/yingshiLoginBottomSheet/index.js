@@ -8,7 +8,7 @@ import {setYingshiUserLoginParam} from '@/store/yingshiUser';
 import CountryInput from '@/componentsH5/yingshiLoginBottomSheet/countryInput';
 import Image from 'next/image';
 import {GoogleIcon} from '@/asset/icons';
-import {Button} from '@material-tailwind/react';
+import {Button, Checkbox} from '@material-tailwind/react';
 
 export default function YingshiLoginBottomSheet({visible, onDismiss}) {
     const router = useRouter()
@@ -122,7 +122,13 @@ export default function YingshiLoginBottomSheet({visible, onDismiss}) {
                             />
                         <Button className={'h-12 w-full rounded-[10px] disabled:bg-[#1D2023] enabled:bg-[#0085E0] disabled:text-[#9C9C9C] enabled:text-white text-[17px]'} onClick={handleRegister} disabled={isInputError || isInputEmpty || !isAgreementChecked}>注册</Button>
                         <div className={'flex items-center justify-center mt-[20px]'}>
-                            <div className={`w-3 h-3 rounded-lg border border-[#9c9c9c] m-1 ${isAgreementChecked ? 'bg-[#0085E0]' : ''}`} onClick={()=> setIsAgreementChecked(x => !x)}/>
+                            <Checkbox
+                              defaultChecked={isAgreementChecked}
+                              ripple={false}
+                              className={'w-4 h-4 rounded-full hover:before:opacity-0'}
+                              color={'blue'}
+                              onChange={(e) => setIsAgreementChecked(e.target.checked)}
+                            />
                             <span className={'text-[13px] text-[#9C9C9C]'}>我已阅读并同意
                                 <span className={'text-[#0085E0]'}>用户协议</span>
                                 和

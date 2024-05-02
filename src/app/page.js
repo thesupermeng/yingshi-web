@@ -45,13 +45,27 @@ export default function Home() {
   const targetRef = useRef(null);
 
   const getTypePage = async (idValue) => {
-    return YingshiApi(
-      URL_YINGSHI_VOD.homeGetPages,
-      {
-        id: idValue,
-      },
-      { method: 'GET' }
-    );
+    if(idValue == 99){
+      return YingshiApi(
+        URL_YINGSHI_VOD.homeGetPages,
+        {
+          id: idValue,
+          dj: true,
+          page: 1,
+          limit: 60,
+          vod_limit: 6
+        },
+        { method: 'GET' }
+      );
+    } else {
+      return YingshiApi(
+        URL_YINGSHI_VOD.homeGetPages,
+        {
+          id: idValue,
+        },
+        { method: 'GET' }
+      );
+    }
   };
 
   const getTopicListApi = async () => {
@@ -120,7 +134,6 @@ export default function Home() {
     setLoading(true);
     getTypePage(selectedMenu.id).then((data) => {
       if(selectedMenu.id == 99){
-        console.log(data);
         setClassList(data.class_list);
       }
       setCategories(data.categories);
@@ -346,7 +359,9 @@ export default function Home() {
                                     fontStyle: 'normal',
                                     fontFamily: 'PingFang SC',
                                   }}
-                                  onClick={() => handleClick(category)}
+                                  onClick={(e) => {
+                                    router.push(`/xvod/${category.vod_source_name}/${category.type_name}`);
+                                  }}
                                 >
                                   更多
                                 </span>

@@ -44,6 +44,7 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
   const [toggleShowShareBoxStatus, setToggleShowShareBoxStatus] = useState(false);
   const [vodShareContent, setVodShareContent] = useState('');
   const [showToastMessage, setShowToastMessage] = useState(false);
+  const [vodUrl, setVodUrl] = useState('');
 
   const getXVodDetails = async () => {
     if (tId == 0) {
@@ -109,7 +110,6 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
     if (episodeSelected == null) {
       getXVodDetails().then((data) => {
         console.log('xData');
-        console.log(data);
         if (
           data === undefined ||
           data.length <= 0 ||
@@ -118,6 +118,11 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
         )
           return;
         let res = data.List[0];
+        console.log(res);
+        if(res?.vod_play_list?.url_count > 0) {
+          console.log(res?.vod_play_list?.urls[0].url);
+          setVodUrl(res?.vod_play_list?.urls[0].url);
+        }
         setVod(res);
 
         if (res.vod_sources?.length > 0) {
@@ -428,7 +433,6 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
           </div>
         </FullPageContent>
       )
-      
       :
       (
         <div className='flex flex-row space-x-4'>
@@ -466,7 +470,7 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
                 className='aspect-[16/9]'
                 option={{
                   container: '.artplayer-app',
-                  url: episodeSelected?.url ?? '',
+                  url: vodUrl,
                   fullscreen: true,
                   autoplay: true,
                   muted: false,

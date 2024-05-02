@@ -22,13 +22,12 @@ export const VideoHorizontalCard = ({ vod, typepage_id }) => {
 
   return (
     <div className='flex flex-col items-center'>
-      <div className='relative flex w-full aspect-[726/530] group mx-4 my-3 rounded-lg'>
+      <div className='relative flex w-full aspect-[726/430] group mx-4 my-3 rounded-lg'>
 
         <Image
           placeholder='blur'
           blurDataURL={Placeholder.src}
           onClick={(e) => {
-            e.preventDefault();
             router.push(`/play/${vod.type_id}/${nId}/${vod.vod_id}`);
           }}
           alt='video'
