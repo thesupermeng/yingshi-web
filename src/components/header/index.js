@@ -859,7 +859,7 @@ const Header = () => {
       <div className="flex items-center px-2">
         <div className="border-l-2 border-white h-4"/>
       </div>
-      
+
       <div className="flex flex-row pl-4 items-center">
         {/* md:flex */}
         <div
@@ -1197,6 +1197,10 @@ const Header = () => {
         </div>
       </div>
     );
+  }
+
+  if (pathname.startsWith('/payment')) {
+    return null
   }
 
   return defaultHeader;
