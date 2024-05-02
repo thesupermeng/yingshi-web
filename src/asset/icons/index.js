@@ -78,6 +78,8 @@ export { default as PersonIconBlue} from './personBlue.svg'
 export { default as LogoutBlue} from './logoutBlue.svg'
 export { default as ArrowRightBlue } from './arrowRightBlue.svg'
 
+export { default as WarningIcon } from './warningIcon.svg';
+
 
 // profiles
 export { default as AnimationTick } from './profile/animationTick.gif';
