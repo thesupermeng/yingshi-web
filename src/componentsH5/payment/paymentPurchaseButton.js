@@ -1,5 +1,5 @@
 import {Button} from '@material-tailwind/react';
-import styles from './paymentPurchaseButton.module.css'
+import styles from './styles.module.css'
 
 export default function PaymentPurchaseButton ({className}) {
   return (

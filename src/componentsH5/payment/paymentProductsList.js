@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import style from './paymentProductList.module.css'
+import style from './styles.module.css'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
 

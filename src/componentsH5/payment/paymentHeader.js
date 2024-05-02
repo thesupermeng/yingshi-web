@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import {PaymentTitle, vipLightIcon} from '@/asset/icons';
-import styles from './paymentHeader.module.css'
+import styles from './styles.module.css'
 
 const benefits = [
   {
