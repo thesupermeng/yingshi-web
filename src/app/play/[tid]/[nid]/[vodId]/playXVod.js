@@ -14,6 +14,7 @@ import { VodContent } from '@/components/vod/vodContent.js';
 import styles from './style.module.css';
 import { AdsBanner } from '@/components/ads/adsBanner.js';
 import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
+import { VideoHorizontalCard } from '@/components/videoItem/videoHorizontalCard';
 import { ArrowLeftIcon, ArrowRightIcon } from '@/asset/icons';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -69,14 +70,14 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
     }
   };
 
-  const getSuggestedVodType = async () => {
+  const getSuggestedVodType = async (vod_class, vod_source_name) => {
+    // const randomInt = Math.floor(Math.random() * 10) + 1;
+    const randomInt = 4;
+    let url = URL_YINGSHI_VOD.getXVodDetails + '?limit=12&page=' + randomInt + '&vod_source_name=' + vod_source_name + '&class=' + vod_class;
+    console.log(url);
     return YingshiApi(
-      URL_YINGSHI_VOD.searchingList,
-      {
-        category: vod?.vod_class?.split(',').shift(),
-        tid: vod?.type_id.toString() ?? '',
-        limit: 12,
-      },
+      url,
+      {},
       { method: 'GET' }
     );
   };
@@ -170,9 +171,13 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
   }, []);
 
   useEffect(() => {
-    getSuggestedVodType().then((data) => {
-      setSuggestedVods(data.List);
-    });
+    if(vod){
+      getSuggestedVodType(vod.vod_class, vod.vod_source_name).then((data) => {
+        console.log('dasdaaa');
+        console.log(data);
+        setSuggestedVods(data.List);
+      });
+    }
   }, [vod]);
 
   useEffect(() => {
@@ -512,6 +517,7 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
                     vodEpisodeSelected={episodeSelected}
                     vodEpisodeInfo={vod.vod_episode_info}
                     vod={vod}
+                    xMode={true}
                     setShowShareBox={toggleShowShareBox}
                   />
 
@@ -548,7 +554,7 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
                 >
                   {suggestedVods?.length > 0 &&
                     suggestedVods?.slice(0, 12).map((vod, i) => {
-                      return <VideoVerticalCard vod={vod} key={i} />;
+                      return <VideoHorizontalCard vod={vod} key={i} typepage_id={99}/>;
                     })}
                 </div>
               </div>
@@ -570,6 +576,7 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
                     vodClass={vod.vod_class}
                     vodRemark={vod.vod_remarks}
                     vod={vod}
+                    xMode={true}
                     openJianJie={openJianJie}
                     setShowShareBox={toggleShowShareBox}
                   />
