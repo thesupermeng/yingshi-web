@@ -5,10 +5,11 @@ import PaymentProductsList from '@/componentsH5/payment/paymentProductsList';
 import {Button} from '@material-tailwind/react';
 import PaymentPurchaseButton from '@/componentsH5/payment/paymentPurchaseButton';
 import PaymentDisclaimer from '@/componentsH5/payment/paymentDisclaimer';
+import PaymentMethods from '@/componentsH5/payment/paymentMethods';
 
 export default function H5Page() {
   return (
-    <div className={'relative h-full w-full'}>
+    <div className={'relative w-full'}>
       {/* background */}
       <div className={'grid grid-rows-2 w-full h-full'}>
         <div className={'relative bg-[#14161A]'}>
@@ -30,8 +31,9 @@ export default function H5Page() {
       {/* content */}
       <div className={'flex flex-col items-center absolute top-0 left-0 w-full h-full px-[29px]'}>
         <PaymentHeader/>
-        <PaymentCountdown className={'mt-[21px]'}/>
+        <PaymentCountdown className={'mt-[21px] self-start'}/>
         <PaymentProductsList className={'mt-[20px]'}/>
+        <PaymentMethods className={'mt-[26px]'}/>
         <PaymentDisclaimer className={'mt-[30px]'}/>
         <PaymentPurchaseButton className={'mt-[15px]'}/>
       </div>

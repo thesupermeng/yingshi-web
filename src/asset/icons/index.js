@@ -81,6 +81,12 @@ export { default as ArrowRightBlue } from './arrowRightBlue.svg'
 export { default as WarningIcon } from './warningIcon.svg';
 export { default as PaymentTitle } from './payment_title.svg'
 
+export { default as WechatPayIcon } from './wechatPayMethodIcon.svg'
+export { default as AlipayIcon } from './alipayMethodIcon.svg'
+export { default as CreditCardPayIcon } from './creditCardMethodIcon.svg'
+export { default as VisaMasterAmex } from './visaMasterAmex.svg'
+
+
 // profiles
 export { default as AnimationTick } from './profile/animationTick.gif';
 export { default as Arrow } from './profile/arrow.svg';

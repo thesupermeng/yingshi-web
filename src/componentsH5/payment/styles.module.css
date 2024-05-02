@@ -30,3 +30,18 @@
 .product_card_animation {
     animation: height 0.5s ease-in-out;
 }
+
+.payment_method_select_inner {
+    background: linear-gradient(180deg, #D4AE80 0%, #BB9469 100%);
+
+
+}
+.payment_method_select_outer {
+    border: 1px solid rgba(190, 151, 107, 0.8);
+
+}
+
+.payment_method_background {
+    background: linear-gradient(270deg, #1D2023 6.8%, #2E3134 94.17%);
+
+}
