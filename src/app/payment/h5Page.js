@@ -1,5 +1,6 @@
 import styles from './style.module.css'
 import PaymentHeader from '@/componentsH5/payment/paymentHeader';
+import PaymentCountdown from '@/componentsH5/payment/paymentCountdown';
 
 export default function H5Page() {
   return (
@@ -25,6 +26,7 @@ export default function H5Page() {
       {/* content */}
       <div className={'flex flex-col items-center absolute top-0 left-0 w-full h-full px-[29px]'}>
         <PaymentHeader/>
+        <PaymentCountdown className={'mt-[21px]'}/>
       </div>
     </div>
   )
