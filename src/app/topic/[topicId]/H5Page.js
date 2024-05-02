@@ -50,9 +50,9 @@ export default function Page() {
           {/* desktop view */}
           <div className='desktop'>
             <div className={styles.containerHeader}>
-              <div className='d-flexx' style={{ width: '100%' }}>
+              <div className='d-flex' style={{ width: '100%' }}>
                 <div className='overlay' style={{ width: '100%' }}>
-                  <div className='row px-0 d-flex flex-column w-screen'>
+                  <div className='px-0 d-flex flex-column w-screen'>
                     <div className='topic-container-header container content-end'>
                       <div className='topic-header-text'>
                         {topicObj.topic_name}
