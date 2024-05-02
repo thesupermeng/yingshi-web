@@ -45,8 +45,8 @@ const VodItemDesktop = ({ vod }) => {
                     ? vod.vod_blurb.substring(0, 73) + '...'
                     : vod.vod_blurb}
                 </div>
-                <button className='btn btn-topic-play' onClick={() => handlePlay(vod.vod_id)}>
-                  <FontAwesomeIcon icon={faPlay} /> <span className='ml-2'> 立即播放 </span>
+                <button className='btn btn-topic-play'  onClick={() => handlePlay(vod.vod_id)}>
+                  <FontAwesomeIcon icon={faPlay}  style={{ color: 'white' }} /> <span className='ml-2'> 立即播放 </span>
                 </button>
               </div>
             </div>
