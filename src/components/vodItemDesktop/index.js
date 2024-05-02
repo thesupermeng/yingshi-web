@@ -16,7 +16,11 @@ const VodItemDesktop = ({ vod }) => {
         <div className='row'>
           <div className='col-12'>
             <div className='row'>
-              <div className='col-lg-3 col-md-2'>
+              <div   style={{
+                    padding: '0px',
+                    width: '132px',
+          
+                  }}>
                 <img
                   alt='vod'
                   className='object-cover'
@@ -29,7 +33,7 @@ const VodItemDesktop = ({ vod }) => {
                 />
               </div>
 
-              <div className='col-lg-9 col-md-10'>
+              <div className='col'>
                 <div className='topic-details-title'>{vod.vod_name}</div>
                 <div className='topic-details-title-sub text-secondary '>
                   {vod.vod_year} {vod.vod_class}
