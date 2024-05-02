@@ -178,7 +178,7 @@ export default function Page() {
                                   : vod.vod_blurb}
                               </div>
                               <button className='btn btn-topic-play'>
-                                <FontAwesomeIcon className='text-white' icon={faPlay} />{' '}
+                                <FontAwesomeIcon style={{ color: 'white' }}  icon={faPlay} />{' '}
                                 <span className='ml-2 text-white'> 立即播放 </span>
                               </button>
                             </div>

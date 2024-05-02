@@ -6,9 +6,15 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
 export const VideoVerticalCard = ({ vod }) => {
   const router = useRouter();
+
+  const listConverter = (strings) => {
+    let list = [];
+    list = strings.split(',').filter((item) => item !== '');
+    return list;
+  };
   return (
     <div className='flex flex-col items-center'>
-      <div className='relative flex w-full aspect-[530/726] group mx-4 my-3 rounded-lg'>
+      <div className='relative flex w-full aspect-[530/726] group mx-4 my-2 rounded-lg'>
         <Image
           placeholder='blur'
           blurDataURL={Placeholder.src}
@@ -21,13 +27,14 @@ export const VideoVerticalCard = ({ vod }) => {
           style={{ borderRadius: '0.5rem !important', objectFit: 'cover' }}
           fill
           sizes='100%'
-          className='rounded-lg md:transition md:group-hover:scale-125 
-  md:group-hover:cursor-pointer group-hover:rounded-lg md:group-hover:z-10 md:group-hover:rounded-lg'
+          className='rounded-lg md:transition md:group-hover:scale-150 md:group-hover:duration-500
+              md:group-hover:cursor-pointer group-hover:rounded-lg md:group-hover:z-10 md:group-hover:rounded-lg'
         />
 
         <div
-          className='bg-[#0000008c] h-full w-full flex flex-col rounded-lg md:transition md:group-hover:scale-125 
-  md:group-hover:cursor-pointer group-hover:rounded-lg md:group-hover:z-10 md:group-hover:rounded-lg'
+          className='bg-[#0000008c] h-[100%] w-full flex flex-col rounded-lg md:transition md:group-hover:scale-150 
+           md:group-hover:duration-500 md:group-hover:cursor-pointer group-hover:rounded-lg 
+           md:group-hover:z-10 md:group-hover:rounded-lg'
           onClick={(e) => {
             e.preventDefault();
             router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);
@@ -43,9 +50,26 @@ export const VideoVerticalCard = ({ vod }) => {
               />
             </div>
           </div>
-          <div className='bg-[#1D2023] rounded-b-lg w-full h-[55%]'>
-            {console.log(vod)}
-            <p className='text-xs truncate'>{vod.vod_content}</p>
+          <div className='bg-[#1D2023] rounded-b-lg w-full h-[55%] p-2 flex flex-col overflow-hidden'>
+            <span className='text-[10px]/6 text-[#0085E0] font-bold'>
+              {vod.vod_name}
+            </span>
+            <div className='flex flex-row gap-1 flex-wrap py-1'>
+              {vod.vod_actor !== undefined &&
+                listConverter(vod.vod_actor).map((item, index) => {
+                  return (
+                    <span
+                      key={index}
+                      className='rounded-md bg-[#ffffff1a] text-[7px] text-[#9C9C9C] font-bold p-1'
+                    >
+                      {item}
+                    </span>
+                  );
+                })}
+            </div>
+            <div className='flex overflow-hidden'>
+              <span className='text-[7px] text-[#9C9C9C] font-bold text-ellipsis '>{vod.vod_content}</span>
+            </div>
           </div>
         </div>
 

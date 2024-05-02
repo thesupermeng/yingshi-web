@@ -17,11 +17,12 @@ import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
 import { ArrowLeftIcon, ArrowRightIcon } from '@/asset/icons';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { convertTimeStampToDateTime } from "@/util/date";
+import { convertTimeStampToDateTime } from '@/util/date';
 import { FullPageContent } from '@/componentsH5/FullPageContent';
 import { LottieAnimation } from '../../../../../../src/components/lottie';
 import { IrrLoading } from '@/asset/lottie';
 import FullScreenModal from '@/components/FullScreenModal';
+import artplayerPluginAds from 'artplayer-plugin-ads';
 
 export const PlayVod = ({ vodId, tId, nId }) => {
   const router = useRouter();
@@ -41,7 +42,8 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   const [suggestedVods, setSuggestedVods] = useState([]);
   const [toggleJianJie, setToggleJianJie] = useState(false);
   const [desc, setDesc] = useState('');
-  const [toggleShowShareBoxStatus, setToggleShowShareBoxStatus] = useState(false);
+  const [toggleShowShareBoxStatus, setToggleShowShareBoxStatus] =
+    useState(false);
   const [vodShareContent, setVodShareContent] = useState('');
   const [showToastMessage, setShowToastMessage] = useState(false);
 
@@ -79,8 +81,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   };
 
   useEffect(() => {
-
-    let content = "";
+    let content = '';
 
     if (vod) {
       let desc = vod.vod_year + ' ' + vod.vod_area;
@@ -95,11 +96,11 @@ export const PlayVod = ({ vodId, tId, nId }) => {
 
       setDesc(desc);
 
-      content += "《" + vod.vod_name + "》高清播放";
-      content += "</br>" + window.location.href;
-      content += "</br>鲨鱼TV-海量高清视频在线观看";
+      content += '《' + vod.vod_name + '》高清播放';
+      content += '</br>' + window.location.href;
+      content += '</br>鲨鱼TV-海量高清视频在线观看';
 
-      setVodShareContent(content)
+      setVodShareContent(content);
     }
   }, [vod]);
 
@@ -167,7 +168,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   }, [vod]);
 
   useEffect(() => {
-    console.log(vod)
+    console.log(vod);
     if (episodeSelected !== null) {
       let watchHistory = {
         tid: tId,
@@ -253,103 +254,135 @@ export const PlayVod = ({ vodId, tId, nId }) => {
 
   const toggleShowShareBox = (e) => {
     console.log(e?.target?.id);
-    if(typeof e == 'undefined'){
+    if (typeof e == 'undefined') {
       setToggleShowShareBoxStatus(true);
       return;
     }
 
-    if(e?.target?.id === "parentBg" || e?.target?.id === "parentBgMobile" ){
+    if (e?.target?.id === 'parentBg' || e?.target?.id === 'parentBgMobile') {
       setToggleShowShareBoxStatus(false);
       return;
     }
-  }
+  };
 
   const copyContentToClipboard = () => {
-    let content = vodShareContent.replaceAll("</br>", " ");
+    let content = vodShareContent.replaceAll('</br>', ' ');
     navigator.clipboard.writeText(content);
     setShowToastMessage(true);
     setToggleShowShareBoxStatus(false);
-    const timeout = setTimeout(() => setShowToastMessage(false), 2000)
-  }
+    const timeout = setTimeout(() => setShowToastMessage(false), 2000);
+  };
 
   return (
-    <div ref={domElementRef} className='container' style={{ padding: '0px', position: 'relative' }}>
-      <div className={`${showToastMessage ? 'flex' : 'hidden'} items-center justify-center`} style={{ width: '100%', height: '100%', position: 'absolute' }}>
+    <div
+      ref={domElementRef}
+      className='container'
+      style={{ padding: '0px', position: 'relative' }}
+    >
+      <div
+        className={`${showToastMessage ? 'flex' : 'hidden'} items-center justify-center`}
+        style={{ width: '100%', height: '100%', position: 'absolute' }}
+      >
         <div
           className={`fixed top-0 z-[9999] flex items-center justify-center w-full h-full pointer-events-none text-white transition-opacity duration-300 opacity-100`}
         >
-          <div className='text-white px-6 py-3 rounded-[12px] text-sm flex gap-3' style={{ background: '#1D2023CC' }}>
+          <div
+            className='text-white px-6 py-3 rounded-[12px] text-sm flex gap-3'
+            style={{ background: '#1D2023CC' }}
+          >
             已复制链接
           </div>
         </div>
       </div>
       <div className='desktop'>
-        <div className={`${toggleShowShareBoxStatus ? 'block' : 'hidden'} fixed z-50 top-0 bottom-0 left-0 right-0 bg-black opacity-60`}></div>
-        <div className={`${toggleShowShareBoxStatus ? 'block' : 'hidden'} h-screen fixed z-50 top-0 bottom-0 left-0 right-0 bg-transparent backdrop-blur-sm`}>
-          <div className='items-center justify-center' style={{ display: 'flex', width: '100%', height: '100%' }} id="parentBg"
-          onClick={toggleShowShareBox}>
+        <div
+          className={`${toggleShowShareBoxStatus ? 'block' : 'hidden'} fixed z-50 top-0 bottom-0 left-0 right-0 bg-black opacity-60`}
+        ></div>
+        <div
+          className={`${toggleShowShareBoxStatus ? 'block' : 'hidden'} h-screen fixed z-50 top-0 bottom-0 left-0 right-0 bg-transparent backdrop-blur-sm`}
+        >
+          <div
+            className='items-center justify-center'
+            style={{ display: 'flex', width: '100%', height: '100%' }}
+            id='parentBg'
+            onClick={toggleShowShareBox}
+          >
             <div
-                // className={`${toggleShowShareBoxStatus ? 'flex' : 'hidden'} h-screen desktop`}
+              // className={`${toggleShowShareBoxStatus ? 'flex' : 'hidden'} h-screen desktop`}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                position: 'absolute',
+                justifyContent: 'center',
+                alignItems: 'center',
+                display: 'flex',
+              }}
+            >
+              <div
+                className=''
                 style={{
+                  width: '400px',
+                  height: '30%',
+                  zIndex: '999',
                   display: 'flex',
-                  flexDirection: 'column',
-                  position: 'absolute',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  display: 'flex',
+                  flexDirection: 'column',
+                  background: '#1D2023',
+                  padding: '1rem 1rem 0rem 1rem',
+                  borderRadius: '12px',
                 }}
               >
+                <span className='text-md' style={{ fontWeight: '500' }}>
+                  分享视频
+                </span>
+                <div
+                  style={{
+                    width: '100%',
+                    paddingTop: '0.5rem',
+                    paddingBottom: '0.5rem',
+                  }}
+                >
+                  <span className='text-sm'>
+                    复制下方链接，去粘贴给好友吧：
+                  </span>
+                </div>
                 <div
                   className=''
                   style={{
-                    width: '400px',
-                    height: '30%',
-                    zIndex: '999',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    flexDirection: 'column',
-                    background: '#1D2023',
-                    padding: '1rem 1rem 0rem 1rem',
-                    borderRadius: '12px'
+                    width: '100%',
+                    height: '100%',
+                    background: 'rgba(137, 149, 181, 0.08)',
+                    padding: '1rem',
                   }}
                 >
-                  <span className='text-md' style={{ fontWeight: '500' }}>分享视频</span>
-                  <div style={{ width: '100%', paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
-                    <span className='text-sm'>复制下方链接，去粘贴给好友吧：</span>
-                  </div>
                   <div
-                    className=''
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      background: 'rgba(137, 149, 181, 0.08)',
-                      padding: '1rem'
-                    }}
-                  >
-                    <div className='text-sm' ref={shareContentRef} dangerouslySetInnerHTML={{__html: vodShareContent}}>
-                    </div>
-                  </div>
-                  <div
-                    style={{ 
-                      padding: '0.3rem 1.2rem',
-                      background: '#0085E0',
-                      borderRadius: '12px',
-                      margin: '0.5rem',
-                    }}
-                    onClick={copyContentToClipboard}
-                  >
-                    <span className='text-sm cursor-pointer'>一键复制</span>
-                  </div>
+                    className='text-sm'
+                    ref={shareContentRef}
+                    dangerouslySetInnerHTML={{ __html: vodShareContent }}
+                  ></div>
                 </div>
+                <div
+                  style={{
+                    padding: '0.3rem 1.2rem',
+                    background: '#0085E0',
+                    borderRadius: '12px',
+                    margin: '0.5rem',
+                  }}
+                  onClick={copyContentToClipboard}
+                >
+                  <span className='text-sm cursor-pointer'>一键复制</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       <div className='mobile'>
-        <div 
-          className={`${toggleShowShareBoxStatus ? 'flex' : 'hidden'} fixed z-10 top-0 bottom-0 left-0 right-0 bg-black opacity-60`}></div>
+        <div
+          className={`${toggleShowShareBoxStatus ? 'flex' : 'hidden'} fixed z-10 top-0 bottom-0 left-0 right-0 bg-black opacity-60`}
+        ></div>
         <div
           className={`${toggleShowShareBoxStatus ? 'flex' : 'hidden'} w-screen h-screen z-50`}
           style={{
@@ -374,12 +407,20 @@ export const PlayVod = ({ vodId, tId, nId }) => {
               flexDirection: 'column',
               background: '#1D2023',
               padding: '1rem 1rem 0rem 1rem',
-              borderRadius: '12px'
+              borderRadius: '12px',
             }}
             onClick={toggleShowShareBox}
           >
-            <span className='text-md' style={{ fontWeight: '500' }}>分享视频</span>
-            <div style={{ width: '100%', paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
+            <span className='text-md' style={{ fontWeight: '500' }}>
+              分享视频
+            </span>
+            <div
+              style={{
+                width: '100%',
+                paddingTop: '0.5rem',
+                paddingBottom: '0.5rem',
+              }}
+            >
               <span className='text-sm'>复制下方链接，去粘贴给好友吧：</span>
             </div>
             <div
@@ -388,14 +429,17 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                 width: '100%',
                 height: '100%',
                 background: 'rgba(137, 149, 181, 0.08)',
-                padding: '1rem'
+                padding: '1rem',
               }}
             >
-              <div className='text-sm' ref={shareContentRef} dangerouslySetInnerHTML={{__html: vodShareContent}}>
-              </div>
+              <div
+                className='text-sm'
+                ref={shareContentRef}
+                dangerouslySetInnerHTML={{ __html: vodShareContent }}
+              ></div>
             </div>
             <div
-              style={{ 
+              style={{
                 padding: '0.5rem 1.2rem',
                 background: '#0085E0',
                 borderRadius: '12px',
@@ -408,12 +452,8 @@ export const PlayVod = ({ vodId, tId, nId }) => {
           </div>
         </div>
       </div>
-      
-      {vod == null
 
-      ?
-
-      (
+      {vod == null ? (
         <FullPageContent>
           <div className='flex flex-1 w-full h-full items-center justify-center'>
             <LottieAnimation
@@ -423,10 +463,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
             />
           </div>
         </FullPageContent>
-      )
-      
-      :
-      (
+      ) : (
         <div className='flex flex-row space-x-4'>
           <div
             className='flex-1 space-y-4 no-scrollbar'
@@ -466,6 +503,29 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                   fullscreen: true,
                   autoplay: true,
                   muted: false,
+                  plugins: [
+                    artplayerPluginAds({
+                      // 视频广告的地址
+                      video: 'https://oss.yingshi.tv/videos/vod/vi/bsport15_sec.mp4',
+                      // 广告跳转网址，为空则不跳转
+                      url: '',
+                      // 必须观看的时长，期间不能被跳过，单位为秒
+                      // 当该值大于或等于totalDuration时，不能提前关闭广告
+                      // 当该值等于或小于0时，则随时都可以关闭广告
+                      playDuration: 15,
+                      // 广告总时长，单位为秒
+                      totalDuration: 15,
+                      // 视频广告是否默认静音
+                      muted: false,
+                      // 多语言支持
+                      i18n: {
+                        close: '关闭广告',
+                        countdown: '%s秒',
+                        detail: '查看详情',
+                        canBeClosed: '%s秒后可关闭广告',
+                      },
+                    }),
+                  ],
                 }}
                 getInstance={(art) => console.info(art)}
                 onVideoEnd={onVideoEnd}
@@ -477,10 +537,13 @@ export const PlayVod = ({ vodId, tId, nId }) => {
             ></div>
             {/* Web Share Horizontal */}
             <div className='lg:flex hidden'>
-              <ShareHorizontal className={'w-[80%]'} setShowShareBox={() => {
-                console.log('ASDA');
-                setToggleShowShareBoxStatus(true);
-              }}/>
+              <ShareHorizontal
+                className={'w-[80%]'}
+                setShowShareBox={() => {
+                  console.log('ASDA');
+                  setToggleShowShareBoxStatus(true);
+                }}
+              />
             </div>
             <VodContent
               vodContent={vod.vod_content}
@@ -613,9 +676,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                       简介
                     </div>
                     <div className='text-sm'>
-                      <p>
-                        {vod.vod_content}
-                      </p>
+                      <p>{vod.vod_content}</p>
                     </div>
                   </div>
                 </div>

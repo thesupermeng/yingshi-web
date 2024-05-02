@@ -92,11 +92,11 @@
 }
 
 .btn-topic-play {
-  margin-top: 42px;
-  font-size: 12px;
-  border-radius: 20px;
-  padding: 7px 24px;
-  background-image: linear-gradient(to right, #094eff, #4f80ff);
+  margin-top: 42px !important;
+  font-size: 12px !important;
+  border-radius: 20px !important;
+  padding: 7px 24px !important;
+  background-image: linear-gradient(to right, #094eff, #4f80ff) !important;
   color: #fff !important;
 }
 
@@ -236,4 +236,8 @@
   text-overflow: ellipsis;
   max-width: 360px;
   align-items: center;
+}
+.fa-play
+{
+  color: #fff !important;
 }
