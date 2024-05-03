@@ -150,7 +150,7 @@ export default function OtpModal ({open, handler, onLogin, onRegister}) {
               {errorMessage && <p className={'text-[#FF1010] text-[13px] mb-[13px]'}>{errorMessage}</p>}
               {!errorMessage && <p className={'text-transparent text-[13px] mb-[13px]'}>placeholder</p>}
 
-              <Button className={'bg-shayuBlue text-[15px] font-semibold normal-case'} disabled={countdownTimer > 0} onClick={handleResendOtp}>从新发送验证码 {countdownTimer > 0 && `${countdownTimer}s`}</Button>
+              <Button className={'bg-shayuBlue text-[15px] font-semibold normal-case'} disabled={countdownTimer > 0} onClick={handleResendOtp}>重新发送验证码 {countdownTimer > 0 && `${countdownTimer}s`}</Button>
             </div>
           </DialogBody>
         </Dialog>
