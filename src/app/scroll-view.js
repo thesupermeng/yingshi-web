@@ -3,7 +3,11 @@ import { backtoTopIcon } from '@/asset/icons';
 import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsScroll, setIsTop } from '@/store/scrollView';
+import {
+  setIsScroll,
+  setIsTop,
+  setCurrentScrollPosition,
+} from '@/store/scrollView';
 
 const getIsTop = (state) => state.isTop;
 const getIsScroll = (state) => state.isScroll;
@@ -32,6 +36,8 @@ export const ScrollView = ({ children }) => {
 
     // Store the current scroll position
     const currentScrollPosition = scrollableDivRef.current.scrollTop;
+
+    dispatch(setCurrentScrollPosition(currentScrollPosition));
 
     // Check if the scroll position has changed since the last event
     if (currentScrollPosition !== lastScrollPosition) {
