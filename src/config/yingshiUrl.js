@@ -18,3 +18,7 @@ export const URL_YINGSHI_VOD = {
   filteringTypeList: 'type/v2/type',
   getXVodDetails: 'svod/v2/vod',
 };
+
+export const URL_YINGSHI_PAYMENT = {
+  getProducts: 'products/v2/nativeProducts',
+}

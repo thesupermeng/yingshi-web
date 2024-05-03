@@ -8,14 +8,13 @@ export default function PaymentProductsList({className, productList, onProductSe
   const [selectedProduct, setSelectedProduct] = useState(0)
 
   useEffect(() => {
-    onProductSelect(productList[0])
-    setSelectedProduct(productList[0].product_id)
-    console.log(productList[0])
+    if (productList && productList.length > 0) {
+      onProductSelect(productList[0])
+      setSelectedProduct(productList[0].product_id)
+    }
+
   }, [productList])
 
-  useEffect(() => {
-    console.log('selectedProduct',selectedProduct)
-  }, [selectedProduct]);
 
   return (
     <div className={`h-[194px] w-full overflow-scroll flex flex-nowrap gap-[20px] items-center ${className}`}>
