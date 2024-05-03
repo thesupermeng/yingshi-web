@@ -8,3 +8,19 @@ export const getYingshiProducts = async () => {
     { method: 'GET' }
   );
 }
+
+export const postPayOrder = async ({ productId, zfType }) => {
+  return YingshiApi(
+    URL_YINGSHI_PAYMENT.createPayOrder,
+    {
+      platform: 'WEB',
+      redirect_to: 'web',
+      product_id: productId,
+      zf_type: zfType,
+    },
+    {
+      method: 'POST',
+      returnFullResponse: true
+    }
+  );
+}
