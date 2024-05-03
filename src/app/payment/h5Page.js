@@ -180,9 +180,9 @@ export default function H5Page() {
   const [paymentMethodSelected, setPaymentMethodSelected] = useState(null)
 
   return (
-    <div className={'relative w-full h-full'}>
+    <div className={'relative w-full'}>
       {/* background */}
-      <div className={'grid grid-rows-2 w-full h-full'}>
+      <div className={'w-full'}>
         <div className={'relative bg-[#14161A]'}>
           <video
             src={'./video/vip_background.mp4'}
@@ -197,10 +197,9 @@ export default function H5Page() {
             className={styles.gradient_overlay + ' absolute top-0 left-0 w-full h-full'}
           />
         </div>
-        <div className={'bg-[#14161A]'}></div>
       </div>
       {/* content */}
-      <div className={'flex flex-col items-center absolute top-0 left-0 w-full h-full px-[29px]'}>
+      <div className={'flex flex-col items-center absolute top-0 left-0 w-full px-[29px] pb-[55px]'}>
         <PaymentHeader/>
         <PaymentCountdown className={'mt-[21px] self-start'}/>
         <PaymentProductsList className={'mt-[20px]'} productList={fakeProductList} onProductSelect={(product) => setProductSelected(product)}/>
