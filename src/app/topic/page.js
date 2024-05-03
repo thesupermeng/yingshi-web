@@ -152,8 +152,14 @@ export default function Page({ params }) {
                 >
                   <div className='col-12 mx-0 px-0'>
                     <div className='d-flex topic-card'>
-                      <div className='col-lg-4 col-md-2.5 px-0'>
-                        <div className={`object-cover topic-img`}>
+                      <div    style={{
+                              padding: '10px',
+                              width: '123px',
+                              borderRadius: '10px',
+                            
+                            }}
+                           >
+                
                           <img
                             alt='topic items'
                             className={`object-cover`}
@@ -164,9 +170,9 @@ export default function Page({ params }) {
                               height: '170px',
                             }}
                           />
-                        </div>
+                    
                       </div>
-                      <div className='col-lg-8 col-md-9 px-0 d-flex flex-column justify-content-between'>
+                      <div className='col d-flex flex-column justify-content-between'>
                         <div>
                           <div className='text-base font-bold pb-2'>
                             {topic.topic_name}

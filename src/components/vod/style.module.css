@@ -70,3 +70,7 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+.improve-text-unblurry {
+  -webkit-font-smoothing: antialiased;
+}
