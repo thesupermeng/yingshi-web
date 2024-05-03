@@ -1,6 +1,6 @@
 import {Button, Dialog, DialogBody} from '@material-tailwind/react';
 import {forwardRef, useEffect, useRef, useState} from 'react';
-import {loginEmail, loginSms} from '@/services/yingshiUser';
+import {loginEmail, loginRequestEmailOtp, loginRequestSmsOtp, loginSms} from '@/services/yingshiUser';
 import {setYingshiUserLoginParam, setYingshiUserToken} from '@/store/yingshiUser';
 import {useRouter} from 'next/navigation';
 import {useDispatch, useSelector} from 'react-redux';
@@ -28,15 +28,17 @@ export default function OtpModal ({open, handler, onLogin, onRegister}) {
   useEffect(() => {
     // if (timerRef.current) return;
 
-    timerRef.current = setInterval(() => {
-      setCountdownTimer(prev => Math.max(0, prev - 1))
-    }, 1000)
+    if (open) {
+      timerRef.current = setInterval(() => {
+        setCountdownTimer(prev => Math.max(0, prev - 1))
+      }, 1000)
+    }
 
     return () => {
       clearInterval(timerRef.current)
     }
 
-  }, [])
+  }, [open])
 
   useEffect(() => {
     if (inputRefs.current.length !== 0 ){
@@ -110,6 +112,16 @@ export default function OtpModal ({open, handler, onLogin, onRegister}) {
     }
   }
 
+  const handleResendOtp = () => {
+    setCountdownTimer(totalCountdownTime)
+    if (loginParam.loginMode === 'sms') {
+      loginRequestSmsOtp(loginParam)
+    } else {
+      loginRequestEmailOtp(loginParam)
+
+    }
+  }
+
   return (
     <>
       {loginParam && loginParam.loginMode &&
@@ -138,7 +150,7 @@ export default function OtpModal ({open, handler, onLogin, onRegister}) {
               {errorMessage && <p className={'text-[#FF1010] text-[13px] mb-[13px]'}>{errorMessage}</p>}
               {!errorMessage && <p className={'text-transparent text-[13px] mb-[13px]'}>placeholder</p>}
 
-              <Button className={'bg-shayuBlue text-[15px] font-semibold normal-case'} disabled={countdownTimer > 0}>从新发送验证码 {countdownTimer > 0 && `${countdownTimer}s`}</Button>
+              <Button className={'bg-shayuBlue text-[15px] font-semibold normal-case'} disabled={countdownTimer > 0} onClick={handleResendOtp}>从新发送验证码 {countdownTimer > 0 && `${countdownTimer}s`}</Button>
             </div>
           </DialogBody>
         </Dialog>
