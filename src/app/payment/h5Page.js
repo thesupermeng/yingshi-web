@@ -9,6 +9,9 @@ import PaymentPurchaseButton from '@/componentsH5/payment/paymentPurchaseButton'
 import PaymentDisclaimer from '@/componentsH5/payment/paymentDisclaimer';
 import PaymentMethods from '@/componentsH5/payment/paymentMethods';
 import {useState} from 'react';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faTimes} from '@fortawesome/free-solid-svg-icons';
+import {useRouter} from 'next/navigation';
 
 const fakeProductList = [
   {
@@ -176,6 +179,7 @@ const fakeProductList = [
 
 
 export default function H5Page() {
+  const router = useRouter()
   const [productSelected, setProductSelected] = useState(null)
   const [paymentMethodSelected, setPaymentMethodSelected] = useState(null)
 
@@ -200,6 +204,14 @@ export default function H5Page() {
       </div>
       {/* content */}
       <div className={'flex flex-col items-center absolute top-0 left-0 w-full px-[29px] pb-[55px]'}>
+        <FontAwesomeIcon icon={faTimes} style={{
+          color:'white',
+          width: '30px',
+          height: '30px',
+          position: 'absolute',
+          top: '20px',
+          left: '20px'
+        }} onClick={()=> router.back()}/>
         <PaymentHeader/>
         <PaymentCountdown className={'mt-[21px] self-start'}/>
         <PaymentProductsList className={'mt-[20px]'} productList={fakeProductList} onProductSelect={(product) => setProductSelected(product)}/>

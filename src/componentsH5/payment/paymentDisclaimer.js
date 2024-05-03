@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 
 export default function PaymentDisclaimer({className}) {
@@ -16,6 +17,7 @@ export default function PaymentDisclaimer({className}) {
 
   const handleClickEmail = () => {
     console.log('Email clicked')
+    window.location = 'mailto:contact.movie9@gmail.com'
   }
 
   return (
