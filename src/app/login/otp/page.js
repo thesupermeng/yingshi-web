@@ -4,7 +4,7 @@ import Image from 'next/image';
 import {Stopwatch} from '@/asset/icons';
 import {useDispatch, useSelector} from 'react-redux';
 import {useRouter} from 'next/navigation';
-import {loginEmail, loginRequestEmailOtp, loginSms} from '@/services/yingshiUser';
+import {loginEmail, loginRequestEmailOtp, loginRequestSmsOtp, loginSms} from '@/services/yingshiUser';
 import {setYingshiUserLoginParam} from '@/store/yingshiUser';
 
 const totalCountdownTime = 60 // seconds
@@ -32,10 +32,13 @@ export default function OTP () {
     const seconds = countdownTimer % 60;
 
     const handleResendOTP = () => {
+      setCountdownTimer(totalCountdownTime)
+      if (loginParam.loginMode === 'sms') {
+        loginRequestSmsOtp(loginParam)
+      } else {
         loginRequestEmailOtp(loginParam)
-            .then(res => {
-                setCountdownTimer(totalCountdownTime)
-            })
+
+      }
     }
 
     useEffect(() => {
