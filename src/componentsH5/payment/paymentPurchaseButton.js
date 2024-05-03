@@ -13,7 +13,7 @@ export default function PaymentPurchaseButton({productInfo, paymentInfo, classNa
       .then(res => {
         if (res.code === 0) {
           console.log('going to ',res.data.paymentData.url)
-          window.open(res.data.paymentData.url, '_blank')
+          window.location.href = res.data.paymentData.url
         }
       })
       .finally(() => {
