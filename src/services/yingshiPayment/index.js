@@ -24,3 +24,15 @@ export const postPayOrder = async ({ productId, zfType }) => {
     }
   );
 }
+
+export const getTransactionDetail = async (transactionId) => {
+  return YingshiApi(
+    URL_YINGSHI_PAYMENT.getTransactionDetail,
+    {
+      transaction_id: transactionId
+    },
+    {
+      method: 'GET'
+    }
+  )
+}
