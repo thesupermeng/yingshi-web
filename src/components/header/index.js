@@ -60,7 +60,7 @@ const Header = () => {
   const selectedSpecialMenu = useSelector(getSpecialHeaderMenuSelected);
   const [visibleItems, setVisibleItems] = useState([]);
   const [hiddenItems, setHiddenItems] = useState([]);
-  const {isVip, userInfo} = useYingshiUser();
+  const { isVip, userInfo } = useYingshiUser();
 
   const router = useRouter();
   const pathname = usePathname();
@@ -335,20 +335,17 @@ const Header = () => {
     if (pathname.startsWith('/topic')) {
       dispatch(setSpecialSelectedId(998));
       dispatch(setSelectedId(0));
-
     } else if (pathname.startsWith('/filmLibrary')) {
       dispatch(setSpecialSelectedId(999));
       dispatch(setSelectedId(0));
-    }
-    else if (pathname.startsWith('/play/')){
+    } else if (pathname.startsWith('/play/')) {
       dispatch(setSpecialSelectedId(-1));
       dispatch(setSelectedId(0));
-    }
-    else {
+    } else {
       dispatch(setSpecialSelectedId(-1));
       dispatch(setSelectedId(selectedMenu.id));
     }
-  }, [pathname])
+  }, [pathname]);
 
   useEffect(() => {
     calculateItemsVisibility();
@@ -449,129 +446,135 @@ const Header = () => {
         </div>
         {openSearch ? (
           <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100vh_-_52px)] md:h-[calc(50vh_-_52px)] z-20 left-0 md:left-auto md:w-96 md:ml-16'>
-            <div className='no-scrollbar py-3 px-4 flex flex-col md:rounded-md w-full h-full overflow-y-scroll bg-[#1d2023] md:bg-[#2c313ae6] md:w-96'>
-              {searchInput ? (
-                loadingSearching ? (
-                  <LoadingPage full={false} />
-                ) : searchingList.length > 0 ? (
-                  searchingList.map((item, index) => {
-                    return (
-                      <div
-                        className='flex flex-row justify-between py-2.5'
-                        key={index}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setOpenSearch(false);
-                          setSearchInput('');
-                          handleAddSearchHistory();
-                          router.push(`/play/${item.type_id}/1/${item.vod_id}`);
-                        }}
-                      >
-                        <div className='flex flex-row'>
-                          <div className='text-sm'>{item.vod_name}</div>
-                        </div>
-                      </div>
-                    );
-                  })
-                ) : (
-                  <div className='flex items-center justify-center flex-col h-full'>
-                    <Image
-                      className='mx-2'
-                      src={searchEmptyIcon}
-                      alt='empty'
-                      width={120}
-                    />
-                    <span>暂无播单</span>
-                  </div>
-                )
-              ) : (
-                <>
-                  {searchHistoryList.length > 0 ? (
-                    <div>
-                      <div className='flex flex-row justify-between items-center pb-2'>
-                        <div className='text-sm'>历史搜索</div>
+            <div className='py-3 px-4 bg-[#1d2023] md:rounded-md w-full h-full md:bg-[#2c313ae6] md:w-96'>
+              <div className='no-scrollbar flex flex-col overflow-y-scroll w-full h-full'>
+                {searchInput ? (
+                  loadingSearching ? (
+                    <LoadingPage full={false} />
+                  ) : searchingList.length > 0 ? (
+                    searchingList.map((item, index) => {
+                      return (
                         <div
-                          className='flex flex-row'
-                          onClick={handleClearSearchHistory}
+                          className='flex flex-row justify-between py-2.5'
+                          key={index}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setOpenSearch(false);
+                            setSearchInput('');
+                            handleAddSearchHistory();
+                            router.push(
+                              `/play/${item.type_id}/1/${item.vod_id}`
+                            );
+                          }}
                         >
-                          <span
-                            className='text-xs'
-                            style={{ color: 'rgba(156, 156, 156, 1)' }}
+                          <div className='flex flex-row'>
+                            <div className='text-sm'>{item.vod_name}</div>
+                          </div>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <div className='flex items-center justify-center flex-col h-full'>
+                      <Image
+                        className='mx-2'
+                        src={searchEmptyIcon}
+                        alt='empty'
+                        width={120}
+                      />
+                      <span>暂无播单</span>
+                    </div>
+                  )
+                ) : (
+                  <>
+                    {searchHistoryList.length > 0 ? (
+                      <div>
+                        <div className='flex flex-row justify-between items-center pb-2'>
+                          <div className='text-sm'>历史搜索</div>
+                          <div
+                            className='flex flex-row'
+                            onClick={handleClearSearchHistory}
                           >
-                            清除
-                          </span>
-                          <Image
-                            className='mx-1'
-                            src={clear}
-                            alt='clear'
-                            width={10}
-                          />
+                            <span
+                              className='text-xs'
+                              style={{ color: 'rgba(156, 156, 156, 1)' }}
+                            >
+                              清除
+                            </span>
+                            <Image
+                              className='mx-1'
+                              src={clear}
+                              alt='clear'
+                              width={10}
+                            />
+                          </div>
+                        </div>
+                        <div className='flex flex-wrap py-2 gap-2'>
+                          {searchHistoryList.map((item, index) => {
+                            return (
+                              <div
+                                className='py-1 px-2 rounded-lg cursor-pointer hover-effect'
+                                style={{
+                                  background: 'rgba(255, 255, 255, 0.06)',
+                                  color: 'rgba(156, 156, 156, 1)',
+                                }}
+                                key={index}
+                                onClick={() => {
+                                  goToSeachResult(item);
+                                }}
+                              >
+                                {item}
+                              </div>
+                            );
+                          })}
                         </div>
                       </div>
-                      <div className='flex flex-wrap py-2 gap-2'>
-                        {searchHistoryList.map((item, index) => {
-                          return (
+                    ) : null}
+                    <div className='flex flex-row justify-between'>
+                      <div className='text-sm'>热搜总榜</div>
+                    </div>
+                    {topTenList.map((item, index) => {
+                      return (
+                        <div
+                          className='flex flex-row justify-between py-2.5 cursor-pointer search-hot-item'
+                          key={index}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setOpenSearch(false);
+                            router.push(
+                              `/play/${item.type_id}/1/${item.vod_id}`
+                            );
+                          }}
+                        >
+                          <div className='flex flex-row'>
                             <div
-                              className='py-1 px-2 rounded-lg cursor-pointer hover-effect'
+                              className='text-sm w-8 text-center font-bold'
                               style={{
-                                background: 'rgba(255, 255, 255, 0.06)',
-                                color: 'rgba(156, 156, 156, 1)',
-                              }}
-                              key={index}
-                              onClick={() => {
-                                goToSeachResult(item);
+                                color:
+                                  index == 0
+                                    ? 'rgba(0, 106, 178, 1)'
+                                    : index == 1
+                                      ? 'rgba(0, 133, 224, 1)'
+                                      : index == 2
+                                        ? 'rgba(96, 191, 255, 1)'
+                                        : 'rgba(156, 156, 156, 1)',
                               }}
                             >
-                              {item}
+                              {index + 1}
                             </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  ) : null}
-                  <div className='flex flex-row justify-between'>
-                    <div className='text-sm'>热搜总榜</div>
-                  </div>
-                  {topTenList.map((item, index) => {
-                    return (
-                      <div
-                        className='flex flex-row justify-between py-2.5 cursor-pointer search-hot-item'
-                        key={index}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setOpenSearch(false);
-                          router.push(`/play/${item.type_id}/1/${item.vod_id}`);
-                        }}
-                      >
-                        <div className='flex flex-row'>
-                          <div
-                            className='text-sm w-8 text-center font-bold'
-                            style={{
-                              color:
-                                index == 0
-                                  ? 'rgba(0, 106, 178, 1)'
-                                  : index == 1
-                                  ? 'rgba(0, 133, 224, 1)'
-                                  : index == 2
-                                  ? 'rgba(96, 191, 255, 1)'
-                                  : 'rgba(156, 156, 156, 1)',
-                            }}
-                          >
-                            {index + 1}
+                            <div className='text-sm'>{item.vod_name}</div>
                           </div>
-                          <div className='text-sm'>{item.vod_name}</div>
+                          <div
+                            className='text-xs pr-4'
+                            style={{ color: 'rgba(156, 156, 156, 1)' }}
+                          >
+                            {item.type_name}
+                          </div>
                         </div>
-                        <div
-                          className='text-xs pr-4'
-                          style={{ color: 'rgba(156, 156, 156, 1)' }}
-                        >
-                          {item.type_name}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </>
-              )}
+                      );
+                    })}
+                  </>
+                )}
+              </div>
             </div>
           </div>
         ) : null}
@@ -664,9 +667,9 @@ const Header = () => {
   );
 
   let historyContainer = (
-    <div className="flex-row flex">
+    <div className='flex-row flex'>
       <div
-        className="relative"
+        className='relative'
         ref={dropdownHistoryRef}
         onMouseEnter={() => {
           handleOpenHistory(true);
@@ -675,16 +678,16 @@ const Header = () => {
           handleOpenHistory(false);
         }}
       >
-        <div className="h-full flex justify-center">
+        <div className='h-full flex justify-center'>
           <Image
-            className="cursor-pointer"
+            className='cursor-pointer'
             src={HistoryIcon}
-            alt="history"
+            alt='history'
             width={30}
           />
         </div>
         {openHistory ? (
-          <div className="absolute flex flex-col items-center w-80 z-20 -left-36">
+          <div className='absolute flex flex-col items-center w-80 z-20 -left-36'>
             <div
               style={{
                 width: 0,
@@ -696,19 +699,19 @@ const Header = () => {
               }}
             />
             <div
-              className="p-3 w-full rounded-md"
-              style={{backgroundColor: '#2c313ae6'}}
+              className='p-3 w-full rounded-md'
+              style={{ backgroundColor: '#2c313ae6' }}
             >
-              <div className="flex pb-3 pl-2">
+              <div className='flex pb-3 pl-2'>
                 <span
-                  className="text-lg"
-                  style={{color: 'rgba(255, 255, 255, 1)'}}
+                  className='text-lg'
+                  style={{ color: 'rgba(255, 255, 255, 1)' }}
                 >
                   播放历史
                 </span>
               </div>
               {watchHistoryList.length > 0 ? (
-                <div className="flex flex-col max-h-96 overflow-y-scroll overflow-x-hidden gap-4 no-scrollbar">
+                <div className='flex flex-col max-h-96 overflow-y-scroll overflow-x-hidden gap-4 no-scrollbar'>
                   {watchHistoryList
                     .slice()
                     .reverse()
@@ -716,25 +719,25 @@ const Header = () => {
                       return (
                         <div
                           key={index}
-                          className="flex flex-row hover:text-[#0085E0] gap-x-2 cursor-pointer"
+                          className='flex flex-row hover:text-[#0085E0] gap-x-2 cursor-pointer'
                           onClick={() => {
                             router.push(
-                              `/play/${item.tid}/${item.nid}/${item.vodid}`,
+                              `/play/${item.tid}/${item.nid}/${item.vodid}`
                             );
                             setOpenHistory(false);
                           }}
                         >
-                          <div className="w-28 flex-none">
+                          <div className='w-28 flex-none'>
                             <img
-                              className="rounded-md w-28 h-16 object-cover"
+                              className='rounded-md w-28 h-16 object-cover'
                               src={item.vodpic}
                             />
                           </div>
-                          <div className="flex-1 flex flex-col truncate gap-y-2">
-                            <span className="text-sm truncate">
+                          <div className='flex-1 flex flex-col truncate gap-y-2'>
+                            <span className='text-sm truncate'>
                               {item.vodname}
                             </span>
-                            <span className="text-xs text-white">
+                            <span className='text-xs text-white'>
                               观看至 {secondsToHHMMSS(item.watchtimes)}
                             </span>
                           </div>
@@ -743,16 +746,16 @@ const Header = () => {
                     })}
                 </div>
               ) : (
-                <div className="flex-col items-center flex">
+                <div className='flex-col items-center flex'>
                   <Image
-                    className="mx-2"
+                    className='mx-2'
                     src={searchEmptyIcon}
-                    alt="empty"
+                    alt='empty'
                     width={120}
                   />
                   <span
-                    className="text-sm"
-                    style={{color: 'rgba(156, 156, 156, 1)'}}
+                    className='text-sm'
+                    style={{ color: 'rgba(156, 156, 156, 1)' }}
                   >
                     您还没有观看视频哦
                   </span>
@@ -768,23 +771,23 @@ const Header = () => {
                 }}
               >
                 <span
-                  className="text-sm"
-                  style={{color: 'rgba(156, 156, 156, 1)'}}
+                  className='text-sm'
+                  style={{ color: 'rgba(156, 156, 156, 1)' }}
                 >
                   清除记录
                 </span>
-                <Image className="mx-1" src={clear} alt="clear" width={10}/>
+                <Image className='mx-1' src={clear} alt='clear' width={10} />
               </div>
             </div>
           </div>
         ) : null}
       </div>
-      <div className="flex items-center px-2">
-        <div className="border-l-2 border-white h-4"/>
+      <div className='flex items-center px-2'>
+        <div className='border-l-2 border-white h-4' />
       </div>
 
       <div
-        className="relative"
+        className='relative'
         ref={dropdownAppRef}
         onMouseEnter={() => {
           handleOpenApp(true);
@@ -793,12 +796,12 @@ const Header = () => {
           handleOpenApp(false);
         }}
       >
-        <div className="h-full flex flex-row cursor-pointer">
-          <Image className="mx-2" src={PhoneIcon} alt="app" width={14}/>
-          <div className="flex items-center md:flex hidden">APP</div>
+        <div className='h-full flex flex-row cursor-pointer'>
+          <Image className='mx-2' src={PhoneIcon} alt='app' width={14} />
+          <div className='flex items-center md:flex hidden'>APP</div>
         </div>
         {openApp ? (
-          <div className="absolute flex flex-col items-end pt-1 z-10 right-2">
+          <div className='absolute flex flex-col items-end pt-1 z-10 right-2'>
             <div
               style={{
                 width: 0,
@@ -810,75 +813,75 @@ const Header = () => {
               }}
             />
             <div
-              className="p-2 flex flex-row rounded-md rounded-tr-none"
-              style={{backgroundColor: '#2c313ae6'}}
+              className='p-2 flex flex-row rounded-md rounded-tr-none'
+              style={{ backgroundColor: '#2c313ae6' }}
             >
-              <div className="flex-none w-[200px]">
-                <Image src={AppImage} alt="AppImage" width={200}/>
+              <div className='flex-none w-[200px]'>
+                <Image src={AppImage} alt='AppImage' width={200} />
               </div>
-              <div className="flex-1 flex flex-col justify-center items-center pr-2 gap-y-2">
-                <Image alt="鲨鱼影视" src={Logo} width={120}/>
-                <span className="text-sm">您每一天的影视平台</span>
-                <div className="flex flex-row gap-x-5 pt-2">
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="flex flex-row  items-center">
-                      <Image alt="appleStore" src={AppleStoreIcon} width={25}/>
-                      <span className="text-xs">iOS App 下载</span>
+              <div className='flex-1 flex flex-col justify-center items-center pr-2 gap-y-2'>
+                <Image alt='鲨鱼影视' src={Logo} width={120} />
+                <span className='text-sm'>您每一天的影视平台</span>
+                <div className='flex flex-row gap-x-5 pt-2'>
+                  <div className='flex flex-col items-center gap-2'>
+                    <div className='flex flex-row  items-center'>
+                      <Image alt='appleStore' src={AppleStoreIcon} width={25} />
+                      <span className='text-xs'>iOS App 下载</span>
                     </div>
                     <QRCode
-                      className="rounded-md"
-                      value="https://apps.apple.com/cn/app/id6474402534"
-                      renderAs="canvas"
+                      className='rounded-md'
+                      value='https://apps.apple.com/cn/app/id6474402534'
+                      renderAs='canvas'
                       size={120}
                       includeMargin={true}
                     />
                   </div>
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="flex flex-row items-center">
-                      <Image alt="playStore" src={AndroidIcon} width={25}/>
-                      <span className="text-xs">安卓 App 下载</span>
+                  <div className='flex flex-col items-center gap-2'>
+                    <div className='flex flex-row items-center'>
+                      <Image alt='playStore' src={AndroidIcon} width={25} />
+                      <span className='text-xs'>安卓 App 下载</span>
                     </div>
                     <QRCode
-                      className="rounded-md"
-                      value="https://play.google.com/store/apps/details?id=com.yingshitv"
-                      renderAs="canvas"
+                      className='rounded-md'
+                      value='https://play.google.com/store/apps/details?id=com.yingshitv'
+                      renderAs='canvas'
                       size={120}
                       includeMargin={true}
                     />
                   </div>
                 </div>
-                <span className="text-sm">扫码即可下载手机APP</span>
+                <span className='text-sm'>扫码即可下载手机APP</span>
               </div>
             </div>
           </div>
         ) : null}
       </div>
 
-      <div className="hidden">{vipContainer}</div>
+      <div className='hidden'>{vipContainer}</div>
 
-      <div className="flex items-center px-2">
-        <div className="border-l-2 border-white h-4"/>
+      <div className='flex items-center px-2'>
+        <div className='border-l-2 border-white h-4' />
       </div>
-      
-      <div className="flex flex-row pl-4 items-center">
+
+      <div className='flex flex-row pl-4 items-center'>
         {/* md:flex */}
         <div
           onClick={() => {
             if (userInfo) {
-              router.push('/myprofile')
+              router.push('/myprofile');
             } else {
-              loginFlowRef.current.start()
+              loginFlowRef.current.start();
             }
           }}
         >
           <Image
-            className="cursor-pointer"
+            className='cursor-pointer'
             src={userIcon}
-            alt="user"
+            alt='user'
             width={25}
           />
         </div>
-        <LoginFlow ref={loginFlowRef}/>
+        <LoginFlow ref={loginFlowRef} />
       </div>
     </div>
   );
@@ -933,8 +936,8 @@ const Header = () => {
                       selectedMenu.id === navItem.id
                         ? 'text-blue-500'
                         : selectedSpecialMenu.id === navItem.id
-                        ? 'text-blue-500'
-                        : 'text-white'
+                          ? 'text-blue-500'
+                          : 'text-white'
                     }`}
                   >
                     {navItem.name}
@@ -964,8 +967,8 @@ const Header = () => {
                       selectedMenu.id === navItem.id
                         ? 'text-blue-500'
                         : selectedSpecialMenu.id === navItem.id
-                        ? 'text-blue-500'
-                        : 'text-white'
+                          ? 'text-blue-500'
+                          : 'text-white'
                     }`}
                   >
                     {navItem.name}
@@ -1044,7 +1047,6 @@ const Header = () => {
         </div>
       </div>
     </div>
-
   );
 
   if (pathname.startsWith('/topic/')) {
@@ -1140,7 +1142,6 @@ const Header = () => {
         </div>
         <div className={'desktop z-50'}>{defaultHeader}</div>
       </>
-
     );
   }
 
