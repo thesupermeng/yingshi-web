@@ -42,6 +42,7 @@ import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 const getHeaderMenu = (state) => state.headerMenu;
 const getHeaderMenuSelected = (state) => state.headerMenuSelected;
 const getSpecialHeaderMenuSelected = (state) => state.specialHeaderMenuSelected;
+const getCurrentScrollPosition = (state) => state.currentScrollPosition;
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -58,6 +59,8 @@ const Header = () => {
   const headerMenu = useSelector(getHeaderMenu);
   const selectedMenu = useSelector(getHeaderMenuSelected);
   const selectedSpecialMenu = useSelector(getSpecialHeaderMenuSelected);
+  const currentScrollPosition = useSelector(getCurrentScrollPosition);
+
   const [visibleItems, setVisibleItems] = useState([]);
   const [hiddenItems, setHiddenItems] = useState([]);
   const { isVip, userInfo } = useYingshiUser();
@@ -77,6 +80,7 @@ const Header = () => {
   const [searchingList, setSearchList] = useState([]);
   const [timeoutId, setTimeoutId] = useState(null);
   const [loadingSearching, setLoadingSearching] = useState(false);
+  const [headerBlack, setHeaderBlack] = useState(false);
 
   const handleOpenMore = () => {
     setOpenMore(!openMore);
@@ -298,6 +302,15 @@ const Header = () => {
       setHiddenItems(headerMenu.headerMenu?.slice(maxVisibleItems));
     }
   };
+
+  useEffect(() => {
+    console.log(currentScrollPosition)
+    if (currentScrollPosition.res > 300) {
+      setHeaderBlack(true);
+    } else {
+      setHeaderBlack(false);
+    }
+  }, [currentScrollPosition]);
 
   useEffect(() => {
     const list = JSON.parse(localStorage.getItem('searchHistoryList'));
@@ -888,11 +901,11 @@ const Header = () => {
 
   let defaultHeader = (
     <div
-      className={
+      className={`transition duration-500 ${headerBlack ? 'bg-black' : 'bg-blur-header'} ${
         pathname.startsWith('/play/') || pathname.startsWith('/filmLibrary')
-          ? 'w-screen z-30  bg-blur-header '
-          : 'md:absolute z-30 w-screen bg-blur-header'
-      }
+          ? 'w-screen z-30'
+          : 'md:absolute z-30 w-screen'
+      }`}
     >
       <div className='flex pb-2.5 md:pb-4 pt-3 justify-center container md:pl-0'>
         <div className='gap-y-2 flex-col w-full md:flex-row flex'>

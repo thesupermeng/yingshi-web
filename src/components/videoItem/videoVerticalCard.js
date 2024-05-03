@@ -16,7 +16,7 @@ export const VideoVerticalCard = ({ vod }) => {
     <div className='flex flex-col items-center'>
       <div className='relative w-full aspect-[530/726] group mx-4 my-2 rounded-lg'>
         <div
-          className='absolute inset-0 flex rounded-lg 
+          className='absolute inset-0 flex rounded-lg md:group-hover:improve-text-unblurry
           md:transition md:group-hover:scale-150 md:group-hover:duration-500
           md:group-hover:cursor-pointer group-hover:rounded-lg md:group-hover:z-10 
           md:group-hover:rounded-lg bg-blue-500'
@@ -63,7 +63,7 @@ export const VideoVerticalCard = ({ vod }) => {
                         return (
                           <span
                             key={index}
-                            className='rounded-md bg-[#ffffff1a] text-[7px] text-[#9C9C9C] p-1'
+                            className='rounded-md bg-[#ffffff1a] text-[9px] text-[#9C9C9C] p-1 improve-text-unblurry'
                           >
                             {item}
                           </span>
@@ -71,7 +71,7 @@ export const VideoVerticalCard = ({ vod }) => {
                       })}
                 </div>
                 <div className='flex overflow-hidden'>
-                  <span className='text-[7px] text-[#9C9C9C] line-clamp-4'>
+                  <span className='text-[9px] text-[#9C9C9C] 2xl:line-clamp-[7] xl:line-clamp-5 lg:line-clamp-4 line-clamp-2 improve-text-unblurry'>
                     {vod.vod_content !== undefined ? vod.vod_content : '暂无'}
                   </span>
                 </div>
