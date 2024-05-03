@@ -147,7 +147,7 @@ export const Carousel = ({ carouselItems }) => {
                     }}
                   />
 
-                  <div className="desktop  d-flex" style={{ position: 'absolute', bottom: '10px', left: '10px', color: '#fff', zIndex: 1, width: '100%' }}>
+                  <div className="desktop  d-flex" style={{ position: 'absolute', bottom: '40px', left: '10px', color: '#fff', zIndex: 1, width: '100%' }}>
                     <div className="flex container">
                       <div className="col pt-3">
                         <p className="text-lg">{item.carousel_name}</p>
