@@ -14,9 +14,9 @@ export default function YingshiLoginBottomSheet({visible, onDismiss}) {
     const router = useRouter()
     const [formData, setFormData] = useState({})
     const dispatch = useDispatch()
-    const [loginMode, setLoginMode] = useState('sms')
+    const [loginMode, setLoginMode] = useState('email')
     const [isInputError, setIsInputError] = useState(false);
-    const [isAgreementChecked, setIsAgreementChecked] = useState(false);
+    const [isAgreementChecked, setIsAgreementChecked] = useState(true);
     const isInputEmpty = !formData.phoneNumber && !formData.email
 
     useEffect(() => {

@@ -160,6 +160,7 @@ export default function H5Page({params}) {
         <iframe
           className={'h-[74px] w-full'}
           src={`https://iframe-m.ggsimida.com/user/wallet?authToken=${token}`}
+          scrolling={'no'}
         />
       </div>
 
