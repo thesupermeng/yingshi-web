@@ -56,7 +56,7 @@ export default function H5Page() {
           top: '20px',
           left: '20px'
         }} onClick={()=> router.back()}/>
-        <PaymentHeader/>
+        <PaymentHeader className={'pt-[100px]'}/>
         <PaymentCountdown className={'mt-[21px] self-start'}/>
         <PaymentProductsList className={'mt-[20px]'} productList={productList} onProductSelect={(product) => setProductSelected(product)}/>
         <PaymentMethods className={'mt-[26px]'} paymentOptions={productSelected?.payment_options ?? []} onMethodSelect={(method) => setPaymentMethodSelected(method)}/>
