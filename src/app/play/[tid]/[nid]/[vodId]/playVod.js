@@ -46,6 +46,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
     useState(false);
   const [vodShareContent, setVodShareContent] = useState('');
   const [showToastMessage, setShowToastMessage] = useState(false);
+  const [ads, setAds] = useState(null);
 
   const getVodDetails = async () => {
     if (tId == 0) {
@@ -80,6 +81,14 @@ export const PlayVod = ({ vodId, tId, nId }) => {
     );
   };
 
+  const getAds = async () => {
+    let ads = {
+      video: 'https://oss.yingshi.tv/videos/vod/vi/bsport15_sec.mp4',
+      totalDuration: 15,
+    };
+    return ads;
+  };
+
   useEffect(() => {
     let content = '';
 
@@ -106,6 +115,10 @@ export const PlayVod = ({ vodId, tId, nId }) => {
 
   useEffect(() => {
     if (episodeSelected == null) {
+      getAds().then((res) => {
+        setAds(res);
+      });
+
       getVodDetails().then((data) => {
         if (
           data === undefined ||
@@ -168,8 +181,11 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   }, [vod]);
 
   useEffect(() => {
-    console.log(vod);
+    console.log(episodeSelected);
     if (episodeSelected !== null) {
+      getAds().then((res) => {
+        setAds(res);
+      });
       let watchHistory = {
         tid: tId,
         nid: episodeSelected.nid + 1,
@@ -496,25 +512,30 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                 </div>
               </div>
               <Artplayer
+                key={episodeSelected?.url}
                 className='aspect-[16/9]'
                 option={{
                   container: '.artplayer-app',
                   url: episodeSelected?.url ?? '',
                   fullscreen: true,
-                  autoplay: true,
+                  autoplay: /^((?!chrome|android).)*safari/i.test(
+                    navigator.userAgent
+                  )
+                    ? false
+                    : true,
                   muted: false,
                   plugins: [
                     artplayerPluginAds({
                       // 视频广告的地址
-                      video: 'https://oss.yingshi.tv/videos/vod/vi/bsport15_sec.mp4',
+                      video: ads.video,
                       // 广告跳转网址，为空则不跳转
                       url: '',
                       // 必须观看的时长，期间不能被跳过，单位为秒
                       // 当该值大于或等于totalDuration时，不能提前关闭广告
                       // 当该值等于或小于0时，则随时都可以关闭广告
-                      playDuration: 15,
+                      playDuration: ads.totalDuration,
                       // 广告总时长，单位为秒
-                      totalDuration: 15,
+                      totalDuration: ads.totalDuration,
                       // 视频广告是否默认静音
                       muted: false,
                       // 多语言支持

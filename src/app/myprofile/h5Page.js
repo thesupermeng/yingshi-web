@@ -25,7 +25,7 @@ import {
   AboutusIconGrey,
   FeedbackIconGrey,
   HistoryIconGrey,
-  ArrowRigthGrey,
+  ArrowRigthGrey, LogoutGrey,
 } from '@/asset/icons';
 import {BottomSheet} from 'react-spring-bottom-sheet';
 
@@ -41,45 +41,59 @@ import NavCard from '@/components/myprofile/NavCard';
 import VipCard from '@/components/myprofile/VipCard';
 import ProfileCard from '@/components/myprofile/ProfileCard';
 import LoginSuccess from '@/components/login/loginSuccess';
+import LogoutModal from '@/components/login/logoutModal';
 
-const navs = [
-  {
-    title: '我的收藏',
-    icon: FavouriteIconGrey,
-    onClick: () => {},
-    isSelected: false,
-    platform: 'mobile',
-
-  },
-  {
-    title: '播放历史',
-    icon: HistoryIconGrey,
-    onClick: () => {},
-    isSelected: false,
-    platform: 'mobile',
-
-  },
-  {
-    title: '我要反馈',
-    icon: FeedbackIconGrey,
-    onClick: () => {},
-    isSelected: false,
-    platform: 'mobile',
-
-  },
-  {
-    title: '关于我们',
-    icon: AboutusIconGrey,
-    onClick: () => {},
-    isSelected: false,
-    platform: 'mobile',
-
-  },
-]
 
 export default function H5Page({params}) {
+  const navs = [
+    {
+      title: '我的收藏',
+      icon: FavouriteIconGrey,
+      onClick: () => {},
+      isSelected: false,
+      platform: 'mobile',
+
+    },
+    {
+      title: '播放历史',
+      icon: HistoryIconGrey,
+      onClick: () => {},
+      isSelected: false,
+      platform: 'mobile',
+
+    },
+    {
+      title: '我要反馈',
+      icon: FeedbackIconGrey,
+      onClick: () => {},
+      isSelected: false,
+      platform: 'mobile',
+
+    },
+    {
+      title: '关于我们',
+      icon: AboutusIconGrey,
+      onClick: () => {},
+      isSelected: false,
+      platform: 'mobile',
+
+    },
+    {
+      title: '登出',
+      icon: LogoutGrey,
+      onClick: () => {
+        setOpenLogoutConfirmation(true)
+      },
+      isSelected: false,
+      platform: 'mobile',
+
+    },
+  ]
+
+
   const [openSignInUp, setOpenSignInUp] = useState(false);
   const [openLoginSuccess, setOpenLoginSuccess] = useState(false);
+  const [openLogoutConfirmation, setOpenLogoutConfirmation] = useState(false);
 
   const {isVip, userInfo, token} = useYingshiUser()
 
@@ -110,6 +124,16 @@ export default function H5Page({params}) {
           </div>
         </div>
       }
+      <LogoutModal
+        open={openLogoutConfirmation}
+        handler={() => setOpenLogoutConfirmation(x => !x)}
+        onCancel={() => setOpenLogoutConfirmation(false)}
+        onConfirm={() => {
+          logout()
+          dispatch(setYingshiUserInfo(null))
+          setOpenLogoutConfirmation(false)
+        }}
+      />
       <YingshiLoginBottomSheet
         visible={openSignInUp}
         onDismiss={() => setOpenSignInUp(false)}
@@ -135,7 +159,7 @@ export default function H5Page({params}) {
       <div style={{background: '#1D2023', borderRadius: '12px', marginBottom: '16px'}}>
         <iframe
           className={'h-[74px] w-full'}
-          src={`https://iframe-m.ggsimida.com/wallet?authToken=${token}`}
+          src={`https://iframe-m.ggsimida.com/user/wallet?authToken=${token}`}
         />
       </div>
 
