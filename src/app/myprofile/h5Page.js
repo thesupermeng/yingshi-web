@@ -46,8 +46,9 @@ import {useRouter, useSearchParams} from 'next/navigation';
 import PaymentStatusModal from '@/componentsH5/payment/paymentStatusModal';
 import {getTransactionDetail} from '@/services/yingshiPayment';
 
-
 export default function H5Page({params}) {
+  const router = useRouter();
+
   const navs = [
     {
       title: '我的收藏',
@@ -92,10 +93,6 @@ export default function H5Page({params}) {
 
     },
   ]
-
-export default function H5Page({params}) {
-  const router = useRouter();
-
 
   const [openSignInUp, setOpenSignInUp] = useState(false);
   const [openLoginSuccess, setOpenLoginSuccess] = useState(false);
