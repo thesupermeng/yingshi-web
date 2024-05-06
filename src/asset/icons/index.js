@@ -80,6 +80,8 @@ export { default as ArrowRightBlue } from './arrowRightBlue.svg'
 
 export { default as WarningIcon } from './warningIcon.svg';
 export { default as ProfileBlue } from './profileBlue.png';
+export { default as AhaLogo } from './ahaLogo.svg';
+export { default as AhaLogoActive } from './ahaLogoActive.svg';
 
 
 
