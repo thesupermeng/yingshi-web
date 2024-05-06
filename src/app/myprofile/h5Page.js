@@ -163,7 +163,7 @@ export default function H5Page({params}) {
         />
       </div>
 
-      <div className={'flex flex-col gap-[16px]'}>
+      <div className={'flex flex-col gap-[16px] pb-[100px]'}>
         {navs.map((x, idx) => {
           return <NavCard key={idx} {...x} />
         })}
