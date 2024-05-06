@@ -50,7 +50,7 @@ export default function Player({ option, getInstance, onVideoEnd, ...rest }) {
             name: 'nextButton', // 设置按钮的名称，用于在控制栏中标识
             index: 20,
             position: 'left', // 设置按钮在控制栏中的位置，这里假设放在右侧
-            html: '<img src="@/asset/icons/playNext.png" width="36px">', // 设置按钮的 HTML 内容
+            html: '<img src="/img/playNext.png" width="36px">', // 设置按钮的 HTML 内容
             click: function () {
               top.location.href = MacPlayer.PlayLinkNext;
           },
