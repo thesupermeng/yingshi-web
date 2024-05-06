@@ -22,6 +22,6 @@ export const URL_YINGSHI_VOD = {
 
 export const URL_YINGSHI_PAYMENT = {
   getProducts: 'products/v3/nativeProducts',
-  createPayOrder: 'finzf/v1/order',
+  createPayOrder: 'finzf/v2/order',
   getTransactionDetail: 'finzf/v1/transactions'
 }

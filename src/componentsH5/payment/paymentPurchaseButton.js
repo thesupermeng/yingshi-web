@@ -12,13 +12,20 @@ export default function PaymentPurchaseButton({productInfo, paymentInfo, classNa
     postPayOrder({ productId: productInfo.product_id, zfType: paymentInfo.payment_type_code })
       .then(res => {
         if (res.code === 0) {
-          console.log('going to ',res.data.paymentData.url)
-          // window.location.href = res.data.paymentData.url
+          if (res.data.paymentData.url) {
+            window.location.href = res.data.paymentData.url
+          } else if (res.data.paymentData.html) {
+            // Open a new tab/window
+            const newTab = window.open('', '_self');
+            // Write the HTML content into the new tab
+            newTab.document.write(res.data.paymentData.html.replaceAll('\\', ''));
+            newTab.document.close();
+          }
         }
       })
-      .finally(() => {
-        setIsPaymentProcessing(false)
-      })
+      // .finally(() => {
+      //   setIsPaymentProcessing(false)
+      // })
 
   }
 
