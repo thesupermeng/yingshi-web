@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import {editIcon, profileIcon, vipProfileIcon} from '@/asset/icons';
+import {editIcon, ProfileBlue, profileIcon, vipProfileIcon} from '@/asset/icons';
 import {formatDateCN} from '@/util/date';
 import {logout} from '@/services/yingshiUser';
 import {setYingshiUserInfo} from '@/store/yingshiUser';
@@ -9,11 +9,13 @@ import {useDispatch} from 'react-redux';
 export default function ProfileCard({userInfo, isVip, isH5, onSignin}) {
   const dispatch = useDispatch()
 
+  const iconProfile = isVip ? ProfileBlue : profileIcon
+
   return (
     <div className={'flex gap-[15px] items-center'}>
       <div className="flex justify-center">
         <Image
-          src={profileIcon}
+          src={iconProfile}
           alt="profile"
           height={50}
         />
@@ -46,8 +48,7 @@ export default function ProfileCard({userInfo, isVip, isH5, onSignin}) {
               src={editIcon}
               alt="edit"
               onClick={() => {
-                logout() // TODO : temporary only
-                dispatch(setYingshiUserInfo(null))
+                console.log('edit')
               }}
             />
           }
