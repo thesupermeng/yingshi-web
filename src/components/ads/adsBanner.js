@@ -51,11 +51,7 @@ export const AdsBanner = ({
         }}/>
         </div>
         :
-        <div className="rounded-xl" style={{
-          width,
-          height,
-          backgroundColor,
-        }}></div>
+        <div className="rounded-xl"></div>
       }
     </>
   )

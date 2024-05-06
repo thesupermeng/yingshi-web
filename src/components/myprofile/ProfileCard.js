@@ -48,8 +48,7 @@ export default function ProfileCard({userInfo, isVip, isH5, onSignin}) {
               src={editIcon}
               alt="edit"
               onClick={() => {
-                logout() // TODO : temporary only
-                dispatch(setYingshiUserInfo(null))
+                console.log('edit')
               }}
             />
           }
