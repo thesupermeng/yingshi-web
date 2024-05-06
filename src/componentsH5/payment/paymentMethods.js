@@ -49,7 +49,9 @@ function Method({children, icon, isSelected, onClick}) {
     <div className={`w-full flex items-center rounded-[8px] gap-[10px] px-4 py-3 ${isSelected? 'border border-[#D3AC7B]': ''} ${styles.payment_method_background}`}
       onClick={onClick}
     >
-      <Image src={icon} alt={'payment icon'} width={46} height={32}/>
+      <div className={'h-[32px] w-[46px] relative'}>
+        <Image src={icon} alt={'payment icon'} fill layout={'fill'} className={'object-contain'}/>
+      </div>
       <span className={'flex-1 text-white text-[16px] font-medium'}>{children}</span>
       {isSelected &&
         <div className={`rounded-full w-[16px] h-[16px] flex items-center justify-center ${styles.payment_method_select_outer}`}>
