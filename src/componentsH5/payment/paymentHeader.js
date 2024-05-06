@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import {PaymentTitle, vipLightIcon} from '@/asset/icons';
+import {glyph, noADIcon, PaymentTitle, subtractIcon, vipLightIcon} from '@/asset/icons';
 import styles from './styles.module.css'
 
 const benefits = [
@@ -8,15 +8,15 @@ const benefits = [
     title: 'VIP尊贵标识',
   },
   {
-    icon: vipLightIcon,
+    icon: noADIcon,
     title: '纯净广告',
   },
   {
-    icon: vipLightIcon,
+    icon: glyph,
     title: '解锁全部影视内容',
   },
   {
-    icon: vipLightIcon,
+    icon: subtractIcon,
     title: '畅享离线下载',
   },
 ]
