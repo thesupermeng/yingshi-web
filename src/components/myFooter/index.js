@@ -103,7 +103,7 @@ const MyFooter = () => {
           </div>
           <div>播单</div>
         </div>
-        {/* <div
+        <div
           className='col flex-col d-flex justify-center align-center items-center'
           onClick={() => {
             handleClick(990);
@@ -118,7 +118,7 @@ const MyFooter = () => {
             />
           </div>
           <div>我的</div>
-        </div> */}
+        </div>
       </div>
     </div>
   );

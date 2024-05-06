@@ -17,6 +17,7 @@ export const URL_YINGSHI_VOD = {
   searchingList: 'vod/v3/vod',
   filteringTypeList: 'type/v2/type',
   getXVodDetails: 'svod/v2/vod',
+  getAdsSlot: 'ads/v1/slot',
 };
 
 export const URL_YINGSHI_PAYMENT = {

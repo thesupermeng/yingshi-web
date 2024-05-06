@@ -4,17 +4,19 @@ import React, {useState} from 'react';
 import {Button} from '@material-tailwind/react';
 import Link from 'next/link';
 
-export default function NavCard({icon, iconSelected, title, isSelected, onClick, href}) {
+export default function NavCard({icon, iconSelected, title, isSelected, onClick, href, platform}) {
 
   const [renderIcon, setRenderIcon] = useState(icon)
   const [arrowIcon, setArrowIcon] = useState(ArrowRigthGrey)
 
   const handleMouseEnter = () => {
+    if (platform === 'mobile') return
     setRenderIcon(iconSelected)
     setArrowIcon(ArrowRightBlue)
   }
 
   const handleMouseLeave = () => {
+    if (platform === 'mobile') return
     setRenderIcon(icon)
     setArrowIcon(ArrowRigthGrey)
   }
@@ -22,7 +24,7 @@ export default function NavCard({icon, iconSelected, title, isSelected, onClick,
   return (
     <WithLink href={href}>
       <div className={'bg-[#1D2023] rounded-[12px]'} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-        <Button className={`${isSelected ? 'bg-[#0085E00D]' :'bg-[#1D2023]'} rounded-[10px] w-full h-12 flex items-center p-3 gap-3 text-[#9C9C9C] hover:text-shayuBlue`} onClick={onClick}>
+        <Button className={`${isSelected ? 'bg-[#0085E00D]' :'bg-[#1D2023]'} rounded-[10px] w-full h-12 flex items-center p-3 gap-3 text-[#9C9C9C] ${platform === 'mobile'? '' : 'hover:text-shayuBlue'}`} onClick={onClick}>
           <div className={'w-[24px] h-[24px] flex items-center justify-center'}>
             <Image src={isSelected ? iconSelected : renderIcon} alt={'Icon'}/>
           </div>

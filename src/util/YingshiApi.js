@@ -130,6 +130,8 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
     }
   }
 
+  console.log(url);
+
   try {
     const response = await fetch(url, requestOption)
       .then((d) => d.json())

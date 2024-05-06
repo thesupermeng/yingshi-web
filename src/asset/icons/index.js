@@ -85,6 +85,8 @@ export { default as WechatPayIcon } from './wechatPayMethodIcon.svg'
 export { default as AlipayIcon } from './alipayMethodIcon.svg'
 export { default as CreditCardPayIcon } from './creditCardMethodIcon.svg'
 export { default as VisaMasterAmex } from './visaMasterAmex.svg'
+export { default as ProfileBlue } from './profileBlue.png';
+
 
 
 // profiles

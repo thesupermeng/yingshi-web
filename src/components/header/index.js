@@ -304,7 +304,6 @@ const Header = () => {
   };
 
   useEffect(() => {
-    console.log(currentScrollPosition)
     if (currentScrollPosition.res > 300) {
       setHeaderBlack(true);
     } else {
