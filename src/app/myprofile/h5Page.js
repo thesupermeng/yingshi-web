@@ -48,28 +48,32 @@ const navs = [
     icon: FavouriteIconGrey,
     onClick: () => {},
     isSelected: false,
-    platform: 'mobile'
+    platform: 'mobile',
+
   },
   {
     title: '播放历史',
     icon: HistoryIconGrey,
     onClick: () => {},
     isSelected: false,
-    platform: 'mobile'
+    platform: 'mobile',
+
   },
   {
     title: '我要反馈',
     icon: FeedbackIconGrey,
     onClick: () => {},
     isSelected: false,
-    platform: 'mobile'
+    platform: 'mobile',
+
   },
   {
     title: '关于我们',
     icon: AboutusIconGrey,
     onClick: () => {},
     isSelected: false,
-    platform: 'mobile'
+    platform: 'mobile',
+
   },
 ]
 
