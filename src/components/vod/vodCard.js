@@ -24,6 +24,7 @@ export const VodCard = ({
   vodBlurb,
   openJianJie,
   setShowShareBox,
+  xMode = false,
 }) => {
   const { t } = useTranslation();
 
@@ -111,38 +112,81 @@ export const VodCard = ({
         </div>
       </div>
     </BottomSheet>
-    <div className="relative hidden lg:w-1/3 lg:flex rounded-xl">
-      <img className="rounded-xl" src={imgSource} />
-      <span className="absolute bottom-2 left-0 text-xs bg-black/50 rounded-r py-0.5 pr-0.5">{vodRemark}</span>
-    </div>
+    {xMode ?
+      <>
+        <div className='flex' style={{ flexDirection: 'column' }}>
+          <div className="relative hidden lg:w-3/3 lg:flex rounded-xl">
+            <img className="rounded-xl" src={imgSource} />
+            <span className="absolute bottom-2 left-0 text-xs bg-black/50 rounded-r py-0.5 pr-0.5">{vodRemark}</span>
+          </div>
 
-    <div className="flex flex-col lg:w-2/3">
-      <div className="flex flex-row">
-        <span className="text-lg pr-5">{vodName}</span>
-        <div className="lg:hidden flex flex-row space-x-2 py-1" onClick={() => setOpenIntroBottomSheet(true)}>
-          <span className="text-sm text-white/75" style={{ fontWeight: '300' }}>{t('简介')}</span>
-          <Image
-            src={ArrowRightIcon}
-            alt="Icon"
-          />
+          <div className="flex flex-col lg:w-3/3 pt-3">
+            <div className="flex flex-row">
+              <span className="text-lg pr-5 line-clamp-2">{vodName}</span>
+              <div className="lg:hidden flex flex-row space-x-2 py-1" onClick={() => setOpenIntroBottomSheet(true)}>
+                <span className="text-sm text-white/75" style={{ fontWeight: '300' }}>{t('简介')}</span>
+                <Image
+                  src={ArrowRightIcon}
+                  alt="Icon"
+                />
+              </div>
+            </div>
+            <span className="text-sm text-white/75 py-1 pt-3" style={{ fontWeight: '300', color: '#9C9C9C' }}>{vodYear} {vodClass}</span>
+            <span className="text-sm text-white/75 py-1" style={{ fontWeight: '300', color: '#9C9C9C' }}>{t('更新')}: {_vodUpdateDate.year}-{_vodUpdateDate.month}-{_vodUpdateDate.day}</span>
+            <div className="lg:flex hidden flex-row space-x-2 py-1 cursor-pointer" onClick={webOpenJianJie}>
+              <span className="text-sm text-white/75" style={{ fontWeight: '300', color: '#9C9C9C' }}>{t('简介')}</span>
+              <Image
+                src={ArrowRightIcon}
+                alt="Icon"
+              />
+            </div>
+            {/* H5 Share Horizontal */}
+            <div className="lg:hidden flex">
+              <ShareHorizontal
+                className={'w-[90%]'}
+                setShowShareBox={setShowShareBox}
+              />
+            </div>
+          </div>
         </div>
-      </div>
-      <span className="text-sm text-white/75 py-1 pt-3" style={{ fontWeight: '300', color: '#9C9C9C' }}>{vodYear} {vodClass}</span>
-      <span className="text-sm text-white/75 py-1" style={{ fontWeight: '300', color: '#9C9C9C' }}>{t('更新')}: {_vodUpdateDate.year}-{_vodUpdateDate.month}-{_vodUpdateDate.day}</span>
-      <div className="lg:flex hidden flex-row space-x-2 py-1 cursor-pointer" onClick={webOpenJianJie}>
-        <span className="text-sm text-white/75" style={{ fontWeight: '300', color: '#9C9C9C' }}>{t('简介')}</span>
-        <Image
-          src={ArrowRightIcon}
-          alt="Icon"
-        />
-      </div>
-      {/* H5 Share Horizontal */}
-      <div className="lg:hidden flex">
-        <ShareHorizontal
-          className={'w-[90%]'}
-          setShowShareBox={setShowShareBox}
-        />
-      </div>
-    </div>
+      </>
+      :
+      <>
+        <div className="relative hidden lg:w-1/3 lg:flex rounded-xl">
+          <img className="rounded-xl" src={imgSource} />
+          <span className="absolute bottom-2 left-0 text-xs bg-black/50 rounded-r py-0.5 pr-0.5">{vodRemark}</span>
+        </div>
+
+        <div className="flex flex-col lg:w-2/3">
+          <div className="flex flex-row">
+            <span className="text-lg pr-5 line-clamp-2">{vodName}</span>
+            <div className="lg:hidden flex flex-row space-x-2 py-1" onClick={() => setOpenIntroBottomSheet(true)}>
+              <span className="text-sm text-white/75" style={{ fontWeight: '300' }}>{t('简介')}</span>
+              <Image
+                src={ArrowRightIcon}
+                alt="Icon"
+              />
+            </div>
+          </div>
+          <span className="text-sm text-white/75 py-1 pt-3" style={{ fontWeight: '300', color: '#9C9C9C' }}>{vodYear} {vodClass}</span>
+          <span className="text-sm text-white/75 py-1" style={{ fontWeight: '300', color: '#9C9C9C' }}>{t('更新')}: {_vodUpdateDate.year}-{_vodUpdateDate.month}-{_vodUpdateDate.day}</span>
+          <div className="lg:flex hidden flex-row space-x-2 py-1 cursor-pointer" onClick={webOpenJianJie}>
+            <span className="text-sm text-white/75" style={{ fontWeight: '300', color: '#9C9C9C' }}>{t('简介')}</span>
+            <Image
+              src={ArrowRightIcon}
+              alt="Icon"
+            />
+          </div>
+          {/* H5 Share Horizontal */}
+          <div className="lg:hidden flex">
+            <ShareHorizontal
+              className={'w-[90%]'}
+              setShowShareBox={setShowShareBox}
+            />
+          </div>
+        </div>
+      </>
+
+    }
   </div>
 }

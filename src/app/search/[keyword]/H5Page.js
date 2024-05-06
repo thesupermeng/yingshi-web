@@ -35,7 +35,7 @@ export default function Page() {
 
   const getSearchResultApi = async () => {
     return YingshiApi(
-      URL_YINGSHI_VOD.searchingList + '?wd=' + keyword + '&limit=100&page=1',
+      URL_YINGSHI_VOD.searchingList + '?wd=' + keyword + '&limit=35&page=1',
       {},
       { method: 'GET' }
     );
@@ -130,7 +130,7 @@ export default function Page() {
           {/* desktop  view  */}
           <div className='desktop'>
             <div className='d-flex container pt-3 ' style={{ width: '100%' }}>
-              <div className='row'>
+              <div className='row w-screen'>
                 {searchResults?.List?.map((vod) => (
                   <div className='col-md-6 mt-2 mb-2'>
                     <div
@@ -143,7 +143,11 @@ export default function Page() {
                       <div className='row '>
                         <div className='col-12'>
                           <div className='row'>
-                            <div className='col-3'>
+                            <div  style={{
+                                  width: '132px',
+                                  paddingLeft: '0px',
+                                  paddingRight: '0px',
+                                }}>
                               <img
                                 alt='vod'
                                 className={`object-cover`}
@@ -156,7 +160,7 @@ export default function Page() {
                               />
                             </div>
 
-                            <div className='col-9'>
+                            <div className='col'>
                               <div className='topic-details-title'>
                                 {' '}
                                 {vod.vod_name}{' '}

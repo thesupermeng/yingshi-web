@@ -48,7 +48,7 @@ export const VideoHorizontalCard = ({ vod, typepage_id }) => {
           </div>
         ) : null}
       </div>
-      <span className='text-center text-sm mx-1'>{vod.vod_name}</span>
+      <span className='text-center text-sm mx-1 line-clamp-2'>{vod.vod_name}</span>
     </div>
   );
 };
