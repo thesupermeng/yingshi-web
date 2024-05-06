@@ -32,7 +32,8 @@ export const getTransactionDetail = async (transactionId) => {
       transaction_id: transactionId
     },
     {
-      method: 'GET'
+      method: 'GET',
+      returnFullResponse: true
     }
   )
 }

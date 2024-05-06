@@ -96,12 +96,8 @@ export default function H5Page({params}) {
 
   const [openSignInUp, setOpenSignInUp] = useState(false);
   const [openLoginSuccess, setOpenLoginSuccess] = useState(false);
-  const [openPaymentStatus, setOpenPaymentStatus] = useState(false);
   const [openLogoutConfirmation, setOpenLogoutConfirmation] = useState(false);
 
-  const queryParams = useSearchParams();
-  const transactionId = queryParams.get('transactionId')
-  const [transactionDetail, setTransactionDetail] = useState(null)
   const {isVip, userInfo, token} = useYingshiUser()
 
   const dispatch = useDispatch()
@@ -119,15 +115,6 @@ export default function H5Page({params}) {
     }
   }, [loginParam])
 
-  useEffect(() => {
-    if (transactionId){
-      setOpenPaymentStatus(true)
-      getTransactionDetail(transactionId).then(res => {
-        setTransactionDetail(res)
-      })
-    }
-  }, [transactionId])
-
   const handleOnClickVip = () => {
     if (!userInfo) {
       setOpenSignInUp(true)
@@ -139,18 +126,7 @@ export default function H5Page({params}) {
 
   return (
     <div>
-      {transactionId &&
-        transactionDetail &&
-        <PaymentStatusModal
-          open={openPaymentStatus}
-          handler={() => {
-            setOpenPaymentStatus(x => !x)
-            router.push('/myprofile')
-          }}
-          transactionDetail={transactionDetail}
-        />
 
-      }
       {openLoginSuccess &&
         <div className={'absolute top-0 left-0 flex justify-center items-center w-full h-full'}
              onClick={() => setOpenSignInUp(false)}>

@@ -8,11 +8,12 @@ import {Button} from '@material-tailwind/react';
 import PaymentPurchaseButton from '@/componentsH5/payment/paymentPurchaseButton';
 import PaymentDisclaimer from '@/componentsH5/payment/paymentDisclaimer';
 import PaymentMethods from '@/componentsH5/payment/paymentMethods';
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons';
-import {useRouter} from 'next/navigation';
-import {getYingshiProducts} from '@/services/yingshiPayment';
+import {useRouter, useSearchParams} from 'next/navigation';
+import {getTransactionDetail, getYingshiProducts} from '@/services/yingshiPayment';
+import PaymentStatusModal from '@/componentsH5/payment/paymentStatusModal';
 
 export default function H5Page() {
   const router = useRouter()
@@ -20,6 +21,20 @@ export default function H5Page() {
   const [paymentMethodSelected, setPaymentMethodSelected] = useState(null)
 
   const [productList, setProductList] = useState([])
+  const [openPaymentStatus, setOpenPaymentStatus] = useState(false);
+
+  const queryParams = useSearchParams();
+  const transactionId = queryParams.get('transactionId')
+  const [transactionResponse, setTransactionResponse] = useState(null)
+
+  useEffect(() => {
+    if (transactionId){
+      setOpenPaymentStatus(true)
+      getTransactionDetail(transactionId).then(res => {
+        setTransactionResponse(res)
+      })
+    }
+  }, [transactionId])
 
   useEffect(() => {
     getYingshiProducts().then((res) => {
@@ -63,6 +78,18 @@ export default function H5Page() {
         <PaymentDisclaimer className={'mt-[30px]'}/>
         <PaymentPurchaseButton className={'mt-[15px]'} productInfo={productSelected} paymentInfo={paymentMethodSelected}/>
       </div>
+
+      {transactionId &&
+        transactionResponse &&
+        <PaymentStatusModal
+          open={openPaymentStatus}
+          handler={() => {
+            setOpenPaymentStatus(x => !x)
+            router.push('/myprofile')
+          }}
+          transactionDetail={transactionResponse}
+        />
+      }
     </div>
   )
 }
