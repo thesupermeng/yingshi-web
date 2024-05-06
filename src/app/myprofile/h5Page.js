@@ -52,6 +52,7 @@ export default function H5Page({params}) {
       onClick: () => {},
       isSelected: false,
       platform: 'mobile',
+      isRequireLogin: false
 
     },
     {
@@ -60,6 +61,7 @@ export default function H5Page({params}) {
       onClick: () => {},
       isSelected: false,
       platform: 'mobile',
+      isRequireLogin: false
 
     },
     {
@@ -68,6 +70,7 @@ export default function H5Page({params}) {
       onClick: () => {},
       isSelected: false,
       platform: 'mobile',
+      isRequireLogin: false
 
     },
     {
@@ -76,7 +79,7 @@ export default function H5Page({params}) {
       onClick: () => {},
       isSelected: false,
       platform: 'mobile',
-
+      isRequireLogin: false
     },
     {
       title: '登出',
@@ -86,7 +89,7 @@ export default function H5Page({params}) {
       },
       isSelected: false,
       platform: 'mobile',
-
+      isRequireLogin: true
     },
   ]
 
@@ -165,7 +168,15 @@ export default function H5Page({params}) {
       </div>
 
       <div className={'flex flex-col gap-[16px] pb-[100px]'}>
-        {navs.map((x, idx) => {
+        {navs
+          .filter (x => {
+            if (userInfo) { // is logged in
+              return true // show all
+            } else {
+              return x.isRequireLogin === false // show only those that don't require login
+            }
+          })
+          .map((x, idx) => {
           return <NavCard key={idx} {...x} />
         })}
       </div>
