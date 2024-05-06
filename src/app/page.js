@@ -15,6 +15,7 @@ import { H5Only } from '@/components/Fragments/EnvComponent';
 import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
 import { VideoHorizontalCard } from '@/components/videoItem/videoHorizontalCard';
 import { isWeb } from '@/util/common';
+import { AdsBanner } from '@/components/ads/adsBanner.js';
 export const RightBetCartWidth = 'w-[32rem]';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
@@ -156,7 +157,7 @@ export default function Home() {
   const handleScroll = () => {
     console.log(window.scrollY);
   }
-  
+  console.log(selectedMenu.id);
   return (
     <div
       className='flex flex-1 justify-center flex-col'
@@ -172,9 +173,10 @@ export default function Home() {
           {selectedMenu.id != 99 ? (
             <div className='flex flex-col w-full'>
               <Carousel carouselItems={carousel} />
+              <AdsBanner navId={selectedMenu.id} height='500px'/>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
               {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
-                <div className='pt-4 container  w-[100%]'>
+                <div className='container w-[100%]'>
                   {yunying != [] &&
                     yunying?.map((yy, idx) => {
                       return (
@@ -202,100 +204,112 @@ export default function Home() {
                   {categories != [] &&
                     categories?.map((category, idx) => {
                       return (
-                        <div
-                          id={category.type_id}
-                          key={idx}
-                          style={{ paddingTop: '3rem' }}
-                        >
-                          <div className='flex justify-between'>
-                            <span
-                              style={{
-                                fontSize: '20px',
-                                fontWeight: '600',
-                                fontStyle: 'normal',
-                                fontFamily: 'PingFang SC',
-                              }}
-                            >
-                              {category.type_name}
-                            </span>
-                            <div className='flex w-fit items-center cursor-pointer hover-blue'>
+                        <>
+                          {idx % 2 ?
+                            <AdsBanner navId={selectedMenu.id} height='500px'/>
+                            :
+                            <div style={{ paddingTop: '20px' }}></div>
+                          }
+                          <div
+                            id={category.type_id}
+                            key={idx}
+                          >
+                            <div className='flex justify-between'>
                               <span
-                                className='mr-1'
                                 style={{
-                                  fontSize: '12px',
-                                  fontWeight: '400',
+                                  fontSize: '20px',
+                                  fontWeight: '600',
                                   fontStyle: 'normal',
                                   fontFamily: 'PingFang SC',
                                 }}
-                                onClick={() => handleClick(category)}
                               >
-                                更多
+                                {category.type_name}
                               </span>
-                              <FontAwesomeIcon style={{
-                                fontSize: '14px',
-                                fontWeight: '400',
-                                fontStyle: 'normal',
-                                fontFamily: 'PingFang SC',
-                              }} icon={faAngleRight} />
+                              <div className='flex w-fit items-center cursor-pointer hover-blue'>
+                                <span
+                                  className='mr-1'
+                                  style={{
+                                    fontSize: '12px',
+                                    fontWeight: '400',
+                                    fontStyle: 'normal',
+                                    fontFamily: 'PingFang SC',
+                                  }}
+                                  onClick={() => handleClick(category)}
+                                >
+                                  更多
+                                </span>
+                                <FontAwesomeIcon style={{
+                                  fontSize: '14px',
+                                  fontWeight: '400',
+                                  fontStyle: 'normal',
+                                  fontFamily: 'PingFang SC',
+                                }} icon={faAngleRight} />
+                              </div>
+                            </div>
+                            <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
+                              {category.vod_list?.slice(0, 6).map((vod, i) => {
+                                return <VideoVerticalCard vod={vod} key={i} />;
+                              })}
                             </div>
                           </div>
-                          <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
-                            {category.vod_list?.slice(0, 6).map((vod, i) => {
-                              return <VideoVerticalCard vod={vod} key={i} />;
-                            })}
-                          </div>
-                        </div>
+                        </>
                       );
                     })}
                   {topicList != null &&
                     topicList?.map((topic, idx) => {
                       return (
-                        <div
-                          id={topic.topic_id}
-                          key={idx}
-                          style={{ paddingTop: '3rem' }}
-                        >
-                          <div className='flex justify-between'>
-                            <span
-                              style={{
-                                fontSize: '20px',
-                                fontWeight: '600',
-                                fontStyle: 'normal',
-                                fontFamily: 'PingFang SC',
-                              }}
-                            >
-                              {topic.topic_name}
-                            </span>
-                            <div className='flex w-fit items-center cursor-pointer hover-blue'>
+                        <>
+                          {idx % 2 ?
+                            <AdsBanner navId={selectedMenu.id} height='500px'/>
+                            :
+                            <div style={{ paddingTop: '20px' }}></div>
+                          }
+                          <div
+                            id={topic.topic_id}
+                            key={idx}
+                          >
+                            <div className='flex justify-between'>
                               <span
-                                className='mr-1'
                                 style={{
-    
-                                  fontSize: '12px',
-                                  fontWeight: '400',
+                                  fontSize: '20px',
+                                  fontWeight: '600',
                                   fontStyle: 'normal',
                                   fontFamily: 'PingFang SC',
                                 }}
-                                onClick={() => {
-                                  router.push('/topic/' + topic.topic_id);
-                                }}
                               >
-                                更多
+                                {topic.topic_name}
                               </span>
-                              <FontAwesomeIcon style={{
-                                fontSize: '14px',
-                                fontWeight: '400',
-                                fontStyle: 'normal',
-                                fontFamily: 'PingFang SC',
-                              }} icon={faAngleRight} />
+                              <div className='flex w-fit items-center cursor-pointer hover-blue'>
+                                <span
+                                  className='mr-1'
+                                  style={{
+      
+                                    fontSize: '12px',
+                                    fontWeight: '400',
+                                    fontStyle: 'normal',
+                                    fontFamily: 'PingFang SC',
+                                  }}
+                                  onClick={() => {
+                                    router.push('/topic/' + topic.topic_id);
+                                  }}
+                                >
+                                  更多
+                                </span>
+                                <FontAwesomeIcon style={{
+                                  fontSize: '14px',
+                                  fontWeight: '400',
+                                  fontStyle: 'normal',
+                                  fontFamily: 'PingFang SC',
+                                }} icon={faAngleRight} />
+                              </div>
+                            </div>
+                            <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
+                              {topic.vod_list?.slice(0, 6).map((vod, i) => {
+                                return <VideoVerticalCard vod={vod} key={i} />;
+                              })}
                             </div>
                           </div>
-                          <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
-                            {topic.vod_list?.slice(0, 6).map((vod, i) => {
-                              return <VideoVerticalCard vod={vod} key={i} />;
-                            })}
-                          </div>
-                        </div>
+                        </>
                       );
                     })}
                 </div>

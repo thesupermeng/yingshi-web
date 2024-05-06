@@ -175,7 +175,9 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
       getSuggestedVodType(vod.vod_class, vod.vod_source_name).then((data) => {
         console.log('dasdaaa');
         console.log(data);
-        setSuggestedVods(data.List);
+        if(data){
+          setSuggestedVods(data.List);
+        }
       });
     }
   }, [vod]);

@@ -540,7 +540,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
               <ShareHorizontal
                 className={'w-[80%]'}
                 setShowShareBox={() => {
-                  console.log('ASDA');
                   setToggleShowShareBoxStatus(true);
                 }}
               />

@@ -52,7 +52,7 @@ export const VideoVerticalCard = ({ vod }) => {
             </div>
             <div className='bg-[#1D2023] rounded-b-lg w-full h-[55%] px-2 py-1.5 flex'>
               <div className='flex flex-col overflow-hidden'>
-                <span className='text-[10px]/4 text-[#0085E0] font-bold'>
+                <span className='antialiased text-[10px]/4 text-[#0085E0] font-bold'>
                   {vod.vod_name}
                 </span>
                 <div className='flex flex-row gap-1 flex-wrap py-0.5'>
@@ -63,7 +63,7 @@ export const VideoVerticalCard = ({ vod }) => {
                         return (
                           <span
                             key={index}
-                            className='rounded-md bg-[#ffffff1a] text-[9px] text-[#9C9C9C] p-1 improve-text-unblurry'
+                            className='antialiased rounded-md bg-[#ffffff1a] text-[9px] text-[#9C9C9C] p-1'
                           >
                             {item}
                           </span>
@@ -71,7 +71,7 @@ export const VideoVerticalCard = ({ vod }) => {
                       })}
                 </div>
                 <div className='flex overflow-hidden'>
-                  <span className='text-[9px] text-[#9C9C9C] 2xl:line-clamp-[7] xl:line-clamp-5 lg:line-clamp-4 line-clamp-2 improve-text-unblurry'>
+                  <span className='antialiased text-[9px] text-[#9C9C9C] 2xl:line-clamp-[7] xl:line-clamp-5 lg:line-clamp-4 line-clamp-2'>
                     {vod.vod_content !== undefined ? vod.vod_content : '暂无'}
                   </span>
                 </div>
