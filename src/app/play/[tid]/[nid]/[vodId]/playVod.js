@@ -512,19 +512,22 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                 </div>
               </div>
               <Artplayer
-              key={episodeSelected?.url}
+                key={episodeSelected?.url}
                 className='aspect-[16/9]'
                 option={{
                   container: '.artplayer-app',
                   url: episodeSelected?.url ?? '',
                   fullscreen: true,
-                  autoplay: true,
+                  autoplay: /^((?!chrome|android).)*safari/i.test(
+                    navigator.userAgent
+                  )
+                    ? false
+                    : true,
                   muted: false,
                   plugins: [
                     artplayerPluginAds({
                       // 视频广告的地址
-                      video:
-                        ads.video,
+                      video: ads.video,
                       // 广告跳转网址，为空则不跳转
                       url: '',
                       // 必须观看的时长，期间不能被跳过，单位为秒
