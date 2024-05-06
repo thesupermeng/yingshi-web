@@ -79,6 +79,8 @@ export { default as LogoutBlue} from './logoutBlue.svg'
 export { default as ArrowRightBlue } from './arrowRightBlue.svg'
 
 export { default as WarningIcon } from './warningIcon.svg';
+export { default as ProfileBlue } from './profileBlue.png';
+
 
 
 // profiles
