@@ -116,6 +116,15 @@ export default function H5Page({params}) {
     }
   }, [transactionId])
 
+  const handleOnClickVip = () => {
+    if (!userInfo) {
+      setOpenSignInUp(true)
+    } else {
+      router.push('/payment')
+    }
+  }
+
+
   return (
     <div>
       {transactionId &&
@@ -156,7 +165,7 @@ export default function H5Page({params}) {
             />
           </div>
           <div>
-            <VipCard/>
+            <VipCard onClick={handleOnClickVip}/>
           </div>
         </div>
       </div>
