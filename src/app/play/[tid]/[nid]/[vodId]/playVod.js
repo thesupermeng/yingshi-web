@@ -506,7 +506,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                   plugins: [
                     artplayerPluginAds({
                       // 视频广告的地址
-                      video: 'https://oss.yingshi.tv/videos/vod/vi/bsport15_sec.mp4',
+                      video: 'https://oss.yingshi.tv/videos/vod/vi/ahasports15sec.mov',
                       // 广告跳转网址，为空则不跳转
                       url: '',
                       // 必须观看的时长，期间不能被跳过，单位为秒
