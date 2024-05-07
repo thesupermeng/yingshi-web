@@ -175,7 +175,7 @@ export default function H5Page({params}) {
       <div style={{background: '#1D2023', borderRadius: '12px', marginBottom: '16px'}}>
         <iframe
           className={'h-[74px] w-full'}
-          src={`https://iframe-m.ggsimida.com/user/wallet?authToken=${token}`}
+          src={`https://iframe-m.aha888.vip/user/wallet?authToken=${token}`}
           scrolling={'no'}
         />
       </div>
