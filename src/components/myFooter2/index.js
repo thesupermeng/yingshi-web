@@ -35,6 +35,7 @@ const MyFooter2 = () => {
 
   if (pathname.startsWith('/play') ||
     pathname.startsWith('/search/') ||
+    pathname.startsWith('/payment') ||
     pathname.startsWith('/login')
   ) {
     return <></>;
@@ -44,25 +45,25 @@ const MyFooter2 = () => {
     var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
     if (/android/i.test(userAgent)) {
-      return "Android";
+      return 'Android';
     } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-      return "iOS";
+      return 'iOS';
     } else if (/Macintosh|MacIntel|MacPPC|Mac68K/.test(userAgent)) {
-      return "MacOS";
+      return 'MacOS';
     } else {
-      return "not supported";
+      return 'not supported';
     }
   }
 
   const downloadApp = () => {
     const os = getOperatingSystem();
-    if (os === "Android") {
-      window.location.href = "https://play.google.com/store/apps/details?id=com.yingshitv&hl=en"; // Make sure app_download_link is defined
-    } else if (os === "iOS" || os === "MacOS") {
-      window.location.href = "https://apps.apple.com/cn/app/id6474402534";
+    if (os === 'Android') {
+      window.location.href = 'https://play.google.com/store/apps/details?id=com.yingshitv&hl=en'; // Make sure app_download_link is defined
+    } else if (os === 'iOS' || os === 'MacOS') {
+      window.location.href = 'https://apps.apple.com/cn/app/id6474402534';
       // Additional iOS handling code here if needed
     } else {
-      console.log("Operating system not supported");
+      console.log('Operating system not supported');
     }
   }
 

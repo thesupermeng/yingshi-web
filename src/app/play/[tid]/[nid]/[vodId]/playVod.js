@@ -487,7 +487,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
           >
             <div
               ref={playerDivRef}
-              className='aspect-[16/9] absolute w-screen lg:relative lg:w-[100%]'
+              className='aspect-[16/9] absolute w-full lg:relative lg:w-[100%]'
               style={{ zIndex: '1' }}
             >
               <div
@@ -550,6 +550,8 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                 }}
                 getInstance={(art) => console.info(art)}
                 onVideoEnd={onVideoEnd}
+                episodeSelected={episodeSelected}
+                vodSourceSelected={vodSourceSelected}
               />
             </div>
             <div

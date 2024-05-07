@@ -29,7 +29,6 @@ export const AdsBanner = ({
         setAds(data);
       });
     }
-    console.log('ADIII');
   }, []);
 
   useEffect(() => {

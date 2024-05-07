@@ -58,32 +58,26 @@ export const ShareHorizontal = ({ className = '', setShowShareBox }) => {
           <span>{t('分享')}:</span>
         </div>
       </div>
-      <div
+       <div
         className='grid grid-cols-5 gap-4 mobile cursor-pointer'
         onClick={share}
       >
         {sharingMethod.map((item, index) => (
           <div
             key={index}
-            className={`col-span-1 ${index >= 5 && !showDropDown ? 'hidden' : ''}`}
+            className={` ${index >= 5 && !showDropDown ? 'hidden' : ''}`}
           >
-            {/* Your icon or content here */}
-            <div className=''>
-              <Image src={item} alt='Icon' className='rounded-full' />
-            </div>
+            <Image src={item} alt='Icon' className='rounded-full' />
           </div>
         ))}
       </div>
       <div
-        className='flex flex-1 space-x-4 desktop cursor-pointer'
+        className='flex flex-1 flex-row space-x-4 desktop cursor-pointer'
         onClick={share}
       >
         {sharingMethod.map((item, index) => (
-          <div key={index} className={''}>
-            {/* Your icon or content here */}
-            <div className=''>
-              <Image src={item} alt='Icon' className='rounded-full' />
-            </div>
+          <div key={index} >
+            <Image src={item} alt='Icon' className='rounded-full' />
           </div>
         ))}
       </div>

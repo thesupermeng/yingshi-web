@@ -122,12 +122,6 @@ export default function LoginModal({open, handler, onRegsiter}) {
           }
           {/* button */}
           <Button className={'w-full rounded-[10px] h-[48px] bg-shayuBlue text-[17px] font-semibold'} onClick={handleRegister} disabled={isInputError || isInputEmpty || !isAgreementChecked}>登录</Button>
-          {/* 或者 */}
-          <div className={'flex items-center gap-1'}>
-            <div className={'flex-1 bg-[#3E3E3E] h-px'}/>
-            <span className={'text-[#3E3E3E] text-[12px] font-medium'}>或者</span>
-            <div className={'flex-1 bg-[#3E3E3E] h-px'}/>
-          </div>
           {/* agreement */}
           <div className={'flex items-center justify-center'}>
             {/*<div*/}
@@ -145,6 +139,12 @@ export default function LoginModal({open, handler, onRegsiter}) {
                                 和
                                 <span className={'text-[#0085E0]'}>隐私协议</span>
                             </span>
+          </div>
+          {/* 或者 */}
+          <div className={'flex items-center gap-1'}>
+            <div className={'flex-1 bg-[#3E3E3E] h-px'}/>
+            <span className={'text-[#3E3E3E] text-[12px] font-medium'}>或者</span>
+            <div className={'flex-1 bg-[#3E3E3E] h-px'}/>
           </div>
           <div className={'flex flex-col gap-[12px]'} >
               <Button className={'w-full h-12 flex items-center bg-[#1D2023] rounded-lg px-[20px] normal-case'}>
