@@ -41,7 +41,7 @@ export default function NavCard({icon, iconSelected, title, isSelected, onClick,
 
 function WithLink({href, children}) {
   return href ?
-    <Link href={href}>
+    <Link href={href} className={'no-underline'}>
       {children}
     </Link>
     :

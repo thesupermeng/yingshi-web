@@ -79,7 +79,15 @@ export { default as LogoutBlue} from './logoutBlue.svg'
 export { default as ArrowRightBlue } from './arrowRightBlue.svg'
 
 export { default as WarningIcon } from './warningIcon.svg';
+export { default as PaymentTitle } from './payment_title.svg'
+
+export { default as WechatPayIcon } from './wechatPayMethodIcon.svg'
+export { default as AlipayIcon } from './alipayMethodIcon.svg'
+export { default as CreditCardPayIcon } from './creditCardMethodIcon.svg'
+export { default as VisaMasterAmex } from './visaMasterAmex.svg'
 export { default as ProfileBlue } from './profileBlue.png';
+export { default as AhaLogo } from './ahaLogo.svg';
+export { default as AhaLogoActive } from './ahaLogoActive.svg';
 
 
 

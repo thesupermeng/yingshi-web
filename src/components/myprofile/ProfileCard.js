@@ -9,7 +9,7 @@ import {useDispatch} from 'react-redux';
 export default function ProfileCard({userInfo, isVip, isH5, onSignin}) {
   const dispatch = useDispatch()
 
-  const iconProfile = isVip ? ProfileBlue : profileIcon
+  const iconProfile = userInfo ? ProfileBlue : profileIcon
 
   return (
     <div className={'flex gap-[15px] items-center'}>
@@ -48,8 +48,7 @@ export default function ProfileCard({userInfo, isVip, isH5, onSignin}) {
               src={editIcon}
               alt="edit"
               onClick={() => {
-                logout() // TODO : temporary only
-                dispatch(setYingshiUserInfo(null))
+                console.log('edit')
               }}
             />
           }
