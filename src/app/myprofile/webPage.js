@@ -13,7 +13,7 @@ import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import {usePathname, useRouter} from 'next/navigation';
 import {logout} from '@/services/yingshiUser';
 import {useDispatch} from 'react-redux';
-import {setYingshiUserInfo, setYingshiUserToken} from '@/store/yingshiUser';
+import {setAhaToken, setYingshiUserInfo, setYingshiUserToken} from '@/store/yingshiUser';
 import LogoutModal from '@/components/login/logoutModal';
 import {LocalStorageKeys} from '@/config/common';
 
@@ -112,6 +112,7 @@ export default function WebPage ({subMenus}) {
           logout()
           dispatch(setYingshiUserToken(null))
           dispatch(setYingshiUserInfo(null))
+          dispatch(setAhaToken(null))
           router.push('/')
         }}
         onCancel={()=> setOpenLogout(false)}

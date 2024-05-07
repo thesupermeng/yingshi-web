@@ -5,7 +5,7 @@ import {Stopwatch} from '@/asset/icons';
 import {useDispatch, useSelector} from 'react-redux';
 import {useRouter} from 'next/navigation';
 import {loginEmail, loginRequestEmailOtp, loginRequestSmsOtp, loginSms} from '@/services/yingshiUser';
-import {setYingshiUserLoginParam} from '@/store/yingshiUser';
+import {setAhaToken, setYingshiUserLoginParam, setYingshiUserToken} from '@/store/yingshiUser';
 
 const totalCountdownTime = 60 // seconds
 
@@ -97,6 +97,8 @@ export default function OTP () {
                             }
 
                             dispatch(setYingshiUserLoginParam({success: true}))
+                            dispatch(setYingshiUserToken(res.data.access_token))
+                            dispatch(setAhaToken(res.data.aha_token))
                             if (res.code === 0) {
                                 //signup
                                 router.push('/myprofile')
@@ -118,6 +120,8 @@ export default function OTP () {
                             }
 
                             dispatch(setYingshiUserLoginParam({success: true}))
+                            dispatch(setYingshiUserToken(res.data.access_token))
+                            dispatch(setAhaToken(res.data.aha_token))
                             if (res.code === 0) {
                                 //signup
                                 router.push('/myprofile')
