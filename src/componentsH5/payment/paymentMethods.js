@@ -46,7 +46,7 @@ export default function PaymentMethods({className, paymentOptions, onMethodSelec
 
 function Method({children, icon, isSelected, onClick}) {
   return (
-    <div className={`w-full flex items-center rounded-[8px] gap-[10px] px-4 py-3 ${isSelected? 'border border-[#D3AC7B]': ''} ${styles.payment_method_background}`}
+    <div className={`w-full flex items-center rounded-[8px] gap-[10px] px-4 py-3 ${isSelected? 'border-2 border-[#D3AC7B]': ''} ${styles.payment_method_background}`}
       onClick={onClick}
     >
       <div className={'h-[32px] w-[46px] relative'}>
