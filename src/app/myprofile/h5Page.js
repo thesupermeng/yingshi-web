@@ -42,9 +42,13 @@ import VipCard from '@/components/myprofile/VipCard';
 import ProfileCard from '@/components/myprofile/ProfileCard';
 import LoginSuccess from '@/components/login/loginSuccess';
 import LogoutModal from '@/components/login/logoutModal';
-
+import {useRouter, useSearchParams} from 'next/navigation';
+import PaymentStatusModal from '@/componentsH5/payment/paymentStatusModal';
+import {getTransactionDetail} from '@/services/yingshiPayment';
 
 export default function H5Page({params}) {
+  const router = useRouter();
+
   const navs = [
     {
       title: '我的收藏',
@@ -93,7 +97,6 @@ export default function H5Page({params}) {
     },
   ]
 
-
   const [openSignInUp, setOpenSignInUp] = useState(false);
   const [openLoginSuccess, setOpenLoginSuccess] = useState(false);
   const [openLogoutConfirmation, setOpenLogoutConfirmation] = useState(false);
@@ -115,8 +118,18 @@ export default function H5Page({params}) {
     }
   }, [loginParam])
 
+  const handleOnClickVip = () => {
+    if (!userInfo) {
+      setOpenSignInUp(true)
+    } else {
+      router.push('/payment')
+    }
+  }
+
+
   return (
     <div>
+
       {openLoginSuccess &&
         <div className={'absolute top-0 left-0 flex justify-center items-center w-full h-full'}
              onClick={() => setOpenSignInUp(false)}>
@@ -152,9 +165,9 @@ export default function H5Page({params}) {
               onSignin={() => setOpenSignInUp(true)}
             />
           </div>
-          <div>
-            <VipCard/>
-          </div>
+          {!isVip && <div>
+            <VipCard onClick={handleOnClickVip}/>
+          </div>}
         </div>
       </div>
 
