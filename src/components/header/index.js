@@ -1212,6 +1212,14 @@ const Header = () => {
     );
   }
 
+  if (pathname.startsWith('/payment')) {
+    return null
+  }
+
+  if (pathname.startsWith('/sport')) {
+    return null
+  }
+
   return defaultHeader;
 };
 export default Header;

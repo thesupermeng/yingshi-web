@@ -550,6 +550,8 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                 }}
                 getInstance={(art) => console.info(art)}
                 onVideoEnd={onVideoEnd}
+                episodeSelected={episodeSelected}
+                vodSourceSelected={vodSourceSelected}
               />
             </div>
             <div

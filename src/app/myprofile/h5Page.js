@@ -42,9 +42,13 @@ import VipCard from '@/components/myprofile/VipCard';
 import ProfileCard from '@/components/myprofile/ProfileCard';
 import LoginSuccess from '@/components/login/loginSuccess';
 import LogoutModal from '@/components/login/logoutModal';
-
+import {useRouter, useSearchParams} from 'next/navigation';
+import PaymentStatusModal from '@/componentsH5/payment/paymentStatusModal';
+import {getTransactionDetail} from '@/services/yingshiPayment';
 
 export default function H5Page({params}) {
+  const router = useRouter();
+
   const navs = [
     {
       title: '我的收藏',
@@ -52,6 +56,7 @@ export default function H5Page({params}) {
       onClick: () => {},
       isSelected: false,
       platform: 'mobile',
+      isRequireLogin: false
 
     },
     {
@@ -60,6 +65,7 @@ export default function H5Page({params}) {
       onClick: () => {},
       isSelected: false,
       platform: 'mobile',
+      isRequireLogin: false
 
     },
     {
@@ -68,6 +74,7 @@ export default function H5Page({params}) {
       onClick: () => {},
       isSelected: false,
       platform: 'mobile',
+      isRequireLogin: false
 
     },
     {
@@ -76,7 +83,7 @@ export default function H5Page({params}) {
       onClick: () => {},
       isSelected: false,
       platform: 'mobile',
-
+      isRequireLogin: false
     },
     {
       title: '登出',
@@ -86,10 +93,9 @@ export default function H5Page({params}) {
       },
       isSelected: false,
       platform: 'mobile',
-
+      isRequireLogin: true
     },
   ]
-
 
   const [openSignInUp, setOpenSignInUp] = useState(false);
   const [openLoginSuccess, setOpenLoginSuccess] = useState(false);
@@ -112,8 +118,18 @@ export default function H5Page({params}) {
     }
   }, [loginParam])
 
+  const handleOnClickVip = () => {
+    if (!userInfo) {
+      setOpenSignInUp(true)
+    } else {
+      router.push('/payment')
+    }
+  }
+
+
   return (
     <div>
+
       {openLoginSuccess &&
         <div className={'absolute top-0 left-0 flex justify-center items-center w-full h-full'}
              onClick={() => setOpenSignInUp(false)}>
@@ -149,9 +165,9 @@ export default function H5Page({params}) {
               onSignin={() => setOpenSignInUp(true)}
             />
           </div>
-          <div>
-            <VipCard/>
-          </div>
+          {!isVip && <div>
+            <VipCard onClick={handleOnClickVip}/>
+          </div>}
         </div>
       </div>
 
@@ -160,11 +176,20 @@ export default function H5Page({params}) {
         <iframe
           className={'h-[74px] w-full'}
           src={`https://iframe-m.ggsimida.com/user/wallet?authToken=${token}`}
+          scrolling={'no'}
         />
       </div>
 
-      <div className={'flex flex-col gap-[16px]'}>
-        {navs.map((x, idx) => {
+      <div className={'flex flex-col gap-[16px] pb-[100px]'}>
+        {navs
+          .filter (x => {
+            if (userInfo) { // is logged in
+              return true // show all
+            } else {
+              return x.isRequireLogin === false // show only those that don't require login
+            }
+          })
+          .map((x, idx) => {
           return <NavCard key={idx} {...x} />
         })}
       </div>

@@ -8,7 +8,7 @@ import {
   topicTab,
   topicTabActive,
   profileTab,
-  profileTabActive,
+  profileTabActive, AhaLogoActive, AhaLogo,
 } from '@/asset/icons';
 import { use, useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
@@ -47,6 +47,9 @@ const MyFooter = () => {
     }  else if (value == 990) {
       dispatch(setSpecialSelectedId(value));
       router.push('/myprofile');
+    } else if (value == 997) {
+      dispatch(setSpecialSelectedId(value));
+      router.push('/sport');
     } else {
       dispatch(setSpecialSelectedId(-1));
       dispatch(setSelectedId(value));
@@ -57,6 +60,7 @@ const MyFooter = () => {
 
   if (pathname.startsWith('/play') ||
       pathname.startsWith('/search/') ||
+      pathname.startsWith('/payment') ||
       pathname.startsWith('/login')
   ) {
     return <></>;
@@ -80,10 +84,27 @@ const MyFooter = () => {
                   : homeTab
               }
               width={22}
-              style={{ cursor: 'pointer' }}
+              style={{cursor: 'pointer'}}
             />
           </div>
           <div>首页</div>
+        </div>
+
+        <div
+          className='col flex-col d-flex justify-center align-center items-center'
+          onClick={() => {
+            handleClick(997);
+          }}
+        >
+          <div className='d-flex'>
+            <Image
+              alt='aha体育'
+              src={pathname.startsWith('/sport') ? AhaLogoActive : AhaLogo}
+              width={22}
+              style={{cursor: 'pointer'}}
+            />
+          </div>
+          <div>aha体育</div>
         </div>
 
         <div
@@ -97,7 +118,7 @@ const MyFooter = () => {
               alt='鲨鱼影视'
               src={pathname.startsWith('/topic') ? topicTabActive : topicTab}
               width={22}
-              style={{ cursor: 'pointer' }}
+              style={{cursor: 'pointer'}}
             />
           </div>
           <div>播单</div>
@@ -113,7 +134,7 @@ const MyFooter = () => {
               alt='鲨鱼影视'
               src={pathname.startsWith('/myprofile') ? profileTabActive : profileTab}
               width={22}
-              style={{ cursor: 'pointer' }}
+              style={{cursor: 'pointer'}}
             />
           </div>
           <div>我的</div>
