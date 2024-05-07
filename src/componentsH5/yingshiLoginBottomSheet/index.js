@@ -80,6 +80,14 @@ export default function YingshiLoginBottomSheet({visible, onDismiss}) {
         setLoginMode('sms')
     }
 
+    const handleClickPrivacy = () => {
+        router.push('/privacy')
+    }
+
+    const handleClickService = () => {
+        router.push('/service')
+    }
+
     return (
         <BottomSheet
             onDismiss={onDismiss}
@@ -130,9 +138,9 @@ export default function YingshiLoginBottomSheet({visible, onDismiss}) {
                               onChange={(e) => setIsAgreementChecked(e.target.checked)}
                             />
                             <span className={'text-[13px] text-[#9C9C9C]'}>我已阅读并同意
-                                <span className={'text-[#0085E0]'}>用户协议</span>
+                                <span className={'text-[#0085E0]'} onClick={handleClickService}>用户协议</span>
                                 和
-                                <span className={'text-[#0085E0]'}>隐私协议</span>
+                                <span className={'text-[#0085E0]'} onClick={handleClickPrivacy}>隐私协议</span>
                             </span>
                         </div>
                         {/*<div className={'flex flex-col gap-[12px] mt-[20px]'} >*/}
