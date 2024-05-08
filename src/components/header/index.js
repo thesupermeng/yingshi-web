@@ -1223,7 +1223,7 @@ const Header = () => {
   if (pathname.startsWith('/service') || pathname.startsWith('/privacy')) {
     return (
       <div className={'z-30 w-screen mobile'}>
-        <div className='flex py-3 mx-2.5'>
+        <div className='flex py-4 mx-2.5'>
           <div className='gap-y-2 flex-col w-full md:flex-row flex'>
             <div className='relative flex-1 flex gap-x-2 md:justify-start'>
               <div
@@ -1241,12 +1241,13 @@ const Header = () => {
               <div
                 className={'flex-1 absolute h-full w-full flex items-center justify-center'}
               >
-                {pathname.startsWith('/service') &&
-                  <span className={'text-white'}>用户服务协议</span>
-                }
-                {pathname.startsWith('/privacy') &&
-                  <span className={'text-white'}>隐私协议</span>
-                }
+                {/*{pathname.startsWith('/service') &&*/}
+                {/*  <span className={'text-white'}>用户服务协议</span>*/}
+                {/*}*/}
+                {/*{pathname.startsWith('/privacy') &&*/}
+                {/*  <span className={'text-white'}>隐私协议</span>*/}
+                {/*}*/}
+                <Image src={Logo} alt={'鲨鱼影视'}/>
               </div>
             </div>
           </div>

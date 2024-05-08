@@ -232,6 +232,9 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   const onSelectSource = (source) => {
     setVodSourceSelected(source);
 
+    // router.push(`/play/${vod.type_id}/${episodeSelected.nid + 1}/${vod.vod_id}`);
+    // router.replace(`/play/${vod.type_id}/${episodeSelected.nid + 1}/${vod.vod_id}`)
+    
     if (source.vod_play_list.urls?.length > 0) {
       setEpisodeSelected(source.vod_play_list.urls[0]);
     }
@@ -242,6 +245,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   };
 
   const onSelectEpisode = (episode) => {
+    router.push(`/play/${vod.type_id}/${episode.nid + 1}/${vod.vod_id}`);
     setEpisodeSelected(episode);
   };
 

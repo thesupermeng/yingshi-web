@@ -94,7 +94,7 @@ export default function Player({
       });
 
       // Attach ads plugin to Artplayer instance
-      // artRef.current.plugins.add(adsPluginRef.current);
+      artRef.current.plugins.add(adsPluginRef.current);
     }
 
     if (getInstance && typeof getInstance === 'function') {
@@ -109,10 +109,8 @@ export default function Player({
   }, []);
 
   useEffect(() => {
-    console.log()
     artRef.current.switchUrl(option.url);
     artRef.current.on('video:ended', onVideoEnd);
-    console.log(artRef.current)
     return () => {
       if (artRef.current) {
         artRef.current.off('video:ended', onVideoEnd);

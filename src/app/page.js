@@ -157,7 +157,7 @@ export default function Home() {
   const handleScroll = () => {
     console.log(window.scrollY);
   }
-  console.log(selectedMenu.id);
+  
   return (
     <div
       className='flex flex-1 justify-center flex-col'
