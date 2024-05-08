@@ -109,6 +109,7 @@ export default function Player({
   }, []);
 
   useEffect(() => {
+    console.log()
     artRef.current.switchUrl(option.url);
     artRef.current.on('video:ended', onVideoEnd);
     console.log(artRef.current)
