@@ -84,7 +84,7 @@ export default function Player({
         playDuration: adsInfo.totalDuration,
         totalDuration: adsInfo.totalDuration,
         muted: false,
-        loop: true,
+        loop: false,
         i18n: {
           close: '关闭广告',
           countdown: '%s秒',
