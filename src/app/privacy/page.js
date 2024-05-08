@@ -9,14 +9,22 @@ export default function Page({ params }) {
 
   return (
     <>
-      <div className={'desktop pt-[90px]'}></div>
-      <div className={'mobile pt-[20px]'}></div>
-      <div className="grid grid-cols-12 mt-6 mb-2" style={{ color: 'white', important: true }}>
+      <div className={'desktop'}>
+        <div className={'py-[32px] flex items-center'}>
+          <h1 className="text-shayuBlue text-[30px] text-center font-semibold">鲨鱼影视隐私协议</h1>
+        </div>
+      </div>
+      <div className={'mobile'}>
+        <div className={'py-[16px] flex items-center'}>
+          <h1 className="text-shayuBlue text-[18px] text-center font-semibold">鲨鱼影视隐私协议</h1>
+        </div>
+      </div>
+      <div className="grid grid-cols-12 mt-6 mb-2" style={{color: 'white', important: true}}>
         <div className="col-span-1"></div>
         <div className="col-span-10">
           <div className="grid grid-cols-12">
             <div className="col-span-12">
-              <h1 className="pb-1" style={{ fontSize: '18px', color: '#FFF' }}>《鲨鱼影视隐私协议》</h1>
+              {/*<h1 className="pb-1" style={{ fontSize: '18px', color: '#FFF' }}>《鲨鱼影视隐私协议》</h1>*/}
               <p className="pb-4" style={{ fontSize: '15px', color: '#FFF' }}>
                 一、引言<br />
                 二、名词解释<br />
