@@ -126,10 +126,23 @@ export default function H5Page({params}) {
     }
   }
 
+  const iframeMessageListener = (event) => {
+    // console.log('iframe message', event.data)
+    if (event.data.message === 'iframe') {
+      router.push(`/sport/${event.data.url}`)
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('message', iframeMessageListener)
+
+    return () => {
+      window.removeEventListener('message', iframeMessageListener)
+    }
+  }, [])
 
   return (
     <div>
-
       {openLoginSuccess &&
         <div className={'absolute top-0 left-0 flex justify-center items-center w-full h-full'}
              onClick={() => setOpenSignInUp(false)}>
