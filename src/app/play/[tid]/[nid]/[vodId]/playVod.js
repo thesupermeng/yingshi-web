@@ -232,12 +232,12 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   const onSelectSource = (source) => {
     setVodSourceSelected(source);
 
-    router.push(`/play/${vod.type_id}/${episodeSelected.nid + 1}/${vod.vod_id}`);
-    // router.refresh();
-    console.log('test')
-    // if (source.vod_play_list.urls?.length > 0) {
-    //   setEpisodeSelected(source.vod_play_list.urls[0]);
-    // }
+    // router.push(`/play/${vod.type_id}/${episodeSelected.nid + 1}/${vod.vod_id}`);
+    // router.replace(`/play/${vod.type_id}/${episodeSelected.nid + 1}/${vod.vod_id}`)
+    
+    if (source.vod_play_list.urls?.length > 0) {
+      setEpisodeSelected(source.vod_play_list.urls[0]);
+    }
   };
 
   const onSelectEpisodeGroup = (group) => {
@@ -263,14 +263,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
 
     setEpisodeSelected(vodSourceSelected?.vod_play_list?.urls[indexFound + 1]);
   };
-
-  useEffect(()=> {
-    const sourceType = localStorage.getItem('vodSourceSelected');
-    if (sourceType !== undefined){
-      setVodSourceSelected(sourceType)
-      localStorage.removeItem('vodSourceSelected')
-    }
-  }, [])
 
   useEffect(() => {
     if (playerDivRef.current) {

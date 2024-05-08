@@ -12,5 +12,9 @@ export default function Home() {
   const tId = params.tid;
   const nId = params.nid;
 
-  return nId != 9999 ? <PlayVod vodId={vodId} tId={tId} nId={nId}/> : <PlayXVod vodId={vodId} tId={tId} nId={nId}/>;
+  return nId != 9999 ? (
+    <PlayVod vodId={vodId} tId={tId} nId={nId} />
+  ) : (
+    <PlayXVod vodId={vodId} tId={tId} nId={nId} />
+  );
 }
