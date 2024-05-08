@@ -1,7 +1,7 @@
 import {Button, Dialog, DialogBody} from '@material-tailwind/react';
 import {forwardRef, useEffect, useRef, useState} from 'react';
 import {loginEmail, loginRequestEmailOtp, loginRequestSmsOtp, loginSms} from '@/services/yingshiUser';
-import {setYingshiUserLoginParam, setYingshiUserToken} from '@/store/yingshiUser';
+import {setAhaToken, setYingshiUserLoginParam, setYingshiUserToken} from '@/store/yingshiUser';
 import {useRouter} from 'next/navigation';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -84,6 +84,7 @@ export default function OtpModal ({open, handler, onLogin, onRegister}) {
                 onRegister()
               }
               dispatch(setYingshiUserToken(res.data.access_token))
+              dispatch(setAhaToken(res.data.aha_token))
               inputRefs.current[inputRefs.current.length - 1].blur()
             })
         } else {
@@ -104,6 +105,7 @@ export default function OtpModal ({open, handler, onLogin, onRegister}) {
                 onRegister()
               }
               dispatch(setYingshiUserToken(res.data.access_token))
+              dispatch(setAhaToken(res.data.aha_token))
               inputRefs.current[inputRefs.current.length - 1].blur()
             })
         }

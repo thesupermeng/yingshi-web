@@ -1,9 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {LocalStorageKeys} from '@/config/common';
 
 export const setYingshiUserInfo = (d) => yingshiUser.actions.setUserInfo(d)
 export const setYingshiUserToken = (d) => yingshiUser.actions.setToken(d)
 export const setYingshiUserLoginParam = (d) => yingshiUser.actions.setLoginParam(d)
+export const setAhaToken = (d) => yingshiUser.actions.setAhaToken(d)
 
 
 export const yingshiUser = createSlice( {
@@ -31,6 +31,7 @@ export const yingshiUser = createSlice( {
         userInfo: null,
         token: null,
         loginParam: null,
+        ahaToken: null
     },
     reducers: {
         setUserInfo: (state, action) => {
@@ -41,6 +42,9 @@ export const yingshiUser = createSlice( {
         },
         setLoginParam: (state, action) => {
             state.loginParam = action.payload;
+        },
+        setAhaToken: (state, action) => {
+            state.ahaToken = action.payload;
         }
     }
 })

@@ -46,6 +46,7 @@ export const loginEmail = async ({email, referralCode, otp}) => {
         {
             method: 'POST',
             saveUserToken: true,
+            saveAhaToken: true,
             returnFullResponse: true
         }
     )
@@ -66,6 +67,7 @@ export const loginSms = async ({phoneNumber, countryId, referralCode, otp}) => {
         {
             method: 'POST',
             saveUserToken: true,
+            saveAhaToken: true,
             returnFullResponse: true
 
         }
