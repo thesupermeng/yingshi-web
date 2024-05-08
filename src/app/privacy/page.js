@@ -9,13 +9,15 @@ export default function Page({ params }) {
 
   return (
     <>
-      <div class="grid grid-cols-12 mt-6 mb-2" style={{ color: 'white', important: true , paddingTop :'90px' , backgroundColor:'rgb(16, 18, 21)' }}>
-        <div class="col-span-1"></div>
-        <div class="col-span-10">
-          <div class="grid grid-cols-12">
-            <div class="col-span-12">
-              <h1 class="pb-1" style={{ fontSize: '18px', color: '#FFF' }}>《鲨鱼影视隐私协议》</h1>
-              <p class="pb-4" style={{ fontSize: '15px', color: '#FFF' }}>
+      <div className={'desktop pt-[90px]'}></div>
+      <div className={'mobile pt-[20px]'}></div>
+      <div className="grid grid-cols-12 mt-6 mb-2" style={{ color: 'white', important: true }}>
+        <div className="col-span-1"></div>
+        <div className="col-span-10">
+          <div className="grid grid-cols-12">
+            <div className="col-span-12">
+              <h1 className="pb-1" style={{ fontSize: '18px', color: '#FFF' }}>《鲨鱼影视隐私协议》</h1>
+              <p className="pb-4" style={{ fontSize: '15px', color: '#FFF' }}>
                 一、引言<br />
                 二、名词解释<br />
                 三、我们如何收集和使用您的个人信息<br />
@@ -29,7 +31,7 @@ export default function Page({ params }) {
                 十一、本政策如何更新<br />
                 十二、争议解决
               </p>
-              <p class="pb-4">
+              <p className="pb-4">
                 <span style={{ fontSize: '15px', color: '#FFF' }}>一、引言</span><br />
                 <span style={{ fontSize: '13px', color: '#FFF' }}
 >
@@ -39,7 +41,7 @@ export default function Page({ params }) {
                   4. 您需理解，只有在您确认并同意变更后的《鲨鱼影视隐私协议》，我们才会依据变更后的隐私协议收集、使用、处理和存储您的个人信息；您有权拒绝同意变更后的隐私协议，但请您知悉，一旦您拒绝同意变更后的隐私协议，可能导致您不能或不能继续完整使用鲨鱼影视的相关服务和功能，或者无法达到我们拟达到的服务效果。
                 </span>
               </p>
-              <p class="pb-4">
+              <p className="pb-4">
                 <span style={{ fontSize: '15px', color: '#FFF' }}>二、名词解释</span><br />
                 <span style={{ fontSize: '13px', color: '#FFF' }}
 >
@@ -57,7 +59,7 @@ export default function Page({ params }) {
                   11.  服务器日志：通常情况下，我们的服务器会自动记录您在访问网站时所发出的网页请求。这些“服务器日志”通常包括您的网络请求、互联网协议地址、浏览器类型、浏览器语言、请求的日期和时间及可以唯一识别您的浏览器的一个或多个Cookie。
                 </span>
               </p>
-              <p class="pb-4">
+              <p className="pb-4">
                 <span style={{ fontSize: '15px', color: '#FFF' }}>三、我们如何收集和使用您的个人信息</span><br />
                 <span style={{ fontSize: '13px', color: '#FFF' }}
 >
@@ -103,7 +105,7 @@ export default function Page({ params }) {
                   h) 有权机关的要求、法律法规等规定的其他情形。
                 </span>
               </p>
-              <p class="pb-4">
+              <p className="pb-4">
                 <span style={{ fontSize: '15px', color: '#FFF' }}>四、我们如何共享、转让、公开披露您的个人信息</span><br />
                 <span style={{ fontSize: '13px', color: '#FFF' }}
 >
@@ -133,7 +135,7 @@ export default function Page({ params }) {
                   4.7 法律法规等规定的其他情形。
                 </span>
               </p>
-              <p class="pb-4">
+              <p className="pb-4">
                 <span style={{ fontSize: '15px', color: '#FFF' }}>五、关于使用Cookie和同类技术</span><br />
                 <span style={{ fontSize: '13px', color: '#FFF' }}
 >
@@ -141,7 +143,7 @@ export default function Page({ params }) {
                   2. 如果您拒绝我们使用Cookie及同类技术收集和使用您的相关信息，您可在浏览器具备该功能的前提下，通过您的浏览器的设置以管理、（部分/全部）拒绝Cookie与/或同类技术；或删除已经储存在您的计算机、移动设备或其他装置内的Cookie与/或同类技术，从而实现我们无法全部或部分追踪您的个人信息。您如需详细了解如何更改浏览器设置，请具体查看您使用的浏览器的相关设置页面。您理解并知悉：我们的某些产品/服务只能通过使用Cookie或同类技术才可得到实现，如您拒绝使用或删除的，您可能将无法正常使用我们的相关产品与/或服务或无法通过我们的产品与/或服务获得最佳的服务体验，同时也可能会对您的信息保护和账号安全性造成一定的影响。
                 </span>
               </p>
-              <p class="pb-4">
+              <p className="pb-4">
                 <span style={{ fontSize: '15px', color: '#FFF' }}>六、我们对您个人信息的存储与保护</span><br />
                 <span style={{ fontSize: '13px', color: '#FFF' }}
 >
@@ -155,7 +157,7 @@ export default function Page({ params }) {
                   2.3 为防止安全事故的发生，我们成立了专门的数据安全部门并制定了妥善的预警机制和应急预案。一旦发生个人信息安全事件，我们将按照法律法规的要求，及时向您告知：安全事件的基本情况和可能的影响、我们已采取或将要采取的处置措施、您可自主防范和降低风险的建议和对您的补救措施，并立即启动应急预案，力求将损失最小化。我们将及时将事件相关情况以电话、推送通知等方式告知您。
                 </span>
               </p>
-              <p class="pb-4">
+              <p className="pb-4">
                 <span style={{ fontSize: '15px', color: '#FFF' }}>七、您管理个人信息的权利</span><br />
                 <span style={{ fontSize: '13px', color: '#FFF' }}
 >
@@ -181,7 +183,7 @@ export default function Page({ params }) {
                   如前文所述，我们提供的产品和服务的部分功能需要获得您使用设备的相关权限（包括：相机、麦克风、存储等，具体以本隐私协议第四条为准）。您可以在授权后随时撤回（或停止）对该权限的继续授权。当您更新App版本后，未经您的明确同意，我们不会更改您之前设置的权限状态。例如您可以通过移动设备中的“设置-隐私-照片”来关闭您对手机相册的授权。您也可以通过注销账号的方式，永久撤回我们继续收集您个人信息的全部授权。您需理解，当您撤回授权后，我们无法继续为您提供撤回授权所对应的特定功能和/或服务。但您撤回授权的决定，不会影响此前基于您的授权而开展的个人信息处理。
                 </span>
               </p>
-              <p class="pb-4">
+              <p className="pb-4">
                 <span style={{ fontSize: '15px', color: '#FFF' }}>八、我们对未成年人的保护</span><br />
                 <span style={{ fontSize: '13px', color: '#FFF' }}
 >
@@ -189,7 +191,7 @@ export default function Page({ params }) {
                   2. 若您是未成年人的监护人，当您对您所监护的未成年人的个人信息有相关疑问时，您可以通过本隐私协议第十一条“联系我们”中公示的联系方式与我们沟通解决。如果我们发现在未事先获得可证实的监护人同意的情况下收集了未成年人的个人信息，则会尽快删除相关数据。
                 </span>
               </p>
-              <p class="pb-4">
+              <p className="pb-4">
                 <span style={{ fontSize: '15px', color: '#FFF' }}>九、我们对去世用户的个人信息保护</span><br />
                 <span style={{ fontSize: '13px', color: '#FFF' }}
 >
@@ -197,7 +199,7 @@ export default function Page({ params }) {
                   2. 您理解并确认，为了充分保护去世用户的个人信息权益，申请行使本条权利的去世用户近亲属需要根据鲨鱼影视的指定流程或客服提示，提交去世用户的身份证明文件、死亡证明文件、申请人的身份证明文件、申请人与去世用户的亲属关系证明文件，并提供申请行使的权利种类、目的。更多关于去世用户的个人信息保护流程、条件等事项请详见《帮助中心》。
                 </span>
               </p>
-              <p class="pb-4">
+              <p className="pb-4">
                 <span style={{ fontSize: '15px', color: '#FFF' }}>十、联系我们</span><br />
                 <span style={{ fontSize: '13px', color: '#FFF' }}
 >
@@ -214,7 +216,7 @@ export default function Page({ params }) {
                 2.7 法律法规等规定的其他情形。
               </span>
             </p>
-            <p class="pb-4">
+            <p className="pb-4">
               <span style={{ fontSize: '15px', color: '#FFF' }}>十一、本政策如何更新</span><br />
               <span style={{ fontSize: '13px', color: '#FFF' }}
 >
@@ -228,7 +230,7 @@ export default function Page({ params }) {
                 2.6 个人信息安全影响评估报告表明存在高风险时。
               </span>
             </p>
-            <p class="pb-4">
+            <p className="pb-4">
               <span style={{ fontSize: '15px', color: '#FFF' }}>十二、争议解决</span><br />
               <span style={{ fontSize: '13px', color: '#FFF' }}
 >
