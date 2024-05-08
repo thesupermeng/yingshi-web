@@ -1,10 +1,20 @@
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import Artplayer from 'artplayer';
 import Hls from 'hls.js';
+import artplayerPluginAds from 'artplayer-plugin-ads';
 
-export default function Player({ option, getInstance, onVideoEnd, episodeSelected, vodSourceSelected, ...rest }) {
+export default function Player({
+  option,
+  getInstance,
+  onVideoEnd,
+  episodeSelected,
+  vodSourceSelected,
+  adsInfo,
+  ...rest
+}) {
   const artContainerRef = useRef();
   const artRef = useRef();
+  const adsPluginRef = useRef();
 
   const playM3U8 = (video, url, art) => {
     if (Hls.isSupported()) {
@@ -24,10 +34,13 @@ export default function Player({ option, getInstance, onVideoEnd, episodeSelecte
   useLayoutEffect(() => {
     let showNextFlag;
     try {
-      showNextFlag = episodeSelected.name == vodSourceSelected.vod_play_list.urls[vodSourceSelected.vod_play_list.url_count - 1].name;
-    }
-    catch (e) {
-      showNextFlag = false
+      showNextFlag =
+        episodeSelected.name ==
+        vodSourceSelected.vod_play_list.urls[
+          vodSourceSelected.vod_play_list.url_count - 1
+        ].name;
+    } catch (e) {
+      showNextFlag = false;
     }
 
     artRef.current = new Artplayer({
@@ -44,7 +57,6 @@ export default function Player({ option, getInstance, onVideoEnd, episodeSelecte
       autoPlayback: true,
       aspectRatio: true,
       theme: '#0085E0',
-
       lang: 'zh-cn',
       controls: [
         {
@@ -61,7 +73,29 @@ export default function Player({ option, getInstance, onVideoEnd, episodeSelecte
           // },
         },
       ],
+      plugins: [],
     });
+
+    if (adsInfo !== null) {
+      // Initialize ads plugin
+      adsPluginRef.current = new artplayerPluginAds({
+        video: adsInfo.video,
+        url: '',
+        playDuration: adsInfo.totalDuration,
+        totalDuration: adsInfo.totalDuration,
+        muted: false,
+        loop: true,
+        i18n: {
+          close: '关闭广告',
+          countdown: '%s秒',
+          detail: '查看详情',
+          canBeClosed: '%s秒后可关闭广告',
+        },
+      });
+
+      // Attach ads plugin to Artplayer instance
+      artRef.current.plugins.add(adsPluginRef.current);
+    }
 
     if (getInstance && typeof getInstance === 'function') {
       getInstance(artRef.current);
@@ -71,18 +105,18 @@ export default function Player({ option, getInstance, onVideoEnd, episodeSelecte
       if (artRef.current && artRef.current.destroy) {
         artRef.current.destroy();
       }
-    }
-  }, [])
+    };
+  }, []);
 
   useEffect(() => {
-    artRef.current.switchUrl(option.url)
+    artRef.current.switchUrl(option.url);
     artRef.current.on('video:ended', onVideoEnd);
-
+    console.log(artRef.current)
     return () => {
       if (artRef.current) {
         artRef.current.off('video:ended', onVideoEnd);
       }
-    }
+    };
   }, [option.url]);
 
   return <div ref={artContainerRef} {...rest}></div>;

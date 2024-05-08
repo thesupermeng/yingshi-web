@@ -22,7 +22,6 @@ import { FullPageContent } from '@/componentsH5/FullPageContent';
 import { LottieAnimation } from '../../../../../../src/components/lottie';
 import { IrrLoading } from '@/asset/lottie';
 import FullScreenModal from '@/components/FullScreenModal';
-import artplayerPluginAds from 'artplayer-plugin-ads';
 
 export const PlayVod = ({ vodId, tId, nId }) => {
   const router = useRouter();
@@ -32,6 +31,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
 
   const domElementRef = useRef(null);
   const playerDivRef = useRef(null);
+  const playerRef = useRef(null);
   const [vod, setVod] = useState(null);
   const [preventMutipleCall, setPreventMutipleCall] = useState(false);
   const [playerDivHeight, setPlayerDivHeight] = useState(0);
@@ -183,6 +183,9 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   useEffect(() => {
     console.log(episodeSelected);
     if (episodeSelected !== null) {
+      if (playerRef.current) {
+        playerRef.current.pause();
+      }
       getAds().then((res) => {
         setAds(res);
       });
@@ -512,7 +515,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                 </div>
               </div>
               <Artplayer
-                key={episodeSelected?.url}
+                // key={episodeSelected?.url}
                 className='aspect-[16/9]'
                 option={{
                   container: '.artplayer-app',
@@ -524,30 +527,8 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                     ? false
                     : true,
                   muted: false,
-                  plugins: [
-                    artplayerPluginAds({
-                      // 视频广告的地址
-                      video: ads.video,
-                      // 广告跳转网址，为空则不跳转
-                      url: '',
-                      // 必须观看的时长，期间不能被跳过，单位为秒
-                      // 当该值大于或等于totalDuration时，不能提前关闭广告
-                      // 当该值等于或小于0时，则随时都可以关闭广告
-                      playDuration: ads.totalDuration,
-                      // 广告总时长，单位为秒
-                      totalDuration: ads.totalDuration,
-                      // 视频广告是否默认静音
-                      muted: false,
-                      // 多语言支持
-                      i18n: {
-                        close: '关闭广告',
-                        countdown: '%s秒',
-                        detail: '查看详情',
-                        canBeClosed: '%s秒后可关闭广告',
-                      },
-                    }),
-                  ],
                 }}
+                adsInfo={ads}
                 getInstance={(art) => console.info(art)}
                 onVideoEnd={onVideoEnd}
                 episodeSelected={episodeSelected}
