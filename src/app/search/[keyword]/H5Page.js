@@ -177,7 +177,7 @@ export default function Page() {
                                   : vod.vod_actor}
                               </div>
                               <div className='topic-details-title-sub text-secondary '>
-                                {vod.vod_blurb.length > 75
+                                {vod?.vod_blurb?.length > 75
                                   ? vod.vod_blurb.substring(0, 73) + '...'
                                   : vod.vod_blurb}
                               </div>
