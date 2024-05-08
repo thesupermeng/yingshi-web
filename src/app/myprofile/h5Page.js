@@ -101,7 +101,7 @@ export default function H5Page({params}) {
   const [openLoginSuccess, setOpenLoginSuccess] = useState(false);
   const [openLogoutConfirmation, setOpenLogoutConfirmation] = useState(false);
 
-  const {isVip, userInfo, token} = useYingshiUser()
+  const {isVip, userInfo, ahaToken} = useYingshiUser()
 
   const dispatch = useDispatch()
   const getLoginParam = (s) => s.yingshiUser.loginParam
@@ -126,10 +126,23 @@ export default function H5Page({params}) {
     }
   }
 
+  const iframeMessageListener = (event) => {
+    // console.log('iframe message', event.data)
+    if (event.data.message === 'iframe') {
+      router.push(`/sport/${event.data.url}`)
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('message', iframeMessageListener)
+
+    return () => {
+      window.removeEventListener('message', iframeMessageListener)
+    }
+  }, [])
 
   return (
     <div>
-
       {openLoginSuccess &&
         <div className={'absolute top-0 left-0 flex justify-center items-center w-full h-full'}
              onClick={() => setOpenSignInUp(false)}>
@@ -172,17 +185,19 @@ export default function H5Page({params}) {
       </div>
 
       {/*aha iframe */}
-      <div style={{background: '#1D2023', borderRadius: '12px', marginBottom: '16px'}}>
-        <iframe
-          className={'h-[74px] w-full'}
-          src={`https://iframe-m.aha888.vip/user/wallet?authToken=${token}`}
-          scrolling={'no'}
-        />
-      </div>
+      {userInfo &&
+        <div style={{background: '#1D2023', borderRadius: '12px', marginBottom: '16px'}}>
+          <iframe
+            className={'h-[74px] w-full'}
+            src={`https://iframe-m.aha888.vip/user/wallet?authToken=${ahaToken}`}
+            scrolling={'no'}
+          />
+        </div>
+      }
 
       <div className={'flex flex-col gap-[16px] pb-[100px]'}>
         {navs
-          .filter (x => {
+          .filter(x => {
             if (userInfo) { // is logged in
               return true // show all
             } else {
@@ -190,10 +205,9 @@ export default function H5Page({params}) {
             }
           })
           .map((x, idx) => {
-          return <NavCard key={idx} {...x} />
-        })}
+            return <NavCard key={idx} {...x} />
+          })}
       </div>
-
     </div>
   );
 }

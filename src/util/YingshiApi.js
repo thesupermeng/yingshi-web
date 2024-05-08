@@ -96,6 +96,7 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
   const {
     method = 'POST',
     saveUserToken,
+    saveAhaToken,
     saveFBToken,
     saveTayaToken,
     removeToken,
@@ -153,8 +154,12 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
     if (saveUserToken) {
       updateLocalstorage(LocalStorageKeys.AuthToken, resData.data.access_token)
     }
+    if (saveAhaToken) {
+      updateLocalstorage(LocalStorageKeys.AhaToken, resData.data.aha_token)
+    }
     if (removeToken) {
       updateLocalstorage(LocalStorageKeys.AuthToken, undefined);
+      updateLocalstorage(LocalStorageKeys.AhaToken, undefined);
     }
   }
   if (returnFullResponse) {
