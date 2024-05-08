@@ -4,6 +4,21 @@ import CryptoJS from 'crypto-js';
 import { LocalStorageKeys } from '@/config/common';
 import { URL_USER } from '@/config/url';
 
+let ipAddress = ""
+
+const getIPAddress = async () => {
+  if(ipAddress != ""){
+    return ipAddress;
+  }
+  const response = await fetch("https://api.ipify.org/?format=json").then((d) => d.json())
+  .catch((e) => {
+    console.log('IP ADDRESS ERROR!!!')
+    throw e;
+  });
+  ipAddress = response.ip;
+  return ipAddress;
+}
+
 const ServerTimeOffset = { value: 0, set: false };
 export const setServerTimeOffset = (offset) => {
   ServerTimeOffset.value = offset || 0;
@@ -54,7 +69,7 @@ const Platform = { WEB: 1, H5: 2 }[process.env.NEXT_PUBLIC_ENV || 'WEB'];
 
 
 const getQuery = (url) => {
-  const queryParameters = 'appName=Shayu&platform=WEB&channelId=WEB&ip=165.21.14.226';
+  const queryParameters = 'appName=Shayu&platform=WEB&channelId=WEB&ip=' + getIPAddress();
 
   if (url.includes('?')) {
     return '&' + queryParameters;
@@ -63,7 +78,7 @@ const getQuery = (url) => {
   }
 }
 
-const getHeader = (
+const getHeader = async (
   requestBody,
   method = 'POST',
   token = '',
@@ -83,7 +98,7 @@ const getHeader = (
     'Platform-OS': 'WEB',
     'App-Channel': 'WEB',
     'App-Name': 'WEB',
-    'IP-Address': '165.21.14.226',
+    'IP-Address': getIPAddress(),
     'App-Version': '',
     'Access-Control-Allow-Origin': '*',
     'Authorization': `Bearer ${token}`
