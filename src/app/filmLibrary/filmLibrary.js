@@ -275,7 +275,7 @@ export const FilmLibrary = ({}) => {
         {loading ? (
           <LoadingPage full={false} />
         ) : (
-          <div className='flex w-screen flex-col items-center'>
+          <div className='flex w-screen flex-col items-center'> 
             <div
               className={`bg-[#1D2023] w-screen h-auto p-1 z-20 sticky -top-0.5 md:static `}
             >
@@ -314,7 +314,7 @@ export const FilmLibrary = ({}) => {
                 }
                 flex flex-col divide-y divide-gray-800 container md:flex md:opacity-100`}
               >
-                <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll'>
+                <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar'>
                   {advanceFilterItem.map((item, index) => {
                     return (
                       <div
@@ -345,7 +345,7 @@ export const FilmLibrary = ({}) => {
                     (item) => item.type_id === paramsFilter.typeId
                   )
                 ].type_extend_obj.class != '' && (
-                  <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll'>
+                  <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar'>
                     {listConverter('class').map((item, index) => {
                       return (
                         <div
@@ -377,7 +377,7 @@ export const FilmLibrary = ({}) => {
                     (item) => item.type_id === paramsFilter.typeId
                   )
                 ].type_extend_obj.area != '' && (
-                  <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll'>
+                  <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar'>
                     {listConverter('area').map((item, index) => {
                       return (
                         <div
@@ -409,7 +409,7 @@ export const FilmLibrary = ({}) => {
                     (item) => item.type_id === paramsFilter.typeId
                   )
                 ].type_extend_obj.lang != '' && (
-                  <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll'>
+                  <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar'>
                     {listConverter('lang').map((item, index) => {
                       return (
                         <div
@@ -441,7 +441,7 @@ export const FilmLibrary = ({}) => {
                     (item) => item.type_id === paramsFilter.typeId
                   )
                 ].type_extend_obj.year != '' && (
-                  <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll'>
+                  <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar'>
                     {listConverter('year').map((item, index) => {
                       return (
                         <div

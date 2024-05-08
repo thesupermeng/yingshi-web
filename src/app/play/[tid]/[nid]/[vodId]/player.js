@@ -94,7 +94,7 @@ export default function Player({
       });
 
       // Attach ads plugin to Artplayer instance
-      artRef.current.plugins.add(adsPluginRef.current);
+      // artRef.current.plugins.add(adsPluginRef.current);
     }
 
     if (getInstance && typeof getInstance === 'function') {
