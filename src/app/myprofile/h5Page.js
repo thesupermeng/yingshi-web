@@ -178,9 +178,7 @@ export default function H5Page({params}) {
               onSignin={() => setOpenSignInUp(true)}
             />
           </div>
-          {!isVip && <div>
-            <VipCard onClick={handleOnClickVip}/>
-          </div>}
+          <VipCard onClick={handleOnClickVip}/>
         </div>
       </div>
 
