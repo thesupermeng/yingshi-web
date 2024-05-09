@@ -539,11 +539,11 @@ export const PlayVod = ({ vodId, tId, nId }) => {
           >
             <div
               ref={playerDivRef}
-              className='aspect-[16/9] absolute w-full lg:relative lg:w-[100%]'
+              className='aspect-[16/9] absolute w-full lg:relative lg:w-[100%] sticky md:static top-0'
               style={{ zIndex: '1' }}
             >
               <div
-                className='p-3 lg:hidden block'
+                className='p-3 mobile'
                 onClick={() => router.back()}
                 style={{
                   background: 'black',
@@ -592,10 +592,10 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                 />
               )}
             </div>
-            <div
+            {/* <div
               className='lg:hidden block'
               style={{ height: `${playerDivHeight}px` }}
-            ></div>
+            ></div> */}
             {/* Web Share Horizontal */}
             <div className='lg:flex hidden'>
               <ShareHorizontal
