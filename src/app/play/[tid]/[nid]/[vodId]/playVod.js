@@ -22,6 +22,7 @@ import { FullPageContent } from '@/componentsH5/FullPageContent';
 import { LottieAnimation } from '../../../../../../src/components/lottie';
 import { IrrLoading } from '@/asset/lottie';
 import FullScreenModal from '@/components/FullScreenModal';
+import { AdsPlayer } from './adsPlayer.js';
 
 export const PlayVod = ({ vodId, tId, nId }) => {
   const router = useRouter();
@@ -47,6 +48,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   const [vodShareContent, setVodShareContent] = useState('');
   const [showToastMessage, setShowToastMessage] = useState(false);
   const [ads, setAds] = useState(null);
+  const [showAds, setShowAds] = useState(true);
 
   const getVodDetails = async () => {
     if (tId == 0) {
@@ -131,26 +133,30 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         setVod(res);
 
         const vodIdTemp = JSON.parse(localStorage.getItem('vodIdTemp'));
-        console.log(vodIdTemp)
-        if (vodIdTemp === null){
+        console.log(vodIdTemp);
+        if (vodIdTemp === null) {
           localStorage.setItem('vodIdTemp', vodId);
-        }else {
-          if (vodIdTemp !== parseInt(vodId)){
-            localStorage.removeItem('vodSourceSelected')
-            localStorage.removeItem('vodIdTemp')
+        } else {
+          if (vodIdTemp !== parseInt(vodId)) {
+            localStorage.removeItem('vodSourceSelected');
+            localStorage.removeItem('vodIdTemp');
           }
         }
 
         if (res.vod_sources.length > 0) {
-          const sourceType = JSON.parse(localStorage.getItem('vodSourceSelected'));
-          console.log(sourceType)
-          let index = 0
+          const sourceType = JSON.parse(
+            localStorage.getItem('vodSourceSelected')
+          );
+          console.log(sourceType);
+          let index = 0;
           if (sourceType !== null)
-            index = res.vod_sources.findIndex(x => x.source_id === sourceType.source_id) 
-          
+            index = res.vod_sources.findIndex(
+              (x) => x.source_id === sourceType.source_id
+            );
+
           let source = res.vod_sources[index == -1 ? 0 : index];
           setVodSourceSelected(source);
-            
+
           if (source.vod_play_list.urls.length > Config.vodEpisodeGroupMax) {
             const tolGroup = Math.ceil(
               source.vod_play_list.urls.length / Config.vodEpisodeGroupMax
@@ -247,20 +253,17 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   }, [episodeSelected]);
 
   const onSelectSource = (source) => {
-    if (source.source_id !== vodSourceSelected.source_id){
+    if (source.source_id !== vodSourceSelected.source_id) {
       setVodSourceSelected(source);
-      localStorage.setItem(
-        'vodSourceSelected',
-        JSON.stringify(source)
-      );
+      localStorage.setItem('vodSourceSelected', JSON.stringify(source));
       window.location.reload();
     }
-      // router.push(`/play/${vod.type_id}/${episodeSelected.nid + 1}/${vod.vod_id}`);
-      // router.replace(`/play/${vod.type_id}/${episodeSelected.nid + 1}/${vod.vod_id}`)
-      
-      // if (source.vod_play_list.urls?.length > 0) {
-      //   setEpisodeSelected(source.vod_play_list.urls[0]);
-      // }
+    // router.push(`/play/${vod.type_id}/${episodeSelected.nid + 1}/${vod.vod_id}`);
+    // router.replace(`/play/${vod.type_id}/${episodeSelected.nid + 1}/${vod.vod_id}`)
+
+    // if (source.vod_play_list.urls?.length > 0) {
+    //   setEpisodeSelected(source.vod_play_list.urls[0]);
+    // }
   };
 
   const onSelectEpisodeGroup = (group) => {
@@ -284,7 +287,11 @@ export const PlayVod = ({ vodId, tId, nId }) => {
       return;
     }
 
-    router.push(`/play/${vod.type_id}/${vodSourceSelected?.vod_play_list?.urls[indexFound + 1].nid + 1}/${vod.vod_id}`);
+    router.push(
+      `/play/${vod.type_id}/${
+        vodSourceSelected?.vod_play_list?.urls[indexFound + 1].nid + 1
+      }/${vod.vod_id}`
+    );
     setEpisodeSelected(vodSourceSelected?.vod_play_list?.urls[indexFound + 1]);
   };
 
@@ -320,6 +327,10 @@ export const PlayVod = ({ vodId, tId, nId }) => {
     const timeout = setTimeout(() => setShowToastMessage(false), 2000);
   };
 
+  const handleAdsPlayerEndPlay = () => {
+    setShowAds(false);
+  };
+
   return (
     <div
       ref={domElementRef}
@@ -327,7 +338,9 @@ export const PlayVod = ({ vodId, tId, nId }) => {
       style={{ padding: '0px', position: 'relative' }}
     >
       <div
-        className={`${showToastMessage ? 'flex' : 'hidden'} items-center justify-center`}
+        className={`${
+          showToastMessage ? 'flex' : 'hidden'
+        } items-center justify-center`}
         style={{ width: '100%', height: '100%', position: 'absolute' }}
       >
         <div
@@ -343,10 +356,14 @@ export const PlayVod = ({ vodId, tId, nId }) => {
       </div>
       <div className='desktop'>
         <div
-          className={`${toggleShowShareBoxStatus ? 'block' : 'hidden'} fixed z-50 top-0 bottom-0 left-0 right-0 bg-black opacity-60`}
+          className={`${
+            toggleShowShareBoxStatus ? 'block' : 'hidden'
+          } fixed z-50 top-0 bottom-0 left-0 right-0 bg-black opacity-60`}
         ></div>
         <div
-          className={`${toggleShowShareBoxStatus ? 'block' : 'hidden'} h-screen fixed z-50 top-0 bottom-0 left-0 right-0 bg-transparent backdrop-blur-sm`}
+          className={`${
+            toggleShowShareBoxStatus ? 'block' : 'hidden'
+          } h-screen fixed z-50 top-0 bottom-0 left-0 right-0 bg-transparent backdrop-blur-sm`}
         >
           <div
             className='items-center justify-center'
@@ -428,10 +445,14 @@ export const PlayVod = ({ vodId, tId, nId }) => {
 
       <div className='mobile'>
         <div
-          className={`${toggleShowShareBoxStatus ? 'flex' : 'hidden'} fixed z-10 top-0 bottom-0 left-0 right-0 bg-black opacity-60`}
+          className={`${
+            toggleShowShareBoxStatus ? 'flex' : 'hidden'
+          } fixed z-10 top-0 bottom-0 left-0 right-0 bg-black opacity-60`}
         ></div>
         <div
-          className={`${toggleShowShareBoxStatus ? 'flex' : 'hidden'} w-screen h-screen z-50`}
+          className={`${
+            toggleShowShareBoxStatus ? 'flex' : 'hidden'
+          } w-screen h-screen z-50`}
           style={{
             flexDirection: 'column',
             position: 'absolute',
@@ -542,26 +563,34 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                   <Image src={ArrowLeftIcon} alt='Icon' />
                 </div>
               </div>
-              <Artplayer
-                // key={episodeSelected?.url}
-                className='aspect-[16/9]'
-                option={{
-                  container: '.artplayer-app',
-                  url: episodeSelected?.url ?? '',
-                  fullscreen: true,
-                  autoplay: /^((?!chrome|android).)*safari/i.test(
-                    navigator.userAgent
-                  )
-                    ? false
-                    : true,
-                  muted: false,
-                }}
-                adsInfo={ads}
-                getInstance={(art) => console.info(art)}
-                onVideoEnd={onVideoEnd}
-                episodeSelected={episodeSelected}
-                vodSourceSelected={vodSourceSelected}
-              />
+              {showAds ? (
+                <AdsPlayer
+                  className='aspect-[16/9]'
+                  adsInfo={ads}
+                  handleAdsPlayerEndPlay={handleAdsPlayerEndPlay}
+                />
+              ) : (
+                <Artplayer
+                  // key={episodeSelected?.url}
+                  className='aspect-[16/9]'
+                  option={{
+                    container: '.artplayer-app',
+                    url: episodeSelected?.url ?? '',
+                    fullscreen: true,
+                    autoplay: /^((?!chrome|android).)*safari/i.test(
+                      navigator.userAgent
+                    )
+                      ? false
+                      : true,
+                    muted: false,
+                  }}
+                  adsInfo={ads}
+                  getInstance={(art) => console.info(art)}
+                  onVideoEnd={onVideoEnd}
+                  episodeSelected={episodeSelected}
+                  vodSourceSelected={vodSourceSelected}
+                />
+              )}
             </div>
             <div
               className='lg:hidden block'
