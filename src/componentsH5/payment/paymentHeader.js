@@ -26,13 +26,13 @@ export default function PaymentHeader({className}) {
     <div className={`flex flex-col w-full items-center ${className}`}>
       <Image src={PaymentTitle} alt={'Title'} width={282}/>
       <div className="mobile flex flex-col w-full items-center">
-        <div className={`${styles.benefit_container_border} w-full mt-[32px]`}>
+        <div className={`${styles.benefit_container_border} w-full mt-[32px] min-w-[290px]`}>
           <div
             className={`relative flex flex-col items-center px-[20px] pb-[20px] pt-[30px]  rounded-xl ${styles.benefit_container_background_color}`}>
             <SubHeader className={'absolute top-0 -translate-y-1/2  min-w-[310px]'}/>
-            <div className={'grid grid-cols-2 w-full gap-y-1  min-w-[320px]'}>
+            <div className={'grid grid-cols-5 w-full gap-y-1  min-w-[290px]'}>
               {
-                benefits.map((benefit, index) => <BenefitItem key={index} icon={benefit.icon} title={benefit.title}/>)
+                benefits.map((benefit, index) => <BenefitItem key={index} icon={benefit.icon} title={benefit.title} className={index % 2 === 0 ? 'col-span-3' : 'col-span-2'}/>)
               }
             </div>
           </div>
@@ -58,16 +58,16 @@ function SubHeader({className}) {
   )
 }
 
-function BenefitItem({icon, title}) {
+function BenefitItem({icon, title, className}) {
   return (
     <>
-      <div className={'mobile'}>
+      <div className={`mobile ${className}`}>
         <div className={'flex items-center gap-1'}>
           <Image src={icon} alt={`${title} icon`} width={24} height={24}/>
           <span className={'text-[14px] text-[#F4DBBA] font-normal'}>{title}</span>
         </div>
       </div>
-      <div className={'desktop'}>
+      <div className={`desktop ${className}`}>
         <div className={'flex items-center gap-1'}>
           <Image src={icon} alt={`${title} icon`} width={28} height={28}/>
           <span className={'text-[15px] text-[#F4DBBA] font-normal'}>{title}</span>
