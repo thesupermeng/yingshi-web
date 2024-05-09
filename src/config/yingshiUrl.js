@@ -19,10 +19,11 @@ export const URL_YINGSHI_VOD = {
   filteringTypeList: 'type/v2/type',
   getXVodDetails: 'svod/v2/vod',
   getAdsSlot: 'ads/v1/slot',
+  getAdsVideoSlot: 'ads/v2/slot',
 };
 
 export const URL_YINGSHI_PAYMENT = {
   getProducts: 'products/v3/nativeProducts',
   createPayOrder: 'finzf/v2/order',
-  getTransactionDetail: 'finzf/v1/transactions'
-}
+  getTransactionDetail: 'finzf/v1/transactions',
+};
