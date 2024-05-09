@@ -87,8 +87,7 @@ export default function Player({
     if (adsInfo !== null) {
       // Initialize ads plugin
       adsPluginRef.current = new artplayerPluginAds({
-        html: '',
-        video: adsInfo.video,
+        video: adsInfo?.video,
         url: '',
         playDuration: adsInfo.totalDuration,
         totalDuration: adsInfo.totalDuration,

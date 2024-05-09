@@ -4,18 +4,21 @@ import CryptoJS from 'crypto-js';
 import { LocalStorageKeys } from '@/config/common';
 import { URL_USER } from '@/config/url';
 
-let ipAddress = ""
+let ipAddress = ''
 
 const getIPAddress = async () => {
-  if(ipAddress != ""){
+  if(ipAddress != ''){
     return ipAddress;
   }
-  const response = await fetch("https://api.ipify.org/?format=json").then((d) => d.json())
+  const response = await fetch('https://geolocation-db.com/json/').then((d) => d.json())
   .catch((e) => {
-    console.log('IP ADDRESS ERROR!!!')
-    throw e;
+    // console.log('IP ADDRESS ERROR!!!')
+    // throw e;
+
+    // got error, use default ip address
+    ipAddress = '219.75.27.16'
   });
-  ipAddress = response.ip;
+  ipAddress = response.IPv4;
   return ipAddress;
 }
 
@@ -68,8 +71,8 @@ const UserURL = process.env.NEXT_PUBLIC_URL_USER_API;
 const Platform = { WEB: 1, H5: 2 }[process.env.NEXT_PUBLIC_ENV || 'WEB'];
 
 
-const getQuery = (url) => {
-  const queryParameters = 'appName=Shayu&platform=WEB&channelId=WEB&ip=' + getIPAddress();
+const getQuery = async (url) => {
+  const queryParameters = 'appName=Shayu&platform=WEB&channelId=WEB&ip=' + await getIPAddress();
 
   if (url.includes('?')) {
     return '&' + queryParameters;
@@ -98,7 +101,7 @@ const getHeader = async (
     'Platform-OS': 'WEB',
     'App-Channel': 'WEB',
     'App-Name': 'WEB',
-    'IP-Address': getIPAddress(),
+    'IP-Address': await getIPAddress(),
     'App-Version': '',
     'Access-Control-Allow-Origin': '*',
     'Authorization': `Bearer ${token}`
@@ -123,7 +126,7 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
   const requestBody = JSON.stringify(body);
   const requestOption = {
     method,
-    headers: getHeader(requestBody, method, localStorage.getItem(LocalStorageKeys.AuthToken)),
+    headers: await getHeader(requestBody, method, localStorage.getItem(LocalStorageKeys.AuthToken)),
   };
 
   let getParams = '';
@@ -133,7 +136,7 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
 
 
   if (method !== 'GET') {
-    url = url +  getQuery(url);
+    url = url +  await getQuery(url);
     requestOption.body = requestBody;
   } else {
     getParams = objectToGetParams(body);
