@@ -4,7 +4,8 @@ export const URL_YINGSHI_USER = {
   userInfo: 'users/v1/me',
   countryList: 'country/v1/country',
   updateUser: 'users/v1/update',
-  feedback: 'feedback/v2/submit'
+  feedback: 'feedback/v2/submit',
+  refreshAhaToken: 'users/v2/aha/refresh'
 };
 
 export const URL_YINGSHI_VOD = {
@@ -18,10 +19,11 @@ export const URL_YINGSHI_VOD = {
   filteringTypeList: 'type/v2/type',
   getXVodDetails: 'svod/v2/vod',
   getAdsSlot: 'ads/v1/slot',
+  getAdsVideoSlot: 'ads/v2/slot',
 };
 
 export const URL_YINGSHI_PAYMENT = {
   getProducts: 'products/v3/nativeProducts',
   createPayOrder: 'finzf/v2/order',
-  getTransactionDetail: 'finzf/v1/transactions'
-}
+  getTransactionDetail: 'finzf/v1/transactions',
+};

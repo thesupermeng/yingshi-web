@@ -30,11 +30,11 @@ import {
 import {BottomSheet} from 'react-spring-bottom-sheet';
 
 import 'react-spring-bottom-sheet/dist/style.css'
-import {loginRequestEmailOtp, logout} from '@/services/yingshiUser';
+import {getNewAhaToken, loginRequestEmailOtp, logout} from '@/services/yingshiUser';
 import YingshiLoginBottomSheet from '@/componentsH5/yingshiLoginBottomSheet';
 import {TickAnimation} from '@/asset/gif';
 import {useDispatch, useSelector} from 'react-redux';
-import {setYingshiUserInfo, setYingshiUserLoginParam} from '@/store/yingshiUser';
+import {setAhaToken, setYingshiUserInfo, setYingshiUserLoginParam, setYingshiUserToken} from '@/store/yingshiUser';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import {formatDateCN} from '@/util/date';
 import NavCard from '@/components/myprofile/NavCard';
@@ -45,6 +45,8 @@ import LogoutModal from '@/components/login/logoutModal';
 import {useRouter, useSearchParams} from 'next/navigation';
 import PaymentStatusModal from '@/componentsH5/payment/paymentStatusModal';
 import {getTransactionDetail} from '@/services/yingshiPayment';
+import {updateLocalstorage} from '@/util/YingshiApi';
+import {LocalStorageKeys} from '@/config/common';
 
 export default function H5Page({params}) {
   const router = useRouter();
@@ -97,7 +99,10 @@ export default function H5Page({params}) {
     },
   ]
 
-  const [openSignInUp, setOpenSignInUp] = useState(false);
+  const queryParams = useSearchParams();
+  const openLogin = queryParams.get('login') === 'true'
+
+  const [openSignInUp, setOpenSignInUp] = useState(openLogin);
   const [openLoginSuccess, setOpenLoginSuccess] = useState(false);
   const [openLogoutConfirmation, setOpenLogoutConfirmation] = useState(false);
 
@@ -106,6 +111,7 @@ export default function H5Page({params}) {
   const dispatch = useDispatch()
   const getLoginParam = (s) => s.yingshiUser.loginParam
   const loginParam = useSelector(getLoginParam)
+
 
   useEffect(() => {
     if (loginParam && loginParam.success) {
@@ -129,7 +135,18 @@ export default function H5Page({params}) {
   const iframeMessageListener = (event) => {
     // console.log('iframe message', event.data)
     if (event.data.message === 'iframe') {
-      router.push(`/sport/${event.data.url}`)
+      if (event.data.type === 'login') {
+        getNewAhaToken()
+          .then(res => {
+            if (res){
+              dispatch(setAhaToken(res))
+              updateLocalstorage(LocalStorageKeys.AhaToken, res)
+            }
+          })
+      } else {
+        router.push(`/sport/${event.data.url}`)
+      }
+
     }
   }
 
@@ -160,6 +177,8 @@ export default function H5Page({params}) {
         onConfirm={() => {
           logout()
           dispatch(setYingshiUserInfo(null))
+          dispatch(setYingshiUserToken(null))
+          dispatch(setAhaToken(null))
           setOpenLogoutConfirmation(false)
         }}
       />
@@ -187,7 +206,7 @@ export default function H5Page({params}) {
         <div style={{background: '#1D2023', borderRadius: '12px', marginBottom: '16px'}}>
           <iframe
             className={'h-[74px] w-full rounded-[12px]'}
-            src={`https://iframe-m.aha888.vip/user/wallet?authToken=${ahaToken}`}
+            src={`https://iframe-h5.aha666.site/user/wallet?authToken=${ahaToken}`}
             scrolling={'no'}
           />
         </div>

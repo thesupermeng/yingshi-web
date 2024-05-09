@@ -925,17 +925,31 @@ const Header = () => {
             </div>
             {searchContainer}
             {!openSearch ? (
-              <div className='flex justify-center hidden'>
+              <div className="flex justify-center">
                 {/* add on md: infront of hidden */}
-                {vipContainer}
+                {/*{vipContainer}*/}
+                <div
+                  className="flex h-full flex-row cursor-pointer rounded-full md:bg-[#1D2023] md:px-4 md:ml-2 md:rounded-full">
+                  <Image className="mr-2" src={vipIcon} alt="vip" width={20}/>
+                  <div className="flex items-center" onClick={() => {
+                    if (!userInfo) {
+                      router.push('/myprofile?login=true')
+                    } else {
+                      router.push('/payment')
+                    }
+                  }}>
+                    <span className="text-[#F4DBBA] text-[13px]">VIP会员</span>
+                  </div>
+                </div>
+
               </div>
             ) : null}
           </div>
-          <div className='flex gap-4 overflow-scroll md:hidden no-scrollbar'>
+          <div className="flex gap-4 overflow-scroll md:hidden no-scrollbar">
             {headerMenu.headerMenu?.map((navItem, index) => {
               return (
                 <div
-                  className='flex flex-1 flex-col items-center cursor-pointer header-tab'
+                  className="flex flex-1 flex-col items-center cursor-pointer header-tab"
                   id={navItem.id}
                   key={index}
                   onClick={() => {
@@ -1131,11 +1145,27 @@ const Header = () => {
                 </div>
                 {searchContainer}
                 {/* {!openSearch ? historyContainer : null} */}
+                {!openSearch &&
+                  <div
+                    className="flex h-full flex-row cursor-pointer rounded-full md:bg-[#1D2023] md:px-4 md:ml-2 md:rounded-full">
+                    <Image className="mr-2" src={vipIcon} alt="vip" width={20}/>
+                    <div className="flex items-center" onClick={() => {
+                      if (!userInfo) {
+                        router.push('/myprofile?login=true')
+                      } else {
+                        router.push('/payment')
+                      }
+                    }}>
+                      <span className="text-[#F4DBBA] text-[13px]">VIP会员</span>
+                    </div>
+                  </div>
+                }
+
               </div>
             </div>
           </div>
         </div>
-        <div className='desktop z-50'>{defaultHeader}</div>
+        <div className="desktop z-50">{defaultHeader}</div>
       </>
     );
   }
@@ -1144,10 +1174,10 @@ const Header = () => {
     return (
       <>
         <div className={'z-30 w-screen mobile'}>
-          <div className='flex py-3 mx-2.5'>
-            <div className='gap-y-2 flex-col w-full md:flex-row flex'>
-              <div className='flex-1 flex gap-x-2 md:justify-start'>
-                <span className='text-topic-title'> 我的 </span>
+          <div className="flex py-3 mx-2.5">
+            <div className="gap-y-2 flex-col w-full md:flex-row flex">
+              <div className="flex-1 flex gap-x-2 md:justify-start">
+                <span className="text-topic-title"> 我的 </span>
               </div>
             </div>
           </div>
