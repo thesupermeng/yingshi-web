@@ -30,7 +30,7 @@ import {
 import {BottomSheet} from 'react-spring-bottom-sheet';
 
 import 'react-spring-bottom-sheet/dist/style.css'
-import {loginRequestEmailOtp, logout} from '@/services/yingshiUser';
+import {getNewAhaToken, loginRequestEmailOtp, logout} from '@/services/yingshiUser';
 import YingshiLoginBottomSheet from '@/componentsH5/yingshiLoginBottomSheet';
 import {TickAnimation} from '@/asset/gif';
 import {useDispatch, useSelector} from 'react-redux';
@@ -45,6 +45,8 @@ import LogoutModal from '@/components/login/logoutModal';
 import {useRouter, useSearchParams} from 'next/navigation';
 import PaymentStatusModal from '@/componentsH5/payment/paymentStatusModal';
 import {getTransactionDetail} from '@/services/yingshiPayment';
+import {updateLocalstorage} from '@/util/YingshiApi';
+import {LocalStorageKeys} from '@/config/common';
 
 export default function H5Page({params}) {
   const router = useRouter();
@@ -133,7 +135,18 @@ export default function H5Page({params}) {
   const iframeMessageListener = (event) => {
     // console.log('iframe message', event.data)
     if (event.data.message === 'iframe') {
-      router.push(`/sport/${event.data.url}`)
+      if (event.data.type === 'login') {
+        getNewAhaToken()
+          .then(res => {
+            if (res){
+              dispatch(setAhaToken(res))
+              updateLocalstorage(LocalStorageKeys.AhaToken, res)
+            }
+          })
+      } else {
+        router.push(`/sport/${event.data.url}`)
+      }
+
     }
   }
 
