@@ -96,7 +96,7 @@ export default function OTP () {
                                 return
                             }
 
-                            dispatch(setYingshiUserLoginParam({success: true}))
+                            dispatch(setYingshiUserLoginParam({...loginParam, success: true}))
                             dispatch(setYingshiUserToken(res.data.access_token))
                             dispatch(setAhaToken(res.data.aha_token))
                             if (res.code === 0) {
@@ -119,7 +119,7 @@ export default function OTP () {
                                 return
                             }
 
-                            dispatch(setYingshiUserLoginParam({success: true}))
+                            dispatch(setYingshiUserLoginParam({...loginParam, success: true}))
                             dispatch(setYingshiUserToken(res.data.access_token))
                             dispatch(setAhaToken(res.data.aha_token))
                             if (res.code === 0) {

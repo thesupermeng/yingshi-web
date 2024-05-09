@@ -79,12 +79,12 @@ export default function Player({
     if (adsInfo !== null) {
       // Initialize ads plugin
       adsPluginRef.current = new artplayerPluginAds({
-        video: adsInfo.video,
+        video: adsInfo?.video,
         url: '',
         playDuration: adsInfo.totalDuration,
         totalDuration: adsInfo.totalDuration,
         muted: false,
-        loop: true,
+        loop: false,
         i18n: {
           close: '关闭广告',
           countdown: '%s秒',

@@ -37,7 +37,7 @@ const VodItemMobile = ({ vod }) => {
                 {vod?.vod_actor?.length > 20 ? vod?.vod_actor?.substring(0, 20) + '...' : vod.vod_actor}
               </div>
               <div className='topic-details-title-sub text-secondary '>
-                {vod.vod_blurb.length > 42 ? vod.vod_blurb.substring(0, 42) + '...' : vod.vod_blurb}
+                {vod?.vod_blurb?.length > 42 ? vod.vod_blurb.substring(0, 42) + '...' : vod.vod_blurb}
               </div>
             </div>
           </div>
