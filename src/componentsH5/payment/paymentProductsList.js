@@ -26,6 +26,7 @@ export default function PaymentProductsList({className, productList, onProductSe
                           onProductSelect(product)
                         }}
                         productInfo={product}
+                        isBest={index === 0}
         />
       })
 

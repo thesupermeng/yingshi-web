@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import {glyph, noADIcon, PaymentTitle, subtractIcon, vipLightIcon} from '@/asset/icons';
+import {glyph, noADIcon, PaymentTitle, subtractIcon, VipBenefits, vipLightIcon} from '@/asset/icons';
 import styles from './styles.module.css'
 
 const benefits = [
@@ -29,8 +29,8 @@ export default function PaymentHeader({className}) {
         <div className={`${styles.benefit_container_border} w-full mt-[32px]`}>
           <div
             className={`relative flex flex-col items-center px-[20px] pb-[20px] pt-[30px]  rounded-xl ${styles.benefit_container_background_color}`}>
-            <SubHeader className={'absolute top-0 -translate-y-1/2'}/>
-            <div className={'grid grid-cols-2 w-full gap-y-1'}>
+            <SubHeader className={'absolute top-0 -translate-y-1/2  min-w-[310px]'}/>
+            <div className={'grid grid-cols-2 w-full gap-y-1  min-w-[320px]'}>
               {
                 benefits.map((benefit, index) => <BenefitItem key={index} icon={benefit.icon} title={benefit.title}/>)
               }
