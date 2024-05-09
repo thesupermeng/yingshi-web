@@ -166,7 +166,7 @@ export const VodEpisodeList = ({
           <div style={{ margin: '0.2rem 0.4rem' }} key={`key-episode-${episode.nid}`}>
             <li style={{ justifyContent: 'center' }} key={`key-episode-${episode.nid}`} id={`episode-${episode.nid}`} className={`${styles.radioOptionCard} ${episodeSource.nid === episode.nid ? styles.selectedOptionCard : styles.unselectedOptionCard}`} onClick={() => selectEpisode(episode)}>
               <label htmlFor={`episode-${episode.nid}`}>
-                <div className="text-sm">{episode.name}</div>
+                <div className="text-sm text-nowrap">{episode.name}</div>
               </label>
             </li>
           </div>
