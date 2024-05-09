@@ -4,7 +4,8 @@ export const URL_YINGSHI_USER = {
   userInfo: 'users/v1/me',
   countryList: 'country/v1/country',
   updateUser: 'users/v1/update',
-  feedback: 'feedback/v2/submit'
+  feedback: 'feedback/v2/submit',
+  refreshAhaToken: 'users/v2/aha/refresh'
 };
 
 export const URL_YINGSHI_VOD = {

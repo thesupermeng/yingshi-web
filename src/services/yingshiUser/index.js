@@ -125,3 +125,13 @@ export const submitFeedback = async ({email, feedback}) => {
         }
     )
 }
+
+export const getNewAhaToken = async () => {
+  return YingshiApi(
+    URL_YINGSHI_USER.refreshAhaToken,
+    {},
+    {
+      method : 'GET',
+    }
+  )
+}
