@@ -34,7 +34,7 @@ import {loginRequestEmailOtp, logout} from '@/services/yingshiUser';
 import YingshiLoginBottomSheet from '@/componentsH5/yingshiLoginBottomSheet';
 import {TickAnimation} from '@/asset/gif';
 import {useDispatch, useSelector} from 'react-redux';
-import {setYingshiUserInfo, setYingshiUserLoginParam} from '@/store/yingshiUser';
+import {setAhaToken, setYingshiUserInfo, setYingshiUserLoginParam, setYingshiUserToken} from '@/store/yingshiUser';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import {formatDateCN} from '@/util/date';
 import NavCard from '@/components/myprofile/NavCard';
@@ -97,7 +97,10 @@ export default function H5Page({params}) {
     },
   ]
 
-  const [openSignInUp, setOpenSignInUp] = useState(false);
+  const queryParams = useSearchParams();
+  const openLogin = queryParams.get('login') === 'true'
+
+  const [openSignInUp, setOpenSignInUp] = useState(openLogin);
   const [openLoginSuccess, setOpenLoginSuccess] = useState(false);
   const [openLogoutConfirmation, setOpenLogoutConfirmation] = useState(false);
 
@@ -106,6 +109,7 @@ export default function H5Page({params}) {
   const dispatch = useDispatch()
   const getLoginParam = (s) => s.yingshiUser.loginParam
   const loginParam = useSelector(getLoginParam)
+
 
   useEffect(() => {
     if (loginParam && loginParam.success) {
@@ -160,6 +164,8 @@ export default function H5Page({params}) {
         onConfirm={() => {
           logout()
           dispatch(setYingshiUserInfo(null))
+          dispatch(setYingshiUserToken(null))
+          dispatch(setAhaToken(null))
           setOpenLogoutConfirmation(false)
         }}
       />
