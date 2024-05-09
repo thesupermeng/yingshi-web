@@ -23,6 +23,7 @@ import { LottieAnimation } from '../../../../../../src/components/lottie';
 import { IrrLoading } from '@/asset/lottie';
 import FullScreenModal from '@/components/FullScreenModal';
 import { AdsPlayer } from './adsPlayer.js';
+import useYingshiUser from '@/hook/yingshiUser/useYingshiUser.js';
 
 export const PlayVod = ({ vodId, tId, nId }) => {
   const router = useRouter();
@@ -49,6 +50,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   const [showToastMessage, setShowToastMessage] = useState(false);
   const [ads, setAds] = useState(null);
   const [showAds, setShowAds] = useState(true);
+  const { isVip } = useYingshiUser();
 
   const getVodDetails = async () => {
     if (tId == 0) {
@@ -84,8 +86,15 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   };
 
   const getAds = async () => {
+    // return YingshiApi(
+    //   URL_YINGSHI_VOD.getAdsVideoSlot,
+    //   {
+    //     slot_id: slotId,
+    //   },
+    //   { method: 'GET' }
+    // );
     let ads = {
-      video: 'https://oss.yingshi.tv/videos/vod/vi/bsport15_sec.mp4',
+      video: 'https://oss.yingshi.tv/videos/vod/vi/aha-qiantiepian-15sec.mp4',
       totalDuration: 15,
     };
     return ads;
@@ -117,9 +126,13 @@ export const PlayVod = ({ vodId, tId, nId }) => {
 
   useEffect(() => {
     if (episodeSelected == null) {
-      getAds().then((res) => {
-        setAds(res);
-      });
+      if (isVip) {
+        setShowAds(false);
+      } else {
+        getAds().then((res) => {
+          setAds(res);
+        });
+      }
 
       getVodDetails().then((data) => {
         if (
@@ -209,9 +222,14 @@ export const PlayVod = ({ vodId, tId, nId }) => {
       if (playerRef.current) {
         playerRef.current.pause();
       }
-      getAds().then((res) => {
-        setAds(res);
-      });
+      if (isVip) {
+        setShowAds(false);
+      } else {
+        getAds().then((res) => {
+          setAds(res);
+        });
+      }
+
       let watchHistory = {
         tid: tId,
         nid: episodeSelected.nid + 1,
