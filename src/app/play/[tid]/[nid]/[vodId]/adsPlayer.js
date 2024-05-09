@@ -9,7 +9,7 @@ import {
 export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
   const adsPlayerRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [remaining, setRemaining] = useState(0);
+  const [remaining, setRemaining] = useState(15);
 
   const playVideo = () => {
     adsPlayerRef.current.play();
@@ -37,6 +37,7 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
         ref={adsPlayerRef}
         autoPlay
         playsInline
+        
         onEnded={handleAdsPlayerEndPlay}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
@@ -45,11 +46,11 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
       </video>
       <div
         className={`absolute bg-[#00000099] py-1 px-2 rounded-full items-center top-2 right-2 ${
-          !isPlaying ? 'hidden' : 'flex'
+          remaining !== null ? 'flex' : 'hidden'
         }`}
       >
-        <span>{remaining}s后关闭广告｜</span>
-        <span onClick={() => {}} className='text-[#0085E0]'>
+        <span className='text-sm nowrap'>{remaining}s后关闭广告|</span>
+        <span onClick={() => {}} className='text-[#0085E0] text-sm nowrap'>
           VIP跳广告
         </span>
         <FontAwesomeIcon
