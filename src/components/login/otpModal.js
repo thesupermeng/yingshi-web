@@ -127,17 +127,20 @@ export default function OtpModal ({open, handler, onLogin, onRegister}) {
   return (
     <>
       {loginParam && loginParam.loginMode &&
-        <Dialog open={open} handler={handler} className={'w-[500px] bg-[#121212] rounded-[28px] px-[85px] py-[25px] overflow-scroll'} size={'xs'}>
+        <Dialog open={open} handler={handler} className={'w-[600px] bg-[#121212] rounded-[28px]  py-[25px] overflow-scroll'} size={'xs'}>
           <DialogBody className={'p-0 w-full h-full'}>
             <div className={'flex flex-col items-center]'}>
-              <p className={'text-white font-semibold text-[20px] text-center mb-[54px]'}>输入验证码</p>
+              <p className={' px-[15px] text-white font-semibold text-[20px] text-center mb-[54px]'}>输入验证码</p>
 
-              <div className={'flex flex-col items-center'}>
+
+              <div className={'px-[15px] flex flex-col items-center'}>
                 <p className={'text-white text-center font-medium font-[18px]'}>请输入 6 位数字，验证码已发送至</p>
                 <p className={'text-shayuBlue text-center font-medium font-[18px]'}>{loginParam.loginMode === 'sms' ? `+${loginParam.phonecode} ${loginParam.phoneNumber}` : loginParam.email}</p>
               </div>
 
-              <div className={'flex justify-between mt-[13px]'}>
+
+              <div className={'flex justify-center mt-[13px] px-[15px]'}>
+              <div className={'flex justify-between w-full max-w-[320px]'}>
                 {[1, 2, 3, 4, 5, 6].map((item, index) => (
                   <OtpInput
                     key={index}
@@ -148,11 +151,16 @@ export default function OtpModal ({open, handler, onLogin, onRegister}) {
                     isError={!!errorMessage}
                   />
                 ))}
+                         </div>
               </div>
-              {errorMessage && <p className={'text-[#FF1010] text-[13px] mb-[13px]'}>{errorMessage}</p>}
-              {!errorMessage && <p className={'text-transparent text-[13px] mb-[13px]'}>placeholder</p>}
 
-              <Button className={'bg-shayuBlue text-[15px] font-semibold normal-case'} disabled={countdownTimer > 0} onClick={handleResendOtp}>重新发送验证码 {countdownTimer > 0 && `${countdownTimer}s`}</Button>
+
+              {errorMessage && <p className={'px-[15px] text-[#FF1010] text-[13px] mb-[13px]'}>{errorMessage}</p>}
+              {!errorMessage && <p className={'px-[15px] text-transparent text-[13px] mb-[13px]'}>placeholder</p>}
+
+             <div  className={'px-[15px] flex flex-col items-center]'}>
+              <Button className={'px-[15px] bg-shayuBlue text-[15px] font-semibold normal-case'} disabled={countdownTimer > 0} onClick={handleResendOtp}>重新发送验证码 {countdownTimer > 0 && `${countdownTimer}s`}</Button>
+              </div>
             </div>
           </DialogBody>
         </Dialog>
