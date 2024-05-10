@@ -225,6 +225,7 @@ const Header = () => {
     );
     setSearchHistoryList(JSON.parse(localStorage.getItem('searchHistoryList')));
     setOpenSearch(false);
+    setSearchInput('');
     router.push('/search/' + searchInput);
   };
 
@@ -433,7 +434,10 @@ const Header = () => {
               className='border-0 border-gray-300 text-white rounded-full pl-10 md:pl-4 md:pr-10 pr-4 py-2 focus:outline-none w-full md:w-60 header-search-input-desktop'
               onClick={handleOpenSearch}
               onKeyDown={(e) => {
-                if (e.key === 'Enter') handleSearch();
+                if (e.key === 'Enter') {
+                  e.target.blur();
+                  handleSearch();
+                }
               }}
             />
             <div className='absolute inset-y-0 left-3 flex items-center justify-center md:hidden'>
@@ -937,7 +941,6 @@ const Header = () => {
               <div className='flex justify-center md:hidden'>
                 {/* add on md: infront of hidden */}
                 {vipContainer}
-                
               </div>
             ) : null}
           </div>
@@ -1155,9 +1158,9 @@ const Header = () => {
     return (
       <>
         <div className={'z-30 w-screen mobile'}>
-          <div className='flex py-3 mx-2.5'>
+          <div className='flex pt-4 mx-2.5'>
             <div className='gap-y-2 flex-col w-full md:flex-row flex'>
-              <div className='flex-1 flex gap-x-2 md:justify-start'>
+              <div className='flex-1 flex px-4 md:justify-start'>
                 <span className='text-topic-title'> 我的 </span>
               </div>
             </div>
