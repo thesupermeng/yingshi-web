@@ -7,9 +7,9 @@ import { YingshiApi } from '@/util/YingshiApi';
 import styles from './style.module.css';
 import { VideoHorizontalCard } from '@/components/videoItem/videoHorizontalCard';
 import { Spinner } from './../../../../components/spinner';
-
+import TopicHeader from './../../../../components/topicHeader';
 export default function Page() {
-  
+
   const params = useParams();
   const xvodId = params.xvodId;
   const xvodClass = params.xvodClass;
@@ -67,7 +67,7 @@ export default function Page() {
       setVods(combinedList);
       loading = false;
 
-
+      setIsLoading(false);
 
     } else {
       stillCanLoad = false
@@ -79,11 +79,11 @@ export default function Page() {
 
   useEffect(() => {
     getXVodList().then((data) => {
-      if(data && data.List.length > 0){
+      if (data && data.List.length > 0) {
         setVods([...vods, ...data.List]);
       }
     });
-    
+
   }, [xvodId, xvodClass])
 
   useEffect(() => {
@@ -115,29 +115,44 @@ export default function Page() {
 
   return (
     <>
-      <div className='desktop'>
-        <div className={`${styles.containerHeader}`}>
-          
-        </div>
-        <div className='d-flex container pb-6' style={{ flexDirection: 'column' }}>
-          <div className='text-xl'>{decodeURIComponent(xvodClass)}</div>
-          <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
-            {vods != [] &&
-              vods?.map((vod, idx) => {
-                return <VideoHorizontalCard vod={vod} key={idx} typepage_id={99}/>;
-                return (
-                  <>{vod.vod_name}</>
-                )
-              })
-            }
+        <div className='mobile'>
+        <TopicHeader topicName={decodeURIComponent(xvodClass)} />
+        <div style={{ height: '52px' }}></div>
+      
+      </div>
+
+      {!isLoading &&
+        <div>
+          <div className={`${styles.containerHeader} desktop`}>
+
+          </div>
+
+     
+
+
+          <div className='d-flex container pb-6' style={{ flexDirection: 'column' }}>
+            <div className='text-xl desktop'>{decodeURIComponent(xvodClass)}</div>
+            <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
+              {vods != [] &&
+                vods?.map((vod, idx) => {
+                  return <VideoHorizontalCard vod={vod} key={idx} typepage_id={99} />;
+                  return (
+                    <>{vod.vod_name}</>
+                  )
+                })
+              }
+            </div>
           </div>
         </div>
-      </div>
+      }
 
 
       {/* loading spinner  */}
-      <div ref={targetRef}>{isLoading && <Spinner></Spinner>}</div>
-
+      <div ref={targetRef}>{isLoading &&
+        <div className=' items-center justify-center flex-col my-6 py-6'>
+          <Spinner></Spinner>
+        </div>
+      }</div>
 
       {!isLoading &&
         <div className='flex items-center justify-center flex-col my-6 py-6'>
