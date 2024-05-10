@@ -7,14 +7,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import LoginFlow from '@/components/login/loginFlow';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
-import {useLoginOpen} from '@/hook/yingshiScreenState/useLoginOpen';
-import {useRouter} from 'next/navigation';
+import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
+import { useRouter } from 'next/navigation';
 
-export const AdsPlayer = ({
-  adsInfo,
-  handleAdsPlayerEndPlay,
-}) => {
-  const router = useRouter()
+export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
+  const router = useRouter();
   const { userInfo } = useYingshiUser();
   const [isLoginOpen, setIsLoginOpen] = useLoginOpen();
 
@@ -32,6 +29,13 @@ export const AdsPlayer = ({
     adsPlayerRef.current.pause();
   };
 
+  const handleHrefLink = () => {
+    if (isPlaying) {
+      pauseVideo();
+      window.open('https://aha888.vip/home?channel=100007', '_blank');
+    }
+  };
+
   const handleOnSkipAd = () => {
     const isMobile = window.innerWidth < 768;
 
@@ -42,7 +46,7 @@ export const AdsPlayer = ({
         loginFlowRef.current.start();
       }
     } else {
-      router.push('/payment')
+      router.push('/payment');
     }
 
     pauseVideo();
@@ -68,12 +72,17 @@ export const AdsPlayer = ({
     <div className='flex relative justify-center items-center'>
       <LoginFlow ref={loginFlowRef} />
       <video
+        className={`${isPlaying ? 'cursor-pointer' : ''}`}
         ref={adsPlayerRef}
         autoPlay
         playsInline
         onEnded={handleAdsPlayerEndPlay}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
+        onClick={() => {
+          console.log('ttesst');
+          handleHrefLink();
+        }}
       >
         <source
           src={
@@ -84,9 +93,6 @@ export const AdsPlayer = ({
           type='video/mp4'
         />
       </video>
-      <div className={'w-full h-full absolute top-0 left-0'} onClick={() => {
-        // TODO : redirect to link from adsInfo
-      }}/>
       <div
         className={`absolute bg-[#00000099] py-1 px-2 rounded-full items-center top-2 right-2 ${
           remaining !== null ? 'flex' : 'hidden'
@@ -94,8 +100,10 @@ export const AdsPlayer = ({
       >
         <span className='text-sm nowrap'>{remaining}s&nbsp;|&nbsp;</span>
         <span
-          onClick={handleOnSkipAd}
-          className='text-[#0085E0] text-sm nowrap'
+          onClick={() => {
+            handleOnSkipAd();
+          }}
+          className='text-[#0085E0] text-sm nowrap cursor-pointer'
         >
           VIP跳广告
         </span>
