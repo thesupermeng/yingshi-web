@@ -1077,7 +1077,7 @@ const Header = () => {
     </div>
   );
 
-  if (pathname.startsWith('/topic/')) {
+  if (pathname.startsWith('/topic/') || pathname.startsWith('/xvod')) {
     return <div className={'desktop z-50'}>{defaultHeader}</div>;
   }
 
