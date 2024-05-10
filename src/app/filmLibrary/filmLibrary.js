@@ -94,7 +94,6 @@ export const FilmLibrary = ({}) => {
   }, [isAtTop]);
 
   useEffect(() => {
-    console.log(isScrolling, buttonUncollapse);
     if (isScrolling.res) {
       if (buttonUncollapse) {
         setCollapse(true);
@@ -250,6 +249,11 @@ export const FilmLibrary = ({}) => {
 
       if (type == 'type') {
         params.typeId = value;
+        params.by = 'time';
+        params.class = '全部类型';
+        params.area = '全部地区';
+        params.lang = '全部语言';
+        params.year = '全部时间';
       } else if (type == 'by') {
         params.by = value;
       } else if (type == 'class') {
@@ -261,6 +265,7 @@ export const FilmLibrary = ({}) => {
       } else if (type == 'year') {
         params.year = value;
       }
+      console.log(params);
       setParamsFilter(params);
       setNextPage(1);
       setVideoList([]);
@@ -275,7 +280,7 @@ export const FilmLibrary = ({}) => {
         {loading ? (
           <LoadingPage full={false} />
         ) : (
-          <div className='flex w-screen flex-col items-center'> 
+          <div className='flex w-screen flex-col items-center'>
             <div
               className={`bg-[#1D2023] w-screen h-auto p-1 z-20 sticky -top-0.5 md:static `}
             >
