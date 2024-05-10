@@ -110,6 +110,7 @@ export default function H5Page({params}) {
   }, [loginParam])
 
   const handleOnClickVip = () => {
+    console.log('testing', userInfo)
     if (!userInfo) {
       setOpenSignInUp(true)
     } else {

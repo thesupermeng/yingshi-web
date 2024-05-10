@@ -377,18 +377,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
     setShowAds(false);
   };
 
-  const handleVipSkipAd = () => {
-    if (!userInfo) {
-      // not logged in, jump login btm sheet
-      setIsLoginShow(true);
-    } else {
-      if (!isVip) {
-        // not vip, jump to payment
-        router.push('/payment');
-      }
-    }
-  };
-
   return (
     <div
       ref={domElementRef}
