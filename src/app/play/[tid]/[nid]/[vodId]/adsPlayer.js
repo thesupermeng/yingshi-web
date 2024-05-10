@@ -6,7 +6,11 @@ import {
   faPlay,
 } from '@fortawesome/free-solid-svg-icons';
 
-export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay, handleVipSkipAd }) => {
+export const AdsPlayer = ({
+  adsInfo,
+  handleAdsPlayerEndPlay,
+  handleVipSkipAd,
+}) => {
   const adsPlayerRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [remaining, setRemaining] = useState(15);
@@ -37,25 +41,34 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay, handleVipSkipAd }) 
         ref={adsPlayerRef}
         autoPlay
         playsInline
-
         onEnded={handleAdsPlayerEndPlay}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
       >
-        <source src={adsInfo.video} type='video/mp4' />
+        <source
+          src={
+            adsInfo?.ads_pic === undefined
+              ? 'https://oss.yingshi.tv/videos/vod/vi/aha-qiantiepian-15sec.mp4'
+              : adsInfo?.ads_pic
+          }
+          type='video/mp4'
+        />
       </video>
       <div
         className={`absolute bg-[#00000099] py-1 px-2 rounded-full items-center top-2 right-2 ${
           remaining !== null ? 'flex' : 'hidden'
         }`}
       >
-        <span className='text-sm nowrap'>{remaining}s后关闭广告|</span>
-        <span onClick={handleVipSkipAd} className='text-[#0085E0] text-sm nowrap'>
+        <span className='text-sm nowrap'>{remaining}s&nbsp;|&nbsp;</span>
+        <span
+          onClick={handleVipSkipAd}
+          className='text-[#0085E0] text-sm nowrap'
+        >
           VIP跳广告
         </span>
         <FontAwesomeIcon
           style={{
-            fontSize: '15px',
+            fontSize: '12px',
             paddingLeft: '5px',
             color: '#0085E0',
           }}
