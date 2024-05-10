@@ -101,7 +101,7 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
         <span className='text-sm nowrap'>{remaining}s&nbsp;|&nbsp;</span>
         <span
           onClick={() => {
-            handleOnSkipAd;
+            handleOnSkipAd();
           }}
           className='text-[#0085E0] text-sm nowrap cursor-pointer'
         >
