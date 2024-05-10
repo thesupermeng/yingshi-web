@@ -6,7 +6,7 @@ import {
   faPlay,
 } from '@fortawesome/free-solid-svg-icons';
 
-export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
+export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay, handleVipSkipAd }) => {
   const adsPlayerRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [remaining, setRemaining] = useState(15);
@@ -37,7 +37,7 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
         ref={adsPlayerRef}
         autoPlay
         playsInline
-        
+
         onEnded={handleAdsPlayerEndPlay}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
@@ -50,7 +50,7 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
         }`}
       >
         <span className='text-sm nowrap'>{remaining}s后关闭广告|</span>
-        <span onClick={() => {}} className='text-[#0085E0] text-sm nowrap'>
+        <span onClick={handleVipSkipAd} className='text-[#0085E0] text-sm nowrap'>
           VIP跳广告
         </span>
         <FontAwesomeIcon
