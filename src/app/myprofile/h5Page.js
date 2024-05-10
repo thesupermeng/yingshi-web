@@ -218,7 +218,7 @@ export default function H5Page({params}) {
             <span className={'text-white text-[14px]'}>联系邮箱：</span>
             <span className={'text-shayuBlue text-[14px]'} onClick={handleClickEmail}>shayuyingshi@gmail.com</span>
           </div>
-          <Button className={'text-shayuBlue text-[16px] mt-[12px] outline-none'} color={'blue'} tabIndex={-1} variant={'outlined'} onClick={() => setOpenAboutus(false)}>确定</Button>
+          <Button className={'text-shayuBlue text-[16px] mt-[12px] outline-none'} color={'blue'} tabIndex={-1} variant={'outlined'} size={'sm'} onClick={() => setOpenAboutus(false)}>确定</Button>
         </DialogBody>
       </Dialog>
       {/* temporary only end  */}
