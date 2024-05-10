@@ -50,9 +50,9 @@ export default function Page() {
           {/* desktop view */}
           <div className='desktop'>
             <div className={styles.containerHeader}>
-              <div className='d-flexx' style={{ width: '100%' }}>
+              <div className='d-flex' style={{ width: '100%' }}>
                 <div className='overlay' style={{ width: '100%' }}>
-                  <div className='row px-0 d-flex flex-column '>
+                  <div className='px-0 d-flex flex-column w-screen'>
                     <div className='topic-container-header container content-end'>
                       <div className='topic-header-text'>
                         {topicObj.topic_name}
@@ -82,8 +82,12 @@ export default function Page() {
           </div>
 
           {/* mobile view */}
-          <div className='mobile mt-2 px-4 pb-6'>
+          <div className='mobile mt-2 pb-6'>
             <TopicHeader topicName={topicObj.topic_name} />
+            <div style={{height:'52px'}}></div>
+
+
+            <div  className='px-2.5'>
             {/* mobile content */}
             <div className='topic-header-text-sub mt-3'>
               {topicObj.topic_blurb}
@@ -98,6 +102,8 @@ export default function Page() {
              <VodItemMobile vod={vod} />
               ))}
             </div>
+            </div>
+            
           </div>
         </>
       )}

@@ -17,7 +17,9 @@
 }
 
 :root {
-	--rsbs-bg: black;
+	--rsbs-bg: #171717;
+  --rsbs-backdrop-bg: rgba(0, 0, 0, 0.8);
+  --rsbs-handle-bg: #9C9C9C !important;
 }
 
 body {
@@ -191,9 +193,9 @@ body {
   padding: 2px !important;
 }
 /* .text-stroke {
-  -webkit-text-fill-color: white; 
-  -webkit-text-stroke-width: 7px; 
-  -webkit-text-stroke-color: #ff0000; 
+  -webkit-text-fill-color: white;
+  -webkit-text-stroke-width: 7px;
+  -webkit-text-stroke-color: #ff0000;
   stroke-linecap: round;
   letter-spacing: -0.1px;
 } */
@@ -234,4 +236,12 @@ body {
 }
 .animate-out {
   animation: slideRightToLeft 0.3s ease-in-out forwards;
+}
+
+.autofillInput:-webkit-autofill,
+.autofillInput:-webkit-autofill:hover,
+.autofillInput:-webkit-autofill:focus,
+.autofillInput:-webkit-autofill:active{
+  transition: background-color 600000s 0s, color 600000s 0s;
+  /*https://stackoverflow.com/a/69364368*/
 }

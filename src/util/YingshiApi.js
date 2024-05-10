@@ -4,6 +4,24 @@ import CryptoJS from 'crypto-js';
 import { LocalStorageKeys } from '@/config/common';
 import { URL_USER } from '@/config/url';
 
+let ipAddress = ''
+
+const getIPAddress = async () => {
+  if(ipAddress != ''){
+    return ipAddress;
+  }
+  const response = await fetch('https://geolocation-db.com/json/').then((d) => d.json())
+  .catch((e) => {
+    // console.log('IP ADDRESS ERROR!!!')
+    // throw e;
+
+    // got error, use default ip address
+    ipAddress = '219.75.27.16'
+  });
+  ipAddress = response.IPv4;
+  return ipAddress;
+}
+
 const ServerTimeOffset = { value: 0, set: false };
 export const setServerTimeOffset = (offset) => {
   ServerTimeOffset.value = offset || 0;
@@ -53,8 +71,8 @@ const UserURL = process.env.NEXT_PUBLIC_URL_USER_API;
 const Platform = { WEB: 1, H5: 2 }[process.env.NEXT_PUBLIC_ENV || 'WEB'];
 
 
-const getQuery = (url) => {
-  const queryParameters = 'appName=Shayu&platform=WEB&channelId=WEB&ip=165.21.14.226';
+const getQuery = async (url) => {
+  const queryParameters = 'appName=Shayu&platform=WEB&channelId=WEB&ip=' + await getIPAddress();
 
   if (url.includes('?')) {
     return '&' + queryParameters;
@@ -63,12 +81,12 @@ const getQuery = (url) => {
   }
 }
 
-const getHeader = (
+const getHeader = async (
   requestBody,
   method = 'POST',
   token = '',
 ) => {
-  
+
   // config.headers['Authorization'] = `Bearer ${this.bearerToken}`;
   // config.headers['Device-Id'] = "";
   // config.headers['Platform-OS'] = "WEB";
@@ -83,11 +101,12 @@ const getHeader = (
     'Platform-OS': 'WEB',
     'App-Channel': 'WEB',
     'App-Name': 'WEB',
-    'IP-Address': '165.21.14.226',
+    'IP-Address': await getIPAddress(),
     'App-Version': '',
     'Access-Control-Allow-Origin': '*',
+    'Authorization': `Bearer ${token}`
   };
-  
+
   return obj;
 };
 
@@ -95,35 +114,43 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
   const {
     method = 'POST',
     saveUserToken,
+    saveAhaToken,
     saveFBToken,
     saveTayaToken,
     removeToken,
     isFormdata,
     excludeInSignature,
+    returnFullResponse,
   } = options;
 
   const requestBody = JSON.stringify(body);
   const requestOption = {
     method,
-    headers: getHeader(requestBody, method, ''),
+    headers: await getHeader(requestBody, method, localStorage.getItem(LocalStorageKeys.AuthToken)),
   };
 
   let getParams = '';
   let resData;
-  url = "https://api.yingshi.tv/" + url
+  url = 'https://api.yingshi.tv/' + url
 
 
-  
+
   if (method !== 'GET') {
-    url = url +  getQuery(url);
+    url = url +  await getQuery(url);
     requestOption.body = requestBody;
   } else {
     getParams = objectToGetParams(body);
+
+    if(body.class){
+      getParams = getParams.replace(encodeURIComponent(body.class), decodeURIComponent(body.class));
+    }
     if(getParams != ''){
-      url += "?" + getParams;
+      url += '?' + getParams;
     }
   }
+
   console.log(url);
+
   try {
     const response = await fetch(url, requestOption)
       .then((d) => d.json())
@@ -141,6 +168,20 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
   }
   if(resData.code === 401){
     return;
+  } else if (resData.code === 0 || resData.code === 201) {
+    if (saveUserToken) {
+      updateLocalstorage(LocalStorageKeys.AuthToken, resData.data.access_token)
+    }
+    if (saveAhaToken) {
+      updateLocalstorage(LocalStorageKeys.AhaToken, resData.data.aha_token)
+    }
+    if (removeToken) {
+      updateLocalstorage(LocalStorageKeys.AuthToken, undefined);
+      updateLocalstorage(LocalStorageKeys.AhaToken, undefined);
+    }
+  }
+  if (returnFullResponse) {
+    return resData
   }
   return resData.data;
 };
@@ -172,25 +213,25 @@ const objectToGetParams = (paramsObject) => {
 //   return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
 // };
 
-// export const updateLocalstorage = (key, val, isSessionStorage = false) => {
-//   const storage = isSessionStorage ? sessionStorage : localStorage;
-//   if (storage.getItem(key) == val) {
-//     return;
-//   }
-//   if (val !== undefined) {
-//     storage.setItem(key, val);
-//   } else {
-//     storage.removeItem(key);
-//   }
-//   const toDispatch = () => {
-//     if (storage.getItem(key) == val) {
-//       window.dispatchEvent(new Event('storage-' + key));
-//     } else {
-//       return setTimeout(toDispatch);
-//     }
-//   };
-//   return toDispatch();
-// };
+export const updateLocalstorage = (key, val, isSessionStorage = false) => {
+  const storage = isSessionStorage ? sessionStorage : localStorage;
+  if (storage.getItem(key) == val) {
+    return;
+  }
+  if (val !== undefined) {
+    storage.setItem(key, val);
+  } else {
+    storage.removeItem(key);
+  }
+  const toDispatch = () => {
+    if (storage.getItem(key) == val) {
+      window.dispatchEvent(new Event('storage-' + key));
+    } else {
+      return setTimeout(toDispatch);
+    }
+  };
+  return toDispatch();
+};
 
 // const checkServerTime = async (url) => {
 //   const timepass = async (res) => {

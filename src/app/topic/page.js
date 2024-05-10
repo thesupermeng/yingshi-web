@@ -22,7 +22,7 @@ export default function Page({ params }) {
   const [topicList, setTopicList] = useState([]);
   let topicListTotal = [];
   let currentPage = 0;
-  const [stillCanLoad, setStillCanLoad] = useState(true);
+  let stillCanLoad = true
   // const [isVisible, setIsVisible] = useState(false);
   let totalPage = 0;
   let loading = false;
@@ -54,18 +54,30 @@ export default function Page({ params }) {
       }
 
       if (currentPage == totalPage) {
-        setStillCanLoad(false);
+        stillCanLoad = false
         setIsLoading(false);
         return;
       }
+
+      // if (currentPage == 2) {
+      //   stillCanLoad = false
+      //   setIsLoading(false);
+      //   return
+      // }
+
+
+
       topicListTotal = [...topicListTotal, ...tempList];
       let combinedList = topicListTotal;
       console.log(combinedList);
       setTopicList(combinedList);
       loading = false;
       console.log(topicList);
+
+
+
     } else {
-      setStillCanLoad(false);
+      stillCanLoad = false
       await new Promise((resolve) => setTimeout(resolve, 2000));
       loading = false;
       setIsLoading(false);
@@ -140,8 +152,14 @@ export default function Page({ params }) {
                 >
                   <div className='col-12 mx-0 px-0'>
                     <div className='d-flex topic-card'>
-                      <div className='col-lg-4 col-md-2.5 px-0'>
-                        <div className={`object-cover topic-img`}>
+                      <div    style={{
+                              padding: '10px',
+                              width: '123px',
+                              borderRadius: '10px',
+                            
+                            }}
+                           >
+                
                           <img
                             alt='topic items'
                             className={`object-cover`}
@@ -152,9 +170,9 @@ export default function Page({ params }) {
                               height: '170px',
                             }}
                           />
-                        </div>
+                    
                       </div>
-                      <div className='col-lg-8 col-md-9 px-0 d-flex flex-column justify-content-between'>
+                      <div className='col d-flex flex-column justify-content-between'>
                         <div>
                           <div className='text-base font-bold pb-2'>
                             {topic.topic_name}
@@ -181,14 +199,14 @@ export default function Page({ params }) {
       {/* mobile  view  */}
 
       <div className='mobile'>
-        <div className='row'>
+        <div className='row w-screen'>
           {topicList.map((topic) => (
             <div
               className='mb-2 cursor-pointer'
               key={topic.topic_id}
               onClick={() => goToTopicDetails(topic)}
             >
-              <div className='col-12 pt-2 px-4 d-flex justify-content-between align-items-center pb-1 font-semibold'>
+              <div className='col-12 pt-2 d-flex justify-content-between align-items-center pb-1 font-semibold'>
                 <span>{topic.topic_name}</span>
                 <span className='mr-2'>
                   {' '}
@@ -196,21 +214,21 @@ export default function Page({ params }) {
                 </span>
               </div>
 
-              <div className='col-12 mobile-topic-desc px-4'>
+              <div className='col-12 mobile-topic-desc'>
                 {topic.topic_blurb.length > 52
                   ? `${topic.topic_blurb.slice(0, 52)}...`
                   : topic.topic_blurb}
               </div>
 
-              <div className='col-12 px-4' key={topic.topic_id}>
-                <div className='row g-0'>
+              <div className='col-12' key={topic.topic_id}>
+                <div className='row g-2'>
                   {topic?.vod_list?.slice(0, 3).map((vod) => (
                     <div
-                      className='col-4 px-1 cursor-pointer'
+                      className='col-4 cursor-pointer'
                       key={vod.vod_id}
                       onClick={(e) => {
                         e.preventDefault();
-                        router.push(`/play/${vod.vod_id}`);
+                        router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);
                       }}
                     >
                       {' '}
@@ -236,6 +254,13 @@ export default function Page({ params }) {
 
       {/* loading spinner  */}
       <div ref={targetRef}>{isLoading && <Spinner></Spinner>}</div>
+
+
+      {!isLoading &&
+        <div className='flex items-center justify-center flex-col my-6 py-6'>
+          <span className='test-xs text-muted'>没有更多了</span>
+        </div>
+      }
     </>
   );
 }

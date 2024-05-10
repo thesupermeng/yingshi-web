@@ -22,7 +22,14 @@ import { videoPlayerMisc } from './videoPlayerMisc';
 import { livechat } from './livechat';
 import { games } from './games';
 import { streamGame } from './streamGame';
-import { headerMenu, headerMenuSelected } from './headerData';
+import {
+  headerMenu,
+  headerMenuSelected,
+  specialHeaderMenuSelected,
+} from './headerData';
+import { currentScrollPosition, isScroll, isTop } from './scrollView';
+import { yingshiUser } from '@/store/yingshiUser';
+import { yingshiScreen } from '@/store/yingshiScreen';
 
 export const store = configureStore({
   reducer: {
@@ -51,6 +58,12 @@ export const store = configureStore({
     livechat: livechat.reducer,
     headerMenu: headerMenu.reducer,
     headerMenuSelected: headerMenuSelected.reducer,
+    specialHeaderMenuSelected: specialHeaderMenuSelected.reducer,
+    isScroll: isScroll.reducer,
+    isTop: isTop.reducer,
+    currentScrollPosition: currentScrollPosition.reducer,
+    yingshiUser: yingshiUser.reducer,
+    yingshiScreen: yingshiScreen.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

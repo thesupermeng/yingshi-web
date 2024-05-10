@@ -7,7 +7,7 @@ const VodItemDesktop = ({ vod }) => {
   const router = useRouter();
 
   const handlePlay = (vodId) => {
-    router.push(`/play/${vodId}`);
+    router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);
   };
 
   return (
@@ -16,7 +16,11 @@ const VodItemDesktop = ({ vod }) => {
         <div className='row'>
           <div className='col-12'>
             <div className='row'>
-              <div className='col-lg-3 col-md-2'>
+              <div   style={{
+                    padding: '0px',
+                    width: '132px',
+          
+                  }}>
                 <img
                   alt='vod'
                   className='object-cover'
@@ -29,7 +33,7 @@ const VodItemDesktop = ({ vod }) => {
                 />
               </div>
 
-              <div className='col-lg-9 col-md-10'>
+              <div className='col'>
                 <div className='topic-details-title'>{vod.vod_name}</div>
                 <div className='topic-details-title-sub text-secondary '>
                   {vod.vod_year} {vod.vod_class}
@@ -41,12 +45,12 @@ const VodItemDesktop = ({ vod }) => {
                     : vod.vod_actor}
                 </div>
                 <div className='topic-details-title-sub text-secondary '>
-                  {vod.vod_blurb.length > 75
+                  {vod?.vod_blurb?.length > 75
                     ? vod.vod_blurb.substring(0, 73) + '...'
                     : vod.vod_blurb}
                 </div>
-                <button className='btn btn-topic-play' onClick={() => handlePlay(vod.vod_id)}>
-                  <FontAwesomeIcon icon={faPlay} /> <span className='ml-2'> 立即播放 </span>
+                <button className='btn btn-topic-play'  onClick={() => handlePlay(vod.vod_id)}>
+                  <FontAwesomeIcon icon={faPlay}  style={{ color: 'white' }} /> <span className='ml-2'> 立即播放 </span>
                 </button>
               </div>
             </div>

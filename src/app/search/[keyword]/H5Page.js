@@ -10,13 +10,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import VodItemMobile from './../../../components/vodItemMobile'
+import { Spinner } from './../../../components/spinner';
+import Image from 'next/image';
+import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
+
+import {
+
+  searchEmptyIcon,
+
+} from '@/asset/icons';
 
 export default function Page() {
   const { keyword } = useParams();
+  const decodedKeyword = decodeURIComponent(keyword);
   const [searchResults, setSearchResults] = useState();
   const [isSearching, setIsSearching] = useState(true);
   const router = useRouter();
-
+  const [yunying, setYunying] = useState([]);
 
 
   //todo remove this 
@@ -25,7 +35,7 @@ export default function Page() {
 
   const getSearchResultApi = async () => {
     return YingshiApi(
-      URL_YINGSHI_VOD.searchingList + '?wd=' + keyword + '&limit=100&page=1',
+      URL_YINGSHI_VOD.searchingList + '?wd=' + keyword + '&limit=35&page=1',
       {},
       { method: 'GET' }
     );
@@ -35,13 +45,37 @@ export default function Page() {
     setIsSearching(true)
     console.log('keyword');
     console.log(keyword);
+    console.log('decodedKeyword');
+    console.log(decodedKeyword);
+    
 
     let res = await getSearchResultApi();
 
     console.log('result is ')
     console.log(res)
+    if (res?.Total == 0) {
+      let res2 = await getTypePageApi()
+      console.log('result 2  is ')
+      console.log(res2)
+      setYunying(res2.yunying);
+
+    }
+
     setSearchResults(res);
     setIsSearching(false)
+  };
+
+  // if empty seatch result 
+  const getTypePageApi = async (idValue) => {
+    return YingshiApi(
+      URL_YINGSHI_VOD.homeGetPages,
+      {
+        id: idValue,
+        limit: 3,
+        page: 1,
+      },
+      { method: 'GET' }
+    );
   };
 
   useEffect(() => {
@@ -55,20 +89,28 @@ export default function Page() {
 
   return (
     <>
+
+      {/* loading spinner  */}
+      <div className='mobile'>
+        <div>{isSearching && <Spinner></Spinner>}</div>
+      </div>
+
+
+
       <div className='desktop'>
         <div className={styles.containerHeader}>
           <div className='d-flex' style={{ width: '100%' }}>
             <div className='overlay' style={{ width: '100%' }}>
-              <div className='row px-0 d-flex flex-column '>
+              <div className='px-0 d-flex flex-column '>
                 <div className='topic-container-header container content-end'>
-                  <div className='topic-header-text'>{keyword}</div>
+                  <div className='topic-header-text'>{decodedKeyword}</div>
                   <div className='topic-header-text-sub'>
 
 
-                    搜索"{keyword}" ，找到
-                    <span className='search-count'>
+                    搜索"{decodedKeyword}" ，找到
+                    <span className='search-count text-theme'>
                       {isSearching === false ? (
-                        <span>{searchResults?.List?.length}</span>
+                    <span>{searchResults?.List ? searchResults.List.length : 0}</span>
                       ) : (
                         <FontAwesomeIcon icon={faSpinner} spin />
                       )}</span>
@@ -88,20 +130,24 @@ export default function Page() {
           {/* desktop  view  */}
           <div className='desktop'>
             <div className='d-flex container pt-3 ' style={{ width: '100%' }}>
-              <div className='row'>
-                {searchResults.List.map((vod) => (
-                  <div className='col-6 mt-2 mb-2'>
+              <div className='row w-screen'>
+                {searchResults?.List?.map((vod) => (
+                  <div className='col-md-6 mt-2 mb-2'>
                     <div
                       className='topic-details-card'
                       onClick={(e) => {
                         e.preventDefault();
-                        router.push(`/play/${vod.vod_id}`);
+                        router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);
                       }}
                     >
                       <div className='row '>
                         <div className='col-12'>
                           <div className='row'>
-                            <div className='col-3'>
+                            <div  style={{
+                                  width: '132px',
+                                  paddingLeft: '0px',
+                                  paddingRight: '0px',
+                                }}>
                               <img
                                 alt='vod'
                                 className={`object-cover`}
@@ -114,7 +160,7 @@ export default function Page() {
                               />
                             </div>
 
-                            <div className='col-9'>
+                            <div className='col'>
                               <div className='topic-details-title'>
                                 {' '}
                                 {vod.vod_name}{' '}
@@ -131,13 +177,13 @@ export default function Page() {
                                   : vod.vod_actor}
                               </div>
                               <div className='topic-details-title-sub text-secondary '>
-                                {vod.vod_blurb.length > 75
+                                {vod?.vod_blurb?.length > 75
                                   ? vod.vod_blurb.substring(0, 73) + '...'
                                   : vod.vod_blurb}
                               </div>
                               <button className='btn btn-topic-play'>
-                                <FontAwesomeIcon icon={faPlay} />{' '}
-                                <span className='ml-2'> 立即播放 </span>
+                                <FontAwesomeIcon style={{ color: 'white' }}  icon={faPlay} />{' '}
+                                <span className='ml-2 text-white'> 立即播放 </span>
                               </button>
                             </div>
                           </div>
@@ -156,18 +202,75 @@ export default function Page() {
           <div className='mobile'>
             <div className='d-flex container pt-3' style={{ width: '100%' }}>
               <div className='row'>
-                {searchResults.List.map((vod) => (
+                {searchResults?.List?.map((vod) => (
                   <VodItemMobile vod={vod} />
                 ))}
               </div>
             </div>
           </div>
+
+
+          {!searchResults?.List && 
+
+            <div className='flex items-center justify-center flex-col h-full pt-6 mt-6'>
+              <Image
+                className='mx-2'
+                src={searchEmptyIcon}
+                alt='empty'
+                width={120}
+              />
+
+
+              <span className="text-xs pt-2">    抱歉没有搜索到"{decodedKeyword}"的相关视频</span>
+              <span className="text-xs pt-2">  为你推荐更多精彩内容</span>
+
+
+
+            </div>
+
+
+          }
+
         </>
       )}
       {/* topic list  */}
       {/* <div className='d-flex container pb-6'>
         <div className='row '></div>
       </div> */}
+      {yunying != [] &&
+        <div className='flex flex-col w-full mb-8 mb-8 px-1.5'>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          {/* md:mx-20 mx-2.5  */}
+            <div className='pt-8 mt-8 lg:w-[80%] w-[100%] container'>
+              {yunying?.map((yy, idx) => {
+                return (
+                  <div id={yy.type_id} key={idx} className='lg:pt-3'>
+                    <div className='flex justify-between'>
+                      <span
+                        style={{
+                          fontSize: '20px',
+                          fontWeight: '600',
+                          fontStyle: 'normal',
+                          fontFamily: 'PingFang SC',
+                        }}
+                      >
+                        {yy.type_name}
+                      </span>
+                    </div>
+
+                    <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
+                      {yy.vod_list?.slice(0, 6).map((vod, i) => {
+                        return <VideoVerticalCard vod={vod} key={i} />;
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      }
+
     </>
   );
 }

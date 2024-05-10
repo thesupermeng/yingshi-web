@@ -2,6 +2,7 @@ export { default as Account } from './account.svg';
 export { default as BalWallet } from './balWallet.svg';
 export { default as CaretDown } from './caretDown.svg';
 export { default as Close } from './cross.svg';
+export { default as CrossRed } from './cross_red.svg';
 export { default as CreditCardIcon } from './creditcard.svg';
 export { default as Deposit } from './wallet.svg';
 export { default as Edit } from './edit.svg';
@@ -16,6 +17,7 @@ export { default as PasswordEye1 } from './passwordEye1.svg';
 export { default as searchIcon } from './searchIcon.png';
 export { default as ShareVideo } from './shareVideo.svg';
 export { default as Tick } from './tick.svg';
+export { default as TickBlue } from './tick_blue.svg';
 export { default as Transaction } from './transaction.svg';
 export { default as TransactionItem } from './transactionItem.svg';
 export { default as TrashIcon } from './trash.svg';
@@ -42,12 +44,52 @@ export { default as userIcon } from './userIcon.svg';
 export { default as vipIcon } from './vipIcon.svg';
 export { default as glyph } from './glyph.svg';
 export { default as noADIcon } from './noADIcon.svg';
-export { default as subtractIcon } from './subtractIcon.svg'
+export { default as subtractIcon } from './subtractIcon.svg';
 export { default as vipLightIcon } from './vipLightIcon.svg';
 export { default as homeTab } from './homeTab.svg';
 export { default as homeTabActive } from './homeTabActive.svg';
 export { default as topicTab } from './topicTab.svg';
 export { default as topicTabActive } from './topicTabActive.svg';
+export { default as profileTab } from './me.svg';
+export { default as profileTabActive } from './meActive.svg';
+export { default as profileIcon } from './profile_icon.svg';
+export { default as vipProfileIcon } from './ysVIPIcon.svg';
+export { default as editIcon } from './ysEdit.svg';
+export { default as arrowRight } from './arrowRight.svg';
+export { default as Stopwatch } from './stopwatch.svg'
+export { default as VipBlackIcon} from './vipBlack.svg'
+export { default as HistoryIconGrey} from './history_icon_grey.svg'
+export { default as AboutusIconGrey} from './aboutus_icon_grey.svg'
+export { default as FeedbackIconGrey} from './feedback_icon_grey.svg'
+export { default as FavouriteIconGrey} from './favourites_icon_grey.svg'
+export { default as ArrowRigthGrey} from './arrowRightGrey.svg'
+export { default as Favicon} from './../../app/yingshi.tv_logo-32x32.png'
+export { default as PersonIconGrey} from './personGrey.svg'
+export { default as LogoutGrey} from './logoutGrey.svg'
+export { default as Placeholder } from './../../app/placeholder.png';
+export { default as backtoTopIcon } from './backtoTopIcon.svg'
+export { default as GoogleIcon} from './googleIcon.png'
+export { default as AppIcon } from './appIcon.svg';
+export { default as AppImage } from './appImage.png';
+
+export { default as HistoryIconBlue} from './history_icon_blue.svg'
+export { default as FeedbackIconBlue} from './feedback_icon_blue.svg'
+export { default as PersonIconBlue} from './personBlue.svg'
+export { default as LogoutBlue} from './logoutBlue.svg'
+export { default as ArrowRightBlue } from './arrowRightBlue.svg'
+
+export { default as WarningIcon } from './warningIcon.svg';
+export { default as PaymentTitle } from './payment_title.svg'
+
+export { default as WechatPayIcon } from './wechatPayMethodIcon.svg'
+export { default as AlipayIcon } from './alipayMethodIcon.svg'
+export { default as CreditCardPayIcon } from './creditCardMethodIcon.svg'
+export { default as VisaMasterAmex } from './visaMasterAmex.svg'
+export { default as ProfileBlue } from './profileBlue.png';
+export { default as AhaLogo } from './ahaLogo.svg';
+export { default as AhaLogoActive } from './ahaLogoActive.svg';
+
+
 
 // profiles
 export { default as AnimationTick } from './profile/animationTick.gif';
@@ -284,3 +326,7 @@ export { default as ArrowLeftIcon } from './arrows/arrowLeft.svg';
 export { default as ArrowRightIcon } from './arrows/arrowRight.svg';
 export { default as ArrowDownFillIcon } from './arrows/arrowDownFill.svg';
 export { default as PlayRightIcon } from './arrows/playRight.svg';
+export { default as CloseX } from './close.svg';
+
+//countries
+export { default as CNFlag } from './countryIcons/cn.png';

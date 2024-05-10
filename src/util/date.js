@@ -124,3 +124,12 @@ export const getCurrentFormattedDateTime = () => {
 
   return `${year}-${month}-${day} ${hour}:${minutes}`;
 };
+
+export const formatDateCN = (timestamp) => {
+  const date = new Date(timestamp * 1000); // Convert timestamp to milliseconds
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1; // Months are zero-based, so we add 1
+  const day = date.getDate();
+
+  return `${year}年${month}月${day}日`
+}

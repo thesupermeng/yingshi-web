@@ -43,21 +43,35 @@ export const VodContent = ({
   const onExpandPress = () => {
     setCollapse(!isCollapse);
   }
-  console.log(vodEpisodeInfo);
-  console.log(vodEpisodeSelected);
+  
   return (
     <>
       {episodeInfo != null &&
-        <div className={styles.vodMetaContainer}>
+        <div className="desktop bg-[#1d2023] bg-[#1d2023e0]" style={{ padding: '1rem 1.5rem', borderRadius: '12px' }}>
           <div className="space-y-4">
             <span className="">{t('分集剧情 : ')}{episodeInfo.title}</span>
-            <p ref={qqqref} className={`${isCollapse ? 'line-clamp-2' : ''} text-white/75`}>{episodeInfo.gpt_content}</p>
+            <p ref={qqqref} className={`${isCollapse ? 'line-clamp-2' : ''} text-white/75 text-sm`} style={{ color: '#9C9C9C' }}>{episodeInfo.gpt_content}</p>
             {isLineExceed &&
-              <div className="flex flex-row space-x-2 items-center" onClick={onExpandPress}>
-                <span className={styles.primaryText}>{t('expand')}</span>
-                <ArrowDownIcon
-                  color={'#FAC33D'}
-                />
+              <div>
+                {isCollapse ?
+                  <div className="flex flex-row space-x-2 items-center" onClick={onExpandPress}>
+                    <span className={styles.primaryText}>{t('更多')}</span>
+                    <ArrowDownIcon
+                      color={'#0085E0'}
+                    />
+                  </div>
+
+                  :
+
+                  <div className="flex flex-row space-x-2 items-center" onClick={onExpandPress}>
+                    <span className={styles.primaryText}>{t('收起')}</span>
+                    <div style={{ transform: 'rotate(180deg)' }}>
+                      <ArrowDownIcon
+                        color={'#0085E0'}
+                      />
+                    </div>
+                  </div>
+                }
               </div>
             }
           </div>
