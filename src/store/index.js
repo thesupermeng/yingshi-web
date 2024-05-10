@@ -29,6 +29,7 @@ import {
 } from './headerData';
 import { currentScrollPosition, isScroll, isTop } from './scrollView';
 import { yingshiUser } from '@/store/yingshiUser';
+import { yingshiScreen } from '@/store/yingshiScreen';
 
 export const store = configureStore({
   reducer: {
@@ -62,6 +63,7 @@ export const store = configureStore({
     isTop: isTop.reducer,
     currentScrollPosition: currentScrollPosition.reducer,
     yingshiUser: yingshiUser.reducer,
+    yingshiScreen: yingshiScreen.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

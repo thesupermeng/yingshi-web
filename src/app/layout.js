@@ -39,7 +39,7 @@ export const metadata = {
 export const viewport = {
   themeColor: '#000000',
 };
-export default function RootLayout({ children }) {
+export default function RootLayout({ children, modal }) {
   return (
     <>
       <Script
@@ -114,6 +114,7 @@ export default function RootLayout({ children }) {
           <Providers>
             <div className='w-screen h-[100dvh] flex flex-col bg-[#000000]'>
               <Header />
+              {modal}
               <ScrollView>
                 <>
                     {children}

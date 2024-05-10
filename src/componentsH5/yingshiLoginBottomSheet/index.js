@@ -1,3 +1,4 @@
+'use client'
 import {BottomSheet} from 'react-spring-bottom-sheet';
 import React, {useEffect, useState} from 'react';
 import {loginRequestEmailOtp, loginRequestSmsOtp} from '@/services/yingshiUser';
@@ -6,8 +7,6 @@ import {useRouter} from 'next/navigation';
 import {useDispatch} from 'react-redux';
 import {setYingshiUserLoginParam} from '@/store/yingshiUser';
 import CountryInput from '@/componentsH5/yingshiLoginBottomSheet/countryInput';
-import Image from 'next/image';
-import {GoogleIcon} from '@/asset/icons';
 import {Button, Checkbox} from '@material-tailwind/react';
 
 export default function YingshiLoginBottomSheet({visible, onDismiss}) {
@@ -43,6 +42,7 @@ export default function YingshiLoginBottomSheet({visible, onDismiss}) {
             loginRequestEmailOtp(loginParam)
         }
         dispatch(setYingshiUserLoginParam(loginParam))
+        onDismiss()
         router.push('/login/otp')
 
 
@@ -81,10 +81,12 @@ export default function YingshiLoginBottomSheet({visible, onDismiss}) {
     }
 
     const handleClickPrivacy = () => {
+        onDismiss()
         router.push('/privacy')
     }
 
     const handleClickService = () => {
+        onDismiss()
         router.push('/service')
     }
 
@@ -99,8 +101,8 @@ export default function YingshiLoginBottomSheet({visible, onDismiss}) {
                 <p className={'text-sm text-center text-[#9C9C9C] mt-2.5'}>登录后可管理您的账号，多端同步观看历史和收藏夹。</p>
                 <div className={'px-[23px] mt-[22px]'}>
                     <div className={'flex'}>
-                      <Tabs title={'手机号码'} onClick={handleClickPhone} isSelected={loginMode==='sms'} />
                       <Tabs title={'电邮地址'} onClick={handleClickEmail} isSelected={loginMode==='email'} />
+                      <Tabs title={'手机号码'} onClick={handleClickPhone} isSelected={loginMode==='sms'} />
                     </div>
                     <div className={'flex flex-col'}>
                         {loginMode === 'email' &&

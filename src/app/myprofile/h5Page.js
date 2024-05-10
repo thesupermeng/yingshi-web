@@ -1,52 +1,21 @@
 'use client';
-// import Gallery from '@/components/gallery';
-// import { StreamerInfo } from '@/components/streamer/StreamerInfo';
-// import { URL_USER } from '@/config/url';
-// import { UserApi } from '@/util/UserApi';
-// import { useTranslation } from 'next-i18next';
-// import { LoadingPage } from '@/components/loading';
-// import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
-// import { isWeb } from '@/util/common';
-// import { YingshiApi } from '@/util/YingshiApi';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
-// import { debounce } from 'lodash';
-// import { usePathname, useRouter } from 'next/navigation';
-// import {Spinner} from './../../components/spinner'
 import Image from 'next/image';
-import React, {useCallback, useEffect, useState} from 'react';
-import {
-  profileIcon,
-  vipProfileIcon,
-  editIcon,
-  VipBlackIcon,
-  ArrowRightIcon,
-  FavouriteIconGrey,
-  AboutusIconGrey,
-  FeedbackIconGrey,
-  HistoryIconGrey,
-  ArrowRigthGrey, LogoutGrey,
-} from '@/asset/icons';
-import {BottomSheet} from 'react-spring-bottom-sheet';
+import React, {useEffect, useState} from 'react';
+import {AboutusIconGrey, FavouriteIconGrey, FeedbackIconGrey, HistoryIconGrey, LogoutGrey} from '@/asset/icons';
 
-import 'react-spring-bottom-sheet/dist/style.css'
-import {getNewAhaToken, loginRequestEmailOtp, logout} from '@/services/yingshiUser';
-import YingshiLoginBottomSheet from '@/componentsH5/yingshiLoginBottomSheet';
+import {getNewAhaToken, logout} from '@/services/yingshiUser';
 import {TickAnimation} from '@/asset/gif';
 import {useDispatch, useSelector} from 'react-redux';
 import {setAhaToken, setYingshiUserInfo, setYingshiUserLoginParam, setYingshiUserToken} from '@/store/yingshiUser';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
-import {formatDateCN} from '@/util/date';
 import NavCard from '@/components/myprofile/NavCard';
 import VipCard from '@/components/myprofile/VipCard';
 import ProfileCard from '@/components/myprofile/ProfileCard';
-import LoginSuccess from '@/components/login/loginSuccess';
 import LogoutModal from '@/components/login/logoutModal';
 import {useRouter, useSearchParams} from 'next/navigation';
-import PaymentStatusModal from '@/componentsH5/payment/paymentStatusModal';
-import {getTransactionDetail} from '@/services/yingshiPayment';
 import {updateLocalstorage} from '@/util/YingshiApi';
 import {LocalStorageKeys} from '@/config/common';
+import {useLoginOpen} from '@/hook/yingshiScreenState/useLoginOpen';
 
 export default function H5Page({params}) {
   const router = useRouter();
@@ -102,7 +71,7 @@ export default function H5Page({params}) {
   const queryParams = useSearchParams();
   const openLogin = queryParams.get('login') === 'true'
 
-  const [openSignInUp, setOpenSignInUp] = useState(openLogin);
+  const [openSignInUp, setOpenSignInUp] = useLoginOpen()
   const [openLoginSuccess, setOpenLoginSuccess] = useState(false);
   const [openLogoutConfirmation, setOpenLogoutConfirmation] = useState(false);
 
@@ -181,10 +150,6 @@ export default function H5Page({params}) {
           dispatch(setAhaToken(null))
           setOpenLogoutConfirmation(false)
         }}
-      />
-      <YingshiLoginBottomSheet
-        visible={openSignInUp}
-        onDismiss={() => setOpenSignInUp(false)}
       />
       {/* user profile */}
       <div style={{background: '#1D2023', borderRadius: '12px', marginBottom: '16px'}}>
