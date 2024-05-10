@@ -32,7 +32,7 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
   const handleHrefLink = () => {
     if (isPlaying) {
       pauseVideo();
-      window.open('https://aha888.vip/home?channel=100007', '_blank');
+      window.open(adsInfo.ads_url, '_blank');
     }
   };
 
@@ -80,15 +80,12 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
         onClick={() => {
-          console.log('ttesst');
           handleHrefLink();
         }}
       >
         <source
           src={
-            adsInfo?.ads_pic === undefined
-              ? 'https://oss.yingshi.tv/videos/vod/vi/aha-qiantiepian-15sec.mp4'
-              : adsInfo?.ads_pic
+            adsInfo.ads_pic 
           }
           type='video/mp4'
         />

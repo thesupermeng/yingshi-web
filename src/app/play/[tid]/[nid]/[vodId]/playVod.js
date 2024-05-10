@@ -92,15 +92,15 @@ export const PlayVod = ({ vodId, tId, nId }) => {
       URL_YINGSHI_VOD.getAdsSlot,
       {
         slot_id: 146,
-        ip: '219.75.27.16',
+        // ip: '219.75.27.16',
         v: 1,
       },
       {
         method: 'GET',
-        headers: {
-          'App-Name': 'LANSHAYU',
-          'App-Channel': 'LANSHAYU',
-        },
+        // headers: {
+        //   'App-Name': 'LANSHAYU',
+        //   'App-Channel': 'LANSHAYU',
+        // },
       }
     );
     // let ads = {
@@ -139,8 +139,11 @@ export const PlayVod = ({ vodId, tId, nId }) => {
       setShowAds(false);
     } else {
       getAds().then((res) => {
-        console.log(res);
-        setAds(res?.data?.ads);
+        if (res == null) {
+          setShowAds(false);
+        } else {
+          setAds(res);
+        }
       });
     }
   }, [isVip]);
@@ -151,8 +154,11 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         setShowAds(false);
       } else {
         getAds().then((res) => {
-          console.log(res);
-          setAds(res?.data?.ads);
+          if (res == null) {
+            setShowAds(false);
+          } else {
+            setAds(res);
+          }
         });
       }
 
@@ -168,7 +174,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         setVod(res);
 
         const vodIdTemp = JSON.parse(localStorage.getItem('vodIdTemp'));
-        console.log(vodIdTemp);
         if (vodIdTemp === null) {
           localStorage.setItem('vodIdTemp', vodId);
         } else {
@@ -182,7 +187,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
           const sourceType = JSON.parse(
             localStorage.getItem('vodSourceSelected')
           );
-          console.log(sourceType);
           let index = 0;
           if (sourceType !== null)
             index = res.vod_sources.findIndex(
@@ -239,7 +243,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   }, [vod]);
 
   useEffect(() => {
-    console.log(episodeSelected);
     if (episodeSelected !== null) {
       if (playerRef.current) {
         playerRef.current.pause();
@@ -248,8 +251,11 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         setShowAds(false);
       } else {
         getAds().then((res) => {
-          console.log(res);
-          setAds(res?.data?.ads);
+          if (res == null) {
+            setShowAds(false);
+          } else {
+            setAds(res);
+          }
         });
       }
 
@@ -348,7 +354,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   };
 
   const toggleShowShareBox = (e) => {
-    console.log(e?.target?.id);
     if (typeof e == 'undefined') {
       setToggleShowShareBoxStatus(true);
       return;
@@ -370,18 +375,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
 
   const handleAdsPlayerEndPlay = () => {
     setShowAds(false);
-  };
-
-  const handleVipSkipAd = () => {
-    if (!userInfo) {
-      // not logged in, jump login btm sheet
-      setIsLoginShow(true);
-    } else {
-      if (!isVip) {
-        // not vip, jump to payment
-        router.push('/payment');
-      }
-    }
   };
 
   return (
