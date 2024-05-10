@@ -405,6 +405,17 @@ const Header = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const metaTag = document.querySelector('meta[name="viewport"]');
+    metaTag.name = 'viewport';
+    if(metaTag) {
+      metaTag.content = 'width=device-width, initial-scale=1, maximum-scale=1';
+    }
+    return () => {
+      metaTag.content = 'width=device-width, initial-scale=1';
+    };
+  }, []);
+
   if (loading) {
     return <LoadingPage full={true} />;
   }
