@@ -13,8 +13,11 @@ import {useRouter} from 'next/navigation';
 export const AdsPlayer = ({
   adsInfo,
   handleAdsPlayerEndPlay,
-  handleVipSkipAd,
 }) => {
+  const router = useRouter()
+  const { userInfo } = useYingshiUser();
+  const [isLoginOpen, setIsLoginOpen] = useLoginOpen();
+
   const adsPlayerRef = useRef(null);
   const loginFlowRef = useRef(null);
 
@@ -91,7 +94,7 @@ export const AdsPlayer = ({
       >
         <span className='text-sm nowrap'>{remaining}s&nbsp;|&nbsp;</span>
         <span
-          onClick={handleVipSkipAd}
+          onClick={handleOnSkipAd}
           className='text-[#0085E0] text-sm nowrap'
         >
           VIP跳广告
