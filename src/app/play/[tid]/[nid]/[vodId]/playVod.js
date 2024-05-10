@@ -92,7 +92,8 @@ export const PlayVod = ({ vodId, tId, nId }) => {
       URL_YINGSHI_VOD.getAdsSlot,
       {
         slot_id: 146,
-        
+        ip: '219.75.27.16',
+        v: 1,
       },
       { method: 'GET' }
     );
@@ -132,7 +133,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
       setShowAds(false);
     } else {
       getAds().then((res) => {
-        console.log(res)
+        console.log(res);
         setAds(res?.data?.ads);
       });
     }
@@ -144,7 +145,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         setShowAds(false);
       } else {
         getAds().then((res) => {
-          console.log(res)
+          console.log(res);
           setAds(res?.data?.ads);
         });
       }
