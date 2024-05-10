@@ -38,6 +38,7 @@ import { updateUserInfo } from '@/services/yingshiUser';
 import QRCode from 'qrcode.react';
 import LoginFlow from '@/components/login/loginFlow';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
+import {useLoginOpen} from '@/hook/yingshiScreenState/useLoginOpen';
 
 const getHeaderMenu = (state) => state.headerMenu;
 const getHeaderMenuSelected = (state) => state.headerMenuSelected;
@@ -81,6 +82,7 @@ const Header = () => {
   const [timeoutId, setTimeoutId] = useState(null);
   const [loadingSearching, setLoadingSearching] = useState(false);
   const [headerBlack, setHeaderBlack] = useState(false);
+  const [_, setOpenLogin] = useLoginOpen();
 
   const handleOpenMore = () => {
     setOpenMore(!openMore);
@@ -611,7 +613,8 @@ const Header = () => {
         // }}
         onClick={() => {
           if (!userInfo) {
-            router.push('/myprofile?login=true');
+            // router.push('/myprofile?login=true');
+            setOpenLogin(true);
           } else {
             router.push('/payment');
           }

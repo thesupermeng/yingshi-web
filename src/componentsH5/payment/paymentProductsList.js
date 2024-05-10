@@ -54,11 +54,14 @@ function Product({isBest, isSelected, productInfo, onProductSelect}) {
             <span className={'text-white text-[14px] font-semibold'}>最多人选择</span>
           </div>
         }
-        <FontAwesomeIcon
-          icon={faCheckCircle}
-          style={{color: '#D4AE7F', width:'20px', height: '20px'}}
-          className={`absolute top-[5px] right-[5px] z-10 ${isSelected ? 'block' : 'hidden'}`}
-        />
+        <div
+          className={`absolute flex items-center justify-center top-[5px] right-[5px] z-10 ${isSelected ? 'block' : 'hidden'}`}
+        >
+          <FontAwesomeIcon
+            icon={faCheckCircle}
+            style={{color: '#D4AE7F', width:'20px', height: '20px'}}
+          />
+        </div>
       </div>
       <div
         className={`flex-1 w-full flex flex-col items-center justify-center gap-2 ${style.product_card_background_color} ${isSelected ? style.selected : ''}`}>
