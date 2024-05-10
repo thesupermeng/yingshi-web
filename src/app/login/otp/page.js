@@ -201,7 +201,7 @@ const OtpInput = forwardRef(function OtpInput({onKeyPress, onChange, isError}, r
             onKeyDown={onKeyPress}
             onChange={onChange}
             ref={ref}
-            className={`w-[53px] h-[53px] rounded-[10px] bg-[#1D2023] text-[30px] text-center outline-none ${colorClasses}`}
+            className={`w-[53px] h-[53px] aspect-square min-w-[35px] rounded-[10px] bg-[#1D2023] text-[30px] text-center outline-none ${colorClasses}`}
             maxLength={1}
             type={'tel'}
         />
