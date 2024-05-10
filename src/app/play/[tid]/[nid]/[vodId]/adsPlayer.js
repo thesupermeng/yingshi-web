@@ -7,9 +7,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import LoginFlow from '@/components/login/loginFlow';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
+import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
+import { useRouter } from 'next/navigation';
 
 export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
-  const { isVip, userInfo } = useYingshiUser();
+  const router = useRouter();
+  const { userInfo } = useYingshiUser();
+  const [isLoginOpen, setIsLoginOpen] = useLoginOpen();
 
   const adsPlayerRef = useRef(null);
   const loginFlowRef = useRef(null);
@@ -25,12 +29,26 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
     adsPlayerRef.current.pause();
   };
 
-  const openLogin = () => {
-    if (userInfo) {
-      router.push('/myprofile');
-    } else {
-      loginFlowRef.current.start();
+  const handleHrefLink = () => {
+    if (isPlaying) {
+      pauseVideo();
+      window.open('https://aha888.vip/home?channel=100007', '_blank');
     }
+  };
+
+  const handleOnSkipAd = () => {
+    const isMobile = window.innerWidth < 768;
+
+    if (!userInfo) {
+      if (isMobile) {
+        setIsLoginOpen(true);
+      } else {
+        loginFlowRef.current.start();
+      }
+    } else {
+      router.push('/payment');
+    }
+
     pauseVideo();
   };
 
@@ -54,24 +72,36 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
     <div className='flex relative justify-center items-center'>
       <LoginFlow ref={loginFlowRef} />
       <video
+        className={`${isPlaying ? 'cursor-pointer' : ''}`}
         ref={adsPlayerRef}
         autoPlay
         playsInline
         onEnded={handleAdsPlayerEndPlay}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
+        onClick={() => {
+          console.log('ttesst');
+          handleHrefLink();
+        }}
       >
-        <source src={adsInfo.video} type='video/mp4' />
+        <source
+          src={
+            adsInfo?.ads_pic === undefined
+              ? 'https://oss.yingshi.tv/videos/vod/vi/aha-qiantiepian-15sec.mp4'
+              : adsInfo?.ads_pic
+          }
+          type='video/mp4'
+        />
       </video>
       <div
         className={`absolute bg-[#00000099] py-1 px-2 rounded-full items-center top-2 right-2 ${
           remaining !== null ? 'flex' : 'hidden'
         }`}
       >
-        <span className='text-sm nowrap'>{remaining}s后关闭广告|</span>
+        <span className='text-sm nowrap'>{remaining}s&nbsp;|&nbsp;</span>
         <span
           onClick={() => {
-            openLogin();
+            handleOnSkipAd();
           }}
           className='text-[#0085E0] text-sm nowrap cursor-pointer'
         >
@@ -79,7 +109,7 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
         </span>
         <FontAwesomeIcon
           style={{
-            fontSize: '15px',
+            fontSize: '12px',
             paddingLeft: '5px',
             color: '#0085E0',
           }}

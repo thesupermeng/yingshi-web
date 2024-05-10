@@ -27,6 +27,7 @@ import dynamic from 'next/dynamic';
 import { Favicon } from '@/asset/icons';
 import Image from 'next/image';
 import { ScrollView } from './scroll-view';
+import ModalOverlays from '@/components/modalOverlays';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -114,6 +115,7 @@ export default function RootLayout({ children }) {
           <Providers>
             <div className='w-screen h-[100dvh] flex flex-col bg-[#000000]'>
               <Header />
+              <ModalOverlays/>
               <ScrollView>
                 <>
                     {children}
