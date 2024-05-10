@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import styles from './style.module.css';
 import Image from 'next/image';
 import { PlayRightIcon } from '@/asset/icons';
 import { useRouter } from 'next/navigation';
-import Slider from "react-slick";
+import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -24,13 +24,14 @@ export const Carousel = ({ carouselItems }) => {
     appendDots: (dots) => (
       <div
         style={{
-          position: "absolute",
-          bottom: "20px",
-          left: "50%",
-          transform: "translateX(-50%)",
+          position: 'absolute',
+          bottom: '20px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: '3'
         }}
       >
-        <ul style={{ margin: "0px" }}> {dots} </ul>
+        <ul style={{ margin: '0px' }}> {dots} </ul>
       </div>
     ),
 
@@ -108,14 +109,14 @@ export const Carousel = ({ carouselItems }) => {
         {carouselItems && carouselItems.length > 0 && (
           <div className="desktop d-flex" style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
             {carouselItems.map((item, index) => {
-              let desc = " | " + item.vod.vod_area
+              let desc = ' | ' + item.vod.vod_area
               let vodClass = []
               if (item.vod.vod_class != null) {
-                vodClass = item.vod.vod_class.split(",");
+                vodClass = item.vod.vod_class.split(',');
               }
               vodClass = vodClass.slice(0, 2);
               vodClass.forEach((item, i) => {
-                desc += " | " + item
+                desc += ' | ' + item
               })
               return (
                 <div
@@ -178,10 +179,10 @@ export const Carousel = ({ carouselItems }) => {
 
                       <div style={{ display: 'flex', flexDirection: 'row', zIndex: '10', width: '80%' }}>
                         {carouselItems.map((previewItem, previewIndex) => (
-                          <div 
+                          <div
                           className="hidden xl:flex"
                           style={{
-                   
+
                             flexDirection: 'column',
                             justifyContent: 'center',
                             alignItems: 'center',
@@ -208,7 +209,8 @@ export const Carousel = ({ carouselItems }) => {
                               />
                             </div>
                             <div key={previewIndex} style={{ paddingRight: '10px', paddingLeft: '10px', textAlign: 'center', fontSize: '12px', paddingTop: '6px' }}>
-                              {renderShortString(previewItem.carousel_name)}
+                              {/* {renderShortString(previewItem.carousel_name)} */}
+                              <p className="line-clamp-1">{previewItem.carousel_name}</p>
                             </div>
                           </div>
                         ))}

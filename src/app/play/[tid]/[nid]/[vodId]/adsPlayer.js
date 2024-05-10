@@ -10,11 +10,8 @@ import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 import { useRouter } from 'next/navigation';
 
-export const AdsPlayer = ({
-  adsInfo,
-  handleAdsPlayerEndPlay,
-}) => {
-  const router = useRouter()
+export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
+  const router = useRouter();
   const { userInfo } = useYingshiUser();
   const [isLoginOpen, setIsLoginOpen] = useLoginOpen();
 
@@ -83,6 +80,7 @@ export const AdsPlayer = ({
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
         onClick={() => {
+          console.log('ttesst');
           handleHrefLink();
         }}
       >
@@ -95,9 +93,6 @@ export const AdsPlayer = ({
           type='video/mp4'
         />
       </video>
-      <div className={'w-full h-full absolute top-0 left-0'} onClick={() => {
-        // TODO : redirect to link from adsInfo
-      }}/>
       <div
         className={`absolute bg-[#00000099] py-1 px-2 rounded-full items-center top-2 right-2 ${
           remaining !== null ? 'flex' : 'hidden'
@@ -105,7 +100,9 @@ export const AdsPlayer = ({
       >
         <span className='text-sm nowrap'>{remaining}s&nbsp;|&nbsp;</span>
         <span
-          onClick={handleOnSkipAd}
+          onClick={() => {
+            handleOnSkipAd();
+          }}
           className='text-[#0085E0] text-sm nowrap cursor-pointer'
         >
           VIP跳广告
