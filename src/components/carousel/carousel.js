@@ -176,7 +176,7 @@ export const Carousel = ({ carouselItems }) => {
                         </div>
                       </div>
 
-                      <div style={{ display: 'flex', flexDirection: 'row', zIndex: '10' }}>
+                      <div style={{ display: 'flex', flexDirection: 'row', zIndex: '10', width: '80%' }}>
                         {carouselItems.map((previewItem, previewIndex) => (
                           <div 
                           className="hidden xl:flex"

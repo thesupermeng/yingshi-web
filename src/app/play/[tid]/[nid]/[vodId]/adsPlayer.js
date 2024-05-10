@@ -5,6 +5,10 @@ import {
   faArrowRight,
   faPlay,
 } from '@fortawesome/free-solid-svg-icons';
+import LoginFlow from '@/components/login/loginFlow';
+import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
+import {useLoginOpen} from '@/hook/yingshiScreenState/useLoginOpen';
+import {useRouter} from 'next/navigation';
 
 export const AdsPlayer = ({
   adsInfo,
@@ -12,11 +16,33 @@ export const AdsPlayer = ({
   handleVipSkipAd,
 }) => {
   const adsPlayerRef = useRef(null);
+  const loginFlowRef = useRef(null);
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [remaining, setRemaining] = useState(15);
 
   const playVideo = () => {
     adsPlayerRef.current.play();
+  };
+
+  const pauseVideo = () => {
+    adsPlayerRef.current.pause();
+  };
+
+  const handleOnSkipAd = () => {
+    const isMobile = window.innerWidth < 768;
+
+    if (!userInfo) {
+      if (isMobile) {
+        setIsLoginOpen(true);
+      } else {
+        loginFlowRef.current.start();
+      }
+    } else {
+      router.push('/payment')
+    }
+
+    pauseVideo();
   };
 
   useEffect(() => {
@@ -37,6 +63,7 @@ export const AdsPlayer = ({
 
   return (
     <div className='flex relative justify-center items-center'>
+      <LoginFlow ref={loginFlowRef} />
       <video
         ref={adsPlayerRef}
         autoPlay

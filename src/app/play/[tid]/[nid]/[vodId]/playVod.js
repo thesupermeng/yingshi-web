@@ -614,7 +614,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                   className='aspect-[16/9]'
                   adsInfo={ads}
                   handleAdsPlayerEndPlay={handleAdsPlayerEndPlay}
-                  handleVipSkipAd={handleVipSkipAd}
                 />
               ) : (
                 <Artplayer
