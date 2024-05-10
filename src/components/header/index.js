@@ -225,6 +225,7 @@ const Header = () => {
     );
     setSearchHistoryList(JSON.parse(localStorage.getItem('searchHistoryList')));
     setOpenSearch(false);
+    setSearchInput('');
     router.push('/search/' + searchInput);
   };
 
@@ -433,7 +434,10 @@ const Header = () => {
               className='border-0 border-gray-300 text-white rounded-full pl-10 md:pl-4 md:pr-10 pr-4 py-2 focus:outline-none w-full md:w-60 header-search-input-desktop'
               onClick={handleOpenSearch}
               onKeyDown={(e) => {
-                if (e.key === 'Enter') handleSearch();
+                if (e.key === 'Enter') {
+                  e.target.blur();
+                  handleSearch();
+                }
               }}
             />
             <div className='absolute inset-y-0 left-3 flex items-center justify-center md:hidden'>
@@ -565,10 +569,10 @@ const Header = () => {
                                   index == 0
                                     ? 'rgba(0, 106, 178, 1)'
                                     : index == 1
-                                      ? 'rgba(0, 133, 224, 1)'
-                                      : index == 2
-                                        ? 'rgba(96, 191, 255, 1)'
-                                        : 'rgba(156, 156, 156, 1)',
+                                    ? 'rgba(0, 133, 224, 1)'
+                                    : index == 2
+                                    ? 'rgba(96, 191, 255, 1)'
+                                    : 'rgba(156, 156, 156, 1)',
                               }}
                             >
                               {index + 1}
@@ -599,11 +603,18 @@ const Header = () => {
       <div
         className='relative'
         ref={dropdownVipRef}
-        onMouseEnter={() => {
-          handleOpenVip(true);
-        }}
-        onMouseLeave={() => {
-          handleOpenVip(false);
+        // onMouseEnter={() => {
+        //   handleOpenVip(true);
+        // }}
+        // onMouseLeave={() => {
+        //   handleOpenVip(false);
+        // }}
+        onClick={() => {
+          if (!userInfo) {
+            router.push('/myprofile?login=true');
+          } else {
+            router.push('/payment');
+          }
         }}
       >
         <div className='flex h-full flex-row cursor-pointer rounded-full md:bg-[#1D2023] md:px-4 md:ml-2 md:rounded-full'>
@@ -900,7 +911,9 @@ const Header = () => {
 
   let defaultHeader = (
     <div
-      className={`transition duration-500 ${headerBlack ? 'bg-black' : 'bg-blur-header'} ${
+      className={`transition duration-500 ${
+        headerBlack ? 'bg-black' : 'bg-blur-header'
+      } ${
         pathname.startsWith('/play/') || pathname.startsWith('/filmLibrary')
           ? 'w-screen z-30'
           : 'md:absolute z-30 w-screen'
@@ -925,31 +938,17 @@ const Header = () => {
             </div>
             {searchContainer}
             {!openSearch ? (
-              <div className="flex justify-center">
+              <div className='flex justify-center md:hidden'>
                 {/* add on md: infront of hidden */}
-                {/*{vipContainer}*/}
-                <div
-                  className="flex h-full flex-row cursor-pointer rounded-full md:bg-[#1D2023] md:px-4 md:ml-2 md:rounded-full">
-                  <Image className="mr-2" src={vipIcon} alt="vip" width={20}/>
-                  <div className="flex items-center" onClick={() => {
-                    if (!userInfo) {
-                      router.push('/myprofile?login=true')
-                    } else {
-                      router.push('/payment')
-                    }
-                  }}>
-                    <span className="text-[#F4DBBA] text-[13px]">VIP会员</span>
-                  </div>
-                </div>
-
+                {vipContainer}
               </div>
             ) : null}
           </div>
-          <div className="flex gap-4 overflow-scroll md:hidden no-scrollbar">
+          <div className='flex gap-4 overflow-scroll md:hidden no-scrollbar'>
             {headerMenu.headerMenu?.map((navItem, index) => {
               return (
                 <div
-                  className="flex flex-1 flex-col items-center cursor-pointer header-tab"
+                  className='flex flex-1 flex-col items-center cursor-pointer header-tab'
                   id={navItem.id}
                   key={index}
                   onClick={() => {
@@ -962,8 +961,8 @@ const Header = () => {
                       selectedMenu.id === navItem.id
                         ? 'text-blue-500'
                         : selectedSpecialMenu.id === navItem.id
-                          ? 'text-blue-500'
-                          : 'text-white'
+                        ? 'text-blue-500'
+                        : 'text-white'
                     }`}
                   >
                     {navItem.name}
@@ -993,8 +992,8 @@ const Header = () => {
                       selectedMenu.id === navItem.id
                         ? 'text-blue-500'
                         : selectedSpecialMenu.id === navItem.id
-                          ? 'text-blue-500'
-                          : 'text-white'
+                        ? 'text-blue-500'
+                        : 'text-white'
                     }`}
                   >
                     {navItem.name}
@@ -1145,27 +1144,12 @@ const Header = () => {
                 </div>
                 {searchContainer}
                 {/* {!openSearch ? historyContainer : null} */}
-                {!openSearch &&
-                  <div
-                    className="flex h-full flex-row cursor-pointer rounded-full md:bg-[#1D2023] md:px-4 md:ml-2 md:rounded-full">
-                    <Image className="mr-2" src={vipIcon} alt="vip" width={20}/>
-                    <div className="flex items-center" onClick={() => {
-                      if (!userInfo) {
-                        router.push('/myprofile?login=true')
-                      } else {
-                        router.push('/payment')
-                      }
-                    }}>
-                      <span className="text-[#F4DBBA] text-[13px]">VIP会员</span>
-                    </div>
-                  </div>
-                }
-
+                {!openSearch && vipContainer}
               </div>
             </div>
           </div>
         </div>
-        <div className="desktop z-50">{defaultHeader}</div>
+        <div className='desktop z-50'>{defaultHeader}</div>
       </>
     );
   }
@@ -1174,10 +1158,10 @@ const Header = () => {
     return (
       <>
         <div className={'z-30 w-screen mobile'}>
-          <div className="flex py-3 mx-2.5">
-            <div className="gap-y-2 flex-col w-full md:flex-row flex">
-              <div className="flex-1 flex gap-x-2 md:justify-start">
-                <span className="text-topic-title"> 我的 </span>
+          <div className='flex pt-4 mx-2.5'>
+            <div className='gap-y-2 flex-col w-full md:flex-row flex'>
+              <div className='flex-1 flex px-4 md:justify-start'>
+                <span className='text-topic-title'> 我的 </span>
               </div>
             </div>
           </div>
@@ -1243,11 +1227,11 @@ const Header = () => {
   }
 
   if (pathname.startsWith('/payment')) {
-    return null
+    return null;
   }
 
   if (pathname.startsWith('/sport')) {
-    return null
+    return null;
   }
 
   if (pathname.startsWith('/service') || pathname.startsWith('/privacy')) {
@@ -1257,19 +1241,19 @@ const Header = () => {
           <div className='gap-y-2 flex-col w-full md:flex-row flex'>
             <div className='relative flex-1 flex gap-x-2 md:justify-start'>
               <div
-                className={'flex w-[30px] h-[30px] justify-center items-center z-10'}
+                className={
+                  'flex w-[30px] h-[30px] justify-center items-center z-10'
+                }
                 onClick={() => {
-                  router.back()
+                  router.back();
                 }}
               >
-                <Image
-                  src={ArrowLeftIcon}
-                  alt={'back button'}
-                  height={16}
-                />
+                <Image src={ArrowLeftIcon} alt={'back button'} height={16} />
               </div>
               <div
-                className={'flex-1 absolute h-full w-full flex items-center justify-center'}
+                className={
+                  'flex-1 absolute h-full w-full flex items-center justify-center'
+                }
               >
                 {/*{pathname.startsWith('/service') &&*/}
                 {/*  <span className={'text-white'}>用户服务协议</span>*/}
@@ -1277,7 +1261,7 @@ const Header = () => {
                 {/*{pathname.startsWith('/privacy') &&*/}
                 {/*  <span className={'text-white'}>隐私协议</span>*/}
                 {/*}*/}
-                <Image src={Logo} alt={'鲨鱼影视'}/>
+                <Image src={Logo} alt={'鲨鱼影视'} />
               </div>
             </div>
           </div>

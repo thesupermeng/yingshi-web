@@ -125,6 +125,16 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   }, [vod]);
 
   useEffect(() => {
+    if (isVip) {
+      setShowAds(false);
+    } else {
+      getAds().then((res) => {
+        setAds(res);
+      });
+    }
+  }, [isVip]);
+
+  useEffect(() => {
     if (episodeSelected == null) {
       if (isVip) {
         setShowAds(false);

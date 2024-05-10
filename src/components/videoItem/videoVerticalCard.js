@@ -39,7 +39,7 @@ export const VideoVerticalCard = ({ vod }) => {
             sizes='100%'
             className='rounded-lg'
           />
-          <div className='bg-[#0000008c] h-[100%] w-full flex flex-col rounded-lg md:group-hover:z-10'>
+          <div className='bg-[#0000008c] h-[100%] w-full flex flex-col rounded-lg md:group-hover:z-20 -z-10'>
             <div className='rounded-t-lg w-full h-[45%] flex justify-center items-center'>
               <div className='rounded-full bg-[#0085E0] w-10 h-10 flex justify-center items-center'>
                 <FontAwesomeIcon

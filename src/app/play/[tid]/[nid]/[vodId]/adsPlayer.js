@@ -5,14 +5,33 @@ import {
   faArrowRight,
   faPlay,
 } from '@fortawesome/free-solid-svg-icons';
+import LoginFlow from '@/components/login/loginFlow';
+import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 
 export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
+  const { isVip, userInfo } = useYingshiUser();
+
   const adsPlayerRef = useRef(null);
+  const loginFlowRef = useRef(null);
+
   const [isPlaying, setIsPlaying] = useState(false);
-  const [remaining, setRemaining] = useState(0);
+  const [remaining, setRemaining] = useState(15);
 
   const playVideo = () => {
     adsPlayerRef.current.play();
+  };
+
+  const pauseVideo = () => {
+    adsPlayerRef.current.pause();
+  };
+
+  const openLogin = () => {
+    if (userInfo) {
+      router.push('/myprofile');
+    } else {
+      loginFlowRef.current.start();
+    }
+    pauseVideo();
   };
 
   useEffect(() => {
@@ -33,6 +52,7 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
 
   return (
     <div className='flex relative justify-center items-center'>
+      <LoginFlow ref={loginFlowRef} />
       <video
         ref={adsPlayerRef}
         autoPlay
@@ -45,11 +65,16 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
       </video>
       <div
         className={`absolute bg-[#00000099] py-1 px-2 rounded-full items-center top-2 right-2 ${
-          !isPlaying ? 'hidden' : 'flex'
+          remaining !== null ? 'flex' : 'hidden'
         }`}
       >
-        <span>{remaining}s后关闭广告｜</span>
-        <span onClick={() => {}} className='text-[#0085E0]'>
+        <span className='text-sm nowrap'>{remaining}s后关闭广告|</span>
+        <span
+          onClick={() => {
+            openLogin();
+          }}
+          className='text-[#0085E0] text-sm nowrap cursor-pointer'
+        >
           VIP跳广告
         </span>
         <FontAwesomeIcon
