@@ -74,6 +74,9 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
       >
         <source src={adsInfo.video} type='video/mp4' />
       </video>
+      <div className={'w-full h-full absolute top-0 left-0'} onClick={() => {
+        // TODO : redirect to link from adsInfo
+      }}/>
       <div
         className={`absolute bg-[#00000099] py-1 px-2 rounded-full items-center top-2 right-2 ${
           remaining !== null ? 'flex' : 'hidden'
