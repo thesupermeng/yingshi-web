@@ -433,7 +433,7 @@ const Header = () => {
               placeholder='输入搜索关键词'
               value={searchInput}
               onChange={handleChange}
-              className='border-0 border-gray-300 text-white rounded-full pl-10 md:pl-4 md:pr-10 pr-4 py-2 focus:outline-none w-full md:w-60 header-search-input-desktop'
+              className='border-0 border-gray-300 text-white rounded-full pl-10 md:pl-4 md:pr-10 pr-4 py-2 focus:outline-none w-full md:w-60 header-search-input-desktop text-[14px]'
               onClick={handleOpenSearch}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
@@ -623,7 +623,7 @@ const Header = () => {
         <div className='flex h-full flex-row cursor-pointer rounded-full md:bg-[#1D2023] md:px-4 md:ml-2 md:rounded-full'>
           <Image className='mr-2' src={vipIcon} alt='vip' width={25} />
           <div className='flex items-center'>
-            <span className='text-[#F4DBBA]'>VIP会员</span>
+            <span className='text-[#F4DBBA] text-[14px]'>VIP会员</span>
           </div>
         </div>
         {openVip ? (

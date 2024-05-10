@@ -90,7 +90,7 @@ const MyFooter = () => {
               style={{cursor: 'pointer'}}
             />
           </div>
-          <div className={`text-[12px] font-medium ${(selectedSpecialMenu !== -1 && selectedMenu.id === 0 && pathname == '/') ? 'text-shayuBlue' : 'text-[#6A6A6A]'}`}>首页</div>
+          <div className={`text-[14px] font-medium ${(selectedSpecialMenu !== -1 && selectedMenu.id === 0 && pathname == '/') ? 'text-shayuBlue' : 'text-[#6A6A6A]'}`}>首页</div>
         </div>
 
         {/* <div
@@ -107,7 +107,7 @@ const MyFooter = () => {
               style={{cursor: 'pointer'}}
             />
           </div>
-          <div className={`text-[12px] font-medium ${pathname.startsWith('/sport') ? 'text-shayuBlue' : 'text-[#6A6A6A]'}`}>aha体育</div>
+          <div className={`text-[14px] font-medium ${pathname.startsWith('/sport') ? 'text-shayuBlue' : 'text-[#6A6A6A]'}`}>aha体育</div>
         </div> */}
 
         <div
@@ -124,7 +124,7 @@ const MyFooter = () => {
               style={{cursor: 'pointer'}}
             />
           </div>
-          <div className={`text-[12px] font-medium ${pathname.startsWith('/topic') ? 'text-shayuBlue' : 'text-[#6A6A6A]'}`}>播单</div>
+          <div className={`text-[14px] font-medium ${pathname.startsWith('/topic') ? 'text-shayuBlue' : 'text-[#6A6A6A]'}`}>播单</div>
         </div>
         <div
           className='col flex-col d-flex justify-center align-center items-center'
@@ -140,7 +140,7 @@ const MyFooter = () => {
               style={{cursor: 'pointer'}}
             />
           </div>
-          <div className={`text-[12px] font-medium ${pathname.startsWith('/myprofile') ? 'text-shayuBlue' : 'text-[#6A6A6A]'}`}>我的</div>
+          <div className={`text-[14px] font-medium ${pathname.startsWith('/myprofile') ? 'text-shayuBlue' : 'text-[#6A6A6A]'}`}>我的</div>
         </div>
       </div>
     </div>
