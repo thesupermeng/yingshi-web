@@ -15,10 +15,10 @@ const benefits = [
     icon: glyph,
     title: '解锁全部影视内容',
   },
-  {
-    icon: subtractIcon,
-    title: '畅享离线下载',
-  },
+  // {
+  //   icon: subtractIcon,
+  //   title: '畅享离线下载',
+  // },
 ]
 
 export default function PaymentHeader({className}) {
