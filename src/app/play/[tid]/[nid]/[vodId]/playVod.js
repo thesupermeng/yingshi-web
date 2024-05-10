@@ -95,7 +95,13 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         ip: '219.75.27.16',
         v: 1,
       },
-      { method: 'GET' }
+      {
+        method: 'GET',
+        headers: {
+          'App-Name': 'LANSHAYU',
+          'App-Channel': 'LANSHAYU',
+        },
+      }
     );
     // let ads = {
     //   video: 'https://oss.yingshi.tv/videos/vod/vi/aha-qiantiepian-15sec.mp4',

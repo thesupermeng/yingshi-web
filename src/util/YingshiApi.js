@@ -99,13 +99,15 @@ const getHeader = async (
     'Content-Type': 'application/json',
     'Device-Id': 'application/json',
     'Platform-OS': 'WEB',
-    'App-Channel': 'WEB',
-    'App-Name': 'WEB',
+    'App-Channel': 'LANSHAYU',
+    'App-Name': 'LANSHAYU',
     'IP-Address': await getIPAddress(),
     'App-Version': '',
     'Access-Control-Allow-Origin': '*',
     'Authorization': `Bearer ${token}`
   };
+
+  console.log(obj)
 
   return obj;
 };
