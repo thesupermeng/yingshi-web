@@ -24,7 +24,6 @@ import { IrrLoading } from '@/asset/lottie';
 import FullScreenModal from '@/components/FullScreenModal';
 import { AdsPlayer } from './adsPlayer.js';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser.js';
-import {useLoginOpen} from '@/hook/yingshiScreenState/useLoginOpen';
 
 export const PlayVod = ({ vodId, tId, nId }) => {
   const router = useRouter();
@@ -51,8 +50,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   const [showToastMessage, setShowToastMessage] = useState(false);
   const [ads, setAds] = useState(null);
   const [showAds, setShowAds] = useState(true);
-  const { isVip , userInfo} = useYingshiUser();
-  const [_, setIsLoginShow] = useLoginOpen();
+  const { isVip } = useYingshiUser();
 
   const getVodDetails = async () => {
     if (tId == 0) {
@@ -361,18 +359,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
     setShowAds(false);
   };
 
-  const handleVipSkipAd = () => {
-    if (!userInfo) {
-      // not logged in, jump login btm sheet
-      setIsLoginShow(true);
-    } else {
-      if (!isVip) {
-        // not vip, jump to payment
-        router.push('/payment');
-      }
-    }
-  }
-
   return (
     <div
       ref={domElementRef}
@@ -610,7 +596,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                   className='aspect-[16/9]'
                   adsInfo={ads}
                   handleAdsPlayerEndPlay={handleAdsPlayerEndPlay}
-                  handleVipSkipAd={handleVipSkipAd}
                 />
               ) : (
                 <Artplayer
