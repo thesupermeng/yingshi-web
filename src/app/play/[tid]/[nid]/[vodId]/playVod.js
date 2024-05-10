@@ -24,7 +24,7 @@ import { IrrLoading } from '@/asset/lottie';
 import FullScreenModal from '@/components/FullScreenModal';
 import { AdsPlayer } from './adsPlayer.js';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser.js';
-import {useLoginOpen} from '@/hook/yingshiScreenState/useLoginOpen';
+import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 
 export const PlayVod = ({ vodId, tId, nId }) => {
   const router = useRouter();
@@ -51,7 +51,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   const [showToastMessage, setShowToastMessage] = useState(false);
   const [ads, setAds] = useState(null);
   const [showAds, setShowAds] = useState(true);
-  const { isVip , userInfo} = useYingshiUser();
+  const { isVip, userInfo } = useYingshiUser();
   const [_, setIsLoginShow] = useLoginOpen();
 
   const getVodDetails = async () => {
@@ -88,18 +88,19 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   };
 
   const getAds = async () => {
-    // return YingshiApi(
-    //   URL_YINGSHI_VOD.getAdsVideoSlot,
-    //   {
-    //     slot_id: slotId,
-    //   },
-    //   { method: 'GET' }
-    // );
-    let ads = {
-      video: 'https://oss.yingshi.tv/videos/vod/vi/aha-qiantiepian-15sec.mp4',
-      totalDuration: 15,
-    };
-    return ads;
+    return YingshiApi(
+      URL_YINGSHI_VOD.getAdsSlot,
+      {
+        slot_id: 146,
+        
+      },
+      { method: 'GET' }
+    );
+    // let ads = {
+    //   video: 'https://oss.yingshi.tv/videos/vod/vi/aha-qiantiepian-15sec.mp4',
+    //   totalDuration: 15,
+    // };
+    // return ads;
   };
 
   useEffect(() => {
@@ -131,7 +132,8 @@ export const PlayVod = ({ vodId, tId, nId }) => {
       setShowAds(false);
     } else {
       getAds().then((res) => {
-        setAds(res);
+        console.log(res)
+        setAds(res?.data?.ads);
       });
     }
   }, [isVip]);
@@ -142,7 +144,8 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         setShowAds(false);
       } else {
         getAds().then((res) => {
-          setAds(res);
+          console.log(res)
+          setAds(res?.data?.ads);
         });
       }
 
@@ -238,7 +241,8 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         setShowAds(false);
       } else {
         getAds().then((res) => {
-          setAds(res);
+          console.log(res);
+          setAds(res?.data?.ads);
         });
       }
 
@@ -371,7 +375,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         router.push('/payment');
       }
     }
-  }
+  };
 
   return (
     <div
@@ -610,7 +614,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                   className='aspect-[16/9]'
                   adsInfo={ads}
                   handleAdsPlayerEndPlay={handleAdsPlayerEndPlay}
-                  handleVipSkipAd={handleVipSkipAd}
                 />
               ) : (
                 <Artplayer
@@ -627,7 +630,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                       : true,
                     muted: false,
                   }}
-                  adsInfo={ads}
                   getInstance={(art) => console.info(art)}
                   onVideoEnd={onVideoEnd}
                   episodeSelected={episodeSelected}

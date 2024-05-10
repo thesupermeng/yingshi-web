@@ -19,7 +19,7 @@ export const VideoVerticalCard = ({ vod }) => {
           className='absolute inset-0 flex rounded-lg md:group-hover:improve-text-unblurry
           md:transition md:group-hover:scale-150 md:group-hover:duration-500
           md:group-hover:cursor-pointer group-hover:rounded-lg md:group-hover:z-10 
-          md:group-hover:rounded-lg bg-blue-500'
+          md:group-hover:rounded-lg'
           onClick={(e) => {
             e.preventDefault();
             router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);
@@ -39,7 +39,7 @@ export const VideoVerticalCard = ({ vod }) => {
             sizes='100%'
             className='rounded-lg'
           />
-          <div className='bg-[#0000008c] h-[100%] w-full flex flex-col rounded-lg md:group-hover:z-20 -z-10'>
+          <div className='bg-[#0000008c] h-[100%] w-full flex flex-col rounded-lg md:group-hover:z-10 md:group-hover:block hidden'>
             <div className='rounded-t-lg w-full h-[45%] flex justify-center items-center'>
               <div className='rounded-full bg-[#0085E0] w-10 h-10 flex justify-center items-center'>
                 <FontAwesomeIcon
