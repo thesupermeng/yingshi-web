@@ -36,9 +36,12 @@ export default function CountryInput ({name, placeholder, validator, onChange, e
                        errorMessage={errorMessage} isShowIcon={isShowIcon} prefixText={prefix}
                         inputType={'number'}
             />
-            <BottomSheet open={openCountry} onDismiss={() => setOpenCountry(false)}>
+            <BottomSheet open={openCountry} onDismiss={() => setOpenCountry(false)}
+                         snapPoints={({ minHeight, maxHeight }) => minHeight}
+
+            >
                 <p className={'text-xl text-center'}>选择国家电话代码</p>
-                <div className={'flex flex-col p-[20px]'}>
+                <div className={'flex flex-col p-[20px] h-[500px] overflow-scroll'}>
                     {countryList && countryList.map(country => {
                         return <CountrySelectItem
                             country={country}
