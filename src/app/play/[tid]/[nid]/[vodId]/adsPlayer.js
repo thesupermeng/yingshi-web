@@ -7,8 +7,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import LoginFlow from '@/components/login/loginFlow';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
-import {useLoginOpen} from '@/hook/yingshiScreenState/useLoginOpen';
-import {useRouter} from 'next/navigation';
+import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
+import { useRouter } from 'next/navigation';
 
 export const AdsPlayer = ({
   adsInfo,
@@ -29,6 +29,13 @@ export const AdsPlayer = ({
     adsPlayerRef.current.pause();
   };
 
+  const handleHrefLink = () => {
+    if (isPlaying) {
+      pauseVideo();
+      window.open('https://aha888.vip/home?channel=100007', '_blank');
+    }
+  };
+
   const handleOnSkipAd = () => {
     const isMobile = window.innerWidth < 768;
 
@@ -39,7 +46,7 @@ export const AdsPlayer = ({
         loginFlowRef.current.start();
       }
     } else {
-      router.push('/payment')
+      router.push('/payment');
     }
 
     pauseVideo();
@@ -65,12 +72,16 @@ export const AdsPlayer = ({
     <div className='flex relative justify-center items-center'>
       <LoginFlow ref={loginFlowRef} />
       <video
+        className={`${isPlaying ? 'cursor-pointer' : ''}`}
         ref={adsPlayerRef}
         autoPlay
         playsInline
         onEnded={handleAdsPlayerEndPlay}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
+        onClick={() => {
+          handleHrefLink();
+        }}
       >
         <source
           src={
@@ -89,7 +100,7 @@ export const AdsPlayer = ({
         <span className='text-sm nowrap'>{remaining}s&nbsp;|&nbsp;</span>
         <span
           onClick={handleVipSkipAd}
-          className='text-[#0085E0] text-sm nowrap'
+          className='text-[#0085E0] text-sm nowrap cursor-pointer'
         >
           VIP跳广告
         </span>
