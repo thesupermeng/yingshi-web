@@ -416,7 +416,7 @@ const Header = () => {
   useEffect(() => {
     const metaTag = document.querySelector('meta[name="viewport"]');
     metaTag.name = 'viewport';
-    if(metaTag) {
+    if (metaTag) {
       metaTag.content = 'width=device-width, initial-scale=1, maximum-scale=1';
     }
     return () => {
@@ -903,7 +903,7 @@ const Header = () => {
         ) : null}
       </div>
 
-      <div className='flex'>{vipContainer}</div>
+      <div className='hidden'>{vipContainer}</div>
 
       <div className='flex items-center px-2'>
         <div className='border-l-2 border-white h-4' />
