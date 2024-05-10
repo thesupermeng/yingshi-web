@@ -208,7 +208,8 @@ export const Carousel = ({ carouselItems }) => {
                               />
                             </div>
                             <div key={previewIndex} style={{ paddingRight: '10px', paddingLeft: '10px', textAlign: 'center', fontSize: '12px', paddingTop: '6px' }}>
-                              {renderShortString(previewItem.carousel_name)}
+                              {/* {renderShortString(previewItem.carousel_name)} */}
+                              <p className="line-clamp-1">{previewItem.carousel_name}</p>
                             </div>
                           </div>
                         ))}
