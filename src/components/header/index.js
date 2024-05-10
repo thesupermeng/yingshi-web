@@ -397,8 +397,6 @@ const Header = () => {
         if (!isMobile) {
           setOpenSearch(false);
         }
-
-        console.log('omg');
       }
     }
 
