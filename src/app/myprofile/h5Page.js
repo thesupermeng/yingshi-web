@@ -167,7 +167,7 @@ export default function H5Page({params}) {
       </div>
 
       {/*aha iframe */}
-      {userInfo &&
+      {/* {userInfo &&
         <div style={{background: '#1D2023', borderRadius: '12px', marginBottom: '16px'}}>
           <iframe
             className={'h-[74px] w-full rounded-[12px]'}
@@ -175,7 +175,7 @@ export default function H5Page({params}) {
             scrolling={'no'}
           />
         </div>
-      }
+      } */}
 
       <div className={'flex flex-col gap-[16px] pb-[100px]'}>
         {navs
