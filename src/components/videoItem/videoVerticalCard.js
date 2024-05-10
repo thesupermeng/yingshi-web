@@ -19,7 +19,7 @@ export const VideoVerticalCard = ({ vod }) => {
           className='absolute inset-0 flex rounded-lg md:group-hover:improve-text-unblurry
           md:transition md:group-hover:scale-150 md:group-hover:duration-500
           md:group-hover:cursor-pointer group-hover:rounded-lg md:group-hover:z-10 
-          md:group-hover:rounded-lg bg-blue-500'
+          md:group-hover:rounded-lg'
           onClick={(e) => {
             e.preventDefault();
             router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);

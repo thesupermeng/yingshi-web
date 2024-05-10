@@ -9,7 +9,6 @@ export default function Player({
   onVideoEnd,
   episodeSelected,
   vodSourceSelected,
-  adsInfo,
   ...rest
 }) {
   const artContainerRef = useRef();
@@ -83,27 +82,6 @@ export default function Player({
       ],
       plugins: [],
     });
-
-    if (adsInfo !== null) {
-      // Initialize ads plugin
-      adsPluginRef.current = new artplayerPluginAds({
-        video: adsInfo?.video,
-        url: '',
-        playDuration: adsInfo.totalDuration,
-        totalDuration: adsInfo.totalDuration,
-        muted: false,
-        loop: false,
-        i18n: {
-          close: '关闭广告',
-          countdown: '%s秒',
-          detail: '查看详情',
-          canBeClosed: '%s秒后可关闭广告',
-        },
-      });
-
-      //   // Attach ads plugin to Artplayer instance
-      // artRef.current.plugins.add(adsPluginRef.current);
-    }
 
     if (getInstance && typeof getInstance === 'function') {
       getInstance(artRef.current);
