@@ -43,7 +43,7 @@ export default function ProfileCard({userInfo, isVip, isH5, onSignin}) {
       </div>
       {isH5 &&
         <div className="flex items-center justify-center">
-          {userInfo &&
+          {userInfo && false && // temp hide
             <Image
               src={editIcon}
               alt="edit"
