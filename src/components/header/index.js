@@ -38,7 +38,7 @@ import { updateUserInfo } from '@/services/yingshiUser';
 import QRCode from 'qrcode.react';
 import LoginFlow from '@/components/login/loginFlow';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
-import {useLoginOpen} from '@/hook/yingshiScreenState/useLoginOpen';
+import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 
 const getHeaderMenu = (state) => state.headerMenu;
 const getHeaderMenuSelected = (state) => state.headerMenuSelected;
@@ -227,7 +227,7 @@ const Header = () => {
     );
     setSearchHistoryList(JSON.parse(localStorage.getItem('searchHistoryList')));
     setOpenSearch(false);
-    setSearchInput('');
+    // setSearchInput('');
     router.push('/search/' + searchInput);
   };
 
@@ -283,11 +283,13 @@ const Header = () => {
     } else {
       dispatch(setSelectedId(value));
       router.push('/');
+      setSearchInput('');
     }
   };
 
   const goToSeachResult = (query) => {
     setOpenSearch(false);
+    setSearchInput(query);
     router.push('/search/' + query);
   };
 
@@ -360,6 +362,7 @@ const Header = () => {
       dispatch(setSpecialSelectedId(-1));
       dispatch(setSelectedId(selectedMenu.id));
     }
+    if (!pathname.startsWith('/search/')) setSearchInput('');
   }, [pathname]);
 
   useEffect(() => {
@@ -390,7 +393,12 @@ const Header = () => {
         dropdownSearchRef.current &&
         !dropdownSearchRef.current.contains(event.target)
       ) {
-        setOpenSearch(false);
+        const isMobile = window.innerWidth < 768;
+        if (!isMobile) {
+          setOpenSearch(false);
+        }
+
+        console.log('omg');
       }
     }
 
@@ -411,7 +419,7 @@ const Header = () => {
 
   let searchContainer = (
     <div className='items-center flex flex-1 md:flex-none'>
-      <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>
+      <div ref={dropdownSearchRef} className='flex-1 md:flex-none'>
         <div className='relative flex flex-1 md:flex-none'>
           <div
             className={`flex justify-between pr-4 pl-2 self-center ${
@@ -556,6 +564,7 @@ const Header = () => {
                           className='flex flex-row justify-between py-2.5 cursor-pointer search-hot-item'
                           key={index}
                           onClick={(e) => {
+                            console.log('helelle');
                             e.preventDefault();
                             setOpenSearch(false);
                             router.push(

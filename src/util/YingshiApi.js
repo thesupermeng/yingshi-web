@@ -107,8 +107,6 @@ const getHeader = async (
     'Authorization': `Bearer ${token}`
   };
 
-  console.log(obj)
-
   return obj;
 };
 
