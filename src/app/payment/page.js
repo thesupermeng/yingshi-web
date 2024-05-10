@@ -1,5 +1,5 @@
 'use client'
-import React from 'react';
+import React, {Suspense} from 'react';
 import H5Page from '@/app/payment/h5Page';
 
 export default function Page () {
@@ -9,7 +9,9 @@ export default function Page () {
         desktop
       </div>
       <div className="mobile w-screen h-full">
-        <H5Page/>
+        <Suspense fallback={<div/>}>
+          <H5Page/>
+        </Suspense>
       </div>
     </>
   )
