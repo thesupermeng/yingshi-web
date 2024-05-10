@@ -903,7 +903,7 @@ const Header = () => {
         ) : null}
       </div>
 
-      <div className='hidden'>{vipContainer}</div>
+      <div className='flex'>{vipContainer}</div>
 
       <div className='flex items-center px-2'>
         <div className='border-l-2 border-white h-4' />
