@@ -4,7 +4,7 @@ import 'react-spring-bottom-sheet/dist/style.css'
 import YingshiLoginBottomSheet from '@/componentsH5/yingshiLoginBottomSheet';
 import {useLoginOpen} from '@/hook/yingshiScreenState/useLoginOpen';
 
-export default function Page() {
+export default function ModalOverlays() {
   const [isOpenLogin, setIsOpenLogin] = useLoginOpen();
 
   return (
