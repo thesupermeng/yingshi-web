@@ -5,14 +5,44 @@ import {
   faArrowRight,
   faPlay,
 } from '@fortawesome/free-solid-svg-icons';
+import LoginFlow from '@/components/login/loginFlow';
+import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
+import {useLoginOpen} from '@/hook/yingshiScreenState/useLoginOpen';
+import {useRouter} from 'next/navigation';
 
-export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay, handleVipSkipAd }) => {
+export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
+  const router = useRouter()
+  const { isVip, userInfo } = useYingshiUser();
+  const [isLoginOpen, setIsLoginOpen] = useLoginOpen();
+
   const adsPlayerRef = useRef(null);
+  const loginFlowRef = useRef(null);
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [remaining, setRemaining] = useState(15);
 
   const playVideo = () => {
     adsPlayerRef.current.play();
+  };
+
+  const pauseVideo = () => {
+    adsPlayerRef.current.pause();
+  };
+
+  const handleOnSkipAd = () => {
+    const isMobile = window.innerWidth < 768;
+
+    if (!userInfo) {
+      if (isMobile) {
+        setIsLoginOpen(true);
+      } else {
+        loginFlowRef.current.start();
+      }
+    } else {
+      router.push('/payment')
+    }
+
+    pauseVideo();
   };
 
   useEffect(() => {
@@ -33,11 +63,11 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay, handleVipSkipAd }) 
 
   return (
     <div className='flex relative justify-center items-center'>
+      <LoginFlow ref={loginFlowRef} />
       <video
         ref={adsPlayerRef}
         autoPlay
         playsInline
-
         onEnded={handleAdsPlayerEndPlay}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
@@ -50,7 +80,10 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay, handleVipSkipAd }) 
         }`}
       >
         <span className='text-sm nowrap'>{remaining}s后关闭广告|</span>
-        <span onClick={handleVipSkipAd} className='text-[#0085E0] text-sm nowrap'>
+        <span
+          onClick={handleOnSkipAd}
+          className='text-[#0085E0] text-sm nowrap cursor-pointer'
+        >
           VIP跳广告
         </span>
         <FontAwesomeIcon
