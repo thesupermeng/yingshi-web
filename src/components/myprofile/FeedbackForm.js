@@ -60,7 +60,7 @@ export default function FeedbackForm() {
               </div>
 
 
-              <span className={'text-white text-[16px] font-semibold mt-[20px]'}>个人信息</span>
+              <span className={'text-white text-[16px] font-semibold mt-[20px]'}>问题反馈</span>
               <div className={'flex bg-[#1D2023] rounded-[10px] px-[20px] py-[17px] mt-[14px] h-[176px]'}>
           <textarea className={'w-full h-full bg-inherit text-white font-semibold resize-none outline-none'}
                     placeholder={'请详细描述您的问题和建议'} onChange={handleChange} maxLength={200} value={feedback}/>
@@ -73,8 +73,31 @@ export default function FeedbackForm() {
 
         </div>
       </div>
-      <div className={'mobile'}>
 
+      <div className={'mobile w-full px-4'}>
+        <div className={'flex flex-col'}>
+          <span className={'text-white text-[16px] font-semibold'}>电子邮箱</span>
+          <div className={'mt-[14px] font-semibold'}>
+            <TextInput
+              name="email"
+              placeholder={'输入邮箱账号'}
+              onChange={handleEmailChange}
+              errorMessage={'电邮地址格式错误'}
+              validator={(value) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(value)}
+              initValue={email}
+            />
+          </div>
+
+
+          <span className={'text-white text-[16px] font-semibold mt-[12px]'}>问题反馈</span>
+          <div className={'flex bg-[#1D2023] rounded-[10px] px-[20px] py-[17px] mt-[14px] h-[176px]'}>
+          <textarea className={'w-full h-full bg-inherit text-white font-semibold resize-none outline-none'}
+                    placeholder={'请详细描述您的问题和建议'} onChange={handleChange} maxLength={200} value={feedback}/>
+          </div>
+          <span className={'self-end text-[#9C9C9C] mb-[14px]'}>{feedback.length}/200</span>
+          <Button className={'bg-shayuBlue text-[17px] font-semibold text-white'}
+                  disabled={!canSubmit} onClick={handleSubmit}>提交</Button>
+        </div>
       </div>
     </>
 

@@ -40,15 +40,16 @@ export default function H5Page({params}) {
     //   isRequireLogin: false
     //
     // },
-    // {
-    //   title: '我要反馈',
-    //   icon: FeedbackIconGrey,
-    //   onClick: () => {},
-    //   isSelected: false,
-    //   platform: 'mobile',
-    //   isRequireLogin: false
-    //
-    // },
+    {
+      title: '我要反馈',
+      icon: FeedbackIconGrey,
+      onClick: () => {},
+      isSelected: false,
+      platform: 'mobile',
+      isRequireLogin: false,
+      href: '/myprofile/feedback'
+
+    },
     {
       title: '关于我们',
       icon: AboutusIconGrey,
