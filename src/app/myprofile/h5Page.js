@@ -31,15 +31,15 @@ export default function H5Page({params}) {
     //   isRequireLogin: false
     //
     // },
-    // {
-    //   title: '播放历史',
-    //   icon: HistoryIconGrey,
-    //   onClick: () => {},
-    //   isSelected: false,
-    //   platform: 'mobile',
-    //   isRequireLogin: false
-    //
-    // },
+    {
+      title: '播放历史',
+      icon: HistoryIconGrey,
+      onClick: () => {},
+      isSelected: false,
+      platform: 'mobile',
+      isRequireLogin: false,
+      href: '/myprofile/watchHistory'
+    },
     {
       title: '我要反馈',
       icon: FeedbackIconGrey,

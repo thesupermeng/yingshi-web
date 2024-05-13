@@ -40,6 +40,7 @@ const MyFooter2 = () => {
     pathname.startsWith('/privacy') ||
     pathname.startsWith('/service') ||
     pathname.startsWith('/sport') ||
+    pathname.startsWith('/myprofile/watchHistory') ||
     pathname.startsWith('/myprofile/feedback')
   ) {
     return <></>;
