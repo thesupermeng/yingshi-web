@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useRouter} from 'next/navigation';
 import {loginEmail, loginRequestEmailOtp, loginRequestSmsOtp, loginSms} from '@/services/yingshiUser';
 import {setAhaToken, setYingshiUserLoginParam, setYingshiUserToken} from '@/store/yingshiUser';
+import {useLoginSuccessOpen} from '@/hook/yingshiScreenState/useLoginSuccessOpen';
 
 const totalCountdownTime = 60 // seconds
 
@@ -26,6 +27,7 @@ export default function OTP () {
     // state
     const [countdownTimer, setCountdownTimer] = useState(totalCountdownTime);
     const [errorMessage, setErrorMessage] = useState('')
+    const [_, setOpenLoginSuccess] = useLoginSuccessOpen()
 
     //computed
     const minutes = Math.floor(countdownTimer / 60);
@@ -101,12 +103,22 @@ export default function OTP () {
                             dispatch(setAhaToken(res.data.aha_token))
                             if (res.code === 0) {
                                 //signup
-                                router.push('/myprofile')
+                                // router.push('/myprofile')
+                              router.back()
+                              setOpenLoginSuccess(true)
+                              setTimeout(() => {
+                                setOpenLoginSuccess(false)
+                              }, 2000)
                             }
                             if (res.code === 201) {
                                 //login
                                 // router.push('/login/nickname') // remove nickname page from the signup flow
-                                router.push('/myprofile')
+                                // router.push('/myprofile')
+                              router.back()
+                              setOpenLoginSuccess(true)
+                              setTimeout(() => {
+                                setOpenLoginSuccess(false)
+                              }, 2000)
 
                             }
                         })
@@ -126,12 +138,22 @@ export default function OTP () {
                             dispatch(setAhaToken(res.data.aha_token))
                             if (res.code === 0) {
                                 //signup
-                                router.push('/myprofile')
+                                // router.push('/myprofile')
+                              router.back()
+                              setOpenLoginSuccess(true)
+                              setTimeout(() => {
+                                setOpenLoginSuccess(false)
+                              }, 2000)
                             }
                             if (res.code === 201) {
                                 //login
                               // router.push('/login/nickname') // remove nickname page from the signup flow
-                              router.push('/myprofile')
+                              // router.push('/myprofile')
+                              router.back()
+                              setOpenLoginSuccess(true)
+                              setTimeout(() => {
+                                setOpenLoginSuccess(false)
+                              }, 2000)
                             }
 
                         })
