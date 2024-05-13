@@ -1,9 +1,8 @@
-import { ArrowLeftIcon, clear, searchEmptyIcon } from '@/asset/icons';
+import {ArrowLeftIcon, clear, ImagePlaceholder, searchEmptyIcon} from '@/asset/icons';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Button, Dialog, DialogBody, Progress } from '@material-tailwind/react';
 import { useRouter } from 'next/navigation';
-import { PlaceholderImage } from '@/asset/image';
 
 const getObjectValue = (obj, targetKey) => {
   // Check if the object is defined and if it contains the 'times' key
@@ -256,7 +255,7 @@ function HistoryCard({ vod, onClick }) {
               }
             >
               <Image
-                src={PlaceholderImage}
+                src={ImagePlaceholder}
                 alt={`Image for ${vod.vodname}`}
                 fill={true}
                 objectFit={'cover'}
@@ -292,7 +291,7 @@ function HistoryCard({ vod, onClick }) {
               }
             >
               <Image
-                src={PlaceholderImage}
+                src={ImagePlaceholder}
                 alt={`Image for ${vod.vodname}`}
                 fill={true}
                 objectFit={'cover'}
