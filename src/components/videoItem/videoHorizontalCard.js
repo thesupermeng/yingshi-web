@@ -30,11 +30,11 @@ export const VideoHorizontalCard = ({ vod, typepage_id }) => {
             router.push(`/play/${vod.type_id}/${nId}/${vod.vod_id}`);
           }}
           alt='video'
-          src={ImagePlaceholder}
+          src={vod.vod_pic}
           style={{ borderRadius: '0.5rem !important', objectFit: 'cover' }}
           fill
           sizes='100%'
-          className='rounded-lg md:transition md:group-hover:scale-125 
+          className='rounded-lg md:transition md:group-hover:scale-125
   md:group-hover:cursor-pointer group-hover:rounded-lg md:group-hover:z-10 md:group-hover:rounded-lg'
         />
 

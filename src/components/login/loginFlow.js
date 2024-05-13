@@ -34,14 +34,14 @@ const LoginFlow = forwardRef(function LoginFlow(props, ref) {
 
   return (
     <>
-      {/* <LoginModal
+      <LoginModal
         open={openLogin}
         handler={handleOpenLogin}
         onRegsiter={() => {
           setOpenLogin(false)
           setOpenOTP(true)
         }}
-      /> */}
+      />
       <OtpModal
         open={openOTP}
         handler={handleOpenOTP}
@@ -57,18 +57,18 @@ const LoginFlow = forwardRef(function LoginFlow(props, ref) {
           setOpenNickname(true);
         }}
       />
-      {/* <NicknameModal
-        open={openNickname}
-        handler={handleOpenNickname}
-        onSuccess={() => {
-          setOpenNickname(false)
-          setOpenLoginSuccess(true)
-          setTimeout(() => {
-            setOpenLoginSuccess(false)
-            router.refresh()
-          }, 2000)
-        }}
-      /> */}
+      {/*<NicknameModal*/}
+      {/*  open={openNickname}*/}
+      {/*  handler={handleOpenNickname}*/}
+      {/*  onSuccess={() => {*/}
+      {/*    setOpenNickname(false)*/}
+      {/*    setOpenLoginSuccess(true)*/}
+      {/*    setTimeout(() => {*/}
+      {/*      setOpenLoginSuccess(false)*/}
+      {/*      router.refresh()*/}
+      {/*    }, 2000)*/}
+      {/*  }}*/}
+      {/*/>*/}
       <LoginSuccess
         open={openLoginSuccess}
         handler={handleOpenLoginSuccess}

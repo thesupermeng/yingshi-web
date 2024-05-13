@@ -5,6 +5,7 @@ import artplayerPluginAds from 'artplayer-plugin-ads';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import LoginFlow from '@/components/login/loginFlow';
+import {useRouter} from 'next/navigation';
 
 export default function Player({
   option,
@@ -19,6 +20,8 @@ export default function Player({
   const artRef = useRef();
   const adsPluginRef = useRef();
   const loginFlowRef = useRef(null);
+  const router = useRouter();
+
 
   // const [remaining, setRemaining]= useState(setupTimeout)
 
@@ -72,7 +75,7 @@ export default function Player({
           if (isMobile) {
             setIsLoginOpen(true);
           } else {
-            loginFlowRef.current.start();
+            // loginFlowRef.current.start();
           }
         } else {
           router.push('/payment');
@@ -179,7 +182,8 @@ export default function Player({
 
   return (
     <div ref={artContainerRef} {...rest}>
-      <LoginFlow ref={loginFlowRef} />
+      {/* TODO : temp remove login flow solve video play in background bug */}
+      {/*<LoginFlow ref={loginFlowRef} />*/}
     </div>
   );
 }
