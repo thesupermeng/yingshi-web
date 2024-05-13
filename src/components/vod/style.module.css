@@ -1,9 +1,11 @@
 .arrowCard {
   display: flex;
-  background-color: #A7A7A71A !important;
-  padding: 2px;
+ /* background-color: #A7A7A71A !important; */
+  /* padding: 2px; */
+  padding: 2px 5px;
   align-items: center;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 .radioOptionCard {

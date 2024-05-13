@@ -228,7 +228,7 @@ const Header = () => {
     setSearchHistoryList(JSON.parse(localStorage.getItem('searchHistoryList')));
     setOpenSearch(false);
     // setSearchInput('');
-    router.push('/search/' + searchInput);
+    router.push('/search/' + encodeURIComponent(searchInput));
   };
 
   const handleClearSearchHistory = () => {
@@ -290,7 +290,7 @@ const Header = () => {
   const goToSeachResult = (query) => {
     setOpenSearch(false);
     setSearchInput(query);
-    router.push('/search/' + query);
+    router.push('/search/' + encodeURIComponent(query));
   };
 
   const calculateItemsVisibility = () => {
@@ -516,7 +516,7 @@ const Header = () => {
                         alt='empty'
                         width={120}
                       />
-                      <span>暂无播单</span>
+                      <span>无搜索结果</span>
                     </div>
                   )
                 ) : (
