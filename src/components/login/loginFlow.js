@@ -43,7 +43,7 @@ const LoginFlow = forwardRef(function LoginFlow(props, ref) {
         }}
       />
       <OtpModal
-        open={openOTP}
+        open={true}
         handler={handleOpenOTP}
         onLogin={() => {
           setOpenOTP(false)
@@ -55,6 +55,9 @@ const LoginFlow = forwardRef(function LoginFlow(props, ref) {
         onRegister={() => {
           setOpenOTP(false)
           setOpenNickname(true)
+        }}
+        onCloseOTP={() => {
+          setOpenOTP(false)
         }}
       />
       <NicknameModal
