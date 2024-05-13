@@ -329,7 +329,7 @@ const Header = () => {
     const fetchData = async () => {
       let menuItem = await getTopNav();
       const topTenItem = await getTopTenList();
-
+      console.log(menuItem);
       setTopTenList(topTenItem.vod_list);
       menuItem.push({
         id: 998,
@@ -357,7 +357,7 @@ const Header = () => {
       dispatch(setSelectedId(0));
     } else if (pathname.startsWith('/play/')) {
       dispatch(setSpecialSelectedId(-1));
-      dispatch(setSelectedId(0));
+      dispatch(setSelectedId(selectedMenu.id));
     } else {
       dispatch(setSpecialSelectedId(-1));
       dispatch(setSelectedId(selectedMenu.id));
@@ -1179,7 +1179,7 @@ const Header = () => {
     return (
       <>
         <div className={'z-30 w-screen mobile'}>
-          {pathname === '/myprofile' &&
+          {pathname === '/myprofile' && (
             <div className='flex pt-3 mx-2.5'>
               <div className='gap-y-2 flex-col w-full md:flex-row flex'>
                 <div className='flex-1 flex px-4 md:justify-start'>
@@ -1187,7 +1187,7 @@ const Header = () => {
                 </div>
               </div>
             </div>
-          }
+          )}
         </div>
         <div className={'desktop z-50'}>{defaultHeader}</div>
       </>
@@ -1197,9 +1197,9 @@ const Header = () => {
   if (pathname.startsWith('/login/otp')) {
     return (
       <div className={'z-30 w-screen mobile'}>
-        <div className="flex py-3 mx-2.5">
-          <div className="gap-y-2 flex-col w-full md:flex-row flex">
-            <div className="flex-1 flex gap-x-2 md:justify-start">
+        <div className='flex py-3 mx-2.5'>
+          <div className='gap-y-2 flex-col w-full md:flex-row flex'>
+            <div className='flex-1 flex gap-x-2 md:justify-start'>
               <div
                 className={'flex w-[30px] h-[30px] justify-center items-center'}
               >

@@ -10,7 +10,6 @@ export const AdsBanner = ({
   imgUrl = '',
   navId = 0,
 }) => {
-
   const [ads, setAds] = useState(null);
   const { isVip, userInfo } = useYingshiUser();
 
@@ -22,39 +21,45 @@ export const AdsBanner = ({
       },
       { method: 'GET' }
     );
-  }
+  };
 
   useEffect(() => {
     let slotId = 100 + navId;
-    if(slotId > 99 && slotId < 110){
+    if (slotId > 99 && slotId < 110) {
       getAdsSlotAds(slotId).then((data) => {
-        console.log(data)
+        // console.log(data)
         setAds(data);
       });
     }
   }, []);
 
   useEffect(() => {
-    
     return () => {
       setAds(null);
-    }
+    };
   }, []);
 
   return (
     <>
-      {ads ?
-        <div className="my-6" style={{ display: 'flex', justifyContent: 'center', cursor: 'pointer' }}>
-        <img src={ads.ads_pic} onClick={() => {
-          window.open(
-            ads.ads_url,
-            '_blank',
-          );
-        }}/>
+      {ads ? (
+        <div
+          className='my-6'
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            cursor: 'pointer',
+          }}
+        >
+          <img
+            src={ads.ads_pic}
+            onClick={() => {
+              window.open(ads.ads_url, '_blank');
+            }}
+          />
         </div>
-        :
-        <div className="rounded-xl"></div>
-      }
+      ) : (
+        <div className='rounded-xl'></div>
+      )}
     </>
-  )
-}
+  );
+};
