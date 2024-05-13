@@ -68,7 +68,7 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
   const handleHrefLink = () => {
     if (isPlaying) {
       pauseVideo();
-      window.open(adsInfo.ads_url, '_blank');
+      window.open('https://aha888.vip/home?channel=100006', '_blank');
     }
   };
 
