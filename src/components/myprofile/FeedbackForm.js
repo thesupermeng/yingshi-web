@@ -1,11 +1,12 @@
 import {Alert, Button} from '@material-tailwind/react';
-import {useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import TextInput from '@/components/login/input';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import {submitFeedback} from '@/services/yingshiUser';
 import Image from 'next/image';
 import {ArrowLeftIcon} from '@/asset/icons';
 import {useRouter} from 'next/navigation';
+import {FeedbackAnimation, TickAnimation} from '@/asset/gif';
 
 export default function FeedbackForm() {
 
@@ -42,10 +43,13 @@ export default function FeedbackForm() {
       <div className={'desktop w-full'}>
         <div className={'relative flex flex-col gap-[36px] w-full'}>
           {isShowSuccess &&
-            <div className={'absolute w-full h-full top-0 left-0 px-20 flex items-center z-10'}
+            <div className={'absolute top-0 left-0 flex justify-center items-center w-full h-full z-10'}
                  onClick={() => setIsShowSuccess(false)}>
-              <Alert className={'bg-green-500'}>
-                反馈提交成功，我们会尽快审核你的留言</Alert>
+              <div
+                className={'w-[270px] h-[195px] rounded-[14px] bg-[#222222CC] flex flex-col items-center justify-center'}>
+                <Image src={FeedbackAnimation} alt={'Submit success'} width={95} height={95}/>
+                <span className={'text-[17px]'}>反馈提交成功</span>
+              </div>
             </div>
           }
           <div className={`relative flex flex-col gap-[36px] w-full ${isShowSuccess ? 'blur' : ''}`}>
@@ -79,6 +83,16 @@ export default function FeedbackForm() {
       </div>
 
       <div className={'mobile w-full'}>
+        {isShowSuccess &&
+          <div className={'absolute top-0 left-0 flex justify-center items-center w-full h-full z-10'}
+               onClick={() => setIsShowSuccess(false)}>
+            <div
+              className={'w-[270px] h-[195px] rounded-[14px] bg-[#222222CC] flex flex-col items-center justify-center'}>
+              <Image src={FeedbackAnimation} alt={'Submit success'} width={95} height={95}/>
+              <span className={'text-[17px]'}>反馈提交成功</span>
+            </div>
+          </div>
+        }
         <div className='flex py-3 mx-2.5'>
           <div className='gap-y-2 flex-col w-full md:flex-row flex'>
             <div className="relative flex-1 flex gap-x-2 md:justify-start">
@@ -102,7 +116,7 @@ export default function FeedbackForm() {
             </div>
           </div>
         </div>
-        <div className={'flex flex-col px-4'}>
+        <div className={`flex flex-col px-4 ${isShowSuccess ? 'blur' : ''}`}>
           <span className={'text-white text-[16px] font-semibold'}>电子邮箱</span>
           <div className={'mt-[14px] font-semibold'}>
             <TextInput
