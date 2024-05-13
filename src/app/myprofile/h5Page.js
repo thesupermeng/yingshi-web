@@ -12,7 +12,7 @@ import NavCard from '@/components/myprofile/NavCard';
 import VipCard from '@/components/myprofile/VipCard';
 import ProfileCard from '@/components/myprofile/ProfileCard';
 import LogoutModal from '@/components/login/logoutModal';
-import {useRouter, useSearchParams} from 'next/navigation';
+import {useRouter} from 'next/navigation';
 import {updateLocalstorage} from '@/util/YingshiApi';
 import {LocalStorageKeys} from '@/config/common';
 import {useLoginOpen} from '@/hook/yingshiScreenState/useLoginOpen';
@@ -71,8 +71,6 @@ export default function H5Page({params}) {
     },
   ]
 
-  const queryParams = useSearchParams();
-  const openLogin = queryParams.get('login') === 'true'
 
   const [openSignInUp, setOpenSignInUp] = useLoginOpen()
   const [openLoginSuccess, setOpenLoginSuccess] = useState(false);
