@@ -15,8 +15,7 @@ import {logout} from '@/services/yingshiUser';
 import {useDispatch} from 'react-redux';
 import {setAhaToken, setYingshiUserInfo, setYingshiUserToken} from '@/store/yingshiUser';
 import LogoutModal from '@/components/login/logoutModal';
-import {LocalStorageKeys} from '@/config/common';
-import PaymentModal from '@/components/payment/paymentModal';
+import {usePaymentOpen} from '@/hook/yingshiScreenState/usePaymentOpen';
 
 export default function WebPage ({subMenus}) {
 
@@ -25,14 +24,10 @@ export default function WebPage ({subMenus}) {
   const router = useRouter();
   const pathname = usePathname();
   const [openLogout, setOpenLogout] = useState(false)
-  const [openPaymentModal, setOpenPaymentModal] = useState(false)
+  const [openPayment, setOpenPayment] = usePaymentOpen()
 
   const handleLogout = () => {
     setOpenLogout(x => !x)
-  }
-
-  const handleOpenPaymentModal = () => {
-    setOpenPaymentModal(x => !x)
   }
 
   const navs = [
@@ -94,7 +89,7 @@ export default function WebPage ({subMenus}) {
             isH5={false}
           />
         </div>
-        <VipCard onClick={() => setOpenPaymentModal(true)}/>
+        <VipCard onClick={() => setOpenPayment(true)}/>
         {navs
           .filter (x => {
             if (userInfo) { // is logged in
@@ -123,7 +118,6 @@ export default function WebPage ({subMenus}) {
         }}
         onCancel={()=> setOpenLogout(false)}
       />
-      <PaymentModal open={openPaymentModal} handler={handleOpenPaymentModal}/>
     </div>
   )
 }
