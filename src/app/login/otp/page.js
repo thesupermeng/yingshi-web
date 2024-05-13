@@ -105,7 +105,9 @@ export default function OTP () {
                             }
                             if (res.code === 201) {
                                 //login
-                                router.push('/login/nickname')
+                                // router.push('/login/nickname') // remove nickname page from the signup flow
+                                router.push('/myprofile')
+
                             }
                         })
                 } else {
@@ -128,7 +130,8 @@ export default function OTP () {
                             }
                             if (res.code === 201) {
                                 //login
-                                router.push('/login/nickname')
+                              // router.push('/login/nickname') // remove nickname page from the signup flow
+                              router.push('/myprofile')
                             }
 
                         })

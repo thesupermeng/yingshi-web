@@ -103,11 +103,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         // },
       }
     );
-    // let ads = {
-    //   video: 'https://oss.yingshi.tv/videos/vod/vi/aha-qiantiepian-15sec.mp4',
-    //   totalDuration: 15,
-    // };
-    // return ads;
   };
 
   useEffect(() => {
@@ -139,11 +134,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
       setShowAds(false);
     } else {
       getAds().then((res) => {
-        if (res == null) {
-          setShowAds(false);
-        } else {
-          setAds(res);
-        }
+        setAds(res);
       });
     }
   }, [isVip]);
@@ -154,11 +145,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         setShowAds(false);
       } else {
         getAds().then((res) => {
-          if (res == null) {
-            setShowAds(false);
-          } else {
-            setAds(res);
-          }
+          setAds(res);
         });
       }
 
@@ -251,11 +238,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         setShowAds(false);
       } else {
         getAds().then((res) => {
-          if (res == null) {
-            setShowAds(false);
-          } else {
-            setAds(res);
-          }
+          setAds(res);
         });
       }
 
