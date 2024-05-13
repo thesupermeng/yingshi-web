@@ -2,8 +2,8 @@ import LoginModal from '@/components/login/index';
 import OtpModal from '@/components/login/otpModal';
 import NicknameModal from '@/components/login/nicknameModal';
 import LoginSuccess from '@/components/login/loginSuccess';
-import {forwardRef, useImperativeHandle, useState} from 'react';
-import {useRouter} from 'next/navigation';
+import { forwardRef, useImperativeHandle, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const LoginFlow = forwardRef(function LoginFlow(props, ref) {
   const [openLogin, setOpenLogin] = useState(false);
@@ -13,24 +13,24 @@ const LoginFlow = forwardRef(function LoginFlow(props, ref) {
   const router = useRouter();
 
   const handleOpenLogin = () => {
-    setOpenLogin(x => !x);
-  }
+    setOpenLogin((x) => !x);
+  };
 
   const handleOpenOTP = () => {
-    setOpenOTP(x => !x);
-  }
+    setOpenOTP((x) => !x);
+  };
 
   const handleOpenLoginSuccess = () => {
-    setOpenLoginSuccess(x => !x);
-  }
+    setOpenLoginSuccess((x) => !x);
+  };
 
   const handleOpenNickname = () => {
-    setOpenNickname(x => !x);
-  }
+    setOpenNickname((x) => !x);
+  };
 
   useImperativeHandle(ref, () => ({
-    start: ()=> setOpenLogin(true)
-  }))
+    start: () => setOpenLogin(true),
+  }));
 
   return (
     <>
@@ -46,37 +46,36 @@ const LoginFlow = forwardRef(function LoginFlow(props, ref) {
         open={openOTP}
         handler={handleOpenOTP}
         onLogin={() => {
-          setOpenOTP(false)
-          setOpenLoginSuccess(true)
+          setOpenOTP(false);
+          setOpenLoginSuccess(true);
           setTimeout(() => {
-            setOpenLoginSuccess(false)
-          }, 2000)
+            setOpenLoginSuccess(false);
+          }, 2000);
         }}
         onRegister={() => {
-          setOpenOTP(false)
-          setOpenNickname(true)
+          setOpenOTP(false);
+          setOpenNickname(true);
         }}
       />
-      <NicknameModal
-        open={openNickname}
-        handler={handleOpenNickname}
-        onSuccess={() => {
-          setOpenNickname(false)
-          setOpenLoginSuccess(true)
-          setTimeout(() => {
-            setOpenLoginSuccess(false)
-            router.refresh()
-          }, 2000)
-        }}
-      />
+      {/*<NicknameModal*/}
+      {/*  open={openNickname}*/}
+      {/*  handler={handleOpenNickname}*/}
+      {/*  onSuccess={() => {*/}
+      {/*    setOpenNickname(false)*/}
+      {/*    setOpenLoginSuccess(true)*/}
+      {/*    setTimeout(() => {*/}
+      {/*      setOpenLoginSuccess(false)*/}
+      {/*      router.refresh()*/}
+      {/*    }, 2000)*/}
+      {/*  }}*/}
+      {/*/>*/}
       <LoginSuccess
         open={openLoginSuccess}
         handler={handleOpenLoginSuccess}
         msg={'登录成功'}
       />
     </>
-  )
-}
-)
+  );
+});
 
 export default LoginFlow;

@@ -121,7 +121,7 @@ export default function LoginModal({open, handler, onRegsiter}) {
             </>
           }
           {/* button */}
-          <Button className={'w-full rounded-[10px] h-[48px] bg-shayuBlue text-[17px] font-semibold'} onClick={handleRegister} disabled={isInputError || isInputEmpty || !isAgreementChecked}>登录</Button>
+          <Button className={'w-full rounded-[10px] h-auto bg-shayuBlue py-2 text-[17px] font-semibold'} onClick={handleRegister} disabled={isInputError || isInputEmpty || !isAgreementChecked}>登录</Button>
           {/* agreement */}
           <div className={'flex items-center justify-center'}>
             {/*<div*/}

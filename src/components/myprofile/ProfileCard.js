@@ -5,9 +5,11 @@ import {logout} from '@/services/yingshiUser';
 import {setYingshiUserInfo} from '@/store/yingshiUser';
 import React from 'react';
 import {useDispatch} from 'react-redux';
+import {useRouter} from 'next/navigation';
 
 export default function ProfileCard({userInfo, isVip, isH5, onSignin}) {
   const dispatch = useDispatch()
+  const router = useRouter()
 
   const iconProfile = userInfo ? ProfileBlue : profileIcon
 
@@ -48,7 +50,7 @@ export default function ProfileCard({userInfo, isVip, isH5, onSignin}) {
               src={editIcon}
               alt="edit"
               onClick={() => {
-                console.log('edit')
+                router.push('/myprofile/userCenter')
               }}
             />
           }

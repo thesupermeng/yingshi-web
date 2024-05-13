@@ -12,32 +12,33 @@ import NavCard from '@/components/myprofile/NavCard';
 import VipCard from '@/components/myprofile/VipCard';
 import ProfileCard from '@/components/myprofile/ProfileCard';
 import LogoutModal from '@/components/login/logoutModal';
-import {useRouter, useSearchParams} from 'next/navigation';
+import {useRouter} from 'next/navigation';
 import {updateLocalstorage} from '@/util/YingshiApi';
 import {LocalStorageKeys} from '@/config/common';
 import {useLoginOpen} from '@/hook/yingshiScreenState/useLoginOpen';
+import {Button, Dialog, DialogBody} from '@material-tailwind/react';
 
 export default function H5Page({params}) {
   const router = useRouter();
 
   const navs = [
-    {
-      title: '我的收藏',
-      icon: FavouriteIconGrey,
-      onClick: () => {},
-      isSelected: false,
-      platform: 'mobile',
-      isRequireLogin: false
-
-    },
+    // {
+    //   title: '我的收藏',
+    //   icon: FavouriteIconGrey,
+    //   onClick: () => {},
+    //   isSelected: false,
+    //   platform: 'mobile',
+    //   isRequireLogin: false
+    //
+    // },
     {
       title: '播放历史',
       icon: HistoryIconGrey,
       onClick: () => {},
       isSelected: false,
       platform: 'mobile',
-      isRequireLogin: false
-
+      isRequireLogin: false,
+      href: '/myprofile/watchHistory'
     },
     {
       title: '我要反馈',
@@ -45,13 +46,16 @@ export default function H5Page({params}) {
       onClick: () => {},
       isSelected: false,
       platform: 'mobile',
-      isRequireLogin: false
+      isRequireLogin: false,
+      href: '/myprofile/feedback'
 
     },
     {
       title: '关于我们',
       icon: AboutusIconGrey,
-      onClick: () => {},
+      onClick: () => {
+        setOpenAboutus(true)
+      },
       isSelected: false,
       platform: 'mobile',
       isRequireLogin: false
@@ -68,8 +72,6 @@ export default function H5Page({params}) {
     },
   ]
 
-  const queryParams = useSearchParams();
-  const openLogin = queryParams.get('login') === 'true'
 
   const [openSignInUp, setOpenSignInUp] = useLoginOpen()
   const [openLoginSuccess, setOpenLoginSuccess] = useState(false);
@@ -81,6 +83,19 @@ export default function H5Page({params}) {
   const getLoginParam = (s) => s.yingshiUser.loginParam
   const loginParam = useSelector(getLoginParam)
 
+
+  // temp
+  const [openAboutus , setOpenAboutus] = useState(false)
+
+  const aboutusHandler = () => {
+    setOpenAboutus(x => !x)
+  }
+
+  const handleClickEmail = () => {
+    window.location = 'mailto:shayuyingshi@gmail.com'
+  }
+
+  // temp end
 
   useEffect(() => {
     if (loginParam && loginParam.success) {
@@ -94,6 +109,7 @@ export default function H5Page({params}) {
   }, [loginParam])
 
   const handleOnClickVip = () => {
+    console.log('testing', userInfo)
     if (!userInfo) {
       setOpenSignInUp(true)
     } else {
@@ -190,6 +206,23 @@ export default function H5Page({params}) {
             return <NavCard key={idx} {...x} />
           })}
       </div>
+
+      {/* temporary only  */}
+      <Dialog open={openAboutus} handler={aboutusHandler} className={'bg-[#121212] rounded-[28px] p-[30px] outline-none'} size={'xs'}>
+        <DialogBody className={'p-0 w-full h-full flex flex-col items-center'}>
+          <p className={'text-center text-white text-[17px] font-medium mb-[12px]'}>鲨鱼影视</p>
+          <p className={'text-[14px] text-white'}>
+            如果本站提供内容侵犯了您的版权，请来函说明，本网站将立即删除，保护版权所有者的权益。
+          </p>
+          <div className={'w-full'}>
+            <span className={'text-white text-[14px]'}>联系邮箱：</span>
+            <span className={'text-shayuBlue text-[14px]'} onClick={handleClickEmail}>shayuyingshi@gmail.com</span>
+          </div>
+          <Button className={'text-shayuBlue text-[16px] mt-[12px] outline-none'} color={'blue'} tabIndex={-1} variant={'outlined'} size={'sm'} onClick={() => setOpenAboutus(false)}>确定</Button>
+        </DialogBody>
+      </Dialog>
+      {/* temporary only end  */}
+
     </div>
   );
 }

@@ -21,6 +21,7 @@ const TopicHeader = ({ topicName }) => {
       backgroundColor: 'rgb(16, 18, 21)',
       position: 'fixed',
       top: 0,
+      right: 0,
       width: '100%',
       zIndex: 999, // Ensure it's above other content
     }}

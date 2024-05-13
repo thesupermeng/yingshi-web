@@ -124,11 +124,11 @@ export const VodCard = ({
             <div className="flex flex-row">
               <span className="text-lg pr-5 line-clamp-2">{vodName}</span>
               <div className="lg:hidden flex flex-row space-x-2 py-1" onClick={() => setOpenIntroBottomSheet(true)}>
-                <span className="text-sm text-white/75" style={{ fontWeight: '300' }}>{t('简介')}</span>
+                {/* <span className="text-sm text-white/75" style={{ fontWeight: '300' }}>{t('简介')}</span>
                 <Image
                   src={ArrowRightIcon}
                   alt="Icon"
-                />
+                /> */}
               </div>
             </div>
             <span className="text-sm text-white/75 py-1 pt-3" style={{ fontWeight: '300', color: '#9C9C9C' }}>{vodYear} {vodClass}</span>
