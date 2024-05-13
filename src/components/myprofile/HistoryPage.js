@@ -1,4 +1,4 @@
-import {clear, searchEmptyIcon} from '@/asset/icons'
+import {ArrowLeftIcon, clear, searchEmptyIcon} from '@/asset/icons'
 import Image from 'next/image';
 import {useEffect, useState} from 'react';
 import {Button, Dialog, DialogBody, Progress} from '@material-tailwind/react';
@@ -146,9 +146,32 @@ export default function HistoryPage() {
           </div>
         </div>
       </div>
-      <div className={'mobile'}>
-        <div>
-          <div className={'flex flex-col px-4'}>
+      <div className={'mobile h-screen'}>
+        <div className={'flex flex-col h-full'}>
+          <div className="flex py-3 mx-2.5">
+            <div className="gap-y-2 flex-col w-full md:flex-row flex">
+              <div className="relative flex-1 flex gap-x-2 md:justify-start">
+                <div
+                  className={
+                    'flex w-[30px] h-[30px] justify-center items-center z-10'
+                  }
+                  onClick={() => {
+                    router.back();
+                  }}
+                >
+                  <Image src={ArrowLeftIcon} alt={'back button'} height={16}/>
+                </div>
+                <div
+                  className={
+                    'flex-1 absolute h-full w-full flex items-center justify-center'
+                  }
+                >
+                  <span className={'text-white'}>播放历史</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={'flex-1 flex flex-col px-4 overflow-scroll'}>
             {
               watchHistoryList
                 .slice()

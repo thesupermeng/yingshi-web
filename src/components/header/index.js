@@ -1180,60 +1180,10 @@ const Header = () => {
       <>
         <div className={'z-30 w-screen mobile'}>
           {pathname === '/myprofile' &&
-            <div className='flex pt-4 mx-2.5'>
+            <div className='flex pt-3 mx-2.5'>
               <div className='gap-y-2 flex-col w-full md:flex-row flex'>
                 <div className='flex-1 flex px-4 md:justify-start'>
                   <span className='text-topic-title'> 我的 </span>
-                </div>
-              </div>
-            </div>
-          }
-          {pathname === '/myprofile/feedback' &&
-            <div className='flex py-3 mx-2.5'>
-              <div className='gap-y-2 flex-col w-full md:flex-row flex'>
-                <div className="relative flex-1 flex gap-x-2 md:justify-start">
-                  <div
-                    className={
-                      'flex w-[30px] h-[30px] justify-center items-center z-10'
-                    }
-                    onClick={() => {
-                      router.back();
-                    }}
-                  >
-                    <Image src={ArrowLeftIcon} alt={'back button'} height={16}/>
-                  </div>
-                  <div
-                    className={
-                      'flex-1 absolute h-full w-full flex items-center justify-center'
-                    }
-                  >
-                    <span className={'text-white'}>我要反馈</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          }
-          {pathname === '/myprofile/watchHistory' &&
-            <div className='flex py-3 mx-2.5'>
-              <div className='gap-y-2 flex-col w-full md:flex-row flex'>
-                <div className="relative flex-1 flex gap-x-2 md:justify-start">
-                  <div
-                    className={
-                      'flex w-[30px] h-[30px] justify-center items-center z-10'
-                    }
-                    onClick={() => {
-                      router.back();
-                    }}
-                  >
-                    <Image src={ArrowLeftIcon} alt={'back button'} height={16}/>
-                  </div>
-                  <div
-                    className={
-                      'flex-1 absolute h-full w-full flex items-center justify-center'
-                    }
-                  >
-                    <span className={'text-white'}>播放历史</span>
-                  </div>
                 </div>
               </div>
             </div>

@@ -3,10 +3,14 @@ import {useRef, useState} from 'react';
 import TextInput from '@/components/login/input';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import {submitFeedback} from '@/services/yingshiUser';
+import Image from 'next/image';
+import {ArrowLeftIcon} from '@/asset/icons';
+import {useRouter} from 'next/navigation';
 
 export default function FeedbackForm() {
 
   const {userInfo} = useYingshiUser()
+  const router = useRouter()
 
   const [feedback, setFeedback] = useState('')
   const [email, setEmail] = useState(userInfo?.user_email)
@@ -74,8 +78,31 @@ export default function FeedbackForm() {
         </div>
       </div>
 
-      <div className={'mobile w-full px-4'}>
-        <div className={'flex flex-col'}>
+      <div className={'mobile w-full'}>
+        <div className='flex py-3 mx-2.5'>
+          <div className='gap-y-2 flex-col w-full md:flex-row flex'>
+            <div className="relative flex-1 flex gap-x-2 md:justify-start">
+              <div
+                className={
+                  'flex w-[30px] h-[30px] justify-center items-center z-10'
+                }
+                onClick={() => {
+                  router.back();
+                }}
+              >
+                <Image src={ArrowLeftIcon} alt={'back button'} height={16}/>
+              </div>
+              <div
+                className={
+                  'flex-1 absolute h-full w-full flex items-center justify-center'
+                }
+              >
+                <span className={'text-white'}>我要反馈</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={'flex flex-col px-4'}>
           <span className={'text-white text-[16px] font-semibold'}>电子邮箱</span>
           <div className={'mt-[14px] font-semibold'}>
             <TextInput
