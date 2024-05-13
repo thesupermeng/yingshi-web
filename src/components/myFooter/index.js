@@ -65,6 +65,7 @@ const MyFooter = () => {
       pathname.startsWith('/privacy') ||
       pathname.startsWith('/service') ||
       pathname.startsWith('/myprofile/watchHistory') ||
+      pathname.startsWith('/myprofile/userCenter') ||
       pathname.startsWith('/myprofile/feedback')
 
   ) {
