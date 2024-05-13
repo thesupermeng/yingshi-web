@@ -140,7 +140,7 @@ export default function OtpModal({ open, handler, onLogin, onRegister , onCloseO
                 <p className={' px-[15px] text-white font-semibold text-[20px] text-center mb-[24px]'}>输入验证码</p>
 
                 <div 
-                onClick={onCloseOTP}
+                onClick={handler}
                 className={'hover-effect'} style={{
                   width: '30px', // Adjust size as needed
                   height: '30px', // Adjust size as needed
