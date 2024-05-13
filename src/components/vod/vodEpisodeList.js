@@ -8,7 +8,8 @@ import { BottomSheet } from 'react-spring-bottom-sheet';
 import 'react-spring-bottom-sheet/dist/style.css'
 import { ArrowRightIcon } from "@/asset/icons";
 
-export const VodEpisodeList = ({
+export const 
+VodEpisodeList = ({
   episodeGroups,
   episodeGroup,
   vodSource,
@@ -99,6 +100,7 @@ export const VodEpisodeList = ({
     </ul>
 
     {/* Mobile H5 */}
+    {vodSource?.vod_play_list?.urls?.length > 0 &&
     <div className='lg:hidden flex relative' style={{ justifyContent: 'space-between' }}>
       <div>
         <span>选集</span>
@@ -159,7 +161,7 @@ export const VodEpisodeList = ({
         </div>
       </BottomSheet>
     </div>
-
+    }
     <ul className="lg:hidden flex flex-column overflow-auto no-scrollbar">
       {vodSource?.vod_play_list?.urls?.slice(episodeGroup.from - 1, episodeGroup.to).map((episode) => {
         return (
