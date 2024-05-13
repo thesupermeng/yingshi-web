@@ -277,7 +277,7 @@ export const FilmLibrary = ({}) => {
       num +=1;
     }
 
-    return num;
+    return num ;
   };
 
   const filterVideoList = (value, type) => {
@@ -349,6 +349,7 @@ export const FilmLibrary = ({}) => {
                   );
                 })}
               </div>
+              {console.log(heightFilter())}
               <div
                 className={`transition-all duration-500 md:h-fit md:visible md:py-2 
                 ease-out ${
