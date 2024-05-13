@@ -228,7 +228,7 @@ const Header = () => {
     setSearchHistoryList(JSON.parse(localStorage.getItem('searchHistoryList')));
     setOpenSearch(false);
     // setSearchInput('');
-    router.push('/search/' + searchInput);
+    router.push('/search/' + encodeURIComponent(searchInput));
   };
 
   const handleClearSearchHistory = () => {
@@ -290,7 +290,7 @@ const Header = () => {
   const goToSeachResult = (query) => {
     setOpenSearch(false);
     setSearchInput(query);
-    router.push('/search/' + query);
+    router.push('/search/' + encodeURIComponent(query));
   };
 
   const calculateItemsVisibility = () => {
