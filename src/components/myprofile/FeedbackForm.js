@@ -137,7 +137,7 @@ export default function FeedbackForm() {
           </div>
           <span className={'self-end text-[#9C9C9C] mb-[14px]'}>{feedback.length}/200</span>
           <Button className={'bg-shayuBlue text-[17px] font-semibold text-white'}
-                  disabled={!canSubmit} onClick={handleSubmit}>提交</Button>
+                  disabled={!canSubmit} onClick={handleSubmit} size={'sm'}>提交</Button>
         </div>
       </div>
     </>

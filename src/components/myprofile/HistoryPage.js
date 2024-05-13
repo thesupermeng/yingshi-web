@@ -162,7 +162,7 @@ export default function HistoryPage() {
               <div className="relative flex-1 flex gap-x-2 justify-between">
                 <div
                   className={
-                    'flex w-[30px] h-[30px] justify-center items-center z-10'
+                    'flex w-[30px] h-[30px] justify-center items-center z-10 self-center'
                   }
                   onClick={() => {
                     router.back();
@@ -177,9 +177,9 @@ export default function HistoryPage() {
                 >
                   <span className={'text-white'}>播放历史</span>
                 </div>
-                <div className={'self-center mr-2 z-10'} onClick={() => setOpenConfirmClearHistory(true)}>
+                <Button variant={'text'} size={'sm'} className={'self-center mr-2 z-10 text-white text-[15px]'} onClick={() => setOpenConfirmClearHistory(true)}>
                   清除
-                </div>
+                </Button>
               </div>
             </div>
           </div>

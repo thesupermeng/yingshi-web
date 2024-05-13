@@ -1,3 +1,4 @@
+'use client'
 import {Button, Dialog, DialogBody} from '@material-tailwind/react';
 import {useState} from 'react';
 import {updateUserInfo} from '@/services/yingshiUser';
@@ -37,7 +38,7 @@ export default function EditNicknameModal({open, handler, onSuccess}) {
 
   const canSubmit = validator(nickname)
 
-  const isMobile = window.innerWidth < 768
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
 
   return (
     <>
@@ -81,9 +82,9 @@ export default function EditNicknameModal({open, handler, onSuccess}) {
         >
           <div className={'flex flex-col mt-[19px] w-full px-4 pb-4'}>
             <div className={'flex justify-between items-center'}>
-              <Button className={'text-[15px] text-white'} variant={'text'} onClick={handler}>取消</Button>
-              <span className={'text-[17px]'}>设置昵称</span>
-              <Button className={'text-[15px] text-shayuBlue'} variant={'text'} onClick={handleConfirm} disabled={!canSubmit}>保存</Button>
+              <Button className={'text-[15px] text-white'} variant={'text'} onClick={handler} size={'sm'} tabIndex={-1}>取消</Button>
+              <span className={'text-[19px]'}>设置昵称</span>
+              <Button className={'text-[15px] text-shayuBlue'} variant={'text'} onClick={handleConfirm} disabled={!canSubmit} size={'sm'} tabIndex={-1}>保存</Button>
             </div>
             <div
               className={`mt-[15px] bg-[#1D2023] rounded-[10px] px-[20px] h-[48px] flex items-center border border-transparent ${errorMsg ? 'border-[#FF0000]' : ''}`}>
