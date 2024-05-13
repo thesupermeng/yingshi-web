@@ -148,9 +148,18 @@ export default function HistoryPage() {
       </div>
       <div className={'mobile h-screen'}>
         <div className={'flex flex-col h-full'}>
+          <ConfirmClearHistoryModal
+            open={openConfirmClearHistory}
+            handler={handleOpenConfirmClearHistory}
+            onConfirm={() => {
+              handleClearWatchHistory()
+              setOpenConfirmClearHistory(false)
+            }}
+            onCancel={() => setOpenConfirmClearHistory(false)}
+          />
           <div className="flex py-3 mx-2.5">
             <div className="gap-y-2 flex-col w-full md:flex-row flex">
-              <div className="relative flex-1 flex gap-x-2 md:justify-start">
+              <div className="relative flex-1 flex gap-x-2 justify-between">
                 <div
                   className={
                     'flex w-[30px] h-[30px] justify-center items-center z-10'
@@ -168,23 +177,29 @@ export default function HistoryPage() {
                 >
                   <span className={'text-white'}>播放历史</span>
                 </div>
+                <div className={'self-center mr-2 z-10'} onClick={() => setOpenConfirmClearHistory(true)}>
+                  清除
+                </div>
               </div>
             </div>
           </div>
-          <div className={'flex-1 flex flex-col px-4 overflow-scroll'}>
-            {
-              watchHistoryList
-                .slice()
-                .reverse()
-                .map((vod, idx) => {
-                  return <HistoryCard key={idx} vod={vod} onClick={() => {
-                    router.push(
-                      `/play/${vod.tid}/${vod.nid}/${vod.vodid}`,
-                    );
-                  }}/>
-                })
-            }
-          </div>
+          {watchHistoryList.length !== 0 &&
+            <div className={'flex-1 flex flex-col px-4 overflow-scroll'}>
+              {
+                watchHistoryList
+                  .slice()
+                  .reverse()
+                  .map((vod, idx) => {
+                    return <HistoryCard key={idx} vod={vod} onClick={() => {
+                      router.push(
+                        `/play/${vod.tid}/${vod.nid}/${vod.vodid}`,
+                      );
+                    }}/>
+                  })
+              }
+            </div>
+          }
+
           {watchHistoryList.length === 0 &&
             <div className="flex-col items-center flex">
               <Image
@@ -260,12 +275,24 @@ function HistoryCard({vod, onClick}) {
 function ConfirmClearHistoryModal({open, handler, onConfirm, onCancel}) {
   return <Dialog open={open} handler={handler} className={'bg-[#121212] rounded-[28px] p-[30px]'} size={'xs'}>
     <DialogBody className={'p-0 w-full h-full'}>
-      <div className={'flex flex-col gap-[16px] px-10 font-medium'}>
-        <span className={'text-[17px] text-white text-center'}>清除提示</span>
-        <span className={'text-[17px] text-white text-center'}>您确定要清空播放历史吗？？</span>
-        <div className={'flex flex-col py-[10px]'}>
-          <Button className={'text-[15px] text-white bg-shayuBlue'} onClick={onConfirm}>确定</Button>
-          <Button className={'text-[15px] text-[#9C9C9C] bg-transparent'} onClick={onCancel}>取消</Button>
+      <div className={'desktop'}>
+        <div className={'flex flex-col gap-[16px] px-10 font-medium'}>
+          <span className={'text-[17px] text-white text-center'}>清除提示</span>
+          <span className={'text-[17px] text-white text-center'}>您确定要清空播放历史吗？？</span>
+          <div className={'flex flex-col py-[10px]'}>
+            <Button className={'text-[15px] text-white bg-shayuBlue'} onClick={onConfirm}>确定</Button>
+            <Button className={'text-[15px] text-[#9C9C9C] bg-transparent'} onClick={onCancel}>取消</Button>
+          </div>
+        </div>
+      </div>
+      <div className={'mobile'}>
+        <div className={'flex flex-col gap-[16px] px-10 font-medium'}>
+          <span className={'text-[17px] text-white text-center'}>清除提示</span>
+          <span className={'text-[13px] text-white text-center'}>您确定要清空播放历史吗？？</span>
+          <div className={'flex gap-1'}>
+            <Button className={'flex-1 text-[15px] text-white'} onClick={onCancel} variant={'outlined'} tabIndex={-1}>取消</Button>
+            <Button className={'flex-1 text-[15px] text-shayuBlue'} onClick={onConfirm} variant={'outlined'} tabIndex={-1} color={'blue'}>确定</Button>
+          </div>
         </div>
       </div>
     </DialogBody>
