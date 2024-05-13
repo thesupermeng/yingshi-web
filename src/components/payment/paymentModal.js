@@ -16,7 +16,7 @@ export default function PaymentModal({open, handler}) {
 
   useEffect(() => {
     getYingshiProducts().then((res) => {
-      setProductList(res['4_fang_items'])
+      if (res) setProductList(res['4_fang_items'])
     })
   }, [])
 
