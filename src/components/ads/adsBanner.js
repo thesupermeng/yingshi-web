@@ -1,6 +1,7 @@
 import { useEffect, useCallback, useState } from 'react';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { YingshiApi } from '@/util/YingshiApi';
+import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 
 export const AdsBanner = ({
   width = '100%',
@@ -11,6 +12,7 @@ export const AdsBanner = ({
 }) => {
 
   const [ads, setAds] = useState(null);
+  const { isVip, userInfo } = useYingshiUser();
 
   const getAdsSlotAds = async (slotId) => {
     return YingshiApi(
@@ -26,6 +28,7 @@ export const AdsBanner = ({
     let slotId = 100 + navId;
     if(slotId > 99 && slotId < 110){
       getAdsSlotAds(slotId).then((data) => {
+        console.log(data)
         setAds(data);
       });
     }
