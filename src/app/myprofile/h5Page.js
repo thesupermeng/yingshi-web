@@ -145,16 +145,16 @@ export default function H5Page({params}) {
 
   return (
     <div>
-      {openLoginSuccess &&
-        <div className={'absolute top-0 left-0 flex justify-center items-center w-full h-full'}
-             onClick={() => setOpenSignInUp(false)}>
-          <div
-            className={'w-[270px] h-[195px] rounded-[14px] bg-[#222222CC] flex flex-col items-center justify-center'}>
-            <Image src={TickAnimation} alt={'Login success'} width={95} height={95}/>
-            <span className={'text-[17px]'}>登录成功</span>
-          </div>
-        </div>
-      }
+      {/*{openLoginSuccess &&*/}
+      {/*  <div className={'absolute top-0 left-0 flex justify-center items-center w-full h-full'}*/}
+      {/*       onClick={() => setOpenSignInUp(false)}>*/}
+      {/*    <div*/}
+      {/*      className={'w-[270px] h-[195px] rounded-[14px] bg-[#222222CC] flex flex-col items-center justify-center'}>*/}
+      {/*      <Image src={TickAnimation} alt={'Login success'} width={95} height={95}/>*/}
+      {/*      <span className={'text-[17px]'}>登录成功</span>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*}*/}
       <LogoutModal
         open={openLogoutConfirmation}
         handler={() => setOpenLogoutConfirmation(x => !x)}
