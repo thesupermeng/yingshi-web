@@ -1234,7 +1234,7 @@ const Header = () => {
               {/*  />*/}
               {/*</div>*/}
               <div
-                className={'flex-1 flex justify-end items-center px-2'}
+                className={'flex-1 hidden justify-end items-center px-2'}
                 onClick={() => {
                   updateUserInfo(); // will assign default username
                   router.push('/myprofile');
