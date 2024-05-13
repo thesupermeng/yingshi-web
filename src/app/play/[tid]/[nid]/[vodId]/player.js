@@ -19,7 +19,6 @@ export default function Player({
   const artContainerRef = useRef();
   const artRef = useRef();
   const adsPluginRef = useRef();
-  const loginFlowRef = useRef(null);
   const router = useRouter();
 
   // const [remaining, setRemaining]= useState(setupTimeout)
@@ -71,11 +70,7 @@ export default function Player({
         const isMobile = window.innerWidth < 768;
 
         if (!userInfo) {
-          if (isMobile) {
-            setIsLoginOpen(true);
-          } else {
-            // loginFlowRef.current.start();
-          }
+          setIsLoginOpen(true);
         } else {
           router.push('/payment');
         }
@@ -172,10 +167,10 @@ export default function Player({
   }, []);
 
   useEffect(() => {
-    artRef.current.switchUrl(option.url);
-    // artRef.current.switchUrl(
-    //   'https://m3u.haiwaikan.com/xm3u8/c97db14105eea2eef701e1283fed0adad5fbb6a501851302a592e744fbba6ebd9921f11e97d0da21.m3u8'
-    // );
+    // artRef.current.switchUrl(option.url);
+    artRef.current.switchUrl(
+      'https://m3u.haiwaikan.com/xm3u8/c97db14105eea2eef701e1283fed0adad5fbb6a501851302a592e744fbba6ebd9921f11e97d0da21.m3u8'
+    );
     artRef.current.on('video:ended', onVideoEnd);
     return () => {
       if (artRef.current) {
@@ -186,8 +181,6 @@ export default function Player({
 
   return (
     <div ref={artContainerRef} {...rest}>
-      {/* TODO : temp remove login flow solve video play in background bug */}
-      {/*<LoginFlow ref={loginFlowRef} />*/}
     </div>
   );
 }

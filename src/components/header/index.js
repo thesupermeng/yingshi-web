@@ -36,7 +36,6 @@ import {
 import TopicHeader from './../../components/topicHeader';
 import { updateUserInfo } from '@/services/yingshiUser';
 import QRCode from 'qrcode.react';
-import LoginFlow from '@/components/login/loginFlow';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 
@@ -53,7 +52,6 @@ const Header = () => {
   const dropdownVipRef = useRef(null);
   const dropdownHistoryRef = useRef(null);
   const dropdownAppRef = useRef(null);
-  const loginFlowRef = useRef(null);
 
   const { t } = useTranslation();
 
@@ -916,7 +914,7 @@ const Header = () => {
             if (userInfo) {
               router.push('/myprofile');
             } else {
-              loginFlowRef.current.start();
+              setOpenLogin(true)
             }
           }}
         >
@@ -927,7 +925,6 @@ const Header = () => {
             width={25}
           />
         </div>
-        <LoginFlow ref={loginFlowRef} />
       </div>
     </div>
   );
