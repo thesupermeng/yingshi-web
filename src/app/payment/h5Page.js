@@ -76,12 +76,12 @@ export default function H5Page() {
           top: '20px',
           left: '20px'
         }} onClick={()=> router.back()}/>
-        <PaymentHeader className={'pt-[100px]'}/>
+        <PaymentHeader className={'pt-[80px]'}/>
         {/*<PaymentCountdown className={'mt-[21px] self-start'}/>*/}
-        <PaymentProductsList className={'mt-[20px]'} productList={productList.sort((a, b) => a.product_sorting - b.product_sorting)} onProductSelect={(product) => setProductSelected(product)}/>
-        <PaymentMethods className={'mt-[26px]'} paymentOptions={productSelected?.payment_options ?? []} onMethodSelect={(method) => setPaymentMethodSelected(method)}/>
-        <div className={'fixed bottom-0 pb-5 bg-black w-full px-[29px]'}>
-          <PaymentDisclaimer className={'mt-[30px]'}/>
+        <PaymentProductsList className={'mt-[12px]'} productList={productList.sort((a, b) => a.product_sorting - b.product_sorting)} onProductSelect={(product) => setProductSelected(product)}/>
+        <PaymentMethods className={'mt-[13px]'} paymentOptions={productSelected?.payment_options ?? []} onMethodSelect={(method) => setPaymentMethodSelected(method)}/>
+        <div className={'fixed bottom-0 pb-4 bg-black w-full px-[29px]'}>
+          <PaymentDisclaimer className={'mt-[15px]'}/>
           <PaymentPurchaseButton className={'mt-[15px]'} productInfo={productSelected} paymentInfo={paymentMethodSelected}/>
         </div>
       </div>
