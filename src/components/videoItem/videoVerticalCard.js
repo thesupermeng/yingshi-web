@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { ImagePlaceholder } from '@/asset/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import base64PlaceholderString from '@/app/placeholder';
 
 export const VideoVerticalCard = ({ vod }) => {
   const router = useRouter();
@@ -12,6 +13,7 @@ export const VideoVerticalCard = ({ vod }) => {
     list = strings.split(',').filter((item) => item !== '');
     return list;
   };
+
   return (
     <div className='flex flex-col items-center'>
       <div className='relative w-full aspect-[530/726] group mx-4 my-2 rounded-lg'>
@@ -25,10 +27,9 @@ export const VideoVerticalCard = ({ vod }) => {
             router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);
           }}
         >
-          {/* {console.log(ImagePlaceholder.src)} */}
           <Image
             placeholder='blur'
-            blurDataURL={ImagePlaceholder.src}
+            blurDataURL={'data:image/png;base64,' + base64PlaceholderString}
             onClick={(e) => {
               e.preventDefault();
               router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);
