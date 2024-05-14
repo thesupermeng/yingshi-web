@@ -81,7 +81,16 @@ export default function Home() {
     let currentPage = nextPage;
     getTopicListApi().then((data) => {
       if (nextPage > 1) {
-        setTopicList((prev) => [...prev, ...data.List]);
+
+        try{
+          setTopicList((prev) => [...prev, ...data.List]);
+        }catch(e)
+        {
+          console.log(e)
+          console.log('crash')
+          console.log(topicList)
+          setTopicList(data.List);
+        }
       } else {
         setTopicList(data.List);
       }
