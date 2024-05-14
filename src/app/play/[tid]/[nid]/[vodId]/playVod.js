@@ -225,7 +225,12 @@ export const PlayVod = ({ vodId, tId, nId }) => {
 
   useEffect(() => {
     getSuggestedVodType().then((data) => {
-      setSuggestedVods(data.List);
+      try {
+        setSuggestedVods(data.List);
+      } catch (e) {
+        console.log(e)
+        setSuggestedVods([]);
+      }
     });
   }, [vod]);
 
@@ -743,7 +748,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                   className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5'
                   style={{ marginTop: '0px', marginBottom: '5rem' }}
                 >
-                  {suggestedVods.length > 0 &&
+                  {suggestedVods && suggestedVods.length > 0 &&
                     suggestedVods?.slice(0, 12).map((vod, i) => {
                       return <VideoVerticalCard vod={vod} key={i} />;
                     })}
