@@ -360,7 +360,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   };
 
   const onSelectEpisode = (episode) => {
-    router.push(`/play/${vod.type_id}/${episode.nid + 1}/${vod.vod_id}`);
+    router.replace(`/play/${vod.type_id}/${episode.nid + 1}/${vod.vod_id}`);
     setEpisodeSelected(episode);
   };
 
@@ -376,7 +376,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
       return;
     }
 
-    router.push(
+    router.replace(
       `/play/${vod.type_id}/${
         vodSourceSelected?.vod_play_list?.urls[indexFound + 1].nid + 1
       }/${vod.vod_id}`
