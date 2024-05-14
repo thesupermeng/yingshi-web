@@ -6,7 +6,7 @@ const GoogleAnalyticComponent = () => {
   useEffect(() => {
     // Google Analytics script
     const script = document.createElement('script');
-    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-2562H7TH3Z';
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-VRZW8QLRHZ';
     script.async = true;
     document.head.appendChild(script);
 
@@ -14,7 +14,7 @@ const GoogleAnalyticComponent = () => {
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', 'G-2562H7TH3Z');
+    gtag('config', 'G-VRZW8QLRHZ');
 
     return () => {
       // Clean up function if needed
