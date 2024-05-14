@@ -48,7 +48,7 @@ function Product({isBest, isSelected, productInfo, onProductSelect}) {
 
       <div className={'flex-1 w-full absolute'}>
         {/* overlay */}
-        {isSelected && isBest &&
+        {isBest &&
           <div
             className={'flex w-fit items-center justify-center rounded-tl-[8px] rounded-br-[8px] bg-[#FA3E3E] px-[9px] py-[4px] top-0 left-0'}>
             <span className={'text-white text-[14px] font-semibold'}>最多人选择</span>

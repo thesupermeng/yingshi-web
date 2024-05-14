@@ -14,6 +14,8 @@ import {faAngleLeft, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {getTransactionDetail, getYingshiProducts} from '@/services/yingshiPayment';
 import PaymentStatusModal from '@/componentsH5/payment/paymentStatusModal';
+import {VipBackgroundImage} from '@/asset/image';
+import Image from 'next/image';
 
 export default function H5Page() {
   const router = useRouter()
@@ -47,17 +49,18 @@ export default function H5Page() {
       {/* background */}
       <div className={'w-full'}>
         <div className={'relative bg-[#14161A]'}>
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            controls={false}
-            className={'w-full h-full object-cover pb-1'}
-            poster={'./img/vip_background_fallback.jpg'}
-          >
-            <source src={'./video/vip_background.mp4'} type={'video/mp4'}/>
-          </video>
+          {/*<video*/}
+          {/*  autoPlay*/}
+          {/*  loop*/}
+          {/*  muted*/}
+          {/*  playsInline*/}
+          {/*  controls={false}*/}
+          {/*  className={'w-full h-full object-cover pb-1'}*/}
+          {/*  poster={'./img/vip_background_fallback.jpg'}*/}
+          {/*>*/}
+          {/*  <source src={'./video/vip_background.mp4'} type={'video/mp4'}/>*/}
+          {/*</video>*/}
+          <Image src={VipBackgroundImage} alt={'vip background image'}/>
           <div
             className={styles.gradient_overlay + ' absolute top-0 left-0 w-full h-full'}
           />
