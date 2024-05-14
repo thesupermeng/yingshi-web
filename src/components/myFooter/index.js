@@ -63,87 +63,84 @@ const MyFooter = () => {
       pathname.startsWith('/payment') ||
       pathname.startsWith('/login') ||
       pathname.startsWith('/privacy') ||
-      pathname.startsWith('/service')
+      pathname.startsWith('/service') ||
+      pathname.startsWith('/myprofile/watchHistory') ||
+      pathname.startsWith('/myprofile/userCenter') ||
+      pathname.startsWith('/myprofile/feedback')
 
   ) {
     return <></>;
   }
 
+  const tabs = [
+    {
+      onClick: () => {
+        handleClick(0);
+      },
+      active: selectedSpecialMenu !== -1 && selectedMenu.id === 0 && pathname == '/',
+      icon: homeTab,
+      iconActive: homeTabActive,
+      title: '首页',
+    },
+    // {
+    //   onClick: () => {
+    //     handleClick(997);
+    //   },
+    //   active: pathname.startsWith('/sport'),
+    //   icon: AhaLogo,
+    //   iconActive: AhaLogoActive,
+    //   title: 'aha体育',
+    // },
+    {
+      onClick: () => {
+        handleClick(998);
+      },
+      active: pathname.startsWith('/topic') ,
+      icon: topicTab,
+      iconActive: topicTabActive,
+      title: '播单',
+    },
+    {
+      onClick: () => {
+        handleClick(990);
+      },
+      active: pathname.startsWith('/myprofile'),
+      icon: profileTab,
+      iconActive: profileTabActive,
+      title: '我的',
+    },
+  ]
+
   return (
     <div className='mobile'>
       <div className='flex mb-2'>
-        <div
-          className='col flex-col d-flex justify-center align-center items-center'
-          onClick={() => {
-            handleClick(0);
-          }}
-        >
-          <div className='d-flex'>
-            <Image
-              alt='鲨鱼影视'
-              src={
-                selectedSpecialMenu !== -1 && selectedMenu.id === 0 && pathname == '/'
-                  ? homeTabActive
-                  : homeTab
-              }
-              width={22}
-              style={{cursor: 'pointer'}}
-            />
-          </div>
-          <div className={`text-[12px] font-medium ${(selectedSpecialMenu !== -1 && selectedMenu.id === 0 && pathname == '/') ? 'text-shayuBlue' : 'text-[#6A6A6A]'}`}>首页</div>
-        </div>
-
-        {/* <div
-          className='col flex-col d-flex justify-center align-center items-center'
-          onClick={() => {
-            handleClick(997);
-          }}
-        >
-          <div className='d-flex'>
-            <Image
-              alt='aha体育'
-              src={pathname.startsWith('/sport') ? AhaLogoActive : AhaLogo}
-              width={22}
-              style={{cursor: 'pointer'}}
-            />
-          </div>
-          <div className={`text-[12px] font-medium ${pathname.startsWith('/sport') ? 'text-shayuBlue' : 'text-[#6A6A6A]'}`}>aha体育</div>
-        </div> */}
-
-        <div
-          className='col flex-col d-flex justify-center align-center items-center'
-          onClick={() => {
-            handleClick(998);
-          }}
-        >
-          <div className='d-flex'>
-            <Image
-              alt='鲨鱼影视'
-              src={pathname.startsWith('/topic') ? topicTabActive : topicTab}
-              width={22}
-              style={{cursor: 'pointer'}}
-            />
-          </div>
-          <div className={`text-[12px] font-medium ${pathname.startsWith('/topic') ? 'text-shayuBlue' : 'text-[#6A6A6A]'}`}>播单</div>
-        </div>
-        <div
-          className='col flex-col d-flex justify-center align-center items-center'
-          onClick={() => {
-            handleClick(990);
-          }}
-        >
-          <div className='d-flex'>
-            <Image
-              alt='鲨鱼影视'
-              src={pathname.startsWith('/myprofile') ? profileTabActive : profileTab}
-              width={22}
-              style={{cursor: 'pointer'}}
-            />
-          </div>
-          <div className={`text-[12px] font-medium ${pathname.startsWith('/myprofile') ? 'text-shayuBlue' : 'text-[#6A6A6A]'}`}>我的</div>
-        </div>
+        {tabs.map((tab, index) => (
+          <TabItem key={index} {...tab} />
+        ))}
       </div>
     </div>
   );
 };
+
+const TabItem = ({onClick, active, icon, iconActive, title}) => {
+  return (
+    <div
+      className='col flex-col d-flex justify-center align-center items-center'
+      onClick={onClick}
+    >
+      <div className='d-flex'>
+        <Image
+          alt='鲨鱼影视'
+          src={active ? iconActive : icon}
+          width={22}
+          style={{cursor: 'pointer'}}
+        />
+      </div>
+      <div
+        className={`text-[14px] font-medium ${active ? 'text-shayuBlue' : 'text-[#6A6A6A]'}`}>{title}
+      </div>
+    </div>
+  )
+}
+
 export default MyFooter;

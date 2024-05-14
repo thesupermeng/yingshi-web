@@ -38,7 +38,7 @@ import { updateUserInfo } from '@/services/yingshiUser';
 import QRCode from 'qrcode.react';
 import LoginFlow from '@/components/login/loginFlow';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
-import {useLoginOpen} from '@/hook/yingshiScreenState/useLoginOpen';
+import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 
 const getHeaderMenu = (state) => state.headerMenu;
 const getHeaderMenuSelected = (state) => state.headerMenuSelected;
@@ -227,8 +227,8 @@ const Header = () => {
     );
     setSearchHistoryList(JSON.parse(localStorage.getItem('searchHistoryList')));
     setOpenSearch(false);
-    setSearchInput('');
-    router.push('/search/' + searchInput);
+    // setSearchInput('');
+    router.push('/search/' + encodeURIComponent(searchInput));
   };
 
   const handleClearSearchHistory = () => {
@@ -283,12 +283,14 @@ const Header = () => {
     } else {
       dispatch(setSelectedId(value));
       router.push('/');
+      setSearchInput('');
     }
   };
 
   const goToSeachResult = (query) => {
     setOpenSearch(false);
-    router.push('/search/' + query);
+    setSearchInput(query);
+    router.push('/search/' + encodeURIComponent(query));
   };
 
   const calculateItemsVisibility = () => {
@@ -327,7 +329,7 @@ const Header = () => {
     const fetchData = async () => {
       let menuItem = await getTopNav();
       const topTenItem = await getTopTenList();
-
+      console.log(menuItem);
       setTopTenList(topTenItem.vod_list);
       menuItem.push({
         id: 998,
@@ -355,11 +357,12 @@ const Header = () => {
       dispatch(setSelectedId(0));
     } else if (pathname.startsWith('/play/')) {
       dispatch(setSpecialSelectedId(-1));
-      dispatch(setSelectedId(0));
+      dispatch(setSelectedId(selectedMenu.id));
     } else {
       dispatch(setSpecialSelectedId(-1));
       dispatch(setSelectedId(selectedMenu.id));
     }
+    if (!pathname.startsWith('/search/')) setSearchInput('');
   }, [pathname]);
 
   useEffect(() => {
@@ -390,7 +393,10 @@ const Header = () => {
         dropdownSearchRef.current &&
         !dropdownSearchRef.current.contains(event.target)
       ) {
-        setOpenSearch(false);
+        const isMobile = window.innerWidth < 768;
+        if (!isMobile) {
+          setOpenSearch(false);
+        }
       }
     }
 
@@ -405,13 +411,24 @@ const Header = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const metaTag = document.querySelector('meta[name="viewport"]');
+    metaTag.name = 'viewport';
+    if (metaTag) {
+      metaTag.content = 'width=device-width, initial-scale=1, maximum-scale=1';
+    }
+    return () => {
+      metaTag.content = 'width=device-width, initial-scale=1';
+    };
+  }, []);
+
   if (loading) {
     return <LoadingPage full={true} />;
   }
 
   let searchContainer = (
     <div className='items-center flex flex-1 md:flex-none'>
-      <div ref={dropdownSearchRef} className=' flex-1 md:flex-none'>
+      <div ref={dropdownSearchRef} className='flex-1 md:flex-none'>
         <div className='relative flex flex-1 md:flex-none'>
           <div
             className={`flex justify-between pr-4 pl-2 self-center ${
@@ -433,7 +450,7 @@ const Header = () => {
               placeholder='输入搜索关键词'
               value={searchInput}
               onChange={handleChange}
-              className='border-0 border-gray-300 text-white rounded-full pl-10 md:pl-4 md:pr-10 pr-4 py-2 focus:outline-none w-full md:w-60 header-search-input-desktop'
+              className='border-0 border-gray-300 text-white rounded-full pl-10 md:pl-4 md:pr-10 pr-4 py-2 focus:outline-none w-full md:w-60 header-search-input-desktop text-[14px]'
               onClick={handleOpenSearch}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
@@ -499,7 +516,7 @@ const Header = () => {
                         alt='empty'
                         width={120}
                       />
-                      <span>暂无播单</span>
+                      <span>无搜索结果</span>
                     </div>
                   )
                 ) : (
@@ -556,6 +573,7 @@ const Header = () => {
                           className='flex flex-row justify-between py-2.5 cursor-pointer search-hot-item'
                           key={index}
                           onClick={(e) => {
+                            console.log('helelle');
                             e.preventDefault();
                             setOpenSearch(false);
                             router.push(
@@ -623,7 +641,7 @@ const Header = () => {
         <div className='flex h-full flex-row cursor-pointer rounded-full md:bg-[#1D2023] md:px-4 md:ml-2 md:rounded-full'>
           <Image className='mr-2' src={vipIcon} alt='vip' width={25} />
           <div className='flex items-center'>
-            <span className='text-[#F4DBBA]'>VIP会员</span>
+            <span className='text-[#F4DBBA] text-[14px]'>VIP会员</span>
           </div>
         </div>
         {openVip ? (
@@ -759,10 +777,12 @@ const Header = () => {
                               src={item.vodpic}
                             />
                           </div>
-                          <div className='flex-1 flex flex-col truncate gap-y-2'>
-                            <span className='text-sm truncate'>
+                          <div className='flex-1 flex flex-col truncate gap-y-1'>
+                            <span className='text-sm truncate '>
                               {item.vodname}
                             </span>
+                            {/* <span className='text-xs truncate'>{item.tid == 2?' ':`第${item.nid}集` }</span> */}
+                            <span className='text-xs truncate'>{`第${item.nid}集`}</span>
                             <span className='text-xs text-white'>
                               观看至 {secondsToHHMMSS(item.watchtimes)}
                             </span>
@@ -1077,7 +1097,7 @@ const Header = () => {
     </div>
   );
 
-  if (pathname.startsWith('/topic/')) {
+  if (pathname.startsWith('/topic/') || pathname.startsWith('/xvod')) {
     return <div className={'desktop z-50'}>{defaultHeader}</div>;
   }
 
@@ -1161,13 +1181,15 @@ const Header = () => {
     return (
       <>
         <div className={'z-30 w-screen mobile'}>
-          <div className='flex pt-4 mx-2.5'>
-            <div className='gap-y-2 flex-col w-full md:flex-row flex'>
-              <div className='flex-1 flex px-4 md:justify-start'>
-                <span className='text-topic-title'> 我的 </span>
+          {pathname === '/myprofile' && (
+            <div className='flex pt-3 mx-2.5'>
+              <div className='gap-y-2 flex-col w-full md:flex-row flex'>
+                <div className='flex-1 flex px-4 md:justify-start'>
+                  <span className='text-topic-title'> 我的 </span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
         <div className={'desktop z-50'}>{defaultHeader}</div>
       </>
@@ -1214,7 +1236,7 @@ const Header = () => {
               {/*  />*/}
               {/*</div>*/}
               <div
-                className={'flex-1 flex justify-end items-center px-2'}
+                className={'flex-1 hidden justify-end items-center px-2'}
                 onClick={() => {
                   updateUserInfo(); // will assign default username
                   router.push('/myprofile');

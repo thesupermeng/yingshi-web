@@ -1,11 +1,18 @@
-import {Button} from '@material-tailwind/react';
+import {Button, Dialog, DialogBody} from '@material-tailwind/react';
 import styles from './styles.module.css'
-import {useState} from 'react';
+import React, {useState} from 'react';
 import {postPayOrder} from '@/services/yingshiPayment';
+import Image from 'next/image';
+import {TickAnimation} from '@/asset/gif';
+import {CrossRed} from '@/asset/icons';
 
 export default function PaymentPurchaseButton({productInfo, paymentInfo, className}) {
   const [isPaymentProcessing, setIsPaymentProcessing] = useState(false)
+  const [showPaymentFailed, setShowPaymentFailed] = useState(false)
 
+  const handleShowPaymentFailed = () => {
+    setShowPaymentFailed(x => !x)
+  }
 
   const handleOnPurchase = () => {
     setIsPaymentProcessing(true)
@@ -21,7 +28,13 @@ export default function PaymentPurchaseButton({productInfo, paymentInfo, classNa
             newTab.document.write(res.data.paymentData.html.replaceAll('\\', ''));
             newTab.document.close();
           }
+        } else {
+          setShowPaymentFailed(true)
+          setTimeout(() => {
+            setShowPaymentFailed(false)
+          }, 3000)
         }
+        setIsPaymentProcessing(false)
       })
       // .finally(() => {
       //   setIsPaymentProcessing(false)
@@ -37,6 +50,18 @@ export default function PaymentPurchaseButton({productInfo, paymentInfo, classNa
           立即解锁 - 总额 {productInfo.currency.currency_symbol}{productInfo.product_price}
         </span>
         </Button>
+      }
+      {showPaymentFailed &&
+        <Dialog open={open} handler={handleShowPaymentFailed} className={'bg-[#121212] rounded-[28px] p-[30px] outline-none'} size={'xs'}>
+          <DialogBody className={'p-0 w-full h-full'}>
+            <div
+              className={'w-full h-full rounded-[14px] flex flex-col items-center justify-center'}>
+              <Image src={CrossRed} alt={'Login success'} width={95} height={95} className={'p-2'}/>
+              <span className={'text-[17px] text-white'}>支付失败，请稍后再试</span>
+            </div>
+          </DialogBody>
+        </Dialog>
+
       }
     </>
   )

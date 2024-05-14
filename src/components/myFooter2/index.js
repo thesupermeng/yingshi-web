@@ -39,7 +39,10 @@ const MyFooter2 = () => {
     pathname.startsWith('/login') ||
     pathname.startsWith('/privacy') ||
     pathname.startsWith('/service') ||
-    pathname.startsWith('/sport')
+    pathname.startsWith('/sport') ||
+    pathname.startsWith('/myprofile/watchHistory') ||
+    pathname.startsWith('/myprofile/userCenter') ||
+    pathname.startsWith('/myprofile/feedback')
   ) {
     return <></>;
   }

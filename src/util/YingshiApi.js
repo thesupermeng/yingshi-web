@@ -18,6 +18,12 @@ const getIPAddress = async () => {
     // got error, use default ip address
     ipAddress = '219.75.27.16'
   });
+
+  if (!response || !response.IPv4) {
+    // got error, use default ip address
+    return '219.75.27.16'
+  }
+
   ipAddress = response.IPv4;
   return ipAddress;
 }
@@ -99,8 +105,8 @@ const getHeader = async (
     'Content-Type': 'application/json',
     'Device-Id': 'application/json',
     'Platform-OS': 'WEB',
-    'App-Channel': 'WEB',
-    'App-Name': 'WEB',
+    'App-Channel': 'LANSHAYU',
+    'App-Name': 'LANSHAYU',
     'IP-Address': await getIPAddress(),
     'App-Version': '',
     'Access-Control-Allow-Origin': '*',

@@ -81,7 +81,16 @@ export default function Home() {
     let currentPage = nextPage;
     getTopicListApi().then((data) => {
       if (nextPage > 1) {
-        setTopicList((prev) => [...prev, ...data.List]);
+
+        try{
+          setTopicList((prev) => [...prev, ...data.List]);
+        }catch(e)
+        {
+          console.log(e)
+          console.log('crash')
+          console.log(topicList)
+          setTopicList(data.List);
+        }
       } else {
         setTopicList(data.List);
       }
@@ -378,14 +387,14 @@ export default function Home() {
               <div className='mobile flex flex-col w-full'>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                 {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
-                  <div className='pt-4 container  w-[100%]'>
+                  <div className='pt-1 container  w-[100%]'>
                     {categories != [] &&
                       categories?.map((category, idx) => {
                         return (
                           <div
                             id={category.type_id}
                             key={idx}
-                            style={{ paddingTop: '3rem' }}
+                            style={{ paddingTop: '1rem' }}
                           >
                             <div className='flex justify-between'>
                               <span

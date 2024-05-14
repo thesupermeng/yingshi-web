@@ -1,20 +1,31 @@
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Artplayer from 'artplayer';
 import Hls from 'hls.js';
 import artplayerPluginAds from 'artplayer-plugin-ads';
+import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
+import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
+import LoginFlow from '@/components/login/loginFlow';
+import { useRouter } from 'next/navigation';
 
 export default function Player({
   option,
+  setupTimeout,
   getInstance,
   onVideoEnd,
   episodeSelected,
   vodSourceSelected,
-  adsInfo,
   ...rest
 }) {
   const artContainerRef = useRef();
   const artRef = useRef();
   const adsPluginRef = useRef();
+  const loginFlowRef = useRef(null);
+  const router = useRouter();
+
+  // const [remaining, setRemaining]= useState(setupTimeout)
+
+  const { userInfo } = useYingshiUser();
+  const [isLoginOpen, setIsLoginOpen] = useLoginOpen();
 
   const playM3U8 = (video, url, art) => {
     if (Hls.isSupported()) {
@@ -31,6 +42,66 @@ export default function Player({
     }
   };
 
+  const addOnLayout = () => {
+    return (art) => {
+      art.layers.add({
+        name: 'ads',
+        html: `<div style="background-color: #00000099; padding: 4px; border-radius: 5px">
+        <span style="font-size: 12px">试看${setupTimeout}秒后结束&nbsp;|&nbsp;</span>
+        <span style="font-size: 12px; color: #D1AC7D">开通VIP畅享无限内容</span>
+        </div>`,
+        style: {
+          display: `${setupTimeout === undefined ? 'none' : 'block'}`,
+          position: 'absolute',
+          bottom: '60px',
+          left: '5px',
+        },
+      });
+
+      function handleDivClick() {
+        // Add your functionality here when the ad image is clicked
+        show();
+      }
+
+      art.layers.ads
+        .querySelector('div')
+        .addEventListener('click', handleDivClick);
+
+      function show() {
+        const isMobile = window.innerWidth < 768;
+
+        if (!userInfo) {
+          if (isMobile) {
+            setIsLoginOpen(true);
+          } else {
+            // loginFlowRef.current.start();
+          }
+        } else {
+          router.push('/payment');
+        }
+      }
+
+      if (setupTimeout !== undefined) {
+        art.on('seek', () => {
+          art.video.currentTime = 0;
+        });
+
+        art.on('video:timeupdate', () => {
+          // setRemaining(setupTimeout - parseInt(art.video.currentTime))
+          if (art.video.currentTime >= setupTimeout) {
+            art.pause();
+            show();
+          }
+        });
+      }
+
+      return {
+        name: 'vipDialog',
+        show,
+      };
+    };
+  };
+
   useLayoutEffect(() => {
     let showNextFlag;
     try {
@@ -42,6 +113,10 @@ export default function Player({
     } catch (e) {
       showNextFlag = false;
     }
+
+
+    Artplayer.MOBILE_DBCLICK_PLAY = false;
+    Artplayer.MOBILE_CLICK_PLAY = true;
 
     artRef.current = new Artplayer({
       ...option,
@@ -81,29 +156,9 @@ export default function Player({
           // },
         },
       ],
-      plugins: [],
+      plugins: [addOnLayout()],
     });
 
-    if (adsInfo !== null) {
-      // Initialize ads plugin
-      adsPluginRef.current = new artplayerPluginAds({
-        video: adsInfo?.video,
-        url: '',
-        playDuration: adsInfo.totalDuration,
-        totalDuration: adsInfo.totalDuration,
-        muted: false,
-        loop: false,
-        i18n: {
-          close: '关闭广告',
-          countdown: '%s秒',
-          detail: '查看详情',
-          canBeClosed: '%s秒后可关闭广告',
-        },
-      });
-
-      //   // Attach ads plugin to Artplayer instance
-      // artRef.current.plugins.add(adsPluginRef.current);
-    }
 
     if (getInstance && typeof getInstance === 'function') {
       getInstance(artRef.current);
@@ -118,6 +173,9 @@ export default function Player({
 
   useEffect(() => {
     artRef.current.switchUrl(option.url);
+    // artRef.current.switchUrl(
+    //   'https://m3u.haiwaikan.com/xm3u8/c97db14105eea2eef701e1283fed0adad5fbb6a501851302a592e744fbba6ebd9921f11e97d0da21.m3u8'
+    // );
     artRef.current.on('video:ended', onVideoEnd);
     return () => {
       if (artRef.current) {
@@ -126,5 +184,10 @@ export default function Player({
     };
   }, [option.url]);
 
-  return <div ref={artContainerRef} {...rest}></div>;
+  return (
+    <div ref={artContainerRef} {...rest}>
+      {/* TODO : temp remove login flow solve video play in background bug */}
+      {/*<LoginFlow ref={loginFlowRef} />*/}
+    </div>
+  );
 }

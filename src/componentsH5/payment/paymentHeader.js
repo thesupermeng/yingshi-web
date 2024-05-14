@@ -15,10 +15,10 @@ const benefits = [
     icon: glyph,
     title: '解锁全部影视内容',
   },
-  {
-    icon: subtractIcon,
-    title: '畅享离线下载',
-  },
+  // {
+  //   icon: subtractIcon,
+  //   title: '畅享离线下载',
+  // },
 ]
 
 export default function PaymentHeader({className}) {
@@ -28,8 +28,8 @@ export default function PaymentHeader({className}) {
       <div className="mobile flex flex-col w-full items-center">
         <div className={`${styles.benefit_container_border} w-full mt-[32px] min-w-[290px]`}>
           <div
-            className={`relative flex flex-col items-center px-[20px] pb-[20px] pt-[30px]  rounded-xl ${styles.benefit_container_background_color}`}>
-            <SubHeader className={'absolute top-0 -translate-y-1/2  min-w-[310px]'}/>
+            className={`relative flex flex-col items-center px-[12px] pb-[12px] pt-[20px]  rounded-xl ${styles.benefit_container_background_color}`}>
+            <SubHeader className={'absolute top-0 -translate-y-1/2  min-w-[270px]'}/>
             <div className={'grid grid-cols-5 w-full gap-y-1  min-w-[290px]'}>
               {
                 benefits.map((benefit, index) => <BenefitItem key={index} icon={benefit.icon} title={benefit.title} className={index % 2 === 0 ? 'col-span-3' : 'col-span-2'}/>)
@@ -52,8 +52,8 @@ export default function PaymentHeader({className}) {
 
 function SubHeader({className}) {
   return (
-    <div className={`${styles.sub_header_container_color} px-[12px] py-[8px] mx-[23px] rounded-[10px] ${className}`}>
-      <span className={'text-[#351B04] text-[14px] font-medium'}>升级解锁全部功能/内容 您还未开通 全部权益</span>
+    <div className={`${styles.sub_header_container_color} px-[10px] py-[4px] mx-[18px] rounded-[10px] ${className} text-center`}>
+      <span className={'text-[#351B04] text-center text-[12px] font-medium'}>升级解锁全部功能/内容 您还未开通 全部权益</span>
     </div>
   )
 }
@@ -63,8 +63,8 @@ function BenefitItem({icon, title, className}) {
     <>
       <div className={`mobile ${className}`}>
         <div className={'flex items-center gap-1'}>
-          <Image src={icon} alt={`${title} icon`} width={24} height={24}/>
-          <span className={'text-[14px] text-[#F4DBBA] font-normal'}>{title}</span>
+          <Image src={icon} alt={`${title} icon`} width={20} height={20}/>
+          <span className={'text-[12px] text-[#F4DBBA] font-normal'}>{title}</span>
         </div>
       </div>
       <div className={`desktop ${className}`}>

@@ -12,7 +12,7 @@ import {
   FeedbackIconGrey,
   HistoryIconGrey,
   ArrowRigthGrey,
-  Placeholder,
+  ImagePlaceholder,
 } from '@/asset/icons';
 
 export const VideoHorizontalCard = ({ vod, typepage_id }) => {
@@ -23,10 +23,9 @@ export const VideoHorizontalCard = ({ vod, typepage_id }) => {
   return (
     <div className='flex flex-col items-center'>
       <div className='relative flex w-full aspect-[726/430] group mx-4 my-3 rounded-lg'>
-
         <Image
           placeholder='blur'
-          blurDataURL={Placeholder.src}
+          blurDataURL={ImagePlaceholder.src}
           onClick={(e) => {
             router.push(`/play/${vod.type_id}/${nId}/${vod.vod_id}`);
           }}
@@ -35,10 +34,9 @@ export const VideoHorizontalCard = ({ vod, typepage_id }) => {
           style={{ borderRadius: '0.5rem !important', objectFit: 'cover' }}
           fill
           sizes='100%'
-          className='rounded-lg md:transition md:group-hover:scale-125 
+          className='rounded-lg md:transition md:group-hover:scale-125
   md:group-hover:cursor-pointer group-hover:rounded-lg md:group-hover:z-10 md:group-hover:rounded-lg'
         />
-
 
         {vod.vod_remarks !== undefined ? (
           <div className='flex absolute w-full bottom-1 px-1.5 justify-end'>
@@ -48,7 +46,9 @@ export const VideoHorizontalCard = ({ vod, typepage_id }) => {
           </div>
         ) : null}
       </div>
-      <span className='text-center text-sm mx-1 line-clamp-2'>{vod.vod_name}</span>
+      <span className='text-center text-sm mx-1 line-clamp-2'>
+        {vod.vod_name}
+      </span>
     </div>
   );
 };

@@ -14,6 +14,8 @@ import {faAngleLeft, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {getTransactionDetail, getYingshiProducts} from '@/services/yingshiPayment';
 import PaymentStatusModal from '@/componentsH5/payment/paymentStatusModal';
+import {VipBackgroundImage} from '@/asset/image';
+import Image from 'next/image';
 
 export default function H5Page() {
   const router = useRouter()
@@ -47,15 +49,18 @@ export default function H5Page() {
       {/* background */}
       <div className={'w-full'}>
         <div className={'relative bg-[#14161A]'}>
-          <video
-            src={'./video/vip_background.mp4'}
-            autoPlay
-            loop
-            muted
-            playsInline
-            controls={false}
-            className={'w-full h-full object-cover pb-1'}
-          />
+          {/*<video*/}
+          {/*  autoPlay*/}
+          {/*  loop*/}
+          {/*  muted*/}
+          {/*  playsInline*/}
+          {/*  controls={false}*/}
+          {/*  className={'w-full h-full object-cover pb-1'}*/}
+          {/*  poster={'./img/vip_background_fallback.jpg'}*/}
+          {/*>*/}
+          {/*  <source src={'./video/vip_background.mp4'} type={'video/mp4'}/>*/}
+          {/*</video>*/}
+          <Image src={VipBackgroundImage} alt={'vip background image'}/>
           <div
             className={styles.gradient_overlay + ' absolute top-0 left-0 w-full h-full'}
           />
@@ -71,12 +76,12 @@ export default function H5Page() {
           top: '20px',
           left: '20px'
         }} onClick={()=> router.back()}/>
-        <PaymentHeader className={'pt-[100px]'}/>
+        <PaymentHeader className={'pt-[80px]'}/>
         {/*<PaymentCountdown className={'mt-[21px] self-start'}/>*/}
-        <PaymentProductsList className={'mt-[20px]'} productList={productList.sort((a, b) => a.product_sorting - b.product_sorting)} onProductSelect={(product) => setProductSelected(product)}/>
-        <PaymentMethods className={'mt-[26px]'} paymentOptions={productSelected?.payment_options ?? []} onMethodSelect={(method) => setPaymentMethodSelected(method)}/>
-        <div className={'fixed bottom-0 pb-5 bg-black w-full px-[29px]'}>
-          <PaymentDisclaimer className={'mt-[30px]'}/>
+        <PaymentProductsList className={'mt-[12px]'} productList={productList.sort((a, b) => a.product_sorting - b.product_sorting)} onProductSelect={(product) => setProductSelected(product)}/>
+        <PaymentMethods className={'mt-[13px]'} paymentOptions={productSelected?.payment_options ?? []} onMethodSelect={(method) => setPaymentMethodSelected(method)}/>
+        <div className={'fixed bottom-0 pb-4 bg-black w-full px-[29px]'}>
+          <PaymentDisclaimer className={'mt-[15px]'}/>
           <PaymentPurchaseButton className={'mt-[15px]'} productInfo={productSelected} paymentInfo={paymentMethodSelected}/>
         </div>
       </div>

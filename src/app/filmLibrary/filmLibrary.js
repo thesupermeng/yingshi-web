@@ -243,6 +243,43 @@ export const FilmLibrary = ({}) => {
     return list;
   };
 
+  const heightFilter = () => {
+    let num = 1;
+    if (
+      filterTypeList[
+        filterTypeList.findIndex((item) => item.type_id === paramsFilter.typeId)
+      ].type_extend_obj.class !== ''
+    ) {
+      num +=1;
+    }
+
+    if (
+      filterTypeList[
+        filterTypeList.findIndex((item) => item.type_id === paramsFilter.typeId)
+      ].type_extend_obj.area !== ''
+    ) {
+      num +=1;
+    }
+
+    if (
+      filterTypeList[
+        filterTypeList.findIndex((item) => item.type_id === paramsFilter.typeId)
+      ].type_extend_obj.lang !== ''
+    ) {
+      num +=1;
+    }
+
+    if (
+      filterTypeList[
+        filterTypeList.findIndex((item) => item.type_id === paramsFilter.typeId)
+      ].type_extend_obj.year !== ''
+    ) {
+      num +=1;
+    }
+
+    return num ;
+  };
+
   const filterVideoList = (value, type) => {
     if (!loadingVideoList) {
       let params = { ...paramsFilter };
@@ -265,7 +302,6 @@ export const FilmLibrary = ({}) => {
       } else if (type == 'year') {
         params.year = value;
       }
-      console.log(params);
       setParamsFilter(params);
       setNextPage(1);
       setVideoList([]);
@@ -315,7 +351,9 @@ export const FilmLibrary = ({}) => {
               <div
                 className={`transition-all duration-500 md:h-fit md:visible md:py-2 
                 ease-out ${
-                  collapse ? 'opacity-0 h-0 collapse' : 'h-[280px] py-2'
+                  collapse
+                    ? 'opacity-0 h-0 collapse'
+                    : `h-[calc(${heightFilter()}_*_56px)] py-2 `
                 }
                 flex flex-col divide-y divide-gray-800 container md:flex md:opacity-100`}
               >
