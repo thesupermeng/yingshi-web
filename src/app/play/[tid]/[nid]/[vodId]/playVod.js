@@ -295,16 +295,19 @@ export const PlayVod = ({ vodId, tId, nId }) => {
 
       localStorage.setItem('watchHistoryList', JSON.stringify(listWithoutId));
 
-      if (artPlayerData !== null || artPlayerData !== undefined) {
+      if (artPlayerData !== null && artPlayerData !== undefined) {
         duplicateList.forEach((item) => {
           if (artPlayerData.times[item.vodurl]) {
             // Remove target URL from the object
             delete artPlayerData.times[item.vodurl];
           }
         });
-      }
 
-      localStorage.setItem('artplayer_settings', JSON.stringify(artPlayerData));
+        localStorage.setItem(
+          'artplayer_settings',
+          JSON.stringify(artPlayerData)
+        );
+      }
 
       //   if (watchHistoryData != null) {
       //     if (
