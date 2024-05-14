@@ -48,14 +48,16 @@ export default function H5Page() {
       <div className={'w-full'}>
         <div className={'relative bg-[#14161A]'}>
           <video
-            src={'./video/vip_background.mp4'}
             autoPlay
             loop
             muted
             playsInline
             controls={false}
             className={'w-full h-full object-cover pb-1'}
-          />
+            poster={'./img/vip_background_fallback.jpg'}
+          >
+            <source src={'./video/vip_background.mp4'} type={'video/mp4'}/>
+          </video>
           <div
             className={styles.gradient_overlay + ' absolute top-0 left-0 w-full h-full'}
           />
