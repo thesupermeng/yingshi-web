@@ -5,7 +5,7 @@ import artplayerPluginAds from 'artplayer-plugin-ads';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import LoginFlow from '@/components/login/loginFlow';
-import {useRouter} from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function Player({
   option,
@@ -21,7 +21,6 @@ export default function Player({
   const adsPluginRef = useRef();
   const loginFlowRef = useRef(null);
   const router = useRouter();
-
 
   // const [remaining, setRemaining]= useState(setupTimeout)
 
@@ -115,6 +114,10 @@ export default function Player({
       showNextFlag = false;
     }
 
+
+    Artplayer.MOBILE_DBCLICK_PLAY = false;
+    Artplayer.MOBILE_CLICK_PLAY = true;
+
     artRef.current = new Artplayer({
       ...option,
       container: artContainerRef.current,
@@ -155,6 +158,7 @@ export default function Player({
       ],
       plugins: [addOnLayout()],
     });
+
 
     if (getInstance && typeof getInstance === 'function') {
       getInstance(artRef.current);
