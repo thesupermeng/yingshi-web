@@ -25,6 +25,7 @@ export const VideoVerticalCard = ({ vod }) => {
             router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);
           }}
         >
+          {/* {console.log(ImagePlaceholder.src)} */}
           <Image
             placeholder='blur'
             blurDataURL={ImagePlaceholder.src}
