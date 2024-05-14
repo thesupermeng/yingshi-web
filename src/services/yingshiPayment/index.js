@@ -14,7 +14,7 @@ export const postPayOrder = async ({ productId, zfType }) => {
     URL_YINGSHI_PAYMENT.createPayOrder,
     {
       platform: 'WEB',
-      redirect_to: 'web-shayu',
+      redirect_to: 'sharkhd',
       product_id: productId,
       zf_type: zfType,
     },
