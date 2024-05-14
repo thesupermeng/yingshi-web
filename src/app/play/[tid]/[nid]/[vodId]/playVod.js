@@ -92,22 +92,17 @@ export const PlayVod = ({ vodId, tId, nId }) => {
       URL_YINGSHI_VOD.getAdsSlot,
       {
         slot_id: 146,
-        ip: '219.75.27.16',
+        // ip: '219.75.27.16',
         v: 1,
       },
       {
         method: 'GET',
-        headers: {
-          'App-Name': 'LANSHAYU',
-          'App-Channel': 'LANSHAYU',
-        },
+        // headers: {
+        //   'App-Name': 'LANSHAYU',
+        //   'App-Channel': 'LANSHAYU',
+        // },
       }
     );
-    // let ads = {
-    //   video: 'https://oss.yingshi.tv/videos/vod/vi/aha-qiantiepian-15sec.mp4',
-    //   totalDuration: 15,
-    // };
-    // return ads;
   };
 
   useEffect(() => {
@@ -139,8 +134,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
       setShowAds(false);
     } else {
       getAds().then((res) => {
-        console.log(res);
-        setAds(res?.data?.ads);
+        setAds(res);
       });
     }
   }, [isVip]);
@@ -151,8 +145,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         setShowAds(false);
       } else {
         getAds().then((res) => {
-          console.log(res);
-          setAds(res?.data?.ads);
+          setAds(res);
         });
       }
 
@@ -168,7 +161,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         setVod(res);
 
         const vodIdTemp = JSON.parse(localStorage.getItem('vodIdTemp'));
-        console.log(vodIdTemp);
         if (vodIdTemp === null) {
           localStorage.setItem('vodIdTemp', vodId);
         } else {
@@ -182,7 +174,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
           const sourceType = JSON.parse(
             localStorage.getItem('vodSourceSelected')
           );
-          console.log(sourceType);
           let index = 0;
           if (sourceType !== null)
             index = res.vod_sources.findIndex(
@@ -239,7 +230,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   }, [vod]);
 
   useEffect(() => {
-    console.log(episodeSelected);
     if (episodeSelected !== null) {
       if (playerRef.current) {
         playerRef.current.pause();
@@ -248,8 +238,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         setShowAds(false);
       } else {
         getAds().then((res) => {
-          console.log(res);
-          setAds(res?.data?.ads);
+          setAds(res);
         });
       }
 
@@ -262,34 +251,85 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         vodurl: episodeSelected.url,
         watchtimes: 0,
       };
+
       let watchHistoryData = JSON.parse(
         localStorage.getItem('watchHistoryList')
       );
 
-      if (watchHistoryData != null) {
-        if (
-          watchHistoryData.findIndex(
-            (item) => item.vodurl === watchHistory.vodurl
-          ) == -1
-        ) {
-          watchHistoryData.push(watchHistory);
-        } else {
-          watchHistoryData = watchHistoryData.filter(
-            (item) => item.vodurl !== watchHistory.vodurl
-          );
-          watchHistoryData.push(watchHistory);
-        }
-
-        if (watchHistoryData.length > 10) {
-          watchHistoryData.splice(0, 1);
-        }
-      } else {
-        watchHistoryData = [watchHistory];
-      }
-      localStorage.setItem(
-        'watchHistoryList',
-        JSON.stringify(watchHistoryData)
+      let artPlayerData = JSON.parse(
+        localStorage.getItem('artplayer_settings')
       );
+
+      if (watchHistoryData == null) {
+        watchHistoryData = [watchHistory];
+      } else {
+        watchHistoryData.push(watchHistory);
+      }
+
+      const lastItemMap = {};
+      const lastItemList = [];
+      const duplicateList = [];
+
+      const listWithId = watchHistoryData.map((item, index) => ({
+        id: index + 1,
+        ...item,
+      }));
+
+      listWithId
+        .slice()
+        .reverse()
+        .forEach((item) => {
+          if (lastItemMap.hasOwnProperty(item.vodid)) {
+            console.log(item.vodid);
+            duplicateList.push(item);
+          } else {
+            lastItemMap[item.vodid] = item;
+          }
+        });
+
+      Object.values(lastItemMap).forEach((item) => lastItemList.push(item));
+
+      const sortedList = lastItemList.sort((a, b) => a.id - b.id);
+
+      const listWithoutId = sortedList.map(({ id, ...rest }) => rest);
+
+      localStorage.setItem('watchHistoryList', JSON.stringify(listWithoutId));
+
+      if (artPlayerData !== null || artPlayerData !== undefined) {
+        duplicateList.forEach((item) => {
+          if (artPlayerData.times[item.vodurl]) {
+            // Remove target URL from the object
+            delete artPlayerData.times[item.vodurl];
+          }
+        });
+      }
+
+      localStorage.setItem('artplayer_settings', JSON.stringify(artPlayerData));
+
+      //   if (watchHistoryData != null) {
+      //     if (
+      //       watchHistoryData.findIndex(
+      //         (item) => item.vodurl === watchHistory.vodurl
+      //       ) == -1
+      //     ) {
+      //       watchHistoryData.push(watchHistory);
+      //     } else {
+      //       watchHistoryData = watchHistoryData.filter(
+      //         (item) => item.vodurl !== watchHistory.vodurl
+      //       );
+      //       watchHistoryData.push(watchHistory);
+      //     }
+
+      //     if (watchHistoryData.length > 10) {
+      //       watchHistoryData.splice(0, 1);
+      //     }
+      //   } else {
+      //     watchHistoryData = [watchHistory];
+      //   }
+      //   localStorage.setItem(
+      //     'watchHistoryList',
+      //     JSON.stringify(watchHistoryData)
+      //   );
     }
   }, [episodeSelected]);
 
@@ -348,7 +388,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   };
 
   const toggleShowShareBox = (e) => {
-    console.log(e?.target?.id);
     if (typeof e == 'undefined') {
       setToggleShowShareBoxStatus(true);
       return;
@@ -370,18 +409,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
 
   const handleAdsPlayerEndPlay = () => {
     setShowAds(false);
-  };
-
-  const handleVipSkipAd = () => {
-    if (!userInfo) {
-      // not logged in, jump login btm sheet
-      setIsLoginShow(true);
-    } else {
-      if (!isVip) {
-        // not vip, jump to payment
-        router.push('/payment');
-      }
-    }
   };
 
   return (

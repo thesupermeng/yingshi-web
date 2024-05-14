@@ -12,7 +12,7 @@ import NavCard from '@/components/myprofile/NavCard';
 import VipCard from '@/components/myprofile/VipCard';
 import ProfileCard from '@/components/myprofile/ProfileCard';
 import LogoutModal from '@/components/login/logoutModal';
-import {useRouter, useSearchParams} from 'next/navigation';
+import {useRouter} from 'next/navigation';
 import {updateLocalstorage} from '@/util/YingshiApi';
 import {LocalStorageKeys} from '@/config/common';
 import {useLoginOpen} from '@/hook/yingshiScreenState/useLoginOpen';
@@ -31,24 +31,25 @@ export default function H5Page({params}) {
     //   isRequireLogin: false
     //
     // },
-    // {
-    //   title: '播放历史',
-    //   icon: HistoryIconGrey,
-    //   onClick: () => {},
-    //   isSelected: false,
-    //   platform: 'mobile',
-    //   isRequireLogin: false
-    //
-    // },
-    // {
-    //   title: '我要反馈',
-    //   icon: FeedbackIconGrey,
-    //   onClick: () => {},
-    //   isSelected: false,
-    //   platform: 'mobile',
-    //   isRequireLogin: false
-    //
-    // },
+    {
+      title: '播放历史',
+      icon: HistoryIconGrey,
+      onClick: () => {},
+      isSelected: false,
+      platform: 'mobile',
+      isRequireLogin: false,
+      href: '/myprofile/watchHistory'
+    },
+    {
+      title: '我要反馈',
+      icon: FeedbackIconGrey,
+      onClick: () => {},
+      isSelected: false,
+      platform: 'mobile',
+      isRequireLogin: false,
+      href: '/myprofile/feedback'
+
+    },
     {
       title: '关于我们',
       icon: AboutusIconGrey,
@@ -71,8 +72,6 @@ export default function H5Page({params}) {
     },
   ]
 
-  const queryParams = useSearchParams();
-  const openLogin = queryParams.get('login') === 'true'
 
   const [openSignInUp, setOpenSignInUp] = useLoginOpen()
   const [openLoginSuccess, setOpenLoginSuccess] = useState(false);
@@ -110,6 +109,7 @@ export default function H5Page({params}) {
   }, [loginParam])
 
   const handleOnClickVip = () => {
+    console.log('testing', userInfo)
     if (!userInfo) {
       setOpenSignInUp(true)
     } else {
@@ -145,16 +145,16 @@ export default function H5Page({params}) {
 
   return (
     <div>
-      {openLoginSuccess &&
-        <div className={'absolute top-0 left-0 flex justify-center items-center w-full h-full'}
-             onClick={() => setOpenSignInUp(false)}>
-          <div
-            className={'w-[270px] h-[195px] rounded-[14px] bg-[#222222CC] flex flex-col items-center justify-center'}>
-            <Image src={TickAnimation} alt={'Login success'} width={95} height={95}/>
-            <span className={'text-[17px]'}>登录成功</span>
-          </div>
-        </div>
-      }
+      {/*{openLoginSuccess &&*/}
+      {/*  <div className={'absolute top-0 left-0 flex justify-center items-center w-full h-full'}*/}
+      {/*       onClick={() => setOpenSignInUp(false)}>*/}
+      {/*    <div*/}
+      {/*      className={'w-[270px] h-[195px] rounded-[14px] bg-[#222222CC] flex flex-col items-center justify-center'}>*/}
+      {/*      <Image src={TickAnimation} alt={'Login success'} width={95} height={95}/>*/}
+      {/*      <span className={'text-[17px]'}>登录成功</span>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*}*/}
       <LogoutModal
         open={openLogoutConfirmation}
         handler={() => setOpenLogoutConfirmation(x => !x)}

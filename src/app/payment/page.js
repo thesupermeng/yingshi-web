@@ -1,15 +1,30 @@
 'use client'
-import React from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import H5Page from '@/app/payment/h5Page';
+import WebPage from '@/app/payment/webPage';
 
 export default function Page () {
+  const [isMobile, setIsMobile] = useState(true);
+
+  useEffect(() => {
+    setIsMobile(typeof window !== 'undefined' && window.innerWidth < 768);
+  }, []);
+
   return (
     <>
       <div className='desktop w-screen' style={{paddingTop: '100px', minHeight: '80vh'}}>
-        desktop
+        {!isMobile &&
+          <Suspense fallback={<div/>}>
+            <WebPage/>
+          </Suspense>
+        }
       </div>
       <div className="mobile w-screen h-full">
-        <H5Page/>
+        {isMobile &&
+          <Suspense fallback={<div/>}>
+            <H5Page/>
+          </Suspense>
+        }
       </div>
     </>
   )

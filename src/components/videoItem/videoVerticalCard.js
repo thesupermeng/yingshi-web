@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Placeholder } from '@/asset/icons';
+import { ImagePlaceholder } from '@/asset/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
@@ -27,7 +27,7 @@ export const VideoVerticalCard = ({ vod }) => {
         >
           <Image
             placeholder='blur'
-            blurDataURL={Placeholder.src}
+            blurDataURL={ImagePlaceholder.src}
             onClick={(e) => {
               e.preventDefault();
               router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);
