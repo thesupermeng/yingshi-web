@@ -305,8 +305,9 @@ function HistoryCard({ vod, onClick }) {
               />
               {/* add placeholder  */}
             </div>
-            <div className={'flex-1 flex flex-col justify-evenly'}>
-              <span className={'text-[17px] font-medium'}>{vod.vodname}</span>
+            <div className={'flex-1 flex flex-col justify-evenly truncate'}>
+              <span className={'text-[17px] font-medium truncate'}>{vod.vodname}</span>
+              <span className='text-xs '>{`第${vod.nid}集`}</span>
               <span className={'text-[12px]'}>
                 观看至 {secondsToHHMMSS(vod.watchtimes)}
               </span>

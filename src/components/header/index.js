@@ -777,10 +777,12 @@ const Header = () => {
                               src={item.vodpic}
                             />
                           </div>
-                          <div className='flex-1 flex flex-col truncate gap-y-2'>
-                            <span className='text-sm truncate'>
+                          <div className='flex-1 flex flex-col truncate gap-y-1'>
+                            <span className='text-sm truncate '>
                               {item.vodname}
                             </span>
+                            {/* <span className='text-xs truncate'>{item.tid == 2?' ':`第${item.nid}集` }</span> */}
+                            <span className='text-xs truncate'>{`第${item.nid}集`}</span>
                             <span className='text-xs text-white'>
                               观看至 {secondsToHHMMSS(item.watchtimes)}
                             </span>

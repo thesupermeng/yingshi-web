@@ -251,34 +251,85 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         vodurl: episodeSelected.url,
         watchtimes: 0,
       };
+
       let watchHistoryData = JSON.parse(
         localStorage.getItem('watchHistoryList')
       );
 
-      if (watchHistoryData != null) {
-        if (
-          watchHistoryData.findIndex(
-            (item) => item.vodurl === watchHistory.vodurl
-          ) == -1
-        ) {
-          watchHistoryData.push(watchHistory);
-        } else {
-          watchHistoryData = watchHistoryData.filter(
-            (item) => item.vodurl !== watchHistory.vodurl
-          );
-          watchHistoryData.push(watchHistory);
-        }
-
-        if (watchHistoryData.length > 10) {
-          watchHistoryData.splice(0, 1);
-        }
-      } else {
-        watchHistoryData = [watchHistory];
-      }
-      localStorage.setItem(
-        'watchHistoryList',
-        JSON.stringify(watchHistoryData)
+      let artPlayerData = JSON.parse(
+        localStorage.getItem('artplayer_settings')
       );
+
+      if (watchHistoryData == null) {
+        watchHistoryData = [watchHistory];
+      } else {
+        watchHistoryData.push(watchHistory);
+      }
+
+      const lastItemMap = {};
+      const lastItemList = [];
+      const duplicateList = [];
+
+      const listWithId = watchHistoryData.map((item, index) => ({
+        id: index + 1,
+        ...item,
+      }));
+
+      listWithId
+        .slice()
+        .reverse()
+        .forEach((item) => {
+          if (lastItemMap.hasOwnProperty(item.vodid)) {
+            console.log(item.vodid);
+            duplicateList.push(item);
+          } else {
+            lastItemMap[item.vodid] = item;
+          }
+        });
+
+      Object.values(lastItemMap).forEach((item) => lastItemList.push(item));
+
+      const sortedList = lastItemList.sort((a, b) => a.id - b.id);
+
+      const listWithoutId = sortedList.map(({ id, ...rest }) => rest);
+
+      localStorage.setItem('watchHistoryList', JSON.stringify(listWithoutId));
+
+      if (artPlayerData !== null || artPlayerData !== undefined) {
+        duplicateList.forEach((item) => {
+          if (artPlayerData.times[item.vodurl]) {
+            // Remove target URL from the object
+            delete artPlayerData.times[item.vodurl];
+          }
+        });
+      }
+
+      localStorage.setItem('artplayer_settings', JSON.stringify(artPlayerData));
+
+      //   if (watchHistoryData != null) {
+      //     if (
+      //       watchHistoryData.findIndex(
+      //         (item) => item.vodurl === watchHistory.vodurl
+      //       ) == -1
+      //     ) {
+      //       watchHistoryData.push(watchHistory);
+      //     } else {
+      //       watchHistoryData = watchHistoryData.filter(
+      //         (item) => item.vodurl !== watchHistory.vodurl
+      //       );
+      //       watchHistoryData.push(watchHistory);
+      //     }
+
+      //     if (watchHistoryData.length > 10) {
+      //       watchHistoryData.splice(0, 1);
+      //     }
+      //   } else {
+      //     watchHistoryData = [watchHistory];
+      //   }
+      //   localStorage.setItem(
+      //     'watchHistoryList',
+      //     JSON.stringify(watchHistoryData)
+      //   );
     }
   }, [episodeSelected]);
 
