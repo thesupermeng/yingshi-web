@@ -22,17 +22,12 @@ import {
   AppleStoreIcon,
   AndroidIcon,
 } from '@/asset/icons';
-
 import { usePathname, useRouter } from 'next/navigation';
 import { use, useEffect, useRef, useState } from 'react';
 import { YingshiApi } from '@/util/YingshiApi';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { LoadingPage } from '@/components/loading';
-import {
-  setHeaderMenu,
-  setSelectedId,
-  setSpecialSelectedId,
-} from '@/store/headerData';
+import { setHeaderMenu } from '@/store/headerData';
 import TopicHeader from './../../components/topicHeader';
 import { updateUserInfo } from '@/services/yingshiUser';
 import QRCode from 'qrcode.react';
@@ -41,8 +36,6 @@ import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 
 const getHeaderMenu = (state) => state.headerMenu;
-const getHeaderMenuSelected = (state) => state.headerMenuSelected;
-const getSpecialHeaderMenuSelected = (state) => state.specialHeaderMenuSelected;
 const getCurrentScrollPosition = (state) => state.currentScrollPosition;
 
 const Header = () => {
@@ -58,8 +51,6 @@ const Header = () => {
   const { t } = useTranslation();
 
   const headerMenu = useSelector(getHeaderMenu);
-  const selectedMenu = useSelector(getHeaderMenuSelected);
-  const selectedSpecialMenu = useSelector(getSpecialHeaderMenuSelected);
   const currentScrollPosition = useSelector(getCurrentScrollPosition);
 
   const [visibleItems, setVisibleItems] = useState([]);
@@ -68,6 +59,7 @@ const Header = () => {
 
   const router = useRouter();
   const pathname = usePathname();
+  const [selectedId, setSelectedId] = useState(0);
   const [searchInput, setSearchInput] = useState('');
   const [loading, setLoading] = useState(true);
   const [openMore, setOpenMore] = useState(false);
@@ -248,15 +240,8 @@ const Header = () => {
 
   const getTopTenList = async () => {
     return YingshiApi(
-      URL_YINGSHI_VOD.topTenList,
-      {
-        // TODO, temp hardcode
-        id: 1,
-        appName: 'E7%88%B1%E9%9F%A9%E5%89%A7TV',
-        platform: 'ANDROID',
-        channelId: 'GOOGLE_PLAY',
-        ip: '211.24.92.4',
-      },
+      URL_YINGSHI_VOD.playlistGetTopicDetail + '?id=1',
+      {},
       { method: 'GET' }
     );
   };
@@ -281,8 +266,7 @@ const Header = () => {
       localStorage.removeItem('videoClass');
       router.push('/film-library');
     } else {
-      dispatch(setSelectedId(value));
-      router.push('/');
+      router.push(`/category/${value}`);
       setSearchInput('');
     }
   };
@@ -329,7 +313,6 @@ const Header = () => {
     const fetchData = async () => {
       let menuItem = await getTopNav();
       const topTenItem = await getTopTenList();
-      console.log(menuItem);
       setTopTenList(topTenItem.vod_list);
       menuItem.push({
         id: 998,
@@ -339,8 +322,8 @@ const Header = () => {
         id: 999,
         name: '片库',
       });
+
       dispatch(setHeaderMenu(menuItem));
-      dispatch(setSelectedId(menuItem[0].id));
 
       setLoading(false);
     };
@@ -350,17 +333,18 @@ const Header = () => {
 
   useEffect(() => {
     if (pathname.startsWith('/topic')) {
-      dispatch(setSpecialSelectedId(998));
-      dispatch(setSelectedId(0));
+      setSelectedId(998);
     } else if (pathname.startsWith('/film-library')) {
-      dispatch(setSpecialSelectedId(999));
-      dispatch(setSelectedId(0));
+      setSelectedId(999);
     } else if (pathname.startsWith('/play/')) {
-      dispatch(setSpecialSelectedId(-1));
-      dispatch(setSelectedId(selectedMenu.id));
+      setSelectedId(-1);
     } else {
-      dispatch(setSpecialSelectedId(-1));
-      dispatch(setSelectedId(selectedMenu.id));
+      const match = pathname.match(/\/category\/(\w+)/);
+      if (match) {
+        setSelectedId(parseInt(match[1]));
+      } else {
+        setSelectedId(0);
+      }
     }
     if (!pathname.startsWith('/search/')) setSearchInput('');
   }, [pathname]);
@@ -573,7 +557,6 @@ const Header = () => {
                           className='flex flex-row justify-between py-2.5 cursor-pointer search-hot-item'
                           key={index}
                           onClick={(e) => {
-                            console.log('helelle');
                             e.preventDefault();
                             setOpenSearch(false);
                             router.push(
@@ -980,12 +963,7 @@ const Header = () => {
                 >
                   <span
                     className={`truncate ${
-                      selectedSpecialMenu.id === -1 &&
-                      selectedMenu.id === navItem.id
-                        ? 'text-blue-500'
-                        : selectedSpecialMenu.id === navItem.id
-                        ? 'text-blue-500'
-                        : 'text-white'
+                      selectedId === navItem.id ? 'text-blue-500' : 'text-white'
                     }`}
                   >
                     {navItem.name}
@@ -1011,20 +989,12 @@ const Header = () => {
                 >
                   <span
                     className={`hover:text-blue-500 transition-colors duration-300 truncate ${
-                      selectedSpecialMenu.id === -1 &&
-                      selectedMenu.id === navItem.id
-                        ? 'text-blue-500'
-                        : selectedSpecialMenu.id === navItem.id
-                        ? 'text-blue-500'
-                        : 'text-white'
+                      selectedId === navItem.id ? 'text-blue-500' : 'text-white'
                     }`}
                   >
                     {navItem.name}
                   </span>
-                  {selectedSpecialMenu.id === -1 &&
-                  selectedMenu.id === navItem.id ? (
-                    <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
-                  ) : selectedSpecialMenu.id === navItem.id ? (
+                  {selectedId === navItem.id ? (
                     <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
                   ) : null}
                 </div>
@@ -1035,7 +1005,7 @@ const Header = () => {
                 <div className='relative' ref={dropdownMoreRef}>
                   <button
                     onClick={handleOpenMore}
-                    className='flex flex-row items-center'
+                    className='flex flex-row items-center hover:text-blue-500'
                   >
                     <span>更多</span>
                     <Image
@@ -1074,7 +1044,7 @@ const Header = () => {
                             >
                               <span
                                 className={`hover:text-blue-500 transition-colors duration-300 truncate ${
-                                  selectedMenu.id === navItem.id
+                                  selectedId === navItem.id
                                     ? 'text-blue-500'
                                     : 'text-white'
                                 }`}

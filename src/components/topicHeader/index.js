@@ -3,16 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 // import { useHistory } from 'react-router-dom';
-import {
-  setHeaderMenu,
-  setSelectedId,
-  setSpecialSelectedId,
-} from '@/store/headerData';
 import { usePathname, useRouter } from 'next/navigation';
 const TopicHeader = ({ topicName }) => {
   // const history = useHistory();
   const router = useRouter();
-  const dispatch = useDispatch();
 
   return (
     <div
@@ -27,8 +21,6 @@ const TopicHeader = ({ topicName }) => {
     }}
       onClick={(e) => {
         e.preventDefault();
-       // history.goBack();
-        dispatch(setSpecialSelectedId(0));
         router.back();
       }}
     >
