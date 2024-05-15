@@ -279,7 +279,7 @@ const Header = () => {
     } else if (value == 999) {
       localStorage.removeItem('videoTypeId');
       localStorage.removeItem('videoClass');
-      router.push('/filmLibrary');
+      router.push('/film-library');
     } else {
       dispatch(setSelectedId(value));
       router.push('/');
@@ -352,7 +352,7 @@ const Header = () => {
     if (pathname.startsWith('/topic')) {
       dispatch(setSpecialSelectedId(998));
       dispatch(setSelectedId(0));
-    } else if (pathname.startsWith('/filmLibrary')) {
+    } else if (pathname.startsWith('/film-library')) {
       dispatch(setSpecialSelectedId(999));
       dispatch(setSelectedId(0));
     } else if (pathname.startsWith('/play/')) {
@@ -480,7 +480,7 @@ const Header = () => {
           </div>
         </div>
         {openSearch ? (
-          <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100vh_-_52px)] md:h-[calc(50vh_-_52px)] z-20 left-0 md:left-auto md:w-96 md:ml-16'>
+          <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100dvh-52px)] md:h-[calc(50vh_-_52px)] z-20 left-0 md:left-auto md:w-96 md:ml-16'>
             <div className='py-3 px-4 bg-[#1d2023] md:rounded-md w-full h-full md:bg-[#2c313ae6] md:w-96'>
               <div className='no-scrollbar flex flex-col overflow-y-scroll w-full h-full'>
                 {searchInput ? (
@@ -937,7 +937,7 @@ const Header = () => {
       className={`transition duration-500 ${
         headerBlack ? 'bg-black' : 'bg-blur-header'
       } ${
-        pathname.startsWith('/play/') || pathname.startsWith('/filmLibrary')
+        pathname.startsWith('/play/') || pathname.startsWith('/film-library')
           ? 'w-screen z-30'
           : 'md:absolute z-30 w-screen'
       }`}
@@ -1101,7 +1101,7 @@ const Header = () => {
     return <div className={'desktop z-50'}>{defaultHeader}</div>;
   }
 
-  if (pathname.startsWith('/filmLibrary') || pathname.startsWith('/topic/')) {
+  if (pathname.startsWith('/film-library') || pathname.startsWith('/topic/')) {
     return (
       <>
         <div className={'mobile'}>

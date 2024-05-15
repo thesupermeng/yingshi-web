@@ -9,7 +9,8 @@
     "build:h5": "cross-env NEXT_PUBLIC_ENV=H5 yarn build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "node ./script/fetchTranslationExcel.js"
+    "postinstall": "node ./script/fetchTranslationExcel.js",
+    "build:start": "yarn build && yarn start"
   },
   "dependencies": {
     "@ducanh2912/react-hls-player": "^3.3.5",
