@@ -43,7 +43,7 @@ const MyFooter = () => {
       router.push('/topic');
     } else if (value == 999) {
       dispatch(setSpecialSelectedId(value));
-      router.push('/filmLibrary');
+      router.push('/film-library');
     }  else if (value == 990) {
       dispatch(setSpecialSelectedId(value));
       router.push('/myprofile');
