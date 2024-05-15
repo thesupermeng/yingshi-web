@@ -3,18 +3,20 @@ import {faChevronLeft, faChevronRight, faTimesCircle} from '@fortawesome/free-so
 import {Button, Dialog, DialogBody, IconButton} from '@material-tailwind/react';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import {useState} from 'react';
+import Image from 'next/image';
+import {searchEmptyIcon} from '@/asset/icons';
 
 export default function PaymentDetailModal({open, handler}) {
   const {userInfo} = useYingshiUser()
   const accumulatedDays = userInfo?.user_vip_time_duration_days ?? 0
-  const amountPaid = userInfo?.paid_vip_response.history
+  const history = userInfo?.paid_vip_response.history ?? []
+  const amountPaid = history
     .filter(x => x.transaction_status === 1)
     .reduce((acc, curr) => acc + curr.product_price, 0)
 
-
-  const [history, setHistory] = useState(Array.from({length: 33}, (_, index) => index + 1))
   const [currentPage, setCurrentPage] = useState(0)
   const itemsPerPage = 5
+  const totalPages = Math.ceil(history.length / itemsPerPage)
 
   return (
     <Dialog open={open} handler={handler} className={'relative bg-[#121212] rounded-[28px] p-0 outline-none'}
@@ -35,28 +37,45 @@ export default function PaymentDetailModal({open, handler}) {
             <span className={'text-[13px] text-[#9C9C9C]'}>累计VIP天数</span>
           </div>
           <div className={'flex-1 flex flex-col'}>
-            <span className={'text-[24px] font-semibold'}>{amountPaid}</span>
+            <span className={'text-[24px] font-semibold'}>{amountPaid.toFixed(2)}</span>
             <span className={'text-[13px] text-[#9C9C9C]'}>购买总额（￥)</span>
           </div>
         </div>
         <div className={'flex flex-col bg-[#1D2023] rounded-[20px] w-full px-[18px] py-[6px] mt-[20px]'}>
-          {
+          {history.length > 0 &&
             history
+              .sort((a, b) => a.created_date + b.created_date)
               .slice(itemsPerPage * currentPage, (currentPage + 1) * itemsPerPage)
               .map((entry, idx) => {
-              return <TransactionDetail key={idx} status={'+30天'} title={entry} date={'2023-01-01'}/>
+              return <TransactionDetail key={idx} status={`+${entry.num_days}天`} title={entry.product_name_2} date={formatDate(entry.created_date)}/>
             })
           }
 
+          {history.length === 0 &&
+            <div className="flex-col items-center flex my-5">
+              <Image
+                className="mx-2"
+                src={searchEmptyIcon}
+                alt="empty"
+                width={120}
+              />
+              <span className="text-sm font-semibold text-white">
+                  暂无购买记录
+                </span>
+            </div>
+          }
+
         </div>
-          <Pagination totalPages={10} onChange={(e) => {setCurrentPage(e - 1)}} className={'self-end'}/>
+        <Pagination totalPages={totalPages} onChange={(e) => {
+          setCurrentPage(e - 1)
+        }} className={'self-end'}/>
       </DialogBody>
     </Dialog>
-)
+  )
 }
 
 
-function TransactionDetail ({title, date, status}) {
+function TransactionDetail({title, date, status}) {
   return (
     <div className={'flex justify-between py-[8px]'}>
       <div className={'flex flex-col'}>
@@ -80,12 +99,11 @@ export function Pagination({ totalPages, onChange, className }) {
   };
 
   const getItemProps = (index) => ({
-    variant: 'text',
     onClick: () => handlePageChange(index),
     className: `rounded p-0 font-bold ${
-      active === index ? 'bg-blue-500 text-white' : 'text-gray-500'
+      active === index ? 'bg-blue-500 text-white' : 'bg-transparent text-gray-500'
     }`,
-    size: 'sm'
+    size: 'sm',
   });
 
   const next = () => {
@@ -192,4 +210,17 @@ export function Pagination({ totalPages, onChange, className }) {
       </IconButton>
     </div>
   );
+}
+
+function formatDate(epochSeconds) {
+  // Convert epoch seconds to milliseconds
+  var date = new Date(epochSeconds * 1000);
+
+  // Get the year, month, and day
+  var year = date.getFullYear();
+  var month = ('0' + (date.getMonth() + 1)).slice(-2);
+  var day = ('0' + date.getDate()).slice(-2);
+
+  // Return the formatted date
+  return year + '-' + month + '-' + day;
 }
