@@ -167,10 +167,10 @@ export default function Player({
   }, []);
 
   useEffect(() => {
-    // artRef.current.switchUrl(option.url);
-    artRef.current.switchUrl(
-      'https://m3u.haiwaikan.com/xm3u8/c97db14105eea2eef701e1283fed0adad5fbb6a501851302a592e744fbba6ebd9921f11e97d0da21.m3u8'
-    );
+    artRef.current.switchUrl(option.url);
+    // artRef.current.switchUrl(
+    //   'https://m3u.haiwaikan.com/xm3u8/c97db14105eea2eef701e1283fed0adad5fbb6a501851302a592e744fbba6ebd9921f11e97d0da21.m3u8'
+    // );
     artRef.current.on('video:ended', onVideoEnd);
     return () => {
       if (artRef.current) {
