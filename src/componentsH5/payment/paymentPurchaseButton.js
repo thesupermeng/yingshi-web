@@ -45,7 +45,7 @@ export default function PaymentPurchaseButton({productInfo, paymentInfo, classNa
   return (
     <>
       {productInfo &&
-        <Button loading={isPaymentProcessing} className={`justify-center ${styles.payment_button} ${className}`} onClick={handleOnPurchase}>
+        <Button loading={isPaymentProcessing} className={`justify-center bg-[#FFCD92] ${styles.payment_button} ${className}`} onClick={handleOnPurchase}>
         <span className={'text-[#1D2023] text-[19px] font-semibold'}>
           立即解锁 - 总额 {productInfo.currency.currency_symbol}{productInfo.product_price}
         </span>
