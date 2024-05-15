@@ -7,6 +7,8 @@ import LoginSuccess from '@/components/login/loginSuccess';
 import {useLoginSuccessOpen} from '@/hook/yingshiScreenState/useLoginSuccessOpen';
 import {useEffect, useLayoutEffect, useState} from 'react';
 import LoginFlow from '@/components/login/loginFlow';
+import PaymentModal from '@/components/payment/paymentModal';
+import {usePaymentOpen} from '@/hook/yingshiScreenState/usePaymentOpen';
 
 export default function ModalOverlays() {
   const [isMobile, setIsMobile] = useState(false);
@@ -17,6 +19,7 @@ export default function ModalOverlays() {
 
   const [isOpenLogin, setIsOpenLogin] = useLoginOpen();
   const [isLoginSuccess, setIsLoginSuccess] = useLoginSuccessOpen()
+  const [isOpenPayment, setIsOpenPayment] = usePaymentOpen();
 
   return (
     <>
@@ -28,6 +31,12 @@ export default function ModalOverlays() {
       }
       {!isMobile &&
         <LoginFlow/>
+      }
+      {!isMobile &&
+        <PaymentModal
+          open={isOpenPayment}
+          handler={() => setIsOpenPayment(false)}
+        />
       }
       <LoginSuccess
         open={isLoginSuccess}
