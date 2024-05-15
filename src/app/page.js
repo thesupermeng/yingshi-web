@@ -81,7 +81,16 @@ export default function Home() {
     let currentPage = nextPage;
     getTopicListApi().then((data) => {
       if (nextPage > 1) {
-        setTopicList((prev) => [...prev, ...data.List]);
+
+        try{
+          setTopicList((prev) => [...prev, ...data.List]);
+        }catch(e)
+        {
+          console.log(e)
+          console.log('crash')
+          console.log(topicList)
+          setTopicList(data.List);
+        }
       } else {
         setTopicList(data.List);
       }
@@ -147,7 +156,7 @@ export default function Home() {
   const handleClick = (item) => {
     localStorage.setItem('videoTypeId', item.type_id);
     localStorage.setItem('videoClass', item.type_name);
-    router.push(`/filmLibrary`);
+    router.push(`/film-library`);
   };
 
   useEffect(() => {
@@ -204,7 +213,7 @@ export default function Home() {
                   {categories != [] &&
                     categories?.map((category, idx) => {
                       return (
-                        <>
+                        <div key={idx}>
                           {idx % 2 ?
                             <AdsBanner navId={selectedMenu.id} height='500px'/>
                             :
@@ -252,13 +261,13 @@ export default function Home() {
                               })}
                             </div>
                           </div>
-                        </>
+                        </div>
                       );
                     })}
                   {topicList != null &&
                     topicList?.map((topic, idx) => {
                       return (
-                        <>
+                        <div key={idx}>
                           {idx % 2 ?
                             <AdsBanner navId={selectedMenu.id} height='500px'/>
                             :
@@ -309,7 +318,7 @@ export default function Home() {
                               })}
                             </div>
                           </div>
-                        </>
+                        </div>
                       );
                     })}
                 </div>

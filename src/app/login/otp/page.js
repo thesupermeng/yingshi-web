@@ -168,7 +168,7 @@ export default function OTP () {
         // full width and full height
         <>
             {loginParam && loginParam.loginMode &&
-                <div className={'h-screen w-screen flex flex-col align-center absolute'}>
+                <div className={'w-screen flex flex-col align-center absolute'}>
                     {loginParam.loginMode === 'email' && <>
                         <p className={'text-center text-[22px] mb-[13px] mt-[40px]'}>输入邮箱验证码</p>
                         <p className={'text-center text-[14px]'}>验证码已发送至 <span

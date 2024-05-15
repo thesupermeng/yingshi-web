@@ -60,10 +60,10 @@ export default function RootLayout({ children }) {
       <html
         translate='no'
         lang='cn'
-        className={`bg-sideMenu notranslate ${
+        className={`bg-sideMenu notranslate root-class ${
           isWeb()
             ? 'webcontent h-full overflow-x-auto overflow-y-hidden'
-            : 'h5content overscroll-none'
+            : 'h5content overscroll-none h-dvh'
         } relative w-[100vw]`}
         // className={`bg-sideMenu ${
         //   isWeb() ? 'webcontent min-w-[1360px] min-h-[500px]' : 'h5content'
@@ -109,7 +109,7 @@ export default function RootLayout({ children }) {
           className={`${
             inter.className
           } h-full bg-sideMenu text-white flex flex-col w-full overscroll-none overflow-x-hidden ${
-            isWeb() ? '' : 'min-h-[100svh]'
+            isWeb() ? '' : 'min-h-[100dvh]'
           }`}
         >
           <Providers>

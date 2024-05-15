@@ -30,6 +30,10 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   const router = useRouter();
 
   const { t } = useTranslation();
+
+  const { isVip, userInfo } = useYingshiUser();
+  const [_, setIsLoginShow] = useLoginOpen();
+
   const shareContentRef = useRef(null);
 
   const domElementRef = useRef(null);
@@ -50,9 +54,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   const [vodShareContent, setVodShareContent] = useState('');
   const [showToastMessage, setShowToastMessage] = useState(false);
   const [ads, setAds] = useState(null);
-  const [showAds, setShowAds] = useState(true);
-  const { isVip, userInfo } = useYingshiUser();
-  const [_, setIsLoginShow] = useLoginOpen();
+  const [showAds, setShowAds] = useState(!isVip);
 
   const getVodDetails = async () => {
     if (tId == 0) {
@@ -134,6 +136,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
       setShowAds(false);
     } else {
       getAds().then((res) => {
+        setShowAds(true);
         setAds(res);
       });
     }
@@ -145,6 +148,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         setShowAds(false);
       } else {
         getAds().then((res) => {
+          setShowAds(true);
           setAds(res);
         });
       }
@@ -225,7 +229,12 @@ export const PlayVod = ({ vodId, tId, nId }) => {
 
   useEffect(() => {
     getSuggestedVodType().then((data) => {
-      setSuggestedVods(data.List);
+      try {
+        setSuggestedVods(data.List);
+      } catch (e) {
+        console.log(e);
+        setSuggestedVods([]);
+      }
     });
   }, [vod]);
 
@@ -238,6 +247,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         setShowAds(false);
       } else {
         getAds().then((res) => {
+          setShowAds(true);
           setAds(res);
         });
       }
@@ -251,34 +261,88 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         vodurl: episodeSelected.url,
         watchtimes: 0,
       };
+
       let watchHistoryData = JSON.parse(
         localStorage.getItem('watchHistoryList')
       );
 
-      if (watchHistoryData != null) {
-        if (
-          watchHistoryData.findIndex(
-            (item) => item.vodurl === watchHistory.vodurl
-          ) == -1
-        ) {
-          watchHistoryData.push(watchHistory);
-        } else {
-          watchHistoryData = watchHistoryData.filter(
-            (item) => item.vodurl !== watchHistory.vodurl
-          );
-          watchHistoryData.push(watchHistory);
-        }
-
-        if (watchHistoryData.length > 10) {
-          watchHistoryData.splice(0, 1);
-        }
-      } else {
-        watchHistoryData = [watchHistory];
-      }
-      localStorage.setItem(
-        'watchHistoryList',
-        JSON.stringify(watchHistoryData)
+      let artPlayerData = JSON.parse(
+        localStorage.getItem('artplayer_settings')
       );
+
+      if (watchHistoryData == null) {
+        watchHistoryData = [watchHistory];
+      } else {
+        watchHistoryData.push(watchHistory);
+      }
+
+      const lastItemMap = {};
+      const lastItemList = [];
+      const duplicateList = [];
+
+      const listWithId = watchHistoryData.map((item, index) => ({
+        id: index + 1,
+        ...item,
+      }));
+
+      listWithId
+        .slice()
+        .reverse()
+        .forEach((item) => {
+          if (lastItemMap.hasOwnProperty(item.vodid)) {
+            console.log(item.vodid);
+            duplicateList.push(item);
+          } else {
+            lastItemMap[item.vodid] = item;
+          }
+        });
+
+      Object.values(lastItemMap).forEach((item) => lastItemList.push(item));
+
+      const sortedList = lastItemList.sort((a, b) => a.id - b.id);
+
+      const listWithoutId = sortedList.map(({ id, ...rest }) => rest);
+
+      localStorage.setItem('watchHistoryList', JSON.stringify(listWithoutId));
+
+      if (artPlayerData !== null && artPlayerData !== undefined) {
+        duplicateList.forEach((item) => {
+          if (artPlayerData.times[item.vodurl]) {
+            // Remove target URL from the object
+            delete artPlayerData.times[item.vodurl];
+          }
+        });
+
+        localStorage.setItem(
+          'artplayer_settings',
+          JSON.stringify(artPlayerData)
+        );
+      }
+
+      //   if (watchHistoryData != null) {
+      //     if (
+      //       watchHistoryData.findIndex(
+      //         (item) => item.vodurl === watchHistory.vodurl
+      //       ) == -1
+      //     ) {
+      //       watchHistoryData.push(watchHistory);
+      //     } else {
+      //       watchHistoryData = watchHistoryData.filter(
+      //         (item) => item.vodurl !== watchHistory.vodurl
+      //       );
+      //       watchHistoryData.push(watchHistory);
+      //     }
+
+      //     if (watchHistoryData.length > 10) {
+      //       watchHistoryData.splice(0, 1);
+      //     }
+      //   } else {
+      //     watchHistoryData = [watchHistory];
+      //   }
+      //   localStorage.setItem(
+      //     'watchHistoryList',
+      //     JSON.stringify(watchHistoryData)
+      //   );
     }
   }, [episodeSelected]);
 
@@ -301,7 +365,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   };
 
   const onSelectEpisode = (episode) => {
-    router.push(`/play/${vod.type_id}/${episode.nid + 1}/${vod.vod_id}`);
+    router.replace(`/play/${vod.type_id}/${episode.nid + 1}/${vod.vod_id}`);
     setEpisodeSelected(episode);
   };
 
@@ -317,7 +381,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
       return;
     }
 
-    router.push(
+    router.replace(
       `/play/${vod.type_id}/${
         vodSourceSelected?.vod_play_list?.urls[indexFound + 1].nid + 1
       }/${vod.vod_id}`
@@ -689,7 +753,8 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                   className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5'
                   style={{ marginTop: '0px', marginBottom: '5rem' }}
                 >
-                  {suggestedVods.length > 0 &&
+                  {suggestedVods &&
+                    suggestedVods.length > 0 &&
                     suggestedVods?.slice(0, 12).map((vod, i) => {
                       return <VideoVerticalCard vod={vod} key={i} />;
                     })}

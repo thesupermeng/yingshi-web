@@ -14,6 +14,7 @@ import {
   ArrowRigthGrey,
   ImagePlaceholder,
 } from '@/asset/icons';
+import base64PlaceholderString from '@/app/placeholder';
 
 export const VideoHorizontalCard = ({ vod, typepage_id }) => {
   const router = useRouter();
@@ -25,7 +26,7 @@ export const VideoHorizontalCard = ({ vod, typepage_id }) => {
       <div className='relative flex w-full aspect-[726/430] group mx-4 my-3 rounded-lg'>
         <Image
           placeholder='blur'
-          blurDataURL={ImagePlaceholder.src}
+          blurDataURL={'data:image/png;base64,' + base64PlaceholderString}
           onClick={(e) => {
             router.push(`/play/${vod.type_id}/${nId}/${vod.vod_id}`);
           }}

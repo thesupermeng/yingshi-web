@@ -1,11 +1,14 @@
 'use client'
-import React, {Suspense} from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import H5Page from '@/app/payment/h5Page';
 import WebPage from '@/app/payment/webPage';
 
 export default function Page () {
+  const [isMobile, setIsMobile] = useState(true);
 
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  useEffect(() => {
+    setIsMobile(typeof window !== 'undefined' && window.innerWidth < 768);
+  }, []);
 
   return (
     <>

@@ -13,7 +13,7 @@ export default function PaymentMethods({className, paymentOptions, onMethodSelec
 
   return (
     <div className={`flex flex-col w-full gap-4 ${className}`}>
-      <p className={'text-[#D3AC7B] text-[20px] font-semibold'}>支付方式</p>
+      <p className={'text-[#D3AC7B] text-[18px] font-semibold'}>支付方式</p>
       <div className={'flex flex-col gap-3 w-full'}>
         {paymentOptions.map((option, index) => {
           return (
@@ -46,13 +46,13 @@ export default function PaymentMethods({className, paymentOptions, onMethodSelec
 
 function Method({children, icon, isSelected, onClick}) {
   return (
-    <div className={`w-full flex items-center rounded-[8px] gap-[10px] px-4 py-3 ${isSelected? 'border-2 border-[#D3AC7B]': ''} ${styles.payment_method_background}`}
+    <div className={`w-full flex items-center rounded-[8px] gap-[10px] px-2 py-2 ${isSelected? 'border-2 border-[#D3AC7B]': ''} ${styles.payment_method_background}`}
       onClick={onClick}
     >
-      <div className={'h-[32px] w-[46px] relative'}>
+      <div className={'h-[24px] w-[34px] relative'}>
         <Image src={icon} alt={'payment icon'} fill layout={'fill'} className={'object-contain'}/>
       </div>
-      <span className={'flex-1 text-white text-[16px] font-medium'}>{children}</span>
+      <span className={'flex-1 text-white text-[14px] font-medium'}>{children}</span>
       {isSelected &&
         <div className={`rounded-full w-[16px] h-[16px] flex items-center justify-center ${styles.payment_method_select_outer}`}>
           <div className={`rounded-full w-[10px] h-[10px] ${styles.payment_method_select_inner}`}/>

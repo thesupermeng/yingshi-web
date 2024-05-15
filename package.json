@@ -9,7 +9,8 @@
     "build:h5": "cross-env NEXT_PUBLIC_ENV=H5 yarn build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "node ./script/fetchTranslationExcel.js"
+    "postinstall": "node ./script/fetchTranslationExcel.js",
+    "build:start": "yarn build && yarn start"
   },
   "dependencies": {
     "@ducanh2912/react-hls-player": "^3.3.5",
@@ -60,6 +61,7 @@
     "react-switch": "^7.0.0",
     "react-tooltip": "^5.21.1",
     "react-vertical-timeline-component": "^3.6.0",
+    "redux-persist": "^6.0.0",
     "slick-carousel": "^1.8.1",
     "socket.io-client": "^4.7.2",
     "swiper": "^10.3.0",
