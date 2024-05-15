@@ -1,9 +1,9 @@
 'use client'
 import {Button, Dialog, DialogBody} from '@material-tailwind/react';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {updateUserInfo} from '@/services/yingshiUser';
 import Image from 'next/image';
-import {profileIcon} from '@/asset/icons';
+import {ProfileBlue, profileIcon} from '@/asset/icons';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import {BottomSheet} from 'react-spring-bottom-sheet';
 
@@ -11,7 +11,12 @@ export default function EditNicknameModal({open, handler, onSuccess}) {
   const {userInfo} = useYingshiUser()
   const [nickname, setNickname] = useState(userInfo ? userInfo.user_name : '')
   const [errorMsg, setErrorMsg] = useState(null)
+  const [isOriginal, setIsOriginal] = useState(true)
 
+  useEffect(() => {
+    setNickname(userInfo ? userInfo.user_name : '')
+    setIsOriginal(true)
+  }, [open])
 
   const validator = (val) => {
     // check whether val is between 2 and 18 characters
@@ -20,6 +25,7 @@ export default function EditNicknameModal({open, handler, onSuccess}) {
 
   const handleChange = (e) => {
     setErrorMsg(null)
+    setIsOriginal(false)
     const val = e.target.value
     setNickname(val)
   }
@@ -36,7 +42,7 @@ export default function EditNicknameModal({open, handler, onSuccess}) {
       })
   }
 
-  const canSubmit = validator(nickname)
+  const canSubmit = !isOriginal && validator(nickname)
 
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
 
@@ -50,7 +56,7 @@ export default function EditNicknameModal({open, handler, onSuccess}) {
             {/*<p className={'text-[16px] text-[#9C9C9C] text-center mt-[15px]'}>请输入2-18个字符</p>*/}
 
             <p className={'text-[22px] text-white text-center font-medium mb-[20px]'}>个人信息</p>
-            <Image src={profileIcon} alt={'profile icon'} width={100} height={100}/>
+            <Image src={ProfileBlue} alt={'profile icon'} width={100} height={100}/>
 
             <div className={'flex flex-col mt-[19px] w-full'}>
               <span className={'text-[15px] text-white self-start font-semibold'}>昵称</span>
