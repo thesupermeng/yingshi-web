@@ -5,7 +5,7 @@ import { setAhaToken, setYingshiUserLoginParam, setYingshiUserToken } from '@/st
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import {faTimes, faTimesCircle} from '@fortawesome/free-solid-svg-icons';
 
 const totalCountdownTime = 60 // seconds
 
@@ -129,8 +129,8 @@ export default function OtpModal({ open, handler, onLogin, onRegister , onCloseO
   return (
     <>
       {loginParam && loginParam.loginMode &&
-        <Dialog open={open} handler={handler} className={'w-[600px] bg-[#121212] rounded-[28px]  py-[25px] overflow-scroll'} size={'xs'}>
-          <DialogBody className={'p-0 w-full h-full'}>
+        <Dialog open={open} handler={handler} className={'w-[600px] bg-[#121212] rounded-[28px] p-0 overflow-scroll relative'} size={'xs'} dismiss={{outsidePress:false}}>
+          <DialogBody className={'py-[25px] w-full h-full'}>
             <div className={'flex flex-col items-center]'}>
               <div style={{
                 display: 'flex',
@@ -139,24 +139,10 @@ export default function OtpModal({ open, handler, onLogin, onRegister , onCloseO
               }}>
                 <p className={' px-[15px] text-white font-semibold text-[20px] text-center mb-[24px]'}>输入验证码</p>
 
-                <div
-                onClick={handler}
-                className={'hover-effect'} style={{
-                  width: '30px', // Adjust size as needed
-                  height: '30px', // Adjust size as needed
-                  borderRadius: '50%',
-                  backgroundColor: '#ccc', // Grey background color
-                  display: 'flex',
-                  justifyContent: 'center',
-                  position: 'absolute',
-                  right: '20px',
-                  alignItems: 'center',
-                  top:'-1px',
-                  color:'rgb(14, 15, 15) !important',
-                  backgroundColor:'#414141',
-                }}>
-                  <FontAwesomeIcon icon={faTimes} />
-                </div>
+                <FontAwesomeIcon icon={faTimesCircle}
+                                 className={'absolute top-4 right-4 cursor-pointer w-[35px] h-[35px] text-[#FFFFFF33] hover-effect'}
+                                 onClick={handler}
+                />
               </div>
 
               <div className={'px-[15px] flex flex-col items-center'}>

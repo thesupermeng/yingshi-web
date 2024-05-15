@@ -8,6 +8,8 @@ import {useRouter} from 'next/navigation';
 import {useDispatch} from 'react-redux';
 import {loginRequestEmailOtp, loginRequestSmsOtp} from '@/services/yingshiUser';
 import {setYingshiUserLoginParam} from '@/store/yingshiUser';
+import {faTimesCircle} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 export default function LoginModal({open, handler, onRegsiter}) {
   const router = useRouter()
@@ -81,10 +83,14 @@ export default function LoginModal({open, handler, onRegsiter}) {
   }
 
   return (
-    <Dialog open={open} handler={handler} className={'w-[500px] bg-[#121212] rounded-[28px] p-[30px]'}>
-      <DialogBody className={'p-0 w-full h-full'}>
+    <Dialog open={open} handler={handler} className={'w-[500px] bg-[#121212] rounded-[28px] p-0 relative'} dismiss={{outsidePress:false}}>
+      <DialogBody className={'p-[30px] w-full h-full'}>
+        <FontAwesomeIcon icon={faTimesCircle}
+                         className={'absolute top-4 right-4 cursor-pointer w-[35px] h-[35px] text-[#FFFFFF33] hover-effect'}
+                         onClick={handler}
+        />
         <div className={'flex flex-col gap-[19px]'}>
-          <p className={'text-[16px] text-center font-semibold text-white'}>注册/登录</p>
+          <p className={'text-[20px] text-center font-semibold text-white'}>注册/登录</p>
           <p className={'text-[16px] text-center font-medium text-[#9C9C9C]'}>登录后可管理您的账号，多端同步观看历史和收藏夹。</p>
         </div>
         {/* login mode tab */}
