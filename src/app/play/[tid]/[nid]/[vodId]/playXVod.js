@@ -84,7 +84,6 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
       vod_source_name +
       '&class=' +
       vod_class;
-    console.log(url);
     return YingshiApi(url, {}, { method: 'GET' });
   };
 
@@ -115,7 +114,7 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
   useEffect(() => {
     if (episodeSelected == null) {
       getXVodDetails().then((data) => {
-        console.log('xData');
+        // console.log('xData');
         if (
           data === undefined ||
           data.length <= 0 ||
@@ -124,9 +123,7 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
         )
           return;
         let res = data.List[0];
-        console.log(res);
         if (res?.vod_play_list?.url_count > 0) {
-          console.log(res?.vod_play_list?.urls[0].url);
           setVodUrl(res?.vod_play_list?.urls[0].url);
         }
         setVod(res);
@@ -178,8 +175,8 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
   useEffect(() => {
     if (vod) {
       getSuggestedVodType(vod.vod_class, vod.vod_source_name).then((data) => {
-        console.log('dasdaaa');
-        console.log(data);
+        // console.log('dasdaaa');
+        // console.log(data);
         if (data) {
           setSuggestedVods(data.List);
         }
@@ -228,7 +225,7 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
         .reverse()
         .forEach((item) => {
           if (lastItemMap.hasOwnProperty(item.vodid)) {
-            console.log(item.vodid);
+            // console.log(item.vodid);
             duplicateList.push(item);
           } else {
             lastItemMap[item.vodid] = item;
@@ -328,7 +325,7 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
   };
 
   const toggleShowShareBox = (e) => {
-    console.log(e?.target?.id);
+    // console.log(e?.target?.id);
     if (typeof e == 'undefined') {
       setToggleShowShareBoxStatus(true);
       return;
@@ -604,7 +601,6 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
               <ShareHorizontal
                 className={'w-[80%]'}
                 setShowShareBox={() => {
-                  console.log('ASDA');
                   setToggleShowShareBoxStatus(true);
                 }}
               />

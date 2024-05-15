@@ -232,7 +232,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
       try {
         setSuggestedVods(data.List);
       } catch (e) {
-        console.log(e);
+        // console.log(e);
         setSuggestedVods([]);
       }
     });
@@ -290,7 +290,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         .reverse()
         .forEach((item) => {
           if (lastItemMap.hasOwnProperty(item.vodid)) {
-            console.log(item.vodid);
+            // console.log(item.vodid);
             duplicateList.push(item);
           } else {
             lastItemMap[item.vodid] = item;
