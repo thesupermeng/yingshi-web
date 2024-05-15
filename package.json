@@ -46,6 +46,7 @@
     "react": "18.2.0",
     "react-calendar": "^4.6.0",
     "react-chartjs-2": "^5.2.0",
+    "react-device-detect": "^2.2.3",
     "react-dom": "18.2.0",
     "react-draggable": "^4.4.6",
     "react-dropzone": "^14.2.3",
