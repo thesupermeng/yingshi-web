@@ -26,7 +26,6 @@ import { Spinner } from '@/components/spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
-
 export default function Home(params) {
   const { t } = useTranslation();
   const router = useRouter();
@@ -42,7 +41,6 @@ export default function Home(params) {
   const [classList, setClassList] = useState([]);
 
   const targetRef = useRef(null);
-
 
   const getTypePage = async (idValue) => {
     if (idValue == 99) {
