@@ -156,7 +156,7 @@ export default function Home() {
   const handleClick = (item) => {
     localStorage.setItem('videoTypeId', item.type_id);
     localStorage.setItem('videoClass', item.type_name);
-    router.push(`/filmLibrary`);
+    router.push(`/film-library`);
   };
 
   useEffect(() => {

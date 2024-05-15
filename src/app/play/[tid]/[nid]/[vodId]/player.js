@@ -115,8 +115,8 @@ export default function Player({
     }
 
 
-    Artplayer.MOBILE_DBCLICK_PLAY = false;
-    Artplayer.MOBILE_CLICK_PLAY = true;
+    // Artplayer.MOBILE_DBCLICK_PLAY = false;
+    // Artplayer.MOBILE_CLICK_PLAY = true;
 
     artRef.current = new Artplayer({
       ...option,
