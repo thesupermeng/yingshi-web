@@ -4,7 +4,6 @@ import Hls from 'hls.js';
 import artplayerPluginAds from 'artplayer-plugin-ads';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
-import LoginFlow from '@/components/login/loginFlow';
 import { useRouter } from 'next/navigation';
 
 export default function Player({

@@ -1,17 +1,26 @@
 'use client'
 import React from 'react';
 import {useRouter} from 'next/navigation';
+import {isMobile} from 'react-device-detect';
 
 export default function PaymentDisclaimer({className}) {
 
   const router = useRouter()
 
   const handleClickPrivacy = () => {
-    router.push('/privacy')
+    if (isMobile) {
+      router.push('/privacy')
+    } else {
+      window.open('/privacy', '_blank')
+    }
   }
 
   const handleClickService = () => {
-    router.push('/service')
+    if (isMobile) {
+      router.push('/service')
+    } else {
+      window.open('/service', '_blank')
+    }
   }
 
   // const handleClickAutoRenew = () => {
@@ -19,7 +28,6 @@ export default function PaymentDisclaimer({className}) {
   // }
 
   const handleClickEmail = () => {
-    console.log('Email clicked')
     window.location = 'mailto:contact.movie9@gmail.com'
   }
 

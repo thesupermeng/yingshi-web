@@ -25,25 +25,29 @@ export default function PaymentHeader({className}) {
   return (
     <div className={`flex flex-col w-full items-center ${className}`}>
       <Image src={PaymentTitle} alt={'Title'} width={282}/>
-      <div className="mobile flex flex-col w-full items-center">
-        <div className={`${styles.benefit_container_border} w-full mt-[32px] min-w-[290px]`}>
-          <div
-            className={`relative flex flex-col items-center px-[12px] pb-[12px] pt-[20px]  rounded-xl ${styles.benefit_container_background_color}`}>
-            <SubHeader className={'absolute top-0 -translate-y-1/2  min-w-[270px]'}/>
-            <div className={'grid grid-cols-5 w-full gap-y-1  min-w-[290px]'}>
-              {
-                benefits.map((benefit, index) => <BenefitItem key={index} icon={benefit.icon} title={benefit.title} className={index % 2 === 0 ? 'col-span-3' : 'col-span-2'}/>)
-              }
+      <div className={'mobile  w-full'}>
+        <div className="flex flex-col items-center">
+          <div className={`${styles.benefit_container_border} w-full mt-[32px] min-w-[290px]`}>
+            <div
+              className={`relative flex flex-col items-center px-[12px] pb-[12px] pt-[20px]  rounded-xl ${styles.benefit_container_background_color}`}>
+              <SubHeader className={'absolute top-0 -translate-y-1/2  min-w-[270px]'}/>
+              <div className={'grid grid-cols-5 w-full gap-y-1  min-w-[290px]'}>
+                {
+                  benefits.map((benefit, index) => <BenefitItem key={index} icon={benefit.icon} title={benefit.title} className={index % 2 === 0 ? 'col-span-3' : 'col-span-2'}/>)
+                }
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="desktop flex flex-col items-center w-full">
-        <SubHeader className={'mt-[15px]'}/>
-        <div className={'grid grid-cols-3 w-full gap-y-1 mt-[28px]'}>
-          {
-            benefits.map((benefit, index) => <BenefitItem key={index} icon={benefit.icon} title={benefit.title}/>)
-          }
+      <div className={'desktop w-full'}>
+        <div className="flex flex-col items-center">
+          <SubHeader className={'mt-[15px]'}/>
+          <div className={'flex justify-between w-full gap-y-1 mt-[28px]'}>
+            {
+              benefits.map((benefit, index) => <BenefitItem key={index} icon={benefit.icon} title={benefit.title}/>)
+            }
+          </div>
         </div>
       </div>
     </div>
@@ -58,7 +62,7 @@ function SubHeader({className}) {
   )
 }
 
-function BenefitItem({icon, title, className}) {
+function BenefitItem({icon, title, className = ''}) {
   return (
     <>
       <div className={`mobile ${className}`}>

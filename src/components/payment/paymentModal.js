@@ -7,25 +7,29 @@ import PaymentProductsList from '@/componentsH5/payment/paymentProductsList';
 import PaymentMethods from '@/componentsH5/payment/paymentMethods';
 import PaymentDisclaimer from '@/componentsH5/payment/paymentDisclaimer';
 import PaymentPurchaseButton from '@/componentsH5/payment/paymentPurchaseButton';
+import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 
 export default function PaymentModal({open, handler}) {
+  const {token} = useYingshiUser()
   const [productSelected, setProductSelected] = useState(null)
   const [paymentMethodSelected, setPaymentMethodSelected] = useState(null)
 
   const [productList, setProductList] = useState([])
 
   useEffect(() => {
-    getYingshiProducts().then((res) => {
-      if (res) setProductList(res['4_fang_items'])
-    })
-  }, [])
+    if (token){
+      getYingshiProducts().then((res) => {
+        if (res) setProductList(res['4_fang_items'])
+      })
+    }
+  }, [token])
 
   return (
     <Dialog open={open} handler={handler} className={'bg-[#121212] rounded-[28px] p-[38px] outline-none'}
             size={'sm'}>
       <DialogBody className={'p-0 w-full h-full'}>
         <PaymentHeader/>
-        <PaymentCountdown className={'mt-[28px]'}/>
+        {/*<PaymentCountdown className={'mt-[28px]'}/>*/}
         <PaymentProductsList className={'mt-[20px]'} productList={productList} onProductSelect={(product) => setProductSelected(product)}/>
         <PaymentMethods className={'mt-[26px]'} paymentOptions={productSelected?.payment_options ?? []} onMethodSelect={(method) => setPaymentMethodSelected(method)}/>
         <PaymentDisclaimer className={'mt-[30px]'}/>

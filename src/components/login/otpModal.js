@@ -139,7 +139,7 @@ export default function OtpModal({ open, handler, onLogin, onRegister , onCloseO
               }}>
                 <p className={' px-[15px] text-white font-semibold text-[20px] text-center mb-[24px]'}>输入验证码</p>
 
-                <div 
+                <div
                 onClick={handler}
                 className={'hover-effect'} style={{
                   width: '30px', // Adjust size as needed
@@ -153,7 +153,7 @@ export default function OtpModal({ open, handler, onLogin, onRegister , onCloseO
                   alignItems: 'center',
                   top:'-1px',
                   color:'rgb(14, 15, 15) !important',
-                  backgroundColor:'#414141',                  
+                  backgroundColor:'#414141',
                 }}>
                   <FontAwesomeIcon icon={faTimes} />
                 </div>

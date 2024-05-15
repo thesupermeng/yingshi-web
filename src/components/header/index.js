@@ -20,7 +20,7 @@ import {
   ArrowLeftIcon,
   AppImage,
   AppleStoreIcon,
-  AndroidIcon,
+  AndroidIcon, ProfileBlue,
 } from '@/asset/icons';
 
 import { usePathname, useRouter } from 'next/navigation';
@@ -38,6 +38,8 @@ import { updateUserInfo } from '@/services/yingshiUser';
 import QRCode from 'qrcode.react';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
+import {isMobile} from 'react-device-detect';
+import {usePaymentOpen} from '@/hook/yingshiScreenState/usePaymentOpen';
 
 const getHeaderMenu = (state) => state.headerMenu;
 const getHeaderMenuSelected = (state) => state.headerMenuSelected;
@@ -81,6 +83,7 @@ const Header = () => {
   const [loadingSearching, setLoadingSearching] = useState(false);
   const [headerBlack, setHeaderBlack] = useState(false);
   const [_, setOpenLogin] = useLoginOpen();
+  const [__, setOpenPayment] = usePaymentOpen();
 
   const handleOpenMore = () => {
     setOpenMore(!openMore);
@@ -628,18 +631,27 @@ const Header = () => {
         //   handleOpenVip(false);
         // }}
         onClick={() => {
-          if (!userInfo) {
-            // router.push('/myprofile?login=true');
-            setOpenLogin(true);
+          if (isMobile) {
+            if (!userInfo) {
+              // router.push('/myprofile?login=true');
+              setOpenLogin(true);
+            } else {
+              router.push('/payment');
+            }
           } else {
-            router.push('/payment');
+            if (!userInfo) {
+              setOpenLogin(true);
+            } else {
+              setOpenPayment(true);
+            }
           }
-        }}
+        }
+        }
       >
-        <div className='flex h-full flex-row cursor-pointer rounded-full md:bg-[#1D2023] md:px-4 md:ml-2 md:rounded-full'>
+        <div className='flex h-full flex-row cursor-pointer rounded-full md:bg-[#1D2023] md:px-4 md:ml-2 md:rounded-full  md:py-1'>
           <Image className='mr-2' src={vipIcon} alt='vip' width={25} />
           <div className='flex items-center'>
-            <span className='text-[#F4DBBA] text-[14px]'>VIP会员</span>
+            <span className='text-[#F4DBBA] text-[14px] md:text-[16px]'>VIP会员</span>
           </div>
         </div>
         {openVip ? (
@@ -901,9 +913,9 @@ const Header = () => {
         ) : null}
       </div>
 
-      <div className='hidden'>{vipContainer}</div>
+      <div className='flex justify-center items-center'>{vipContainer}</div>
 
-      <div className='flex items-center px-2'>
+      <div className='hidden items-center px-2'>
         <div className='border-l-2 border-white h-4' />
       </div>
 
@@ -920,7 +932,7 @@ const Header = () => {
         >
           <Image
             className='cursor-pointer'
-            src={userIcon}
+            src={userInfo ? ProfileBlue : userIcon}
             alt='user'
             width={25}
           />

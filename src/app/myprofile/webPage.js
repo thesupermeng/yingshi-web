@@ -16,6 +16,7 @@ import {useDispatch} from 'react-redux';
 import {setAhaToken, setYingshiUserInfo, setYingshiUserToken} from '@/store/yingshiUser';
 import LogoutModal from '@/components/login/logoutModal';
 import {usePaymentOpen} from '@/hook/yingshiScreenState/usePaymentOpen';
+import {useLoginOpen} from '@/hook/yingshiScreenState/useLoginOpen';
 
 export default function WebPage ({subMenus}) {
 
@@ -25,9 +26,18 @@ export default function WebPage ({subMenus}) {
   const pathname = usePathname();
   const [openLogout, setOpenLogout] = useState(false)
   const [openPayment, setOpenPayment] = usePaymentOpen()
+  const [openLogin, setOpenLogin] = useLoginOpen()
 
   const handleLogout = () => {
     setOpenLogout(x => !x)
+  }
+
+  const hanldeVipClick = () => {
+    if (userInfo) {
+      setOpenPayment(true)
+    } else {
+      setOpenLogin(true)
+    }
   }
 
   const navs = [
@@ -89,7 +99,7 @@ export default function WebPage ({subMenus}) {
             isH5={false}
           />
         </div>
-        <VipCard onClick={() => setOpenPayment(true)}/>
+        <VipCard onClick={hanldeVipClick}/>
         {navs
           .filter (x => {
             if (userInfo) { // is logged in
