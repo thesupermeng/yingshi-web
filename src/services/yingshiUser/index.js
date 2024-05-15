@@ -118,7 +118,7 @@ export const submitFeedback = async ({email, feedback}) => {
         {
           email,
           feedback,
-          platformId
+          platform_id:platformId
         },
         {
             method: 'POST',
