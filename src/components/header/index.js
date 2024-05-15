@@ -934,7 +934,7 @@ const Header = () => {
             className='cursor-pointer'
             src={userInfo ? ProfileBlue : userIcon}
             alt='user'
-            width={25}
+            width={30}
           />
         </div>
       </div>
