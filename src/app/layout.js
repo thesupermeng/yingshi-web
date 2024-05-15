@@ -60,7 +60,7 @@ export default function RootLayout({ children }) {
       <html
         translate='no'
         lang='cn'
-        className={`bg-sideMenu notranslate ${
+        className={`bg-sideMenu notranslate root-class ${
           isWeb()
             ? 'webcontent h-full overflow-x-auto overflow-y-hidden'
             : 'h5content overscroll-none h-dvh'
