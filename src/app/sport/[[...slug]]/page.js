@@ -8,9 +8,13 @@ import {LocalStorageKeys} from '@/config/common';
 
 export default function Page ({params}) {
 
-  const redirect = params.slug?.join('/') || 'sports'
+  let redirect = params.slug?.join('/') || 'sports'
 
   const dispatch = useDispatch()
+
+  if(localStorage.getItem('AuthToken') == null || localStorage.getItem('AuthToken' == "")){
+    redirect += "?authToken=aa";
+  }
 
   const iframeMessageListener = (event) => {
     if (event.data.message === 'iframe') {
