@@ -4,16 +4,17 @@ import NicknameModal from '@/components/login/nicknameModal';
 import LoginSuccess from '@/components/login/loginSuccess';
 import { forwardRef, useImperativeHandle, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import {useLoginOpen} from '@/hook/yingshiScreenState/useLoginOpen';
+import {useLoginSuccessOpen} from '@/hook/yingshiScreenState/useLoginSuccessOpen';
 
-const LoginFlow = forwardRef(function LoginFlow(props, ref) {
-  const [openLogin, setOpenLogin] = useState(false);
+export default function LoginFlow(props) {
+  const [openLogin, setOpenLogin] = useLoginOpen();
   const [openOTP, setOpenOTP] = useState(false);
-  const [openLoginSuccess, setOpenLoginSuccess] = useState(false);
+  const [openLoginSuccess, setOpenLoginSuccess] = useLoginSuccessOpen();
   const [openNickname, setOpenNickname] = useState(false);
-  const router = useRouter();
 
   const handleOpenLogin = () => {
-    setOpenLogin((x) => !x);
+    setOpenLogin(!openLogin);
   };
 
   const handleOpenOTP = () => {
@@ -21,16 +22,12 @@ const LoginFlow = forwardRef(function LoginFlow(props, ref) {
   };
 
   const handleOpenLoginSuccess = () => {
-    setOpenLoginSuccess((x) => !x);
+    setOpenLoginSuccess(!openLoginSuccess);
   };
 
   const handleOpenNickname = () => {
     setOpenNickname((x) => !x);
   };
-
-  useImperativeHandle(ref, () => ({
-    start: () => setOpenLogin(true),
-  }));
 
   return (
     <>
@@ -76,6 +73,5 @@ const LoginFlow = forwardRef(function LoginFlow(props, ref) {
       />
     </>
   );
-});
+}
 
-export default LoginFlow;

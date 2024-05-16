@@ -12,47 +12,39 @@ import {
 } from '@/asset/icons';
 import { use, useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import {
-  setHeaderMenu,
-  setSelectedId,
-  setSpecialSelectedId,
-} from '@/store/headerData';
-const getHeaderMenuSelected = (state) => state.headerMenuSelected;
-const getSpecialHeaderMenuSelected = (state) => state.specialHeaderMenuSelected;
 
 const MyFooter = () => {
-  const dispatch = useDispatch();
   const pathname = usePathname();
   const router = useRouter();
-  const selectedMenu = useSelector(getHeaderMenuSelected);
-  const selectedSpecialMenu = useSelector(getSpecialHeaderMenuSelected);
+  const [selectedId, setSelectedId] = useState(0);
 
-  // useEffect(() => {
-  //   console.log("pathname")
-  //   console.log(pathname)
-  //   console.log("selectedMenu")
-  //   console.log(selectedMenu.id)
-  //   if (pathname.startsWith('/filmLibrary')) dispatch(setSelectedId(999));
-  //   else if (pathname.startsWith('/topic')) dispatch(setSelectedId(99));
-  //   else if (pathname.startsWith('/play/')) dispatch(setSelectedId(-1));
-  // }, [selectedMenu]);
+  useEffect(() => {
+    if (pathname.startsWith('/topic')) {
+      setSelectedId(998);
+    } else if (pathname.startsWith('/film-library')) {
+      setSelectedId(999);
+    } else if (pathname.startsWith('/play/')) {
+      setSelectedId(-1);
+    } else {
+      const match = pathname.match(/\/category\/(\w+)/);
+      if (match) {
+        setSelectedId(parseInt(match[1]));
+      } else {
+        setSelectedId(0);
+      }
+    }
+  }, [pathname]);
 
   const handleClick = (value) => {
     if (value == 998) {
-      dispatch(setSpecialSelectedId(value));
       router.push('/topic');
     } else if (value == 999) {
-      dispatch(setSpecialSelectedId(value));
       router.push('/film-library');
     }  else if (value == 990) {
-      dispatch(setSpecialSelectedId(value));
       router.push('/myprofile');
     } else if (value == 997) {
-      dispatch(setSpecialSelectedId(value));
       router.push('/sport');
     } else {
-      dispatch(setSpecialSelectedId(-1));
-      dispatch(setSelectedId(value));
       router.push('/');
     }
   };
@@ -77,7 +69,7 @@ const MyFooter = () => {
       onClick: () => {
         handleClick(0);
       },
-      active: selectedSpecialMenu !== -1 && selectedMenu.id === 0 && pathname == '/',
+      active: selectedId === 0 && pathname == '/',
       icon: homeTab,
       iconActive: homeTabActive,
       title: '首页',

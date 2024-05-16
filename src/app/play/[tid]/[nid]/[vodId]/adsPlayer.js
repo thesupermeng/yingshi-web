@@ -5,7 +5,6 @@ import {
   faArrowRight,
   faPlay,
 } from '@fortawesome/free-solid-svg-icons';
-import LoginFlow from '@/components/login/loginFlow';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 import { useRouter } from 'next/navigation';
@@ -16,7 +15,6 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
   const [isLoginOpen, setIsLoginOpen] = useLoginOpen();
 
   const adsPlayerRef = useRef(null);
-  const loginFlowRef = useRef(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [remaining, setRemaining] = useState(15);
@@ -55,11 +53,7 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
     setIsPlaying(false);
     const isMobile = window.innerWidth < 768;
     if (!userInfo) {
-      if (isMobile) {
-        setIsLoginOpen(true);
-      } else {
-        loginFlowRef.current.start();
-      }
+      setIsLoginOpen(true);
     } else {
       router.push('/payment');
     }
@@ -76,11 +70,7 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
     const isMobile = window.innerWidth < 768;
 
     if (!userInfo) {
-      if (isMobile) {
-        setIsLoginOpen(true);
-      } else {
-        loginFlowRef.current.start();
-      }
+      setIsLoginOpen(true);
     } else {
       router.push('/payment');
     }
@@ -106,7 +96,6 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
 
   return adsInfo !== null ? (
     <div className='flex relative justify-center items-center'>
-      <LoginFlow ref={loginFlowRef} />
       <video
         className={`${isPlaying ? 'cursor-pointer' : ''}`}
         ref={adsPlayerRef}

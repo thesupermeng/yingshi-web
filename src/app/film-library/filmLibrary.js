@@ -277,7 +277,7 @@ export const FilmLibrary = ({}) => {
       num +=1;
     }
 
-    return num ;
+    return num * 56 ;
   };
 
   const filterVideoList = (value, type) => {
@@ -353,7 +353,7 @@ export const FilmLibrary = ({}) => {
                 ease-out ${
                   collapse
                     ? 'opacity-0 h-0 collapse'
-                    : `h-[calc(${heightFilter()}_*_56px)] py-2 `
+                    : `h-[${heightFilter()}px] py-2 `
                 }
                 flex flex-col divide-y divide-gray-800 container md:flex md:opacity-100`}
               >
