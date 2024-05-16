@@ -39,6 +39,7 @@ export default function Home(params) {
   const [nextPage, setNextPage] = useState(0);
   const [scrollY, setScrollY] = useState(0);
   const [classList, setClassList] = useState([]);
+  let paramsInput = params.category == undefined ? 0 : params.category;
 
   const targetRef = useRef(null);
 
@@ -128,7 +129,7 @@ export default function Home(params) {
   }, [nextPage, stillCanLoad]);
 
   useEffect(() => {
-    if (params.category == 0) {
+    if (paramsInput == 0) {
       setStillCanLoad(true);
       setTopicList(null);
     } else {
@@ -137,8 +138,8 @@ export default function Home(params) {
       setNextPage(0);
     }
     setLoading(true);
-    getTypePage(params.category).then((data) => {
-      if (params.category == 99) {
+    getTypePage(paramsInput).then((data) => {
+      if (paramsInput == 99) {
         setClassList(data.class_list);
       }
       setCategories(data.categories);
@@ -146,7 +147,7 @@ export default function Home(params) {
       setCarousel(data.carousel);
       setLoading(false);
     });
-  }, [params.category]);
+  }, [paramsInput]);
 
   const handleClick = (item) => {
     localStorage.setItem('videoTypeId', item.type_id);
@@ -174,10 +175,10 @@ export default function Home(params) {
         </div>
       ) : (
         <>
-          {params.category != 99 ? (
+          {paramsInput != 99 ? (
             <div className='flex flex-col w-full'>
               <Carousel carouselItems={carousel} />
-              <AdsBanner navId={params.category} height='500px' />
+              <AdsBanner navId={paramsInput} height='500px' />
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
                 <div className='container w-[100%]'>
@@ -210,7 +211,7 @@ export default function Home(params) {
                       return (
                         <div key={idx}>
                           {idx % 2 ? (
-                            <AdsBanner navId={params.category} height='500px' />
+                            <AdsBanner navId={paramsInput} height='500px' />
                           ) : (
                             <div style={{ paddingTop: '20px' }}></div>
                           )}
@@ -264,7 +265,7 @@ export default function Home(params) {
                       return (
                         <div key={idx}>
                           {idx % 2 ? (
-                            <AdsBanner navId={params.category} height='500px' />
+                            <AdsBanner navId={paramsInput} height='500px' />
                           ) : (
                             <div style={{ paddingTop: '20px' }}></div>
                           )}
@@ -377,7 +378,7 @@ export default function Home(params) {
                                   <VideoHorizontalCard
                                     vod={vod}
                                     key={i}
-                                    typepage_id={params.category}
+                                    typepage_id={paramsInput}
                                   />
                                 );
                               })}
@@ -445,7 +446,7 @@ export default function Home(params) {
                                   <VideoHorizontalCard
                                     vod={vod}
                                     key={i}
-                                    typepage_id={params.category}
+                                    typepage_id={paramsInput}
                                   />
                                 );
                               })}
@@ -461,7 +462,7 @@ export default function Home(params) {
         </>
       )}
       <div ref={targetRef}>
-        {stillCanLoad && params.category == 0 && <Spinner></Spinner>}
+        {stillCanLoad && paramsInput == 0 && <Spinner></Spinner>}
       </div>
     </div>
   );

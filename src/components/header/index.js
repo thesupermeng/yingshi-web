@@ -344,7 +344,7 @@ const Header = () => {
       if (match) {
         setSelectedId(parseInt(match[1]));
       } else {
-        setSelectedId(0);
+        setSelectedId(-1);
       }
     }
     if (!pathname.startsWith('/search/')) setSearchInput('');
