@@ -719,7 +719,7 @@ const Header = () => {
           handleOpenHistory(false);
         }}
       >
-        <div className='h-full flex justify-center'>
+        <div className='h-full flex justify-center' onClick={() => router.push('/myprofile/watchHistory')}>
           <Image
             className='cursor-pointer'
             src={HistoryIcon}
