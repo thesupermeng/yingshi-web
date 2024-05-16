@@ -20,7 +20,8 @@ import {
   ArrowLeftIcon,
   AppImage,
   AppleStoreIcon,
-  AndroidIcon, ProfileBlue,
+  AndroidIcon,
+  ProfileBlue,
 } from '@/asset/icons';
 import { usePathname, useRouter } from 'next/navigation';
 import { use, useEffect, useRef, useState } from 'react';
@@ -33,8 +34,8 @@ import { updateUserInfo } from '@/services/yingshiUser';
 import QRCode from 'qrcode.react';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
-import {isMobile} from 'react-device-detect';
-import {usePaymentOpen} from '@/hook/yingshiScreenState/usePaymentOpen';
+import { isMobile } from 'react-device-detect';
+import { usePaymentOpen } from '@/hook/yingshiScreenState/usePaymentOpen';
 
 const getHeaderMenu = (state) => state.headerMenu;
 const getCurrentScrollPosition = (state) => state.currentScrollPosition;
@@ -333,7 +334,9 @@ const Header = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (pathname.startsWith('/topic')) {
+    if (pathname == '/') {
+      setSelectedId(parseInt(0));
+    } else if (pathname.startsWith('/topic')) {
       setSelectedId(998);
     } else if (pathname.startsWith('/film-library')) {
       setSelectedId(999);
@@ -466,7 +469,7 @@ const Header = () => {
         </div>
         {openSearch ? (
           <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100dvh-52px)] md:h-[calc(50vh_-_52px)] z-20 left-0 md:left-auto md:w-96 md:ml-16'>
-            <div className='py-3 px-4 bg-[#1d2023] md:rounded-md w-full h-full md:bg-[#2c313ae6] md:w-96'>
+            <div className='py-3 px-4 bg-[#1d2023] md:rounded-md w-full h-full md:bg-[#26253ae6] md:w-96'>
               <div className='no-scrollbar flex flex-col overflow-y-scroll w-full h-full'>
                 {searchInput ? (
                   loadingSearching ? (
@@ -628,13 +631,14 @@ const Header = () => {
               setOpenPayment(true);
             }
           }
-        }
-        }
+        }}
       >
         <div className='flex h-full flex-row cursor-pointer rounded-full md:bg-[#1D2023] md:px-4 md:ml-2 md:rounded-full  md:py-1'>
           <Image className='mr-2' src={vipIcon} alt='vip' width={25} />
           <div className='flex items-center'>
-            <span className='text-[#F4DBBA] text-[14px] md:text-[16px]'>VIP会员</span>
+            <span className='text-[#F4DBBA] text-[14px] md:text-[16px]'>
+              VIP会员
+            </span>
           </div>
         </div>
         {openVip ? (
@@ -909,7 +913,7 @@ const Header = () => {
             if (userInfo) {
               router.push('/myprofile');
             } else {
-              setOpenLogin(true)
+              setOpenLogin(true);
             }
           }}
         >
