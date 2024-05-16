@@ -90,8 +90,8 @@ export default function WebPage ({subMenus}) {
   // }, [token])
 
   return (
-    <div className={'grid grid-cols-4 px-[110px]'}>
-      <div className={'w-full flex flex-col gap-[15px] min-w-[300px]'}>
+    <div className={'grid grid-cols-5 xl:grid-cols-4 px-[110px]'}>
+      <div className={'col-span-2 xl:col-span-1 w-full flex flex-col gap-[15px] min-w-[300px]'}>
         <div className={'h-[80px] rounded-[12px] bg-[#1A1F24] flex items-center px-[21px] py-[12px]'}>
           <ProfileCard
             userInfo={userInfo}
@@ -113,7 +113,7 @@ export default function WebPage ({subMenus}) {
         })
         }
       </div>
-      <div className={'col-span-3 w-full flex flex-col gap-[15px] items-center px-[60px]'}>
+      <div className={'col-span-3 xl:col-span-3 w-full flex flex-col gap-[15px] items-center px-[60px]'}>
         {subMenus}
       </div>
       <LogoutModal

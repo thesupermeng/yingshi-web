@@ -101,7 +101,7 @@ export default function HistoryPage() {
                 }}
               >
                 <span
-                  className='text-sm'
+                  className='text-sm hover-effect'
                   style={{ color: 'rgba(156, 156, 156, 1)' }}
                 >
                   清除记录
