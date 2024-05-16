@@ -8,12 +8,9 @@ import {searchEmptyIcon} from '@/asset/icons';
 
 export default function PaymentDetailModal({open, handler}) {
   const {userInfo} = useYingshiUser()
-  const accumulatedDays = userInfo?.user_vip_time_duration_days ?? 0
+  const accumulatedDays = userInfo?.paid_vip_response.total_purchased_days ?? 0
   const history = userInfo?.paid_vip_response.history ?? []
-  const amountPaid = history
-    .filter(x => x.transaction_status === 1)
-    .reduce((acc, curr) => acc + curr.product_price, 0)
-
+  const amountPaid = userInfo?.paid_vip_response.total_purchased_amount ?? 0
   const [currentPage, setCurrentPage] = useState(0)
   const itemsPerPage = 5
   const totalPages = Math.ceil(history.length / itemsPerPage)
@@ -44,7 +41,7 @@ export default function PaymentDetailModal({open, handler}) {
         <div className={'flex flex-col bg-[#1D2023] rounded-[20px] w-full px-[18px] py-[6px] mt-[20px]'}>
           {history.length > 0 &&
             history
-              .sort((a, b) => a.created_date + b.created_date)
+              .toSorted((a, b) => a.created_date + b.created_date)
               .slice(itemsPerPage * currentPage, (currentPage + 1) * itemsPerPage)
               .map((entry, idx) => {
               return <TransactionDetail key={idx} status={`+${entry.num_days}天`} title={entry.product_name_2} date={formatDate(entry.created_date)}/>
