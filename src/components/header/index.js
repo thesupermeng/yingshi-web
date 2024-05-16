@@ -712,16 +712,25 @@ const Header = () => {
       <div
         className='relative'
         ref={dropdownHistoryRef}
+        onClick={() => {
+          handleOpenHistory(false);
+          router.push('/myprofile/watchHistory');
+        }}
         onMouseEnter={() => {
-          handleOpenHistory(true);
+          if (pathname !== '/myprofile/watchHistory') {
+            handleOpenHistory(true);
+          }
         }}
         onMouseLeave={() => {
           handleOpenHistory(false);
         }}
       >
-        <div className='h-full flex justify-center' onClick={() => router.push('/myprofile/watchHistory')}>
+        <div
+          className='h-full flex justify-center'
+          onClick={() => router.push('/myprofile/watchHistory')}
+        >
           <Image
-            className='cursor-pointer'
+            className={`cursor-pointer `}
             src={HistoryIcon}
             alt='history'
             width={30}
