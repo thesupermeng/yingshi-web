@@ -2,7 +2,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronLeft, faChevronRight, faTimesCircle} from '@fortawesome/free-solid-svg-icons';
 import {Button, Dialog, DialogBody, IconButton} from '@material-tailwind/react';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Image from 'next/image';
 import {searchEmptyIcon} from '@/asset/icons';
 
@@ -14,6 +14,10 @@ export default function PaymentDetailModal({open, handler}) {
   const [currentPage, setCurrentPage] = useState(0)
   const itemsPerPage = 5
   const totalPages = Math.ceil(history.length / itemsPerPage)
+
+  useEffect(() => {
+    setCurrentPage(0)
+  }, [open])
 
   return (
     <Dialog open={open} handler={handler} className={'relative bg-[#121212] rounded-[28px] p-0 outline-none'}
@@ -38,7 +42,7 @@ export default function PaymentDetailModal({open, handler}) {
             <span className={'text-[13px] text-[#9C9C9C]'}>购买总额（￥)</span>
           </div>
         </div>
-        <div className={'flex flex-col bg-[#1D2023] rounded-[20px] w-full px-[18px] py-[6px] mt-[20px]'}>
+        <div className={'flex flex-col bg-[#1D2023] rounded-[20px] w-full px-[18px] py-[6px] mt-[20px] h-[300px]'}>
           {history.length > 0 &&
             history
               .toSorted((a, b) => a.created_date + b.created_date)
