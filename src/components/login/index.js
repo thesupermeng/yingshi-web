@@ -49,7 +49,7 @@ export default function LoginModal({open, handler, onRegsiter}) {
     } else {
       loginRequestEmailOtp(loginParam)
     }
-    console.log(loginParam)
+    // console.log(loginParam)
     dispatch(setYingshiUserLoginParam(loginParam))
     // router.push('/login/otp')
     onRegsiter()
@@ -156,23 +156,23 @@ export default function LoginModal({open, handler, onRegsiter}) {
               onChange={(e) => setIsAgreementChecked(e.target.checked)}
             />
             <span className={'text-[13px] text-[#9C9C9C]'}>我已阅读并同意
-                                <span className={'text-[#0085E0]'}>用户协议</span>
+                                <span className={'text-[#0085E0] hover-effect'}>用户协议</span>
                                 和
-                                <span className={'text-[#0085E0]'}>隐私协议</span>
+                                <span className={'text-[#0085E0] hover-effect'}>隐私协议</span>
                             </span>
           </div>
-          {/* 或者 */}
-          <div className={'flex items-center gap-1'}>
-            <div className={'flex-1 bg-[#3E3E3E] h-px'}/>
-            <span className={'text-[#3E3E3E] text-[12px] font-medium'}>或者</span>
-            <div className={'flex-1 bg-[#3E3E3E] h-px'}/>
-          </div>
-          <div className={'flex flex-col gap-[12px]'}>
-            <Button className={'w-full h-12 flex items-center bg-[#1D2023] rounded-lg px-[20px] normal-case'}>
-              <Image src={GoogleIcon} alt={'Google Icon'} width={24} height={24}/>
-              <span className={'font-semibold text-[15px] text-white flex-1'}>继续使用 Google</span>
-            </Button>
-          </div>
+          {/*/!* 或者 *!/*/}
+          {/*<div className={'flex items-center gap-1'}>*/}
+          {/*  <div className={'flex-1 bg-[#3E3E3E] h-px'}/>*/}
+          {/*  <span className={'text-[#3E3E3E] text-[12px] font-medium'}>或者</span>*/}
+          {/*  <div className={'flex-1 bg-[#3E3E3E] h-px'}/>*/}
+          {/*</div>*/}
+          {/*<div className={'flex flex-col gap-[12px]'}>*/}
+          {/*  <Button className={'w-full h-12 flex items-center bg-[#1D2023] rounded-lg px-[20px] normal-case'}>*/}
+          {/*    <Image src={GoogleIcon} alt={'Google Icon'} width={24} height={24}/>*/}
+          {/*    <span className={'font-semibold text-[15px] text-white flex-1'}>继续使用 Google</span>*/}
+          {/*  </Button>*/}
+          {/*</div>*/}
         </div>
       </DialogBody>
     </Dialog>
@@ -183,7 +183,7 @@ function Tabs({title, isSelected, onClick}) {
   const color = isSelected ? '#0085E0' : 'transparent'
   const textStyle = isSelected ? 'text-white font-semibold' : 'text-[#FFFFFF80] '
 
-  return (<div className={'p-2.5 flex flex-col items-center justify-center'} onClick={onClick}>
+  return (<div className={'p-2.5 flex flex-col items-center justify-center hover-effect'} onClick={onClick}>
     <span className={textStyle}>{title}</span>
     <div className={`rounded h-[3px] w-[22px] bg-[${color}]`}></div>
   </div>)
