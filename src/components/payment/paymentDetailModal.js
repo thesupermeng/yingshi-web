@@ -48,7 +48,8 @@ export default function PaymentDetailModal({open, handler}) {
               .toSorted((a, b) => a.created_date + b.created_date)
               .slice(itemsPerPage * currentPage, (currentPage + 1) * itemsPerPage)
               .map((entry, idx) => {
-              return <TransactionDetail key={idx} status={`+${entry.num_days}天`} title={entry.product_name_2} date={formatDate(entry.created_date)} transactionNo={entry.transaction_no}/>
+                const status = entry.transaction_status === 1 ? `+${entry.num_days}天` : ''
+              return <TransactionDetail key={idx} status={status} title={entry.product_name_2} date={formatDate(entry.created_date)} transactionNo={entry.transaction_no}/>
             })
           }
 
