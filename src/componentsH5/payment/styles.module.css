@@ -29,7 +29,7 @@
 }
 
 .product_card_animation {
-    animation: height 0.5s ease-in-out;
+    animation: height 5s ease-in-out;
 }
 
 .payment_method_select_inner {
@@ -45,4 +45,8 @@
 .payment_method_background {
     background: linear-gradient(270deg, #1D2023 6.8%, #2E3134 94.17%);
 
+}
+
+.swiper-wrapper {
+    align-items: center !important;
 }
