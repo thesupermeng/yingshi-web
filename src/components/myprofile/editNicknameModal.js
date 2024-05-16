@@ -6,6 +6,8 @@ import Image from 'next/image';
 import {ProfileBlue, profileIcon} from '@/asset/icons';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import {BottomSheet} from 'react-spring-bottom-sheet';
+import {faTimesCircle} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 export default function EditNicknameModal({open, handler, onSuccess}) {
   const {userInfo} = useYingshiUser()
@@ -49,8 +51,12 @@ export default function EditNicknameModal({open, handler, onSuccess}) {
   return (
     <>
       {!isMobile &&
-        <Dialog open={open} handler={handler} className={'w-[500px] bg-[#121212] rounded-[28px] p-[30px]'} size={'sm'}>
-        <DialogBody className={'p-0 w-full h-full'}>
+        <Dialog open={open} handler={handler} className={'bg-[#121212] rounded-[28px] p-0 relative'} size={'sm'} dismiss={{outsidePress:false}}>
+        <DialogBody className={'p-[30px] w-full h-full'}>
+          <FontAwesomeIcon icon={faTimesCircle}
+                           className={'absolute top-4 right-4 cursor-pointer w-[35px] h-[35px] text-[#FFFFFF33] hover-effect'}
+                           onClick={handler}
+          />
           <div className={'flex flex-col items-center w-full px-[23px]'}>
             {/*<p className={'text-[22px] text-white text-center font-medium'}>输入属于您的昵称</p>*/}
             {/*<p className={'text-[16px] text-[#9C9C9C] text-center mt-[15px]'}>请输入2-18个字符</p>*/}
