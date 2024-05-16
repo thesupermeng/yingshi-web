@@ -15,8 +15,8 @@ import {logout} from '@/services/yingshiUser';
 import {useDispatch} from 'react-redux';
 import {setAhaToken, setYingshiUserInfo, setYingshiUserToken} from '@/store/yingshiUser';
 import LogoutModal from '@/components/login/logoutModal';
-import {LocalStorageKeys} from '@/config/common';
-import PaymentModal from '@/components/payment/paymentModal';
+import {usePaymentOpen} from '@/hook/yingshiScreenState/usePaymentOpen';
+import {useLoginOpen} from '@/hook/yingshiScreenState/useLoginOpen';
 
 export default function WebPage ({subMenus}) {
 
@@ -25,14 +25,19 @@ export default function WebPage ({subMenus}) {
   const router = useRouter();
   const pathname = usePathname();
   const [openLogout, setOpenLogout] = useState(false)
-  const [openPaymentModal, setOpenPaymentModal] = useState(false)
+  const [openPayment, setOpenPayment] = usePaymentOpen()
+  const [openLogin, setOpenLogin] = useLoginOpen()
 
   const handleLogout = () => {
     setOpenLogout(x => !x)
   }
 
-  const handleOpenPaymentModal = () => {
-    setOpenPaymentModal(x => !x)
+  const hanldeVipClick = () => {
+    if (userInfo) {
+      setOpenPayment(true)
+    } else {
+      setOpenLogin(true)
+    }
   }
 
   const navs = [
@@ -85,8 +90,8 @@ export default function WebPage ({subMenus}) {
   // }, [token])
 
   return (
-    <div className={'grid grid-cols-4 px-[110px]'}>
-      <div className={'w-full flex flex-col gap-[15px] min-w-[300px]'}>
+    <div className={'grid grid-cols-5 xl:grid-cols-4 px-[110px]'}>
+      <div className={'col-span-2 xl:col-span-1 w-full flex flex-col gap-[15px] min-w-[300px]'}>
         <div className={'h-[80px] rounded-[12px] bg-[#1A1F24] flex items-center px-[21px] py-[12px]'}>
           <ProfileCard
             userInfo={userInfo}
@@ -94,7 +99,7 @@ export default function WebPage ({subMenus}) {
             isH5={false}
           />
         </div>
-        <VipCard onClick={() => setOpenPaymentModal(true)}/>
+        <VipCard onClick={hanldeVipClick}/>
         {navs
           .filter (x => {
             if (userInfo) { // is logged in
@@ -108,7 +113,7 @@ export default function WebPage ({subMenus}) {
         })
         }
       </div>
-      <div className={'col-span-3 w-full flex flex-col gap-[15px] items-center px-[60px]'}>
+      <div className={'col-span-3 xl:col-span-3 w-full flex flex-col gap-[15px] items-center px-[60px]'}>
         {subMenus}
       </div>
       <LogoutModal
@@ -123,7 +128,6 @@ export default function WebPage ({subMenus}) {
         }}
         onCancel={()=> setOpenLogout(false)}
       />
-      <PaymentModal open={openPaymentModal} handler={handleOpenPaymentModal}/>
     </div>
   )
 }

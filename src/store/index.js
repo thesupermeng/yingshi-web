@@ -24,8 +24,6 @@ import { games } from './games';
 import { streamGame } from './streamGame';
 import {
   headerMenu,
-  headerMenuSelected,
-  specialHeaderMenuSelected,
 } from './headerData';
 import { currentScrollPosition, isScroll, isTop } from './scrollView';
 import { yingshiUser } from '@/store/yingshiUser';
@@ -65,8 +63,6 @@ const rootReducer = combineReducers({
   streamGame: streamGame.reducer,
   livechat: livechat.reducer,
   headerMenu: headerMenu.reducer,
-  headerMenuSelected: headerMenuSelected.reducer,
-  specialHeaderMenuSelected: specialHeaderMenuSelected.reducer,
   isScroll: isScroll.reducer,
   isTop: isTop.reducer,
   currentScrollPosition: currentScrollPosition.reducer,

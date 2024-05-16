@@ -35,11 +35,11 @@ export default function CountryInput ({name, placeholder, validator, onChange, e
             <Image src={CaretDown} alt={'more'}/>
           </div>
         </PopoverHandler>
-        <PopoverContent className={'w-[300px] bg-[#191A1D] border-[#191A1D] p-[12px] z-[10000]'}> {/* modal z-index 9999, so need to be above */}
+        <PopoverContent className={'w-[300px] bg-[#191A1D] border-[#191A1D] p-[12px] z-[10000] text-white'}> {/* modal z-index 9999, so need to be above */}
           <div>
             <p className={'text-[16px] text-center'}>选择国家电话代码</p>
-            <div>search</div>
-            <div className={'max-h-[300px] overflow-scroll'}>
+            {/*<div>search</div>*/}
+            <div className={'max-h-[300px] overflow-scroll mt-[10px]'}>
               {countryList.map((country, idx) => {
                 return <CountrySelectItem
                   key={idx}

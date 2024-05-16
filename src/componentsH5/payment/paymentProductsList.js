@@ -40,7 +40,7 @@ function Product({isBest, isSelected, productInfo, onProductSelect}) {
     <div
       className={`${isSelected ? 'h-[160px] border-2 border-[#D4AE7F]' : 'h-[150px]'} 
       ${style.product_card_animation}
-      w-[117px] rounded-[8px] overflow-hidden flex flex-col flex-none relative 
+      w-[117px] rounded-[8px] overflow-hidden flex flex-col flex-none relative hover-effect
       `}
       onClick={onProductSelect}
     >

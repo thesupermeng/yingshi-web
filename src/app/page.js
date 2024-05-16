@@ -26,9 +26,7 @@ import { Spinner } from '@/components/spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
-const getHeaderMenuSelected = (state) => state.headerMenuSelected;
-
-export default function Home() {
+export default function Home(params) {
   const { t } = useTranslation();
   const router = useRouter();
   const pathname = usePathname();
@@ -36,17 +34,17 @@ export default function Home() {
   const [categories, setCategories] = useState([]);
   const [yunying, setYunying] = useState([]);
   const [carousel, setCarousel] = useState([]);
-  const selectedMenu = useSelector(getHeaderMenuSelected);
   const [stillCanLoad, setStillCanLoad] = useState(false);
   const [topicList, setTopicList] = useState(null);
   const [nextPage, setNextPage] = useState(0);
   const [scrollY, setScrollY] = useState(0);
   const [classList, setClassList] = useState([]);
+  let paramsInput = params.category == undefined ? 0 : params.category;
 
   const targetRef = useRef(null);
 
   const getTypePage = async (idValue) => {
-    if(idValue == 99){
+    if (idValue == 99) {
       return YingshiApi(
         URL_YINGSHI_VOD.homeGetPages,
         {
@@ -54,7 +52,7 @@ export default function Home() {
           dj: true,
           page: 1,
           limit: 60,
-          vod_limit: 6
+          vod_limit: 6,
         },
         { method: 'GET' }
       );
@@ -81,14 +79,12 @@ export default function Home() {
     let currentPage = nextPage;
     getTopicListApi().then((data) => {
       if (nextPage > 1) {
-
-        try{
+        try {
           setTopicList((prev) => [...prev, ...data.List]);
-        }catch(e)
-        {
-          console.log(e)
-          console.log('crash')
-          console.log(topicList)
+        } catch (e) {
+          console.log(e);
+          console.log('crash');
+          console.log(topicList);
           setTopicList(data.List);
         }
       } else {
@@ -133,7 +129,7 @@ export default function Home() {
   }, [nextPage, stillCanLoad]);
 
   useEffect(() => {
-    if (selectedMenu.id == 0) {
+    if (paramsInput == 0) {
       setStillCanLoad(true);
       setTopicList(null);
     } else {
@@ -142,8 +138,8 @@ export default function Home() {
       setNextPage(0);
     }
     setLoading(true);
-    getTypePage(selectedMenu.id).then((data) => {
-      if(selectedMenu.id == 99){
+    getTypePage(paramsInput).then((data) => {
+      if (paramsInput == 99) {
         setClassList(data.class_list);
       }
       setCategories(data.categories);
@@ -151,7 +147,7 @@ export default function Home() {
       setCarousel(data.carousel);
       setLoading(false);
     });
-  }, [selectedMenu]);
+  }, [paramsInput]);
 
   const handleClick = (item) => {
     localStorage.setItem('videoTypeId', item.type_id);
@@ -161,12 +157,12 @@ export default function Home() {
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
-  })
+  });
 
   const handleScroll = () => {
     console.log(window.scrollY);
-  }
-  
+  };
+
   return (
     <div
       className='flex flex-1 justify-center flex-col'
@@ -179,12 +175,12 @@ export default function Home() {
         </div>
       ) : (
         <>
-          {selectedMenu.id != 99 ? (
+          {paramsInput != 99 ? (
             <div className='flex flex-col w-full'>
               <Carousel carouselItems={carousel} />
-              <AdsBanner navId={selectedMenu.id} height='500px'/>
+              <AdsBanner navId={paramsInput} height='500px' />
               <div style={{ display: 'flex', justifyContent: 'center' }}>
-              {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
+                {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
                 <div className='container w-[100%]'>
                   {yunying != [] &&
                     yunying?.map((yy, idx) => {
@@ -214,15 +210,12 @@ export default function Home() {
                     categories?.map((category, idx) => {
                       return (
                         <div key={idx}>
-                          {idx % 2 ?
-                            <AdsBanner navId={selectedMenu.id} height='500px'/>
-                            :
+                          {idx % 2 ? (
+                            <AdsBanner navId={paramsInput} height='500px' />
+                          ) : (
                             <div style={{ paddingTop: '20px' }}></div>
-                          }
-                          <div
-                            id={category.type_id}
-                            key={idx}
-                          >
+                          )}
+                          <div id={category.type_id} key={idx}>
                             <div className='flex justify-between'>
                               <span
                                 style={{
@@ -247,12 +240,15 @@ export default function Home() {
                                 >
                                   更多
                                 </span>
-                                <FontAwesomeIcon style={{
-                                  fontSize: '14px',
-                                  fontWeight: '400',
-                                  fontStyle: 'normal',
-                                  fontFamily: 'PingFang SC',
-                                }} icon={faAngleRight} />
+                                <FontAwesomeIcon
+                                  style={{
+                                    fontSize: '14px',
+                                    fontWeight: '400',
+                                    fontStyle: 'normal',
+                                    fontFamily: 'PingFang SC',
+                                  }}
+                                  icon={faAngleRight}
+                                />
                               </div>
                             </div>
                             <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
@@ -268,15 +264,12 @@ export default function Home() {
                     topicList?.map((topic, idx) => {
                       return (
                         <div key={idx}>
-                          {idx % 2 ?
-                            <AdsBanner navId={selectedMenu.id} height='500px'/>
-                            :
+                          {idx % 2 ? (
+                            <AdsBanner navId={paramsInput} height='500px' />
+                          ) : (
                             <div style={{ paddingTop: '20px' }}></div>
-                          }
-                          <div
-                            id={topic.topic_id}
-                            key={idx}
-                          >
+                          )}
+                          <div id={topic.topic_id} key={idx}>
                             <div className='flex justify-between'>
                               <span
                                 style={{
@@ -292,7 +285,6 @@ export default function Home() {
                                 <span
                                   className='mr-1'
                                   style={{
-      
                                     fontSize: '12px',
                                     fontWeight: '400',
                                     fontStyle: 'normal',
@@ -304,12 +296,15 @@ export default function Home() {
                                 >
                                   更多
                                 </span>
-                                <FontAwesomeIcon style={{
-                                  fontSize: '14px',
-                                  fontWeight: '400',
-                                  fontStyle: 'normal',
-                                  fontFamily: 'PingFang SC',
-                                }} icon={faAngleRight} />
+                                <FontAwesomeIcon
+                                  style={{
+                                    fontSize: '14px',
+                                    fontWeight: '400',
+                                    fontStyle: 'normal',
+                                    fontFamily: 'PingFang SC',
+                                  }}
+                                  icon={faAngleRight}
+                                />
                               </div>
                             </div>
                             <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
@@ -328,7 +323,7 @@ export default function Home() {
             <>
               <div className='desktop flex flex-col w-full'>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
+                  {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
                   <div className='pt-4 container  w-[100%]'>
                     {categories != [] &&
                       categories?.map((category, idx) => {
@@ -359,34 +354,44 @@ export default function Home() {
                                     fontFamily: 'PingFang SC',
                                   }}
                                   onClick={(e) => {
-                                    router.push(`/xvod/${category.vod_source_name}/${category.type_name}`);
+                                    router.push(
+                                      `/xvod/${category.vod_source_name}/${category.type_name}`
+                                    );
                                   }}
                                 >
                                   更多
                                 </span>
-                                <FontAwesomeIcon style={{
-                                  fontSize: '14px',
-                                  fontWeight: '400',
-                                  fontStyle: 'normal',
-                                  fontFamily: 'PingFang SC',
-                                }} icon={faAngleRight} />
+                                <FontAwesomeIcon
+                                  style={{
+                                    fontSize: '14px',
+                                    fontWeight: '400',
+                                    fontStyle: 'normal',
+                                    fontFamily: 'PingFang SC',
+                                  }}
+                                  icon={faAngleRight}
+                                />
                               </div>
                             </div>
                             <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
                               {category.vod_list?.slice(0, 6).map((vod, i) => {
-                                return <VideoHorizontalCard vod={vod} key={i} typepage_id={selectedMenu.id} />;
+                                return (
+                                  <VideoHorizontalCard
+                                    vod={vod}
+                                    key={i}
+                                    typepage_id={paramsInput}
+                                  />
+                                );
                               })}
                             </div>
                           </div>
                         );
-                      })
-                    }
+                      })}
                   </div>
                 </div>
               </div>
               <div className='mobile flex flex-col w-full'>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
+                  {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
                   <div className='pt-1 container  w-[100%]'>
                     {categories != [] &&
                       categories?.map((category, idx) => {
@@ -417,39 +422,47 @@ export default function Home() {
                                     fontFamily: 'PingFang SC',
                                   }}
                                   onClick={(e) => {
-                                    router.push(`/xvod/${category.vod_source_name}/${category.type_name}`);
+                                    router.push(
+                                      `/xvod/${category.vod_source_name}/${category.type_name}`
+                                    );
                                   }}
                                 >
                                   更多
                                 </span>
-                                <FontAwesomeIcon style={{
-                                  fontSize: '14px',
-                                  fontWeight: '400',
-                                  fontStyle: 'normal',
-                                  fontFamily: 'PingFang SC',
-                                }} icon={faAngleRight} />
+                                <FontAwesomeIcon
+                                  style={{
+                                    fontSize: '14px',
+                                    fontWeight: '400',
+                                    fontStyle: 'normal',
+                                    fontFamily: 'PingFang SC',
+                                  }}
+                                  icon={faAngleRight}
+                                />
                               </div>
                             </div>
                             <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
                               {category.vod_list?.slice(0, 6).map((vod, i) => {
-                                return <VideoHorizontalCard vod={vod} key={i} typepage_id={selectedMenu.id} />;
+                                return (
+                                  <VideoHorizontalCard
+                                    vod={vod}
+                                    key={i}
+                                    typepage_id={paramsInput}
+                                  />
+                                );
                               })}
                             </div>
                           </div>
                         );
-                      })
-                    }
+                      })}
                   </div>
                 </div>
               </div>
             </>
-          )
-
-          }
+          )}
         </>
       )}
       <div ref={targetRef}>
-        {stillCanLoad && selectedMenu.id == 0 && <Spinner></Spinner>}
+        {stillCanLoad && paramsInput == 0 && <Spinner></Spinner>}
       </div>
     </div>
   );

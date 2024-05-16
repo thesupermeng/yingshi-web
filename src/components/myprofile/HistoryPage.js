@@ -101,7 +101,7 @@ export default function HistoryPage() {
                 }}
               >
                 <span
-                  className='text-sm'
+                  className='text-sm hover-effect'
                   style={{ color: 'rgba(156, 156, 156, 1)' }}
                 >
                   清除记录
@@ -275,12 +275,12 @@ function HistoryCard({ vod, onClick }) {
             <span className={'text-white text-[12px] mb-1'}>
               观看至 {secondsToHHMMSS(vod.watchtimes)}
             </span>
-            <Progress
-              value={10}
-              size={'sm'}
-              color={'blue'}
-              className={'bg-[#FFFFFF38]'}
-            />
+            {/*<Progress*/}
+            {/*  value={10}*/}
+            {/*  size={'sm'}*/}
+            {/*  color={'blue'}*/}
+            {/*  className={'bg-[#FFFFFF38]'}*/}
+            {/*/>*/}
           </div>
         </div>
         <div className={'mobile'}>

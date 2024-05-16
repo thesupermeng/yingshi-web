@@ -13,13 +13,6 @@ import {
 } from '@/asset/icons';
 import { use, useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import {
-  setHeaderMenu,
-  setSelectedId,
-  setSpecialSelectedId,
-} from '@/store/headerData';
-const getHeaderMenuSelected = (state) => state.headerMenuSelected;
-const getSpecialHeaderMenuSelected = (state) => state.specialHeaderMenuSelected;
 
 
 
