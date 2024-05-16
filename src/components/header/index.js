@@ -21,28 +21,23 @@ import {
   AppImage,
   AppleStoreIcon,
   AndroidIcon,
+  ProfileBlue,
 } from '@/asset/icons';
-
 import { usePathname, useRouter } from 'next/navigation';
 import { use, useEffect, useRef, useState } from 'react';
 import { YingshiApi } from '@/util/YingshiApi';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { LoadingPage } from '@/components/loading';
-import {
-  setHeaderMenu,
-  setSelectedId,
-  setSpecialSelectedId,
-} from '@/store/headerData';
+import { setHeaderMenu } from '@/store/headerData';
 import TopicHeader from './../../components/topicHeader';
 import { updateUserInfo } from '@/services/yingshiUser';
 import QRCode from 'qrcode.react';
-import LoginFlow from '@/components/login/loginFlow';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
+import { isMobile } from 'react-device-detect';
+import { usePaymentOpen } from '@/hook/yingshiScreenState/usePaymentOpen';
 
 const getHeaderMenu = (state) => state.headerMenu;
-const getHeaderMenuSelected = (state) => state.headerMenuSelected;
-const getSpecialHeaderMenuSelected = (state) => state.specialHeaderMenuSelected;
 const getCurrentScrollPosition = (state) => state.currentScrollPosition;
 
 const Header = () => {
@@ -53,13 +48,10 @@ const Header = () => {
   const dropdownVipRef = useRef(null);
   const dropdownHistoryRef = useRef(null);
   const dropdownAppRef = useRef(null);
-  const loginFlowRef = useRef(null);
 
   const { t } = useTranslation();
 
   const headerMenu = useSelector(getHeaderMenu);
-  const selectedMenu = useSelector(getHeaderMenuSelected);
-  const selectedSpecialMenu = useSelector(getSpecialHeaderMenuSelected);
   const currentScrollPosition = useSelector(getCurrentScrollPosition);
 
   const [visibleItems, setVisibleItems] = useState([]);
@@ -68,6 +60,7 @@ const Header = () => {
 
   const router = useRouter();
   const pathname = usePathname();
+  const [selectedId, setSelectedId] = useState(0);
   const [searchInput, setSearchInput] = useState('');
   const [loading, setLoading] = useState(true);
   const [openMore, setOpenMore] = useState(false);
@@ -83,6 +76,7 @@ const Header = () => {
   const [loadingSearching, setLoadingSearching] = useState(false);
   const [headerBlack, setHeaderBlack] = useState(false);
   const [_, setOpenLogin] = useLoginOpen();
+  const [__, setOpenPayment] = usePaymentOpen();
 
   const handleOpenMore = () => {
     setOpenMore(!openMore);
@@ -248,15 +242,8 @@ const Header = () => {
 
   const getTopTenList = async () => {
     return YingshiApi(
-      URL_YINGSHI_VOD.topTenList,
-      {
-        // TODO, temp hardcode
-        id: 1,
-        appName: 'E7%88%B1%E9%9F%A9%E5%89%A7TV',
-        platform: 'ANDROID',
-        channelId: 'GOOGLE_PLAY',
-        ip: '211.24.92.4',
-      },
+      URL_YINGSHI_VOD.playlistGetTopicDetail + '?id=1',
+      {},
       { method: 'GET' }
     );
   };
@@ -281,8 +268,7 @@ const Header = () => {
       localStorage.removeItem('videoClass');
       router.push('/film-library');
     } else {
-      dispatch(setSelectedId(value));
-      router.push('/');
+      router.push(`/category/${value}`);
       setSearchInput('');
     }
   };
@@ -329,7 +315,6 @@ const Header = () => {
     const fetchData = async () => {
       let menuItem = await getTopNav();
       const topTenItem = await getTopTenList();
-      console.log(menuItem);
       setTopTenList(topTenItem.vod_list);
       menuItem.push({
         id: 998,
@@ -339,8 +324,8 @@ const Header = () => {
         id: 999,
         name: '片库',
       });
+
       dispatch(setHeaderMenu(menuItem));
-      dispatch(setSelectedId(menuItem[0].id));
 
       setLoading(false);
     };
@@ -349,18 +334,21 @@ const Header = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (pathname.startsWith('/topic')) {
-      dispatch(setSpecialSelectedId(998));
-      dispatch(setSelectedId(0));
+    if (pathname == '/') {
+      setSelectedId(parseInt(0));
+    } else if (pathname.startsWith('/topic')) {
+      setSelectedId(998);
     } else if (pathname.startsWith('/film-library')) {
-      dispatch(setSpecialSelectedId(999));
-      dispatch(setSelectedId(0));
+      setSelectedId(999);
     } else if (pathname.startsWith('/play/')) {
-      dispatch(setSpecialSelectedId(-1));
-      dispatch(setSelectedId(selectedMenu.id));
+      setSelectedId(-1);
     } else {
-      dispatch(setSpecialSelectedId(-1));
-      dispatch(setSelectedId(selectedMenu.id));
+      const match = pathname.match(/\/category\/(\w+)/);
+      if (match) {
+        setSelectedId(parseInt(match[1]));
+      } else {
+        setSelectedId(-1);
+      }
     }
     if (!pathname.startsWith('/search/')) setSearchInput('');
   }, [pathname]);
@@ -481,7 +469,7 @@ const Header = () => {
         </div>
         {openSearch ? (
           <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100dvh-52px)] md:h-[calc(50vh_-_52px)] z-20 left-0 md:left-auto md:w-96 md:ml-16'>
-            <div className='py-3 px-4 bg-[#1d2023] md:rounded-md w-full h-full md:bg-[#2c313ae6] md:w-96'>
+            <div className='py-3 px-4 bg-[#1d2023] md:rounded-md w-full h-full md:bg-[#18191ef5] md:w-96'>
               <div className='no-scrollbar flex flex-col overflow-y-scroll w-full h-full'>
                 {searchInput ? (
                   loadingSearching ? (
@@ -573,7 +561,6 @@ const Header = () => {
                           className='flex flex-row justify-between py-2.5 cursor-pointer search-hot-item'
                           key={index}
                           onClick={(e) => {
-                            console.log('helelle');
                             e.preventDefault();
                             setOpenSearch(false);
                             router.push(
@@ -630,18 +617,28 @@ const Header = () => {
         //   handleOpenVip(false);
         // }}
         onClick={() => {
-          if (!userInfo) {
-            // router.push('/myprofile?login=true');
-            setOpenLogin(true);
+          if (isMobile) {
+            if (!userInfo) {
+              // router.push('/myprofile?login=true');
+              setOpenLogin(true);
+            } else {
+              router.push('/payment');
+            }
           } else {
-            router.push('/payment');
+            if (!userInfo) {
+              setOpenLogin(true);
+            } else {
+              setOpenPayment(true);
+            }
           }
         }}
       >
-        <div className='flex h-full flex-row cursor-pointer rounded-full md:bg-[#1D2023] md:px-4 md:ml-2 md:rounded-full'>
+        <div className='flex h-full flex-row cursor-pointer rounded-full md:bg-[#1D2023] md:px-4 md:ml-2 md:rounded-full  md:py-1'>
           <Image className='mr-2' src={vipIcon} alt='vip' width={25} />
           <div className='flex items-center'>
-            <span className='text-[#F4DBBA] text-[14px]'>VIP会员</span>
+            <span className='text-[#F4DBBA] text-[14px] md:text-[16px]'>
+              VIP会员
+            </span>
           </div>
         </div>
         {openVip ? (
@@ -739,12 +736,12 @@ const Header = () => {
                 top: '-10px',
                 borderLeft: '10px solid transparent',
                 borderRight: '10px solid transparent',
-                borderBottom: '10px solid #2c313ae6',
+                borderBottom: '10px solid #18191ef5',
               }}
             />
             <div
               className='p-3 w-full rounded-md'
-              style={{ backgroundColor: '#2c313ae6' }}
+              style={{ backgroundColor: '#18191ef5' }}
             >
               <div className='flex pb-3 pl-2'>
                 <span
@@ -855,12 +852,12 @@ const Header = () => {
                 top: '-10px',
                 borderLeft: '10px solid transparent',
                 borderRight: '10px solid transparent',
-                borderBottom: '10px solid #2c313ae6',
+                borderBottom: '10px solid #18191f5',
               }}
             />
             <div
               className='p-2 flex flex-row rounded-md rounded-tr-none'
-              style={{ backgroundColor: '#2c313ae6' }}
+              style={{ backgroundColor: '#18191ef5' }}
             >
               <div className='flex-none w-[200px]'>
                 <Image src={AppImage} alt='AppImage' width={200} />
@@ -903,9 +900,9 @@ const Header = () => {
         ) : null}
       </div>
 
-      <div className='hidden'>{vipContainer}</div>
+      <div className='flex justify-center items-center'>{vipContainer}</div>
 
-      <div className='flex items-center px-2'>
+      <div className='hidden items-center px-2'>
         <div className='border-l-2 border-white h-4' />
       </div>
 
@@ -916,18 +913,17 @@ const Header = () => {
             if (userInfo) {
               router.push('/myprofile');
             } else {
-              loginFlowRef.current.start();
+              setOpenLogin(true);
             }
           }}
         >
           <Image
             className='cursor-pointer'
-            src={userIcon}
+            src={userInfo ? ProfileBlue : userIcon}
             alt='user'
-            width={25}
+            width={30}
           />
         </div>
-        <LoginFlow ref={loginFlowRef} />
       </div>
     </div>
   );
@@ -980,12 +976,7 @@ const Header = () => {
                 >
                   <span
                     className={`truncate ${
-                      selectedSpecialMenu.id === -1 &&
-                      selectedMenu.id === navItem.id
-                        ? 'text-blue-500'
-                        : selectedSpecialMenu.id === navItem.id
-                        ? 'text-blue-500'
-                        : 'text-white'
+                      selectedId === navItem.id ? 'text-blue-500' : 'text-white'
                     }`}
                   >
                     {navItem.name}
@@ -1011,20 +1002,12 @@ const Header = () => {
                 >
                   <span
                     className={`hover:text-blue-500 transition-colors duration-300 truncate ${
-                      selectedSpecialMenu.id === -1 &&
-                      selectedMenu.id === navItem.id
-                        ? 'text-blue-500'
-                        : selectedSpecialMenu.id === navItem.id
-                        ? 'text-blue-500'
-                        : 'text-white'
+                      selectedId === navItem.id ? 'text-blue-500' : 'text-white'
                     }`}
                   >
                     {navItem.name}
                   </span>
-                  {selectedSpecialMenu.id === -1 &&
-                  selectedMenu.id === navItem.id ? (
-                    <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
-                  ) : selectedSpecialMenu.id === navItem.id ? (
+                  {selectedId === navItem.id ? (
                     <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
                   ) : null}
                 </div>
@@ -1035,7 +1018,7 @@ const Header = () => {
                 <div className='relative' ref={dropdownMoreRef}>
                   <button
                     onClick={handleOpenMore}
-                    className='flex flex-row items-center'
+                    className='flex flex-row items-center hover:text-blue-500'
                   >
                     <span>更多</span>
                     <Image
@@ -1054,12 +1037,12 @@ const Header = () => {
                           top: '-10px',
                           borderLeft: '10px solid transparent',
                           borderRight: '10px solid transparent',
-                          borderBottom: '10px solid #2c313ae6',
+                          borderBottom: '10px solid #18191ef5',
                         }}
                       />
                       <div
                         className='py-3 flex flex-col md:rounded-md rounded-b-lg rounded-tl-lg'
-                        style={{ backgroundColor: '#2c313ae6' }}
+                        style={{ backgroundColor: '#18191ef5' }}
                       >
                         {hiddenItems?.map((navItem, index) => {
                           return (
@@ -1074,7 +1057,7 @@ const Header = () => {
                             >
                               <span
                                 className={`hover:text-blue-500 transition-colors duration-300 truncate ${
-                                  selectedMenu.id === navItem.id
+                                  selectedId === navItem.id
                                     ? 'text-blue-500'
                                     : 'text-white'
                                 }`}

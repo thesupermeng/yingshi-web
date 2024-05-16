@@ -46,7 +46,7 @@ export default function UserCenter() {
           <div>
             <span className={'text-white text-[16px] font-semibold'}>个人信息</span>
             <div className={'flex bg-[#1D2023] rounded-[10px] px-[20px] py-[17px] items-center gap-[12px] mt-[14px]'}>
-              <Image src={profileIcon} alt={'profile icon'} width={56}/>
+              <Image src={ProfileBlue} alt={'profile icon'} width={56}/>
               <span className={'text-white text-[15px] font-semibold flex-1'}>{userInfo?.user_name}</span>
               <Image src={editIcon} alt={'edit'} width={30} onClick={handleOpenEditNickname}
                      className={'cursor-pointer'}/>
