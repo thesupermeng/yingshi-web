@@ -15,15 +15,20 @@ export default function LoginModal({open, handler, onRegsiter}) {
   const router = useRouter()
   const [formData, setFormData] = useState({})
   const dispatch = useDispatch()
-  const [loginMode, setLoginMode] = useState('sms')
+  const [loginMode, setLoginMode] = useState('email')
   const [isInputError, setIsInputError] = useState(false);
-  const [isAgreementChecked, setIsAgreementChecked] = useState(false);
+  const [isAgreementChecked, setIsAgreementChecked] = useState(true);
   const isInputEmpty = !formData.phoneNumber && !formData.email
 
 
   useEffect(() => {
-    setFormData({})
+    setFormData({referralCode: formData.referralCode})
   }, [loginMode])
+
+  useEffect(() => {
+    setFormData({})
+  }, [open]);
+
 
   const handleRegister = () => {
 
@@ -95,39 +100,49 @@ export default function LoginModal({open, handler, onRegsiter}) {
         </div>
         {/* login mode tab */}
         <div className={'flex'}>
-          <Tabs title={'手机号码'} onClick={handleClickPhone} isSelected={loginMode === 'sms'}/>
           <Tabs title={'电邮地址'} onClick={handleClickEmail} isSelected={loginMode === 'email'}/>
+          <Tabs title={'手机号码'} onClick={handleClickPhone} isSelected={loginMode === 'sms'}/>
         </div>
-        {/* title and input */}
         <div className={'flex flex-col gap-[15px]'}>
-          {loginMode === 'email' &&
-            <>
-              <span className={'text-[15px] text-[#9C9C9C]'}>请输入电邮地址</span>
-              <TextInput
-                name="email"
-                placeholder={'输入邮箱账号'}
-                onChange={handleInput}
-                errorMessage={'电邮地址格式错误'}
-                validator={isEmailValid}
-                isShowIcon={true}
-              />
-            </>
-          }
-          {loginMode === 'sms' &&
-            <>
-              <span className={'text-[15px] text-[#9C9C9C]'}>请输入手机号码</span>
-              <CountryInput
-                name="phoneNumber"
-                placeholder={'2 345 6789'}
-                onChange={handleInput}
-                errorMessage={'手机号码格式错误'}
-                validator={isPhoneValid}
-                isShowIcon={true}
-              />
-            </>
-          }
+          {/* title and input */}
+          <div>
+            {loginMode === 'email' &&
+              <>
+                <span className={'text-[15px] text-[#9C9C9C]'}>请输入电邮地址</span>
+                <TextInput
+                  name="email"
+                  placeholder={'输入邮箱账号'}
+                  onChange={handleInput}
+                  errorMessage={'电邮地址格式错误'}
+                  validator={isEmailValid}
+                  isShowIcon={true}
+                />
+              </>
+            }
+            {loginMode === 'sms' &&
+              <>
+                <span className={'text-[15px] text-[#9C9C9C]'}>请输入手机号码</span>
+                <CountryInput
+                  name="phoneNumber"
+                  placeholder={'2 345 6789'}
+                  onChange={handleInput}
+                  errorMessage={'手机号码格式错误'}
+                  validator={isPhoneValid}
+                  isShowIcon={true}
+                />
+              </>
+            }
+            <span className={'text-[15px] text-[#9C9C9C]'}>请输入邀请码</span>
+            <TextInput
+              name="referralCode"
+              placeholder={'邀请码（选填）'}
+              onChange={handleInput}
+              isShowIcon={false}
+            />
+          </div>
           {/* button */}
-          <Button className={'w-full rounded-[10px] h-auto bg-shayuBlue py-2 text-[17px] font-semibold'} onClick={handleRegister} disabled={isInputError || isInputEmpty || !isAgreementChecked}>登录</Button>
+          <Button className={'w-full rounded-[10px] h-auto bg-shayuBlue py-2 text-[17px] font-semibold'}
+                  onClick={handleRegister} disabled={isInputError || isInputEmpty || !isAgreementChecked}>登录</Button>
           {/* agreement */}
           <div className={'flex items-center justify-center'}>
             {/*<div*/}
@@ -152,11 +167,11 @@ export default function LoginModal({open, handler, onRegsiter}) {
             <span className={'text-[#3E3E3E] text-[12px] font-medium'}>或者</span>
             <div className={'flex-1 bg-[#3E3E3E] h-px'}/>
           </div>
-          <div className={'flex flex-col gap-[12px]'} >
-              <Button className={'w-full h-12 flex items-center bg-[#1D2023] rounded-lg px-[20px] normal-case'}>
-                  <Image src={GoogleIcon} alt={'Google Icon'} width={24} height={24} />
-                  <span className={'font-semibold text-[15px] text-white flex-1'}>继续使用 Google</span>
-              </Button>
+          <div className={'flex flex-col gap-[12px]'}>
+            <Button className={'w-full h-12 flex items-center bg-[#1D2023] rounded-lg px-[20px] normal-case'}>
+              <Image src={GoogleIcon} alt={'Google Icon'} width={24} height={24}/>
+              <span className={'font-semibold text-[15px] text-white flex-1'}>继续使用 Google</span>
+            </Button>
           </div>
         </div>
       </DialogBody>
