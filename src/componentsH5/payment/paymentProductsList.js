@@ -2,10 +2,7 @@ import React, {useEffect, useState} from 'react';
 import style from './styles.module.css'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
-import {Swiper, SwiperSlide} from 'swiper/react';
-import {FreeMode, Mousewheel} from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/free-mode';
+
 
 export default function PaymentProductsList({className, productList, onProductSelect}) {
   const [selectedProduct, setSelectedProduct] = useState(0)
@@ -20,35 +17,21 @@ export default function PaymentProductsList({className, productList, onProductSe
 
 
   return (
-    <Swiper className={`h-[164px] ${className} items-center`}
-      freeMode={true}
-      modules={[FreeMode, Mousewheel]}
-      // spaceBetween={20}
-      slidesPerView={'auto'}
-            mousewheel={true}
-    >
+    <div className={`h-[164px] w-full overflow-scroll flex flex-nowrap gap-[20px] items-center ${className}`}>
       {productList.map((product, index) => {
-        return <SwiperSlide
-          key={product.product_id}
-        >
-          <div className={'h-full flex items-center px-[10px]'}>
-            <Product
-              isSelected={selectedProduct === product.product_id}
-              onProductSelect={() => {
-                setSelectedProduct(product.product_id)
-                onProductSelect(product)
-              }}
-              productInfo={product}
-              isBest={index === 0}
-            />
-
-          </div>
-        </SwiperSlide>
-
+        return <Product key={product.product_id}
+                        isSelected={selectedProduct === product.product_id}
+                        onProductSelect={() => {
+                          setSelectedProduct(product.product_id)
+                          onProductSelect(product)
+                        }}
+                        productInfo={product}
+                        isBest={index === 0}
+        />
       })
 
       }
-    </Swiper>
+    </div>
   );
 }
 
