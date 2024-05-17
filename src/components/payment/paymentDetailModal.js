@@ -2,7 +2,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faChevronLeft, faChevronRight, faTimesCircle} from '@fortawesome/free-solid-svg-icons';
 import {Button, Dialog, DialogBody, IconButton} from '@material-tailwind/react';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import Image from 'next/image';
 import {searchEmptyIcon} from '@/asset/icons';
 
@@ -12,12 +12,8 @@ export default function PaymentDetailModal({open, handler}) {
   const history = userInfo?.paid_vip_response.history ?? []
   const amountPaid = userInfo?.paid_vip_response.total_purchased_amount ?? 0
   const [currentPage, setCurrentPage] = useState(0)
-  const itemsPerPage = 4
+  const itemsPerPage = 5
   const totalPages = Math.ceil(history.length / itemsPerPage)
-
-  useEffect(() => {
-    setCurrentPage(0)
-  }, [open])
 
   return (
     <Dialog open={open} handler={handler} className={'relative bg-[#121212] rounded-[28px] p-0 outline-none'}
@@ -42,14 +38,13 @@ export default function PaymentDetailModal({open, handler}) {
             <span className={'text-[13px] text-[#9C9C9C]'}>购买总额（￥)</span>
           </div>
         </div>
-        <div className={'flex flex-col bg-[#1D2023] rounded-[20px] w-full px-[18px] py-[6px] mt-[20px] h-[320px]'}>
+        <div className={'flex flex-col bg-[#1D2023] rounded-[20px] w-full px-[18px] py-[6px] mt-[20px]'}>
           {history.length > 0 &&
             history
               .toSorted((a, b) => a.created_date + b.created_date)
               .slice(itemsPerPage * currentPage, (currentPage + 1) * itemsPerPage)
               .map((entry, idx) => {
-                const status = entry.transaction_status === 1 ? `+${entry.num_days}天` : ''
-              return <TransactionDetail key={idx} status={status} title={entry.product_name_2} date={formatDate(entry.created_date)} transactionNo={entry.transaction_no}/>
+              return <TransactionDetail key={idx} status={`+${entry.num_days}天`} title={entry.product_name_2} date={formatDate(entry.created_date)}/>
             })
           }
 
@@ -77,12 +72,11 @@ export default function PaymentDetailModal({open, handler}) {
 }
 
 
-function TransactionDetail({title, date, transactionNo, status}) {
+function TransactionDetail({title, date, status}) {
   return (
     <div className={'flex justify-between py-[8px]'}>
       <div className={'flex flex-col'}>
         <span className={'text-[14px]'}>{title}</span>
-        <span className={'text-[12px] text-[#9C9C9C]'}>{transactionNo}</span>
         <span className={'text-[12px] text-[#9C9C9C]'}>{date}</span>
       </div>
       <span className={'text-[16px] text-shayuBlue font-medium self-center'}>{status}</span>
