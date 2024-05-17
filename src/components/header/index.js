@@ -469,7 +469,7 @@ const Header = () => {
         </div>
         {openSearch ? (
           <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100dvh-52px)] md:h-[calc(50vh_-_52px)] z-20 left-0 md:left-auto md:w-96 md:ml-16'>
-            <div className='py-3 px-4 bg-[#1d2023] md:rounded-md w-full h-full md:bg-[#18191ef5] md:w-96'>
+            <div className='py-3 px-4 bg-[#1d2023] md:rounded-md w-full h-full md:bg-[#26253ae6] md:w-96'>
               <div className='no-scrollbar flex flex-col overflow-y-scroll w-full h-full'>
                 {searchInput ? (
                   loadingSearching ? (
@@ -719,7 +719,7 @@ const Header = () => {
           handleOpenHistory(false);
         }}
       >
-        <div className='h-full flex justify-center' onClick={() => router.push('/myprofile/watchHistory')}>
+        <div className='h-full flex justify-center'>
           <Image
             className='cursor-pointer'
             src={HistoryIcon}
@@ -736,12 +736,12 @@ const Header = () => {
                 top: '-10px',
                 borderLeft: '10px solid transparent',
                 borderRight: '10px solid transparent',
-                borderBottom: '10px solid #18191ef5',
+                borderBottom: '10px solid #2c313ae6',
               }}
             />
             <div
               className='p-3 w-full rounded-md'
-              style={{ backgroundColor: '#18191ef5' }}
+              style={{ backgroundColor: '#2c313ae6' }}
             >
               <div className='flex pb-3 pl-2'>
                 <span
@@ -852,12 +852,12 @@ const Header = () => {
                 top: '-10px',
                 borderLeft: '10px solid transparent',
                 borderRight: '10px solid transparent',
-                borderBottom: '10px solid #18191f5',
+                borderBottom: '10px solid #2c313ae6',
               }}
             />
             <div
               className='p-2 flex flex-row rounded-md rounded-tr-none'
-              style={{ backgroundColor: '#18191ef5' }}
+              style={{ backgroundColor: '#2c313ae6' }}
             >
               <div className='flex-none w-[200px]'>
                 <Image src={AppImage} alt='AppImage' width={200} />
@@ -1037,12 +1037,12 @@ const Header = () => {
                           top: '-10px',
                           borderLeft: '10px solid transparent',
                           borderRight: '10px solid transparent',
-                          borderBottom: '10px solid #18191ef5',
+                          borderBottom: '10px solid #2c313ae6',
                         }}
                       />
                       <div
                         className='py-3 flex flex-col md:rounded-md rounded-b-lg rounded-tl-lg'
-                        style={{ backgroundColor: '#18191ef5' }}
+                        style={{ backgroundColor: '#2c313ae6' }}
                       >
                         {hiddenItems?.map((navItem, index) => {
                           return (
