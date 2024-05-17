@@ -21,12 +21,16 @@ import {useLoginOpen} from '@/hook/yingshiScreenState/useLoginOpen';
 export default function WebPage ({subMenus}) {
 
   const dispatch = useDispatch();
-  const {isVip, userInfo, token} = useYingshiUser()
+  const {isVip, userInfo, token, refreshUserInfo} = useYingshiUser()
   const router = useRouter();
   const pathname = usePathname();
   const [openLogout, setOpenLogout] = useState(false)
   const [openPayment, setOpenPayment] = usePaymentOpen()
   const [openLogin, setOpenLogin] = useLoginOpen()
+
+  useEffect(() => {
+    refreshUserInfo()
+  }, [])
 
   const handleLogout = () => {
     setOpenLogout(x => !x)
