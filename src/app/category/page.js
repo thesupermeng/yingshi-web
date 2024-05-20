@@ -26,7 +26,6 @@ export default function Page({ params }) {
   // let loading = false;
 
   const router = useRouter();
-
   router.push(`/`);
 
   return <div></div>;
