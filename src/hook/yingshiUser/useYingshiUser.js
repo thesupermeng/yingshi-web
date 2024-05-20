@@ -43,7 +43,9 @@ export default function useYingshiUser() {
 
     const refreshUserInfo = () => {
         queryUserInfo().then(res => {
-            dispatch(setYingshiUserInfo(res.user))
+            if(res){
+                dispatch(setYingshiUserInfo(res.user))
+            }
         })
     }
 

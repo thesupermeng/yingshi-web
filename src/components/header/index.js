@@ -267,6 +267,9 @@ const Header = () => {
       localStorage.removeItem('videoTypeId');
       localStorage.removeItem('videoClass');
       router.push('/film-library');
+    } else if (value === 0) {
+      router.push(`/`);
+      setSearchInput('');
     } else {
       router.push(`/category/${value}`);
       setSearchInput('');
@@ -712,10 +715,6 @@ const Header = () => {
       <div
         className='relative'
         ref={dropdownHistoryRef}
-        onClick={() => {
-          handleOpenHistory(false);
-          router.push('/myprofile/watchHistory');
-        }}
         onMouseEnter={() => {
           if (pathname !== '/myprofile/watchHistory') {
             handleOpenHistory(true);
@@ -727,7 +726,10 @@ const Header = () => {
       >
         <div
           className='h-full flex justify-center'
-          onClick={() => router.push('/myprofile/watchHistory')}
+          onClick={() => {
+            handleOpenHistory(false);
+            router.push('/myprofile/watchHistory');
+          }}
         >
           <Image
             className={`cursor-pointer `}

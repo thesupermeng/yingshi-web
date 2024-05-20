@@ -26,23 +26,30 @@ export default function Page() {
     return /^\d+$/.test(str);
   };
 
-  if (isInteger(id)) {
-    if (parseInt(id) == 0) {
-      router.push('/');
-    } else if (parseInt(id) == 998) {
-      router.push('/topic');
-    } else if (parseInt(id) == 999) {
-      router.push('/film-library');
-    } else if (headerId.includes(parseInt(id))) {
-      return (
-        <>
-          <Home category={parseInt(id)} />
-        </>
-      );
+  useEffect(() => {
+    if (isInteger(id)) {
+      const intId = parseInt(id);
+      if (intId === 0) {
+        router.push('/');
+      } else if (intId === 998) {
+        router.push('/topic');
+      } else if (intId === 999) {
+        router.push('/film-library');
+      } else if (headerId.includes(intId)) {
+        // No routing needed, return to render Home component below
+      } else {
+        router.push('/404');
+      }
     } else {
       router.push('/404');
     }
-  } else {
-    router.push('/404');
+  }, [id, router]);
+
+  // If id is a valid headerId, render the Home component with the corresponding category
+  if (isInteger(id) && headerId.includes(parseInt(id))) {
+    return <Home category={parseInt(id)} />;
   }
+
+  // Return null or a spinner if routing is in progress
+  return null;
 }
