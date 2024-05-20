@@ -1,11 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import style from './styles.module.css'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCheckCircle} from '@fortawesome/free-solid-svg-icons';
+import { useDraggable } from 'react-use-draggable-scroll';
 
 
 export default function PaymentProductsList({className, productList, onProductSelect}) {
   const [selectedProduct, setSelectedProduct] = useState(0)
+  const listRef = useRef()
+  const {events} = useDraggable(listRef, {applyRubberBandEffect:true, activeMouseButton:'Left'})
 
   useEffect(() => {
     if (productList && productList.length > 0) {
@@ -17,7 +20,7 @@ export default function PaymentProductsList({className, productList, onProductSe
 
 
   return (
-    <div className={`h-[164px] w-full overflow-scroll flex flex-nowrap gap-[20px] items-center ${className}`}>
+    <div className={`h-[164px] w-full overflow-x-scroll flex flex-nowrap gap-[20px] items-center ${className}`} ref={listRef} {...events}>
       {productList.map((product, index) => {
         return <Product key={product.product_id}
                         isSelected={selectedProduct === product.product_id}
