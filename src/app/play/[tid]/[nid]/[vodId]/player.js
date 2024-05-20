@@ -20,7 +20,7 @@ export default function Player({
   const adsPluginRef = useRef();
   const router = useRouter();
 
-  // const [remaining, setRemaining]= useState(setupTimeout)
+  // const [remaining, setRemaining] = useState(setupTimeout);
 
   const { userInfo } = useYingshiUser();
   const [isLoginOpen, setIsLoginOpen] = useLoginOpen();
@@ -81,7 +81,20 @@ export default function Player({
         });
 
         art.on('video:timeupdate', () => {
-          // setRemaining(setupTimeout - parseInt(art.video.currentTime))
+          let remaining = setupTimeout - parseInt(art.video.currentTime)
+          art.layers.update({
+            name: 'ads',
+            html: `<div style="background-color: #00000099; padding: 4px; border-radius: 5px">
+        <span style="font-size: 12px">试看${remaining}秒后结束&nbsp;|&nbsp;</span>
+        <span style="font-size: 12px; color: #D1AC7D">开通VIP畅享无限内容</span>
+        </div>`,
+            style: {
+              display: `${setupTimeout === undefined ? 'none' : 'block'}`,
+              position: 'absolute',
+              bottom: '60px',
+              left: '5px',
+            },
+          });
           if (art.video.currentTime >= setupTimeout) {
             art.pause();
             show();
@@ -107,7 +120,6 @@ export default function Player({
     } catch (e) {
       showNextFlag = false;
     }
-
 
     // Artplayer.MOBILE_DBCLICK_PLAY = false;
     // Artplayer.MOBILE_CLICK_PLAY = true;
@@ -153,7 +165,6 @@ export default function Player({
       plugins: [addOnLayout()],
     });
 
-
     if (getInstance && typeof getInstance === 'function') {
       getInstance(artRef.current);
     }
@@ -178,8 +189,5 @@ export default function Player({
     };
   }, [option.url]);
 
-  return (
-    <div ref={artContainerRef} {...rest}>
-    </div>
-  );
+  return <div ref={artContainerRef} {...rest}></div>;
 }

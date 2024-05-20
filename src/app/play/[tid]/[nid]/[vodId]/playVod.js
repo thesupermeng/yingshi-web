@@ -318,31 +318,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
           JSON.stringify(artPlayerData)
         );
       }
-
-      //   if (watchHistoryData != null) {
-      //     if (
-      //       watchHistoryData.findIndex(
-      //         (item) => item.vodurl === watchHistory.vodurl
-      //       ) == -1
-      //     ) {
-      //       watchHistoryData.push(watchHistory);
-      //     } else {
-      //       watchHistoryData = watchHistoryData.filter(
-      //         (item) => item.vodurl !== watchHistory.vodurl
-      //       );
-      //       watchHistoryData.push(watchHistory);
-      //     }
-
-      //     if (watchHistoryData.length > 10) {
-      //       watchHistoryData.splice(0, 1);
-      //     }
-      //   } else {
-      //     watchHistoryData = [watchHistory];
-      //   }
-      //   localStorage.setItem(
-      //     'watchHistoryList',
-      //     JSON.stringify(watchHistoryData)
-      //   );
     }
   }, [episodeSelected]);
 
