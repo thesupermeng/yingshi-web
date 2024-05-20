@@ -5,12 +5,13 @@ import { setAhaToken, setYingshiUserLoginParam, setYingshiUserToken } from '@/st
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faTimes, faTimesCircle} from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import CryptoJS from 'crypto-js';
 
 const totalCountdownTime = 60 // seconds
 
 
-export default function OtpModal({ open, handler, onLogin, onRegister , onCloseOTP }) {
+export default function OtpModal({ open, handler, onLogin, onRegister, onCloseOTP }) {
   const [countdownTimer, setCountdownTimer] = useState(totalCountdownTime);
   const [errorMessage, setErrorMessage] = useState('')
 
@@ -26,6 +27,42 @@ export default function OtpModal({ open, handler, onLogin, onRegister , onCloseO
   const timerRef = useRef(null);
   const inputRefs = useRef([])
   const otpRef = useRef(new Array(6).fill(''))
+
+
+  const handleTikTokPixelEvent = (userData) => {
+    const hashedEmail = userData.email ? CryptoJS.SHA256(userData.email).toString(CryptoJS.enc.Hex) : '';
+    const hashedPhoneNumber = (userData.phoneNumber && userData.phoneNumber !== '0')
+      ? CryptoJS.SHA256(userData.phoneNumber).toString(CryptoJS.enc.Hex)
+      : '';
+    const hashedExternalID = userData.uniqueID ? CryptoJS.SHA256(userData.uniqueID).toString(CryptoJS.enc.Hex) : '';
+
+    const identifyPayload = {};
+    if (hashedEmail) identifyPayload.email = hashedEmail;
+    if (hashedPhoneNumber) identifyPayload.phone_number = hashedPhoneNumber;
+    if (hashedExternalID) identifyPayload.external_id = hashedExternalID;
+
+
+    // Identify the user
+    if (Object.keys(identifyPayload).length > 0) {
+      console.log('Identifying user with:', identifyPayload); // Debug log
+      window.ttq.identify(identifyPayload);
+    }
+    // Track the specified event
+    window.ttq.track('Login', {
+      email: hashedEmail,
+      phone_number: hashedPhoneNumber,
+      external_id: hashedExternalID,
+    });
+
+
+    // Track the CompletePayment event
+    console.log('TrackingLogin:', {
+      email: hashedEmail,
+      phone_number: hashedPhoneNumber,
+      external_id: hashedExternalID,
+    }); // Debug log
+  };
+
 
   useEffect(() => {
     // if (timerRef.current) return;
@@ -85,6 +122,21 @@ export default function OtpModal({ open, handler, onLogin, onRegister , onCloseO
               if (res.code === 201) {
                 onRegister()
               }
+
+
+
+              const ttkObj = {
+                uniqueID: res?.data?.user?.user_id,
+                phoneNumber: res?.data?.user?.user_phone,
+                email: res?.data?.user?.user_email,
+              }
+
+              console.log('ttkObj')
+              console.log(ttkObj)
+              handleTikTokPixelEvent(ttkObj)
+
+
+
               dispatch(setYingshiUserToken(res.data.access_token))
               dispatch(setAhaToken(res.data.aha_token))
               inputRefs.current[inputRefs.current.length - 1].blur()
@@ -100,12 +152,26 @@ export default function OtpModal({ open, handler, onLogin, onRegister , onCloseO
               }
 
               dispatch(setYingshiUserLoginParam({ success: true }))
+
+
+
+
               if (res.code === 0) {
                 onLogin()
               }
               if (res.code === 201) {
                 onRegister()
               }
+
+
+              const ttkObj = {
+                uniqueID: res?.data?.user?.user_id,
+                phoneNumber: res?.data?.user?.user_phone,
+                email: res?.data?.user?.user_email,
+              }
+              console.log('ttkObj')
+              console.log(ttkObj)
+              handleTikTokPixelEvent(ttkObj)
               dispatch(setYingshiUserToken(res.data.access_token))
               dispatch(setAhaToken(res.data.aha_token))
               inputRefs.current[inputRefs.current.length - 1].blur()
@@ -129,7 +195,7 @@ export default function OtpModal({ open, handler, onLogin, onRegister , onCloseO
   return (
     <>
       {loginParam && loginParam.loginMode &&
-        <Dialog open={open} handler={handler} className={'w-[600px] bg-[#121212] rounded-[28px] p-0 overflow-scroll relative'} size={'xs'} dismiss={{outsidePress:false}}>
+        <Dialog open={open} handler={handler} className={'w-[600px] bg-[#121212] rounded-[28px] p-0 overflow-scroll relative'} size={'xs'} dismiss={{ outsidePress: false }}>
           <DialogBody className={'py-[25px] w-full h-full'}>
             <div className={'flex flex-col items-center]'}>
               <div style={{
@@ -140,8 +206,8 @@ export default function OtpModal({ open, handler, onLogin, onRegister , onCloseO
                 <p className={' px-[15px] text-white font-semibold text-[20px] text-center mb-[24px]'}>输入验证码</p>
 
                 <FontAwesomeIcon icon={faTimesCircle}
-                                 className={'absolute top-4 right-4 cursor-pointer w-[35px] h-[35px] text-[#FFFFFF33] hover-effect'}
-                                 onClick={handler}
+                  className={'absolute top-4 right-4 cursor-pointer w-[35px] h-[35px] text-[#FFFFFF33] hover-effect'}
+                  onClick={handler}
                 />
               </div>
 
