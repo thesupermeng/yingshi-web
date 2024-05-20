@@ -77,7 +77,7 @@ export default function H5Page({params}) {
   const [openLoginSuccess, setOpenLoginSuccess] = useState(false);
   const [openLogoutConfirmation, setOpenLogoutConfirmation] = useState(false);
 
-  const {isVip, userInfo, ahaToken} = useYingshiUser()
+  const {isVip, userInfo, ahaToken, refreshUserInfo} = useYingshiUser()
 
   const dispatch = useDispatch()
   const getLoginParam = (s) => s.yingshiUser.loginParam
@@ -107,6 +107,10 @@ export default function H5Page({params}) {
       }, 2000)
     }
   }, [loginParam])
+
+  useEffect(() => {
+    refreshUserInfo()
+  }, [])
 
   const handleOnClickVip = () => {
     console.log('testing', userInfo)

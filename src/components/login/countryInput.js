@@ -4,11 +4,14 @@ import {useEffect, useState} from 'react';
 import {getCountryList} from '@/services/yingshiUser';
 import {Popover, PopoverContent, PopoverHandler} from '@material-tailwind/react';
 import TextInput from '@/components/login/input';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faSearch} from '@fortawesome/free-solid-svg-icons';
 
 export default function CountryInput ({name, placeholder, validator, onChange, errorMessage, isShowIcon}) {
   const [countryList, setCountryList] = useState([]);
   const [chosenCountry, setChosenCountry] = useState(null);
   const [openCountry, setOpenCountry] = useState(false);
+  const [searchCountry, setSearchCountry] = useState('');
 
   useEffect(() => {
     getCountryList().then((result) => {
@@ -38,9 +41,20 @@ export default function CountryInput ({name, placeholder, validator, onChange, e
         <PopoverContent className={'w-[300px] bg-[#191A1D] border-[#191A1D] p-[12px] z-[10000] text-white'}> {/* modal z-index 9999, so need to be above */}
           <div>
             <p className={'text-[16px] text-center'}>选择国家电话代码</p>
-            {/*<div>search</div>*/}
+            <div className={'mt-[10px]'}>
+              <FontAwesomeIcon icon={faSearch} width={20} className={'mr-[10px]'}/>
+              <input
+                type={'text'}
+                className={'text-[#9C9C9C] bg-transparent outline-none'}
+                placeholder={'搜索'}
+                value={searchCountry}
+                onChange={(e) => setSearchCountry(e.target.value)}
+              />
+            </div>
             <div className={'max-h-[300px] overflow-scroll mt-[10px]'}>
-              {countryList.map((country, idx) => {
+              {countryList
+                .filter((country) => country.country_name.toLowerCase().includes(searchCountry.toLowerCase()) || country.country_phonecode.toString().includes(searchCountry.toLowerCase()) )
+                .map((country, idx) => {
                 return <CountrySelectItem
                   key={idx}
                   country={country}
