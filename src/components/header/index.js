@@ -267,6 +267,9 @@ const Header = () => {
       localStorage.removeItem('videoTypeId');
       localStorage.removeItem('videoClass');
       router.push('/film-library');
+    } else if (value === 0) {
+      router.push(`/`);
+      setSearchInput('');
     } else {
       router.push(`/category/${value}`);
       setSearchInput('');
