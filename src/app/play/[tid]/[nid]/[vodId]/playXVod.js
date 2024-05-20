@@ -185,15 +185,14 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
   }, [vod]);
 
   useEffect(() => {
-    console.log(vod);
-    if (episodeSelected !== null) {
+    if (vod !== null) {
       let watchHistory = {
-        tid: tId,
-        nid: episodeSelected.nid + 1,
-        vodid: vodId,
+        tid: vod.type_id,
+        nid: nId,
+        vodid: vod.vod_id,
         vodpic: vod.vod_pic,
         vodname: vod.vod_name,
-        vodurl: episodeSelected.url,
+        vodurl: vodUrl,
         watchtimes: 0,
       };
 
@@ -240,7 +239,7 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
 
       localStorage.setItem('watchHistoryList', JSON.stringify(listWithoutId));
 
-      if (artPlayerData !== null || artPlayerData !== undefined) {
+      if (artPlayerData !== null && artPlayerData !== undefined) {
         duplicateList.forEach((item) => {
           if (artPlayerData.times[item.vodurl]) {
             // Remove target URL from the object
@@ -250,37 +249,8 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
       }
 
       localStorage.setItem('artplayer_settings', JSON.stringify(artPlayerData));
-
-      // let watchHistoryData = JSON.parse(
-      //   localStorage.getItem('watchHistoryList')
-      // );
-
-      // if (watchHistoryData != null) {
-      //   if (
-      //     watchHistoryData.findIndex(
-      //       (item) => item.vodurl === watchHistory.vodurl
-      //     ) == -1
-      //   ) {
-      //     watchHistoryData.push(watchHistory);
-      //   } else {
-      //     watchHistoryData = watchHistoryData.filter(
-      //       (item) => item.vodurl !== watchHistory.vodurl
-      //     );
-      //     watchHistoryData.push(watchHistory);
-      //   }
-
-      //   if (watchHistoryData.length > 10) {
-      //     watchHistoryData.splice(0, 1);
-      //   }
-      // } else {
-      //   watchHistoryData = [watchHistory];
-      // }
-      // localStorage.setItem(
-      //   'watchHistoryList',
-      //   JSON.stringify(watchHistoryData)
-      // );
     }
-  }, [episodeSelected]);
+  }, [vod]);
 
   const onSelectSource = (source) => {
     setVodSourceSelected(source);
