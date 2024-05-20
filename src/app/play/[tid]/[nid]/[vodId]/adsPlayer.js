@@ -124,7 +124,7 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
           remaining !== null ? 'flex' : 'hidden'
         }`}
       >
-        <span className='text-sm nowrap'>{remaining}s&nbsp;|&nbsp;</span>
+        <span className='text-sm nowrap'>{remaining}秒&nbsp;|&nbsp;</span>
         <span
           onClick={() => {
             handleOnSkipAd();
@@ -165,7 +165,7 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
           remaining !== null ? 'flex' : 'hidden'
         }`}
       >
-        <span className='text-sm nowrap'>{remaining}s&nbsp;|&nbsp;</span>
+        <span className='text-sm nowrap'>{remaining}秒&nbsp;|&nbsp;</span>
         <span
           onClick={() => {
             handleOnStopCount();
