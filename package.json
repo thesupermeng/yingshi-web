@@ -61,6 +61,7 @@
     "react-spring-bottom-sheet": "3.5.0-alpha.0",
     "react-switch": "^7.0.0",
     "react-tooltip": "^5.21.1",
+    "react-use-draggable-scroll": "^0.4.7",
     "react-vertical-timeline-component": "^3.6.0",
     "redux-persist": "^6.0.0",
     "slick-carousel": "^1.8.1",
