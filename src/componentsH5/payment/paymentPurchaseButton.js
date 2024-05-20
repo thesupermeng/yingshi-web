@@ -6,10 +6,15 @@ import Image from 'next/image';
 import {TickAnimation} from '@/asset/gif';
 import {CrossRed} from '@/asset/icons';
 import {useRouter} from 'next/navigation';
+import {isMobile} from 'react-device-detect';
+import {usePaymentOpen} from '@/hook/yingshiScreenState/usePaymentOpen';
+import {usePaymentPendingOpen} from '@/hook/yingshiScreenState/usePaymentPendingOpen';
 
 export default function PaymentPurchaseButton({productInfo, paymentInfo, className}) {
   const [isPaymentProcessing, setIsPaymentProcessing] = useState(false)
   const [showPaymentFailed, setShowPaymentFailed] = useState(false)
+  const [isOpenPayment, setIsOpenPayment] = usePaymentOpen();
+  const [isShowPaymentPending, setShowPaymentPending] = usePaymentPendingOpen()
   const router = useRouter()
 
 
@@ -24,10 +29,17 @@ export default function PaymentPurchaseButton({productInfo, paymentInfo, classNa
         if (res.code === 0) {
           if (res.data.paymentData.url) {
             // window.location.href = res.data.paymentData.url
-            router.push(res.data.paymentData.url)
+            if (isMobile) {
+              router.push(res.data.paymentData.url)
+            } else {
+              window.open(res.data.paymentData.url, '_blank')
+            }
+
           } else if (res.data.paymentData.html) {
+            const target = isMobile ? '_self' : '_blank';
+
             // Open a new tab/window
-            const newTab = window.open('', '_self');
+            const newTab = window.open('', target);
             // Write the HTML content into the new tab
             newTab.document.write(res.data.paymentData.html.replaceAll('\\', ''));
             newTab.document.close();
@@ -39,6 +51,10 @@ export default function PaymentPurchaseButton({productInfo, paymentInfo, classNa
           }, 3000)
         }
         setIsPaymentProcessing(false)
+
+        setIsOpenPayment(false)
+        setShowPaymentPending(true)
+
       })
       // .finally(() => {
       //   setIsPaymentProcessing(false)
