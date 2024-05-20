@@ -794,7 +794,9 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                       {convertTimeStampToDateTime(vod.vod_time).month}-
                       {convertTimeStampToDateTime(vod.vod_time).day}
                     </div>
-                    <div className='text-sm pt-1'>主演: {vod.vod_actor}</div>
+                    <div className='text-sm pt-1 text-ellipsis overflow-hidden'>
+                      主演: {vod.vod_actor}
+                    </div>
                     <div
                       className='text-md pt-3 py-2'
                       style={{
@@ -803,7 +805,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                     >
                       简介
                     </div>
-                    <div className='text-sm'>
+                    <div className='text-sm text-ellipsis overflow-hidden'>
                       <p>{vod.vod_content}</p>
                     </div>
                   </div>

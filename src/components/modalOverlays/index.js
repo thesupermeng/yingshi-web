@@ -9,6 +9,8 @@ import {useEffect, useLayoutEffect, useState} from 'react';
 import LoginFlow from '@/components/login/loginFlow';
 import PaymentModal from '@/components/payment/paymentModal';
 import {usePaymentOpen} from '@/hook/yingshiScreenState/usePaymentOpen';
+import PaymentPendingModal from '@/components/payment/paymentPendingModal';
+import {usePaymentPendingOpen} from '@/hook/yingshiScreenState/usePaymentPendingOpen';
 
 export default function ModalOverlays() {
   const [isMobile, setIsMobile] = useState(false);
@@ -20,6 +22,7 @@ export default function ModalOverlays() {
   const [isOpenLogin, setIsOpenLogin] = useLoginOpen();
   const [isLoginSuccess, setIsLoginSuccess] = useLoginSuccessOpen()
   const [isOpenPayment, setIsOpenPayment] = usePaymentOpen();
+  const [isShowPaymentPending, setShowPaymentPending] = usePaymentPendingOpen()
 
   return (
     <>
@@ -33,10 +36,16 @@ export default function ModalOverlays() {
         <LoginFlow/>
       }
       {!isMobile &&
-        <PaymentModal
-          open={isOpenPayment}
-          handler={() => setIsOpenPayment(false)}
-        />
+        <>
+          <PaymentModal
+            open={isOpenPayment}
+            handler={() => setIsOpenPayment(false)}
+          />
+          <PaymentPendingModal
+            open={isShowPaymentPending}
+            handler={() => setShowPaymentPending(false)}
+          />
+        </>
       }
       <LoginSuccess
         open={isLoginSuccess}
