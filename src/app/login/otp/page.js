@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { loginEmail, loginRequestEmailOtp, loginRequestSmsOtp, loginSms } from '@/services/yingshiUser';
 import { setAhaToken, setYingshiUserLoginParam, setYingshiUserToken } from '@/store/yingshiUser';
 import { useLoginSuccessOpen } from '@/hook/yingshiScreenState/useLoginSuccessOpen';
-
+import CryptoJS from 'crypto-js';
 const totalCountdownTime = 60 // seconds
 
 export default function OTP() {
@@ -135,7 +135,7 @@ export default function OTP() {
                         .then(res => {
                             // login = res.code = 0
                             // signup = res.code = 201
-
+console.log('xx')
                             if (res.code === -1) {
                                 setErrorMessage(res.message)
                                 return
@@ -178,7 +178,7 @@ export default function OTP() {
                         .then(res => {
                             // login = res.code = 0
                             // signup = res.code = 201
-
+                            console.log('xx')
                             if (res.code === -1) {
                                 setErrorMessage(res.message)
                                 return
