@@ -1,16 +1,16 @@
 'use client'
-import {forwardRef, useEffect, useRef, useState} from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import {Stopwatch} from '@/asset/icons';
-import {useDispatch, useSelector} from 'react-redux';
-import {useRouter} from 'next/navigation';
-import {loginEmail, loginRequestEmailOtp, loginRequestSmsOtp, loginSms} from '@/services/yingshiUser';
-import {setAhaToken, setYingshiUserLoginParam, setYingshiUserToken} from '@/store/yingshiUser';
-import {useLoginSuccessOpen} from '@/hook/yingshiScreenState/useLoginSuccessOpen';
+import { Stopwatch } from '@/asset/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
+import { loginEmail, loginRequestEmailOtp, loginRequestSmsOtp, loginSms } from '@/services/yingshiUser';
+import { setAhaToken, setYingshiUserLoginParam, setYingshiUserToken } from '@/store/yingshiUser';
+import { useLoginSuccessOpen } from '@/hook/yingshiScreenState/useLoginSuccessOpen';
 
 const totalCountdownTime = 60 // seconds
 
-export default function OTP () {
+export default function OTP() {
     const router = useRouter()
 
     //redux
@@ -34,13 +34,13 @@ export default function OTP () {
     const seconds = countdownTimer % 60;
 
     const handleResendOTP = () => {
-      setCountdownTimer(totalCountdownTime)
-      if (loginParam.loginMode === 'sms') {
-        loginRequestSmsOtp(loginParam)
-      } else {
-        loginRequestEmailOtp(loginParam)
+        setCountdownTimer(totalCountdownTime)
+        if (loginParam.loginMode === 'sms') {
+            loginRequestSmsOtp(loginParam)
+        } else {
+            loginRequestEmailOtp(loginParam)
 
-      }
+        }
     }
 
     useEffect(() => {
@@ -57,7 +57,7 @@ export default function OTP () {
     }, [])
 
     useEffect(() => {
-        if (inputRefs.current.length !== 0 ){
+        if (inputRefs.current.length !== 0) {
             inputRefs.current[0].focus()
         }
     }, [])
@@ -68,10 +68,53 @@ export default function OTP () {
 
 
     const handleBackspace = (e, index) => {
-        if(e.key === 'Backspace' && !e.target.value && index > 0){
+        if (e.key === 'Backspace' && !e.target.value && index > 0) {
             inputRefs.current[index - 1].focus()
         }
     }
+
+
+    const handleTikTokPixelEvent = (res) => {
+        const userData = {
+            uniqueID: res?.data?.user?.user_id,
+            phoneNumber: res?.data?.user?.user_phone,
+            email: res?.data?.user?.user_email,
+        }
+        const hashedEmail = userData.email ? CryptoJS.SHA256(userData.email).toString(CryptoJS.enc.Hex) : '';
+        const hashedPhoneNumber = (userData.phoneNumber && userData.phoneNumber !== '0')
+            ? CryptoJS.SHA256(userData.phoneNumber).toString(CryptoJS.enc.Hex)
+            : '';
+        const hashedExternalID = userData.uniqueID ? CryptoJS.SHA256(userData.uniqueID).toString(CryptoJS.enc.Hex) : '';
+
+        const identifyPayload = {};
+        if (hashedEmail) identifyPayload.email = hashedEmail;
+        if (hashedPhoneNumber) identifyPayload.phone_number = hashedPhoneNumber;
+        if (hashedExternalID) identifyPayload.external_id = hashedExternalID;
+
+        // Identify the user
+        if (Object.keys(identifyPayload).length > 0) {
+            console.log('Identifying user with:', identifyPayload); // Debug log
+            window.ttq.identify(identifyPayload);
+        }
+
+        // Track the CompleteRegistration event
+        const trackPayload = {
+            email: hashedEmail,
+            phone_number: hashedPhoneNumber,
+            external_id: hashedExternalID,
+        };
+
+        console.log('Tracking CompleteRegistration with:', trackPayload); // Debug log
+        window.ttq.track('CompleteRegistration', trackPayload);
+
+        // Log the status of the tracking
+        try {
+            window.ttq.track('CompleteRegistration', trackPayload);
+            console.log('Tracking CompleteRegistration succeeded.');
+        } catch (error) {
+            console.error('Tracking CompleteRegistration failed:', error);
+        }
+    };
 
 
     const handleChange = (value, index) => {
@@ -80,80 +123,88 @@ export default function OTP () {
         newArr[index] = value.target.value;
         otpRef.current = newArr
 
-        if(value && index < inputRefs.current.length-1){
-            if (value.target.value !== ''){
+        if (value && index < inputRefs.current.length - 1) {
+            if (value.target.value !== '') {
                 inputRefs.current[index + 1].focus()
             }
         }
-        else if (value && index === inputRefs.current.length-1){
-            if (value.target.value !== ''){
+        else if (value && index === inputRefs.current.length - 1) {
+            if (value.target.value !== '') {
                 if (loginParam.loginMode === 'sms') {
-                    loginSms({...loginParam, otp: otpRef.current.join('')})
+                    loginSms({ ...loginParam, otp: otpRef.current.join('') })
                         .then(res => {
                             // login = res.code = 0
                             // signup = res.code = 201
 
-                            if (res.code === -1){
+                            if (res.code === -1) {
                                 setErrorMessage(res.message)
                                 return
                             }
+                            handleTikTokPixelEvent(res)
+                            dispatch(setYingshiUserLoginParam({ ...loginParam, success: true }))
+                            dispatch(setYingshiUserToken(res.data.access_token))
+                            dispatch(setAhaToken(res.data.aha_token))
+                            if (res.code === 0) {
 
-                            dispatch(setYingshiUserLoginParam({...loginParam, success: true}))
+
+
+                                //signup
+                                // router.push('/myprofile')
+                                router.back()
+                                setOpenLoginSuccess(true)
+                                setTimeout(() => {
+                                    setOpenLoginSuccess(false)
+                                }, 2000)
+
+
+                            }
+                            if (res.code === 201) {
+
+
+
+                                //login
+                                // router.push('/login/nickname') // remove nickname page from the signup flow
+                                // router.push('/myprofile')
+                                router.back()
+                                setOpenLoginSuccess(true)
+                                setTimeout(() => {
+                                    setOpenLoginSuccess(false)
+                                }, 2000)
+
+                            }
+                        })
+                } else {
+                    loginEmail({ ...loginParam, otp: otpRef.current.join('') })
+                        .then(res => {
+                            // login = res.code = 0
+                            // signup = res.code = 201
+
+                            if (res.code === -1) {
+                                setErrorMessage(res.message)
+                                return
+                            }
+                            handleTikTokPixelEvent(res)
+                            dispatch(setYingshiUserLoginParam({ ...loginParam, success: true }))
                             dispatch(setYingshiUserToken(res.data.access_token))
                             dispatch(setAhaToken(res.data.aha_token))
                             if (res.code === 0) {
                                 //signup
                                 // router.push('/myprofile')
-                              router.back()
-                              setOpenLoginSuccess(true)
-                              setTimeout(() => {
-                                setOpenLoginSuccess(false)
-                              }, 2000)
+                                router.back()
+                                setOpenLoginSuccess(true)
+                                setTimeout(() => {
+                                    setOpenLoginSuccess(false)
+                                }, 2000)
                             }
                             if (res.code === 201) {
                                 //login
                                 // router.push('/login/nickname') // remove nickname page from the signup flow
                                 // router.push('/myprofile')
-                              router.back()
-                              setOpenLoginSuccess(true)
-                              setTimeout(() => {
-                                setOpenLoginSuccess(false)
-                              }, 2000)
-
-                            }
-                        })
-                } else {
-                    loginEmail({...loginParam, otp: otpRef.current.join('')})
-                        .then(res => {
-                            // login = res.code = 0
-                            // signup = res.code = 201
-
-                            if (res.code === -1){
-                                setErrorMessage(res.message)
-                                return
-                            }
-
-                            dispatch(setYingshiUserLoginParam({...loginParam, success: true}))
-                            dispatch(setYingshiUserToken(res.data.access_token))
-                            dispatch(setAhaToken(res.data.aha_token))
-                            if (res.code === 0) {
-                                //signup
-                                // router.push('/myprofile')
-                              router.back()
-                              setOpenLoginSuccess(true)
-                              setTimeout(() => {
-                                setOpenLoginSuccess(false)
-                              }, 2000)
-                            }
-                            if (res.code === 201) {
-                                //login
-                              // router.push('/login/nickname') // remove nickname page from the signup flow
-                              // router.push('/myprofile')
-                              router.back()
-                              setOpenLoginSuccess(true)
-                              setTimeout(() => {
-                                setOpenLoginSuccess(false)
-                              }, 2000)
+                                router.back()
+                                setOpenLoginSuccess(true)
+                                setTimeout(() => {
+                                    setOpenLoginSuccess(false)
+                                }, 2000)
                             }
 
                         })
@@ -199,15 +250,15 @@ export default function OTP () {
                     <div className={'flex my-12 justify-center'}>
                         {countdownTimer === 0 &&
                             <button className={'text-[17px] font-semibold text-[#0085E0]'}
-                                    onClick={handleResendOTP}>重新发送验证码</button>
+                                onClick={handleResendOTP}>重新发送验证码</button>
                         }
                         {countdownTimer !== 0 &&
                             <div className={'flex gap-[3px] justify-center items-center'}>
-                                <Image src={Stopwatch} width={26} height={26} alt={'timer icon'}/>
+                                <Image src={Stopwatch} width={26} height={26} alt={'timer icon'} />
                                 <span
                                     className={'text-[#9C9C9C] font-semibold w-[50px]'}>
-                                {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
-                            </span>
+                                    {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
+                                </span>
                             </div>
                         }
                     </div>
@@ -219,16 +270,16 @@ export default function OTP () {
     )
 }
 
-const OtpInput = forwardRef(function OtpInput({onKeyPress, onChange, isError}, ref) {
-        const colorClasses = isError ? `border border-[#FF1010] bg-[#FF10101A]` : `border border-transparent focus:border-[#0085E0]`
+const OtpInput = forwardRef(function OtpInput({ onKeyPress, onChange, isError }, ref) {
+    const colorClasses = isError ? `border border-[#FF1010] bg-[#FF10101A]` : `border border-transparent focus:border-[#0085E0]`
 
-        return <input
-            onKeyDown={onKeyPress}
-            onChange={onChange}
-            ref={ref}
-            className={`w-[53px] h-[53px] aspect-square min-w-[35px] rounded-[10px] bg-[#1D2023] text-[30px] text-center outline-none ${colorClasses}`}
-            maxLength={1}
-            type={'tel'}
-        />
-    }
+    return <input
+        onKeyDown={onKeyPress}
+        onChange={onChange}
+        ref={ref}
+        className={`w-[53px] h-[53px] aspect-square min-w-[35px] rounded-[10px] bg-[#1D2023] text-[30px] text-center outline-none ${colorClasses}`}
+        maxLength={1}
+        type={'tel'}
+    />
+}
 )

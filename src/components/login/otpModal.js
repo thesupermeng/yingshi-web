@@ -29,7 +29,12 @@ export default function OtpModal({ open, handler, onLogin, onRegister, onCloseOT
   const otpRef = useRef(new Array(6).fill(''))
 
 
-  const handleTikTokPixelEvent = (userData) => {
+  const handleTikTokPixelEvent = (res) => {
+    const userData = {
+      uniqueID: res?.data?.user?.user_id,
+      phoneNumber: res?.data?.user?.user_phone,
+      email: res?.data?.user?.user_email,
+    }
     const hashedEmail = userData.email ? CryptoJS.SHA256(userData.email).toString(CryptoJS.enc.Hex) : '';
     const hashedPhoneNumber = (userData.phoneNumber && userData.phoneNumber !== '0')
       ? CryptoJS.SHA256(userData.phoneNumber).toString(CryptoJS.enc.Hex)
@@ -41,28 +46,30 @@ export default function OtpModal({ open, handler, onLogin, onRegister, onCloseOT
     if (hashedPhoneNumber) identifyPayload.phone_number = hashedPhoneNumber;
     if (hashedExternalID) identifyPayload.external_id = hashedExternalID;
 
-
     // Identify the user
     if (Object.keys(identifyPayload).length > 0) {
       console.log('Identifying user with:', identifyPayload); // Debug log
       window.ttq.identify(identifyPayload);
     }
-    // Track the specified event
-    window.ttq.track('Login', {
+
+    // Track the CompleteRegistration event
+    const trackPayload = {
       email: hashedEmail,
       phone_number: hashedPhoneNumber,
       external_id: hashedExternalID,
-    });
+    };
 
+    console.log('Tracking CompleteRegistration with:', trackPayload); // Debug log
+    window.ttq.track('CompleteRegistration', trackPayload);
 
-    // Track the CompletePayment event
-    console.log('TrackingLogin:', {
-      email: hashedEmail,
-      phone_number: hashedPhoneNumber,
-      external_id: hashedExternalID,
-    }); // Debug log
+    // Log the status of the tracking
+    try {
+      window.ttq.track('CompleteRegistration', trackPayload);
+      console.log('Tracking CompleteRegistration succeeded.');
+    } catch (error) {
+      console.error('Tracking CompleteRegistration failed:', error);
+    }
   };
-
 
   useEffect(() => {
     // if (timerRef.current) return;
@@ -124,18 +131,7 @@ export default function OtpModal({ open, handler, onLogin, onRegister, onCloseOT
               }
 
 
-
-              const ttkObj = {
-                uniqueID: res?.data?.user?.user_id,
-                phoneNumber: res?.data?.user?.user_phone,
-                email: res?.data?.user?.user_email,
-              }
-
-              console.log('ttkObj')
-              console.log(ttkObj)
-              handleTikTokPixelEvent(ttkObj)
-
-
+              handleTikTokPixelEvent(res)
 
               dispatch(setYingshiUserToken(res.data.access_token))
               dispatch(setAhaToken(res.data.aha_token))
@@ -164,14 +160,8 @@ export default function OtpModal({ open, handler, onLogin, onRegister, onCloseOT
               }
 
 
-              const ttkObj = {
-                uniqueID: res?.data?.user?.user_id,
-                phoneNumber: res?.data?.user?.user_phone,
-                email: res?.data?.user?.user_email,
-              }
-              console.log('ttkObj')
-              console.log(ttkObj)
-              handleTikTokPixelEvent(ttkObj)
+
+              handleTikTokPixelEvent(red)
               dispatch(setYingshiUserToken(res.data.access_token))
               dispatch(setAhaToken(res.data.aha_token))
               inputRefs.current[inputRefs.current.length - 1].blur()
