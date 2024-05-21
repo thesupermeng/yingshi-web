@@ -48,8 +48,8 @@ export default function PaymentDetailModal({open, handler}) {
               .toSorted((a, b) => a.created_date + b.created_date)
               .slice(itemsPerPage * currentPage, (currentPage + 1) * itemsPerPage)
               .map((entry, idx) => {
-                const status = entry.transaction_status === 1 ? `+${entry.num_days}天` : ''
-              return <TransactionDetail key={idx} status={status} title={entry.product_name_2} date={formatDate(entry.created_date)} transactionNo={entry.transaction_no}/>
+                const status = entry.transaction_status === 1 ? `+${entry.num_days}天` : entry.transaction_status_string
+              return <TransactionDetail key={idx} statusCode={entry.transaction_status} statusString={status} title={entry.product_name_2} date={formatDate(entry.created_date)} transactionNo={entry.transaction_no}/>
             })
           }
 
@@ -77,7 +77,9 @@ export default function PaymentDetailModal({open, handler}) {
 }
 
 
-function TransactionDetail({title, date, transactionNo, status}) {
+function TransactionDetail({title, date, transactionNo, statusString, statusCode}) {
+  const statusColor = statusCode === 1 ? 'text-shayuBlue' : 'text-[#9C9C9C]'
+
   return (
     <div className={'flex justify-between py-[8px]'}>
       <div className={'flex flex-col'}>
@@ -85,7 +87,7 @@ function TransactionDetail({title, date, transactionNo, status}) {
         <span className={'text-[12px] text-[#9C9C9C]'}>{transactionNo}</span>
         <span className={'text-[12px] text-[#9C9C9C]'}>{date}</span>
       </div>
-      <span className={'text-[16px] text-shayuBlue font-medium self-center'}>{status}</span>
+      <span className={`text-[16px] font-medium self-center ${statusColor}`}>{statusString}</span>
     </div>
   )
 }
