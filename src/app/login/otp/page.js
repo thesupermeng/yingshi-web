@@ -135,7 +135,6 @@ export default function OTP() {
                         .then(res => {
                             // login = res.code = 0
                             // signup = res.code = 201
-console.log('xx')
                             if (res.code === -1) {
                                 setErrorMessage(res.message)
                                 return
@@ -178,7 +177,6 @@ console.log('xx')
                         .then(res => {
                             // login = res.code = 0
                             // signup = res.code = 201
-                            console.log('xx')
                             if (res.code === -1) {
                                 setErrorMessage(res.message)
                                 return
