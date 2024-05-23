@@ -36,13 +36,13 @@
 
     const { userInfo } = useYingshiUser()
 
+    let  callOnce = false;
 
     useEffect(() => {
       if (transactionId) {
         setOpenPaymentStatus(true)
         getTransactionDetail(transactionId).then(res => {
-
-          if (res?.data?.transaction_status_string === 'COMPLETED') {
+          if (res?.data?.transaction_status_string === 'COMPLETED' || res?.data?.transaction_status_string === 'IN_PROGRESS') {
             const purchaseData = {
               email: userInfo?.user_email, // Replace with actual data
               phoneNumber: userInfo?.user_phone, // Replace with actual data
@@ -51,7 +51,11 @@
               productPrice: res?.data?.product_price, // Replace with actual data
               currency: 'CNY' // Use CNY for Chinese Yuan
             };
-
+            if(callOnce == true)
+              {
+                return;
+              }
+            callOnce = true;
             handleTikTokPixel(purchaseData);
           }
           setTransactionResponse(res)
@@ -59,14 +63,11 @@
       }
     }, [transactionId])
 
-
-
     useEffect(() => {
       getYingshiProducts().then((res) => {
         setProductList(res['4_fang_items'])
       })
     }, [])
-
 
     // useEffect(() => {
     //   const purchaseData = {
@@ -79,7 +80,6 @@
     //   };
     //   console.log('productSelected')
     //   console.log(productSelected)
-
     //  handleTikTokPixel(purchaseData);
     // }, [productSelected])
 
