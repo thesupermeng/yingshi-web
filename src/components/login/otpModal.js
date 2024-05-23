@@ -28,7 +28,6 @@ export default function OtpModal({ open, handler, onLogin, onRegister, onCloseOT
   const inputRefs = useRef([])
   const otpRef = useRef(new Array(6).fill(''))
 
-
   const handleTikTokPixelEvent = (res) => {
     const userData = {
       uniqueID: res?.data?.user?.user_id,
@@ -60,7 +59,7 @@ export default function OtpModal({ open, handler, onLogin, onRegister, onCloseOT
     };
 
     console.log('Tracking CompleteRegistration with:', trackPayload); // Debug log
-    window.ttq.track('CompleteRegistration', trackPayload);
+    // window.ttq.track('CompleteRegistration', trackPayload);
 
     // Log the status of the tracking
     try {

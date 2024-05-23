@@ -105,7 +105,7 @@ export default function OTP() {
         };
 
         console.log('Tracking CompleteRegistration with:', trackPayload); // Debug log
-        window.ttq.track('CompleteRegistration', trackPayload);
+        //  window.ttq.track('CompleteRegistration', trackPayload);
 
         // Log the status of the tracking
         try {
