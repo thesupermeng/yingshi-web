@@ -6,7 +6,7 @@ const VodItemMobile = ({ vod }) => {
   const router = useRouter();
 
   const handlePlay = (vodId) => {
-    router.replace(`/play/${vod.type_id}/1/${vod.vod_id}`);
+    router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);
   };
 
   return (

@@ -93,7 +93,7 @@ export const ScrollView = ({ children }) => {
 
   return (
     <div
-      className='flex-1 overflow-y-scroll overflow-x-hidden overscroll-none flex flex-col md:pb-0 pb-[55px] no-scrollbar'
+      className='absolute w-full h-full flex flex-col overflow-y-auto overflow-x-hidden overscroll-none no-scrollbar'
       style={{ alignItems: 'center' }}
       ref={scrollableDivRef}
       onScroll={handleScroll}
@@ -102,7 +102,7 @@ export const ScrollView = ({ children }) => {
       {children}
       {showScrollUpButton && (
         <button
-          className='absolute bottom-16 right-16 rounded-md z-20 bg-[#2c313ae6] desktop'
+          className='fixed bottom-16 right-16 rounded-md z-20 bg-[#2c313ae6] desktop'
           onClick={scrollToTop}
         >
           <Image src={backtoTopIcon} alt='arrowUp' width={50} />
