@@ -118,7 +118,7 @@ export default function RootLayout({ children }) {
             <ScrollView>
               <Header />
 
-              <div className='w-full grow flex justify-center'>{children}</div>
+              <div className='w-full grow flex justify-center pb-[60px]'>{children}</div>
               {/* <div className=''>{children}</div> */}
 
               <MyFooter2 />

@@ -105,7 +105,7 @@ const MyFooter = () => {
   ];
 
   return (
-    <div className='mobile sticky -bottom-0.5 w-full'>
+    <div className='mobile fixed bottom-0 w-full'>
       <div
         className='w-full bg-[#161616eb] pt-2 pb-2'
         style={{ backdropFilter: 'blur(3px)' }}
