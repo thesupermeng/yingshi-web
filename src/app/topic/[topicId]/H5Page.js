@@ -82,11 +82,8 @@ export default function Page() {
           </div>
 
           {/* mobile view */}
-          <div className='mobile mt-2 pb-6'>
+          <div className='mobile pb-6'>
             <TopicHeader topicName={topicObj.topic_name} />
-            <div style={{height:'52px'}}></div>
-
-
             <div  className='px-2.5'>
             {/* mobile content */}
             <div className='topic-header-text-sub mt-3'>

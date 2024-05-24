@@ -8,7 +8,9 @@ import {
   topicTab,
   topicTabActive,
   profileTab,
-  profileTabActive, AhaLogoActive, AhaLogo,
+  profileTabActive,
+  AhaLogoActive,
+  AhaLogo,
 } from '@/asset/icons';
 import { use, useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
@@ -40,7 +42,7 @@ const MyFooter = () => {
       router.push('/topic');
     } else if (value == 999) {
       router.push('/film-library');
-    }  else if (value == 990) {
+    } else if (value == 990) {
       router.push('/myprofile');
     } else if (value == 997) {
       router.push('/sport');
@@ -49,17 +51,16 @@ const MyFooter = () => {
     }
   };
 
-
-  if (pathname.startsWith('/play') ||
-      pathname.startsWith('/search/') ||
-      pathname.startsWith('/payment') ||
-      pathname.startsWith('/login') ||
-      pathname.startsWith('/privacy') ||
-      pathname.startsWith('/service') ||
-      pathname.startsWith('/myprofile/watchHistory') ||
-      pathname.startsWith('/myprofile/userCenter') ||
-      pathname.startsWith('/myprofile/feedback')
-
+  if (
+    pathname.startsWith('/play') ||
+    pathname.startsWith('/search/') ||
+    pathname.startsWith('/payment') ||
+    pathname.startsWith('/login') ||
+    pathname.startsWith('/privacy') ||
+    pathname.startsWith('/service') ||
+    pathname.startsWith('/myprofile/watchHistory') ||
+    pathname.startsWith('/myprofile/userCenter') ||
+    pathname.startsWith('/myprofile/feedback')
   ) {
     return <></>;
   }
@@ -87,7 +88,7 @@ const MyFooter = () => {
       onClick: () => {
         handleClick(998);
       },
-      active: pathname.startsWith('/topic') ,
+      active: pathname.startsWith('/topic'),
       icon: topicTab,
       iconActive: topicTabActive,
       title: '播单',
@@ -101,20 +102,25 @@ const MyFooter = () => {
       iconActive: profileTabActive,
       title: '我的',
     },
-  ]
+  ];
 
   return (
-    <div className='mobile'>
-      <div className='flex mb-2'>
-        {tabs.map((tab, index) => (
-          <TabItem key={index} {...tab} />
-        ))}
+    <div className='mobile fixed bottom-0 w-full'>
+      <div
+        className='w-full bg-[#161616eb] pt-2 pb-2'
+        style={{ backdropFilter: 'blur(3px)' }}
+      >
+        <div className='flex'>
+          {tabs.map((tab, index) => (
+            <TabItem key={index} {...tab} />
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
-const TabItem = ({onClick, active, icon, iconActive, title}) => {
+const TabItem = ({ onClick, active, icon, iconActive, title }) => {
   return (
     <div
       className='col flex-col d-flex justify-center align-center items-center'
@@ -125,14 +131,18 @@ const TabItem = ({onClick, active, icon, iconActive, title}) => {
           alt='鲨鱼影视'
           src={active ? iconActive : icon}
           width={22}
-          style={{cursor: 'pointer'}}
+          style={{ cursor: 'pointer' }}
         />
       </div>
       <div
-        className={`text-[14px] font-medium ${active ? 'text-shayuBlue' : 'text-[#6A6A6A]'}`}>{title}
+        className={`text-[14px] font-medium ${
+          active ? 'text-shayuBlue' : 'text-[#6A6A6A]'
+        }`}
+      >
+        {title}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default MyFooter;

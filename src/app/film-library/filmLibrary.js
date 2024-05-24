@@ -250,7 +250,7 @@ export const FilmLibrary = ({}) => {
         filterTypeList.findIndex((item) => item.type_id === paramsFilter.typeId)
       ].type_extend_obj.class !== ''
     ) {
-      num +=1;
+      num += 1;
     }
 
     if (
@@ -258,7 +258,7 @@ export const FilmLibrary = ({}) => {
         filterTypeList.findIndex((item) => item.type_id === paramsFilter.typeId)
       ].type_extend_obj.area !== ''
     ) {
-      num +=1;
+      num += 1;
     }
 
     if (
@@ -266,7 +266,7 @@ export const FilmLibrary = ({}) => {
         filterTypeList.findIndex((item) => item.type_id === paramsFilter.typeId)
       ].type_extend_obj.lang !== ''
     ) {
-      num +=1;
+      num += 1;
     }
 
     if (
@@ -274,10 +274,10 @@ export const FilmLibrary = ({}) => {
         filterTypeList.findIndex((item) => item.type_id === paramsFilter.typeId)
       ].type_extend_obj.year !== ''
     ) {
-      num +=1;
+      num += 1;
     }
 
-    return num * 56 ;
+    return num * 56;
   };
 
   const filterVideoList = (value, type) => {
@@ -312,13 +312,13 @@ export const FilmLibrary = ({}) => {
 
   return (
     <>
-      <div className='flex flex-1 justify-center'>
+      <div className='flex flex-1 justify-center flex-col'>
         {loading ? (
           <LoadingPage full={false} />
         ) : (
           <div className='flex w-screen flex-col items-center'>
             <div
-              className={`bg-[#1D2023] w-screen h-auto p-1 z-20 sticky -top-0.5 md:static `}
+              className={`bg-[#1D2023] w-screen h-auto p-1 z-20 sticky top-[51px] md:static`}
             >
               {/* md:mx-20 mx-2.5 */}
               <div className='flex md:flex-wrap gap-x-4 gap-y-2 pl-4 py-2 container'>
@@ -570,9 +570,9 @@ export const FilmLibrary = ({}) => {
             </div>
           </div>
         )}
-      </div>
-      <div ref={targetRef}>
-        {(stillCanLoad || loadingVideoList) && <Spinner></Spinner>}
+        <div ref={targetRef}>
+          {(stillCanLoad || loadingVideoList) && <Spinner></Spinner>}
+        </div>
       </div>
     </>
   );

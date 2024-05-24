@@ -522,7 +522,7 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
           >
             <div
               ref={playerDivRef}
-              className='aspect-[16/9] absolute w-screen lg:relative lg:w-[100%]'
+              className='aspect-[16/9] absolute w-screen lg:relative lg:w-[100%] sticky md:static top-0'
               style={{ zIndex: '1' }}
             >
               <div
@@ -562,10 +562,10 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
                 onVideoEnd={onVideoEnd}
               />
             </div>
-            <div
+            {/* <div
               className='lg:hidden block'
               style={{ height: `${playerDivHeight}px` }}
-            ></div>
+            ></div> */}
             {/* Web Share Horizontal */}
             <div className='lg:flex hidden'>
               <ShareHorizontal
