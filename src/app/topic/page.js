@@ -127,10 +127,10 @@ export default function Page({ params }) {
   }, []);
 
   return (
-    <>
+    <div className='flex flex-col'>
       {/* desktop view  */}
       <div className='desktop'>
-        <div className={styles.containerHeader}>
+        <div className={styles.containerHeader }>
           <div className='d-flex' style={{ width: '100%' }}>
             <div className='overlay' style={{ width: '100%' }}>
               <div className='topic-container-header container px-0 d-flex  flex-column'>
@@ -257,10 +257,10 @@ export default function Page({ params }) {
 
 
       {!isLoading &&
-        <div className='flex items-center justify-center flex-col my-6 py-6'>
+        <div className='flex items-center justify-center flex-col py-2'>
           <span className='test-xs text-muted'>没有更多了</span>
         </div>
       }
-    </>
+    </div>
   );
 }

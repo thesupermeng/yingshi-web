@@ -10,10 +10,10 @@ const TopicHeader = ({ topicName }) => {
 
   return (
     <div
-    className='flex items-center justify-center cursor-pointer py-3.5 sticky'
+    className='flex items-center justify-center cursor-pointer py-3.5'
     style={{
       backgroundColor: 'rgb(16, 18, 21)',
-      position: 'fixed',
+      position: 'sticky',
       top: 0,
       right: 0,
       width: '100%',
