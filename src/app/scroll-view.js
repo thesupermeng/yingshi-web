@@ -10,7 +10,7 @@ import {
   setIsTop,
   setCurrentScrollPosition,
 } from '@/store/scrollView';
-
+import CryptoJS from 'crypto-js';
 const getIsTop = (state) => state.isTop;
 const getIsScroll = (state) => state.isScroll;
 import { setPendingTransactionId , setPendingTransactionTry} from '@/store/yingshiScreen';
@@ -41,7 +41,11 @@ export const ScrollView = ({ children }) => {
 console.log('getTransStatus')
      let transactionId = pendingTransactionId;
     getTransactionDetail(transactionId).then(res => {
-      if (res?.data?.transaction_status_string === 'COMPLETED') {
+      console.log('before ');
+
+      console.log(res)
+      if (res?.data?.transaction_status_string == 'COMPLETED' ) {
+        console.log('pako');
         dispatch(setPendingTransactionTry(0));
         dispatch(setPendingTransactionId(''));
         
@@ -83,7 +87,7 @@ console.log('getTransStatus')
 
 
 
-const handleTikTokPixel = () => {
+const handleTikTokPixel = (res) => {
 
           const purchaseData = {
             email: userInfo?.user_email, // Replace with actual data
