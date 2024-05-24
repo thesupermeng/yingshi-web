@@ -62,7 +62,6 @@ console.log('getTransStatus')
         console.log('isLoginSuccessOpen')
         console.log(pendingTransactionTry)
   
-
         if(pendingTransactionTry > 0 && pendingTransactionId !='' )
           {
             dispatch(setPendingTransactionTry(pendingTransactionTry - 1));
@@ -73,14 +72,14 @@ console.log('getTransStatus')
     };
 
     // Set the interval
-    const intervalId = setInterval(fetchData, 2000); //30000
+    const intervalId = setInterval(fetchData, 30000); //30000
 
     // Fetch data immediately on mount
     fetchData();
 
     // Clear the interval on component unmount
     return () => clearInterval(intervalId);
-}, [pendingTransactionId , pendingTransactionTry ]); // Empty dependency array ensures this runs only on mount and unmount
+}, [pendingTransactionId ]); // Empty dependency array ensures this runs only on mount and unmount
 
 
 

@@ -9,6 +9,8 @@ import {useRouter} from 'next/navigation';
 import {isMobile} from 'react-device-detect';
 import {usePaymentOpen} from '@/hook/yingshiScreenState/usePaymentOpen';
 import {usePaymentPendingOpen} from '@/hook/yingshiScreenState/usePaymentPendingOpen';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPendingTransactionId , setPendingTransactionTry} from '@/store/yingshiScreen';
 
 export default function PaymentPurchaseButton({productInfo, paymentInfo, className}) {
   const [isPaymentProcessing, setIsPaymentProcessing] = useState(false)
@@ -16,7 +18,7 @@ export default function PaymentPurchaseButton({productInfo, paymentInfo, classNa
   const [isOpenPayment, setIsOpenPayment] = usePaymentOpen();
   const [isShowPaymentPending, setShowPaymentPending] = usePaymentPendingOpen()
   const router = useRouter()
-
+  const dispatch = useDispatch();
 
   const handleShowPaymentFailed = () => {
     setShowPaymentFailed(x => !x)
@@ -27,6 +29,13 @@ export default function PaymentPurchaseButton({productInfo, paymentInfo, classNa
     postPayOrder({ productId: productInfo.product_id, zfType: paymentInfo.payment_type_code })
       .then(res => {
         if (res.code === 0) {
+
+
+          dispatch(setPendingTransactionTry(200));
+          dispatch(setPendingTransactionId(res.data.transaction_id));
+
+
+
           if (res.data.paymentData.url) {
             // window.location.href = res.data.paymentData.url
             if (isMobile) {

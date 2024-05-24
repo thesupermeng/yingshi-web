@@ -44,8 +44,7 @@
     useEffect(() => {
       if (transactionId) {
 
-        dispatch(setPendingTransactionTry(50));
-        dispatch(setPendingTransactionId(transactionId));
+  
         
         setOpenPaymentStatus(true)
         getTransactionDetail(transactionId).then(res => {
