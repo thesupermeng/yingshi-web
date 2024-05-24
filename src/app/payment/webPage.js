@@ -59,6 +59,9 @@ export default function WebPage() {
     
 
   const handleTikTokPixel = (purchaseData) => {
+
+    return;
+    
     if (typeof window.ttq === 'undefined') {
       console.error('TikTok Pixel is not loaded');
       return;
