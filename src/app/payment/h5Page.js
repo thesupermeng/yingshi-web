@@ -18,11 +18,7 @@
   import Image from 'next/image';
   import CryptoJS from 'crypto-js';
   import { useDispatch, useSelector } from 'react-redux';
-
   import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
-
-  import { setPendingTransactionId , setPendingTransactionTry , setPendingTransactionObj} from '@/store/yingshiScreen';
-
 
   export default function H5Page() {
     const dispatch = useDispatch();
@@ -89,12 +85,7 @@
     //  handleTikTokPixel(purchaseData);
     // }, [productSelected])
 
-    const handleTikTokPixel = (purchaseData) => {
-      dispatch(setPendingTransactionTry(50));
-      dispatch(setPendingTransactionObj(purchaseData));
-      dispatch(setPendingTransactionId(transactionId));
-      return;
-    };
+  
 
     return (
       <div className={'relative w-full h-full'}>

@@ -13,7 +13,7 @@ import {
 import CryptoJS from 'crypto-js';
 const getIsTop = (state) => state.isTop;
 const getIsScroll = (state) => state.isScroll;
-import { setPendingTransactionId , setPendingTransactionTry} from '@/store/yingshiScreen';
+import { setPendingTransactionId , setPendingTransactionTry} from '@/store/yingshiUser';
 
 
 export const ScrollView = ({ children }) => {
@@ -30,8 +30,8 @@ export const ScrollView = ({ children }) => {
 
 
   // 1111111 
-  const getPendingTransactionId = (state) => state.yingshiScreen.pendingTransactionId;
-  const getPendingTransactionTry = (state) => state.yingshiScreen.pendingTransactionTry;
+  const getPendingTransactionId = (state) => state.yingshiUser.pendingTransactionId;
+  const getPendingTransactionTry = (state) => state.yingshiUser.pendingTransactionTry;
 
   const pendingTransactionId = useSelector(getPendingTransactionId);
   const pendingTransactionTry = useSelector(getPendingTransactionTry);
@@ -54,21 +54,25 @@ console.log('getTransStatus')
     })
 
   }
-
+  let tempCount = 0;
 
   useEffect(() => {
+    tempCount = pendingTransactionTry;
     // Function to be executed every 30 seconds
     const fetchData = () => {
         // Replace this with your logic
         console.log('Fetching data...');
-        console.log('isLoginSuccessOpen')
+        console.log('pendingTransactionId')
         console.log(pendingTransactionId)
-        console.log('isLoginSuccessOpen')
-        console.log(pendingTransactionTry)
-  
-        if(pendingTransactionTry > 0 && pendingTransactionId !='' )
+    
+        console.log('tempCount')
+            console.log(tempCount)
+        if(pendingTransactionTry > 0 && pendingTransactionId !='' && tempCount >0 )
           {
-            dispatch(setPendingTransactionTry(pendingTransactionTry - 1));
+            tempCount = tempCount - 1
+            dispatch(setPendingTransactionTry(tempCount));
+            console.log('pendingTransactionTry')
+            console.log(pendingTransactionTry)
             getTransStatus();
           }
 
@@ -76,7 +80,7 @@ console.log('getTransStatus')
     };
 
     // Set the interval
-    const intervalId = setInterval(fetchData, 30000); //30000
+    const intervalId = setInterval(fetchData, 20000); //30000
 
     // Fetch data immediately on mount
     fetchData();

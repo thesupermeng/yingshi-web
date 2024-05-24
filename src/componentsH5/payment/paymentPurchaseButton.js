@@ -10,7 +10,7 @@ import {isMobile} from 'react-device-detect';
 import {usePaymentOpen} from '@/hook/yingshiScreenState/usePaymentOpen';
 import {usePaymentPendingOpen} from '@/hook/yingshiScreenState/usePaymentPendingOpen';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPendingTransactionId , setPendingTransactionTry} from '@/store/yingshiScreen';
+import { setPendingTransactionId , setPendingTransactionTry} from '@/store/yingshiUser';
 
 export default function PaymentPurchaseButton({productInfo, paymentInfo, className}) {
   const [isPaymentProcessing, setIsPaymentProcessing] = useState(false)

@@ -5,6 +5,9 @@ export const setYingshiUserToken = (d) => yingshiUser.actions.setToken(d)
 export const setYingshiUserLoginParam = (d) => yingshiUser.actions.setLoginParam(d)
 export const setAhaToken = (d) => yingshiUser.actions.setAhaToken(d)
 
+// pixel payment 
+export const setPendingTransactionId = (d) => yingshiUser.actions.setPendingTransactionId(d)
+export const setPendingTransactionTry = (d) => yingshiUser.actions.setPendingTransactionTry(d)
 
 export const yingshiUser = createSlice( {
     name: 'yingshiUser',
@@ -31,7 +34,11 @@ export const yingshiUser = createSlice( {
         userInfo: null,
         token: null,
         loginParam: null,
-        ahaToken: null
+        ahaToken: null,
+        pendingTransactionId: '',
+        pendingTransactionTry: 0,
+        
+   
     },
     reducers: {
         setUserInfo: (state, action) => {
@@ -45,6 +52,13 @@ export const yingshiUser = createSlice( {
         },
         setAhaToken: (state, action) => {
             state.ahaToken = action.payload;
-        }
+        },
+        setPendingTransactionId: (state, action) => {
+            state.pendingTransactionId = action.payload;
+          },
+          setPendingTransactionTry: (state, action) => {
+            state.pendingTransactionTry = action.payload;
+          },
+       
     }
 })
