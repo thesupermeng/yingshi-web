@@ -184,7 +184,7 @@ export default function OtpModal({ open, handler, onLogin, onRegister, onCloseOT
   return (
     <>
       {loginParam && loginParam.loginMode &&
-        <Dialog open={open} handler={handler} className={'w-[600px] bg-[#121212] rounded-[28px] p-0 overflow-scroll relative'} size={'xs'} dismiss={{ outsidePress: false }}>
+        <Dialog open={open} handler={handler} className={'w-[600px] bg-[#121212] rounded-[28px] p-0 overflow-scroll relative no-scrollbar'} size={'xs'} dismiss={{outsidePress:false}}>
           <DialogBody className={'py-[25px] w-full h-full'}>
             <div className={'flex flex-col items-center]'}>
               <div style={{

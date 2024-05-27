@@ -473,133 +473,135 @@ const Header = () => {
         {openSearch ? (
           <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100dvh-52px)] md:h-auto z-20 left-0 md:left-auto md:w-96 md:ml-16'>
             <div className='py-3 px-4 bg-[#1d2023] md:rounded-md w-full h-full md:bg-[#18191ef5] md:w-96'>
-              <div className='no-scrollbar flex flex-col overflow-y-scroll w-full h-full'>
-                {searchInput ? (
-                  loadingSearching ? (
-                    <LoadingPage full={false} />
-                  ) : searchingList.length > 0 ? (
-                    searchingList.map((item, index) => {
-                      return (
-                        <div
-                          className='flex flex-row justify-between py-2.5'
-                          key={index}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setOpenSearch(false);
-                            setSearchInput('');
-                            handleAddSearchHistory();
-                            router.push(
-                              `/play/${item.type_id}/1/${item.vod_id}`
-                            );
-                          }}
-                        >
-                          <div className='flex flex-row'>
-                            <div className='text-sm'>{item.vod_name}</div>
-                          </div>
-                        </div>
-                      );
-                    })
-                  ) : (
-                    <div className='flex items-center justify-center flex-col h-full'>
-                      <Image
-                        className='mx-2'
-                        src={searchEmptyIcon}
-                        alt='empty'
-                        width={120}
-                      />
-                      <span>无搜索结果</span>
-                    </div>
-                  )
-                ) : (
-                  <>
-                    {searchHistoryList.length > 0 ? (
-                      <div>
-                        <div className='flex flex-row justify-between items-center pb-2'>
-                          <div className='text-sm'>历史搜索</div>
+              <div className='no-scrollbar overflow-y-scroll w-full h-full overflow-scroll overscroll-none'>
+                <div className='w-full h-[calc(100%+1px)]'>
+                  {searchInput ? (
+                    loadingSearching ? (
+                      <LoadingPage full={false} />
+                    ) : searchingList.length > 0 ? (
+                      searchingList.map((item, index) => {
+                        return (
                           <div
-                            className='flex flex-row'
-                            onClick={handleClearSearchHistory}
+                            className='flex flex-row justify-between py-2.5'
+                            key={index}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setOpenSearch(false);
+                              setSearchInput('');
+                              handleAddSearchHistory();
+                              router.push(
+                                `/play/${item.type_id}/1/${item.vod_id}`
+                              );
+                            }}
                           >
-                            <span
-                              className='text-xs'
-                              style={{ color: 'rgba(156, 156, 156, 1)' }}
+                            <div className='flex flex-row'>
+                              <div className='text-sm'>{item.vod_name}</div>
+                            </div>
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <div className='flex items-center justify-center flex-col h-full'>
+                        <Image
+                          className='mx-2'
+                          src={searchEmptyIcon}
+                          alt='empty'
+                          width={120}
+                        />
+                        <span>无搜索结果</span>
+                      </div>
+                    )
+                  ) : (
+                    <>
+                      {searchHistoryList.length > 0 ? (
+                        <div>
+                          <div className='flex flex-row justify-between items-center pb-2'>
+                            <div className='text-sm'>历史搜索</div>
+                            <div
+                              className='flex flex-row'
+                              onClick={handleClearSearchHistory}
                             >
-                              清除
-                            </span>
-                            <Image
-                              className='mx-1'
-                              src={clear}
-                              alt='clear'
-                              width={10}
-                            />
+                              <span
+                                className='text-xs'
+                                style={{ color: 'rgba(156, 156, 156, 1)' }}
+                              >
+                                清除
+                              </span>
+                              <Image
+                                className='mx-1'
+                                src={clear}
+                                alt='clear'
+                                width={10}
+                              />
+                            </div>
+                          </div>
+                          <div className='flex flex-wrap py-2 gap-2'>
+                            {searchHistoryList.map((item, index) => {
+                              return (
+                                <div
+                                  className='py-1 px-2 rounded-lg cursor-pointer hover-effect'
+                                  style={{
+                                    background: 'rgba(255, 255, 255, 0.06)',
+                                    color: 'rgba(156, 156, 156, 1)',
+                                  }}
+                                  key={index}
+                                  onClick={() => {
+                                    goToSeachResult(item);
+                                  }}
+                                >
+                                  {item}
+                                </div>
+                              );
+                            })}
                           </div>
                         </div>
-                        <div className='flex flex-wrap py-2 gap-2'>
-                          {searchHistoryList.map((item, index) => {
-                            return (
+                      ) : null}
+                      <div className='flex flex-row justify-between'>
+                        <div className='text-sm'>热搜总榜</div>
+                      </div>
+                      {topTenList.map((item, index) => {
+                        return (
+                          <div
+                            className='flex flex-row justify-between py-2.5 cursor-pointer search-hot-item'
+                            key={index}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setOpenSearch(false);
+                              router.push(
+                                `/play/${item.type_id}/1/${item.vod_id}`
+                              );
+                            }}
+                          >
+                            <div className='flex flex-row'>
                               <div
-                                className='py-1 px-2 rounded-lg cursor-pointer hover-effect'
+                                className='text-sm w-8 text-center font-bold'
                                 style={{
-                                  background: 'rgba(255, 255, 255, 0.06)',
-                                  color: 'rgba(156, 156, 156, 1)',
-                                }}
-                                key={index}
-                                onClick={() => {
-                                  goToSeachResult(item);
+                                  color:
+                                    index == 0
+                                      ? 'rgba(0, 106, 178, 1)'
+                                      : index == 1
+                                      ? 'rgba(0, 133, 224, 1)'
+                                      : index == 2
+                                      ? 'rgba(96, 191, 255, 1)'
+                                      : 'rgba(156, 156, 156, 1)',
                                 }}
                               >
-                                {item}
+                                {index + 1}
                               </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    ) : null}
-                    <div className='flex flex-row justify-between'>
-                      <div className='text-sm'>热搜总榜</div>
-                    </div>
-                    {topTenList.map((item, index) => {
-                      return (
-                        <div
-                          className='flex flex-row justify-between py-2.5 cursor-pointer search-hot-item'
-                          key={index}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setOpenSearch(false);
-                            router.push(
-                              `/play/${item.type_id}/1/${item.vod_id}`
-                            );
-                          }}
-                        >
-                          <div className='flex flex-row'>
-                            <div
-                              className='text-sm w-8 text-center font-bold'
-                              style={{
-                                color:
-                                  index == 0
-                                    ? 'rgba(0, 106, 178, 1)'
-                                    : index == 1
-                                    ? 'rgba(0, 133, 224, 1)'
-                                    : index == 2
-                                    ? 'rgba(96, 191, 255, 1)'
-                                    : 'rgba(156, 156, 156, 1)',
-                              }}
-                            >
-                              {index + 1}
+                              <div className='text-sm'>{item.vod_name}</div>
                             </div>
-                            <div className='text-sm'>{item.vod_name}</div>
+                            <div
+                              className='text-xs pr-4'
+                              style={{ color: 'rgba(156, 156, 156, 1)' }}
+                            >
+                              {item.type_name}
+                            </div>
                           </div>
-                          <div
-                            className='text-xs pr-4'
-                            style={{ color: 'rgba(156, 156, 156, 1)' }}
-                          >
-                            {item.type_name}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </>
-                )}
+                        );
+                      })}
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -941,12 +943,13 @@ const Header = () => {
 
   let defaultHeader = (
     <div
-      className={`transition duration-500 ${
-        headerBlack ? 'bg-black' : 'bg-blur-header'
+      className={`transition duration-500 w-screen z-30 ${
+        headerBlack ? 'bg-black' : 'bg-blur-header md:bg-transparent bg-black'
       } ${
-        pathname.startsWith('/play/') || pathname.startsWith('/film-library')
-          ? 'w-screen z-30'
-          : 'md:absolute z-30 w-screen'
+        ''
+        // pathname.startsWith('/play/') || pathname.startsWith('/film-library')
+        //   ? 'w-screen z-30'
+        //   : 'md:fixed z-30 w-screen top-0 sticky'
       }`}
     >
       <div className='flex pb-2.5 md:pb-4 pt-3 justify-center container md:pl-0'>
@@ -1092,30 +1095,39 @@ const Header = () => {
   );
 
   if (pathname.startsWith('/topic/') || pathname.startsWith('/xvod')) {
-    return <div className={'desktop z-50'}>{defaultHeader}</div>;
+    return (
+      <div className={'desktop z-50 sticky top-0 w-screen'}>
+        {defaultHeader}
+      </div>
+    );
   }
 
   if (pathname.startsWith('/film-library') || pathname.startsWith('/topic/')) {
     return (
       <>
-        <div className={'mobile'}>
+        <div className={'mobile z-50 sticky top-0 w-screen'}>
           <TopicHeader topicName={'片库'} />
-          <div style={{ height: '52px' }}></div>
         </div>
 
-        <div className={'desktop z-50'}>{defaultHeader}</div>
+        <div className={'desktop z-50 sticky top-0 w-screen'}>
+          {defaultHeader}
+        </div>
       </>
     );
   }
 
   if (pathname.startsWith('/play')) {
-    return <div className={'desktop z-50'}>{defaultHeader}</div>;
+    return (
+      <div className={'desktop z-50 sticky top-0 w-screen bg-[#000000]'}>
+        {defaultHeader}
+      </div>
+    );
   }
 
   if (pathname.startsWith('/search/')) {
     return (
       <>
-        <div className={'z-30 w-screen mobile'}>
+        <div className={'z-30 w-screen sticky top-0 mobile'}>
           <div className='flex py-3 mx-2.5'>
             <div className='gap-y-2 flex-col w-full md:flex-row flex'>
               <div className='flex-1 flex gap-x-2 md:justify-start'>
@@ -1140,7 +1152,7 @@ const Header = () => {
             </div>
           </div>
         </div>
-        <div className='desktop z-50'>{defaultHeader}</div>
+        <div className='desktop z-50 fixed top-0 w-screen'>{defaultHeader}</div>
       </>
     );
   }
@@ -1148,7 +1160,7 @@ const Header = () => {
   if (pathname.startsWith('/topic')) {
     return (
       <>
-        <div className={'z-30 w-screen mobile'}>
+        <div className={'z-50 w-screen mobile sticky top-0 bg-[#101215]'}>
           <div className='flex py-3 mx-2.5'>
             <div className='gap-y-2 flex-col w-full md:flex-row flex'>
               <div className='flex-1 flex gap-x-2 md:justify-start'>
@@ -1166,7 +1178,7 @@ const Header = () => {
             </div>
           </div>
         </div>
-        <div className='desktop z-50'>{defaultHeader}</div>
+        <div className='desktop z-50 fixed top-0 w-screen'>{defaultHeader}</div>
       </>
     );
   }
@@ -1174,7 +1186,7 @@ const Header = () => {
   if (pathname.startsWith('/myprofile')) {
     return (
       <>
-        <div className={'z-30 w-screen mobile'}>
+        <div className={'z-50 w-screen mobile sticky top-0'}>
           {pathname === '/myprofile' && (
             <div className='flex pt-3 mx-2.5'>
               <div className='gap-y-2 flex-col w-full md:flex-row flex'>
@@ -1185,7 +1197,9 @@ const Header = () => {
             </div>
           )}
         </div>
-        <div className={'desktop z-50'}>{defaultHeader}</div>
+        <div className={'desktop z-50 fixed top-0 w-screen'}>
+          {defaultHeader}
+        </div>
       </>
     );
   }
@@ -1215,7 +1229,7 @@ const Header = () => {
 
   if (pathname.startsWith('/login/nickname')) {
     return (
-      <div className={'z-30 w-screen mobile'}>
+      <div className={'z-30 w-screen mobile sticky top-0 bg-[#101215]'}>
         <div className='flex py-3 mx-2.5'>
           <div className='gap-y-2 flex-col w-full md:flex-row flex'>
             <div className='flex-1 flex gap-x-2 md:justify-start'>
@@ -1255,7 +1269,7 @@ const Header = () => {
 
   if (pathname.startsWith('/service') || pathname.startsWith('/privacy')) {
     return (
-      <div className={'z-30 w-screen mobile'}>
+      <div className={'z-30 w-screen mobile sticky top-0 bg-[#101215]'}>
         <div className='flex py-4 mx-2.5'>
           <div className='gap-y-2 flex-col w-full md:flex-row flex'>
             <div className='relative flex-1 flex gap-x-2 md:justify-start'>
@@ -1289,6 +1303,8 @@ const Header = () => {
     );
   }
 
-  return defaultHeader;
+  return (
+    <div className='z-50 sticky top-0 md:fixed w-screen'>{defaultHeader}</div>
+  );
 };
 export default Header;

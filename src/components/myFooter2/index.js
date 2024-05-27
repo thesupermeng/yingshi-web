@@ -14,19 +14,15 @@ import {
 import { use, useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
-
-
-import {
-  AppIcon,
-} from '@/asset/icons';
+import { AppIcon } from '@/asset/icons';
 
 const MyFooter2 = () => {
   const dispatch = useDispatch();
   const pathname = usePathname();
   const router = useRouter();
 
-
-  if (pathname.startsWith('/play') ||
+  if (
+    pathname.startsWith('/play') ||
     pathname.startsWith('/search/') ||
     pathname.startsWith('/payment') ||
     pathname.startsWith('/login') ||
@@ -52,37 +48,42 @@ const MyFooter2 = () => {
     } else {
       return 'not supported';
     }
-  }
+  };
 
   const downloadApp = () => {
     const os = getOperatingSystem();
     if (os === 'Android') {
-      window.location.href = 'https://play.google.com/store/apps/details?id=com.yingshitv&hl=en'; // Make sure app_download_link is defined
+      window.location.href =
+        'https://play.google.com/store/apps/details?id=com.yingshitv&hl=en'; // Make sure app_download_link is defined
     } else if (os === 'iOS' || os === 'MacOS') {
       window.location.href = 'https://apps.apple.com/cn/app/id6474402534';
       // Additional iOS handling code here if needed
     } else {
       console.log('Operating system not supported');
     }
-  }
+  };
 
   return (
-    <div className='mobile' style={{ display: 'flex', justifyContent: 'center' }}>
-      <div
-        className='flex'
-        style={{
-          color: '#FFF',
-          position: 'absolute',
-          bottom:'2rem',
-          background: '#0085E0',
-          fontSize: '0.9rem',
-          padding: '0.4rem 1.5rem',
-          borderRadius: '1rem'
-        }}
-        onClick={downloadApp}
-      >
-        <div><Image src={Favicon} alt='icon' width={22} /></div>
-        <div className='pl-2'>打开影视APP，看精彩流畅视频</div>
+    <div className='mobile fixed bottom-[60px] w-full'>
+      <div className='justify-center flex'>
+        <div
+          className='flex'
+          style={{
+            color: '#FFF',
+            position: 'absolute',
+            bottom: '2rem',
+            background: '#0085E0',
+            fontSize: '0.9rem',
+            padding: '0.4rem 1.5rem',
+            borderRadius: '1rem',
+          }}
+          onClick={downloadApp}
+        >
+          <div>
+            <Image src={Favicon} alt='icon' width={22} />
+          </div>
+          <div className='pl-2'>打开影视APP，看精彩流畅视频</div>
+        </div>
       </div>
     </div>
   );
