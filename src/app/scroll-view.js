@@ -13,7 +13,7 @@ import {
 import CryptoJS from 'crypto-js';
 const getIsTop = (state) => state.isTop;
 const getIsScroll = (state) => state.isScroll;
-import { setPendingTransactionId , setPendingTransactionTry} from '@/store/yingshiUser';
+import { setPendingTransactionId, setPendingTransactionTry } from '@/store/yingshiUser';
 
 
 export const ScrollView = ({ children }) => {
@@ -36,19 +36,19 @@ export const ScrollView = ({ children }) => {
   const pendingTransactionId = useSelector(getPendingTransactionId);
   const pendingTransactionTry = useSelector(getPendingTransactionTry);
 
-  
-  const getTransStatus = () =>{
-console.log('getTransStatus')
-     let transactionId = pendingTransactionId;
+
+  const getTransStatus = () => {
+    console.log('getTransStatus')
+    let transactionId = pendingTransactionId;
     getTransactionDetail(transactionId).then(res => {
       console.log('before ');
 
       console.log(res)
-      if (res?.data?.transaction_status_string == 'COMPLETED' ) {
+      if (res?.data?.transaction_status_string == 'COMPLETED') {
         console.log('pako');
         dispatch(setPendingTransactionTry(0));
         dispatch(setPendingTransactionId(''));
-        
+
         handleTikTokPixel(res);
       }
     })
@@ -60,23 +60,37 @@ console.log('getTransStatus')
     tempCount = pendingTransactionTry;
     // Function to be executed every 30 seconds
     const fetchData = () => {
-        // Replace this with your logic
-        console.log('Fetching data...');
-        console.log('pendingTransactionId')
-        console.log(pendingTransactionId)
-    
-        console.log('tempCount')
-            console.log(tempCount)
-        if(pendingTransactionTry > 0 && pendingTransactionId !='' && tempCount >0 )
-          {
-            tempCount = tempCount - 1
-            dispatch(setPendingTransactionTry(tempCount));
-            console.log('pendingTransactionTry')
-            console.log(pendingTransactionTry)
-            getTransStatus();
-          }
+      // Replace this with your logic
+      console.log('Fetching data...');
+      console.log('pendingTransactionId')
+      console.log(pendingTransactionId)
 
-        // Example: setData(newData);
+      console.log('tempCount')
+      console.log(tempCount)
+
+      console.log(pendingTransactionTry > 0)
+
+      console.log(pendingTransactionId !== '')
+
+      console.log(tempCount > 0)
+      if (pendingTransactionTry > 0 && pendingTransactionId !== '' && tempCount > 0) {
+        tempCount = tempCount - 1
+        try {
+          dispatch(setPendingTransactionTry(tempCount));
+          console.log('pendingTransactionTry')
+          console.log(pendingTransactionTry)
+          getTransStatus();
+        }
+        catch (err) {
+          console.log(err)
+        }
+
+
+
+
+      }
+
+      // Example: setData(newData);
     };
 
     // Set the interval
@@ -87,69 +101,69 @@ console.log('getTransStatus')
 
     // Clear the interval on component unmount
     return () => clearInterval(intervalId);
-}, [pendingTransactionId ]); // Empty dependency array ensures this runs only on mount and unmount
+  }, [pendingTransactionId]); // Empty dependency array ensures this runs only on mount and unmount
 
 
 
-const handleTikTokPixel = (res) => {
+  const handleTikTokPixel = (res) => {
 
-          const purchaseData = {
-            email: userInfo?.user_email, // Replace with actual data
-            phoneNumber: userInfo?.user_phone, // Replace with actual data
-            uniqueID: userInfo?.user_id, // Replace with actual data
-            productName: res?.data?.product_name, // Replace with actual data
-            productPrice: res?.data?.product_price, // Replace with actual data
-            currency: 'CNY' // Use CNY for Chinese Yuan
-          };  
-        if (typeof window.ttq === 'undefined') {
-    console.error('TikTok Pixel is not loaded');
-    return;
-  }
+    const purchaseData = {
+      email: userInfo?.user_email, // Replace with actual data
+      phoneNumber: userInfo?.user_phone, // Replace with actual data
+      uniqueID: userInfo?.user_id, // Replace with actual data
+      productName: res?.data?.product_name, // Replace with actual data
+      productPrice: res?.data?.product_price, // Replace with actual data
+      currency: 'CNY' // Use CNY for Chinese Yuan
+    };
+    if (typeof window.ttq === 'undefined') {
+      console.error('TikTok Pixel is not loaded');
+      return;
+    }
 
-  const hashedEmail = purchaseData.email ? CryptoJS.SHA256(purchaseData.email).toString(CryptoJS.enc.Hex) : '';
-  const hashedPhoneNumber = (purchaseData.phoneNumber && purchaseData.phoneNumber !== '0')
-    ? CryptoJS.SHA256(purchaseData.phoneNumber).toString(CryptoJS.enc.Hex)
-    : '';
-  const hashedExternalID = purchaseData.uniqueID ? CryptoJS.SHA256(purchaseData.uniqueID).toString(CryptoJS.enc.Hex) : '';
+    const hashedEmail = purchaseData.email ? CryptoJS.SHA256(purchaseData.email).toString(CryptoJS.enc.Hex) : '';
+    const hashedPhoneNumber = (purchaseData.phoneNumber && purchaseData.phoneNumber !== '0')
+      ? CryptoJS.SHA256(purchaseData.phoneNumber).toString(CryptoJS.enc.Hex)
+      : '';
+    const hashedExternalID = purchaseData.uniqueID ? CryptoJS.SHA256(purchaseData.uniqueID).toString(CryptoJS.enc.Hex) : '';
 
-  const identifyPayload = {};
-  if (hashedEmail) identifyPayload.email = hashedEmail;
-  if (hashedPhoneNumber) identifyPayload.phone_number = hashedPhoneNumber;
-  if (hashedExternalID) identifyPayload.external_id = hashedExternalID;
+    const identifyPayload = {};
+    if (hashedEmail) identifyPayload.email = hashedEmail;
+    if (hashedPhoneNumber) identifyPayload.phone_number = hashedPhoneNumber;
+    if (hashedExternalID) identifyPayload.external_id = hashedExternalID;
 
-  // Identify the user
-  if (Object.keys(identifyPayload).length > 0) {
-    console.log('Identifying user with:', identifyPayload); // Debug log
-    window.ttq.identify(identifyPayload);
-  }
+    // Identify the user
+    if (Object.keys(identifyPayload).length > 0) {
+      console.log('Identifying user with:', identifyPayload); // Debug log
+      window.ttq.identify(identifyPayload);
+    }
 
-  // Ensure productPrice is a valid number
-  const productPrice = parseFloat(purchaseData.productPrice);
-  if (isNaN(productPrice) || productPrice < 0) {
-    console.error('Invalid product price:', purchaseData.productPrice);
-    return;
-  }
+    // Ensure productPrice is a valid number
+    const productPrice = parseFloat(purchaseData.productPrice);
+    if (isNaN(productPrice) || productPrice < 0) {
+      console.error('Invalid product price:', purchaseData.productPrice);
+      return;
+    }
 
-  // Track the CompletePayment event
-  console.log('Tracking CompletePayment with:', {
-    value: productPrice,
-    currency: purchaseData.currency,
-    contents: [
-      {
-        content_id: purchaseData.productName
-      }
-    ]
-  }); // Debug log
-  window.ttq.track('CompletePayment', {
-    value: productPrice,
-    currency: purchaseData.currency,
-    contents: [
-      {
-        content_id: purchaseData.productName
-      }
-    ]
-  });
-};
+    // Track the CompletePayment event
+    console.log('Tracking CompletePayment with:', {
+      value: productPrice,
+      currency: purchaseData.currency,
+      contents: [
+        {
+          content_id: purchaseData.productName
+        }
+      ]
+    }); // Debug log
+    window.ttq.track('CompletePayment', {
+      value: productPrice,
+      currency: purchaseData.currency,
+      contents: [
+        {
+          content_id: purchaseData.productName
+        }
+      ]
+    });
+  };
 
 
 

@@ -25,34 +25,38 @@ export default function PaymentPurchaseButton({productInfo, paymentInfo, classNa
   }
 
   const handleOnPurchase = () => {
+    console.log('oii')
     setIsPaymentProcessing(true)
     postPayOrder({ productId: productInfo.product_id, zfType: paymentInfo.payment_type_code })
       .then(res => {
         if (res.code === 0) {
+          console.log('111111')
 
 
           dispatch(setPendingTransactionTry(200));
           dispatch(setPendingTransactionId(res.data.transaction_id));
 
-
-
-          if (res.data.paymentData.url) {
-            // window.location.href = res.data.paymentData.url
-            if (isMobile) {
-              router.push(res.data.paymentData.url)
-            } else {
-              window.open(res.data.paymentData.url, '_blank')
+          setTimeout(() => {
+            if (res.data.paymentData.url) {
+              // window.location.href = res.data.paymentData.url
+              if (isMobile) {
+                router.push(res.data.paymentData.url)
+              } else {
+                window.open(res.data.paymentData.url, '_blank')
+              }
+  
+            } else if (res.data.paymentData.html) {
+              const target = isMobile ? '_self' : '_blank';
+  
+              // Open a new tab/window
+              const newTab = window.open('', target);
+              // Write the HTML content into the new tab
+              newTab.document.write(res.data.paymentData.html.replaceAll('\\', ''));
+              newTab.document.close();
             }
+          }, 500);
 
-          } else if (res.data.paymentData.html) {
-            const target = isMobile ? '_self' : '_blank';
-
-            // Open a new tab/window
-            const newTab = window.open('', target);
-            // Write the HTML content into the new tab
-            newTab.document.write(res.data.paymentData.html.replaceAll('\\', ''));
-            newTab.document.close();
-          }
+      
         } else {
           setShowPaymentFailed(true)
           setTimeout(() => {
