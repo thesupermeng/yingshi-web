@@ -5,6 +5,8 @@ import artplayerPluginAds from 'artplayer-plugin-ads';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import { useRouter } from 'next/navigation';
+// import { isMobile } from 'react-device-detect';
+import { usePaymentOpen } from '@/hook/yingshiScreenState/usePaymentOpen';
 
 export default function Player({
   option,
@@ -23,7 +25,8 @@ export default function Player({
   // const [remaining, setRemaining] = useState(setupTimeout);
 
   const { userInfo } = useYingshiUser();
-  const [isLoginOpen, setIsLoginOpen] = useLoginOpen();
+  const [_, setOpenLogin] = useLoginOpen();
+  const [__, setOpenPayment] = usePaymentOpen();
 
   const playM3U8 = (video, url, art) => {
     if (Hls.isSupported()) {
@@ -44,10 +47,10 @@ export default function Player({
     return (art) => {
       art.layers.add({
         name: 'ads',
-        html: `<div style="background-color: #00000099; padding: 4px; border-radius: 5px">
-        <span style="font-size: 12px">试看${setupTimeout}秒后结束&nbsp;|&nbsp;</span>
-        <span style="font-size: 12px; color: #D1AC7D">开通VIP畅享无限内容</span>
-        </div>`,
+        html: `<div id="ad-clickable" class="hover-effect" style="background-color: #00000099; padding: 4px; border-radius: 5px;">
+          <span style="font-size: 12px">试看${setupTimeout}秒后结束&nbsp;|&nbsp;</span>
+          <span style="font-size: 12px; color: #D1AC7D">开通VIP畅享无限内容</span>
+          </div>`,
         style: {
           display: `${setupTimeout === undefined ? 'none' : 'block'}`,
           position: 'absolute',
@@ -55,39 +58,49 @@ export default function Player({
           left: '5px',
         },
       });
-
+  
       function handleDivClick() {
-        // Add your functionality here when the ad image is clicked
+        console.log('clicked');
         show();
       }
-
-      art.layers.ads
-        .querySelector('div')
-        .addEventListener('click', handleDivClick);
-
+  
+      const adDiv = art.layers.ads.querySelector('#ad-clickable');
+      if (adDiv) {
+        adDiv.addEventListener('click', handleDivClick);
+      }
+  
       function show() {
         const isMobile = window.innerWidth < 768;
-
-        if (!userInfo) {
-          setIsLoginOpen(true);
+  
+        if (isMobile) {
+          if (!userInfo) {
+            // router.push('/myprofile?login=true');
+            setOpenLogin(true);
+          } else {
+            router.push('/payment');
+          }
         } else {
-          router.push('/payment');
+          if (!userInfo) {
+            setOpenLogin(true);
+          } else {
+            setOpenPayment(true);
+          }
         }
       }
-
+  
       if (setupTimeout !== undefined) {
         art.on('seek', () => {
           art.video.currentTime = 0;
         });
-
+  
         art.on('video:timeupdate', () => {
-          let remaining = setupTimeout - parseInt(art.video.currentTime)
+          let remaining = setupTimeout - parseInt(art.video.currentTime);
           art.layers.update({
             name: 'ads',
-            html: `<div style="background-color: #00000099; padding: 4px; border-radius: 5px">
-        <span style="font-size: 12px">试看${remaining}秒后结束&nbsp;|&nbsp;</span>
-        <span style="font-size: 12px; color: #D1AC7D">开通VIP畅享无限内容</span>
-        </div>`,
+            html: `<div id="ad-clickable"  class="hover-effect" style="background-color: #00000099; padding: 4px; border-radius: 5px">
+              <span style="font-size: 12px">试看${remaining}秒后结束&nbsp;|&nbsp;</span>
+              <span style="font-size: 12px; color: #D1AC7D">开通VIP畅享无限内容</span>
+              </div>`,
             style: {
               display: `${setupTimeout === undefined ? 'none' : 'block'}`,
               position: 'absolute',
@@ -95,19 +108,26 @@ export default function Player({
               left: '5px',
             },
           });
+  
+          const adDiv = art.layers.ads.querySelector('#ad-clickable');
+          if (adDiv) {
+            adDiv.addEventListener('click', handleDivClick);
+          }
+  
           if (art.video.currentTime >= setupTimeout) {
             art.pause();
             show();
           }
         });
       }
-
+  
       return {
         name: 'vipDialog',
         show,
       };
     };
   };
+  
 
   useLayoutEffect(() => {
     let showNextFlag;
