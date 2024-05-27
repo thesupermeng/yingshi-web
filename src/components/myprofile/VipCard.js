@@ -15,7 +15,7 @@ export default function VipCard({onClick}) {
           <span className={'text-[13px] text-[#1D2023]'}>去广告 看完整视频</span>
         </div>
         <Button className={'h-12 w-26 rounded-[10px] bg-[#1D2023] flex items-center justify-center'} onClick={onClick}>
-          <span className={'text-[#D1AC7D] text-[15px] font-semibold'}>立即解锁</span>
+          <span className={'text-[#D1AC7D] text-[15px] font-semibold'}>立即购买</span>
         </Button>
       </div>
     </div>
