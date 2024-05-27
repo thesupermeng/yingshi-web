@@ -56,6 +56,7 @@ export default function Player({
           position: 'absolute',
           bottom: '60px',
           left: '5px',
+          cursor:'pointer'
         },
       });
   
@@ -106,6 +107,7 @@ export default function Player({
               position: 'absolute',
               bottom: '60px',
               left: '5px',
+              cursor:'pointer'
             },
           });
   
