@@ -20,7 +20,7 @@ export default function PaymentProductsList({className, productList, onProductSe
 
 
   return (
-    <div className={`h-[164px] w-full overflow-x-scroll flex flex-nowrap gap-[20px] items-center ${className}`} ref={listRef} {...events}>
+    <div className={`h-[164px] w-full overflow-x-scroll no-scrollbar flex flex-nowrap gap-[20px] items-center ${className}`} ref={listRef} {...events}>
       {productList.map((product, index) => {
         return <Product key={product.product_id}
                         isSelected={selectedProduct === product.product_id}
