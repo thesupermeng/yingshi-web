@@ -88,7 +88,7 @@ export default function Page() {
   }, [searchResults]);
 
   return (
-    <>
+    <div className='flex flex-col'>
 
       {/* loading spinner  */}
       <div className='mobile'>
@@ -125,8 +125,6 @@ export default function Page() {
       </div>
       {searchResults && (
         <>
-
-
           {/* desktop  view  */}
           <div className='desktop'>
             <div className='d-flex container pt-3 ' style={{ width: '100%' }}>
@@ -271,6 +269,6 @@ export default function Page() {
         </div>
       }
 
-    </>
+    </div>
   );
 }
