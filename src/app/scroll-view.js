@@ -28,6 +28,7 @@ export const ScrollView = ({ children }) => {
   const isAtTop = useSelector(getIsTop);
   const isScrolling = useSelector(getIsScroll);
 
+  let checked = false
 
   // 1111111 
   const getPendingTransactionId = (state) => state.yingshiUser.pendingTransactionId;
@@ -44,14 +45,23 @@ export const ScrollView = ({ children }) => {
       console.log('before ');
 
       console.log(res)
-      if (res?.data?.transaction_status_string == 'COMPLETED') {
+      if (res?.data?.transaction_status_string == 'COMPLETED' && checked == false) {
+
         console.log('pako');
+        checked = true
         dispatch(setPendingTransactionTry(0));
         dispatch(setPendingTransactionId(''));
 
         handleTikTokPixel(res);
       }
-    })
+      
+    }).catch((error) => {
+  
+        console.log('err')
+        console.log(err)
+    
+      
+    });
 
   }
   let tempCount = 0;
@@ -75,15 +85,13 @@ export const ScrollView = ({ children }) => {
       console.log(tempCount > 0)
       if (pendingTransactionTry > 0 && pendingTransactionId !== '' && tempCount > 0) {
         tempCount = tempCount - 1
-        try {
+     
           dispatch(setPendingTransactionTry(tempCount));
           console.log('pendingTransactionTry')
           console.log(pendingTransactionTry)
           getTransStatus();
-        }
-        catch (err) {
-          console.log(err)
-        }
+        
+       
 
 
 
