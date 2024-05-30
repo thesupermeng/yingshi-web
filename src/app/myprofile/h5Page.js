@@ -1,24 +1,24 @@
 'use client';
 import Image from 'next/image';
-import React, {useEffect, useState} from 'react';
-import {AboutusIconGrey, FavouriteIconGrey, FeedbackIconGrey, HistoryIconGrey, LogoutGrey} from '@/asset/icons';
+import React, { useEffect, useState } from 'react';
+import { AboutusIconGrey, FavouriteIconGrey, FeedbackIconGrey, HistoryIconGrey, LogoutGrey } from '@/asset/icons';
 
-import {getNewAhaToken, logout} from '@/services/yingshiUser';
-import {TickAnimation} from '@/asset/gif';
-import {useDispatch, useSelector} from 'react-redux';
-import {setAhaToken, setYingshiUserInfo, setYingshiUserLoginParam, setYingshiUserToken} from '@/store/yingshiUser';
+import { getNewAhaToken, logout } from '@/services/yingshiUser';
+import { TickAnimation } from '@/asset/gif';
+import { useDispatch, useSelector } from 'react-redux';
+import { setAhaToken, setYingshiUserInfo, setYingshiUserLoginParam, setYingshiUserToken } from '@/store/yingshiUser';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import NavCard from '@/components/myprofile/NavCard';
 import VipCard from '@/components/myprofile/VipCard';
 import ProfileCard from '@/components/myprofile/ProfileCard';
 import LogoutModal from '@/components/login/logoutModal';
-import {useRouter} from 'next/navigation';
-import {updateLocalstorage} from '@/util/YingshiApi';
-import {LocalStorageKeys} from '@/config/common';
-import {useLoginOpen} from '@/hook/yingshiScreenState/useLoginOpen';
-import {Button, Dialog, DialogBody} from '@material-tailwind/react';
+import { useRouter } from 'next/navigation';
+import { updateLocalstorage } from '@/util/YingshiApi';
+import { LocalStorageKeys } from '@/config/common';
+import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
+import { Button, Dialog, DialogBody } from '@material-tailwind/react';
 
-export default function H5Page({params}) {
+export default function H5Page({ params }) {
   const router = useRouter();
 
   const navs = [
@@ -34,7 +34,7 @@ export default function H5Page({params}) {
     {
       title: '播放历史',
       icon: HistoryIconGrey,
-      onClick: () => {},
+      onClick: () => { },
       isSelected: false,
       platform: 'mobile',
       isRequireLogin: false,
@@ -43,7 +43,7 @@ export default function H5Page({params}) {
     {
       title: '我要反馈',
       icon: FeedbackIconGrey,
-      onClick: () => {},
+      onClick: () => { },
       isSelected: false,
       platform: 'mobile',
       isRequireLogin: false,
@@ -77,15 +77,15 @@ export default function H5Page({params}) {
   const [openLoginSuccess, setOpenLoginSuccess] = useState(false);
   const [openLogoutConfirmation, setOpenLogoutConfirmation] = useState(false);
 
-  const {isVip, userInfo, ahaToken, refreshUserInfo} = useYingshiUser()
+  const { isVip, userInfo, ahaToken, refreshUserInfo } = useYingshiUser()
 
   const dispatch = useDispatch()
   const getLoginParam = (s) => s.yingshiUser.loginParam
   const loginParam = useSelector(getLoginParam)
-
+  let isRefreshing = false;
 
   // temp
-  const [openAboutus , setOpenAboutus] = useState(false)
+  const [openAboutus, setOpenAboutus] = useState(false)
 
   const aboutusHandler = () => {
     setOpenAboutus(x => !x)
@@ -121,21 +121,35 @@ export default function H5Page({params}) {
     }
   }
 
-  const iframeMessageListener = (event) => {
+  const iframeMessageListener = async (event) => {
     // console.log('iframe message', event.data)
-    if (event.data.message === 'iframe') {
+    if (event.data.message === 'iframe' && isRefreshing == false) {
+      // console.log('iframe event ')
       if (event.data.type === 'login') {
-        getNewAhaToken()
-          .then(res => {
-            if (res){
-              dispatch(setAhaToken(res))
-              updateLocalstorage(LocalStorageKeys.AhaToken, res)
-            }
-          })
-      } else {
+        console.log('login type ')
+        isRefreshing = true
+        let res = await getNewAhaToken();
+        if (res) {
+          dispatch(setAhaToken(res))
+          updateLocalstorage(LocalStorageKeys.AhaToken, res)
+        }
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        isRefreshing = false
+      } else if (event.data.type === 'invalidToken') {
+        console.log('invalid aha token')
+        isRefreshing = true
+        let res = await getNewAhaToken();
+        if (res) {
+          dispatch(setAhaToken(res))
+          updateLocalstorage(LocalStorageKeys.AhaToken, res)
+        }
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        isRefreshing = false
+      }
+      else if (isRefreshing != true) {
+        console.log('oi')
         router.push(`/sport/${event.data.url}`)
       }
-
     }
   }
 
@@ -172,7 +186,7 @@ export default function H5Page({params}) {
         }}
       />
       {/* user profile */}
-      <div style={{background: '#1D2023', borderRadius: '12px', marginBottom: '16px'}}>
+      <div style={{ background: '#1D2023', borderRadius: '12px', marginBottom: '16px' }}>
         <div className="flex flex-col p-[12px] gap-[12px]">
           <div>
             <ProfileCard
@@ -182,18 +196,19 @@ export default function H5Page({params}) {
               onSignin={() => setOpenSignInUp(true)}
             />
           </div>
-          <VipCard onClick={handleOnClickVip}/>
+          <VipCard onClick={handleOnClickVip} />
         </div>
       </div>
 
       {/*aha iframe */}
-      {userInfo &&
-        <div style={{background: '#1D2023', borderRadius: '12px', marginBottom: '16px'}}>
+      {(userInfo && isRefreshing == false) &&
+        <div style={{ background: '#1D2023', borderRadius: '12px', marginBottom: '16px' }}>
           <iframe
             className={'h-[74px] w-full rounded-[12px]'}
             src={`https://iframe-h5.aha666.site/user/wallet?authToken=${ahaToken}`}
             scrolling={'no'}
           />
+          {/* <h1> { ahaToken } </h1> */}
         </div>
       }
 
