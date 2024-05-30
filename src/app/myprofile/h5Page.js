@@ -121,30 +121,28 @@ export default function H5Page({ params }) {
     }
   }
 
+  const onRefreshToken = async () => {
+    isRefreshing = true
+    let res = await getNewAhaToken();
+    if (res) {
+      dispatch(setAhaToken(res))
+      updateLocalstorage(LocalStorageKeys.AhaToken, res)
+      isRefreshing = false
+    }
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+  }
+
   const iframeMessageListener = async (event) => {
     // console.log('iframe message', event.data)
     if (event.data.message === 'iframe' && isRefreshing == false) {
       // console.log('iframe event ')
       if (event.data.type === 'login') {
         console.log('login type ')
-        isRefreshing = true
-        let res = await getNewAhaToken();
-        if (res) {
-          dispatch(setAhaToken(res))
-          updateLocalstorage(LocalStorageKeys.AhaToken, res)
-        }
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        isRefreshing = false
+        onRefreshToken()
       } else if (event.data.type === 'invalidToken') {
         console.log('invalid aha token')
-        isRefreshing = true
-        let res = await getNewAhaToken();
-        if (res) {
-          dispatch(setAhaToken(res))
-          updateLocalstorage(LocalStorageKeys.AhaToken, res)
-        }
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        isRefreshing = false
+       
+        onRefreshToken()
       }
       else if (isRefreshing != true) {
         console.log('oi')
