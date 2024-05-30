@@ -5,16 +5,25 @@ import { setAhaToken } from '@/store/yingshiUser';
 import { useDispatch } from 'react-redux';
 import { updateLocalstorage } from '@/util/YingshiApi';
 import { LocalStorageKeys } from '@/config/common';
+import { useRouter } from 'next/navigation';
 
 export default function Page({ params }) {
-
+  const router = useRouter();
   let redirect = params.slug?.join('/') || 'sports'
   let isRefreshing = false;
   const dispatch = useDispatch()
 
-  if (localStorage.getItem('AuthToken') == null || localStorage.getItem('AuthToken' == "")) {
-    redirect += "?authToken=aa";
-  }
+  // if (localStorage.getItem('AuthToken') == null || localStorage.getItem('AuthToken' == "")) {
+  //   redirect += "?authToken=aa";
+  // }
+
+  console.log(111111)
+  console.log(localStorage.getItem('AuthToken'))
+
+  useEffect(() => {
+    console.log(2222)
+    console.log(localStorage.getItem('AuthToken'))
+  }, [])
 
 
   const onRefreshToken = async () => {
@@ -34,14 +43,15 @@ export default function Page({ params }) {
       if (event.data.type === 'login') {
         console.log('login type ')
         onRefreshToken()
-      } else if (event.data.type === 'invalidToken') {
-        console.log('invalid aha token')
-        onRefreshToken()
-      }
+      } 
+      // else if (event.data.type === 'invalidToken') {
+      //   console.log('invalid aha token')
+      //   router.push(`/sport`)
+      // }
       else if (event.data.type === 'onTopUp') {
         console.log('onTopUp')
-        console.log(event.data)
-        // router.push(event.data.data.data.topup_data)
+        console.log(event.data.data.data)
+        router.push(event.data.data.data.topup_data)
       }
 
     }
