@@ -132,7 +132,7 @@ export default function H5Page({ params }) {
     let res = await getNewAhaToken();
     await new Promise((resolve) => setTimeout(resolve, 1200));
     if (res) {
-      setFrameToken(res)
+      //setFrameToken(res)
       dispatch(setAhaToken(res))
       //updateLocalstorage(LocalStorageKeys.AhaToken, res)
       localStorage.setItem('AuthToken', res)
@@ -248,7 +248,7 @@ export default function H5Page({ params }) {
       </div>
 
       {/*aha iframe  background: '#1D2023', */}
-      {(userInfo && frameToken) &&
+      {(userInfo && frameToken && frameToken != -1) &&
         <div style={{ borderRadius: '12px', marginBottom: '16px' }}>
           <iframe
             className={'h-[74px] w-full rounded-[12px]'}
@@ -256,14 +256,15 @@ export default function H5Page({ params }) {
             scrolling={'no'}
           />
 
-          {(frameToken == -1) &&
-            <div style={{ background: '#1D2023', borderRadius: '12px', marginBottom: '16px', height: '73px', display: 'flex', justifyContent: 'center', alignItems: "center", fontSize: '22px' }}>
-              <FontAwesomeIcon icon={faSpinner} spin />
-            </div>
 
-          }
           {/* <h1> { ahaToken } </h1> */}
         </div>
+      }
+      {(frameToken == -1) &&
+        <div style={{ background: '#1D2023', borderRadius: '12px', marginBottom: '16px', height: '73px', display: 'flex', justifyContent: 'center', alignItems: "center", fontSize: '22px' }}>
+          <FontAwesomeIcon icon={faSpinner} spin />
+        </div>
+
       }
 
       <div className={'flex flex-col gap-[16px] pb-[100px]'}>
