@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState, useRef } from 'react';
 import { AboutusIconGrey, FavouriteIconGrey, FeedbackIconGrey, HistoryIconGrey, LogoutGrey } from '@/asset/icons';
 
 import { getNewAhaToken, logout } from '@/services/yingshiUser';
@@ -17,6 +17,11 @@ import { updateLocalstorage } from '@/util/YingshiApi';
 import { LocalStorageKeys } from '@/config/common';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 import { Button, Dialog, DialogBody } from '@material-tailwind/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+
+// import { Spinner } from './../../components/spinner';
 
 export default function H5Page({ params }) {
   const router = useRouter();
@@ -76,7 +81,7 @@ export default function H5Page({ params }) {
   const [openSignInUp, setOpenSignInUp] = useLoginOpen()
   const [openLoginSuccess, setOpenLoginSuccess] = useState(false);
   const [openLogoutConfirmation, setOpenLogoutConfirmation] = useState(false);
-
+  const [frameToken, setFrameToken] = useState(null);
   const { isVip, userInfo, ahaToken, refreshUserInfo } = useYingshiUser()
 
   const dispatch = useDispatch()
@@ -122,30 +127,42 @@ export default function H5Page({ params }) {
   }
 
   const onRefreshToken = async () => {
-    isRefreshing = true
+
+    // setFrameToken(null)
     let res = await getNewAhaToken();
+    await new Promise((resolve) => setTimeout(resolve, 1200));
     if (res) {
+      setFrameToken(res)
       dispatch(setAhaToken(res))
-      updateLocalstorage(LocalStorageKeys.AhaToken, res)
+      //updateLocalstorage(LocalStorageKeys.AhaToken, res)
+      localStorage.setItem('AuthToken', res)
+      setFrameToken(res)
       isRefreshing = false
     }
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    return res;
   }
 
   const iframeMessageListener = async (event) => {
-    // console.log('iframe message', event.data)
-    if (event.data.message === 'iframe' && isRefreshing == false) {
+
+    if (event.data.message === 'iframe' && event.data.type != "TikTokPixelSPAMonitor") {
+      console.log('iframe message', event.data)
       // console.log('iframe event ')
       if (event.data.type === 'login') {
         console.log('login type ')
-        onRefreshToken()
+        // onRefreshToken()
       } else if (event.data.type === 'invalidToken') {
+        if (frameToken == -1) {
+          return
+        }
         console.log('invalid aha token')
-       
-        onRefreshToken()
+
+        setFrameToken(-1)
+
+        // onRefreshToken()
       }
-      else if (isRefreshing != true) {
-        console.log('oi')
+      else {
+        console.log(event.data.url)
         router.push(`/sport/${event.data.url}`)
       }
     }
@@ -158,6 +175,38 @@ export default function H5Page({ params }) {
       window.removeEventListener('message', iframeMessageListener)
     }
   }, [])
+
+
+
+
+
+  useLayoutEffect(() => {
+    // let x = await onRefreshToken()
+    //let xx = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb3VudHJ5X2NvZGUiOiIrNjUiLCJleHAiOjE3NDg2NjY4NDMsImlhdCI6MTcxNzEzMDg0MywibW9iaWxlIjoiODEyMzMzODciLCJ1c2VyX2lkIjoyMDU4fQ.kVo5WYOCwVmLRByTNjY1CpRc5aeKFx1aEIwnMXcGa0s`
+    let xx = localStorage.getItem('AuthToken');
+    setFrameToken(xx)
+    dispatch(setAhaToken(xx))
+  }, [])
+
+
+  const debounceRef = useRef(null);
+
+  useEffect(() => {
+    console.log('frameToken 11');
+    console.log(frameToken);
+
+    if (frameToken === -1) {
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
+
+      debounceRef.current = setTimeout(() => {
+        onRefreshToken();
+      }, 8000);
+    }
+  }, [frameToken]);
+
+
 
   return (
     <div>
@@ -198,14 +247,21 @@ export default function H5Page({ params }) {
         </div>
       </div>
 
-      {/*aha iframe */}
-      {(userInfo && isRefreshing == false) &&
-        <div style={{ background: '#1D2023', borderRadius: '12px', marginBottom: '16px' }}>
+      {/*aha iframe  background: '#1D2023', */}
+      {(userInfo && frameToken) &&
+        <div style={{ borderRadius: '12px', marginBottom: '16px' }}>
           <iframe
             className={'h-[74px] w-full rounded-[12px]'}
-            src={`https://iframe-h5.aha666.site/user/wallet?authToken=${ahaToken}`}
+            src={`https://iframe-h5.aha666.site/user/wallet?authToken=${frameToken}`}
             scrolling={'no'}
           />
+
+          {(frameToken == -1) &&
+            <div style={{ background: '#1D2023', borderRadius: '12px', marginBottom: '16px', height: '73px', display: 'flex', justifyContent: 'center', alignItems: "center", fontSize: '22px' }}>
+              <FontAwesomeIcon icon={faSpinner} spin />
+            </div>
+
+          }
           {/* <h1> { ahaToken } </h1> */}
         </div>
       }

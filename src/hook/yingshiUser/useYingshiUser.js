@@ -17,7 +17,7 @@ export default function useYingshiUser() {
         }
 
         // get token
-        const localStorageToken = localStorage.getItem(LocalStorageKeys.AuthToken);
+        const localStorageToken = localStorage.getItem(LocalStorageKeys.AuthTokenHeader);
         const localStorageAhaToken = localStorage.getItem(LocalStorageKeys.AhaToken);
 
         if (localStorageToken) {

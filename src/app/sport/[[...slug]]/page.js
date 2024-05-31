@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { getNewAhaToken } from '@/services/yingshiUser';
 import { setAhaToken } from '@/store/yingshiUser';
 import { useDispatch } from 'react-redux';
@@ -13,16 +13,31 @@ export default function Page({ params }) {
   let isRefreshing = false;
   const dispatch = useDispatch()
 
-  // if (localStorage.getItem('AuthToken') == null || localStorage.getItem('AuthToken' == "")) {
-  //   redirect += "?authToken=aa";
-  // }
+  
+  if (localStorage.getItem('AuthToken') == null || localStorage.getItem('AuthToken' == "")) {
+    redirect += "?authToken=aa";
+  }
+  else
+  {
+    redirect += "?authToken=" + localStorage.getItem('AuthToken');
+  }
+  useLayoutEffect(() => {
+    if (localStorage.getItem('AuthToken') == null || localStorage.getItem('AuthToken' == "")) {
+      redirect += "?authToken=aa";
+    }
+    else
+    {
+      redirect += "?authToken=" + localStorage.getItem('AuthToken');
+    }
+  }, [])
+
 
   console.log(111111)
-  console.log(localStorage.getItem('AuthToken'))
+  console.log(localStorage.getItem('AuthTokenHeader'))
 
   useEffect(() => {
     console.log(2222)
-    console.log(localStorage.getItem('AuthToken'))
+    console.log(localStorage.getItem('AuthTokenHeader'))
   }, [])
 
 

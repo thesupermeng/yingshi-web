@@ -132,7 +132,7 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
   const requestBody = JSON.stringify(body);
   const requestOption = {
     method,
-    headers: await getHeader(requestBody, method, localStorage.getItem(LocalStorageKeys.AuthToken)),
+    headers: await getHeader(requestBody, method, localStorage.getItem(LocalStorageKeys.AuthTokenHeader)),
   };
 
   let getParams = '';
@@ -174,13 +174,14 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
     return;
   } else if (resData.code === 0 || resData.code === 201) {
     if (saveUserToken) {
-      updateLocalstorage(LocalStorageKeys.AuthToken, resData.data.access_token)
+      updateLocalstorage(LocalStorageKeys.AuthTokenHeader, resData.data.access_token)
     }
     if (saveAhaToken) {
       updateLocalstorage(LocalStorageKeys.AhaToken, resData.data.aha_token)
+      localStorage.setItem('AuthToken' ,resData.data.aha_token )
     }
     if (removeToken) {
-      updateLocalstorage(LocalStorageKeys.AuthToken, undefined);
+      updateLocalstorage(LocalStorageKeys.AuthTokenHeader, undefined);
       updateLocalstorage(LocalStorageKeys.AhaToken, undefined);
     }
   }

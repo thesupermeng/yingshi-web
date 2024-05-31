@@ -26,7 +26,7 @@ export const CommonPerpetual = () => {
     const authToken = urlParams.get('authToken');
     const header = urlParams.get('header');
     if (authToken) {
-      updateLocalstorage(LocalStorageKeys.AuthToken, authToken);
+      updateLocalstorage(LocalStorageKeys.AuthTokenHeader, authToken);
       dispatch(setIsApp(true));
     } else if (header) {
       dispatch(setIsApp(true));

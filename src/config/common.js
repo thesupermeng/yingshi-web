@@ -1,4 +1,5 @@
 export const LocalStorageKeys = {
+  AuthTokenHeader: 'AuthTokenHeader',
   AuthToken: 'AuthToken',
   AhaToken: 'AhaToken',
   CurrencyId: 'CurrencyId',
