@@ -6,6 +6,8 @@ import { useDispatch } from 'react-redux';
 import { updateLocalstorage } from '@/util/YingshiApi';
 import { LocalStorageKeys } from '@/config/common';
 import { useRouter } from 'next/navigation';
+import { setProfileModal, setShowToast } from '@/store/common';
+
 
 export default function Page({ params }) {
   const router = useRouter();
@@ -52,7 +54,8 @@ export default function Page({ params }) {
     await new Promise((resolve) => setTimeout(resolve, 2000));
   }
   const iframeMessageListener = async (event) => {
-    // console.log('iframe message', event.data)
+   // dispatch(setShowToast(event.data.type));
+     console.log('iframe message', event.data)
     if (event.data.message === 'iframe' && isRefreshing == false) {
       // console.log('iframe event ')
       if (event.data.type === 'login') {
@@ -67,6 +70,10 @@ export default function Page({ params }) {
         console.log('onTopUp')
         console.log(event.data.data.data)
         router.push(event.data.data.data.topup_data)
+      }
+      else if (event.data.type === 'enterPin') {
+        console.log('enterPin')
+        router.push('/setpin')
       }
 
     }

@@ -30,6 +30,7 @@ const MyFooter2 = () => {
     pathname.startsWith('/search/') ||
     pathname.startsWith('/payment') ||
     pathname.startsWith('/login') ||
+    pathname.startsWith('/setpin') ||
     pathname.startsWith('/privacy') ||
     pathname.startsWith('/service') ||
     pathname.startsWith('/sport') ||

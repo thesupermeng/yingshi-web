@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import React, { useEffect, useLayoutEffect, useState, useRef } from 'react';
-import { AboutusIconGrey, FavouriteIconGrey, FeedbackIconGrey, HistoryIconGrey, LogoutGrey } from '@/asset/icons';
+import { AboutusIconGrey, FavouriteIconGrey, FeedbackIconGrey, HistoryIconGrey, LogoutGrey , PinIconGrey } from '@/asset/icons';
 
 import { getNewAhaToken, logout } from '@/services/yingshiUser';
 import { TickAnimation } from '@/asset/gif';
@@ -44,6 +44,15 @@ export default function H5Page({ params }) {
       platform: 'mobile',
       isRequireLogin: false,
       href: '/myprofile/watchHistory'
+    },
+    {
+      title: '安全PIN码',
+      icon: PinIconGrey,
+      onClick: () => { },
+      isSelected: false,
+      platform: 'mobile',
+      isRequireLogin: true,
+      href: '/setpin'
     },
     {
       title: '我要反馈',
@@ -135,7 +144,7 @@ export default function H5Page({ params }) {
       //setFrameToken(res)
       dispatch(setAhaToken(res))
       //updateLocalstorage(LocalStorageKeys.AhaToken, res)
-      localStorage.setItem('AuthToken', res)
+      localStorage.setItem('AuthToken', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb3VudHJ5X2NvZGUiOiIrNjUiLCJleHAiOjE3NDkwMjYxMzcsImlhdCI6MTcxNzQ5MDEzNywibW9iaWxlIjoiODEyMzMzODciLCJ1c2VyX2lkIjoyMDU4fQ.SRPV-wLyWxR1g5O82KoQsvQojN8-XRpVvjxvHSpwp5I')
       setFrameToken(res)
       isRefreshing = false
     }
@@ -260,8 +269,10 @@ export default function H5Page({ params }) {
           {/* <h1> { ahaToken } </h1> */}
         </div>
       }
+
+      {/* background: '#1D2023', */}
       {(frameToken == -1) &&
-        <div style={{ background: '#1D2023', borderRadius: '12px', marginBottom: '16px', height: '73px', display: 'flex', justifyContent: 'center', alignItems: "center", fontSize: '22px' }}>
+        <div style={{ borderRadius: '12px', marginBottom: '16px', height: '73px', display: 'flex', justifyContent: 'center', alignItems: "center", fontSize: '22px' }}>
           <FontAwesomeIcon icon={faSpinner} spin />
         </div>
 
