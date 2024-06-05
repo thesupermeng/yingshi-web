@@ -271,7 +271,7 @@ export default function H5Page({ params }) {
       }
 
       {/* background: '#1D2023', */}
-      {(frameToken == -1) &&
+      {(frameToken == -1 && userInfo) &&
         <div style={{ borderRadius: '12px', marginBottom: '16px', height: '73px', display: 'flex', justifyContent: 'center', alignItems: "center", fontSize: '22px' }}>
           <FontAwesomeIcon icon={faSpinner} spin />
         </div>

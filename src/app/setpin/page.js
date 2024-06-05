@@ -9,16 +9,41 @@ import { setAhaToken, setYingshiUserLoginParam, setYingshiUserToken } from '@/st
 import { useLoginSuccessOpen } from '@/hook/yingshiScreenState/useLoginSuccessOpen';
 import TopicHeader from './../../components/topicHeader';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
+import { YingshiApi, YingshiApi2 } from '@/util/YingshiApi';
+import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
+// import { setsEqual } from 'chart.js/dist/helpers/helpers.core';
 const totalCountdownTime = 60 // seconds
+
+function formatPhoneNumber(phone) {
+    const phoneStr = phone.toString();
+    let formattedPhone;
+
+    if (phoneStr.startsWith('+')) {
+        const countryCode = phoneStr.slice(1, 4);
+        const part1 = phoneStr.slice(4, 7);
+        const part2 = phoneStr.slice(7, 11);
+        formattedPhone = `+${countryCode} ${part1} ${part2}`;
+    } else {
+        const countryCode = phoneStr.slice(0, 3);
+        const part1 = phoneStr.slice(3, 6);
+        const part2 = phoneStr.slice(6, 10);
+        formattedPhone = `+${countryCode} ${part1} ${part2}`;
+    }
+
+    return formattedPhone;
+}
 
 export default function OTP() {
     const router = useRouter()
 
 
     const [firstPin, setFirstPin] = useState('')
-    let secondPin = '';
+    const [secondPin, setSecondPin] = useState('')
+    const [userContact, setUserContact] = useState('')
 
+    // const [otp, setOtp] = useState('')
 
+    let otpValue = ''
     //redux
     const dispatch = useDispatch()
     // const getLoginParam = (s) => s.yingshiUser.loginParam
@@ -26,7 +51,7 @@ export default function OTP() {
     const { userInfo } = useYingshiUser()
 
 
-    const [resetMode, setResetMode] = useState(null) // setpin | resetpin
+    const [resetMode, setResetMode] = useState(null) // setpin | resetpin | otp
 
     useEffect(() => {
 
@@ -57,17 +82,18 @@ export default function OTP() {
 
     const handleResendOTP = () => {
         setCountdownTimer(totalCountdownTime)
-        if (loginParam.loginMode === 'sms') {
-            loginRequestSmsOtp(loginParam)
-        } else {
-            loginRequestEmailOtp(loginParam)
 
-        }
+        YingshiApi(URL_YINGSHI_VOD.setAhaWithdrawalPin, {
+            pin: parseInt(firstPin),
+            otp: otp
+
+        }, { method: 'POST' });
     }
 
 
 
     const resetCountDownHandler = () => {
+        setResetMode('otp')
         setCountdownTimer(totalCountdownTime)
     }
 
@@ -102,6 +128,54 @@ export default function OTP() {
         }
     }
 
+    const setUserPin = async () => {
+        console.log('setUserPin');
+        try {
+            let res = await YingshiApi2(URL_YINGSHI_VOD.setAhaWithdrawalPin, {
+                pin: parseInt(firstPin),
+                otp: otpValue
+
+            }, { method: 'POST' });
+            console.log('res')
+
+            console.log(res)
+
+            if (resetMode == 'otp' && res.message =='Invalid OTP') {
+                setErrorMessage('验证码不正确')
+            }
+            else
+            {
+                setErrorMessage('')
+                console.log('success change pin')
+                //todo show success
+            }
+
+        } catch (err) {
+            console.log('err')
+            console.log(err)
+            if (resetMode == 'otp') {
+                setErrorMessage('验证码不正确')
+            }
+
+        }
+
+
+
+    }
+
+
+    const resetInput = () => {
+        otpRef.current = new Array(6).fill('');
+        inputRefs.current.forEach(input => {
+            input.value = '';
+        });
+        inputRefs.current[0].focus();
+
+    }
+    //      loginEmail({...loginParam, otp: otpRef.current.join('')})
+
+    //  YingshiApi(URL_YINGSHI_VOD.homeGetNav, {}, { method: 'GET' });
+
 
     const handleChange = (value, index) => {
         setErrorMessage('')
@@ -123,31 +197,59 @@ export default function OTP() {
             //to do chatGPT 
             // reset otpRef 
 
-            if (value.target.value !== '' ||secondPin == '' ) {
+            if (value.target.value !== '' || secondPin == '') {
                 if (firstPin == '') {
-             
+
                     let temp = otpRef.current.join('');
                     setFirstPin(temp)
-                    otpRef.current = new Array(6).fill('');
-                    inputRefs.current.forEach(input => {
-                        input.value = '';
-                    });
-                    inputRefs.current[0].focus();
+                    resetInput()
                     return
                 }
 
                 console.log("second pin ")
-                secondPin = otpRef.current.join('');
-                console.log("firstPin")
-                console.log(firstPin)
-                console.log("secondPin")
-                console.log(secondPin)
+
+
+                let temp2 = otpRef.current.join('');
+
+
+
+
+
+
+                if (firstPin != temp2 && resetMode !='otp') {
+                    console.log('oi')
+                    setErrorMessage('PIN码不一致')
+                    return
+                }
+                // can remove
+                if(resetMode !='otp')
+                    {
+                        setSecondPin(temp2)
+                    }
+
+           
+                setErrorMessage('')
+
+                if (resetMode != 'otp') {
+
+                    resetInput()
+                    resetCountDownHandler()
+                }
+                else {
+                    // setOtp(temp2)
+                    otpValue = temp2;
+                }
+
+                setUserPin()
                 //      loginEmail({...loginParam, otp: otpRef.current.join('')})
+
+                //  YingshiApi(URL_YINGSHI_VOD.homeGetNav, {}, { method: 'GET' });
 
 
             }
         }
     }
+
     return (
         // full width and full height
 
@@ -167,7 +269,11 @@ export default function OTP() {
                 <div className={'w-screen flex flex-col align-center '}>
                     {resetMode == 'setpin' && <>
                         {firstPin == '' &&
-                            <p className={'text-center text-[22px] mb-[13px] mt-[40px]'}>设置安全PIN码</p>
+                            <p className={'text-center text-[22px] mb-[13px] mt-[40px]'}>设置安全PIN码
+
+
+
+                            </p>
                         }
                         {firstPin != '' &&
                             <p className={'text-center text-[22px] mb-[13px] mt-[40px]'}>确认安全PIN码</p>
@@ -192,22 +298,10 @@ export default function OTP() {
                             />
                         ))}
                     </div>
+
+
                     {errorMessage && <p className={'text-[#FF1010] text-[13px] px-[32px]'}>{errorMessage}</p>}
-                    <div className={'flex my-12 justify-center'}>
-                        {countdownTimer === 0 &&
-                            <button className={'text-[17px] font-semibold text-[#0085E0]'}
-                                onClick={handleResendOTP}>重新发送验证码</button>
-                        }
-                        {countdownTimer !== 0 &&
-                            <div className={'flex gap-[3px] justify-center items-center'}>
-                                <Image src={Stopwatch} width={26} height={26} alt={'timer icon'} />
-                                <span
-                                    className={'text-[#9C9C9C] font-semibold w-[50px]'}>
-                                    {minutes.toString().padStart(2, '0')}:{seconds.toString().padStart(2, '0')}
-                                </span>
-                            </div>
-                        }
-                    </div>
+
 
                 </div>
             }
@@ -217,20 +311,26 @@ export default function OTP() {
             {/* otp here  */}
             {resetMode == 'otp' &&
                 <div className={'w-screen flex flex-col align-center '}>
-                    {resetMode === 'setpin' && <>
-                        <p className={'text-center text-[22px] mb-[13px] mt-[40px]'}>输入邮箱验证码</p>
-                        <p className={'text-center text-[14px]'}>验证码已发送至 <span
-                            className={'text-[#0085E0]'}> email 1111 </span></p>
-                        <p className={'text-center text-[14px] mb-[26px]'}>如果没有收到邮件，请检查垃圾邮箱</p>
-                    </>
-                    }
-                    {resetMode === 'resetpin' && <>
-                        <p className={'text-center text-[22px] mb-[13px] mt-[40px]'}>输入OTP验证码</p>
-                        <p className={'text-center text-[14px] mb-[26px]'}>
-                            验证码已发送至 <span className={'text-[#0085E0]'}>+phone 11111</span>
-                        </p>
-                    </>
-                    }
+
+                    <p className={'text-center text-[22px] mb-[13px] mt-[40px]'}>输入OTP验证码</p>
+                    <p className={'text-center text-[14px]'}>验证码已发送至
+                        <span
+                            className={'text-[#0085E0]'}>
+                            &nbsp;
+                            {userInfo.user_email && userInfo.user_email}
+
+
+                            {userInfo.user_phone !== 0 && userInfo.user_phone !== '0' && userInfo.user_email === '' &&
+
+                                <> {formatPhoneNumber(userInfo.user_phone)} </>
+
+                            }
+
+                        </span>
+
+                    </p>
+                    <p className={'text-center text-[14px] mb-[26px]'}>&nbsp;</p>
+
                     <div className={'flex justify-between px-[32px]'}>
                         {[1, 2, 3, 4, 5, 6].map((item, index) => (
                             <OtpInput
@@ -245,11 +345,11 @@ export default function OTP() {
                     </div>
                     {errorMessage && <p className={'text-[#FF1010] text-[13px] px-[32px]'}>{errorMessage}</p>}
                     <div className={'flex my-12 justify-center'}>
-                        {countdownTimer === 0 &&
+                        {(countdownTimer == 0) &&
                             <button className={'text-[17px] font-semibold text-[#0085E0]'}
                                 onClick={handleResendOTP}>重新发送验证码</button>
                         }
-                        {countdownTimer !== 0 &&
+                        {(countdownTimer !== 0) &&
                             <div className={'flex gap-[3px] justify-center items-center'}>
                                 <Image src={Stopwatch} width={26} height={26} alt={'timer icon'} />
                                 <span
