@@ -58,14 +58,14 @@ export default function RootLayout({ children }) {
           fbq('track', 'PageView');
         `}
       </Script>
-      <noscript>
+      {/* <noscript>
         <img
           height="1"
           width="1"
           style={{ display: 'none' }}
           src="https://www.facebook.com/tr?id=775077627713173&ev=PageView&noscript=1"
         />
-      </noscript>
+      </noscript> */}
 
       <Script
         src='https://www.googletagmanager.com/gtag/js?id=G-2562H7TH3Z'
