@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { loginEmail, loginRequestEmailOtp, loginRequestSmsOtp, loginSms } from '@/services/yingshiUser';
 import { setAhaToken, setYingshiUserLoginParam, setYingshiUserToken } from '@/store/yingshiUser';
 import { useLoginSuccessOpen } from '@/hook/yingshiScreenState/useLoginSuccessOpen';
-import TopicHeader from './../../components/topicHeader';
+import PinHeader from './../../components/PinHeader';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import { YingshiApi, YingshiApi2 } from '@/util/YingshiApi';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
@@ -285,7 +285,7 @@ export default function OTP() {
 
 
             <div className='mobile'>
-                <TopicHeader topicName={'安全PIN码'} />
+                <PinHeader topicName={'安全PIN码'} />
 
                 <div style={{ height: '52px' }}></div>
 
