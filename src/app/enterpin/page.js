@@ -146,27 +146,26 @@ export default function EnterPin() {
         }
         else if (value && index === inputRefs.current.length - 1) {
             //to do chatGPT 
-       
+
             let temp = otpRef.current.join('');
-            if(temp != userInfo.aha_withdrawal_pin)
-                {
-                    console.log('错误的PIN码')
-                    console.log(temp)
-                    console.log(userInfo.aha_withdrawal_pin)
-                    setErrorMessage('错误的PIN码')
-                    return 
-                }
+            if (temp != userInfo.aha_withdrawal_pin) {
+                console.log('错误的PIN码')
+                console.log(temp)
+                console.log(userInfo.aha_withdrawal_pin)
+                setErrorMessage('错误的PIN码')
+                return
+            }
 
-                dispatch(setShowPinSuccess(true))
-
-                
-                setTimeout(() => {
-                    dispatch(setShowPinSuccess(false))
-                }, 2100)
+            dispatch(setShowPinSuccess(true))
 
 
-                // todo
-                // router.replace(`/myprofile`);
+            setTimeout(() => {
+                dispatch(setShowPinSuccess(false))
+            }, 2100)
+
+
+            // todo
+            // router.replace(`/myprofile`);
 
 
 
@@ -183,11 +182,11 @@ export default function EnterPin() {
             <div className='mobile'>
                 <PinHeader topicName={'安全PIN码'} />
 
-                <div style={{ height: '52px' }}></div>
+                {/* <div style={{ height: '52px' }}></div> */}
 
             </div>
 
-            <div className={'w-screen flex flex-col align-center '}>
+            <div style={{ marginTop: '52px' }} className={'w-screen flex flex-col align-center '}>
 
                 <p className={'text-center text-[22px] mb-[13px] mt-[40px]'}>输入安全PIN码
                 </p>
@@ -215,8 +214,8 @@ export default function EnterPin() {
 
                 <span onClick={(e) => {
                     forgotPin()
-                }} style={{ alignSelf: "end", paddingRight: '35px', paddingTop:'20px' }} 
-                className={'text-secondary text-[14px]'}>
+                }} style={{ alignSelf: "end", paddingRight: '35px', paddingTop: '20px' }}
+                    className={'text-secondary text-[14px]'}>
                     忘记安全PIN码?
                 </span>
 

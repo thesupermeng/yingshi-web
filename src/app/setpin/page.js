@@ -293,7 +293,7 @@ export default function OTP() {
 
 
             {(resetMode == 'setpin' || resetMode == 'resetpin') &&
-                <div className={'w-screen flex flex-col align-center '}>
+                <div  style={{marginTop:'52px'}} className={'w-screen flex flex-col align-center '}>
                     {resetMode == 'setpin' && <>
                         {firstPin == '' &&
                             <p className={'text-center text-[22px] mb-[13px] mt-[40px]'}>设置安全PIN码
