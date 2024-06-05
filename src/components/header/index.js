@@ -1256,6 +1256,10 @@ const Header = () => {
     return null;
   }
 
+  if (pathname.startsWith('/enterpin')) {
+    return null;
+  }
+
   if (pathname.startsWith('/service') || pathname.startsWith('/privacy')) {
     return (
       <div className={'z-30 w-screen mobile'}>

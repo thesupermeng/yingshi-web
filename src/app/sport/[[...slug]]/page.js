@@ -73,7 +73,7 @@ export default function Page({ params }) {
       }
       else if (event.data.type === 'enterPin') {
         console.log('enterPin')
-        router.push('/setpin')
+        router.push('/enterpin')
       }
 
     }
