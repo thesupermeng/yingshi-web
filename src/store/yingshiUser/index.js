@@ -4,7 +4,7 @@ export const setYingshiUserInfo = (d) => yingshiUser.actions.setUserInfo(d)
 export const setYingshiUserToken = (d) => yingshiUser.actions.setToken(d)
 export const setYingshiUserLoginParam = (d) => yingshiUser.actions.setLoginParam(d)
 export const setAhaToken = (d) => yingshiUser.actions.setAhaToken(d)
-
+export const setRefreshCd = (d) => yingshiUser.actions.setRefreshCd(d)
 
 export const yingshiUser = createSlice( {
     name: 'yingshiUser',
@@ -31,7 +31,8 @@ export const yingshiUser = createSlice( {
         userInfo: null,
         token: null,
         loginParam: null,
-        ahaToken: null
+        ahaToken: null, 
+        refreshCd: null
     },
     reducers: {
         setUserInfo: (state, action) => {
@@ -45,6 +46,9 @@ export const yingshiUser = createSlice( {
         },
         setAhaToken: (state, action) => {
             state.ahaToken = action.payload;
+        },
+        setRefreshCd: (state, action) => {
+            state.refreshCd = action.payload;
         }
     }
 })

@@ -1,27 +1,83 @@
 'use client'
-import React, {useEffect} from 'react';
-import {getNewAhaToken} from '@/services/yingshiUser';
-import {setAhaToken} from '@/store/yingshiUser';
-import {useDispatch} from 'react-redux';
-import {updateLocalstorage} from '@/util/YingshiApi';
-import {LocalStorageKeys} from '@/config/common';
+import React, { useEffect, useLayoutEffect } from 'react';
+import { getNewAhaToken } from '@/services/yingshiUser';
+import { setAhaToken } from '@/store/yingshiUser';
+import { useDispatch } from 'react-redux';
+import { updateLocalstorage } from '@/util/YingshiApi';
+import { LocalStorageKeys } from '@/config/common';
+import { useRouter } from 'next/navigation';
+import { setProfileModal, setShowToast } from '@/store/common';
 
-export default function Page ({params}) {
 
-  const redirect = params.slug?.join('/') || 'sports'
-
+export default function Page({ params }) {
+  const router = useRouter();
+  let redirect = params.slug?.join('/') || 'sports'
+  let isRefreshing = false;
   const dispatch = useDispatch()
 
-  const iframeMessageListener = (event) => {
-    if (event.data.message === 'iframe') {
+  
+  if (localStorage.getItem('AuthToken') == null || localStorage.getItem('AuthToken' == "")) {
+    redirect += "?authToken=aa";
+  }
+  else
+  {
+    redirect += "?authToken=" + localStorage.getItem('AuthToken');
+  }
+  useLayoutEffect(() => {
+    if (localStorage.getItem('AuthToken') == null || localStorage.getItem('AuthToken' == "")) {
+      redirect += "?authToken=aa";
+    }
+    else
+    {
+      redirect += "?authToken=" + localStorage.getItem('AuthToken');
+    }
+  }, [])
+
+
+  console.log(111111)
+  console.log(localStorage.getItem('AuthTokenHeader'))
+
+  useEffect(() => {
+    console.log(2222)
+    console.log(localStorage.getItem('AuthTokenHeader'))
+  }, [])
+
+
+  const onRefreshToken = async () => {
+    isRefreshing = true
+    let res = await getNewAhaToken();
+    if (res) {
+      dispatch(setAhaToken(res))
+      updateLocalstorage(LocalStorageKeys.AhaToken, res)
+      isRefreshing = false
+    }
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+  }
+  const iframeMessageListener = async (event) => {
+   // dispatch(setShowToast(event.data.type));
+     console.log('iframe message', event.data)
+    if (event.data.message === 'iframe' && isRefreshing == false) {
+      // console.log('iframe event ')
       if (event.data.type === 'login') {
-        getNewAhaToken()
-          .then(res => {
-            if (res.code === 0){
-              dispatch(setAhaToken(res.data.token))
-              updateLocalstorage(LocalStorageKeys.AhaToken, res)
-            }
-          })
+        console.log('login type ')
+        onRefreshToken()
+      } 
+      // else if (event.data.type === 'invalidToken') {
+      //   console.log('invalid aha token')
+      //   router.push(`/sport`)
+      // }
+      else if (event.data.type === 'onTopUp') {
+        console.log('onTopUp')
+        console.log(event.data.data.data)
+        router.push(event.data.data.data.topup_data)
+      }
+      else if (event.data.type === 'enterPin') {
+        console.log('enterPin')
+       // router.push('/enterpin')
+      }
+      else if (event.data.type === 'forgotSecurityPin') {
+        console.log('forgotSecurityPin')
+        router.push('/setpin')
       }
     }
   }
@@ -37,18 +93,23 @@ export default function Page ({params}) {
 
   return (
     <>
-      <div className='desktop w-full flex flex-1 flex-col'>
-        <iframe
-          className={'flex-1'}
-          src={`https://iframe-web.aha666.site/${redirect}`}
-        />
-      </div>
-      <div className="mobile w-screen h-full">
-        <iframe
-          className={'w-full h-full'}
-          src={`https://iframe-h5.aha666.site/${redirect}`}
-        />
-      </div>
+
+
+      <>
+        <div className='desktop w-full flex flex-1 flex-col'>
+          <iframe
+            className={'flex-1'}
+            src={`https://iframe-web.aha666.site/${redirect}`}
+          />
+        </div>
+        <div className="mobile w-screen h-full">
+          <iframe
+            className={'w-full h-full'}
+            src={`https://iframe-h5.aha666.site/${redirect}`}
+          />
+        </div>
+      </>
+
     </>
   )
 }

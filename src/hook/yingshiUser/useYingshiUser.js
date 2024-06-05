@@ -2,12 +2,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useEffect} from 'react';
 import {LocalStorageKeys} from '@/config/common';
 import {queryUserInfo} from '@/services/yingshiUser';
-import {setAhaToken, setYingshiUserInfo, setYingshiUserToken} from '@/store/yingshiUser';
+import {setAhaToken, setYingshiUserInfo, setYingshiUserToken , setRefreshCd} from '@/store/yingshiUser';
 
 export default function useYingshiUser() {
     // {isVip, userInfo}
     const getYingshiUser = (s) => s.yingshiUser
-    const {userInfo, token, ahaToken} = useSelector(getYingshiUser);
+    const {userInfo, token, ahaToken ,refreshCd} = useSelector(getYingshiUser);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -17,7 +17,7 @@ export default function useYingshiUser() {
         }
 
         // get token
-        const localStorageToken = localStorage.getItem(LocalStorageKeys.AuthToken);
+        const localStorageToken = localStorage.getItem(LocalStorageKeys.AuthTokenHeader);
         const localStorageAhaToken = localStorage.getItem(LocalStorageKeys.AhaToken);
 
         if (localStorageToken) {
@@ -56,6 +56,7 @@ export default function useYingshiUser() {
         isVip,
         token,
         ahaToken,
+        refreshCd,
         refreshUserInfo
     }
 }

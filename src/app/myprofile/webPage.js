@@ -86,7 +86,7 @@ export default function WebPage ({subMenus}) {
   ]
 
   // useEffect(() => {
-  //   const localStorageToken = localStorage.getItem(LocalStorageKeys.AuthToken)
+  //   const localStorageToken = localStorage.getItem(LocalStorageKeys.AuthTokenHeader)
   //
   //   if (!token && !localStorageToken && window.innerWidth > 768) {
   //     router.push('/')
