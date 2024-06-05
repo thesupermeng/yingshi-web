@@ -20,7 +20,7 @@ import { Button, Dialog, DialogBody } from '@material-tailwind/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-
+// import {setShowLogin, setShowLoginSuccess , setShowPinSuccess} from '@/store/yingshiScreen';
 // import { Spinner } from './../../components/spinner';
 
 export default function H5Page({ params }) {
@@ -178,8 +178,9 @@ export default function H5Page({ params }) {
   }
 
   useEffect(() => {
-    window.addEventListener('message', iframeMessageListener)
+    //dispatch(setShowPinSuccess(true))
 
+    window.addEventListener('message', iframeMessageListener)
     return () => {
       window.removeEventListener('message', iframeMessageListener)
     }

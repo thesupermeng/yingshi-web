@@ -4,7 +4,9 @@ import 'react-spring-bottom-sheet/dist/style.css'
 import YingshiLoginBottomSheet from '@/componentsH5/yingshiLoginBottomSheet';
 import {useLoginOpen} from '@/hook/yingshiScreenState/useLoginOpen';
 import LoginSuccess from '@/components/login/loginSuccess';
+import PinSuccess from '@/components/login/pinSuccess';
 import {useLoginSuccessOpen} from '@/hook/yingshiScreenState/useLoginSuccessOpen';
+import {usePinSuccessOpen} from '@/hook/yingshiScreenState/usePinSuccessOpen';
 import {useEffect, useLayoutEffect, useState} from 'react';
 import LoginFlow from '@/components/login/loginFlow';
 import PaymentModal from '@/components/payment/paymentModal';
@@ -21,6 +23,7 @@ export default function ModalOverlays() {
 
   const [isOpenLogin, setIsOpenLogin] = useLoginOpen();
   const [isLoginSuccess, setIsLoginSuccess] = useLoginSuccessOpen()
+  const [isPinSuccess, setIsPinSuccess] = usePinSuccessOpen()
   const [isOpenPayment, setIsOpenPayment] = usePaymentOpen();
   const [isShowPaymentPending, setShowPaymentPending] = usePaymentPendingOpen()
 
@@ -51,6 +54,11 @@ export default function ModalOverlays() {
         open={isLoginSuccess}
         handler={() => setIsLoginSuccess(false)}
         msg={'登录成功'}
+      />
+         <PinSuccess
+        open={isPinSuccess}
+        handler={() => setIsPinSuccess(false)}
+        msg={'安全PIN码设置成功'}
       />
     </>
   )

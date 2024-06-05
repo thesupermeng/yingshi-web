@@ -11,6 +11,8 @@ import TopicHeader from './../../components/topicHeader';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import { YingshiApi, YingshiApi2 } from '@/util/YingshiApi';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
+import { setUserInfo } from '@/store/user';
+import {setShowLogin, setShowLoginSuccess , setShowPinSuccess} from '@/store/yingshiScreen';
 // import { setsEqual } from 'chart.js/dist/helpers/helpers.core';
 const totalCountdownTime = 60 // seconds
 
@@ -147,6 +149,21 @@ export default function OTP() {
             {
                 setErrorMessage('')
                 console.log('success change pin')
+
+                sessionStorage.setItem('loginMsg' , '安全PIN码设置成功')
+                let userInfoTemp = { ...userInfo };
+                userInfoTemp.aha_withdrawal_pin = firstPin;
+                
+                dispatch(setUserInfo({ ...userInfoTemp }));
+
+                dispatch(setShowPinSuccess(true))
+
+                
+                setTimeout(() => {
+                    dispatch(setShowPinSuccess(false))
+                }, 2100)
+
+                router.replace(`/myprofile`);
                 //todo show success
             }
 
