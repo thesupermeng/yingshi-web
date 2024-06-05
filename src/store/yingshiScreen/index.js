@@ -5,8 +5,7 @@ export const setShowLoginSuccess = (d) => yingshiScreen.actions.setShowLoginSucc
 export const setShowPayment = (d) => yingshiScreen.actions.setShowPayment(d)
 export const setShowPaymentPending = (d) => yingshiScreen.actions.setShowPaymentPending(d)
 export const setShowPinSuccess = (d) => yingshiScreen.actions.setShowPinSuccess(d)
-export const setShowPinMsg = (d) => yingshiScreen.actions.setShowPinMsg(d)
-
+export const setShowWithdrawalSuccess = (d) => yingshiScreen.actions.setShowWithdrawalSuccess(d)
 
 export const yingshiScreen = createSlice({
   name: 'yingshiScreen',
@@ -16,7 +15,7 @@ export const yingshiScreen = createSlice({
     isShowPayment: false,
     isShowPaymentPending: false,
     isShowPinSuccess: false,
-    isShowPinMsg: '',
+    isShowWithdrawalSuccess: '',
   },
   reducers: {
     setShowLogin: (state, action) => {
@@ -34,8 +33,8 @@ export const yingshiScreen = createSlice({
     setShowPinSuccess: (state, action) => {
       state.isShowPinSuccess = action.payload;
     },
-    setShowPinMsg: (state, action) => {
-      state.isShowPinMsg = action.payload;
+    setShowWithdrawalSuccess: (state, action) => {
+      state.isShowWithdrawalSuccess = action.payload;
     },
   }
 

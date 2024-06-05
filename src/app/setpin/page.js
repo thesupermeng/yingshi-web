@@ -327,7 +327,7 @@ export default function OTP() {
                     </div>
 
 
-                    {errorMessage && <p className={'text-[#FF1010] text-[13px] px-[32px]'}>{errorMessage}</p>}
+                    {errorMessage && <p className={'text-[#FF1010] text-[13px] px-[32px] pt-2'}>{errorMessage}</p>}
 
 
                 </div>
@@ -370,7 +370,7 @@ export default function OTP() {
                             />
                         ))}
                     </div>
-                    {errorMessage && <p className={'text-[#FF1010] text-[13px] px-[32px]'}>{errorMessage}</p>}
+                    {errorMessage && <p className={'text-[#FF1010] text-[13px] px-[32px] pt-2'}>{errorMessage}</p>}
                     <div className={'flex my-12 justify-center'}>
                         {(countdownTimer == 0) &&
                             <button className={'text-[17px] font-semibold text-[#0085E0]'}

@@ -3,7 +3,7 @@ import {TickAnimation} from '@/asset/gif';
 import React from 'react';
 import {Dialog, DialogBody} from '@material-tailwind/react';
 
-export default function LoginSuccess({open, handler, msg}) {
+export default function PinSuccess({open, handler, msg}) {
   return <>
   {open &&
     <Dialog open={open} handler={handler} className={'bg-[#121212] rounded-[28px] p-[30px] outline-none'} size={'xs'}>

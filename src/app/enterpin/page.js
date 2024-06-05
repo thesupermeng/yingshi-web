@@ -117,12 +117,10 @@ export default function EnterPin() {
 
 
 
-    const resetInput = () => {
-        otpRef.current = new Array(6).fill('');
-        inputRefs.current.forEach(input => {
-            input.value = '';
-        });
-        inputRefs.current[0].focus();
+
+
+    const forgotPin = () => {
+        router.replace('/setpin')
 
     }
     //      loginEmail({...loginParam, otp: otpRef.current.join('')})
@@ -148,8 +146,29 @@ export default function EnterPin() {
         }
         else if (value && index === inputRefs.current.length - 1) {
             //to do chatGPT 
-            console.log()
-            
+       
+            let temp = otpRef.current.join('');
+            if(temp != userInfo.aha_withdrawal_pin)
+                {
+                    console.log('错误的PIN码')
+                    console.log(temp)
+                    console.log(userInfo.aha_withdrawal_pin)
+                    setErrorMessage('错误的PIN码')
+                    return 
+                }
+
+                dispatch(setShowPinSuccess(true))
+
+                
+                setTimeout(() => {
+                    dispatch(setShowPinSuccess(false))
+                }, 2100)
+
+
+                // todo
+                // router.replace(`/myprofile`);
+
+
 
         }
     }
@@ -168,21 +187,12 @@ export default function EnterPin() {
 
             </div>
 
-
-
             <div className={'w-screen flex flex-col align-center '}>
-                {resetMode == 'setpin' && <>
 
-                    <p className={'text-center text-[22px] mb-[13px] mt-[40px]'}>输入安全PIN码
+                <p className={'text-center text-[22px] mb-[13px] mt-[40px]'}>输入安全PIN码
+                </p>
 
-
-
-                    </p>
-
-                    <p className={'text-center text-[14px] mb-[26px] text-secondary'}>请输入您的安全PIN码以继续提款</p>
-                </>
-                }
-
+                <p className={'text-center text-[14px] mb-[26px] text-secondary'}>请输入您的安全PIN码以继续提款</p>
                 <div className={'flex justify-between px-[32px]'}>
                     {[1, 2, 3, 4, 5, 6].map((item, index) => (
                         <OtpInput
@@ -197,12 +207,21 @@ export default function EnterPin() {
                 </div>
 
 
-                {errorMessage && <p className={'text-[#FF1010] text-[13px] px-[32px]'}>{errorMessage}</p>}
-
+                {errorMessage && <p className={'text-[#FF1010] text-[13px] px-[32px] pt-2'}>{errorMessage}</p>}
 
             </div>
 
+            <div className={'w-screen flex flex-col align-center '}>
 
+                <span onClick={(e) => {
+                    forgotPin()
+                }} style={{ alignSelf: "end", paddingRight: '35px', paddingTop:'20px' }} 
+                className={'text-secondary text-[14px]'}>
+                    忘记安全PIN码?
+                </span>
+
+
+            </div>
 
 
 
