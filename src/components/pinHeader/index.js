@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 // import { useHistory } from 'react-router-dom';
 import { usePathname, useRouter } from 'next/navigation';
-const TopicHeader = ({ topicName }) => {
+const PinHeader = ({ topicName }) => {
   // const history = useHistory();
   const router = useRouter();
 
