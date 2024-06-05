@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { loginEmail, loginRequestEmailOtp, loginRequestSmsOtp, loginSms } from '@/services/yingshiUser';
 import { setAhaToken, setYingshiUserLoginParam, setYingshiUserToken } from '@/store/yingshiUser';
 import { useLoginSuccessOpen } from '@/hook/yingshiScreenState/useLoginSuccessOpen';
-import PinHeader from './../../components/PinHeader';
+import PinHeader from './../../components/pinHeader';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import { YingshiApi, YingshiApi2 } from '@/util/YingshiApi';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
