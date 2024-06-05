@@ -141,12 +141,22 @@ export default function OTP() {
             console.log('res')
 
             console.log(res)
+            console.log(res.message == 'Invalid OTP')
+            console.log(res.message === 'Invalid OTP')
 
-            if (resetMode == 'otp' && res.message =='Invalid OTP') {
-                setErrorMessage('验证码不正确')
+
+            if (res.message == '验证码已发送，请稍后再试，验证码请求限制为每分钟一次') {
+                setErrorMessage('验证码已发送，请稍后再试，验证码请求限制为每分钟一次')
+                return
             }
-            else
-            {
+
+            if (resetMode == 'otp' && res.message == 'Invalid OTP') {
+                setErrorMessage('验证码不正确')
+                return
+            }
+        
+            if (resetMode == 'otp' && res.message == '成功') {
+            
                 setErrorMessage('')
                 console.log('success change pin')
 
