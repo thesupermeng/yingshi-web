@@ -38,4 +38,4 @@ const TopicHeader = ({ topicName }) => {
   );
 };
 
-export default TopicHeader;
+export default PinHeader;
