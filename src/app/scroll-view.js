@@ -3,6 +3,8 @@ import { backtoTopIcon } from '@/asset/icons';
 import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { usePathname, useRouter } from 'next/navigation';
 import {
   setIsScroll,
   setIsTop,
@@ -18,6 +20,9 @@ export const ScrollView = ({ children }) => {
   const [showScrollUpButton, setShowScrollUpButton] = useState(false);
   const [lastScrollPosition, setLastScrollPosition] = useState(0);
   const [timerId, setTimerId] = useState(null);
+  
+  const router = useRouter();
+  const pathname = usePathname();
 
   const isAtTop = useSelector(getIsTop);
   const isScrolling = useSelector(getIsScroll);
@@ -36,7 +41,6 @@ export const ScrollView = ({ children }) => {
 
     // Store the current scroll position
     const currentScrollPosition = scrollableDivRef.current.scrollTop;
-
     dispatch(setCurrentScrollPosition(currentScrollPosition));
 
     // Check if the scroll position has changed since the last event
@@ -71,7 +75,7 @@ export const ScrollView = ({ children }) => {
         }
       }
     } else {
-      if (scrollableDivRef.current.scrollTop == 0) {
+      if (scrollableDivRef.current.scrollTop === 0) {
         if (!isAtTop.res) {
           dispatch(setIsTop(true));
         }
@@ -91,9 +95,14 @@ export const ScrollView = ({ children }) => {
     }, 15);
   };
 
+  const shouldRemovePadding = pathname.startsWith('/sport/user/deposit') || pathname.startsWith('/sport/user/withdraw') || pathname.startsWith('/sport/user/transaction') || pathname.startsWith('/sport/user/history') ;
+  const divClassName = `flex-1 overflow-y-scroll overflow-x-hidden overscroll-none flex flex-col md:pb-0 ${
+    shouldRemovePadding ? '' : 'pb-[55px]'
+  } no-scrollbar`;
+
   return (
     <div
-      className='flex-1 overflow-y-scroll overflow-x-hidden overscroll-none flex flex-col md:pb-0 pb-[55px] no-scrollbar'
+      className={divClassName}
       style={{ alignItems: 'center' }}
       ref={scrollableDivRef}
       onScroll={handleScroll}
