@@ -7,31 +7,36 @@ import { updateLocalstorage } from '@/util/YingshiApi';
 import { LocalStorageKeys } from '@/config/common';
 import { useRouter } from 'next/navigation';
 import { setProfileModal, setShowToast } from '@/store/common';
-
+import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
+import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 
 export default function Page({ params }) {
   const router = useRouter();
   let redirect = params.slug?.join('/') || 'sports'
   let isRefreshing = false;
   const dispatch = useDispatch()
+  const { isVip, userInfo, ahaToken, refreshUserInfo } = useYingshiUser()
 
+  const [openSignInUp, setOpenSignInUp] = useLoginOpen()
   
-  if (localStorage.getItem('AuthToken') == null || localStorage.getItem('AuthToken' == "")) {
+  if (localStorage.getItem('AuthToken') == null || localStorage.getItem('AuthToken' == "") || (userInfo == null)) {
     redirect += "?authToken=aa";
   }
   else
   {
     redirect += "?authToken=" + localStorage.getItem('AuthToken');
   }
-  useLayoutEffect(() => {
-    if (localStorage.getItem('AuthToken') == null || localStorage.getItem('AuthToken' == "")) {
-      redirect += "?authToken=aa";
-    }
-    else
-    {
-      redirect += "?authToken=" + localStorage.getItem('AuthToken');
-    }
-  }, [])
+  // useLayoutEffect(() => {
+  //   console.log('userInfo')
+  //   console.log(userInfo)
+  //   if (localStorage.getItem('AuthToken') == null || localStorage.getItem('AuthToken' == "") || (userInfo == null)) {
+  //     redirect += "?authToken=aa";
+  //   }
+  //   else
+  //   {
+  //     redirect += "?authToken=" + localStorage.getItem('AuthToken');
+  //   }
+  // }, [])
 
 
   console.log(111111)
@@ -53,6 +58,8 @@ export default function Page({ params }) {
     }
     await new Promise((resolve) => setTimeout(resolve, 2000));
   }
+
+
   const iframeMessageListener = async (event) => {
    // dispatch(setShowToast(event.data.type));
      console.log('iframe message', event.data)
@@ -60,7 +67,14 @@ export default function Page({ params }) {
       // console.log('iframe event ')
       if (event.data.type === 'login') {
         console.log('login type ')
-        onRefreshToken()
+        if (!userInfo) {
+          setOpenSignInUp(true)
+        }
+        else
+        {
+         await refreshUserInfo()
+         onRefreshToken()
+        }
       } 
       // else if (event.data.type === 'invalidToken') {
       //   console.log('invalid aha token')

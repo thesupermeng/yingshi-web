@@ -159,6 +159,10 @@ export default function H5Page({ params }) {
       // console.log('iframe event ')
       if (event.data.type === 'login') {
         console.log('login type ')
+
+        if (!userInfo) {
+          setOpenSignInUp(true)
+        }
         // onRefreshToken()
       } else if (event.data.type === 'invalidToken') {
         if (frameToken == -1) {
