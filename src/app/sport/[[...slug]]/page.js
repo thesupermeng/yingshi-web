@@ -33,7 +33,11 @@ export default function Page({ params }) {
     {
       redirect += "?authToken=" + localStorage.getItem('AuthToken');
     }
+
+    redirect +="&channelCode=100019"
   }, [])
+
+
 
   const onRefreshToken = async () => {
     isRefreshing = true
