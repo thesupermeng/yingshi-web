@@ -19,33 +19,33 @@ export default function Page({ params }) {
 
   const [openSignInUp, setOpenSignInUp] = useLoginOpen()
   
-  if (localStorage.getItem('AuthToken') == null || localStorage.getItem('AuthToken' == "") || (userInfo == null)) {
-    redirect += "?authToken=aa";
-  }
-  else
-  {
-    redirect += "?authToken=" + localStorage.getItem('AuthToken');
-  }
-  // useLayoutEffect(() => {
-  //   console.log('userInfo')
-  //   console.log(userInfo)
-  //   if (localStorage.getItem('AuthToken') == null || localStorage.getItem('AuthToken' == "") || (userInfo == null)) {
-  //     redirect += "?authToken=aa";
-  //   }
-  //   else
-  //   {
-  //     redirect += "?authToken=" + localStorage.getItem('AuthToken');
-  //   }
-  // }, [])
-
-
-  console.log(111111)
-  console.log(localStorage.getItem('AuthTokenHeader'))
-
-  useEffect(() => {
-    console.log(2222)
-    console.log(localStorage.getItem('AuthTokenHeader'))
+  // if (localStorage.getItem('AuthToken') == null || localStorage.getItem('AuthToken' == "") || (userInfo == null)) {
+  //   redirect += "?authToken=aa";
+  // }
+  // else
+  // {
+  //   redirect += "?authToken=" + localStorage.getItem('AuthToken');
+  // }
+  useLayoutEffect(() => {
+    console.log('userInfo')
+    console.log(userInfo)
+    if (localStorage.getItem('AuthToken') == null || localStorage.getItem('AuthToken' == "") || (userInfo == null)) {
+      redirect += "?authToken=aa";
+    }
+    else
+    {
+      redirect += "?authToken=" + localStorage.getItem('AuthToken');
+    }
   }, [])
+
+
+  // console.log(111111)
+  // console.log(localStorage.getItem('AuthTokenHeader'))
+
+  // useEffect(() => {
+  //   console.log(2222)
+  //   console.log(localStorage.getItem('AuthTokenHeader'))
+  // }, [])
 
 
   const onRefreshToken = async () => {
@@ -104,7 +104,7 @@ export default function Page({ params }) {
     }
   }, [])
 
-
+console.log('hiiiiii')
   return (
     <>
 
