@@ -23,20 +23,21 @@ export default function Page({ params }) {
   const [iframeUrl, setIframeUrl] = useState('');
   const [hideFooter, setHideFooter] = useState(true);
 
-  useLayoutEffect(() => {
-    console.log('userInfo')
-    console.log(userInfo)
-    if (localStorage.getItem('AuthToken') == null || localStorage.getItem('AuthToken' == "") || (userInfo == null)) {
-      redirect += "?authToken=aa";
-    }
-    else
-    {
-      redirect += "?authToken=" + localStorage.getItem('AuthToken');
-    }
+  if (localStorage.getItem('AuthToken') == null || localStorage.getItem('AuthToken' == "") || (userInfo == null)) {
+    redirect += "?authToken=aa";
+  }
+  else
+  {
+    redirect += "?authToken=" + localStorage.getItem('AuthToken');
+  }
 
-    redirect +="&channelCode=100019"
+  redirect +="&channelCode=100019"
+
+  useLayoutEffect(() => {
+    setIframeUrl(redirect);
   }, [])
 
+  
 
 
   const onRefreshToken = async () => {
@@ -57,7 +58,6 @@ export default function Page({ params }) {
    if (event.data.type === 'urlChange') {
     
     const newUrl = event.data.newUrl;
-    setIframeUrl(newUrl);
     setHideFooter(newUrl.endsWith('/sports/sport'));
     console.log('newUrl')
     console.log(newUrl)
@@ -118,13 +118,13 @@ console.log('hiiiiii')
         <div className='desktop w-full flex flex-1 flex-col'>
           <iframe
             className={'flex-1'}
-            src={`https://iframe-web.aha666.site/${redirect}`}
+            src={`https://iframe-web.aha666.site/${iframeUrl}`}
           />
         </div>
         <div className="mobile w-screen h-full">
           <iframe
             className={'w-full h-full'}
-            src={`https://iframe-h5.aha666.site/${redirect}`}
+            src={`https://iframe-h5.aha666.site/${iframeUrl}`}
           />
         </div>
       </>
