@@ -206,8 +206,8 @@ export default function H5Page({ params }) {
   const debounceRef = useRef(null);
 
   useEffect(() => {
-    console.log('frameToken 11');
-    console.log(frameToken);
+    // console.log('frameToken 11');
+    // console.log(frameToken);
 
     if (frameToken === -1) {
       if (debounceRef.current) {

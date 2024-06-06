@@ -95,7 +95,7 @@ export const ScrollView = ({ children }) => {
     }, 15);
   };
 
-  const shouldRemovePadding = pathname.startsWith('/sport/user/deposit') || pathname.startsWith('/sport/user/withdraw') || pathname.startsWith('/sport/user/transaction') || pathname.startsWith('/sport/user/history') ;
+  const shouldRemovePadding = pathname.startsWith('/sport')  ; //pathname.startsWith('/sport/user/deposit') || pathname.startsWith('/sport/user/withdraw') || pathname.startsWith('/sport/user/transaction') || pathname.startsWith('/sport/user/history')|| 
   const divClassName = `flex-1 overflow-y-scroll overflow-x-hidden overscroll-none flex flex-col md:pb-0 ${
     shouldRemovePadding ? '' : 'pb-[55px]'
   } no-scrollbar`;

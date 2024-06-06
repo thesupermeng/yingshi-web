@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { getNewAhaToken } from '@/services/yingshiUser';
 import { setAhaToken } from '@/store/yingshiUser';
 import { useDispatch } from 'react-redux';
@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { setProfileModal, setShowToast } from '@/store/common';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
+import MyFooter3 from '@/components/myFooter3';
 
 export default function Page({ params }) {
   const router = useRouter();
@@ -19,13 +20,9 @@ export default function Page({ params }) {
 
   const [openSignInUp, setOpenSignInUp] = useLoginOpen()
   
-  // if (localStorage.getItem('AuthToken') == null || localStorage.getItem('AuthToken' == "") || (userInfo == null)) {
-  //   redirect += "?authToken=aa";
-  // }
-  // else
-  // {
-  //   redirect += "?authToken=" + localStorage.getItem('AuthToken');
-  // }
+  const [iframeUrl, setIframeUrl] = useState('');
+  const [hideFooter, setHideFooter] = useState(true);
+
   useLayoutEffect(() => {
     console.log('userInfo')
     console.log(userInfo)
@@ -37,16 +34,6 @@ export default function Page({ params }) {
       redirect += "?authToken=" + localStorage.getItem('AuthToken');
     }
   }, [])
-
-
-  // console.log(111111)
-  // console.log(localStorage.getItem('AuthTokenHeader'))
-
-  // useEffect(() => {
-  //   console.log(2222)
-  //   console.log(localStorage.getItem('AuthTokenHeader'))
-  // }, [])
-
 
   const onRefreshToken = async () => {
     isRefreshing = true
@@ -62,6 +49,20 @@ export default function Page({ params }) {
 
   const iframeMessageListener = async (event) => {
    // dispatch(setShowToast(event.data.type));
+
+   if (event.data.type === 'urlChange') {
+    
+    const newUrl = event.data.newUrl;
+    setIframeUrl(newUrl);
+    setHideFooter(newUrl.endsWith('/sports/sport'));
+    console.log('newUrl')
+    console.log(newUrl)
+    console.log('sethide ')
+    console.log(newUrl.endsWith('/sports/sport'))
+    
+  }
+
+
      console.log('iframe message', event.data)
     if (event.data.message === 'iframe' && isRefreshing == false) {
       // console.log('iframe event ')
@@ -123,7 +124,14 @@ console.log('hiiiiii')
           />
         </div>
       </>
-
+     {hideFooter && (
+        <div
+          className='fixed bottom-0 w-full bg-[#161616eb] pt-2 pb-[55px]' 
+          style={{ backdropFilter: 'blur(3px)' }}
+        >
+          <MyFooter3 />
+        </div>
+      )}
     </>
   )
 }
