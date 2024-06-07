@@ -17,7 +17,9 @@ import { Button, Dialog, DialogBody } from '@material-tailwind/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-// import {setShowLogin, setShowLoginSuccess , setShowPinSuccess , setShowWithdrawalSuccess} from '@/store/yingshiScreen';
+// import {setShowLogin, setShowLoginSuccess , setShowPinSuccess , setShowWithdrawalSuccess , setIsSessionExpired} from '@/store/yingshiScreen';
+
+ import { setIsSessionExpired} from '@/store/yingshiScreen';
 // import { Spinner } from './../../components/spinner';
 
 export default function H5Page({ params }) {
@@ -162,14 +164,16 @@ export default function H5Page({ params }) {
         }
         // onRefreshToken()
       } else if (event.data.type === 'invalidToken') {
-        if (frameToken == -1) {
-          return
-        }
         console.log('invalid aha token')
+        dispatch(setIsSessionExpired(true))
+        // if (frameToken == -1) {
+        //   return
+        // }
+        // console.log('invalid aha token')
 
-        setFrameToken(-1)
+        // setFrameToken(-1)
 
-        // onRefreshToken()
+   
       }
       else {
         console.log(event.data.url)
@@ -179,7 +183,7 @@ export default function H5Page({ params }) {
   }
 
   useEffect(() => {
-    // dispatch(setShowWithdrawalSuccess(true))
+     // dispatch(setIsSessionExpired(true))
 
     window.addEventListener('message', iframeMessageListener)
     return () => {

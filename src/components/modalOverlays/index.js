@@ -20,9 +20,14 @@ import { usePaymentPendingOpen } from '@/hook/yingshiScreenState/usePaymentPendi
 
 import { useSessionExpiredOpen } from '@/hook/yingshiScreenState/useSessionExpiredOpen';
 import SessionExpired from '@/components/login/sessionExpired';
+
+import {logout} from '@/services/yingshiUser';
+import { useDispatch } from 'react-redux';
+import { setAhaToken, setYingshiUserInfo, setYingshiUserToken } from '@/store/yingshiUser';
+
 export default function ModalOverlays() {
   const [isMobile, setIsMobile] = useState(false);
-
+  const dispatch = useDispatch()
   useLayoutEffect(() => {
     setIsMobile(window.innerWidth < 768)
   }, [])
@@ -34,6 +39,21 @@ export default function ModalOverlays() {
   const [isOpenPayment, setIsOpenPayment] = usePaymentOpen();
   const [isShowPaymentPending, setShowPaymentPending] = usePaymentPendingOpen()
   const [isSessionExpired, setIsSessionExpired] = useSessionExpiredOpen()
+
+  useEffect(() => {
+   
+
+    if(isSessionExpired == true)
+      {
+        logout()
+        dispatch(setYingshiUserInfo(null))
+        dispatch(setYingshiUserToken(null))
+        dispatch(setAhaToken(null))
+      }
+    
+  }, [isSessionExpired])
+
+  
 
   return (
     <>
@@ -73,7 +93,7 @@ export default function ModalOverlays() {
         handler={() => setIsWithdrawalSuccess(false)}
         msg={'提款申请已提交'}
       />
-        <SessionExpired
+       <SessionExpired
         open={isSessionExpired}
         handler={() => setIsSessionExpired(false)}
         msg={'会话已过期'}

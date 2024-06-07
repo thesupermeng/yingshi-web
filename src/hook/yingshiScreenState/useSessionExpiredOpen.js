@@ -1,11 +1,11 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {setIsSessionExpired} from '@/store/yingshiScreen';
+import { setIsSessionExpired} from '@/store/yingshiScreen';
 
 export const useSessionExpiredOpen = () => {
-  const getIsIsSessionExpired = (state) => state.yingshiScreen.isIsSessionExpired;
-  const isIsSessionExpired = useSelector(getIsIsSessionExpired);
+  const getIsSessionExpired = (state) => state.yingshiScreen.isSessionExpired;
+  const isSessionExpired = useSelector(getIsSessionExpired);
   const dispatch = useDispatch();
-  const internalSetIsSessionExpired = (d) => dispatch(setIsSessionExpired(d));
+  const setSessionExpiredOpen = (d) => dispatch(setIsSessionExpired(d));
 
-  return [isIsSessionExpired, internalSetIsSessionExpired]
+  return [isSessionExpired, setSessionExpiredOpen]
 }

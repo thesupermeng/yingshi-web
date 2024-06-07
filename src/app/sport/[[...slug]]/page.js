@@ -10,6 +10,8 @@ import { setProfileModal, setShowToast } from '@/store/common';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 import MyFooter3 from '@/components/myFooter3';
+import { setIsSessionExpired} from '@/store/yingshiScreen';
+
 
 export default function Page({ params }) {
   const router = useRouter();
@@ -102,10 +104,12 @@ export default function Page({ params }) {
          onRefreshToken()
         }
       } 
-      // else if (event.data.type === 'invalidToken') {
-      //   console.log('invalid aha token')
-      //   router.push(`/sport`)
-      // }
+      else if (event.data.type === 'invalidToken') {
+         console.log('invalid aha token')
+        // router.push(`/sport`)
+
+        dispatch(setIsSessionExpired(true))
+      }
       else if (event.data.type === 'onTopUp') {
         console.log('onTopUp')
         console.log(event.data.data.data)
