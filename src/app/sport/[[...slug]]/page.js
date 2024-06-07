@@ -21,7 +21,7 @@ export default function Page({ params }) {
   const [openSignInUp, setOpenSignInUp] = useLoginOpen()
   
   const [iframeUrl, setIframeUrl] = useState('');
-  const [hideFooter, setHideFooter] = useState(true);
+  const [hideFooter, setHideFooter] = useState(false);
 
   if (localStorage.getItem('AuthToken') == null || localStorage.getItem('AuthToken' == "") || (userInfo == null)) {
     redirect += "?authToken=aa";
@@ -130,7 +130,7 @@ console.log('hiiiiii')
       </>
      {hideFooter && (
         <div
-          className='fixed bottom-0 w-full bg-[#161616eb] pt-2 pb-[55px]' 
+          className='fixed bottom-0 w-full bg-[#161616eb] pt-2 pb-[60px]' 
           style={{ backdropFilter: 'blur(3px)' }}
         >
           <MyFooter3 />
