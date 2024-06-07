@@ -33,7 +33,7 @@ export default function Page({ params }) {
     redirect += "?authToken=" + localStorage.getItem('AuthToken');
   }
 
-  redirect +="&channelCode=100019"
+  redirect +="&channelCode=100018"
 
   useLayoutEffect(() => {
     console.log('redirect')

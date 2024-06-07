@@ -267,7 +267,7 @@ export default function H5Page({ params }) {
         <div style={{ borderRadius: '12px', marginBottom: '16px' }}>
           <iframe
             className={'h-[74px] w-full rounded-[12px]'}
-            src={`https://iframe-h5.aha666.site/user/wallet?authToken=${frameToken}&channelCode=100019`}
+            src={`https://iframe-h5.aha666.site/user/wallet?authToken=${frameToken}&channelCode=100018`}
             scrolling={'no'}
           />
 
