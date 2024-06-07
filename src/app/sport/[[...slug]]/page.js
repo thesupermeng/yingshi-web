@@ -104,7 +104,7 @@ export default function Page({ params }) {
          onRefreshToken()
         }
       } 
-      else if (event.data.type === 'invalidToken') {
+      else if (event.data.type === 'invalidToken' && userInfo) {
          console.log('invalid aha token')
         // router.push(`/sport`)
 

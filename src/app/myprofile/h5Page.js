@@ -163,7 +163,7 @@ export default function H5Page({ params }) {
           setOpenSignInUp(true)
         }
         // onRefreshToken()
-      } else if (event.data.type === 'invalidToken') {
+      } else if (event.data.type === 'invalidToken' && userInfo) {
         console.log('invalid aha token')
         dispatch(setIsSessionExpired(true))
         // if (frameToken == -1) {
