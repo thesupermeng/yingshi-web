@@ -143,6 +143,7 @@ export default function OTP() {
                             dispatch(setYingshiUserLoginParam({ ...loginParam, success: true }))
                             dispatch(setYingshiUserToken(res.data.access_token))
                             dispatch(setAhaToken(res.data.aha_token))
+                            localStorage.setItem('AuthToken' ,res.data.aha_token )
                             if (res.code === 0) {
 
 
@@ -185,6 +186,7 @@ export default function OTP() {
                             dispatch(setYingshiUserLoginParam({ ...loginParam, success: true }))
                             dispatch(setYingshiUserToken(res.data.access_token))
                             dispatch(setAhaToken(res.data.aha_token))
+                            localStorage.setItem('AuthToken' ,res.data.aha_token )
                             if (res.code === 0) {
                                 //signup
                                 // router.push('/myprofile')
