@@ -134,6 +134,7 @@ export default function OtpModal({ open, handler, onLogin, onRegister, onCloseOT
 
               dispatch(setYingshiUserToken(res.data.access_token))
               dispatch(setAhaToken(res.data.aha_token))
+              localStorage.setItem('AuthToken' ,res.data.aha_token )
               inputRefs.current[inputRefs.current.length - 1].blur()
             })
         } else {
@@ -163,6 +164,7 @@ export default function OtpModal({ open, handler, onLogin, onRegister, onCloseOT
               handleTikTokPixelEvent(red)
               dispatch(setYingshiUserToken(res.data.access_token))
               dispatch(setAhaToken(res.data.aha_token))
+              localStorage.setItem('AuthToken' ,res.data.aha_token )
               inputRefs.current[inputRefs.current.length - 1].blur()
             })
         }

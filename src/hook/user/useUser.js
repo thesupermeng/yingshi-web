@@ -14,10 +14,10 @@ export default function useUser() {
   const dispatch = useDispatch();
   const [userId, setUserId] = useState('');
   useEffect(() => {
-    const savedToken = localStorage.getItem(LocalStorageKeys.AuthToken);
+    const savedToken = localStorage.getItem(LocalStorageKeys.AuthTokenHeader);
     setIsLogin(savedToken);
     const handleAuthToken = () => {
-      const token = localStorage.getItem(LocalStorageKeys.AuthToken);
+      const token = localStorage.getItem(LocalStorageKeys.AuthTokenHeader);
       setIsLogin(token);
       authChannel.postMessage({
         type: AUTH_CHANNEL_ACTION.UPDATE_AUTHTOKEN,
@@ -25,12 +25,12 @@ export default function useUser() {
       });
     };
     window.addEventListener(
-      `storage-${LocalStorageKeys.AuthToken}`,
+      `storage-${LocalStorageKeys.AuthTokenHeader}`,
       handleAuthToken
     );
     return () => {
       window.removeEventListener(
-        `storage-${LocalStorageKeys.AuthToken}`,
+        `storage-${LocalStorageKeys.AuthTokenHeader}`,
         handleAuthToken
       );
     };

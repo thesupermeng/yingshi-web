@@ -132,7 +132,7 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
   const requestBody = JSON.stringify(body);
   const requestOption = {
     method,
-    headers: await getHeader(requestBody, method, localStorage.getItem(LocalStorageKeys.AuthToken)),
+    headers: await getHeader(requestBody, method, localStorage.getItem(LocalStorageKeys.AuthTokenHeader)),
   };
 
   let getParams = '';
@@ -174,13 +174,14 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
     return;
   } else if (resData.code === 0 || resData.code === 201) {
     if (saveUserToken) {
-      updateLocalstorage(LocalStorageKeys.AuthToken, resData.data.access_token)
+      updateLocalstorage(LocalStorageKeys.AuthTokenHeader, resData.data.access_token)
     }
     if (saveAhaToken) {
       updateLocalstorage(LocalStorageKeys.AhaToken, resData.data.aha_token)
+      localStorage.setItem('AuthToken' ,resData.data.aha_token )
     }
     if (removeToken) {
-      updateLocalstorage(LocalStorageKeys.AuthToken, undefined);
+      updateLocalstorage(LocalStorageKeys.AuthTokenHeader, undefined);
       updateLocalstorage(LocalStorageKeys.AhaToken, undefined);
     }
   }
@@ -188,6 +189,72 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
     return resData
   }
   return resData.data;
+};
+
+
+export const YingshiApi2 = async (url, body = {}, options = {}) => {
+  const {
+    method = 'POST',
+    saveUserToken,
+    saveAhaToken,
+    saveFBToken,
+    saveTayaToken,
+    removeToken,
+    isFormdata,
+    excludeInSignature,
+    returnFullResponse,
+  } = options;
+
+  const requestBody = JSON.stringify(body);
+  const requestOption = {
+    method,
+    headers: await getHeader(requestBody, method, localStorage.getItem(LocalStorageKeys.AuthTokenHeader)),
+  };
+
+  let getParams = '';
+  let resData;
+  url = 'https://api.yingshi.tv/' + url
+
+
+
+  if (method !== 'GET') {
+    url = url +  await getQuery(url);
+    requestOption.body = requestBody;
+  } else {
+    getParams = objectToGetParams(body);
+
+    if(body.class){
+      getParams = getParams.replace(encodeURIComponent(body.class), decodeURIComponent(body.class));
+    }
+    if(getParams != ''){
+      url += '?' + getParams;
+    }
+  }
+
+ 
+    const response = await fetch(url, requestOption)
+
+    resData = response.json();
+
+  if(resData.code === 401){
+    return;
+  } else if (resData.code === 0 || resData.code === 201) {
+    if (saveUserToken) {
+      updateLocalstorage(LocalStorageKeys.AuthTokenHeader, resData.data.access_token)
+    }
+    if (saveAhaToken) {
+      updateLocalstorage(LocalStorageKeys.AhaToken, resData.data.aha_token)
+      localStorage.setItem('AuthToken' ,resData.data.aha_token )
+    }
+    if (removeToken) {
+      updateLocalstorage(LocalStorageKeys.AuthTokenHeader, undefined);
+      updateLocalstorage(LocalStorageKeys.AhaToken, undefined);
+    }
+  }
+  if (returnFullResponse) {
+    return resData
+  }
+  return resData;
 };
 
 const objectToGetParams = (paramsObject) => {

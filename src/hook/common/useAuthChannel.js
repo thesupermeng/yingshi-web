@@ -10,7 +10,7 @@ export const useAuthChannel = () => {
     const { type, token } = e.data;
     switch (type) {
       case AUTH_CHANNEL_ACTION.UPDATE_AUTHTOKEN:
-        updateLocalstorage(LocalStorageKeys.AuthToken, token);
+        updateLocalstorage(LocalStorageKeys.AuthTokenHeader, token);
         authChannel.close();
         window.location.reload();
         break;

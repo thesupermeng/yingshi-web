@@ -1266,6 +1266,13 @@ const Header = () => {
   if (pathname.startsWith('/sport')) {
     return null;
   }
+  if (pathname.startsWith('/setpin')) {
+    return null;
+  }
+
+  if (pathname.startsWith('/enterpin')) {
+    return null;
+  }
 
   if (pathname.startsWith('/service') || pathname.startsWith('/privacy')) {
     return (

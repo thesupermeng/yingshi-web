@@ -51,30 +51,6 @@ const MyFooter = () => {
     }
   };
 
-  if (
-    pathname.startsWith('/play') ||
-    pathname.startsWith('/search/') ||
-    pathname.startsWith('/payment') ||
-    pathname.startsWith('/login') ||
-    pathname.startsWith('/setpin') ||
-    pathname.startsWith('/enterpin') ||
-    pathname.startsWith('/privacy') ||
-    pathname.startsWith('/service') ||
-   // pathname.startsWith('/sport') ||
-    pathname.startsWith('/myprofile/watchHistory') ||
-    pathname.startsWith('/myprofile/userCenter') ||
-    pathname.startsWith('/myprofile/feedback') ||
-    // aha
-    pathname.startsWith('/sport') ||
-    pathname.startsWith('/service') ||
-    pathname.startsWith('/sport/user/deposit') ||
-    pathname.startsWith('/sport/user/withdraw') ||
-    pathname.startsWith('/sport/user/transaction') ||
-    pathname.startsWith('/sport/user/history') 
-  ) {
-    return <></>;
-  }
-
   const tabs = [
     {
       onClick: () => {
@@ -115,8 +91,7 @@ const MyFooter = () => {
   ];
 
   return (
-    <div className='w-full' style={{paddingBottom : '100px'}}>
-    <div className='mobile fixed bottom-0 w-full' >
+    <div className='mobile fixed bottom-0 w-full'>
       <div
         className='w-full bg-[#161616eb] pt-2 pb-2'
         style={{ backdropFilter: 'blur(3px)' }}
@@ -128,7 +103,6 @@ const MyFooter = () => {
         </div>
       </div>
     </div>
-    </div>
   );
 };
 
@@ -137,6 +111,7 @@ const TabItem = ({ onClick, active, icon, iconActive, title }) => {
     <div
       className='col flex-col d-flex justify-center align-center items-center'
       onClick={onClick}
+      style={{height : '60px'}}
     >
       <div className='d-flex'>
         <Image
