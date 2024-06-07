@@ -18,6 +18,8 @@ import { usePaymentOpen } from '@/hook/yingshiScreenState/usePaymentOpen';
 import PaymentPendingModal from '@/components/payment/paymentPendingModal';
 import { usePaymentPendingOpen } from '@/hook/yingshiScreenState/usePaymentPendingOpen';
 
+import { useSessionExpiredOpen } from '@/hook/yingshiScreenState/useSessionExpiredOpen';
+import SessionExpired from '@/components/login/sessionExpired';
 export default function ModalOverlays() {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -31,6 +33,7 @@ export default function ModalOverlays() {
   const [isWithdrawalSuccess, setIsWithdrawalSuccess] = useWithdrawalSuccessOpen()
   const [isOpenPayment, setIsOpenPayment] = usePaymentOpen();
   const [isShowPaymentPending, setShowPaymentPending] = usePaymentPendingOpen()
+  const [isSessionExpired, setIsSessionExpired] = useSessionExpiredOpen()
 
   return (
     <>
@@ -69,6 +72,11 @@ export default function ModalOverlays() {
         open={isWithdrawalSuccess}
         handler={() => setIsWithdrawalSuccess(false)}
         msg={'提款申请已提交'}
+      />
+        <SessionExpired
+        open={isSessionExpired}
+        handler={() => setIsSessionExpired(false)}
+        msg={'会话已过期'}
       />
     </>
   )

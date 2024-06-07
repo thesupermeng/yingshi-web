@@ -6,6 +6,8 @@ export const setShowPayment = (d) => yingshiScreen.actions.setShowPayment(d)
 export const setShowPaymentPending = (d) => yingshiScreen.actions.setShowPaymentPending(d)
 export const setShowPinSuccess = (d) => yingshiScreen.actions.setShowPinSuccess(d)
 export const setShowWithdrawalSuccess = (d) => yingshiScreen.actions.setShowWithdrawalSuccess(d)
+export const setIsSessionExpired = (d) => yingshiScreen.actions.setIsSessionExpired(d)
+
 
 export const yingshiScreen = createSlice({
   name: 'yingshiScreen',
@@ -16,6 +18,7 @@ export const yingshiScreen = createSlice({
     isShowPaymentPending: false,
     isShowPinSuccess: false,
     isShowWithdrawalSuccess: '',
+    isSessionExpired:false,
   },
   reducers: {
     setShowLogin: (state, action) => {
@@ -35,6 +38,9 @@ export const yingshiScreen = createSlice({
     },
     setShowWithdrawalSuccess: (state, action) => {
       state.isShowWithdrawalSuccess = action.payload;
+    },
+    setIsSessionExpired: (state, action) => {
+      state.isSessionExpired = action.payload;
     },
   }
 
