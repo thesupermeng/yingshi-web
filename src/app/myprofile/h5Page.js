@@ -1,10 +1,9 @@
 'use client';
-import Image from 'next/image';
+// import Image from 'next/image';
 import React, { useEffect, useLayoutEffect, useState, useRef } from 'react';
 import { AboutusIconGrey, FavouriteIconGrey, FeedbackIconGrey, HistoryIconGrey, LogoutGrey , PinIconGrey } from '@/asset/icons';
 
 import { getNewAhaToken, logout } from '@/services/yingshiUser';
-import { TickAnimation } from '@/asset/gif';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAhaToken, setYingshiUserInfo, setYingshiUserLoginParam, setYingshiUserToken } from '@/store/yingshiUser';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
@@ -13,14 +12,12 @@ import VipCard from '@/components/myprofile/VipCard';
 import ProfileCard from '@/components/myprofile/ProfileCard';
 import LogoutModal from '@/components/login/logoutModal';
 import { useRouter } from 'next/navigation';
-import { updateLocalstorage } from '@/util/YingshiApi';
-import { LocalStorageKeys } from '@/config/common';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 import { Button, Dialog, DialogBody } from '@material-tailwind/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import {setShowLogin, setShowLoginSuccess , setShowPinSuccess , setShowWithdrawalSuccess} from '@/store/yingshiScreen';
+// import {setShowLogin, setShowLoginSuccess , setShowPinSuccess , setShowWithdrawalSuccess} from '@/store/yingshiScreen';
 // import { Spinner } from './../../components/spinner';
 
 export default function H5Page({ params }) {
