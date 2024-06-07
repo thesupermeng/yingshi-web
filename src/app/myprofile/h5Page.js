@@ -144,7 +144,7 @@ export default function H5Page({ params }) {
       //setFrameToken(res)
       dispatch(setAhaToken(res))
       //updateLocalstorage(LocalStorageKeys.AhaToken, res)
-      localStorage.setItem('AuthToken', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb3VudHJ5X2NvZGUiOiIrNjUiLCJleHAiOjE3NDkwMjYxMzcsImlhdCI6MTcxNzQ5MDEzNywibW9iaWxlIjoiODEyMzMzODciLCJ1c2VyX2lkIjoyMDU4fQ.SRPV-wLyWxR1g5O82KoQsvQojN8-XRpVvjxvHSpwp5I')
+      localStorage.setItem('AuthToken', res)
       setFrameToken(res)
       isRefreshing = false
     }

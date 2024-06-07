@@ -34,11 +34,25 @@ export default function Page({ params }) {
   redirect +="&channelCode=100019"
 
   useLayoutEffect(() => {
+    console.log('redirect')
+    console.log(redirect)
     setIframeUrl(redirect);
   }, [])
 
   
+  // useLayoutEffect(() => {
 
+  //   if(userInfo)
+  //     {
+  //       console.log('userInfo')
+  //       console.log(userInfo)
+  //       console.log('redirect')
+  //       console.log(redirect)
+  //       setIframeUrl('');
+  //       setIframeUrl(redirect);
+  //     }
+  
+  // }, [userInfo])
 
   const onRefreshToken = async () => {
     isRefreshing = true
@@ -113,7 +127,7 @@ console.log('hiiiiii')
   return (
     <>
 
-
+{iframeUrl != ''  &&
       <>
         <div className='desktop w-full flex flex-1 flex-col'>
           <iframe
@@ -128,6 +142,7 @@ console.log('hiiiiii')
           />
         </div>
       </>
+      }
      {hideFooter && (
         <div
           className='fixed bottom-0 w-full bg-[#161616eb] pt-2 pb-[60px]' 

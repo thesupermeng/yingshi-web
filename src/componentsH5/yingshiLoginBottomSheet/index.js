@@ -96,7 +96,7 @@ export default function YingshiLoginBottomSheet({visible, onDismiss}) {
             open={visible}
             snapPoints={({ minHeight, maxHeight }) => minHeight}
         >
-            <div className={'flex-col items-center pb-20'}>
+            <div className={'flex-col items-center'} style={{paddingBottom : 15}}>
                 <p className={'text-xl text-center'}>注册/登录</p>
                 <p className={'text-sm text-center text-[#9C9C9C] mt-2.5'}>登录后可管理您的账号，多端同步观看历史和收藏夹。</p>
                 <div className={'px-[23px] mt-[22px]'}>
