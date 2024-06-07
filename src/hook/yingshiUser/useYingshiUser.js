@@ -36,7 +36,15 @@ export default function useYingshiUser() {
         }
 
         queryUserInfo().then(res => {
-            dispatch(setYingshiUserInfo(res.user))
+            if(res)
+            {
+                dispatch(setYingshiUserInfo(res.user))
+            }
+            else
+            {
+                console.log('failed to setYingshiUserInfo')
+            }
+
         })
 
     }, [token])
@@ -45,6 +53,10 @@ export default function useYingshiUser() {
         queryUserInfo().then(res => {
             if(res){
                 dispatch(setYingshiUserInfo(res.user))
+            }
+            else
+            {
+                console.log('failed to setYingshiUserInfo')
             }
         })
     }
