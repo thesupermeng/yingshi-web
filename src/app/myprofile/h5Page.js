@@ -290,7 +290,7 @@ export default function H5Page({ params }) {
             }
           })
           .map((x, idx) => {
-            return <NavCard key={idx} {...x} />
+            return <NavCard key={x.title} {...x} />
           })}
       </div>
 
