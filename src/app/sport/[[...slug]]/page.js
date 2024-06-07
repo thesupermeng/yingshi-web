@@ -80,6 +80,13 @@ export default function Page({ params }) {
     
   }
 
+   if (event.data.type === 'openBottomSheet') {
+    setHideFooter(false)
+  }
+   if (event.data.type === 'closeBottomSheet') {
+    setHideFooter(true)
+  }
+
 
      console.log('iframe message', event.data)
     if (event.data.message === 'iframe' && isRefreshing == false) {
@@ -112,6 +119,7 @@ export default function Page({ params }) {
         console.log('forgotSecurityPin')
         router.push('/setpin')
       }
+     
     }
   }
 
