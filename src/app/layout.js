@@ -40,11 +40,11 @@ export const metadata = {
 export const viewport = {
   themeColor: '#000000',
 };
+
 export default function RootLayout({ children }) {
   return (
     <>
-
-<Script id="facebook-pixel">
+    <Script id="facebook-pixel">
         {`
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -58,15 +58,6 @@ export default function RootLayout({ children }) {
           fbq('track', 'PageView');
         `}
       </Script>
-      {/* <noscript>
-        <img
-          height="1"
-          width="1"
-          style={{ display: 'none' }}
-          src="https://www.facebook.com/tr?id=775077627713173&ev=PageView&noscript=1"
-        />
-      </noscript> */}
-
       <Script
         src='https://www.googletagmanager.com/gtag/js?id=G-2562H7TH3Z'
         strategy='afterInteractive'
@@ -84,14 +75,12 @@ export default function RootLayout({ children }) {
       <html
         translate='no'
         lang='cn'
-        className={`bg-sideMenu notranslate root-class ${
-          isWeb()
-            ? 'webcontent h-full overflow-x-auto overflow-y-hidden'
-            : 'h5content overscroll-none h-dvh'
-        } relative w-[100vw]`}
-        // className={`bg-sideMenu ${
-        //   isWeb() ? 'webcontent min-w-[1360px] min-h-[500px]' : 'h5content'
-        // } overflow-x-auto overflow-y-hidden relative w-[100vw] h-[100vh]`}
+        className={`notranslate root-class relative w-screen h-full`}
+        // className={`bg-sideMenu notranslate root-class ${
+        //   isWeb()
+        //     ? 'webcontent h-full overflow-x-auto overflow-y-hidden'
+        //     : 'h5content overscroll-none h-dvh'
+        // } relative w-[100vw]`}
       >
         {/* <DynamicComponentWithNoSSR /> */}
         <Head>
@@ -130,14 +119,65 @@ export default function RootLayout({ children }) {
           />
         </Head>
         <body
-          className={`${
-            inter.className
-          } h-full bg-sideMenu text-white flex flex-col w-full overscroll-none overflow-x-hidden ${
-            isWeb() ? '' : 'min-h-[100dvh]'
-          }`}
+          className={`${inter.className}
+            text-white relative w-full h-full overflow-hidden
+            `}
+          // className={`${
+          //   inter.className
+          // } h-full bg-sideMenu text-white flex flex-col w-full overscroll-none overflow-x-hidden ${
+          //   isWeb() ? '' : 'min-h-[100dvh]'
+          // }`}
         >
           <Providers>
-            <div className='w-screen h-[100dvh] flex flex-col bg-[#000000]'>
+            <ModalOverlays />
+            <ScrollView>
+              <Header />
+
+              <div className='w-full grow flex justify-center '>{children}</div>
+              {/* <div className=''>{children}</div> */}
+
+              <MyFooter2 />
+              <MyFooter />
+              <div
+                className='px-8 py-3 desktop'
+                style={{
+                  marginTop: '2rem',
+                  width: '100%',
+                  textAlign: 'center',
+                  backgroundColor: '#1D2023',
+                  fontSize: '14px',
+                  borderTop: '1px solid hsla(0, 0%, 100%, .05)',
+                }}
+              >
+                <div
+                  style={{
+                    color: '#6B6B6B !important',
+                    lineHeight: '24px',
+                  }}
+                >
+                  版权声明：鲨鱼影视内容均来自互联网，不提供存储/录制/上传。
+                  <br />
+                  如果鲨鱼影视提供内容侵犯了您的版权，请发送电子邮件至
+                  <a href='mailto:shayuyingshi@gmail.com'>
+                    shayuyingshi@gmail.com
+                  </a>
+                  进行说明，我们将立即删除内容，保护版权所有者的权益。
+                  <br />
+                  <br />
+                  <a className='hover-blue custom-link' href={'/privacy'}>
+                    隐私协议
+                  </a>
+                  &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+                  <a className='hover-blue custom-link' href={'/service'}>
+                    用户服务协议
+                  </a>
+                  <br />
+                  Copyright © 2024 shayuyingshi.com All Rights Reserved
+                </div>
+              </div>
+            </ScrollView>
+
+            {/* <div className='w-screen h-[100dvh] flex flex-col bg-[#000000]'>
               <Header />
               <ModalOverlays/>
               <ScrollView>
@@ -193,7 +233,7 @@ export default function RootLayout({ children }) {
                     </div>
                 </>
               </ScrollView>
-            </div>
+            </div> */}
           </Providers>
         </body>
       </html>
