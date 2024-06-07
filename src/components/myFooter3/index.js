@@ -111,6 +111,7 @@ const TabItem = ({ onClick, active, icon, iconActive, title }) => {
     <div
       className='col flex-col d-flex justify-center align-center items-center'
       onClick={onClick}
+      style={{height : '60px'}}
     >
       <div className='d-flex'>
         <Image

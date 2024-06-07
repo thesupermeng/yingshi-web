@@ -3,8 +3,6 @@ import { backtoTopIcon } from '@/asset/icons';
 import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { usePathname, useRouter } from 'next/navigation';
 import {
   setIsScroll,
   setIsTop,
@@ -20,9 +18,6 @@ export const ScrollView = ({ children }) => {
   const [showScrollUpButton, setShowScrollUpButton] = useState(false);
   const [lastScrollPosition, setLastScrollPosition] = useState(0);
   const [timerId, setTimerId] = useState(null);
-  
-  const router = useRouter();
-  const pathname = usePathname();
 
   const isAtTop = useSelector(getIsTop);
   const isScrolling = useSelector(getIsScroll);
@@ -41,6 +36,7 @@ export const ScrollView = ({ children }) => {
 
     // Store the current scroll position
     const currentScrollPosition = scrollableDivRef.current.scrollTop;
+
     dispatch(setCurrentScrollPosition(currentScrollPosition));
 
     // Check if the scroll position has changed since the last event
@@ -75,7 +71,7 @@ export const ScrollView = ({ children }) => {
         }
       }
     } else {
-      if (scrollableDivRef.current.scrollTop === 0) {
+      if (scrollableDivRef.current.scrollTop == 0) {
         if (!isAtTop.res) {
           dispatch(setIsTop(true));
         }
@@ -87,7 +83,7 @@ export const ScrollView = ({ children }) => {
     const scrollableDiv = scrollableDivRef.current;
     const scrollStep = -scrollableDiv.scrollTop / 20;
     const scrollInterval = setInterval(() => {
-      if (scrollableDiv.scrollTop != 0) {
+      if (scrollableDiv.scrollTop !== 0) {
         scrollableDiv.scrollBy(0, scrollStep);
       } else {
         clearInterval(scrollInterval);
@@ -95,14 +91,9 @@ export const ScrollView = ({ children }) => {
     }, 15);
   };
 
-  const shouldRemovePadding = pathname.startsWith('/sport')  ; //pathname.startsWith('/sport/user/deposit') || pathname.startsWith('/sport/user/withdraw') || pathname.startsWith('/sport/user/transaction') || pathname.startsWith('/sport/user/history')|| 
-  const divClassName = `flex-1 overflow-y-scroll overflow-x-hidden overscroll-none flex flex-col md:pb-0 ${
-    shouldRemovePadding ? '' : 'pb-[55px]'
-  } no-scrollbar`;
-
   return (
     <div
-      className={divClassName}
+      className='absolute w-full h-full flex flex-col overflow-y-auto overflow-x-hidden overscroll-none no-scrollbar'
       style={{ alignItems: 'center' }}
       ref={scrollableDivRef}
       onScroll={handleScroll}
@@ -111,7 +102,7 @@ export const ScrollView = ({ children }) => {
       {children}
       {showScrollUpButton && (
         <button
-          className='absolute bottom-16 right-16 rounded-md z-20 bg-[#2c313ae6] desktop'
+          className='fixed bottom-16 right-16 rounded-md z-20 bg-[#2c313ae6] desktop'
           onClick={scrollToTop}
         >
           <Image src={backtoTopIcon} alt='arrowUp' width={50} />
