@@ -40,19 +40,19 @@ export default function Page({ params }) {
   }, [])
 
   
-  // useLayoutEffect(() => {
+  useLayoutEffect(() => {
 
-  //   if(userInfo)
-  //     {
-  //       console.log('userInfo')
-  //       console.log(userInfo)
-  //       console.log('redirect')
-  //       console.log(redirect)
-  //       setIframeUrl('');
-  //       setIframeUrl(redirect);
-  //     }
+    if(userInfo)
+      {
+        console.log('userInfo')
+        console.log(userInfo)
+        console.log('redirect')
+        console.log(redirect)
+        setIframeUrl('');
+        setIframeUrl(redirect);
+      }
   
-  // }, [userInfo])
+  }, [userInfo])
 
   const onRefreshToken = async () => {
     isRefreshing = true
