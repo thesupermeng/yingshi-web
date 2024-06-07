@@ -69,7 +69,7 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <div className={`flex flex-col flex-1 bg-transparent min-x-0`}>
+      <div className={`flex flex-col flex-1 bg-transparent min-x-0 h-full`}>
         <WEBOnly>
           <PageContent
             header={
