@@ -1,7 +1,7 @@
 'use client';
 // import Image from 'next/image';
 import React, { useEffect, useLayoutEffect, useState, useRef } from 'react';
-import { AboutusIconGrey, FavouriteIconGrey, FeedbackIconGrey, HistoryIconGrey, LogoutGrey , PinIconGrey } from '@/asset/icons';
+import { AboutusIconGrey, FavouriteIconGrey, FeedbackIconGrey, HistoryIconGrey, LogoutGrey, PinIconGrey } from '@/asset/icons';
 
 import { getNewAhaToken, logout } from '@/services/yingshiUser';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,7 +19,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 // import {setShowLogin, setShowLoginSuccess , setShowPinSuccess , setShowWithdrawalSuccess , setIsSessionExpired} from '@/store/yingshiScreen';
 
- import { setIsSessionExpired} from '@/store/yingshiScreen';
+import { setIsSessionExpired } from '@/store/yingshiScreen';
 // import { Spinner } from './../../components/spinner';
 
 export default function H5Page({ params }) {
@@ -173,7 +173,7 @@ export default function H5Page({ params }) {
 
         // setFrameToken(-1)
 
-   
+
       }
       else {
         console.log(event.data.url)
@@ -183,7 +183,7 @@ export default function H5Page({ params }) {
   }
 
   useEffect(() => {
-     // dispatch(setIsSessionExpired(true))
+    // dispatch(setIsSessionExpired(true))
 
     window.addEventListener('message', iframeMessageListener)
     return () => {
@@ -195,12 +195,20 @@ export default function H5Page({ params }) {
 
 
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     // let x = await onRefreshToken()
     //let xx = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb3VudHJ5X2NvZGUiOiIrNjUiLCJleHAiOjE3NDg2NjY4NDMsImlhdCI6MTcxNzEzMDg0MywibW9iaWxlIjoiODEyMzMzODciLCJ1c2VyX2lkIjoyMDU4fQ.kVo5WYOCwVmLRByTNjY1CpRc5aeKFx1aEIwnMXcGa0s`
-    let xx = localStorage.getItem('AuthToken');
-    setFrameToken(xx)
-    dispatch(setAhaToken(xx))
+    const init = async () => {
+
+      setFrameToken(-1)
+      let tempToken = localStorage.getItem('AuthToken');
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      setFrameToken(tempToken)
+      dispatch(setAhaToken(tempToken))
+    }
+    init()
+
+
   }, [])
 
 

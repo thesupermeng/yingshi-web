@@ -337,7 +337,7 @@ export default function OTP() {
 
             {/* otp here  */}
             {resetMode == 'otp' &&
-                <div className={'w-screen flex flex-col align-center '}>
+                <div  style={{marginTop:'52px'}}  className={'w-screen flex flex-col align-center '}>
 
                     <p className={'text-center text-[22px] mb-[13px] mt-[40px]'}>输入OTP验证码</p>
                     <p className={'text-center text-[14px]'}>验证码已发送至
@@ -360,7 +360,7 @@ export default function OTP() {
 
                     <div className={'flex justify-between px-[32px]'}>
                         {[1, 2, 3, 4, 5, 6].map((item, index) => (
-                            <OtpInput
+                            <OtpInputNum
                                 key={index}
                                 onKeyPress={(e) => handleBackspace(e, index)}
                                 onChange={(e) => handleChange(e, index)}
@@ -404,6 +404,8 @@ const OtpInput = forwardRef(function OtpInput({ onKeyPress, onChange, isError },
         className={`w-[53px] h-[53px] aspect-square min-w-[35px] rounded-[10px] bg-[#1D2023] text-[30px] text-center outline-none ${colorClasses}`}
         maxLength={1}
         type={'password'}
+        pattern="[0-9]*" 
+        inputmode="numeric"
     />
 }
 )
@@ -418,7 +420,7 @@ const OtpInputNum = forwardRef(function OtpInput({ onKeyPress, onChange, isError
         ref={ref}
         className={`w-[53px] h-[53px] aspect-square min-w-[35px] rounded-[10px] bg-[#1D2023] text-[30px] text-center outline-none ${colorClasses}`}
         maxLength={1}
-        type={'te4l'}
+        type={'tel'}
     />
 }
 )
