@@ -42,7 +42,7 @@ export default function Page({ params }) {
   }, [])
 
   
-  useEffect(() => {
+  useLayoutEffect(() => {
 
     if(userInfo)
       {
