@@ -214,20 +214,19 @@ export default function H5Page({ params }) {
 
   const debounceRef = useRef(null);
 
-  useEffect(() => {
-    // console.log('frameToken 11');
-    // console.log(frameToken);
+  // useEffect(() => {
+   
 
-    if (frameToken === -1) {
-      if (debounceRef.current) {
-        clearTimeout(debounceRef.current);
-      }
+  //   if (frameToken === -1) {
+  //     if (debounceRef.current) {
+  //       clearTimeout(debounceRef.current);
+  //     }
 
-      debounceRef.current = setTimeout(() => {
-        onRefreshToken();
-      }, 8000);
-    }
-  }, [frameToken]);
+  //     debounceRef.current = setTimeout(() => {
+  //       onRefreshToken();
+  //     }, 8000);
+  //   }
+  // }, [frameToken]);
 
 
 

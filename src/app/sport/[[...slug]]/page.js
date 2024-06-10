@@ -42,7 +42,7 @@ export default function Page({ params }) {
   }, [])
 
   
-  useLayoutEffect(() => {
+  useEffect(() => {
 
     if(userInfo)
       {
@@ -98,17 +98,17 @@ export default function Page({ params }) {
         if (!userInfo) {
           setOpenSignInUp(true)
         }
-        else
-        {
-         await refreshUserInfo()
-         onRefreshToken()
-        }
+        // else
+        // {
+        //  await refreshUserInfo()
+        //  onRefreshToken()
+        // }
       } 
       else if (event.data.type === 'invalidToken' && userInfo) {
          console.log('invalid aha token')
         // router.push(`/sport`)
-
         dispatch(setIsSessionExpired(true))
+        router.replace(`/myprofile`)
       }
       else if (event.data.type === 'onTopUp') {
         console.log('onTopUp')
