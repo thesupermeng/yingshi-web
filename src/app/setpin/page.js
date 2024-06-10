@@ -84,10 +84,12 @@ export default function OTP() {
 
     const handleResendOTP = () => {
         setCountdownTimer(totalCountdownTime)
-
+        console.log('handleResendOTP')
+        console.log('firstPin')
+        console.log(firstPin)
         YingshiApi(URL_YINGSHI_VOD.setAhaWithdrawalPin, {
             pin: parseInt(firstPin),
-            otp: otp
+            otp: ''
 
         }, { method: 'POST' });
     }
