@@ -123,6 +123,9 @@ export default function Page({ params }) {
         console.log('forgotSecurityPin')
         router.push('/setpin')
       }
+      else if (event.data.type === 'return') {
+        router.push(event.data.url)
+      }
      
     }
   }
