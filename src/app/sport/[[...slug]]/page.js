@@ -95,9 +95,9 @@ export default function Page({ params }) {
       // console.log('iframe event ')
       if (event.data.type === 'login') {
         console.log('login type ')
-        if (!userInfo) {
+       // if (!userInfo) {
           setOpenSignInUp(true)
-        }
+       // }
         // else
         // {
         //  await refreshUserInfo()
