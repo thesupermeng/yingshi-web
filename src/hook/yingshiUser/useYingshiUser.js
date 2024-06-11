@@ -32,6 +32,7 @@ export default function useYingshiUser() {
     useEffect(() => {
         if (!token || userInfo) {
             // if no token or user info populated, no need populate again
+            console.log('if no token or user info populated, no need populate again')
             return
         }
 
@@ -50,6 +51,11 @@ export default function useYingshiUser() {
     }, [token])
 
     const refreshUserInfo = () => {
+        if (!token || userInfo) {
+            // if no token or user info populated, no need populate again
+            console.log('if no token or user info populated, no need populate again')
+            return
+        }
         queryUserInfo().then(res => {
             if(res){
                 dispatch(setYingshiUserInfo(res.user))

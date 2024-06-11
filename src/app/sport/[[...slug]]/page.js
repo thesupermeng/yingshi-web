@@ -95,20 +95,20 @@ export default function Page({ params }) {
       // console.log('iframe event ')
       if (event.data.type === 'login') {
         console.log('login type ')
-        if (!userInfo) {
+       // if (!userInfo) {
           setOpenSignInUp(true)
-        }
-        else
-        {
-         await refreshUserInfo()
-         onRefreshToken()
-        }
+       // }
+        // else
+        // {
+        //  await refreshUserInfo()
+        //  onRefreshToken()
+        // }
       } 
       else if (event.data.type === 'invalidToken' && userInfo) {
          console.log('invalid aha token')
         // router.push(`/sport`)
-
         dispatch(setIsSessionExpired(true))
+        router.replace(`/myprofile`)
       }
       else if (event.data.type === 'onTopUp') {
         console.log('onTopUp')
