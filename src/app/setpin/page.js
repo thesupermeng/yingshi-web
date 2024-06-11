@@ -96,7 +96,7 @@ export default function OTP() {
     YingshiApi(
       URL_YINGSHI_VOD.setAhaWithdrawalPin,
       {
-        pin: parseInt(firstPin),
+        pin: firstPin,
         otp: '',
       },
       { method: 'POST' }
@@ -140,7 +140,7 @@ export default function OTP() {
       let res = await YingshiApi2(
         URL_YINGSHI_VOD.setAhaWithdrawalPin,
         {
-          pin: parseInt(firstPin),
+          pin: firstPin,
           otp: otpValue,
         },
         { method: 'POST' }

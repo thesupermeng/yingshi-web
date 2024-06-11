@@ -84,7 +84,7 @@ export default function EnterPin() {
     YingshiApi(
       URL_YINGSHI_VOD.setAhaWithdrawalPin,
       {
-        pin: parseInt(firstPin),
+        pin: firstPin,
         otp: otp,
       },
       { method: 'POST' }
