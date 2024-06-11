@@ -129,6 +129,7 @@ export default function OTP() {
   // })
 
   const handleBackspace = (e, index) => {
+
     if (e.key === 'Backspace' && !e.target.value && index > 0) {
       inputRefs.current[index - 1].focus();
     }
@@ -203,6 +204,14 @@ export default function OTP() {
   //  YingshiApi(URL_YINGSHI_VOD.homeGetNav, {}, { method: 'GET' });
 
   const handleChange = (value, index) => {
+
+    const temp = value.target.value;
+    if (!/^\d*$/.test(temp)) {
+    
+      value.target.value = '';
+    }
+
+
     setErrorMessage('');
     let newArr = [...otpRef.current];
     newArr[index] = value.target.value;

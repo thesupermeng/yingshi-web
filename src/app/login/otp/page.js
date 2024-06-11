@@ -51,8 +51,6 @@ export default function OTP() {
   };
 
   useEffect(() => {
-    // if (timerRef.current) return;
-
     timerRef.current = setInterval(() => {
       setCountdownTimer((prev) => Math.max(0, prev - 1));
     }, 1000);
@@ -78,24 +76,27 @@ export default function OTP() {
     }
   };
 
-  const handleChange = (value, index) => {
+  const handleChange = (e, index) => {
+    const value = e.target.value;
+    if (!/^\d*$/.test(value)) {
+      e.target.value = ''; // Discard non-numeric input
+      return;
+    }
+
     setErrorMessage('');
     let newArr = [...otpRef.current];
-    newArr[index] = value.target.value;
+    newArr[index] = value;
     otpRef.current = newArr;
 
     if (value && index < inputRefs.current.length - 1) {
-      if (value.target.value !== '') {
+      if (value !== '') {
         inputRefs.current[index + 1].focus();
       }
     } else if (value && index === inputRefs.current.length - 1) {
-      if (value.target.value !== '') {
+      if (value !== '') {
         if (loginParam.loginMode === 'sms') {
           loginSms({ ...loginParam, otp: otpRef.current.join('') }).then(
             (res) => {
-              // login = res.code = 0
-              // signup = res.code = 201
-
               if (res.code === -1) {
                 setErrorMessage(res.message);
                 return;
@@ -108,8 +109,6 @@ export default function OTP() {
               dispatch(setAhaToken(res.data.aha_token));
               localStorage.setItem('AuthToken', res.data.aha_token);
               if (res.code === 0) {
-                //signup
-                // router.push('/myprofile')
                 router.back();
                 setOpenLoginSuccess(true);
                 setTimeout(() => {
@@ -117,9 +116,6 @@ export default function OTP() {
                 }, 2000);
               }
               if (res.code === 201) {
-                //login
-                // router.push('/login/nickname') // remove nickname page from the signup flow
-                // router.push('/myprofile')
                 router.back();
                 setOpenLoginSuccess(true);
                 setTimeout(() => {
@@ -131,9 +127,6 @@ export default function OTP() {
         } else {
           loginEmail({ ...loginParam, otp: otpRef.current.join('') }).then(
             (res) => {
-              // login = res.code = 0
-              // signup = res.code = 201
-
               if (res.code === -1) {
                 setErrorMessage(res.message);
                 return;
@@ -146,8 +139,6 @@ export default function OTP() {
               dispatch(setAhaToken(res.data.aha_token));
               localStorage.setItem('AuthToken', res.data.aha_token);
               if (res.code === 0) {
-                //signup
-                // router.push('/myprofile')
                 router.back();
                 setOpenLoginSuccess(true);
                 setTimeout(() => {
@@ -155,9 +146,6 @@ export default function OTP() {
                 }, 2000);
               }
               if (res.code === 201) {
-                //login
-                // router.push('/login/nickname') // remove nickname page from the signup flow
-                // router.push('/myprofile')
                 router.back();
                 setOpenLoginSuccess(true);
                 setTimeout(() => {
@@ -170,8 +158,8 @@ export default function OTP() {
       }
     }
   };
+
   return (
-    // full width and full height
     <>
       {loginParam && loginParam.loginMode && (
         <div className={'w-screen flex flex-col align-center absolute'}>
@@ -263,6 +251,8 @@ const OtpInput = forwardRef(function OtpInput(
       className={`otp-input ${isError ? 'error' : ''}`}
       maxLength={1}
       type={'tel'}
+      inputMode='numeric'
+      pattern='[0-9]*'
     />
   );
 });

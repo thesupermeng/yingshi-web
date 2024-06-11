@@ -126,7 +126,6 @@ export default function H5Page({ params }) {
   }, [])
 
   const handleOnClickVip = () => {
-    console.log('testing', userInfo)
     if (!userInfo) {
       setOpenSignInUp(true)
     } else {
@@ -154,29 +153,23 @@ export default function H5Page({ params }) {
   const iframeMessageListener = async (event) => {
 
     if (event.data.message === 'iframe' && event.data.type != "TikTokPixelSPAMonitor") {
-      console.log('iframe message', event.data)
-      // console.log('iframe event ')
+    //  console.log('iframe message', event.data)
       if (event.data.type === 'login') {
-        console.log('login type ')
-
+      //  console.log('login type ')
         if (!userInfo) {
           setOpenSignInUp(true)
         }
         // onRefreshToken()
       } else if (event.data.type === 'invalidToken' && userInfo) {
-        console.log('invalid aha token')
+     //   console.log('invalid aha token')
         dispatch(setIsSessionExpired(true))
         // if (frameToken == -1) {
         //   return
         // }
         // console.log('invalid aha token')
-
         // setFrameToken(-1)
-
-
       }
       else {
-        console.log(event.data.url)
         router.push(`/sport/${event.data.url}`)
       }
     }
@@ -190,8 +183,6 @@ export default function H5Page({ params }) {
       window.removeEventListener('message', iframeMessageListener)
     }
   }, [])
-
-
 
 
 
