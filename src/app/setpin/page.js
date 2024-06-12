@@ -90,9 +90,7 @@ export default function OTP() {
 
   const handleResendOTP = () => {
     setCountdownTimer(totalCountdownTime);
-    console.log('handleResendOTP');
-    console.log('firstPin');
-    console.log(firstPin);
+
     YingshiApi(
       URL_YINGSHI_VOD.setAhaWithdrawalPin,
       {
@@ -136,7 +134,7 @@ export default function OTP() {
   };
 
   const setUserPin = async () => {
-    console.log('setUserPin');
+
     try {
       let res = await YingshiApi2(
         URL_YINGSHI_VOD.setAhaWithdrawalPin,
@@ -146,11 +144,7 @@ export default function OTP() {
         },
         { method: 'POST' }
       );
-      console.log('res');
 
-      console.log(res);
-      console.log(res.message == 'Invalid OTP');
-      console.log(res.message === 'Invalid OTP');
 
       if (
         res.message == '验证码已发送，请稍后再试，验证码请求限制为每分钟一次'
@@ -166,7 +160,7 @@ export default function OTP() {
 
       if (resetMode == 'otp' && res.message == '成功') {
         setErrorMessage('');
-        console.log('success change pin');
+       // success change pin 
 
         sessionStorage.setItem('loginMsg', '安全PIN码设置成功');
         let userInfoTemp = { ...userInfo };
@@ -184,8 +178,7 @@ export default function OTP() {
         //todo show success
       }
     } catch (err) {
-      console.log('err');
-      console.log(err);
+   
       if (resetMode == 'otp') {
         setErrorMessage('验证码不正确');
       }
@@ -217,15 +210,13 @@ export default function OTP() {
     newArr[index] = value.target.value;
     otpRef.current = newArr;
 
-    console.log('otpRef');
-    console.log(otpRef);
+
 
     if (value && index < inputRefs.current.length - 1) {
       if (value.target.value !== '') {
         inputRefs.current[index + 1].focus();
       }
-      console.log('value');
-      console.log(value);
+
     } else if (value && index === inputRefs.current.length - 1) {
       //to do chatGPT
       // reset otpRef
@@ -238,12 +229,12 @@ export default function OTP() {
           return;
         }
 
-        console.log('second pin ');
+
 
         let temp2 = otpRef.current.join('');
 
         if (firstPin != temp2 && resetMode != 'otp') {
-          console.log('oi');
+    
           setErrorMessage('PIN码不一致');
           return;
         }
