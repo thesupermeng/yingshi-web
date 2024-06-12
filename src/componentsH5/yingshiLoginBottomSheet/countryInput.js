@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import {CaretDown, CNFlag} from '@/asset/icons';
+import { CaretDown, CNFlag } from '@/asset/icons';
 import TextInput from '@/components/login/input';
-import {useEffect, useState} from 'react';
-import {getCountryList} from '@/services/yingshiUser';
-import {BottomSheet} from 'react-spring-bottom-sheet';
+import { useEffect, useState } from 'react';
+import { getCountryList } from '@/services/yingshiUser';
+import { BottomSheet } from 'react-spring-bottom-sheet';
 
-export default function CountryInput ({name, placeholder, validator, onChange, errorMessage, isShowIcon}) {
+export default function CountryInput({ name, placeholder, validator, onChange, errorMessage, isShowIcon, setCountryPrefix }) {
     const [countryList, setCountryList] = useState([]);
     const [chosenCountry, setChosenCountry] = useState(null);
     const [openCountry, setOpenCountry] = useState(false);
@@ -14,8 +14,8 @@ export default function CountryInput ({name, placeholder, validator, onChange, e
         getCountryList().then((result) => {
             setCountryList(result)
             setChosenCountry(result[0])
-            onChange({target: {name: 'phonecode', value: result[0].country_phonecode}})
-            onChange({target: {name: 'countryId', value: result[0].country_id}})
+            onChange({ target: { name: 'phonecode', value: result[0].country_phonecode } })
+            onChange({ target: { name: 'countryId', value: result[0].country_id } })
         })
     }, [])
 
@@ -26,18 +26,25 @@ export default function CountryInput ({name, placeholder, validator, onChange, e
         setOpenCountry(true);
     }
 
+    useEffect(() => {
+        if (chosenCountry) {
+
+            setCountryPrefix(chosenCountry.country_phonecode)
+        }
+    }, [chosenCountry])
+
     return (
         <div className={'flex gap-[14px]'}>
             <div className='flex px-[12px] py-[14px] gap-[10px] items-center bg-[#1D2023] rounded-[6px] w-fit h-[47px]' onClick={handleClick}>
                 <Image src={flag} alt={'country flag'} width={20} height={20} />
-                <Image src={CaretDown} alt={'more'}/>
+                <Image src={CaretDown} alt={'more'} />
             </div>
             <TextInput name={name} placeholder={placeholder} validator={validator} onChange={onChange}
-                       errorMessage={errorMessage} isShowIcon={isShowIcon} prefixText={prefix}
-                        inputType={'number'}
+                errorMessage={errorMessage} isShowIcon={isShowIcon} prefixText={prefix}
+                inputType={'number'}
             />
             <BottomSheet open={openCountry} onDismiss={() => setOpenCountry(false)}
-                         snapPoints={({ minHeight, maxHeight }) => minHeight * 0.6}
+                snapPoints={({ minHeight, maxHeight }) => minHeight * 0.6}
 
             >
                 <p className={'text-xl text-center'}>选择国家电话代码</p>
@@ -52,7 +59,7 @@ export default function CountryInput ({name, placeholder, validator, onChange, e
                                 setOpenCountry(false)
                             }}
                             isSelected={country.country_id === chosenCountry.country_id
-                        }
+                            }
                         />
                     })}
                 </div>
@@ -61,16 +68,16 @@ export default function CountryInput ({name, placeholder, validator, onChange, e
     )
 }
 
-function CountrySelectItem ({country, onClick, isSelected}) {
+function CountrySelectItem({ country, onClick, isSelected }) {
     const selectedStyles = isSelected ? 'bg-[#0085E01F]' : ''
 
     const handleOnClick = (e) => {
-        const phonecodeEvent = {...e}
+        const phonecodeEvent = { ...e }
         phonecodeEvent.target.name = 'phonecode'
         phonecodeEvent.target.value = country.country_phonecode
         onClick(phonecodeEvent)
 
-        const countryidEvent = {...e}
+        const countryidEvent = { ...e }
         countryidEvent.target.name = 'countryId'
         countryidEvent.target.value = country.country_id
         onClick(countryidEvent)

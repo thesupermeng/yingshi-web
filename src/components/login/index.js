@@ -1,17 +1,17 @@
-import {Button, Checkbox, Dialog, DialogBody} from '@material-tailwind/react';
-import React, {useEffect, useState} from 'react';
+import { Button, Checkbox, Dialog, DialogBody } from '@material-tailwind/react';
+import React, { useEffect, useState } from 'react';
 import CountryInput from '@/components/login/countryInput';
 import TextInput from '@/components/login/input';
-import {GoogleIcon} from '@/asset/icons';
+import { GoogleIcon } from '@/asset/icons';
 import Image from 'next/image';
-import {useRouter} from 'next/navigation';
-import {useDispatch} from 'react-redux';
-import {loginRequestEmailOtp, loginRequestSmsOtp} from '@/services/yingshiUser';
-import {setYingshiUserLoginParam} from '@/store/yingshiUser';
-import {faTimesCircle} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import { loginRequestEmailOtp, loginRequestSmsOtp } from '@/services/yingshiUser';
+import { setYingshiUserLoginParam } from '@/store/yingshiUser';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function LoginModal({open, handler, onRegsiter}) {
+export default function LoginModal({ open, handler, onRegsiter }) {
   const router = useRouter()
   const [formData, setFormData] = useState({})
   const dispatch = useDispatch()
@@ -19,10 +19,10 @@ export default function LoginModal({open, handler, onRegsiter}) {
   const [isInputError, setIsInputError] = useState(false);
   const [isAgreementChecked, setIsAgreementChecked] = useState(true);
   const isInputEmpty = !formData.phoneNumber && !formData.email
-
+  const [countryPrefix, setCountryPrefix] = useState('');
 
   useEffect(() => {
-    setFormData({referralCode: formData.referralCode})
+    setFormData({ referralCode: formData.referralCode })
   }, [loginMode])
 
   useEffect(() => {
@@ -42,7 +42,8 @@ export default function LoginModal({open, handler, onRegsiter}) {
     //         loginMode,
     //         ...formData
     //     }
-    const loginParam = {...formData, loginMode}
+    const loginParam = { ...formData, loginMode }
+    loginParam.phoneNumber = countryPrefix + loginParam.phoneNumber
 
     if (loginMode === 'sms') {
       loginRequestSmsOtp(loginParam)
@@ -88,11 +89,11 @@ export default function LoginModal({open, handler, onRegsiter}) {
   }
 
   return (
-    <Dialog open={open} handler={handler} className={'w-[500px] bg-[#121212] rounded-[28px] p-0 relative'} dismiss={{outsidePress:false}}>
+    <Dialog open={open} handler={handler} className={'w-[500px] bg-[#121212] rounded-[28px] p-0 relative'} dismiss={{ outsidePress: false }}>
       <DialogBody className={'p-[30px] w-full h-full'}>
         <FontAwesomeIcon icon={faTimesCircle}
-                         className={'absolute top-4 right-4 cursor-pointer w-[35px] h-[35px] text-[#FFFFFF33] hover-effect'}
-                         onClick={handler}
+          className={'absolute top-4 right-4 cursor-pointer w-[35px] h-[35px] text-[#FFFFFF33] hover-effect'}
+          onClick={handler}
         />
         <div className={'flex flex-col gap-[19px]'}>
           <p className={'text-[20px] text-center font-semibold text-white'}>注册/登录</p>
@@ -100,8 +101,8 @@ export default function LoginModal({open, handler, onRegsiter}) {
         </div>
         {/* login mode tab */}
         <div className={'flex'}>
-          <Tabs title={'电邮地址'} onClick={handleClickEmail} isSelected={loginMode === 'email'}/>
-          <Tabs title={'手机号码'} onClick={handleClickPhone} isSelected={loginMode === 'sms'}/>
+          <Tabs title={'电邮地址'} onClick={handleClickEmail} isSelected={loginMode === 'email'} />
+          <Tabs title={'手机号码'} onClick={handleClickPhone} isSelected={loginMode === 'sms'} />
         </div>
         <div className={'flex flex-col gap-[15px]'}>
           {/* title and input */}
@@ -129,6 +130,7 @@ export default function LoginModal({open, handler, onRegsiter}) {
                   errorMessage={'手机号码格式错误'}
                   validator={isPhoneValid}
                   isShowIcon={true}
+                  setCountryPrefix={setCountryPrefix}
                 />
               </>
             }
@@ -142,7 +144,7 @@ export default function LoginModal({open, handler, onRegsiter}) {
           </div>
           {/* button */}
           <Button className={'w-full rounded-[10px] h-auto bg-shayuBlue py-2 text-[17px] font-semibold'}
-                  onClick={handleRegister} disabled={isInputError || isInputEmpty || !isAgreementChecked}>下一步</Button>
+            onClick={handleRegister} disabled={isInputError || isInputEmpty || !isAgreementChecked}>下一步</Button>
           {/* agreement */}
           <div className={'flex items-center justify-center'}>
             {/*<div*/}
@@ -156,10 +158,10 @@ export default function LoginModal({open, handler, onRegsiter}) {
               onChange={(e) => setIsAgreementChecked(e.target.checked)}
             />
             <span className={'text-[13px] text-[#9C9C9C]'}>我已阅读并同意
-                                <span className={'text-[#0085E0] hover-effect'}>用户协议</span>
-                                和
-                                <span className={'text-[#0085E0] hover-effect'}>隐私协议</span>
-                            </span>
+              <span className={'text-[#0085E0] hover-effect'}>用户协议</span>
+              和
+              <span className={'text-[#0085E0] hover-effect'}>隐私协议</span>
+            </span>
           </div>
           {/*/!* 或者 *!/*/}
           {/*<div className={'flex items-center gap-1'}>*/}
@@ -179,7 +181,7 @@ export default function LoginModal({open, handler, onRegsiter}) {
   )
 }
 
-function Tabs({title, isSelected, onClick}) {
+function Tabs({ title, isSelected, onClick }) {
   const color = isSelected ? '#0085E0' : 'transparent'
   const textStyle = isSelected ? 'text-white font-semibold' : 'text-[#FFFFFF80] '
 
