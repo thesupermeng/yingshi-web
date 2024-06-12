@@ -124,10 +124,17 @@ export default function WebPage ({subMenus}) {
         open={openLogout}
         handler={handleLogout}
         onConfirm={() => {
+          // logout()
+          // dispatch(setYingshiUserToken(null))
+          // dispatch(setYingshiUserInfo(null))
+          // dispatch(setAhaToken(null))
+          // router.push('/')
+
           logout()
-          dispatch(setYingshiUserToken(null))
           dispatch(setYingshiUserInfo(null))
+          dispatch(setYingshiUserToken(null))
           dispatch(setAhaToken(null))
+          setOpenLogout(false)
           router.push('/')
         }}
         onCancel={()=> setOpenLogout(false)}

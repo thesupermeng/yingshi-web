@@ -1,4 +1,4 @@
-import {YingshiApi} from '@/util/YingshiApi';
+import {YingshiApi , YingshiApi2} from '@/util/YingshiApi';
 import {URL_YINGSHI_USER} from '@/config/yingshiUrl';
 
 const platformId = 5 // for web
@@ -75,7 +75,7 @@ export const loginSms = async ({phoneNumber, countryId, referralCode, otp}) => {
 }
 
 export const logout = async () => {
-    return YingshiApi(
+    return YingshiApi2(
         URL_YINGSHI_USER.logout,
         {},
         {
