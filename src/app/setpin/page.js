@@ -116,14 +116,12 @@ export default function OTP() {
   // })
 
   const handleBackspace = (e, index) => {
-
     if (e.key === 'Backspace' && !e.target.value && index > 0) {
       inputRefs.current[index - 1].focus();
     }
   };
 
   const setUserPin = async () => {
-
     try {
       let res = await YingshiApi2(
         URL_YINGSHI_VOD.setAhaWithdrawalPin,
@@ -133,7 +131,6 @@ export default function OTP() {
         },
         { method: 'POST' }
       );
-
 
       if (
         res.message == '验证码已发送，请稍后再试，验证码请求限制为每分钟一次'
@@ -149,7 +146,7 @@ export default function OTP() {
 
       if (resetMode == 'otp' && res.message == '成功') {
         setErrorMessage('');
-       // success change pin 
+        // success change pin
 
         sessionStorage.setItem('loginMsg', '安全PIN码设置成功');
         let userInfoTemp = { ...userInfo };
@@ -163,11 +160,10 @@ export default function OTP() {
           dispatch(setShowPinSuccess(false));
         }, 2100);
 
-        router.replace(`/myprofile`);
-        //todo show success
+        router.back();
+        // router.replace(`/myprofile`);
       }
     } catch (err) {
-   
       if (resetMode == 'otp') {
         setErrorMessage('验证码不正确');
       }
@@ -186,26 +182,20 @@ export default function OTP() {
   //  YingshiApi(URL_YINGSHI_VOD.homeGetNav, {}, { method: 'GET' });
 
   const handleChange = (value, index) => {
-
     const temp = value.target.value;
     if (!/^\d*$/.test(temp)) {
-    
       value.target.value = '';
     }
-
 
     setErrorMessage('');
     let newArr = [...otpRef.current];
     newArr[index] = value.target.value;
     otpRef.current = newArr;
 
-
-
     if (value && index < inputRefs.current.length - 1) {
       if (value.target.value !== '') {
         inputRefs.current[index + 1].focus();
       }
-
     } else if (value && index === inputRefs.current.length - 1) {
       //to do chatGPT
       // reset otpRef
@@ -218,12 +208,9 @@ export default function OTP() {
           return;
         }
 
-
-
         let temp2 = otpRef.current.join('');
 
         if (firstPin != temp2 && resetMode != 'otp') {
-    
           setErrorMessage('PIN码不一致');
           return;
         }

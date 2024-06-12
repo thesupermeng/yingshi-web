@@ -118,6 +118,10 @@ export default function Page({ params }) {
       else if (event.data.type === 'enterPin') {
         console.log('enterPin')
       }
+      else if (event.data.type === 'setUpPin') {
+        console.log('setUpPin')
+        router.push('/setpin')
+      }
       else if (event.data.type === 'forgotSecurityPin') {
         console.log('forgotSecurityPin')
         router.push('/setpin')
