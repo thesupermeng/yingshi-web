@@ -1,4 +1,4 @@
-import {ArrowLeftIcon, clear, ImagePlaceholder, searchEmptyIcon} from '@/asset/icons';
+import { ArrowLeftIcon, clear, ImagePlaceholder, searchEmptyIcon } from '@/asset/icons';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Button, Dialog, DialogBody, Progress } from '@material-tailwind/react';
@@ -91,24 +91,26 @@ export default function HistoryPage() {
             >
               播放历史
             </span>
-            <div className={'absolute right-0'}>
-              <div
-                className={`flex-row justify-center cursor-pointer ${
-                  watchHistoryList.length === 0 ? 'hidden' : 'flex'
-                }`}
-                onClick={() => {
-                  setOpenConfirmClearHistory(true);
-                }}
-              >
-                <span
-                  className='text-sm hover-effect'
-                  style={{ color: 'rgba(156, 156, 156, 1)' }}
+      
+              <div className={'absolute right-0'}>
+                <div
+                  className={`flex-row justify-center cursor-pointer ${watchHistoryList.length === 0 ? 'hidden' : 'flex'
+                    }`}
+                  onClick={() => {
+                    setOpenConfirmClearHistory(true);
+                  }}
                 >
-                  清除记录
-                </span>
-                <Image className='mx-1' src={clear} alt='clear' width={10} />
+                  <span
+                    className='text-sm hover-effect'
+                    style={{ color: 'rgba(156, 156, 156, 1)' }}
+                  >
+                    清除记录
+                  </span>
+                  <Image className='mx-1' src={clear} alt='clear' width={10} />
+                </div>
               </div>
-            </div>
+            
+
           </div>
           <div>
             <div className={'flex flex-wrap justify-start gap-x-2'}>
@@ -174,6 +176,7 @@ export default function HistoryPage() {
               >
                 <span className={'text-white'}>播放历史</span>
               </div>
+              {watchHistoryList.length > 0 && (
               <Button
                 variant={'text'}
                 size={'sm'}
@@ -182,6 +185,7 @@ export default function HistoryPage() {
               >
                 清除
               </Button>
+              )}
             </div>
           </div>
         </div>
@@ -353,14 +357,14 @@ function ConfirmClearHistoryModal({ open, handler, onConfirm, onCancel }) {
           </div>
         </div>
         <div className={'mobile'}>
-          <div className={'flex flex-col gap-[16px] px-10 font-medium'}>
+          <div className={'flex flex-col gap-[16px] px-2 font-medium'}>
             <span className={'text-[17px] text-white text-center'}>
               清除提示
             </span>
             <span className={'text-[13px] text-white text-center'}>
               您确定要清空播放历史吗？？
             </span>
-            <div className={'flex gap-1'}>
+            <div className={'flex gap-3 pt-2'}>
               <Button
                 className={'flex-1 text-[15px] text-white'}
                 onClick={onCancel}
