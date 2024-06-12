@@ -122,6 +122,11 @@ export default function Page({ params }) {
         console.log('setUpPin')
         router.push('/setpin')
       }
+      else if (event.data.type === 'share') {
+        console.log('share')
+        // router.push('/setpin')
+        window.open(event.data.url, '_blank', 'noopener,noreferrer');
+      }
       else if (event.data.type === 'forgotSecurityPin') {
         console.log('forgotSecurityPin')
         router.push('/setpin')
