@@ -2,18 +2,33 @@ const { i18n } = require('./next-i18next.config');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'localhost' }],
+        destination: '/:path*',
+        permanent: false,
+      },
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: '^(?!localhost).*$' }],
+        destination: 'https://:host/:path*',
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     return [
       {
         source: '/api/:path*',
         destination: 'https://api.yingshi.tv/:path*',
       },
-    ]
+    ];
   },
   i18n,
   transpilePackages: ['crypto-js'],
   images: {
-    // unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -30,6 +45,6 @@ const nextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
-  transpilePackages: ['crypto-js'],
 };
+
 module.exports = nextConfig;
