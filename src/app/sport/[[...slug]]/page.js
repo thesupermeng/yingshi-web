@@ -148,12 +148,14 @@ console.log('hiiiiii')
           <iframe
             className={'flex-1'}
             src={`https://iframe-web.aha666.site/${iframeUrl}`}
+            allow="clipboard-read; clipboard-write"
           />
         </div>
         <div className="mobile w-screen h-full">
           <iframe
             className={'w-full h-full'}
             src={`https://iframe-h5.aha666.site/${iframeUrl}`}
+            allow="clipboard-read; clipboard-write"
           />
         </div>
       </>

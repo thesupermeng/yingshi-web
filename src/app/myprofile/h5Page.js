@@ -267,6 +267,7 @@ export default function H5Page({ params }) {
             className={'h-[74px] w-full rounded-[12px]'}
             src={`https://iframe-h5.aha666.site/user/wallet?authToken=${frameToken}&channelCode=100019`}
             scrolling={'no'}
+            allow="clipboard-read; clipboard-write"
           />
 
 
