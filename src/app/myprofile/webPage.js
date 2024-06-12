@@ -29,7 +29,7 @@ export default function WebPage ({subMenus}) {
   const [openLogin, setOpenLogin] = useLoginOpen()
 
   useEffect(() => {
-    refreshUserInfo()
+     refreshUserInfo()
   }, [])
 
   const handleLogout = () => {

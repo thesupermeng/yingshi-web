@@ -121,9 +121,10 @@ export default function H5Page({ params }) {
     }
   }, [loginParam])
 
-  useEffect(() => {
-    refreshUserInfo()
-  }, [])
+  // useLayoutEffect(() => {
+  //   console.log('refreshUserInfo')
+  //   refreshUserInfo()
+  // }, [])
 
   const handleOnClickVip = () => {
     if (!userInfo) {
