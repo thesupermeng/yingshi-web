@@ -23,13 +23,18 @@ const nextConfig = {
     return [
       {
         source: '/:path*',
-        has: [{ type: 'host', value: 'localhost' }],
+        has: [
+          { type: 'host', value: 'localhost' },
+        ],
         destination: '/:path*',
         permanent: false,
       },
       {
         source: '/:path*',
-        has: [{ type: 'host', value: '^(?!localhost).*$' }],
+        has: [
+          { type: 'host', value: '^(?!localhost).*$' },
+          { type: 'protocol', value: 'http' },
+        ],
         destination: 'https://:host/:path*',
         permanent: true,
       },
