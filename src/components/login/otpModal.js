@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogBody } from '@material-tailwind/react';
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import { loginEmail, loginRequestEmailOtp, loginRequestSmsOtp, loginSms } from '@/services/yingshiUser';
-import { setAhaToken, setYingshiUserLoginParam, setYingshiUserToken } from '@/store/yingshiUser';
+import { setAhaToken, setYingshiUserLoginParam, setYingshiUserToken , setYingshiUserInfo } from '@/store/yingshiUser';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -85,6 +85,7 @@ export default function OtpModal({ open, handler, onLogin, onRegister , onCloseO
               if (res.code === 201) {
                 onRegister()
               }
+              dispatch(setYingshiUserInfo(res.data.user))
               dispatch(setYingshiUserToken(res.data.access_token))
               dispatch(setAhaToken(res.data.aha_token))
               localStorage.setItem('AuthToken' ,res.data.aha_token )
@@ -100,6 +101,8 @@ export default function OtpModal({ open, handler, onLogin, onRegister , onCloseO
                 return
               }
 
+
+
               dispatch(setYingshiUserLoginParam({ success: true }))
               if (res.code === 0) {
                 onLogin()
@@ -107,6 +110,7 @@ export default function OtpModal({ open, handler, onLogin, onRegister , onCloseO
               if (res.code === 201) {
                 onRegister()
               }
+              dispatch(setYingshiUserInfo(res.data.user))
               dispatch(setYingshiUserToken(res.data.access_token))
               dispatch(setAhaToken(res.data.aha_token))
               localStorage.setItem('AuthToken' ,res.data.aha_token )
