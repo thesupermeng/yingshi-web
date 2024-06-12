@@ -117,7 +117,6 @@ export default function Page({ params }) {
       }
       else if (event.data.type === 'enterPin') {
         console.log('enterPin')
-       // router.push('/enterpin')
       }
       else if (event.data.type === 'forgotSecurityPin') {
         console.log('forgotSecurityPin')
