@@ -1,20 +1,9 @@
 'use client';
 import { forwardRef, useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
-import { Stopwatch } from '@/asset/icons';
+;
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
-import {
-  loginEmail,
-  loginRequestEmailOtp,
-  loginRequestSmsOtp,
-  loginSms,
-} from '@/services/yingshiUser';
-import {
-  setAhaToken,
-  setYingshiUserLoginParam,
-  setYingshiUserToken,
-} from '@/store/yingshiUser';
+
 import { useLoginSuccessOpen } from '@/hook/yingshiScreenState/useLoginSuccessOpen';
 import PinHeader from './../../components/pinHeader';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
@@ -28,25 +17,6 @@ import {
 } from '@/store/yingshiScreen';
 // import { setsEqual } from 'chart.js/dist/helpers/helpers.core';
 const totalCountdownTime = 60; // seconds
-
-function formatPhoneNumber(phone) {
-  const phoneStr = phone.toString();
-  let formattedPhone;
-
-  if (phoneStr.startsWith('+')) {
-    const countryCode = phoneStr.slice(1, 4);
-    const part1 = phoneStr.slice(4, 7);
-    const part2 = phoneStr.slice(7, 11);
-    formattedPhone = `+${countryCode} ${part1} ${part2}`;
-  } else {
-    const countryCode = phoneStr.slice(0, 3);
-    const part1 = phoneStr.slice(3, 6);
-    const part2 = phoneStr.slice(6, 10);
-    formattedPhone = `+${countryCode} ${part1} ${part2}`;
-  }
-
-  return formattedPhone;
-}
 
 export default function EnterPin() {
   const router = useRouter();

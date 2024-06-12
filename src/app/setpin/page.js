@@ -4,17 +4,6 @@ import Image from 'next/image';
 import { Stopwatch } from '@/asset/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
-import {
-  loginEmail,
-  loginRequestEmailOtp,
-  loginRequestSmsOtp,
-  loginSms,
-} from '@/services/yingshiUser';
-import {
-  setAhaToken,
-  setYingshiUserLoginParam,
-  setYingshiUserToken,
-} from '@/store/yingshiUser';
 import { useLoginSuccessOpen } from '@/hook/yingshiScreenState/useLoginSuccessOpen';
 import PinHeader from './../../components/pinHeader';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
