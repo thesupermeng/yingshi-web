@@ -266,7 +266,8 @@ const Header = () => {
     } else if (value == 999) {
       localStorage.removeItem('videoTypeId');
       localStorage.removeItem('videoClass');
-      router.push('/film-library');
+      // router.push('/film-library');
+      router.push('/film-library/testing/id/1/by/time')
     } else if (value === 0) {
       router.push(`/`);
       setSearchInput('');
@@ -413,7 +414,7 @@ const Header = () => {
     };
   }, []);
 
-  if (loading) {
+  if (loading && !pathname.startsWith('/film-library')) {
     return <LoadingPage full={true} />;
   }
 

@@ -34,7 +34,8 @@ export default function Page() {
       } else if (intId === 998) {
         router.push('/topic');
       } else if (intId === 999) {
-        router.push('/film-library');
+        // router.push('/film-library');
+        router.push('/film-library/testing/id/1/by/time')
       } else if (headerId.includes(intId)) {
         // No routing needed, return to render Home component below
       } else {

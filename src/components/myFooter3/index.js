@@ -41,7 +41,8 @@ const MyFooter = () => {
     if (value == 998) {
       router.push('/topic');
     } else if (value == 999) {
-      router.push('/film-library');
+      // router.push('/film-library');
+      router.push('/film-library/testing/id/1/by/time')
     } else if (value == 990) {
       router.push('/myprofile');
     } else if (value == 997) {
