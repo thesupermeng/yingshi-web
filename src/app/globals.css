@@ -256,3 +256,38 @@ body {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+/* Add this to your global CSS file or a CSS module */
+.otp-container {
+  display: flex;
+  justify-content: center;
+  padding: 0 32px; /* Add padding on left and right */
+  box-sizing: border-box; /* Ensure padding is included in element's width */
+  width: 100%; /* Full width of the screen */
+  max-width: 100%; /* Prevent overflow beyond the screen width */
+}
+
+.otp-inputs {
+  display: flex;
+  gap: 10px; /* Gap between inputs */
+}
+
+.otp-input {
+  width: 50px; /* Adjust the width and height as needed */
+  height: 50px;
+  border-radius: 10px;
+  background-color: #1D2023;
+  color: #FFFFFF; /* Adjust text color if needed */
+  border: 1px solid transparent; /* Default border to transparent */
+  text-align: center; /* Center the text */
+  font-size: 30px; /* Adjust font size if needed */
+  box-sizing: border-box; /* Ensure padding is included in element's width */
+}
+.otp-input:focus {
+  border-color: #0085E0; /* Border color on focus */
+  outline: none; /* Remove default outline */
+}
+.otp-input.error {
+  border-color: #FF1010; /* Border color for error state */
+  background-color: rgba(255, 16, 16, 0.1); /* Background color for error state */
+}

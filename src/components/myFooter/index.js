@@ -58,7 +58,6 @@ const MyFooter = () => {
     pathname.startsWith('/payment') ||
     pathname.startsWith('/login') ||
     pathname.startsWith('/setpin') ||
-    pathname.startsWith('/enterpin') ||
     pathname.startsWith('/privacy') ||
     pathname.startsWith('/service') ||
    // pathname.startsWith('/sport') ||

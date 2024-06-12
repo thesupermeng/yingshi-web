@@ -5,13 +5,14 @@ import {useRouter} from 'next/navigation';
 import {useDispatch, useSelector} from 'react-redux';
 import {setYingshiUserInfo} from '@/store/yingshiUser';
 import {Button} from '@material-tailwind/react';
+import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 
 export default function Nickname () {
   const dispatch = useDispatch()
   const router = useRouter()
   const [nickname, setNickname] = useState('')
   const [errorMsg, setErrorMsg] = useState(null)
-
+  const {userInfo, refreshUserInfo} = useYingshiUser()
   const getLoginParam = (s) => s.yingshiUser.loginParam
   const loginParam = useSelector(getLoginParam)
 
@@ -35,16 +36,20 @@ export default function Nickname () {
     setNickname(val)
   }
 
-  const handleConfirm = () => {
-    updateUserInfo({username: nickname})
-      .then(res => {
+  const handleConfirm = async () => {
+   let res = await updateUserInfo({username: nickname})
+   
         if (res.code === 0) {
           // success
+
+          await refreshUserInfo()
+          
+
           router.push('/myprofile')
         } else if (res.code === -1) {
           setErrorMsg(res?.errors?.username ?? '昵称格式不正确')
         }
-      })
+     
   }
 
   const canSubmit = validator(nickname)

@@ -1,15 +1,15 @@
 'use client'
-import {BottomSheet} from 'react-spring-bottom-sheet';
-import React, {useEffect, useState} from 'react';
-import {loginRequestEmailOtp, loginRequestSmsOtp} from '@/services/yingshiUser';
+import { BottomSheet } from 'react-spring-bottom-sheet';
+import React, { useEffect, useState } from 'react';
+import { loginRequestEmailOtp, loginRequestSmsOtp } from '@/services/yingshiUser';
 import TextInput from '@/components/login/input';
-import {useRouter} from 'next/navigation';
-import {useDispatch} from 'react-redux';
-import {setYingshiUserLoginParam} from '@/store/yingshiUser';
+import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import { setYingshiUserLoginParam } from '@/store/yingshiUser';
 import CountryInput from '@/componentsH5/yingshiLoginBottomSheet/countryInput';
-import {Button, Checkbox} from '@material-tailwind/react';
+import { Button, Checkbox } from '@material-tailwind/react';
 
-export default function YingshiLoginBottomSheet({visible, onDismiss}) {
+export default function YingshiLoginBottomSheet({ visible, onDismiss }) {
     const router = useRouter()
     const [formData, setFormData] = useState({})
     const dispatch = useDispatch()
@@ -17,6 +17,8 @@ export default function YingshiLoginBottomSheet({visible, onDismiss}) {
     const [isInputError, setIsInputError] = useState(false);
     const [isAgreementChecked, setIsAgreementChecked] = useState(true);
     const isInputEmpty = !formData.phoneNumber && !formData.email
+    const [countryPrefix, setCountryPrefix] = useState('');
+
 
     useEffect(() => {
         setFormData({})
@@ -34,13 +36,19 @@ export default function YingshiLoginBottomSheet({visible, onDismiss}) {
         //         loginMode,
         //         ...formData
         //     }
-        const loginParam = {...formData, loginMode}
+        const loginParam = { ...formData, loginMode }
+        loginParam.phoneNumber = countryPrefix + loginParam.phoneNumber
+
 
         if (loginMode === 'sms') {
             loginRequestSmsOtp(loginParam)
         } else {
             loginRequestEmailOtp(loginParam)
         }
+
+
+
+        // 1111111
         dispatch(setYingshiUserLoginParam(loginParam))
         onDismiss()
         router.push('/login/otp')
@@ -96,48 +104,49 @@ export default function YingshiLoginBottomSheet({visible, onDismiss}) {
             open={visible}
             snapPoints={({ minHeight, maxHeight }) => minHeight}
         >
-            <div className={'flex-col items-center'} style={{paddingBottom : 15}}>
+            <div className={'flex-col items-center'} style={{ paddingBottom: 15 }}>
                 <p className={'text-xl text-center'}>注册/登录</p>
                 <p className={'text-sm text-center text-[#9C9C9C] mt-2.5'}>登录后可管理您的账号，多端同步观看历史和收藏夹。</p>
                 <div className={'px-[23px] mt-[22px]'}>
                     <div className={'flex'}>
-                      <Tabs title={'电邮地址'} onClick={handleClickEmail} isSelected={loginMode==='email'} />
-                      <Tabs title={'手机号码'} onClick={handleClickPhone} isSelected={loginMode==='sms'} />
+                        <Tabs title={'电邮地址'} onClick={handleClickEmail} isSelected={loginMode === 'email'} />
+                        <Tabs title={'手机号码'} onClick={handleClickPhone} isSelected={loginMode === 'sms'} />
                     </div>
                     <div className={'flex flex-col'}>
                         {loginMode === 'email' &&
                             <TextInput
-                            name="email"
-                            placeholder={'输入邮箱账号'}
-                            onChange={handleInput}
-                            errorMessage={'电邮地址格式错误'}
-                            validator={isEmailValid}
-                            isShowIcon={true}
-                        />}
+                                name="email"
+                                placeholder={'输入邮箱账号'}
+                                onChange={handleInput}
+                                errorMessage={'电邮地址格式错误'}
+                                validator={isEmailValid}
+                                isShowIcon={true}
+                            />}
                         {loginMode === 'sms' &&
-                                <CountryInput
-                                    name="phoneNumber"
-                                    placeholder={'2 345 6789'}
-                                    onChange={handleInput}
-                                    errorMessage={'手机号码格式错误'}
-                                    validator={isPhoneValid}
-                                    isShowIcon={true}
-                                />
+                            <CountryInput
+                                name="phoneNumber"
+                                placeholder={'2 345 6789'}
+                                onChange={handleInput}
+                                errorMessage={'手机号码格式错误'}
+                                validator={isPhoneValid}
+                                isShowIcon={true}
+                                setCountryPrefix={setCountryPrefix}
+                            />
                         }
                         <TextInput
                             name="referralCode"
                             placeholder={'邀请码（选填）'}
                             onChange={handleInput}
                             isShowIcon={false}
-                            />
+                        />
                         <Button className={'h-12 w-full rounded-[10px] disabled:bg-[#1D2023] enabled:bg-[#0085E0] disabled:text-[#9C9C9C] enabled:text-white text-[17px]'} onClick={handleRegister} disabled={isInputError || isInputEmpty || !isAgreementChecked}>下一步</Button>
                         <div className={'flex items-center justify-center mt-[20px]'}>
                             <Checkbox
-                              defaultChecked={isAgreementChecked}
-                              ripple={false}
-                              className={'w-4 h-4 rounded-full hover:before:opacity-0'}
-                              color={'blue'}
-                              onChange={(e) => setIsAgreementChecked(e.target.checked)}
+                                defaultChecked={isAgreementChecked}
+                                ripple={false}
+                                className={'w-4 h-4 rounded-full hover:before:opacity-0'}
+                                color={'blue'}
+                                onChange={(e) => setIsAgreementChecked(e.target.checked)}
                             />
                             <span className={'text-[13px] text-[#9C9C9C]'}>我已阅读并同意
                                 <span className={'text-[#0085E0]'} onClick={handleClickService}>用户协议</span>
@@ -159,12 +168,12 @@ export default function YingshiLoginBottomSheet({visible, onDismiss}) {
     )
 }
 
-function Tabs({title, isSelected, onClick}) {
+function Tabs({ title, isSelected, onClick }) {
     const color = isSelected ? '#0085E0' : 'transparent'
     const textStyle = isSelected ? 'text-white font-semibold' : 'text-[#FFFFFF80] '
 
     return (<div className={'p-2.5 flex flex-col items-center justify-center'} onClick={onClick}>
-      <span className={textStyle}>{title}</span>
-      <div className={`rounded h-[3px] w-[22px] bg-[${color}]`}></div>
+        <span className={textStyle}>{title}</span>
+        <div className={`rounded h-[3px] w-[22px] bg-[${color}]`}></div>
     </div>)
 }

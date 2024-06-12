@@ -219,7 +219,6 @@ export const YingshiApi2 = async (url, body = {}, options = {}) => {
 
 
   if (method !== 'GET') {
-    url = url +  await getQuery(url);
     requestOption.body = requestBody;
   } else {
     getParams = objectToGetParams(body);

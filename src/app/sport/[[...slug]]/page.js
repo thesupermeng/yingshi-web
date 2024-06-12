@@ -95,20 +95,20 @@ export default function Page({ params }) {
       // console.log('iframe event ')
       if (event.data.type === 'login') {
         console.log('login type ')
-        if (!userInfo) {
+       // if (!userInfo) {
           setOpenSignInUp(true)
-        }
-        else
-        {
-         await refreshUserInfo()
-         onRefreshToken()
-        }
+       // }
+        // else
+        // {
+        //  await refreshUserInfo()
+        //  onRefreshToken()
+        // }
       } 
       else if (event.data.type === 'invalidToken' && userInfo) {
          console.log('invalid aha token')
         // router.push(`/sport`)
-
         dispatch(setIsSessionExpired(true))
+        router.replace(`/myprofile`)
       }
       else if (event.data.type === 'onTopUp') {
         console.log('onTopUp')
@@ -117,11 +117,22 @@ export default function Page({ params }) {
       }
       else if (event.data.type === 'enterPin') {
         console.log('enterPin')
-       // router.push('/enterpin')
+      }
+      else if (event.data.type === 'setUpPin') {
+        console.log('setUpPin')
+        router.push('/setpin')
+      }
+      else if (event.data.type === 'share') {
+        console.log('share')
+        // router.push('/setpin')
+        window.open(event.data.url, '_blank', 'noopener,noreferrer');
       }
       else if (event.data.type === 'forgotSecurityPin') {
         console.log('forgotSecurityPin')
         router.push('/setpin')
+      }
+      else if (event.data.type === 'return') {
+        router.push(event.data.url)
       }
      
     }
@@ -145,12 +156,14 @@ console.log('hiiiiii')
           <iframe
             className={'flex-1'}
             src={`https://iframe-web.aha666.site/${iframeUrl}`}
+            allow="clipboard-read; clipboard-write"
           />
         </div>
         <div className="mobile w-screen h-full">
           <iframe
             className={'w-full h-full'}
             src={`https://iframe-h5.aha666.site/${iframeUrl}`}
+            allow="clipboard-read; clipboard-write"
           />
         </div>
       </>
