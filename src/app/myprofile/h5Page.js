@@ -302,7 +302,7 @@ export default function H5Page({ params }) {
         </div>
       )}
 
-      <div className={'flex flex-col gap-[16px] pb-[100px]'}>
+      <div className={'flex flex-col gap-[16px] pb-[20px]'}>
         {navs
           .filter((x) => {
             if (userInfo) {

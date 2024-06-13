@@ -1186,9 +1186,9 @@ const Header = () => {
   if (pathname.startsWith('/myprofile')) {
     return (
       <>
-        <div className={'z-50 w-screen mobile sticky top-0'}>
+        <div className={'z-50 w-screen mobile sticky top-0 bg-[#101215]'}>
           {pathname === '/myprofile' && (
-            <div className='flex pt-3 mx-2.5'>
+            <div className='flex pt-3 pb-3 mx-2.5'>
               <div className='gap-y-2 flex-col w-full md:flex-row flex'>
                 <div className='flex-1 flex px-4 md:justify-start'>
                   <span className='text-topic-title'> 我的 </span>
