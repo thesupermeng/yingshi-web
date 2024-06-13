@@ -35,7 +35,7 @@ export default function Page() {
         router.push('/topic');
       } else if (intId === 999) {
         // router.push('/film-library');
-        router.push('/film-library/testing/id/1/by/time')
+        router.push('/vod/show/by/time/id/1')
       } else if (headerId.includes(intId)) {
         // No routing needed, return to render Home component below
       } else {

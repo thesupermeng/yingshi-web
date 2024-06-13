@@ -189,6 +189,30 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
     return num * 56;
   };
 
+  const generatePath = (value, type) => {
+    const regex = new RegExp(`/${type}/[^/]+`);
+
+    if (regex.test(path)) {
+      return path.replace(regex, `/${type}/${value}`);
+    } else {
+      switch (type) {
+        case 'by':
+          return path.replace(/\/id\//, `/by/${value}/id`);
+        case 'id':
+        case 'class':
+          return path.replace(/\/id\//, `/class/${value}/id/`);
+        case 'area':
+          return path.replace(/\/by\//, `/area/${value}/by/`);
+        case 'lang':
+          return path.replace(/\/id\/[^/]+/, match => `${match}/${type}/${value}`);
+        case 'year':
+          return `${path}/year/${value}`;
+        default:
+          return path;
+      }
+    }
+  }
+
   return (
     <>
       <div className='flex flex-1 justify-center flex-col'>
@@ -208,7 +232,7 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                     className="flex flex-col items-center cursor-pointer"
                     id={item.type_id}
                     key={index}
-                    href={`/film-library/testing/id/${item.type_id}/by/${advanceFilterItem[0].value}`}
+                    href={`/vod/show/by/${advanceFilterItem[0].value}/id/${item.type_id}`}
                   >
                     <span
                       className={`hover:text-blue-500 transition-colors duration-300 truncate ${
@@ -244,7 +268,7 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                       } p-2 rounded-md`}
                       id={item.value}
                       key={index}
-                      href={`${path.replace(/\/by\/[^/]+/, '')}/by/${item.value}`}
+                      href={generatePath(item.value, 'by')}
                     >
                       <span
                         className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
@@ -274,8 +298,8 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                           id={item}
                           key={index}
                           href={item === '全部类型' ?
-                            path.replace(/\/class\/[^/]+/, '') :
-                            `${path.replace(/\/class\/[^/]+/, '')}/class/${item}`
+                              path.replace(/\/class\/[^/]+/, '') :
+                              generatePath(item, 'class')
                           }
                       >
                         <span
@@ -307,8 +331,8 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                         id={item}
                         key={index}
                         href={item === '全部地区' ?
-                            path.replace(/\/area\/[^/]+/, '') :
-                            `${path.replace(/\/area\/[^/]+/, '')}/area/${item}`
+                          path.replace(/\/area\/[^/]+/, '') :
+                          generatePath(item, 'area')
                         }
                       >
                         <span
@@ -341,7 +365,7 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                         key={index}
                         href={item === '全部语言' ?
                             path.replace(/\/lang\/[^/]+/, '') :
-                            `${path.replace(/\/lang\/[^/]+/, '')}/lang/${item}`
+                            generatePath(item, 'lang')
                         }
                       >
                         <span
@@ -374,7 +398,7 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                         key={index}
                         href={item === '全部时间' ?
                             path.replace(/\/year\/[^/]+/, '') :
-                            `${path.replace(/\/year\/[^/]+/, '')}/year/${item}`
+                            generatePath(item, 'year')
                         }
                       >
                         <span

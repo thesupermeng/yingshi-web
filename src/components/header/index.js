@@ -267,7 +267,7 @@ const Header = () => {
       localStorage.removeItem('videoTypeId');
       localStorage.removeItem('videoClass');
       // router.push('/film-library');
-      router.push('/film-library/testing/id/1/by/time')
+      router.push('/vod/show/by/time/id/1');
     } else if (value === 0) {
       router.push(`/`);
       setSearchInput('');
@@ -342,7 +342,7 @@ const Header = () => {
       setSelectedId(parseInt(0));
     } else if (pathname.startsWith('/topic')) {
       setSelectedId(998);
-    } else if (pathname.startsWith('/film-library')) {
+    } else if (pathname.startsWith('/vod/show')) {
       setSelectedId(999);
     } else if (pathname.startsWith('/play/')) {
       setSelectedId(-1);
@@ -414,7 +414,7 @@ const Header = () => {
     };
   }, []);
 
-  if (loading && !pathname.startsWith('/film-library')) {
+  if (loading && !pathname.startsWith('/vod/show')) {
     return <LoadingPage full={true} />;
   }
 
@@ -1103,7 +1103,7 @@ const Header = () => {
     );
   }
 
-  if (pathname.startsWith('/film-library') || pathname.startsWith('/topic/')) {
+  if (pathname.startsWith('/vod/show') || pathname.startsWith('/topic/')) {
     return (
       <>
         <div className={'mobile z-50 sticky top-0 w-screen'}>

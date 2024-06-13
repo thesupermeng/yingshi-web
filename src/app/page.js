@@ -153,7 +153,7 @@ export default function Home(params) {
     localStorage.setItem('videoTypeId', item.type_id);
     localStorage.setItem('videoClass', item.type_name);
     // router.push(`/film-library`);
-    router.push(`film-library/testing/id/${item.type_id}/class/${item.type_name}`);
+    router.push(`vod/show/by/time/class/${item.type_name}/id/${item.type_id}`);
   };
 
   useEffect(() => {
