@@ -132,7 +132,11 @@ export default function Page({ params }) {
         router.push('/setpin')
       }
       else if (event.data.type === 'return') {
-        router.push(event.data.url)
+        if (event.data.url.includes('undefined')) {
+          dispatch(setIsSessionExpired(true));
+        } else {
+          router.push(event.data.url);
+        }
       }
      
     }

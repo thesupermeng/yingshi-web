@@ -181,7 +181,11 @@ export default function H5Page({ params }) {
         // console.log('invalid aha token')
         // setFrameToken(-1)
       } else {
-        router.push(`/sport/${event.data.url}`);
+        if (event.data.url.includes('undefined')) {
+          dispatch(setIsSessionExpired(true));
+        } else {
+          router.push(`/sport/${event.data.url}`);
+        }
       }
     }
   };
