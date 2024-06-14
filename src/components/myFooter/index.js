@@ -23,7 +23,7 @@ const MyFooter = () => {
   useEffect(() => {
     if (pathname.startsWith('/topic')) {
       setSelectedId(998);
-    } else if (pathname.startsWith('/film-library')) {
+    } else if (pathname.startsWith('/vod/show')) {
       setSelectedId(999);
     } else if (pathname.startsWith('/play/')) {
       setSelectedId(-1);
@@ -41,7 +41,8 @@ const MyFooter = () => {
     if (value == 998) {
       router.push('/topic');
     } else if (value == 999) {
-      router.push('/film-library');
+      // router.push('/film-library');
+      router.push('/vod/show/by/time/id/1')
     } else if (value == 990) {
       router.push('/myprofile');
     } else if (value == 997) {

@@ -127,12 +127,13 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
     isFormdata,
     excludeInSignature,
     returnFullResponse,
+    noToken,
   } = options;
 
   const requestBody = JSON.stringify(body);
   const requestOption = {
     method,
-    headers: await getHeader(requestBody, method, localStorage.getItem(LocalStorageKeys.AuthTokenHeader)),
+    headers: await getHeader(requestBody, method, !noToken && localStorage.getItem(LocalStorageKeys.AuthTokenHeader)),
   };
 
   let getParams = '';
