@@ -9,7 +9,6 @@ import { VideoHorizontalCard } from '@/components/videoItem/videoHorizontalCard'
 import { Spinner } from './../../../../components/spinner';
 import TopicHeader from './../../../../components/topicHeader';
 export default function Page() {
-
   const params = useParams();
   const xvodId = params.xvodId;
   const xvodClass = params.xvodClass;
@@ -18,21 +17,23 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(true);
   let vodListTotal = [];
   let currentPage = 0;
-  let stillCanLoad = true
+  let stillCanLoad = true;
   // const [isVisible, setIsVisible] = useState(false);
   let totalPage = 0;
   let loading = false;
   const targetRef = useRef(null);
 
-
   const getXVodListApi = async () => {
-    let url = URL_YINGSHI_VOD.getXVodDetails + '?limit=30&page=' + currentPage + '&vod_source_name=' + xvodId + '&class=' + xvodClass;
+    let url =
+      URL_YINGSHI_VOD.getXVodDetails +
+      '?limit=30&page=' +
+      currentPage +
+      '&vod_source_name=' +
+      xvodId +
+      '&class=' +
+      xvodClass;
     console.log(url);
-    return YingshiApi(
-      url,
-      {},
-      { method: 'GET' }
-    );
+    return YingshiApi(url, {}, { method: 'GET' });
   };
 
   const getXVodList = async () => {
@@ -57,7 +58,7 @@ export default function Page() {
       }
 
       if (currentPage == totalPage) {
-        stillCanLoad = false
+        stillCanLoad = false;
         setIsLoading(false);
         return;
       }
@@ -68,9 +69,8 @@ export default function Page() {
       loading = false;
 
       setIsLoading(false);
-
     } else {
-      stillCanLoad = false
+      stillCanLoad = false;
       await new Promise((resolve) => setTimeout(resolve, 2000));
       loading = false;
       setIsLoading(false);
@@ -83,8 +83,7 @@ export default function Page() {
         setVods([...vods, ...data.List]);
       }
     });
-
-  }, [xvodId, xvodClass])
+  }, [xvodId, xvodClass]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -115,50 +114,58 @@ export default function Page() {
 
   return (
     <>
+      <div
+        className='w-full grow  justify-center '
+        style={{ display: 'block' }}
+      >
         <div className='mobile'>
-        <TopicHeader topicName={decodeURIComponent(xvodClass)} />
-        <div style={{ height: '52px' }}></div>
-      
-      </div>
+          <TopicHeader topicName={decodeURIComponent(xvodClass)} />
+          {/* <div style={{ height: '52px' }}></div> */}
+        </div>
 
-      {!isLoading &&
-        <div>
-          <div className={`${styles.containerHeader} desktop`}>
+        {!isLoading && (
+          <div>
+            <div className={`${styles.containerHeader} desktop`}></div>
 
-          </div>
-
-     
-
-
-          <div className='d-flex container pb-6' style={{ flexDirection: 'column' }}>
-            <div className='text-xl desktop'>{decodeURIComponent(xvodClass)}</div>
-            <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
-              {vods != [] &&
-                vods?.map((vod, idx) => {
-                  return <VideoHorizontalCard vod={vod} key={idx} typepage_id={99} />;
-                  return (
-                    <>{vod.vod_name}</>
-                  )
-                })
-              }
+            <div
+              className='d-flex container pb-6'
+              style={{ flexDirection: 'column' }}
+            >
+              <div className='text-xl desktop'>
+                {decodeURIComponent(xvodClass)}
+              </div>
+              <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
+                {vods != [] &&
+                  vods?.map((vod, idx) => {
+                    return (
+                      <VideoHorizontalCard
+                        vod={vod}
+                        key={idx}
+                        typepage_id={99}
+                      />
+                    );
+                    return <>{vod.vod_name}</>;
+                  })}
+              </div>
             </div>
           </div>
-        </div>
-      }
+        )}
 
-
-      {/* loading spinner  */}
-      <div ref={targetRef}>{isLoading &&
-        <div className=' items-center justify-center flex-col my-6 py-6'>
-          <Spinner></Spinner>
+        {/* loading spinner  */}
+        <div ref={targetRef}>
+          {isLoading && (
+            <div className=' items-center justify-center flex-col my-6 py-6'>
+              <Spinner></Spinner>
+            </div>
+          )}
         </div>
-      }</div>
 
-      {!isLoading &&
-        <div className='flex items-center justify-center flex-col my-6 py-6'>
-          <span className='test-xs text-muted'>没有更多了</span>
-        </div>
-      }
+        {!isLoading && (
+          <div className='flex items-center justify-center flex-col my-6 py-6'>
+            <span className='test-xs text-muted'>没有更多了</span>
+          </div>
+        )}
+      </div>
     </>
   );
 }
