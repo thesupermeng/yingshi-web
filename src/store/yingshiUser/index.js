@@ -39,12 +39,15 @@ export const yingshiUser = createSlice( {
             state.userInfo = action.payload;
         },
         setToken: (state, action) => {
+            localStorage.setItem('AuthTokenHeader' ,action.payload)
             state.token = action.payload;
         },
         setLoginParam: (state, action) => {
             state.loginParam = action.payload;
         },
         setAhaToken: (state, action) => {
+            localStorage.setItem('AuthToken',action.payload)
+            localStorage.setItem('AhaToken',action.payload)
             state.ahaToken = action.payload;
         },
         setRefreshCd: (state, action) => {
