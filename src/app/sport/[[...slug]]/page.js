@@ -74,6 +74,14 @@ export default function Page({ params }) {
    if (event.data.type === 'urlChange') {
     
     const newUrl = event.data.newUrl;
+
+
+    if (newUrl.includes('undefined')) {
+      dispatch(setIsSessionExpired(true));
+      return
+    }
+
+
     setHideFooter(newUrl.endsWith('/sports/sport'));
     console.log('newUrl')
     console.log(newUrl)

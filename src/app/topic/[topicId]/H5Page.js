@@ -68,13 +68,13 @@ export default function Page() {
 
             <div className='d-flex container pt-3' style={{ width: '100%' }}>
               <div className='topic-header-text-sub'>
-                (共{topicObj.vod_list.length}部)
+                (共{topicObj?.vod_list?.length || 0}部)
               </div>
             </div>
 
             <div className='d-flex container pt-3' style={{ width: '100%' }}>
               <div className='row'>
-                {topicObj.vod_list.map((vod) => (
+                {topicObj?.vod_list?.map((vod) => (
                   <VodItemDesktop vod={vod} />
                 ))}
               </div>
@@ -91,11 +91,11 @@ export default function Page() {
             </div>
 
             <div className='topic-header-text-sub mt-3'>
-              (共{topicObj.vod_list.length}部)
+              (共{topicObj?.vod_list?.length || 0}部)
             </div>
             {/* mobile vod list  */}
             <div className='row mt-2'>
-              {topicObj.vod_list.map((vod) => (
+              {topicObj?.vod_list?.map((vod) => (
              <VodItemMobile vod={vod} />
               ))}
             </div>
