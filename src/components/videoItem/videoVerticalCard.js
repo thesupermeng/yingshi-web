@@ -15,13 +15,13 @@ export const VideoVerticalCard = ({ vod }) => {
   };
 
   return (
-    <div className='flex flex-col items-center'>
-      <div className='relative w-full aspect-[530/726] group mx-4 my-2 rounded-lg'>
+    <div className='flex flex-col items-center md-hover-effect'>
+      <div className='relative w-full aspect-[530/726] group mx-4 my-2 rounded-lg md-hover-effect'>
         <div
-          className='absolute inset-0 flex rounded-lg md:group-hover:improve-text-unblurry
-          md:transition md:group-hover:scale-150 md:group-hover:duration-500
-          md:group-hover:cursor-pointer group-hover:rounded-lg md:group-hover:z-10 
-          md:group-hover:rounded-lg'
+          className='absolute inset-0 flex rounded-lg lg:group-hover:improve-text-unblurry
+          lg:transition lg:group-hover:scale-150 lg:group-hover:duration-500
+          lg:group-hover:cursor-pointer group-hover:rounded-lg lg:group-hover:z-10 
+          lg:group-hover:rounded-lg'
           onClick={(e) => {
             e.preventDefault();
             router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);
@@ -41,7 +41,7 @@ export const VideoVerticalCard = ({ vod }) => {
             sizes='100%'
             className='rounded-lg'
           />
-          <div className='bg-[#0000008c] h-[100%] w-full flex flex-col rounded-lg md:group-hover:z-10 md:group-hover:block hidden'>
+          <div className='bg-[#0000008c] h-[100%] w-full flex flex-col rounded-lg md:group-hover:z-10 lg:group-hover:block hidden'>
             <div className='rounded-t-lg w-full h-[45%] flex justify-center items-center'>
               <div className='rounded-full bg-[#0085E0] w-10 h-10 flex justify-center items-center'>
                 <FontAwesomeIcon
@@ -89,7 +89,7 @@ export const VideoVerticalCard = ({ vod }) => {
           </div>
         ) : null}
       </div>
-      <span className='text-center text-sm mx-1'>{vod.vod_name}</span>
+      <span className='text-center text-sm mx-1 md-hover-effect'>{vod.vod_name}</span>
     </div>
   );
 };
