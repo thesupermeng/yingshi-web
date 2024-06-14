@@ -317,7 +317,7 @@ export default function OTP() {
               {userInfo.user_phone !== 0 &&
                 userInfo.user_phone !== '0' &&
                 userInfo.user_email === '' && (
-                  <> {formatPhoneNumber(userInfo.user_phone)} </>
+                  <> +{userInfo.user_phone} </>
                 )}
             </span>
           </p>

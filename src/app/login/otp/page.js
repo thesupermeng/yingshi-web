@@ -185,7 +185,7 @@ export default function OTP() {
               <p className={'text-center text-[14px] mb-[26px]'}>
                 验证码已发送至{' '}
                 <span className={'text-[#0085E0]'}>
-                  +{loginParam.phonecode} {loginParam.phoneNumber}
+                  +{loginParam.phoneNumber}
                 </span>
               </p>
             </>

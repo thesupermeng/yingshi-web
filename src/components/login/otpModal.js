@@ -153,7 +153,7 @@ export default function OtpModal({ open, handler, onLogin, onRegister , onCloseO
 
               <div className={'px-[15px] flex flex-col items-center'}>
                 <p className={'text-white text-center font-medium font-[18px]'}>请输入 6 位数字，验证码已发送至</p>
-                <p className={'text-shayuBlue text-center font-medium font-[18px]'}>{loginParam.loginMode === 'sms' ? `+${loginParam.phonecode} ${loginParam.phoneNumber}` : loginParam.email}</p>
+                <p className={'text-shayuBlue text-center font-medium font-[18px]'}>{loginParam.loginMode === 'sms' ? `+${loginParam.phoneNumber}` : loginParam.email}</p>
               </div>
 
 
