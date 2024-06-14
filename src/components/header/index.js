@@ -435,7 +435,7 @@ const Header = () => {
               }}
             />
           </div>
-          <div className='relative flex-1 md:ml-16'>
+          <div className='relative flex-1'>
             <input
               type='text'
               placeholder='输入搜索关键词'
@@ -954,7 +954,7 @@ const Header = () => {
     >
       <div className='flex pb-2.5 md:pb-4 pt-3 justify-center container md:pl-0'>
         <div className='gap-y-2 flex-col w-full md:flex-row flex'>
-          <div className='flex-1 flex gap-x-2 md:justify-start '>
+          <div className='flex-1 flex gap-x-2 md:justify-between '>
             <div
               className={`flex justify-between w-24 md:w-28 ${
                 openSearch ? 'hidden md:flex' : ''
@@ -1130,7 +1130,7 @@ const Header = () => {
         <div className={'z-30 w-screen sticky top-0 mobile'}>
           <div className='flex py-3 mx-2.5'>
             <div className='gap-y-2 flex-col w-full md:flex-row flex'>
-              <div className='flex-1 flex gap-x-2 md:justify-start'>
+              <div className='flex-1 flex gap-x-2 md:justify-between'>
                 <div
                   className={`flex justify-between w-22 pl-2 pr-2 self-center ${
                     openSearch ? 'hidden' : ''
@@ -1163,7 +1163,7 @@ const Header = () => {
         <div className={'z-50 w-screen mobile sticky top-0 bg-[#101215]'}>
           <div className='flex py-3 mx-2.5'>
             <div className='gap-y-2 flex-col w-full md:flex-row flex'>
-              <div className='flex-1 flex gap-x-2 md:justify-start'>
+              <div className='flex-1 flex gap-x-2 md:justify-between'>
                 <div
                   className={`flex justify-between w-22 pl-3 ${
                     openSearch ? 'hidden' : ''
@@ -1209,7 +1209,7 @@ const Header = () => {
       <div className={'z-30 w-screen mobile'}>
         <div className='flex py-3 mx-2.5'>
           <div className='gap-y-2 flex-col w-full md:flex-row flex'>
-            <div className='flex-1 flex gap-x-2 md:justify-start'>
+            <div className='flex-1 flex gap-x-2 md:justify-between'>
               <div
                 className={'flex w-[30px] h-[30px] justify-center items-center'}
               >
@@ -1232,7 +1232,7 @@ const Header = () => {
       <div className={'z-30 w-screen mobile sticky top-0 bg-[#101215]'}>
         <div className='flex py-3 mx-2.5'>
           <div className='gap-y-2 flex-col w-full md:flex-row flex'>
-            <div className='flex-1 flex gap-x-2 md:justify-start'>
+            <div className='flex-1 flex gap-x-2 md:justify-between'>
               {/*<div*/}
               {/*  className={'flex w-[30px] h-[30px] justify-center items-center'}*/}
               {/*>*/}
@@ -1279,7 +1279,7 @@ const Header = () => {
       <div className={'z-30 w-screen mobile sticky top-0 bg-[#101215]'}>
         <div className='flex py-4 mx-2.5'>
           <div className='gap-y-2 flex-col w-full md:flex-row flex'>
-            <div className='relative flex-1 flex gap-x-2 md:justify-start'>
+            <div className='relative flex-1 flex gap-x-2 md:justify-between'>
               <div
                 className={
                   'flex w-[30px] h-[30px] justify-center items-center z-10'
