@@ -180,7 +180,13 @@ export default function H5Page({ params }) {
         // }
         // console.log('invalid aha token')
         // setFrameToken(-1)
-      } else {
+      } 
+      else if (event.data.type === 'share') {
+        console.log('share')
+        // router.push('/setpin')
+        window.open(event.data.url, '_blank', 'noopener,noreferrer');
+        
+      }else {
         if (event.data.url.includes('undefined')) {
           dispatch(setIsSessionExpired(true));
         } else {
