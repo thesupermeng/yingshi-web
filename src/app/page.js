@@ -198,7 +198,7 @@ export default function Home(params) {
                               {yy.type_name}
                             </span>
                           </div>
-                          <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
+                          <div className='grid grid-cols-3 md:grid-cols-6 lg:grid-cols-6 gap-5 py-2'>
                             {yy.vod_list?.slice(0, 6).map((vod, i) => {
                               return <VideoVerticalCard vod={vod} key={i} />;
                             })}
@@ -251,7 +251,7 @@ export default function Home(params) {
                                 />
                               </div>
                             </div>
-                            <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
+                            <div className='grid grid-cols-3 md:grid-cols-6 lg:grid-cols-6 gap-5 py-2'>
                               {category.vod_list?.slice(0, 6).map((vod, i) => {
                                 return <VideoVerticalCard vod={vod} key={i} />;
                               })}
@@ -307,7 +307,7 @@ export default function Home(params) {
                                 />
                               </div>
                             </div>
-                            <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
+                            <div className='grid grid-cols-3 md:grid-cols-6 lg:grid-cols-6 gap-5 py-2'>
                               {topic.vod_list?.slice(0, 6).map((vod, i) => {
                                 return <VideoVerticalCard vod={vod} key={i} />;
                               })}
@@ -372,7 +372,7 @@ export default function Home(params) {
                                 />
                               </div>
                             </div>
-                            <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
+                            <div className='grid grid-cols-3 md:grid-cols-6 lg:grid-cols-6 gap-5 py-2'>
                               {category.vod_list?.slice(0, 6).map((vod, i) => {
                                 return (
                                   <VideoHorizontalCard
@@ -440,7 +440,7 @@ export default function Home(params) {
                                 />
                               </div>
                             </div>
-                            <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
+                            <div className='grid grid-cols-3 md:grid-cols-6 lg:grid-cols-6 gap-5 py-2'>
                               {category.vod_list?.slice(0, 6).map((vod, i) => {
                                 return (
                                   <VideoHorizontalCard
