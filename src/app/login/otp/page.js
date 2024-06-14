@@ -14,6 +14,7 @@ import {
   setAhaToken,
   setYingshiUserLoginParam,
   setYingshiUserToken,
+  setYingshiUserInfo
 } from '@/store/yingshiUser';
 import { useLoginSuccessOpen } from '@/hook/yingshiScreenState/useLoginSuccessOpen';
 
@@ -105,9 +106,12 @@ export default function OTP() {
               dispatch(
                 setYingshiUserLoginParam({ ...loginParam, success: true })
               );
+              dispatch(setYingshiUserInfo(res.data.user))
               dispatch(setYingshiUserToken(res.data.access_token));
               dispatch(setAhaToken(res.data.aha_token));
-              localStorage.setItem('AuthToken', res.data.aha_token);
+              localStorage.setItem('AuthToken', res.data.aha_token)
+              
+              ;
               if (res.code === 0) {
                 router.back();
                 setOpenLoginSuccess(true);
@@ -135,6 +139,7 @@ export default function OTP() {
               dispatch(
                 setYingshiUserLoginParam({ ...loginParam, success: true })
               );
+              dispatch(setYingshiUserInfo(res.data.user))
               dispatch(setYingshiUserToken(res.data.access_token));
               dispatch(setAhaToken(res.data.aha_token));
               localStorage.setItem('AuthToken', res.data.aha_token);
