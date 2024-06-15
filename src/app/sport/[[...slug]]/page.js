@@ -11,9 +11,10 @@ import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 import MyFooter3 from '@/components/myFooter3';
 import { setIsSessionExpired} from '@/store/yingshiScreen';
-
+import { usePathname } from 'next/navigation';
 
 export default function Page({ params }) {
+  const pathname = usePathname();
   const router = useRouter();
   let redirect = params.slug?.join('/') || 'sports'
   let isRefreshing = false;
@@ -90,12 +91,15 @@ export default function Page({ params }) {
     
   }
 
-   if (event.data.type === 'openBottomSheet') {
+   if (event.data.type === 'openBottomSheet' && !pathname.startsWith('/sport/u') && !pathname.startsWith('/sport/s')) {
+
+    console.log(pathname)
     setHideFooter(false)
   }
-   if (event.data.type === 'closeBottomSheet') {
+   if (event.data.type === 'closeBottomSheet' && !pathname.startsWith('/sport/u') && !pathname.startsWith('/sport/s')) {
+    console.log(pathname)
     setHideFooter(true)
-  }
+    }
 
 
      console.log('iframe message', event.data)
