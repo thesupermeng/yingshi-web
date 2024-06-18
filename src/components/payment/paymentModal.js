@@ -34,20 +34,20 @@ export default function PaymentModal({open, handler}) {
   return (
     <>
       <Dialog open={open} handler={handler} className={'relative bg-[#121212] rounded-[28px] p-0 outline-none zoom-9'}
-              size={'sm'}
+              size={'md'}
               dismiss={{
                 outsidePress: false
               }}
       >
         <DialogBody className={'px-0 pt-4 w-full h-full flex flex-col'}>
-        <div style={{ height:'95vh' , overflow:'auto' , padding:'8px 0px'}}>
+        <div style={{ height:'100vh' , overflow:'auto' , padding:'8px 0px'}}>
           <FontAwesomeIcon icon={faTimesCircle}
             className={'absolute top-4 right-4 cursor-pointer w-[35px] h-[35px] text-[#FFFFFF33] hover-effect'}
             onClick={handler}
           />
         
        
-        <div style={{padding:'0px 16px'}}>
+        <div style={{padding:'0px 38px'}}>
           <PaymentHeader/>
           {/*<PaymentCountdown className={'mt-[28px]'}/>*/}
          
