@@ -43,6 +43,35 @@ export default function Home(params) {
 
   const targetRef = useRef(null);
 
+  //for banner ads
+
+  const [ads, setAds] = useState(null);
+
+  const getAdsSlotAds = async (slotId) => {
+    return YingshiApi(
+      URL_YINGSHI_VOD.getAdsSlot,
+      {
+        slot_id: slotId,
+      },
+      { method: 'GET' }
+    );
+  };
+
+  useEffect(() => {
+    // let slotId = 100 + paramsInput;
+    // if (slotId > 99 && slotId < 110) {
+    //   getAdsSlotAds(slotId).then((data) => {
+    //     setAds(data);
+    //   });
+    // }
+
+    getAdsSlotAds(2).then((data) => {
+      setAds(data);
+    });
+  }, []);
+
+  // end banner ads
+
   const getTypePage = async (idValue) => {
     if (idValue == 99) {
       return YingshiApi(
@@ -153,7 +182,9 @@ export default function Home(params) {
     localStorage.setItem('videoTypeId', item.type_id);
     localStorage.setItem('videoClass', item.type_name);
     // router.push(`/film-library`);
-    router.push(`vod/show/by/hits_day/class/${item.type_name}/id/${item.type_id}`);
+    router.push(
+      `vod/show/by/hits_day/class/${item.type_name}/id/${item.type_id}`
+    );
   };
 
   useEffect(() => {
@@ -179,7 +210,9 @@ export default function Home(params) {
           {paramsInput != 99 ? (
             <div className='flex flex-col w-full'>
               <Carousel carouselItems={carousel} />
-              <AdsBanner navId={paramsInput} height='500px' />
+              <div className='container w-[100%]'>
+                <AdsBanner ads={ads} height='500px' />
+              </div>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
                 <div className='container w-[100%]'>
@@ -212,7 +245,7 @@ export default function Home(params) {
                       return (
                         <div key={idx}>
                           {idx % 2 ? (
-                            <AdsBanner navId={paramsInput} height='500px' />
+                            <AdsBanner ads={ads} height='500px' />
                           ) : (
                             <div style={{ paddingTop: '20px' }}></div>
                           )}
@@ -266,7 +299,7 @@ export default function Home(params) {
                       return (
                         <div key={idx}>
                           {idx % 2 ? (
-                            <AdsBanner navId={paramsInput} height='500px' />
+                            <AdsBanner ads={ads} height='500px' />
                           ) : (
                             <div style={{ paddingTop: '20px' }}></div>
                           )}
