@@ -15,8 +15,8 @@ const VodListViewMore = ({ type, data }) => {
         break;
       }
       case 'topic': {
-       // router.push('/topic/' + item.topic_id);
-        router.push('/topic/detail/id/' + topic.topic_id);
+       //  router.push('/topic/' + item.topic_id);
+         router.push('/topic/detail/id/' + item.topic_id);
         break;
       }
       case 'xcategory': {
