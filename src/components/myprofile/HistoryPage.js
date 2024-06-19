@@ -123,7 +123,7 @@ export default function HistoryPage() {
                       key={idx}
                       vod={vod}
                       onClick={() => {
-                        router.push(`/play/${vod.tid}/${vod.nid}/${vod.vodid}`);
+                        router.push(`/vod/play/id/${vod.vodid}/sid/${vod.tid}/nid/${vod.nid}`);
                       }}
                     />
                   );
@@ -204,7 +204,7 @@ export default function HistoryPage() {
                       key={idx}
                       vod={vod}
                       onClick={() => {
-                        router.push(`/play/${vod.tid}/${vod.nid}/${vod.vodid}`);
+                        router.push(`/vod/play/id/${vod.vodid}/sid/${vod.tid}/nid/${vod.nid}`);
                       }}
                     />
                   );

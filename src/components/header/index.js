@@ -343,7 +343,7 @@ const Header = () => {
       setSelectedId(998);
     } else if (pathname.startsWith('/vod/show')) {
       setSelectedId(999);
-    } else if (pathname.startsWith('/play/')) {
+    } else if (pathname.startsWith('/vod/play/')) {
       setSelectedId(-1);
     } else {
       const match = pathname.match(/\/category\/(\w+)/);
@@ -491,7 +491,7 @@ const Header = () => {
                               setSearchInput('');
                               handleAddSearchHistory();
                               router.push(
-                                `/play/${item.type_id}/1/${item.vod_id}`
+                                `/vod/play/id/${item.vod_id}/sid/${item.type_id}/nid/1`
                               );
                             }}
                           >
@@ -569,7 +569,7 @@ const Header = () => {
                               e.preventDefault();
                               setOpenSearch(false);
                               router.push(
-                                `/play/${item.type_id}/1/${item.vod_id}`
+                                `/vod/play/id/${item.vod_id}/sid/${item.type_id}/nid/1`
                               );
                             }}
                           >
@@ -776,9 +776,10 @@ const Header = () => {
                           key={index}
                           className='flex flex-row hover:text-[#0085E0] gap-x-2 cursor-pointer'
                           onClick={() => {
-                            router.push(
-                              `/play/${item.tid}/${item.nid}/${item.vodid}`
-                            );
+                            const url = item.sourceId ?
+                              `/vod/play/id/${item.vodid}/sid/${item.tid}/nid/${item.nid}/source/${item.sourceId}`:
+                              `/vod/play/id/${item.vodid}/sid/${item.tid}/nid/${item.nid}`
+                            router.push(url);
                             setOpenHistory(false);
                           }}
                         >
@@ -1117,7 +1118,7 @@ const Header = () => {
     );
   }
 
-  if (pathname.startsWith('/play')) {
+  if (pathname.startsWith('/vod/play')) {
     return (
       <div className={'desktop z-50 sticky top-0 w-screen bg-[#000000]'}>
         {defaultHeader}

@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState, useRef } from 'react';
@@ -8,86 +9,58 @@ import { ShareHorizontal } from '@/components/shareHorizontal';
 import { VodCard } from '@/components/vod/vodCard.js';
 import { VodSourceList } from '@/components/vod/vodSourceList.js';
 import { VodEpisodeList } from '@/components/vod/vodEpisodeList.js';
-import { Config } from '@/util/config.js';
 import { VodPopularList } from '@/components/vod/vodPopularList.js';
 import { VodContent } from '@/components/vod/vodContent.js';
 import styles from './style.module.css';
-import { AdsBanner } from '@/components/ads/adsBanner.js';
 import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
-import { ArrowLeftIcon, ArrowRightIcon } from '@/asset/icons';
+import { ArrowLeftIcon } from '@/asset/icons';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import {usePathname, useRouter} from 'next/navigation';
 import { convertTimeStampToDateTime } from '@/util/date';
 import { FullPageContent } from '@/componentsH5/FullPageContent';
-import { LottieAnimation } from '../../../../../../src/components/lottie';
+import { LottieAnimation } from '@/components/lottie';
 import { IrrLoading } from '@/asset/lottie';
-import FullScreenModal from '@/components/FullScreenModal';
 import { AdsPlayer } from './adsPlayer.js';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser.js';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 
-export const PlayVod = ({ vodId, tId, nId }) => {
+export const PlayVod =
+({
+  vod,
+  vodId,
+  tId,
+  sourceId,
+  vodSourceSelected,
+  episodeSelected,
+  episodeGroups,
+  initialGroupSelected,
+  suggestedVods,
+  popularList
+}) => {
   const router = useRouter();
-
+  const path = usePathname();
   const { t } = useTranslation();
 
   const { isVip, userInfo } = useYingshiUser();
   const [_, setIsLoginShow] = useLoginOpen();
 
   const shareContentRef = useRef(null);
-
   const domElementRef = useRef(null);
   const playerDivRef = useRef(null);
   const playerRef = useRef(null);
-  const [vod, setVod] = useState(null);
-  const [preventMutipleCall, setPreventMutipleCall] = useState(false);
+
+  // const [vodSourceSelected, setVodSourceSelected] = useState(details.sourceSelected);
+  // const [episodeSelected, setEpisodeSelected] = useState(details.selectedEpisode);
+  // const [episodeGroups, setEpisodeGroups] = useState(details.episodeGroups);
   const [playerDivHeight, setPlayerDivHeight] = useState(0);
-  const [vodSourceSelected, setVodSourceSelected] = useState(null);
-  const [episodeSelected, setEpisodeSelected] = useState(null);
-  const [episodeGroups, setEpisodeGroups] = useState([]);
-  const [episodeGroupSelected, setEpisodeGroupSelected] = useState({});
-  const [suggestedVods, setSuggestedVods] = useState([]);
-  const [toggleJianJie, setToggleJianJie] = useState(false);
+  const [episodeGroupSelected, setEpisodeGroupSelected] = useState(initialGroupSelected);
   const [desc, setDesc] = useState('');
-  const [toggleShowShareBoxStatus, setToggleShowShareBoxStatus] =
-    useState(false);
+  const [toggleJianJie, setToggleJianJie] = useState(false);
+  const [toggleShowShareBoxStatus, setToggleShowShareBoxStatus] = useState(false);
   const [vodShareContent, setVodShareContent] = useState('');
   const [showToastMessage, setShowToastMessage] = useState(false);
   const [ads, setAds] = useState(null);
   const [showAds, setShowAds] = useState(!isVip);
-
-  const getVodDetails = async () => {
-    if (tId == 0) {
-      return YingshiApi(
-        URL_YINGSHI_VOD.getVodDetails,
-        {
-          id: vodId,
-        },
-        { method: 'GET' }
-      );
-    } else {
-      return YingshiApi(
-        URL_YINGSHI_VOD.getVodDetails,
-        {
-          id: vodId,
-          tid: tId,
-        },
-        { method: 'GET' }
-      );
-    }
-  };
-
-  const getSuggestedVodType = async () => {
-    return YingshiApi(
-      URL_YINGSHI_VOD.searchingList,
-      {
-        category: vod?.vod_class?.split(',').shift(),
-        tid: vod?.type_id.toString() ?? '',
-        limit: 12,
-      },
-      { method: 'GET' }
-    );
-  };
 
   const getAds = async () => {
     return YingshiApi(
@@ -143,102 +116,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   }, [isVip]);
 
   useEffect(() => {
-    if (episodeSelected == null) {
-      if (isVip) {
-        setShowAds(false);
-      } else {
-        getAds().then((res) => {
-          setShowAds(true);
-          setAds(res);
-        });
-      }
-
-      getVodDetails().then((data) => {
-        if (
-          data === undefined ||
-          data.length <= 0 ||
-          data.List === undefined ||
-          data.List?.length <= 0
-        )
-          return;
-        let res = data.List[0];
-        setVod(res);
-
-        const vodIdTemp = JSON.parse(localStorage.getItem('vodIdTemp'));
-        if (vodIdTemp === null) {
-          localStorage.setItem('vodIdTemp', vodId);
-        } else {
-          if (vodIdTemp !== parseInt(vodId)) {
-            localStorage.removeItem('vodSourceSelected');
-            localStorage.removeItem('vodIdTemp');
-          }
-        }
-
-        if (res.vod_sources.length > 0) {
-          const sourceType = JSON.parse(
-            localStorage.getItem('vodSourceSelected')
-          );
-          let index = 0;
-          if (sourceType !== null)
-            index = res.vod_sources.findIndex(
-              (x) => x.source_id === sourceType.source_id
-            );
-
-          let source = res.vod_sources[index == -1 ? 0 : index];
-          setVodSourceSelected(source);
-
-          if (source.vod_play_list.urls.length > Config.vodEpisodeGroupMax) {
-            const tolGroup = Math.ceil(
-              source.vod_play_list.urls.length / Config.vodEpisodeGroupMax
-            );
-            const groups = [];
-
-            for (let i = 0; i < tolGroup; i++) {
-              groups.push({
-                from: i * Config.vodEpisodeGroupMax + 1,
-                to:
-                  tolGroup === i + 1
-                    ? source.vod_play_list.urls.length
-                    : (i + 1) * Config.vodEpisodeGroupMax,
-              });
-            }
-
-            setEpisodeGroups(groups);
-            setEpisodeGroupSelected(groups.length > 0 ? groups[0] : {});
-          } else {
-            const defaultGroup = {
-              from: 1,
-              to: source.vod_play_list.urls.length,
-            };
-
-            setEpisodeGroups([defaultGroup]);
-            setEpisodeGroupSelected(defaultGroup);
-          }
-
-          if (source.vod_play_list.urls.length > 0) {
-            if (nId && nId > 0 && nId < 9999) {
-              setEpisodeSelected(source.vod_play_list.urls[nId - 1]);
-            } else {
-              setEpisodeSelected(source.vod_play_list.urls[0]);
-            }
-          }
-        }
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    getSuggestedVodType().then((data) => {
-      try {
-        setSuggestedVods(data.List);
-      } catch (e) {
-        // console.log(e);
-        setSuggestedVods([]);
-      }
-    });
-  }, [vod]);
-
-  useEffect(() => {
     if (episodeSelected !== null) {
       if (playerRef.current) {
         playerRef.current.pause();
@@ -260,6 +137,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         vodname: vod.vod_name,
         vodurl: episodeSelected.url,
         watchtimes: 0,
+        sourceId: sourceId,
       };
 
       let watchHistoryData = JSON.parse(
@@ -289,6 +167,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
         .slice()
         .reverse()
         .forEach((item) => {
+          // eslint-disable-next-line no-prototype-builtins
           if (lastItemMap.hasOwnProperty(item.vodid)) {
             // console.log(item.vodid);
             duplicateList.push(item);
@@ -323,16 +202,13 @@ export const PlayVod = ({ vodId, tId, nId }) => {
 
   const onSelectSource = (source) => {
     if (source.source_id !== vodSourceSelected.source_id) {
-      setVodSourceSelected(source);
-      localStorage.setItem('vodSourceSelected', JSON.stringify(source));
-      window.location.reload();
-    }
-    // router.push(`/play/${vod.type_id}/${episodeSelected.nid + 1}/${vod.vod_id}`);
-    // router.replace(`/play/${vod.type_id}/${episodeSelected.nid + 1}/${vod.vod_id}`)
+      const pattern = /\/source\/\d+/;
+      const url = pattern.test(path) ?
+        path.replace(pattern, `/source/${source.source_id}`) :
+        `${path}/source/${source.source_id}`;
 
-    // if (source.vod_play_list.urls?.length > 0) {
-    //   setEpisodeSelected(source.vod_play_list.urls[0]);
-    // }
+      router.replace(url);
+    }
   };
 
   const onSelectEpisodeGroup = (group) => {
@@ -340,8 +216,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
   };
 
   const onSelectEpisode = (episode) => {
-    router.replace(`/play/${vod.type_id}/${episode.nid + 1}/${vod.vod_id}`);
-    setEpisodeSelected(episode);
+    router.replace(`${path.replace(/(\/nid\/)\d+/, `$1${episode.nid + 1}`)}`);
   };
 
   const onVideoEnd = () => {
@@ -356,12 +231,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
       return;
     }
 
-    router.replace(
-      `/play/${vod.type_id}/${
-        vodSourceSelected?.vod_play_list?.urls[indexFound + 1].nid + 1
-      }/${vod.vod_id}`
-    );
-    setEpisodeSelected(vodSourceSelected?.vod_play_list?.urls[indexFound + 1]);
+    router.replace(`${path.replace(/(\/nid\/)\d+/, `$1${vodSourceSelected?.vod_play_list?.urls[indexFound + 1].nid + 1}`)}`);
   };
 
   useEffect(() => {
@@ -447,7 +317,6 @@ export const PlayVod = ({ vodId, tId, nId }) => {
                 position: 'absolute',
                 justifyContent: 'center',
                 alignItems: 'center',
-                display: 'flex',
               }}
             >
               <div
@@ -814,7 +683,7 @@ export const PlayVod = ({ vodId, tId, nId }) => {
             </div>
 
             <div className={styles.vodMetaContainer}>
-              <VodPopularList />
+              <VodPopularList topic={popularList} />
             </div>
 
             {/* <AdsBanner height='500px' /> */}

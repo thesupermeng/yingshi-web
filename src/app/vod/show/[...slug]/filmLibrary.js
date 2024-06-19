@@ -64,7 +64,7 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
   };
 
   useEffect(() => {
-    if (!isAtTop.res || videos.Page > 1) {
+    if (!isAtTop.res) {
       setCollapse(true);
     } else {
       setCollapse(false);
@@ -216,11 +216,6 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
   return (
     <>
       <div className='flex flex-1 justify-center flex-col'>
-        {/*{loading ? (*/}
-        {/*  <LoadingPage full={false}/>*/}
-        {/*) : (*/}
-        {/*  */}
-        {/*)}*/}
         <div className="flex w-screen flex-col items-center">
           <div
             className={`bg-[#1D2023] w-screen h-auto p-1 z-20 top-[51px] md:static`}

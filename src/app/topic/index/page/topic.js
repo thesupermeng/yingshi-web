@@ -166,7 +166,7 @@ export const Topic = ({ topics }) => {
                       key={vod.vod_id}
                       onClick={(e) => {
                         e.preventDefault();
-                        router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);
+                        router.push(`/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`);
                       }}
                     >
                       {' '}
