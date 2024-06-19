@@ -32,9 +32,8 @@ export default function Page() {
       if (intId === 0) {
         router.push('/');
       } else if (intId === 998) {
-        router.push('/topic');
+        router.push('/topic/index/page');
       } else if (intId === 999) {
-        // router.push('/film-library');
         router.push('/vod/show/by/time/id/1')
       } else if (headerId.includes(intId)) {
         // No routing needed, return to render Home component below

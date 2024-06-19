@@ -39,7 +39,7 @@ const MyFooter = () => {
 
   const handleClick = (value) => {
     if (value == 998) {
-      router.push('/topic');
+      router.push('/topic/index/page');
     } else if (value == 999) {
       // router.push('/film-library');
       router.push('/vod/show/by/time/id/1')

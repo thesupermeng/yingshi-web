@@ -325,7 +325,7 @@ export default function Home(params) {
                                     fontFamily: 'PingFang SC',
                                   }}
                                   onClick={() => {
-                                    router.push('/topic/' + topic.topic_id);
+                                    router.push('/topic/detail/id/' + topic.topic_id);
                                   }}
                                 >
                                   更多

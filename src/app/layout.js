@@ -28,6 +28,7 @@ import { Favicon } from '@/asset/icons';
 import Image from 'next/image';
 import { ScrollView } from './scroll-view';
 import ModalOverlays from '@/components/modalOverlays';
+import '@fortawesome/fontawesome-svg-core/styles.css';
 
 const inter = Inter({ subsets: ['latin'] });
 

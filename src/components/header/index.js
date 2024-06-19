@@ -262,11 +262,10 @@ const Header = () => {
 
   const handleClick = (value) => {
     if (value == 998) {
-      router.push('/topic');
+      router.push('/topic/index/page');
     } else if (value == 999) {
       localStorage.removeItem('videoTypeId');
       localStorage.removeItem('videoClass');
-      // router.push('/film-library');
       router.push('/vod/show/by/time/id/1');
     } else if (value === 0) {
       router.push(`/`);
@@ -414,9 +413,10 @@ const Header = () => {
     };
   }, []);
 
-  if (loading && !pathname.startsWith('/vod/show')) {
-    return <LoadingPage full={true} />;
-  }
+  // TODO: temporary remove as it will block the prerender contents
+  // if (loading && !pathname.startsWith('/vod/') && !pathname.startsWith('/topic')) {
+  //   return <LoadingPage full={true} />;
+  // }
 
   let searchContainer = (
     <div className='items-center flex flex-1 md:flex-none'>
@@ -1095,7 +1095,7 @@ const Header = () => {
     </div>
   );
 
-  if (pathname.startsWith('/topic/') || pathname.startsWith('/xvod')) {
+  if (pathname.startsWith('/topic/detail/') || pathname.startsWith('/xvod')) {
     return (
       <div className={'desktop z-50 sticky top-0 w-screen'}>
         {defaultHeader}
@@ -1103,7 +1103,7 @@ const Header = () => {
     );
   }
 
-  if (pathname.startsWith('/vod/show') || pathname.startsWith('/topic/')) {
+  if (pathname.startsWith('/vod/show')) {
     return (
       <>
         <div className={'mobile z-50 sticky top-0 w-screen'}>

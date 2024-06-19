@@ -1,5 +1,6 @@
+'use client';
 import React from 'react';
-import { usePathname, useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
@@ -19,7 +20,6 @@ const VodItemDesktop = ({ vod }) => {
               <div   style={{
                     padding: '0px',
                     width: '132px',
-          
                   }}>
                 <img
                   alt='vod'
