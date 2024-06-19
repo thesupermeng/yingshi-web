@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState } from 'react';
 import styles from './style.module.css';
 import Image from 'next/image';
@@ -40,7 +41,7 @@ export const Carousel = ({ carouselItems }) => {
   useEffect(() => {
     if (!currentlyHover) {
       let autoSwipeCarousel = null;
-      if(carouselItems != null){
+      if (carouselItems != null) {
         autoSwipeCarousel = setTimeout(() => {
           setCarouselIndex((prevIndex) => (prevIndex + 1) % carouselItems.length);
           setCarouselVodId()
@@ -48,7 +49,7 @@ export const Carousel = ({ carouselItems }) => {
       }
 
       return () => {
-        if(autoSwipeCarousel != null){
+        if (autoSwipeCarousel != null) {
           clearTimeout(autoSwipeCarousel);
         }
       };
@@ -177,21 +178,21 @@ export const Carousel = ({ carouselItems }) => {
                         </div>
                       </div>
 
-                      <div style={{ display: 'flex', flexDirection: 'row', zIndex: '10', width: '80%', justifyContent: 'flex-end'}}>
+                      <div style={{ display: 'flex', flexDirection: 'row', zIndex: '10', width: '80%', justifyContent: 'flex-end' }}>
                         {carouselItems.map((previewItem, previewIndex) => (
                           <div
-                          className="hidden xl:flex"
-                          style={{
+                            className="hidden xl:flex"
+                            style={{
 
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            justifySelf: 'center',
-                            height: '100%',
-                            width: '6rem',
-                            marginRight: '1rem',
-                            cursor: 'pointer',
-                          }}
+                              flexDirection: 'column',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              justifySelf: 'center',
+                              height: '100%',
+                              width: '6rem',
+                              marginRight: '1rem',
+                              cursor: 'pointer',
+                            }}
                             key={previewIndex}
                             onMouseEnter={() => onHover(previewIndex)}
                             onMouseLeave={() => onUnhover(previewIndex)}

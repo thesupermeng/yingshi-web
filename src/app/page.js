@@ -1,180 +1,79 @@
-'use client';
-import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'next-i18next';
-import { SWRConfig } from 'swr';
-import { FBApi } from '@/util/FB_Api';
-
-import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
-import { YingshiApi } from '@/util/YingshiApi';
-
-import './i18n';
+// import './i18n';
 import { LoadingPage } from '@/components/loading';
-import { FullPageContent } from '@/componentsH5/FullPageContent';
-import { H5Only } from '@/components/Fragments/EnvComponent';
 import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
 import { VideoHorizontalCard } from '@/components/videoItem/videoHorizontalCard';
-import { isWeb } from '@/util/common';
 import { AdsBanner } from '@/components/ads/adsBanner.js';
 export const RightBetCartWidth = 'w-[32rem]';
-import Image from 'next/image';
-import { useSelector } from 'react-redux';
 import { Carousel } from '@/components/carousel/carousel';
-import { arrowRight, ArrowRightIcon } from '@/asset/icons';
-import { Spinner } from '@/components/spinner';
+import { Suspense } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
-export default function Home(params) {
-  const { t } = useTranslation();
-  const router = useRouter();
-  const pathname = usePathname();
-  const [loading, setLoading] = useState(true);
-  const [categories, setCategories] = useState([]);
-  const [yunying, setYunying] = useState([]);
-  const [carousel, setCarousel] = useState([]);
-  const [stillCanLoad, setStillCanLoad] = useState(false);
-  const [topicList, setTopicList] = useState(null);
-  const [nextPage, setNextPage] = useState(0);
-  const [scrollY, setScrollY] = useState(0);
-  const [classList, setClassList] = useState([]);
+import {
+  getTypePage,
+  getTopicListApi,
+} from "@/app/actions";
+import VodListViewMore from '@/components/vodListViewMore';
+import TopicPagingList from '@/components/topicPagingList';
+
+export default async function Home(params) {
   let paramsInput = params.category == undefined ? 0 : params.category;
 
-  const targetRef = useRef(null);
+  let classList = [];
+  let categories = [];
+  let yunying = [];
+  let carousel = [];
+  let topicList = null;
+  let nextPage = 0;
+  let stillCanLoad = paramsInput == 0 ? true : false;
 
-  const getTypePage = async (idValue) => {
-    if (idValue == 99) {
-      return YingshiApi(
-        URL_YINGSHI_VOD.homeGetPages,
-        {
-          id: idValue,
-          dj: true,
-          page: 1,
-          limit: 60,
-          vod_limit: 6,
-        },
-        { method: 'GET' }
-      );
-    } else {
-      return YingshiApi(
-        URL_YINGSHI_VOD.homeGetPages,
-        {
-          id: idValue,
-        },
-        { method: 'GET' }
-      );
+  await Promise.all([getTypePage(paramsInput), getTopicListApi(nextPage)]).then(([typePageData, topicListData]) => {
+    if (typePageData) {
+      if (paramsInput == 99) {
+        classList = typePageData.class_list;
+      }
+      categories = typePageData.categories;
+      yunying = typePageData.yunying;
+      carousel = typePageData.carousel;
     }
-  };
 
-  const getTopicListApi = async () => {
-    return YingshiApi(
-      URL_YINGSHI_VOD.playlistGetTopic + '?limit=5&page=' + nextPage,
-      {},
-      { method: 'GET' }
-    );
-  };
+    if (topicListData) {
+      let currentPage = nextPage;
 
-  const getTopicList = () => {
-    let currentPage = nextPage;
-    getTopicListApi().then((data) => {
       if (nextPage > 1) {
         try {
-          setTopicList((prev) => [...prev, ...data.List]);
+          topicList = [...topicList, ...topicListData.List];
         } catch (e) {
           console.log(e);
           console.log('crash');
           console.log(topicList);
-          setTopicList(data.List);
+          topicList = topicListData.List;
         }
       } else {
-        setTopicList(data.List);
+        topicList = topicListData.List;
       }
-      if (nextPage > data.TotalPageCount - 1) {
-        setStillCanLoad(false);
+      if (nextPage > topicListData.TotalPageCount - 1) {
+        stillCanLoad = false;
       } else {
-        setStillCanLoad(true);
-        setNextPage(currentPage + 1);
+        stillCanLoad = true;
+        nextPage = currentPage + 1;
       }
-    });
-  };
-
-  useEffect(() => {
-    if (stillCanLoad) {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          // setIsVisible(entry.intersectionRatio >= 0.5);
-          if (entry.intersectionRatio >= 0.5) {
-            getTopicList();
-            console.log('Element is at least 50% visible.');
-          } else {
-            console.log('Element is not yet 50% visible.');
-          }
-        },
-        {
-          threshold: 0.5, // 50% visibility threshold
-        }
-      );
-
-      if (targetRef.current) {
-        observer.observe(targetRef.current);
-      }
-
-      return () => {
-        if (targetRef.current) {
-          observer.unobserve(targetRef.current);
-        }
-      };
     }
-  }, [nextPage, stillCanLoad]);
-
-  useEffect(() => {
-    if (paramsInput == 0) {
-      setStillCanLoad(true);
-      setTopicList(null);
-    } else {
-      setStillCanLoad(false);
-      setTopicList(null);
-      setNextPage(0);
-    }
-    setLoading(true);
-    getTypePage(paramsInput).then((data) => {
-      if (paramsInput == 99) {
-        setClassList(data.class_list);
-      }
-      setCategories(data.categories);
-      setYunying(data.yunying);
-      setCarousel(data.carousel);
-      setLoading(false);
-    });
-  }, [paramsInput]);
-
-  const handleClick = (item) => {
-    localStorage.setItem('videoTypeId', item.type_id);
-    localStorage.setItem('videoClass', item.type_name);
-    // router.push(`/film-library`);
-    router.push(`vod/show/by/hits_day/class/${item.type_name}/id/${item.type_id}`);
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-  });
-
-  const handleScroll = () => {
-    console.log(window.scrollY);
-  };
+  })
 
   return (
     <div
       className='flex flex-1 justify-center flex-col'
       style={{ width: '100%' }}
-      onScroll={handleScroll}
     >
-      {loading ? (
-        <div>
-          <LoadingPage full={false} />
-        </div>
-      ) : (
+      <Suspense
+        fallback={
+          <div>
+            <LoadingPage full={false} />
+          </div>
+        }
+      >
         <>
           {paramsInput != 99 ? (
             <div className='flex flex-col w-full'>
@@ -229,18 +128,7 @@ export default function Home(params) {
                                 {category.type_name}
                               </span>
                               <div className='flex w-fit items-center cursor-pointer hover-blue'>
-                                <span
-                                  className='mr-1'
-                                  style={{
-                                    fontSize: '12px',
-                                    fontWeight: '400',
-                                    fontStyle: 'normal',
-                                    fontFamily: 'PingFang SC',
-                                  }}
-                                  onClick={() => handleClick(category)}
-                                >
-                                  更多
-                                </span>
+                                <VodListViewMore type={'category'} data={category} />
                                 <FontAwesomeIcon
                                   style={{
                                     fontSize: '14px',
@@ -261,62 +149,12 @@ export default function Home(params) {
                         </div>
                       );
                     })}
-                  {topicList != null &&
-                    topicList?.map((topic, idx) => {
-                      return (
-                        <div key={idx}>
-                          {idx % 2 ? (
-                            <AdsBanner navId={paramsInput} height='500px' />
-                          ) : (
-                            <div style={{ paddingTop: '20px' }}></div>
-                          )}
-                          <div id={topic.topic_id} key={idx}>
-                            <div className='flex justify-between'>
-                              <span
-                                style={{
-                                  fontSize: '20px',
-                                  fontWeight: '600',
-                                  fontStyle: 'normal',
-                                  fontFamily: 'PingFang SC',
-                                }}
-                              >
-                                {topic.topic_name}
-                              </span>
-                              <div className='flex w-fit items-center cursor-pointer hover-blue'>
-                                <span
-                                  className='mr-1'
-                                  style={{
-                                    fontSize: '12px',
-                                    fontWeight: '400',
-                                    fontStyle: 'normal',
-                                    fontFamily: 'PingFang SC',
-                                  }}
-                                  onClick={() => {
-                                    router.push('/topic/' + topic.topic_id);
-                                  }}
-                                >
-                                  更多
-                                </span>
-                                <FontAwesomeIcon
-                                  style={{
-                                    fontSize: '14px',
-                                    fontWeight: '400',
-                                    fontStyle: 'normal',
-                                    fontFamily: 'PingFang SC',
-                                  }}
-                                  icon={faAngleRight}
-                                />
-                              </div>
-                            </div>
-                            <div className='grid grid-cols-3 md:grid-cols-6 lg:grid-cols-6 gap-5 py-2'>
-                              {topic.vod_list?.slice(0, 6).map((vod, i) => {
-                                return <VideoVerticalCard vod={vod} key={i} />;
-                              })}
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
+                  <TopicPagingList
+                    data={topicList}
+                    navId={paramsInput}
+                    serverNextPage={nextPage}
+                    isStillCanLoad={stillCanLoad}
+                  />
                 </div>
               </div>
             </div>
@@ -346,22 +184,7 @@ export default function Home(params) {
                                 {category.type_name}
                               </span>
                               <div className='flex w-fit items-center cursor-pointer hover-blue'>
-                                <span
-                                  className='mr-1'
-                                  style={{
-                                    fontSize: '12px',
-                                    fontWeight: '400',
-                                    fontStyle: 'normal',
-                                    fontFamily: 'PingFang SC',
-                                  }}
-                                  onClick={(e) => {
-                                    router.push(
-                                      `/xvod/${category.vod_source_name}/${category.type_name}`
-                                    );
-                                  }}
-                                >
-                                  更多
-                                </span>
+                                <VodListViewMore type={'xcategory'} data={category} />
                                 <FontAwesomeIcon
                                   style={{
                                     fontSize: '14px',
@@ -414,22 +237,7 @@ export default function Home(params) {
                                 {category.type_name}
                               </span>
                               <div className='flex w-fit items-center cursor-pointer hover-blue'>
-                                <span
-                                  className='mr-1'
-                                  style={{
-                                    fontSize: '12px',
-                                    fontWeight: '400',
-                                    fontStyle: 'normal',
-                                    fontFamily: 'PingFang SC',
-                                  }}
-                                  onClick={(e) => {
-                                    router.push(
-                                      `/xvod/${category.vod_source_name}/${category.type_name}`
-                                    );
-                                  }}
-                                >
-                                  更多
-                                </span>
+                                <VodListViewMore type={'xcategory'} data={category} />
                                 <FontAwesomeIcon
                                   style={{
                                     fontSize: '14px',
@@ -459,12 +267,10 @@ export default function Home(params) {
                 </div>
               </div>
             </>
-          )}
+          )
+          }
         </>
-      )}
-      <div ref={targetRef}>
-        {stillCanLoad && paramsInput == 0 && <Spinner></Spinner>}
-      </div>
+      </Suspense>
     </div>
   );
 }

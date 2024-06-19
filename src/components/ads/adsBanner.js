@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useCallback, useState } from 'react';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { YingshiApi } from '@/util/YingshiApi';
