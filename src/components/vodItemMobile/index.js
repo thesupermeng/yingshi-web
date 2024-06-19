@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { usePathname, useParams, useRouter } from 'next/navigation';
 
@@ -6,7 +7,7 @@ const VodItemMobile = ({ vod }) => {
   const router = useRouter();
 
   const handlePlay = (vodId) => {
-    router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);
+    router.push(`/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`);
   };
 
   return (

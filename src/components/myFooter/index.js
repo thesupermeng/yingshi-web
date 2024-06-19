@@ -25,7 +25,7 @@ const MyFooter = () => {
       setSelectedId(998);
     } else if (pathname.startsWith('/vod/show')) {
       setSelectedId(999);
-    } else if (pathname.startsWith('/play/')) {
+    } else if (pathname.startsWith('/vod/play/')) {
       setSelectedId(-1);
     } else {
       const match = pathname.match(/\/category\/(\w+)/);
@@ -39,7 +39,7 @@ const MyFooter = () => {
 
   const handleClick = (value) => {
     if (value == 998) {
-      router.push('/topic');
+      router.push('/topic/index/page');
     } else if (value == 999) {
       // router.push('/film-library');
       router.push('/vod/show/by/time/id/1')
@@ -53,7 +53,7 @@ const MyFooter = () => {
   };
 
   if (
-    pathname.startsWith('/play') ||
+    pathname.startsWith('/vod/play') ||
     pathname.startsWith('/search/') ||
     pathname.startsWith('/payment') ||
     pathname.startsWith('/login') ||

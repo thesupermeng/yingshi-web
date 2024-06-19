@@ -1,5 +1,6 @@
+'use client';
 import React from 'react';
-import { usePathname, useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
@@ -7,7 +8,7 @@ const VodItemDesktop = ({ vod }) => {
   const router = useRouter();
 
   const handlePlay = (vodId) => {
-    router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);
+    router.push(`/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`);
   };
 
   return (
@@ -19,7 +20,6 @@ const VodItemDesktop = ({ vod }) => {
               <div   style={{
                     padding: '0px',
                     width: '132px',
-          
                   }}>
                 <img
                   alt='vod'

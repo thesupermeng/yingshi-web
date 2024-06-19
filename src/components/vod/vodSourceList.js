@@ -1,9 +1,9 @@
-import Image from "next/image";
+import Image from 'next/image';
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
   PlaySourceIcon,
-} from "@/asset/icons";
+} from '@/asset/icons';
 
 import styles from './style.module.css';
 import { useState, useRef } from 'react';

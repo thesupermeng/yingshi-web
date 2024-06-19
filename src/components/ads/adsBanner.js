@@ -10,35 +10,29 @@ export const AdsBanner = ({
   backgroundColor = '#A7A7A71A',
   imgUrl = '',
   navId = 0,
+  ads = null,
 }) => {
-  const [ads, setAds] = useState(null);
+  // const [ads, setAds] = useState(null);
   const { isVip, userInfo } = useYingshiUser();
 
-  const getAdsSlotAds = async (slotId) => {
-    return YingshiApi(
-      URL_YINGSHI_VOD.getAdsSlot,
-      {
-        slot_id: slotId,
-      },
-      { method: 'GET' }
-    );
-  };
+  // const getAdsSlotAds = async (slotId) => {
+  //   return YingshiApi(
+  //     URL_YINGSHI_VOD.getAdsSlot,
+  //     {
+  //       slot_id: slotId,
+  //     },
+  //     { method: 'GET' }
+  //   );
+  // };
 
-  useEffect(() => {
-    let slotId = 100 + navId;
-    if (slotId > 99 && slotId < 110) {
-      getAdsSlotAds(slotId).then((data) => {
-        // console.log(data)
-        setAds(data);
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      setAds(null);
-    };
-  }, []);
+  // useEffect(() => {
+  //   let slotId = 100 + navId;
+  //   if (slotId > 99 && slotId < 110) {
+  //     getAdsSlotAds(slotId).then((data) => {
+  //       setAds(data);
+  //     });
+  //   }
+  // }, []);
 
   return (
     <>

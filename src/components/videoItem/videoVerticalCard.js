@@ -25,7 +25,7 @@ export const VideoVerticalCard = ({ vod }) => {
           lg:group-hover:rounded-lg'
           onClick={(e) => {
             e.preventDefault();
-            router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);
+            router.push(`/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`);
           }}
         >
           <Image
@@ -33,7 +33,7 @@ export const VideoVerticalCard = ({ vod }) => {
             blurDataURL={'data:image/png;base64,' + base64PlaceholderString}
             onClick={(e) => {
               e.preventDefault();
-              router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);
+              router.push(`/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`);
             }}
             alt='video'
             src={vod.vod_pic}
