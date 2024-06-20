@@ -37,6 +37,7 @@ import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 import { isMobile } from 'react-device-detect';
 import { usePaymentOpen } from '@/hook/yingshiScreenState/usePaymentOpen';
+import styles from './style.module.css';
 
 // const getHeaderMenu = (state) => state.headerMenu;
 const getCurrentScrollPosition = (state) => state.currentScrollPosition;
@@ -55,8 +56,8 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
   // const headerMenu = useSelector(getHeaderMenu);
   const currentScrollPosition = useSelector(getCurrentScrollPosition);
 
-  const [visibleItems, setVisibleItems] = useState(headerMenu.slice(0, 1));
-  const [hiddenItems, setHiddenItems] = useState(headerMenu.slice(2));
+  const [visibleItems, setVisibleItems] = useState([]);
+  const [hiddenItems, setHiddenItems] = useState([]);
   const { isVip, userInfo } = useYingshiUser();
 
   const router = useRouter();
@@ -271,22 +272,21 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
     router.push('/search/' + encodeURIComponent(query));
   };
 
-  const calculateItemsVisibility = () => {
-    if (containerRef.current) {
-      const containerWidth = containerRef.current.offsetWidth;
-      console.log(containerWidth)
-      const itemWidth = 56; // Assuming each item has a fixed width
-      const maxVisibleItems =
-        Math.floor(containerWidth / itemWidth) < headerMenu?.length
-          ? Math.floor(containerWidth / itemWidth) - 1 <= 0
-            ? 0
-            : Math.floor(containerWidth / itemWidth) - 1
-          : headerMenu?.length;
-
-      setVisibleItems(headerMenu?.slice(0, maxVisibleItems));
-      setHiddenItems(headerMenu?.slice(maxVisibleItems));
-    }
-  };
+  // const calculateItemsVisibility = () => {
+  //   if (containerRef.current) {
+  //     const containerWidth = containerRef.current.offsetWidth;
+  //     const itemWidth = 56; // Assuming each item has a fixed width
+  //     const maxVisibleItems =
+  //       Math.floor(containerWidth / itemWidth) < headerMenu?.length
+  //         ? Math.floor(containerWidth / itemWidth) - 1 <= 0
+  //           ? 0
+  //           : Math.floor(containerWidth / itemWidth) - 1
+  //         : headerMenu?.length;
+  //
+  //     setVisibleItems(headerMenu?.slice(0, maxVisibleItems));
+  //     setHiddenItems(headerMenu?.slice(maxVisibleItems));
+  //   }
+  // };
 
   useEffect(() => {
     if (currentScrollPosition.res > 300) {
@@ -323,18 +323,17 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
     if (!pathname.startsWith('/search/')) setSearchInput('');
   }, [pathname]);
 
-  useEffect(() => {
-    console.log('header menu changed');
-    calculateItemsVisibility();
-    const resizeListener = () => {
-      calculateItemsVisibility();
-    };
-    window.addEventListener('resize', resizeListener);
-
-    return () => {
-      window.removeEventListener('resize', resizeListener);
-    };
-  }, [headerMenu]);
+  // useEffect(() => {
+  //   calculateItemsVisibility();
+  //   const resizeListener = () => {
+  //     calculateItemsVisibility();
+  //   };
+  //   window.addEventListener('resize', resizeListener);
+  //
+  //   return () => {
+  //     window.removeEventListener('resize', resizeListener);
+  //   };
+  // }, [headerMenu]);
 
   useEffect(() => {
     // Function to close the dropdown when clicking outside of it
@@ -382,7 +381,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
   }, []);
 
   // TODO: temporary remove as it will block the prerender contents
-  // if (loading && !pathname.startsWith('/vod/') && !pathname.startsWith('/topic')) {
+  // if (loading) {
   //   return <LoadingPage full={true} />;
   // }
 
@@ -970,11 +969,75 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
             })}
           </div>
           <div
-            className='grow md:flex items-center justify-end hidden'
-            style={{ maxWidth: `${headerMenu?.length * 56}px` }}
-            ref={containerRef}
+            className={`grow items-center justify-end ${styles.customSm}`}
+            style={{maxWidth: `${headerMenu?.length * 56}px`}}
           >
-            {visibleItems?.map((navItem, index) => {
+            {headerMenu?.length > 0 && (
+              <div className='w-14 flex flex-col items-center cursor-pointer'>
+                <div className='relative' ref={dropdownMoreRef}>
+                  <button
+                    onClick={handleOpenMore}
+                    className='flex flex-row items-center hover:text-blue-500'
+                  >
+                    <span>更多</span>
+                    <Image
+                      className='mx-1'
+                      alt='more'
+                      src={moreIcon}
+                      width={14}
+                    />
+                  </button>
+                  {openMore ? (
+                    <div className='absolute flex flex-col md:items-center items-end md:-left-2 pt-1 right-0 z-20'>
+                      <div
+                        style={{
+                          width: 0,
+                          height: 0,
+                          top: '-10px',
+                          borderLeft: '10px solid transparent',
+                          borderRight: '10px solid transparent',
+                          borderBottom: '10px solid #18191ef5',
+                        }}
+                      />
+                      <div
+                        className='py-3 flex flex-col md:rounded-md rounded-b-lg rounded-tl-lg'
+                        style={{backgroundColor: '#18191ef5'}}
+                      >
+                        {headerMenu?.slice(1).map((navItem, index) => {
+                          return (
+                            <div
+                              className='w-32 flex flex-col cursor-pointer py-2 items-center'
+                              id={navItem.id}
+                              key={index}
+                              onClick={() => {
+                                handleClick(navItem.id);
+                                setOpenMore(!openMore);
+                              }}
+                            >
+                              <span
+                                className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                                  selectedId === navItem.id
+                                    ? 'text-blue-500'
+                                    : 'text-white'
+                                }`}
+                              >
+                                {navItem.name}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            )}
+          </div>
+          <div
+            className={`grow items-center justify-end ${styles.customMd}`}
+            style={{maxWidth: `${headerMenu?.length * 56}px`}}
+          >
+            {headerMenu?.slice(0, 1).map((navItem, index) => {
               return (
                 <div
                   className='flex flex-1 flex-col items-center cursor-pointer header-tab'
@@ -997,7 +1060,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                 </div>
               );
             })}
-            {hiddenItems.length > 0 && (
+            {headerMenu?.slice(1).length > 0 && (
               <div className='w-14 flex flex-col items-center cursor-pointer'>
                 <div className='relative' ref={dropdownMoreRef}>
                   <button
@@ -1028,7 +1091,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                         className='py-3 flex flex-col md:rounded-md rounded-b-lg rounded-tl-lg'
                         style={{ backgroundColor: '#18191ef5' }}
                       >
-                        {hiddenItems?.map((navItem, index) => {
+                        {headerMenu?.slice(1).map((navItem, index) => {
                           return (
                             <div
                               className='w-32 flex flex-col cursor-pointer py-2 items-center'
@@ -1057,6 +1120,210 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                 </div>
               </div>
             )}
+          </div>
+          <div
+            className={`grow items-center justify-end ${styles.customLg}`}
+            style={{maxWidth: `${headerMenu?.length * 56}px`}}
+          >
+            {headerMenu?.slice(0, 4).map((navItem, index) => {
+              return (
+                <div
+                  className='flex flex-1 flex-col items-center cursor-pointer header-tab'
+                  id={navItem.id}
+                  key={index}
+                  onClick={() => {
+                    handleClick(navItem.id);
+                  }}
+                >
+                  <span
+                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                      selectedId === navItem.id ? 'text-blue-500' : 'text-white'
+                    }`}
+                  >
+                    {navItem.name}
+                  </span>
+                  {selectedId === navItem.id ? (
+                    <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
+                  ) : null}
+                </div>
+              );
+            })}
+            {headerMenu?.slice(4).length > 0 && (
+              <div className='w-14 flex flex-col items-center cursor-pointer'>
+                <div className='relative' ref={dropdownMoreRef}>
+                  <button
+                    onClick={handleOpenMore}
+                    className='flex flex-row items-center hover:text-blue-500'
+                  >
+                    <span>更多</span>
+                    <Image
+                      className='mx-1'
+                      alt='more'
+                      src={moreIcon}
+                      width={14}
+                    />
+                  </button>
+                  {openMore ? (
+                    <div className='absolute flex flex-col md:items-center items-end md:-left-2 pt-1 right-0 z-20'>
+                      <div
+                        style={{
+                          width: 0,
+                          height: 0,
+                          top: '-10px',
+                          borderLeft: '10px solid transparent',
+                          borderRight: '10px solid transparent',
+                          borderBottom: '10px solid #18191ef5',
+                        }}
+                      />
+                      <div
+                        className='py-3 flex flex-col md:rounded-md rounded-b-lg rounded-tl-lg'
+                        style={{backgroundColor: '#18191ef5'}}
+                      >
+                        {headerMenu?.slice(4).map((navItem, index) => {
+                          return (
+                            <div
+                              className='w-32 flex flex-col cursor-pointer py-2 items-center'
+                              id={navItem.id}
+                              key={index}
+                              onClick={() => {
+                                handleClick(navItem.id);
+                                setOpenMore(!openMore);
+                              }}
+                            >
+                              <span
+                                className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                                  selectedId === navItem.id
+                                    ? 'text-blue-500'
+                                    : 'text-white'
+                                }`}
+                              >
+                                {navItem.name}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            )}
+          </div>
+          <div
+            className={`grow items-center justify-end ${styles.customXl}`}
+            style={{maxWidth: `${headerMenu?.length * 56}px`}}
+          >
+            {headerMenu?.slice(0, 7).map((navItem, index) => {
+              return (
+                <div
+                  className='flex flex-1 flex-col items-center cursor-pointer header-tab'
+                  id={navItem.id}
+                  key={index}
+                  onClick={() => {
+                    handleClick(navItem.id);
+                  }}
+                >
+                  <span
+                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                      selectedId === navItem.id ? 'text-blue-500' : 'text-white'
+                    }`}
+                  >
+                    {navItem.name}
+                  </span>
+                  {selectedId === navItem.id ? (
+                    <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
+                  ) : null}
+                </div>
+              );
+            })}
+            {headerMenu?.slice(7).length > 0 && (
+              <div className='w-14 flex flex-col items-center cursor-pointer'>
+                <div className='relative' ref={dropdownMoreRef}>
+                  <button
+                    onClick={handleOpenMore}
+                    className='flex flex-row items-center hover:text-blue-500'
+                  >
+                    <span>更多</span>
+                    <Image
+                      className='mx-1'
+                      alt='more'
+                      src={moreIcon}
+                      width={14}
+                    />
+                  </button>
+                  {openMore ? (
+                    <div className='absolute flex flex-col md:items-center items-end md:-left-2 pt-1 right-0 z-20'>
+                      <div
+                        style={{
+                          width: 0,
+                          height: 0,
+                          top: '-10px',
+                          borderLeft: '10px solid transparent',
+                          borderRight: '10px solid transparent',
+                          borderBottom: '10px solid #18191ef5',
+                        }}
+                      />
+                      <div
+                        className='py-3 flex flex-col md:rounded-md rounded-b-lg rounded-tl-lg'
+                        style={{backgroundColor: '#18191ef5'}}
+                      >
+                        {headerMenu?.slice(7).map((navItem, index) => {
+                          return (
+                            <div
+                              className='w-32 flex flex-col cursor-pointer py-2 items-center'
+                              id={navItem.id}
+                              key={index}
+                              onClick={() => {
+                                handleClick(navItem.id);
+                                setOpenMore(!openMore);
+                              }}
+                            >
+                              <span
+                                className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                                  selectedId === navItem.id
+                                    ? 'text-blue-500'
+                                    : 'text-white'
+                                }`}
+                              >
+                                {navItem.name}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            )}
+          </div>
+          <div
+            className={`grow items-center justify-end ${styles.custom2Xl}`}
+            style={{maxWidth: `${headerMenu?.length * 56}px`}}
+          >
+            {headerMenu?.map((navItem, index) => {
+              return (
+                <div
+                  className='flex flex-1 flex-col items-center cursor-pointer header-tab'
+                  id={navItem.id}
+                  key={index}
+                  onClick={() => {
+                    handleClick(navItem.id);
+                  }}
+                >
+                  <span
+                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                      selectedId === navItem.id ? 'text-blue-500' : 'text-white'
+                    }`}
+                  >
+                    {navItem.name}
+                  </span>
+                  {selectedId === navItem.id ? (
+                    <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
+                  ) : null}
+                </div>
+              );
+            })}
           </div>
           <div className='hidden md:flex'>{historyContainer}</div>
         </div>
