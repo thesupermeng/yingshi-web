@@ -181,7 +181,7 @@ export default function Page() {
                               </div>
                               <button className='btn btn-topic-play'>
                                 <FontAwesomeIcon style={{ color: 'black' }}  icon={faPlay} />{' '}
-                                <span className='ml-2 text-white'> 立即播放 </span>
+                                <span className='ml-2 text-black'> 立即播放 </span>
                               </button>
                             </div>
                           </div>
