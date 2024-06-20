@@ -85,6 +85,12 @@ async function getVod(vodId, tId) {
       {
         method: 'GET',
         noToken: true,
+        extraOptions: {
+          next: {
+            cache: 'force-cache',
+            revalidate: 3600
+          }
+        }
       }
     );
   } else {
@@ -97,6 +103,12 @@ async function getVod(vodId, tId) {
       {
         method: 'GET',
         noToken: true,
+        extraOptions: {
+          next: {
+            cache: 'force-cache',
+            revalidate: 3600
+          }
+        }
       }
     );
   }
@@ -113,6 +125,12 @@ async function getXVod(vodId, tId) {
       {
         method: 'GET',
         noToken: true,
+        extraOptions: {
+          next: {
+            cache: 'force-cache',
+            revalidate: 3600
+          }
+        }
       }
     );
   } else {
@@ -126,6 +144,12 @@ async function getXVod(vodId, tId) {
       {
         method: 'GET',
         noToken: true,
+        extraOptions: {
+          next: {
+            cache: 'force-cache',
+            revalidate: 3600
+          }
+        }
       }
     );
   }
@@ -142,6 +166,12 @@ async function getSuggestedVodType(vod) {
     {
       method: 'GET',
       noToken: true,
+      extraOptions: {
+        next: {
+          cache: 'force-cache',
+          revalidate: 3600
+        }
+      }
     }
   );
 }
@@ -163,7 +193,13 @@ async function getSuggestedXVodType(vod) {
     {},
     {
       method: 'GET',
-      noToken: true
+      noToken: true,
+      extraOptions: {
+        next: {
+          cache: 'force-cache',
+          revalidate: 3600
+        }
+      }
     });
 }
 
@@ -173,7 +209,13 @@ async function getPopularList() {
     {},
     {
       method: 'GET',
-      noToken: true
+      noToken: true,
+      extraOptions: {
+        next: {
+          cache: 'force-cache',
+          revalidate: 3600
+        }
+      }
     });
 }
 

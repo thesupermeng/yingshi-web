@@ -2,6 +2,19 @@ import React from 'react';
 import {redirect} from 'next/navigation';
 import Home from '@/app/page';
 
+export function generateStaticParams() {
+  return [
+    {id: '1'},
+    {id: '2'},
+    {id: '3'},
+    {id: '4'},
+    {id: '5'},
+    {id: '6'},
+    {id: '7'},
+    {id: '99'}
+  ]
+}
+
 export default function Page({ params }) {
   const id = params.id;
   const headerId = [1, 2, 3, 4, 5, 6, 7, 99];

@@ -5,14 +5,33 @@ import HeaderComponent from '@/components/header/headerComp';
 
 const Header = async () => {
   const getTopNav = async () => {
-    return YingshiApi(URL_YINGSHI_VOD.homeGetNav, {}, { method: 'GET' });
+    return YingshiApi(
+      URL_YINGSHI_VOD.homeGetNav,
+      {},
+      {
+        method: 'GET',
+        extraOptions: {
+          next: {
+            cache: 'force-cache',
+            revalidate: 3600
+          }
+        }
+      });
   };
 
   const getTopTenList = async () => {
     return YingshiApi(
       URL_YINGSHI_VOD.playlistGetTopicDetail + '?id=1',
       {},
-      { method: 'GET' }
+      {
+        method: 'GET',
+        extraOptions: {
+          next: {
+            cache: 'force-cache',
+            revalidate: 3600
+          }
+        }
+      }
     );
   };
 

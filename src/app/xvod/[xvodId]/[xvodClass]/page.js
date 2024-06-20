@@ -42,6 +42,12 @@ async function getXVodListApi(xvodId, xvodClass) {
     {},
     {
       method: 'GET',
-      noToken: true
+      noToken: true,
+      extraOptions: {
+        next: {
+          cache: 'force-cache',
+          revalidate: 3600
+        }
+      }
     });
 }

@@ -14,7 +14,15 @@ export const getTypePage = async (idValue) => {
         limit: 60,
         vod_limit: 6,
       },
-      { method: 'GET' }
+      {
+        method: 'GET',
+        extraOptions: {
+          next: {
+            cache: 'force-cache',
+            revalidate: 3600
+          }
+        }
+      }
     );
   } else {
     return YingshiApi(
@@ -22,7 +30,15 @@ export const getTypePage = async (idValue) => {
       {
         id: idValue,
       },
-      { method: 'GET' }
+      {
+        method: 'GET',
+        extraOptions: {
+          next: {
+            cache: 'force-cache',
+            revalidate: 3600
+          }
+        }
+      }
     );
   }
 };
@@ -31,6 +47,14 @@ export const getTopicListApi = async (nextPage) => {
   return YingshiApi(
     URL_YINGSHI_VOD.playlistGetTopic + '?limit=5&page=' + nextPage,
     {},
-    { method: 'GET' }
+    {
+      method: 'GET',
+      extraOptions: {
+        next: {
+          cache: 'force-cache',
+          revalidate: 3600
+        }
+      }
+    }
   );
 };
