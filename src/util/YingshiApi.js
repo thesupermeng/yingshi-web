@@ -128,19 +128,19 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
     excludeInSignature,
     returnFullResponse,
     noToken,
+    extraOptions
   } = options;
 
   const requestBody = JSON.stringify(body);
   const requestOption = {
     method,
     headers: await getHeader(requestBody, method, !noToken && getLocalstorage(LocalStorageKeys.AuthTokenHeader)),
+    ...extraOptions
   };
 
   let getParams = '';
   let resData;
   url = 'https://api.yingshi.tv/' + url
-
-
 
   if (method !== 'GET') {
     url = url + await getQuery(url);

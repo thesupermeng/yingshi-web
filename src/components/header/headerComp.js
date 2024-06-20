@@ -1005,7 +1005,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                       >
                         {headerMenu?.slice(1).map((navItem, index) => {
                           return (
-                            <Link
+                            <div
                               className='w-32 flex flex-col cursor-pointer py-2 items-center'
                               id={navItem.id}
                               key={index}
@@ -1023,7 +1023,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                               >
                                 {navItem.name}
                               </span>
-                            </Link>
+                            </div>
                           );
                         })}
                       </div>

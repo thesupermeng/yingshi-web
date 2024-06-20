@@ -38,7 +38,19 @@ export default async function Page({ params }) {
 }
 
 async function getFilterTypeList() {
-  return YingshiApi(URL_YINGSHI_VOD.filteringTypeList, {}, {method: 'GET', noToken: true});
+  return YingshiApi(
+    URL_YINGSHI_VOD.filteringTypeList,
+    {},
+    {
+      method: 'GET',
+      noToken: true,
+      extraOptions: {
+        next: {
+          cache: 'force-cache',
+          revalidate: 3600
+        }
+      }
+    });
 }
 
 async function getFilterParams(path, filterTypeList, by) {
@@ -86,7 +98,16 @@ async function getVideoList(params, byList) {
         lang: paramsFilter.lang == '全部语言' ? '' : paramsFilter.lang,
         year: paramsFilter.year == '全部时间' ? '' : paramsFilter.year,
       },
-      { method: 'GET', noToken: true }
+      {
+        method: 'GET',
+        noToken: true,
+        extraOptions: {
+          next: {
+            cache: 'force-cache',
+            revalidate: 3600
+          }
+        }
+      }
   );
 
   return {

@@ -2,7 +2,7 @@ import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { YingshiApi } from '@/util/YingshiApi';
 import {Topic} from '@/app/topic/index/page/topic';
 
-export default async function Page({ params }) {
+export default async function Page() {
   const topicList = await getTopicListApi();
 
   return(
@@ -16,7 +16,13 @@ async function getTopicListApi() {
       {},
       {
         method: 'GET',
-        noToken: true
+        noToken: true,
+        extraOptions: {
+          next: {
+            cache: 'force-cache',
+            revalidate: 3600
+          }
+        }
       }
   );
 }
