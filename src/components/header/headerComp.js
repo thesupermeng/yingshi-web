@@ -158,7 +158,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
   };
 
   const handleChange = (event) => {
-    setLoadingSearching(true);
+
     const newValue = event.target.value;
 
     // Check if the first character is a space
@@ -169,6 +169,9 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
 
     setSearchInput(newValue);
 
+    //remove auto complete
+    return 
+    setLoadingSearching(true);
     if (timeoutId) {
       clearTimeout(timeoutId);
     }
@@ -410,7 +413,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
               value={searchInput}
               onChange={handleChange}
               className='border-0 border-gray-300 text-white rounded-full pl-10 md:pl-4 md:pr-10 pr-4 py-2 focus:outline-none w-full md:w-60 header-search-input-desktop text-[14px]'
-              onClick={handleOpenSearch}
+              //onClick={handleOpenSearch}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   e.target.blur();
