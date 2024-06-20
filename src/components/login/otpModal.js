@@ -189,7 +189,7 @@ export default function OtpModal({ open, handler, onLogin, onRegister , onCloseO
 }
 
 const OtpInput = forwardRef(function OtpInput({ onKeyPress, onChange, isError }, ref) {
-  const colorClasses = isError ? `border border-[#FF1010] bg-[#FF10101A]` : `border border-transparent focus:border-[#0085E0]`
+  const colorClasses = isError ? `border border-[#FF1010] bg-[#FF10101A]` : `border border-transparent focus:border-[#FAC33D]`
 
   return <input
     onKeyDown={onKeyPress}

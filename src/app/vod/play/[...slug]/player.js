@@ -159,7 +159,7 @@ export default function Player({
       playbackRate: true,
       autoPlayback: true,
       aspectRatio: true,
-      theme: '#0085E0',
+      theme: '#FAC33D',
       lang: 'zh-cn',
       icons: {
         indicator: `<svg fill="#ffffff" width="800px" height="800px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">

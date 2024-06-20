@@ -668,7 +668,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                   <span className='text-sm text-[#F4DBBA]'>畅享离线下载</span>
                 </div>
               </div>
-              <div className='flex bg-gradient-to-r from-[#FFCD92] to-[#B58C63] rounded p-1 justify-center'>
+              <div className='flex bg-gradient-to-r from-[#FAC33D] to-[#B58C63] rounded p-1 justify-center'>
                 <span className='text-[#000000] text-center font-bold'>
                   开通会员权益
                 </span>
@@ -741,7 +741,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                       return (
                         <div
                           key={index}
-                          className='flex flex-row hover:text-[#0085E0] gap-x-2 cursor-pointer'
+                          className='flex flex-row hover:text-[#FAC33D] gap-x-2 cursor-pointer'
                           onClick={() => {
                             const url = item.sourceId ?
                               `/vod/play/id/${item.vodid}/sid/${item.tid}/nid/${item.nid}/source/${item.sourceId}`:
@@ -845,7 +845,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                 <Image src={AppImage} alt='AppImage' width={200} />
               </div>
               <div className='flex-1 flex flex-col justify-center items-center pr-2 gap-y-2'>
-                <Image alt='鲨鱼影视' src={Logo} width={120} />
+                <Image alt='影视TV' src={Logo} width={120} />
                 <span className='text-sm'>您每一天的影视平台</span>
                 <div className='flex flex-row gap-x-5 pt-2'>
                   <div className='flex flex-col items-center gap-2'>
@@ -930,7 +930,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
               }`}
             >
               <Image
-                alt='鲨鱼影视'
+                alt='影视TV'
                 src={Logo}
                 style={{ cursor: 'pointer' }}
                 onClick={() => {
@@ -977,7 +977,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                 <div className='relative' ref={dropdownMoreRef}>
                   <button
                     onClick={handleOpenMore}
-                    className='flex flex-row items-center hover:text-blue-500'
+                    className='flex flex-row items-center hover:text-yellow-500'
                   >
                     <span>更多</span>
                     <Image
@@ -1015,9 +1015,9 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                               }}
                             >
                               <span
-                                className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                                className={`hover:text-yellow-500 transition-colors duration-300 truncate ${
                                   selectedId === navItem.id
-                                    ? 'text-blue-500'
+                                    ? 'text-yellow-500'
                                     : 'text-white'
                                 }`}
                               >
@@ -1136,14 +1136,14 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                   }}
                 >
                   <span
-                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${
-                      selectedId === navItem.id ? 'text-blue-500' : 'text-white'
+                    className={`hover:text-yellow-500 transition-colors duration-300 truncate ${
+                      selectedId === navItem.id ? 'text-yellow-500' : 'text-white'
                     }`}
                   >
                     {navItem.name}
                   </span>
                   {selectedId === navItem.id ? (
-                    <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
+                    <div className='border-2 border-yellow-500 w-5 h-0.5 rounded-lg'></div>
                   ) : null}
                 </div>
               );
@@ -1153,7 +1153,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                 <div className='relative' ref={dropdownMoreRef}>
                   <button
                     onClick={handleOpenMore}
-                    className='flex flex-row items-center hover:text-blue-500'
+                    className='flex flex-row items-center hover:text-yellow-500'
                   >
                     <span>更多</span>
                     <Image
@@ -1191,9 +1191,9 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                               }}
                             >
                               <span
-                                className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                                className={`hover:text-yellow-500 transition-colors duration-300 truncate ${
                                   selectedId === navItem.id
-                                    ? 'text-blue-500'
+                                    ? 'text-yellow-500'
                                     : 'text-white'
                                 }`}
                               >
@@ -1224,14 +1224,14 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                   }}
                 >
                   <span
-                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${
-                      selectedId === navItem.id ? 'text-blue-500' : 'text-white'
+                    className={`hover:text-yellow-500 transition-colors duration-300 truncate ${
+                      selectedId === navItem.id ? 'text-yellow-500' : 'text-white'
                     }`}
                   >
                     {navItem.name}
                   </span>
                   {selectedId === navItem.id ? (
-                    <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
+                    <div className='border-2 border-yellow-500 w-5 h-0.5 rounded-lg'></div>
                   ) : null}
                 </div>
               );
@@ -1241,7 +1241,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                 <div className='relative' ref={dropdownMoreRef}>
                   <button
                     onClick={handleOpenMore}
-                    className='flex flex-row items-center hover:text-blue-500'
+                    className='flex flex-row items-center hover:text-yellow-500'
                   >
                     <span>更多</span>
                     <Image
@@ -1279,9 +1279,9 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                               }}
                             >
                               <span
-                                className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                                className={`hover:text-yellow-500 transition-colors duration-300 truncate ${
                                   selectedId === navItem.id
-                                    ? 'text-blue-500'
+                                    ? 'text-yellow-500'
                                     : 'text-white'
                                 }`}
                               >
@@ -1312,14 +1312,14 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                   }}
                 >
                   <span
-                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${
-                      selectedId === navItem.id ? 'text-blue-500' : 'text-white'
+                    className={`hover:text-yellow-500 transition-colors duration-300 truncate ${
+                      selectedId === navItem.id ? 'text-yellow-500' : 'text-white'
                     }`}
                   >
                     {navItem.name}
                   </span>
                   {selectedId === navItem.id ? (
-                    <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
+                    <div className='border-2 border-yellow-500 w-5 h-0.5 rounded-lg'></div>
                   ) : null}
                 </div>
               );
@@ -1538,7 +1538,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                 {/*{pathname.startsWith('/privacy') &&*/}
                 {/*  <span className={'text-white'}>隐私协议</span>*/}
                 {/*}*/}
-                <Image src={Logo} alt={'鲨鱼影视'} />
+                <Image src={Logo} alt={'影视TV'} />
               </div>
             </div>
           </div>

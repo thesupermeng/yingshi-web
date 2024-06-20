@@ -148,7 +148,7 @@ export default function LoginModal({ open, handler, onRegsiter }) {
           {/* agreement */}
           <div className={'flex items-center justify-center'}>
             {/*<div*/}
-            {/*  className={`w-3 h-3 rounded-lg border border-[#9c9c9c] m-1 ${isAgreementChecked ? 'bg-[#0085E0]' : ''}`}*/}
+            {/*  className={`w-3 h-3 rounded-lg border border-[#9c9c9c] m-1 ${isAgreementChecked ? 'bg-[#FAC33D]' : ''}`}*/}
             {/*  onClick={() => setIsAgreementChecked(x => !x)}/>*/}
             <Checkbox
               defaultChecked={isAgreementChecked}
@@ -158,9 +158,9 @@ export default function LoginModal({ open, handler, onRegsiter }) {
               onChange={(e) => setIsAgreementChecked(e.target.checked)}
             />
             <span className={'text-[13px] text-[#9C9C9C]'}>我已阅读并同意
-              <span className={'text-[#0085E0] hover-effect'}>用户协议</span>
+              <span className={'text-[#FAC33D] hover-effect'}>用户协议</span>
               和
-              <span className={'text-[#0085E0] hover-effect'}>隐私协议</span>
+              <span className={'text-[#FAC33D] hover-effect'}>隐私协议</span>
             </span>
           </div>
           {/*/!* 或者 *!/*/}
@@ -182,7 +182,7 @@ export default function LoginModal({ open, handler, onRegsiter }) {
 }
 
 function Tabs({ title, isSelected, onClick }) {
-  const color = isSelected ? '#0085E0' : 'transparent'
+  const color = isSelected ? '#FAC33D' : 'transparent'
   const textStyle = isSelected ? 'text-white font-semibold' : 'text-[#FFFFFF80] '
 
   return (<div className={'p-2.5 flex flex-col items-center justify-center hover-effect'} onClick={onClick}>

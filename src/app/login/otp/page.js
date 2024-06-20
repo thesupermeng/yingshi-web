@@ -175,7 +175,7 @@ export default function OTP() {
               </p>
               <p className={'text-center text-[14px]'}>
                 验证码已发送至{' '}
-                <span className={'text-[#0085E0]'}>{loginParam.email}</span>
+                <span className={'text-[#FAC33D]'}>{loginParam.email}</span>
               </p>
               <p className={'text-center text-[14px] mb-[26px]'}>
                 如果没有收到邮件，请检查垃圾邮箱
@@ -189,7 +189,7 @@ export default function OTP() {
               </p>
               <p className={'text-center text-[14px] mb-[26px]'}>
                 验证码已发送至{' '}
-                <span className={'text-[#0085E0]'}>
+                <span className={'text-[#FAC33D]'}>
                   +{loginParam.phoneNumber}
                 </span>
               </p>
@@ -217,7 +217,7 @@ export default function OTP() {
           <div className={'flex my-12 justify-center'}>
             {countdownTimer === 0 && (
               <button
-                className={'text-[17px] font-semibold text-[#0085E0]'}
+                className={'text-[17px] font-semibold text-[#FAC33D]'}
                 onClick={handleResendOTP}
               >
                 重新发送验证码

@@ -107,7 +107,7 @@ function CountrySelectItem({ country, onClick, isSelected }) {
   }
 
   return (
-    <div className={`flex gap-[15px] p-[12px] rounded-[6px] ${selectedStyles} hover:bg-[#0085E010]`} onClick={handleOnClick} data-name={'test'}>
+    <div className={`flex gap-[15px] p-[12px] rounded-[6px] ${selectedStyles} hover:bg-[#FAC33D10]`} onClick={handleOnClick} data-name={'test'}>
       <Image src={country.country_flag} alt={country.country_iso3} width={22} height={22} />
       <span className={'w-[45px]'}>+{country.country_phonecode}</span>
       <span className={'flex-1'}>{country.country_name}</span>

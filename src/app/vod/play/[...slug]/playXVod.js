@@ -294,7 +294,7 @@ export const PlayXVod = ({ nId, vod, vodUrl, vodDetails, suggestedVods, popularL
                 <div
                   style={{
                     padding: '0.3rem 1.2rem',
-                    background: '#0085E0',
+                    background: '#FAC33D',
                     borderRadius: '12px',
                     margin: '0.5rem',
                   }}
@@ -374,7 +374,7 @@ export const PlayXVod = ({ nId, vod, vodUrl, vodDetails, suggestedVods, popularL
             <div
               style={{
                 padding: '0.5rem 1.2rem',
-                background: '#0085E0',
+                background: '#FAC33D',
                 borderRadius: '12px',
                 margin: '0.5rem',
               }}

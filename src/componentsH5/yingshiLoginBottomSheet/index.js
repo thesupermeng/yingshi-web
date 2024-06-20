@@ -139,7 +139,7 @@ export default function YingshiLoginBottomSheet({ visible, onDismiss }) {
                             onChange={handleInput}
                             isShowIcon={false}
                         />
-                        <Button className={'h-12 w-full rounded-[10px] disabled:bg-[#1D2023] enabled:bg-[#0085E0] disabled:text-[#9C9C9C] enabled:text-white text-[17px]'} onClick={handleRegister} disabled={isInputError || isInputEmpty || !isAgreementChecked}>下一步</Button>
+                        <Button className={'h-12 w-full rounded-[10px] disabled:bg-[#1D2023] enabled:bg-[#FAC33D] disabled:text-[#9C9C9C] enabled:text-white text-[17px]'} onClick={handleRegister} disabled={isInputError || isInputEmpty || !isAgreementChecked}>下一步</Button>
                         <div className={'flex items-center justify-center mt-[20px]'}>
                             <Checkbox
                                 defaultChecked={isAgreementChecked}
@@ -149,9 +149,9 @@ export default function YingshiLoginBottomSheet({ visible, onDismiss }) {
                                 onChange={(e) => setIsAgreementChecked(e.target.checked)}
                             />
                             <span className={'text-[13px] text-[#9C9C9C]'}>我已阅读并同意
-                                <span className={'text-[#0085E0]'} onClick={handleClickService}>用户协议</span>
+                                <span className={'text-[#FAC33D]'} onClick={handleClickService}>用户协议</span>
                                 和
-                                <span className={'text-[#0085E0]'} onClick={handleClickPrivacy}>隐私协议</span>
+                                <span className={'text-[#FAC33D]'} onClick={handleClickPrivacy}>隐私协议</span>
                             </span>
                         </div>
                         {/*<div className={'flex flex-col gap-[12px] mt-[20px]'} >*/}
@@ -169,7 +169,7 @@ export default function YingshiLoginBottomSheet({ visible, onDismiss }) {
 }
 
 function Tabs({ title, isSelected, onClick }) {
-    const color = isSelected ? '#0085E0' : 'transparent'
+    const color = isSelected ? '#FAC33D' : 'transparent'
     const textStyle = isSelected ? 'text-white font-semibold' : 'text-[#FFFFFF80] '
 
     return (<div className={'p-2.5 flex flex-col items-center justify-center'} onClick={onClick}>

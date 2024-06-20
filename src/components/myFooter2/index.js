@@ -79,7 +79,7 @@ const MyFooter2 = () => {
             color: '#FFF',
             position: 'absolute',
             bottom: '2rem',
-            background: '#0085E0',
+            background: '#FAC33D',
             fontSize: '0.9rem',
             padding: '0.4rem 1.5rem',
             borderRadius: '1rem',

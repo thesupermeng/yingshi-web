@@ -44,7 +44,7 @@ export const VideoVerticalCard = ({ vod }) => {
           />
           <div className='bg-[#0000008c] h-[100%] w-full flex flex-col rounded-lg md:group-hover:z-10 lg:group-hover:block hidden'>
             <div className='rounded-t-lg w-full h-[45%] flex justify-center items-center'>
-              <div className='rounded-full bg-[#0085E0] w-10 h-10 flex justify-center items-center'>
+              <div className='rounded-full bg-[#FAC33D] w-10 h-10 flex justify-center items-center'>
                 <FontAwesomeIcon
                   style={{
                     fontSize: '18px',
@@ -55,7 +55,7 @@ export const VideoVerticalCard = ({ vod }) => {
             </div>
             <div className='bg-[#1D2023] rounded-b-lg w-full h-[55%] px-2 py-1.5 flex'>
               <div className='flex flex-col overflow-hidden'>
-                <span className='antialiased text-[10px]/4 text-[#0085E0] font-bold'>
+                <span className='antialiased text-[10px]/4 text-[#FAC33D] font-bold'>
                   {vod.vod_name}
                 </span>
                 <div className='flex flex-row gap-1 flex-wrap py-0.5'>

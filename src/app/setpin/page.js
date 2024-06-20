@@ -311,7 +311,7 @@ export default function OTP() {
           </p>
           <p className={'text-center text-[14px]'}>
             验证码已发送至
-            <span className={'text-[#0085E0]'}>
+            <span className={'text-[#FAC33D]'}>
               &nbsp;
               {userInfo.user_email && userInfo.user_email}
               {userInfo.user_phone !== 0 &&
@@ -344,7 +344,7 @@ export default function OTP() {
           <div className={'flex my-12 justify-center'}>
             {countdownTimer == 0 && (
               <button
-                className={'text-[17px] font-semibold text-[#0085E0]'}
+                className={'text-[17px] font-semibold text-[#FAC33D]'}
                 onClick={handleResendOTP}
               >
                 重新发送验证码

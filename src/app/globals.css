@@ -286,7 +286,7 @@ body {
   box-sizing: border-box; /* Ensure padding is included in element's width */
 }
 .otp-input:focus {
-  border-color: #0085E0; /* Border color on focus */
+  border-color: #FAC33D; /* Border color on focus */
   outline: none; /* Remove default outline */
 }
 .otp-input.error {

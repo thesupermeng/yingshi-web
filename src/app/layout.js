@@ -37,7 +37,7 @@ export const metadata = {
   referrer: 'no-referrer',
   title: Config.MetaTitle,
   description:
-    '鲨鱼影视,全球华人在线视频媒体平台,免费点播,无广告无VIP！免费提供最新高清的电影,电视剧,综艺,动漫,台劇,日劇,泰劇,韩剧,美剧等。',
+    '影视TV,全球华人在线视频媒体平台,免费点播,无广告无VIP！免费提供最新高清的电影,电视剧,综艺,动漫,台劇,日劇,泰劇,韩剧,美剧等。',
 };
 export const viewport = {
   themeColor: '#000000',
@@ -157,9 +157,9 @@ export default function RootLayout({ children }) {
                     lineHeight: '24px',
                   }}
                 >
-                  版权声明：鲨鱼影视内容均来自互联网，不提供存储/录制/上传。
+                  版权声明：影视TV内容均来自互联网，不提供存储/录制/上传。
                   <br />
-                  如果鲨鱼影视提供内容侵犯了您的版权，请发送电子邮件至
+                  如果影视TV提供内容侵犯了您的版权，请发送电子邮件至
                   <a href='mailto:shayuyingshi@gmail.com'>
                     shayuyingshi@gmail.com
                   </a>
@@ -213,9 +213,9 @@ export default function RootLayout({ children }) {
                           lineHeight: '24px',
                         }}
                       >
-                        版权声明：鲨鱼影视内容均来自互联网，不提供存储/录制/上传。
+                        版权声明：影视TV内容均来自互联网，不提供存储/录制/上传。
                         <br />
-                        如果鲨鱼影视提供内容侵犯了您的版权，请发送电子邮件至
+                        如果影视TV提供内容侵犯了您的版权，请发送电子邮件至
                         <a href='mailto:shayuyingshi@gmail.com'>
                           shayuyingshi@gmail.com
                         </a>

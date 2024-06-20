@@ -129,7 +129,7 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
           onClick={() => {
             handleOnSkipAd();
           }}
-          className='text-[#0085E0] text-sm nowrap cursor-pointer'
+          className='text-[#FAC33D] text-sm nowrap cursor-pointer'
         >
           VIP跳广告
         </span>
@@ -137,7 +137,7 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
           style={{
             fontSize: '12px',
             paddingLeft: '5px',
-            color: '#0085E0',
+            color: '#FAC33D',
           }}
           icon={faAngleRight}
         />
@@ -170,7 +170,7 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
           onClick={() => {
             handleOnStopCount();
           }}
-          className='text-[#0085E0] text-sm nowrap cursor-pointer'
+          className='text-[#FAC33D] text-sm nowrap cursor-pointer'
         >
           VIP跳广告
         </span>
@@ -178,7 +178,7 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
           style={{
             fontSize: '12px',
             paddingLeft: '5px',
-            color: '#0085E0',
+            color: '#FAC33D',
           }}
           icon={faAngleRight}
         />
