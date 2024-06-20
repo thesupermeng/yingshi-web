@@ -18,7 +18,7 @@ export const VodPopularList = ({ topic }) => {
           : index === 1
             ? 'text-orange-500'
             : index === 2
-              ? 'text-yellow-500'
+              ? 'text-blue-500'
               : 'text-inherit'
         }>{index + 1}</span>
         <span className="text-sm flex-1">{vod.vod_name}</span>

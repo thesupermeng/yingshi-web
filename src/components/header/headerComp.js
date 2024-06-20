@@ -959,7 +959,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                 >
                   <span
                     className={`truncate ${
-                      selectedId === navItem.id ? 'text-yellow-500' : 'text-white'
+                      selectedId === navItem.id ? 'text-blue-500' : 'text-white'
                     }`}
                   >
                     {navItem.name}
@@ -977,7 +977,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                 <div className='relative' ref={dropdownMoreRef}>
                   <button
                     onClick={handleOpenMore}
-                    className='flex flex-row items-center hover:text-yellow-500'
+                    className='flex flex-row items-center hover:text-blue-500'
                   >
                     <span>更多</span>
                     <Image
@@ -1015,9 +1015,9 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                               }}
                             >
                               <span
-                                className={`hover:text-yellow-500 transition-colors duration-300 truncate ${
+                                className={`hover:text-blue-500 transition-colors duration-300 truncate ${
                                   selectedId === navItem.id
-                                    ? 'text-yellow-500'
+                                    ? 'text-blue-500'
                                     : 'text-white'
                                 }`}
                               >
@@ -1048,8 +1048,8 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                   }}
                 >
                   <span
-                    className={`hover:text-yellow-500 transition-colors duration-300 truncate ${
-                      selectedId === navItem.id ? 'text-yellow-500' : 'text-white'
+                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                      selectedId === navItem.id ? 'text-blue-500' : 'text-white'
                     }`}
                   >
                     {navItem.name}
@@ -1065,7 +1065,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                 <div className='relative' ref={dropdownMoreRef}>
                   <button
                     onClick={handleOpenMore}
-                    className='flex flex-row items-center hover:text-yellow-500'
+                    className='flex flex-row items-center hover:text-blue-500'
                   >
                     <span>更多</span>
                     <Image
@@ -1103,9 +1103,9 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                               }}
                             >
                               <span
-                                className={`hover:text-yellow-500 transition-colors duration-300 truncate ${
+                                className={`hover:text-blue-500 transition-colors duration-300 truncate ${
                                   selectedId === navItem.id
-                                    ? 'text-yellow-500'
+                                    ? 'text-blue-500'
                                     : 'text-white'
                                 }`}
                               >
@@ -1136,8 +1136,8 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                   }}
                 >
                   <span
-                    className={`hover:text-yellow-500 transition-colors duration-300 truncate ${
-                      selectedId === navItem.id ? 'text-yellow-500' : 'text-white'
+                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                      selectedId === navItem.id ? 'text-blue-500' : 'text-white'
                     }`}
                   >
                     {navItem.name}
@@ -1153,7 +1153,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                 <div className='relative' ref={dropdownMoreRef}>
                   <button
                     onClick={handleOpenMore}
-                    className='flex flex-row items-center hover:text-yellow-500'
+                    className='flex flex-row items-center hover:text-blue-500'
                   >
                     <span>更多</span>
                     <Image
@@ -1191,9 +1191,9 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                               }}
                             >
                               <span
-                                className={`hover:text-yellow-500 transition-colors duration-300 truncate ${
+                                className={`hover:text-blue-500 transition-colors duration-300 truncate ${
                                   selectedId === navItem.id
-                                    ? 'text-yellow-500'
+                                    ? 'text-blue-500'
                                     : 'text-white'
                                 }`}
                               >
@@ -1224,8 +1224,8 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                   }}
                 >
                   <span
-                    className={`hover:text-yellow-500 transition-colors duration-300 truncate ${
-                      selectedId === navItem.id ? 'text-yellow-500' : 'text-white'
+                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                      selectedId === navItem.id ? 'text-blue-500' : 'text-white'
                     }`}
                   >
                     {navItem.name}
@@ -1241,7 +1241,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                 <div className='relative' ref={dropdownMoreRef}>
                   <button
                     onClick={handleOpenMore}
-                    className='flex flex-row items-center hover:text-yellow-500'
+                    className='flex flex-row items-center hover:text-blue-500'
                   >
                     <span>更多</span>
                     <Image
@@ -1279,9 +1279,9 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                               }}
                             >
                               <span
-                                className={`hover:text-yellow-500 transition-colors duration-300 truncate ${
+                                className={`hover:text-blue-500 transition-colors duration-300 truncate ${
                                   selectedId === navItem.id
-                                    ? 'text-yellow-500'
+                                    ? 'text-blue-500'
                                     : 'text-white'
                                 }`}
                               >
@@ -1312,8 +1312,8 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                   }}
                 >
                   <span
-                    className={`hover:text-yellow-500 transition-colors duration-300 truncate ${
-                      selectedId === navItem.id ? 'text-yellow-500' : 'text-white'
+                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                      selectedId === navItem.id ? 'text-blue-500' : 'text-white'
                     }`}
                   >
                     {navItem.name}
