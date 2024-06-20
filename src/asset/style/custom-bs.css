@@ -1933,8 +1933,8 @@ fieldset:disabled .btn {
 }
 
 a {
-  color: #0d6efd;
-  text-decoration: underline;
+  color: inherit !important;
+  text-decoration: none !important;
 }
 a:hover {
   color: #0a58ca;
