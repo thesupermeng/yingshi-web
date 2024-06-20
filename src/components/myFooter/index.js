@@ -28,7 +28,7 @@ const MyFooter = () => {
     } else if (pathname.startsWith('/vod/play/')) {
       setSelectedId(-1);
     } else {
-      const match = pathname.match(/\/category\/(\w+)/);
+      const match = pathname.match(/\/index\/type\/id\/(\w+)/);
       if (match) {
         setSelectedId(parseInt(match[1]));
       } else {
