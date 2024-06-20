@@ -85,7 +85,7 @@ export default async function Home(params) {
                   {yunying != [] &&
                     yunying?.map((yy, idx) => {
                       return (
-                        <div id={yy.type_id} key={idx} className='lg:pt-3'>
+                        <div key={idx} className='lg:pt-3'>
                           <div className='flex justify-between'>
                             <span
                               style={{

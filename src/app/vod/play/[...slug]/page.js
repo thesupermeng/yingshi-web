@@ -14,7 +14,7 @@ export async function generateMetadata({ params }) {
     const title = `${vod.List[0].vod_name}在线观看 - 影视TV-海量高清视频免费在线观看`
     return {
       title: title,
-      description: vod.List[0].vod_content
+      description: vod.List[0].vod_blurb
     };
   }
 }

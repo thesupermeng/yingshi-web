@@ -75,7 +75,7 @@ export const VideoVerticalCard = ({ vod }) => {
                 </div>
                 <div className='flex overflow-hidden'>
                   <span className='antialiased text-[9px] text-[#9C9C9C] 2xl:line-clamp-[7] xl:line-clamp-5 lg:line-clamp-4 line-clamp-2'>
-                    {vod.vod_content !== undefined ? vod.vod_content : '暂无'}
+                    {vod.vod_blurb !== undefined ? vod.vod_blurb : '暂无'}
                   </span>
                 </div>
               </div>

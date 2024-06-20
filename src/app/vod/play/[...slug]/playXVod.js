@@ -457,7 +457,7 @@ export const PlayXVod = ({ nId, vod, vodUrl, vodDetails, suggestedVods, popularL
               />
             </div>
             <VodContent
-              vodContent={vod.vod_content}
+              vodContent={vod.vod_blurb}
               vodEpisodeSelected={episodeSelected}
               vodEpisodeInfo={vod.vod_episode_info}
             />
@@ -594,7 +594,7 @@ export const PlayXVod = ({ nId, vod, vodUrl, vodDetails, suggestedVods, popularL
                       简介
                     </div>
                     <div className='text-sm'>
-                      <p>{vod.vod_content}</p>
+                      <p>{vod.vod_blurb}</p>
                     </div>
                   </div>
                 </div>
