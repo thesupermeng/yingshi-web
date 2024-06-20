@@ -524,13 +524,13 @@ export const FilmLibrary = ({}) => {
                     ).text
                   }
                 </div>
-                <div className='rounded-full w-1 h-1 bg-blue-500'></div>
+                <div className='rounded-full w-1 h-1 bg-yellow-500'></div>
                 <div>{paramsFilter.class}</div>
-                <div className='rounded-full w-1 h-1 bg-blue-500'></div>
+                <div className='rounded-full w-1 h-1 bg-yellow-500'></div>
                 <div>{paramsFilter.area}</div>
-                <div className='rounded-full w-1 h-1 bg-blue-500'></div>
+                <div className='rounded-full w-1 h-1 bg-yellow-500'></div>
                 <div>{paramsFilter.lang}</div>
-                <div className='rounded-full w-1 h-1 bg-blue-500'></div>
+                <div className='rounded-full w-1 h-1 bg-yellow-500'></div>
                 <div>{paramsFilter.year}</div>
                 <div
                   className='cursor-pointer'

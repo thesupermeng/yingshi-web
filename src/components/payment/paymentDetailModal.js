@@ -106,7 +106,7 @@ export function Pagination({ totalPages, onChange, className }) {
   const getItemProps = (index) => ({
     onClick: () => handlePageChange(index),
     className: `rounded p-0 font-bold ${
-      active === index ? 'bg-blue-500 text-white' : 'bg-transparent text-gray-500'
+      active === index ? 'bg-yellow-500 text-white' : 'bg-transparent text-gray-500'
     }`,
     size: 'sm',
   });
