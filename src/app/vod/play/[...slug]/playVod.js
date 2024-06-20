@@ -123,10 +123,10 @@ export const PlayVod =
       if (isVip) {
         setShowAds(false);
       } else {
-        getAds().then((res) => {
-          setShowAds(true);
-          setAds(res);
-        });
+        // getAds().then((res) => {
+        //   setShowAds(true);
+        //   setAds(res);
+        // });
       }
 
       let watchHistory = {
@@ -521,7 +521,8 @@ export const PlayVod =
                       : true,
                     muted: false,
                   }}
-                  getInstance={(art) => console.info(art)}
+                  getInstance={(art) => {//console.info(art)
+                    }}
                   onVideoEnd={onVideoEnd}
                   episodeSelected={episodeSelected}
                   vodSourceSelected={vodSourceSelected}
@@ -542,7 +543,7 @@ export const PlayVod =
               />
             </div>
             <VodContent
-              vodContent={vod.vod_content}
+              vodContent={vod.vod_blurb}
               vodEpisodeSelected={episodeSelected}
               vodEpisodeInfo={vod.vod_episode_info}
             />
@@ -675,7 +676,7 @@ export const PlayVod =
                       简介
                     </div>
                     <div className='text-sm text-ellipsis overflow-hidden'>
-                      <p>{vod.vod_content}</p>
+                      <p>{vod.vod_blurb}</p>
                     </div>
                   </div>
                 </div>

@@ -99,7 +99,7 @@ export const VodCard = ({
             <div className="text-sm pt-1">导演: {vod.vod_director}</div>
             <div className="text-sm pt-1">主演: {vod.vod_actor}</div>
             <div className="text-sm pt-3">
-              <p>{vod.vod_content}</p>
+              <p>{vod.vod_blurb}</p>
             </div>
           </div>
 
