@@ -280,7 +280,7 @@ export default function H5Page({ params }) {
       </div>
 
       {/*aha iframe  background: '#1D2023', */}
-      {userInfo && frameToken && frameToken != -1 && (
+      {/* {userInfo && frameToken && frameToken != -1 && (
         <div style={{ borderRadius: '12px', marginBottom: '16px' }}>
           <iframe
             className={'h-[74px] w-full rounded-[12px]'}
@@ -288,10 +288,8 @@ export default function H5Page({ params }) {
             scrolling={'no'}
             allow='clipboard-read; clipboard-write'
           />
-
-          {/* <h1> { ahaToken } </h1> */}
         </div>
-      )}
+      )} */}
 
       {/* background: '#1D2023', */}
       {frameToken == -1 && userInfo && (
