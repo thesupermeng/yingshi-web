@@ -38,7 +38,7 @@ import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 import { isMobile } from 'react-device-detect';
 import { usePaymentOpen } from '@/hook/yingshiScreenState/usePaymentOpen';
 import styles from './style.module.css';
-
+import Link from 'next/link';
 // const getHeaderMenu = (state) => state.headerMenu;
 const getCurrentScrollPosition = (state) => state.currentScrollPosition;
 
@@ -1005,7 +1005,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                       >
                         {headerMenu?.slice(1).map((navItem, index) => {
                           return (
-                            <div
+                            <Link
                               className='w-32 flex flex-col cursor-pointer py-2 items-center'
                               id={navItem.id}
                               key={index}
@@ -1023,7 +1023,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                               >
                                 {navItem.name}
                               </span>
-                            </div>
+                            </Link>
                           );
                         })}
                       </div>
