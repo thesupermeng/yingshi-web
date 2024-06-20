@@ -171,29 +171,29 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
 
     //remove auto complete
     return 
-    setLoadingSearching(true);
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
+    // setLoadingSearching(true);
+    // if (timeoutId) {
+    //   clearTimeout(timeoutId);
+    // }
 
-    // Set a new timeout to call the function after 3 seconds
-    const newTimeoutId = setTimeout(async () => {
-      // Call your function here
-      // const encodedData = encodeURIComponent(newValue);
-      // console.log(encodedData)
-      if (newValue !== '') {
-        const res = await getSearchingList(newValue);
-        if (res.List != null) {
-          setSearchList(res.List);
-        } else {
-          setSearchList([]);
-        }
-        setLoadingSearching(false);
-      }
-    }, 2000);
+    // // Set a new timeout to call the function after 3 seconds
+    // const newTimeoutId = setTimeout(async () => {
+    //   // Call your function here
+    //   // const encodedData = encodeURIComponent(newValue);
+    //   // console.log(encodedData)
+    //   if (newValue !== '') {
+    //     const res = await getSearchingList(newValue);
+    //     if (res.List != null) {
+    //       setSearchList(res.List);
+    //     } else {
+    //       setSearchList([]);
+    //     }
+    //     setLoadingSearching(false);
+    //   }
+    // }, 2000);
 
-    // Update the timeoutId state
-    setTimeoutId(newTimeoutId);
+    // // Update the timeoutId state
+    // setTimeoutId(newTimeoutId);
   };
 
   const handleSearch = () => {
