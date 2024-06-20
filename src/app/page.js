@@ -1,3 +1,4 @@
+'use client'
 // import './i18n';
 import { LoadingPage } from '@/components/loading';
 import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
@@ -5,7 +6,7 @@ import { VideoHorizontalCard } from '@/components/videoItem/videoHorizontalCard'
 import { AdsBanner } from '@/components/ads/adsBanner.js';
 export const RightBetCartWidth = 'w-[32rem]';
 import { Carousel } from '@/components/carousel/carousel';
-import { Suspense } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
@@ -17,64 +18,110 @@ import {
 import VodListViewMore from '@/components/vodListViewMore';
 import TopicPagingList from '@/components/topicPagingList';
 
-export default async function Home(params) {
+export default function Home(params) {
   let paramsInput = params.category == undefined ? 0 : params.category;
 
-  let classList = [];
-  let categories = [];
-  let yunying = [];
-  let carousel = [];
-  let topicList = null;
-  let nextPage = 0;
-  let stillCanLoad = paramsInput == 0 ? true : false;
+  const [isLoading, setIsLoading] = useState(false);
+  const [classList, setClassList] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [yunying, setYunying] = useState([]);
+  const [carousel, setCarousel] = useState([]);
+  const [topicList, setTopicList] = useState(null);
+  const [nextPage, setNextPage] = useState(0);
+  const [stillCanLoad, setStillCanLoad] = useState(paramsInput == 0 ? true : false);
 
-  await Promise.all([getTypePage(paramsInput), getTopicListApi(nextPage)]).then(([typePageData, topicListData]) => {
-    if (typePageData) {
-      if (paramsInput == 99) {
-        classList = typePageData.class_list;
-      }
-      categories = typePageData.categories;
-      yunying = typePageData.yunying;
-      carousel = typePageData.carousel;
-    }
+  useEffect(() => {
+    setIsLoading(true);
 
-    if (topicListData) {
-      let currentPage = nextPage;
-
-      if (nextPage > 1) {
-        try {
-          topicList = [...topicList, ...topicListData.List];
-        } catch (e) {
-          console.log(e);
-          console.log('crash');
-          console.log(topicList);
-          topicList = topicListData.List;
+    Promise.all([getTypePage(paramsInput), getTopicListApi(nextPage)]).then(([typePageData, topicListData]) => {
+      if (typePageData) {
+        if (paramsInput == 99) {
+          setClassList(typePageData.class_list);
         }
-      } else {
-        topicList = topicListData.List;
+        setCategories(typePageData.categories);
+        setYunying(typePageData.yunying);
+        setCarousel(typePageData.carousel);
       }
-      if (nextPage > topicListData.TotalPageCount - 1) {
-        stillCanLoad = false;
-      } else {
-        stillCanLoad = true;
-        nextPage = currentPage + 1;
+
+      if (topicListData) {
+        let currentPage = nextPage;
+
+        if (nextPage > 1) {
+          try {
+            setTopicList(prev => [...prev, ...topicListData.List]);
+          } catch (e) {
+            console.log(e);
+            console.log('crash');
+            console.log(topicList);
+            setTopicList(topicListData.List);
+          }
+        } else {
+          setTopicList(topicListData.List);
+        }
+        if (nextPage > topicListData.TotalPageCount - 1) {
+          setStillCanLoad(false);
+        } else {
+          setStillCanLoad(true);
+          setNextPage(currentPage + 1);
+        }
       }
-    }
-  })
+
+      setIsLoading(false);
+    })
+  }, [])
+
+  // let classList = [];
+  // let categories = [];
+  // let yunying = [];
+  // let carousel = [];
+  // let topicList = null;
+  // let nextPage = 0;
+  // let stillCanLoad = paramsInput == 0 ? true : false;
+
+  // await Promise.all([getTypePage(paramsInput), getTopicListApi(nextPage)]).then(([typePageData, topicListData]) => {
+  //   if (typePageData) {
+  //     if (paramsInput == 99) {
+  //       classList = typePageData.class_list;
+  //     }
+  //     categories = typePageData.categories;
+  //     yunying = typePageData.yunying;
+  //     carousel = typePageData.carousel;
+  //   }
+
+  //   if (topicListData) {
+  //     let currentPage = nextPage;
+
+  //     if (nextPage > 1) {
+  //       try {
+  //         topicList = [...topicList, ...topicListData.List];
+  //       } catch (e) {
+  //         console.log(e);
+  //         console.log('crash');
+  //         console.log(topicList);
+  //         topicList = topicListData.List;
+  //       }
+  //     } else {
+  //       topicList = topicListData.List;
+  //     }
+  //     if (nextPage > topicListData.TotalPageCount - 1) {
+  //       stillCanLoad = false;
+  //     } else {
+  //       stillCanLoad = true;
+  //       nextPage = currentPage + 1;
+  //     }
+  //   }
+  // })
 
   return (
     <div
       className='flex flex-1 justify-center flex-col'
       style={{ width: '100%' }}
     >
-      <Suspense
-        fallback={
-          <div>
-            <LoadingPage full={false} />
-          </div>
-        }
-      >
-        <>
+      {isLoading
+        ? <div>
+          <LoadingPage full={false} />
+        </div>
+        : <>
           {paramsInput != 99 ? (
             <div className='flex flex-col w-full'>
               <Carousel carouselItems={carousel} />
@@ -270,7 +317,7 @@ export default async function Home(params) {
           )
           }
         </>
-      </Suspense>
+      }
     </div>
   );
 }
