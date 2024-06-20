@@ -30,6 +30,11 @@ const nextConfig = {
   },
   i18n,
   transpilePackages: ['crypto-js'],
+  logging:{
+    fetches:{
+      fullUrl:true
+    }
+  },
   images: {
     remotePatterns: [
       {
