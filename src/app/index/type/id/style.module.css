@@ -366,7 +366,7 @@
   width: 100vw !important;
   max-width: 100% !important;
   height: 255px; /* Adjust the height as needed */
-  background-image: url("./../../asset/image/topic-bg.png");
+  background-image: url("../../../../asset/image/topic-bg.png");
   background-size: cover;
   background-position: center;
   display: flex;
@@ -375,7 +375,7 @@
 }
 
 .container-header-topic-bg {
-  background-image: url("./../../asset/image/topic-bg.png");
+  background-image: url("../../../../asset/image/topic-bg.png");
 }
 
 .detail-desc {
@@ -625,7 +625,7 @@
 
 .spinner-container {
   display: flex;
-  justify-content: center !;
+  justify-content: center !important;
 }
 
 .spinner-container > img {

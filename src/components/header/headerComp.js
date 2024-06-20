@@ -62,7 +62,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
 
   const router = useRouter();
   const pathname = usePathname();
-  const [selectedId, setSelectedId] = useState(0);
+  const [selectedId, setSelectedId] = useState(-1);
   const [searchInput, setSearchInput] = useState('');
   const [loading, setLoading] = useState(true);
   const [openMore, setOpenMore] = useState(false);
@@ -261,7 +261,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
       router.push(`/`);
       setSearchInput('');
     } else {
-      router.push(`/category/${value}`);
+      router.push(`/index/type/id/${value}`);
       setSearchInput('');
     }
   };
@@ -313,7 +313,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
     } else if (pathname.startsWith('/vod/play/')) {
       setSelectedId(-1);
     } else {
-      const match = pathname.match(/\/category\/(\w+)/);
+      const match = pathname.match(/\/index\/type\/id\/(\w+)/);
       if (match) {
         setSelectedId(parseInt(match[1]));
       } else {

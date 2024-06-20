@@ -3,14 +3,14 @@ import Link from 'next/link';
 import { usePathname, useParams, useRouter } from 'next/navigation';
 import { useTranslation } from 'next-i18next';
 import React, { useEffect, useState } from 'react';
-import styles from './../style.module.css';
+import styles from '../style.module.css';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { YingshiApi } from '@/util/YingshiApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import VodItemMobile from './../../../components/vodItemMobile';
-import { Spinner } from './../../../components/spinner';
+import VodItemMobile from '../../../../../components/vodItemMobile';
+import { Spinner } from '../../../../../components/spinner';
 import Image from 'next/image';
 import Home from '@/app/page';
 
