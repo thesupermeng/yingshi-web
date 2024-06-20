@@ -1055,7 +1055,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                     {navItem.name}
                   </span>
                   {selectedId === navItem.id ? (
-                    <div className='border-2 border-yellow-500 w-5 h-0.5 rounded-lg'></div>
+                    <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
                   ) : null}
                 </div>
               );
@@ -1143,7 +1143,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                     {navItem.name}
                   </span>
                   {selectedId === navItem.id ? (
-                    <div className='border-2 border-yellow-500 w-5 h-0.5 rounded-lg'></div>
+                    <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
                   ) : null}
                 </div>
               );
@@ -1231,7 +1231,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                     {navItem.name}
                   </span>
                   {selectedId === navItem.id ? (
-                    <div className='border-2 border-yellow-500 w-5 h-0.5 rounded-lg'></div>
+                    <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
                   ) : null}
                 </div>
               );
@@ -1319,7 +1319,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                     {navItem.name}
                   </span>
                   {selectedId === navItem.id ? (
-                    <div className='border-2 border-yellow-500 w-5 h-0.5 rounded-lg'></div>
+                    <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
                   ) : null}
                 </div>
               );
