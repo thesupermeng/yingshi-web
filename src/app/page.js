@@ -10,7 +10,8 @@ import { Suspense, useEffect, useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
-
+import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
+import { YingshiApi } from '@/util/YingshiApi';
 import {
   getTypePage,
   getTopicListApi,
@@ -29,6 +30,7 @@ export default function Home(params) {
   const [topicList, setTopicList] = useState(null);
   const [nextPage, setNextPage] = useState(0);
   const [stillCanLoad, setStillCanLoad] = useState(paramsInput == 0 ? true : false);
+ 
 
   useEffect(() => {
     setIsLoading(true);
@@ -125,7 +127,7 @@ export default function Home(params) {
           {paramsInput != 99 ? (
             <div className='flex flex-col w-full'>
               <Carousel carouselItems={carousel} />
-              <AdsBanner navId={paramsInput} height='500px' />
+              <AdsBanner navId={'1-13'} height='500px' />
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
                 <div className='container w-[100%]'>
@@ -158,7 +160,7 @@ export default function Home(params) {
                       return (
                         <div key={idx}>
                           {idx % 2 ? (
-                            <AdsBanner navId={paramsInput} height='500px' />
+                            <AdsBanner navId={"1-13"} height='500px' />
                           ) : (
                             <div style={{ paddingTop: '20px' }}></div>
                           )}
