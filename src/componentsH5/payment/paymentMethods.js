@@ -14,7 +14,7 @@ export default function PaymentMethods({className, paymentOptions, onMethodSelec
   return (
     <div className={`flex flex-col w-full gap-4 ${className}`}>
       <p className={'text-[#D3AC7B] text-[18px] font-semibold'}>支付方式</p>
-      <div className={'flex flex-row gap-3 w-full'}>
+      <div className={'flex  row gap-3 w-full'}>
         {paymentOptions.map((option, index) => {
           return (
             <Method
@@ -46,7 +46,7 @@ export default function PaymentMethods({className, paymentOptions, onMethodSelec
 
 function Method({children, icon, isSelected, onClick}) {
   return (
-    <div className={`hover-effect w-full flex items-center rounded-[8px] gap-[10px] px-2 py-2 ${isSelected? 'border-2 border-[#D3AC7B]': ''} ${styles.payment_method_background}` }
+    <div className={`hover-effect col-5 flex items-center rounded-[8px] gap-[10px] py-3 px-4 ${isSelected? 'border-2 border-[#D3AC7B]': ''} ${styles.payment_method_background}` }
       onClick={onClick}
     >
       <div className={'h-[24px] w-[34px] relative'}>
