@@ -1,4 +1,5 @@
 import './globals.css';
+import './theme.css';
 import '../asset/style/custom-bs.css';
 import '../asset/style/cms.css';
 
@@ -165,11 +166,11 @@ export default function RootLayout({ children }) {
                   进行说明，我们将立即删除内容，保护版权所有者的权益。
                   <br />
                   <br />
-                  <a className='hover-blue custom-link' href={'/privacy'}>
+                  <a className='hover-yellow custom-link' href={'/privacy'}>
                     隐私协议
                   </a>
                   &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
-                  <a className='hover-blue custom-link' href={'/service'}>
+                  <a className='hover-yellow custom-link' href={'/service'}>
                     用户服务协议
                   </a>
                   <br />
@@ -221,11 +222,11 @@ export default function RootLayout({ children }) {
                         进行说明，我们将立即删除内容，保护版权所有者的权益。
                         <br />
                         <br />
-                        <a className='hover-blue custom-link' href={'/privacy'}>
+                        <a className='hover-yellow custom-link' href={'/privacy'}>
                           隐私协议
                         </a>
                         &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a className='hover-blue custom-link' href={'/service'}>
+                        <a className='hover-yellow custom-link' href={'/service'}>
                           用户服务协议
                         </a>
                         <br />

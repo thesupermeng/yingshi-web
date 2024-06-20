@@ -1,0 +1,16 @@
+.text-yellow-500
+{
+  color: #FAC33D !important;
+  
+}
+
+.border-yellow-500 {
+  border-color: rgb(250, 198, 69) !important;
+}
+
+
+.hover-yellow:hover{
+  /* color: rgb(250, 198, 69) !important; */
+  color: rgb(250, 198, 69) !important;
+  cursor: pointer;
+}

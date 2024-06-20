@@ -127,7 +127,7 @@ export default async function Home(params) {
                               >
                                 {category.type_name}
                               </span>
-                              <div className='flex w-fit items-center cursor-pointer hover-blue'>
+                              <div className='flex w-fit items-center cursor-pointer hover-yellow'>
                                 <VodListViewMore type={'category'} data={category} />
                                 <FontAwesomeIcon
                                   style={{
@@ -183,7 +183,7 @@ export default async function Home(params) {
                               >
                                 {category.type_name}
                               </span>
-                              <div className='flex w-fit items-center cursor-pointer hover-blue'>
+                              <div className='flex w-fit items-center cursor-pointer hover-yellow'>
                                 <VodListViewMore type={'xcategory'} data={category} />
                                 <FontAwesomeIcon
                                   style={{
@@ -236,7 +236,7 @@ export default async function Home(params) {
                               >
                                 {category.type_name}
                               </span>
-                              <div className='flex w-fit items-center cursor-pointer hover-blue'>
+                              <div className='flex w-fit items-center cursor-pointer hover-yellow'>
                                 <VodListViewMore type={'xcategory'} data={category} />
                                 <FontAwesomeIcon
                                   style={{

@@ -960,7 +960,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                 >
                   <span
                     className={`truncate ${
-                      selectedId === navItem.id ? 'text-blue-500' : 'text-white'
+                      selectedId === navItem.id ? 'text-yellow-500' : 'text-white'
                     }`}
                   >
                     {navItem.name}
@@ -985,14 +985,14 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                   }}
                 >
                   <span
-                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${
-                      selectedId === navItem.id ? 'text-blue-500' : 'text-white'
+                    className={`hover:text-yellow-500 transition-colors duration-300 truncate ${
+                      selectedId === navItem.id ? 'text-yellow-500' : 'text-white'
                     }`}
                   >
                     {navItem.name}
                   </span>
                   {selectedId === navItem.id ? (
-                    <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
+                    <div className='border-2 border-yellow-500 w-5 h-0.5 rounded-lg'></div>
                   ) : null}
                 </div>
               );
@@ -1002,7 +1002,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                 <div className='relative' ref={dropdownMoreRef}>
                   <button
                     onClick={handleOpenMore}
-                    className='flex flex-row items-center hover:text-blue-500'
+                    className='flex flex-row items-center hover:text-yellow-500'
                   >
                     <span>更多</span>
                     <Image
@@ -1040,9 +1040,9 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
                               }}
                             >
                               <span
-                                className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                                className={`hover:text-yellow-500 transition-colors duration-300 truncate ${
                                   selectedId === navItem.id
-                                    ? 'text-blue-500'
+                                    ? 'text-yellow-500'
                                     : 'text-white'
                                 }`}
                               >

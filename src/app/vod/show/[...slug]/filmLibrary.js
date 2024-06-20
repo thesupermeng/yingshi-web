@@ -230,16 +230,16 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                     href={`/vod/show/by/${advanceFilterItem[0].value}/id/${item.type_id}`}
                   >
                     <span
-                      className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                      className={`hover:text-yellow-500 transition-colors duration-300 truncate ${
                         paramsFilter.typeId === item.type_id
-                          ? 'text-blue-500'
+                          ? 'text-yellow-500'
                           : 'text-white'
                       }`}
                     >
                       {item.type_name}
                     </span>
                     {paramsFilter.typeId === item.type_id ? (
-                      <div className="border-2 border-blue-500 w-5 h-0.5 rounded-lg"></div>
+                      <div className="border-2 border-yellow-500 w-5 h-0.5 rounded-lg"></div>
                     ) : null}
                   </Link>
                 );
@@ -259,16 +259,16 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                   return (
                     <Link
                       className={`flex flex-col items-center cursor-pointer ${
-                        paramsFilter.by === item.value ? 'bg-[#0085E01f]' : ''
+                        paramsFilter.by === item.value ? 'bg-[#FAC33D1F]' : ''
                       } p-2 rounded-md`}
                       id={item.value}
                       key={index}
                       href={generatePath(item.value, 'by')}
                     >
                       <span
-                        className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                        className={`text-sm hover:text-yellow-500 transition-colors duration-300 truncate ${
                           paramsFilter.by === item.value
-                            ? 'text-blue-500'
+                            ? 'text-yellow-500'
                             : 'text-white'
                         }`}
                       >
@@ -288,7 +288,7 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                     return (
                       <Link
                           className={`flex flex-col items-center cursor-pointer ${
-                              paramsFilter.class === item ? 'bg-[#0085E01f]' : ''
+                              paramsFilter.class === item ? 'bg-[#FAC33D1F]' : ''
                           } p-2 rounded-md`}
                           id={item}
                           key={index}
@@ -298,9 +298,9 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                           }
                       >
                         <span
-                          className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                          className={`text-sm hover:text-yellow-500 transition-colors duration-300 truncate ${
                             paramsFilter.class === item
-                              ? 'text-blue-500'
+                              ? 'text-yellow-500'
                               : 'text-white'
                           }`}
                         >
@@ -321,7 +321,7 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                     return (
                       <Link
                         className={`flex flex-col items-center cursor-pointer ${
-                          paramsFilter.area === item ? 'bg-[#0085E01f]' : ''
+                          paramsFilter.area === item ? 'bg-[#FAC33D1F]' : ''
                         } p-2 rounded-md`}
                         id={item}
                         key={index}
@@ -331,9 +331,9 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                         }
                       >
                         <span
-                          className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                          className={`text-sm hover:text-yellow-500 transition-colors duration-300 truncate ${
                             paramsFilter.area === item
-                              ? 'text-blue-500'
+                              ? 'text-yellow-500'
                               : 'text-white'
                           }`}
                         >
@@ -354,7 +354,7 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                     return (
                       <Link
                         className={`flex flex-col items-center cursor-pointer ${
-                          paramsFilter.lang === item ? 'bg-[#0085E01f]' : ''
+                          paramsFilter.lang === item ? 'bg-[#FAC33D1F]' : ''
                         } p-2 rounded-md`}
                         id={item}
                         key={index}
@@ -364,9 +364,9 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                         }
                       >
                         <span
-                          className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                          className={`text-sm hover:text-yellow-500 transition-colors duration-300 truncate ${
                             paramsFilter.lang === item
-                              ? 'text-blue-500'
+                              ? 'text-yellow-500'
                               : 'text-white'
                           }`}
                         >
@@ -387,7 +387,7 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                     return (
                       <Link
                         className={`flex flex-col items-center cursor-pointer ${
-                          paramsFilter.year === item ? 'bg-[#0085E01f]' : ''
+                          paramsFilter.year === item ? 'bg-[#FAC33D1F]' : ''
                         } p-2 rounded-md`}
                         id={item}
                         key={index}
@@ -397,9 +397,9 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                         }
                       >
                         <span
-                          className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                          className={`text-sm hover:text-yellow-500 transition-colors duration-300 truncate ${
                             paramsFilter.year === item
-                              ? 'text-blue-500'
+                              ? 'text-yellow-500'
                               : 'text-white'
                           }`}
                         >
@@ -441,7 +441,7 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                 }}
               >
                 <FontAwesomeIcon
-                  className="text-blue-500 "
+                  className="text-yellow-500 "
                   icon={faAngleDown}
                 />
               </div>

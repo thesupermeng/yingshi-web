@@ -69,7 +69,7 @@ export default function CountryInput({ name, placeholder, validator, onChange, e
 }
 
 function CountrySelectItem({ country, onClick, isSelected }) {
-    const selectedStyles = isSelected ? 'bg-[#0085E01F]' : ''
+    const selectedStyles = isSelected ? 'bg-[#FAC33D1F]' : ''
 
     const handleOnClick = (e) => {
         const phonecodeEvent = { ...e }
