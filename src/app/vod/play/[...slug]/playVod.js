@@ -512,7 +512,7 @@ export const PlayVod =
                   <Image src={ArrowLeftIcon} alt='Icon' />
                 </div>
               </div>
-              {showAds ? (
+              {showAds && ads ? (
                 <AdsPlayer
                   className='aspect-[16/9]'
                   adsInfo={ads}
