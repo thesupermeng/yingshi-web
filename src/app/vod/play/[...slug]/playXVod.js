@@ -59,7 +59,7 @@ export const PlayXVod = ({ nId, vod, vodUrl, vodDetails, suggestedVods, popularL
 
       content += '《' + vod.vod_name + '》高清播放';
       content += '</br>' + window.location.href;
-      content += '</br>鲨鱼TV-海量高清视频在线观看';
+      content += '</br>影视TV-海量高清视频在线观看';
 
       setVodShareContent(content);
     }
