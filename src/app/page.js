@@ -33,7 +33,7 @@ export default function Home(params) {
   useEffect(() => {
     setIsLoading(true);
 
-    Promise.all([getTypePage(paramsInput), getTopicListApi(nextPage)]).then(([typePageData, topicListData]) => {
+    Promise.all([getTypePage(paramsInput), (stillCanLoad && paramsInput == 0 && getTopicListApi(nextPage))]).then(([typePageData, topicListData]) => {
       if (typePageData) {
         if (paramsInput == 99) {
           setClassList(typePageData.class_list);
