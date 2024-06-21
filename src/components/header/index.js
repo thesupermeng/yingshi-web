@@ -428,7 +428,6 @@ const Header = () => {
   }, []);
 
   if (loading) {
-    console.log('is loading')
     return <LoadingPage full={true} />;
   }
 
