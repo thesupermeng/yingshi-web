@@ -3,8 +3,19 @@
 .text-yellow-500
 {
   color: #FAC33D !important;
-  
 }
+
+
+.text-yellow-hover
+{
+  color: inherit;
+}
+
+.text-yellow-hover:hover
+{
+  color: #FAC33D !important;
+}
+
 
 .border-yellow-500 {
   border-color: rgb(250, 198, 69) !important;
