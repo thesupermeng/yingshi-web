@@ -271,7 +271,7 @@ const Header = () => {
       router.push(`/`);
       setSearchInput('');
     } else {
-      router.push(`/category/${value}`);
+      router.push(`/index/type/id/${value}`);
       setSearchInput('');
     }
   };
