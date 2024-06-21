@@ -166,7 +166,7 @@ const Header = () => {
       return; // Exit early if the first character is a space
     }
     setSearchInput(newValue);
-return;
+    return;
 
     setLoadingSearching(true);
    // setSearchInput(newValue);
@@ -491,43 +491,7 @@ return;
             <div className='py-3 px-4 bg-[#1d2023] md:rounded-md w-full h-full md:bg-[#18191ef5] md:w-96'>
               <div className='no-scrollbar overflow-y-scroll w-full h-full overflow-scroll overscroll-none'>
                 <div className='w-full h-[calc(100%+1px)]'>
-                  {searchInput ? (
-                    loadingSearching ? (
-                      <LoadingPage full={false} />
-                    ) : searchingList.length > 0 ? (
-                      searchingList.map((item, index) => {
-                        return (
-                          <div
-                            className='flex flex-row justify-between py-2.5'
-                            key={index}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setOpenSearch(false);
-                              setSearchInput('');
-                              handleAddSearchHistory();
-                              router.push(
-                                `/vod/play/id/${item.vod_id}/sid/${item.type_id}/nid/1`
-                              );
-                            }}
-                          >
-                            <div className='flex flex-row'>
-                              <div className='text-sm'>{item.vod_name}</div>
-                            </div>
-                          </div>
-                        );
-                      })
-                    ) : (
-                      <div className='flex items-center justify-center flex-col h-full'>
-                        <Image
-                          className='mx-2'
-                          src={searchEmptyIcon}
-                          alt='empty'
-                          width={120}
-                        />
-                        <span>无搜索结果</span>
-                      </div>
-                    )
-                  ) : (
+                   
                     <>
                       {searchHistoryList.length > 0 ? (
                         <div>
@@ -616,7 +580,7 @@ return;
                         );
                       })}
                     </>
-                  )}
+                  
                 </div>
               </div>
             </div>
@@ -1035,7 +999,7 @@ return;
                   }}
                 >
                   <span
-                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                    className={`text-blue-hover transition-colors duration-300 truncate ${
                       selectedId === navItem.id ? 'text-blue-500' : 'text-white'
                     }`}
                   >
@@ -1052,7 +1016,7 @@ return;
                 <div className='relative' ref={dropdownMoreRef}>
                   <button
                     onClick={handleOpenMore}
-                    className='flex flex-row items-center hover:text-blue-500'
+                    className='flex flex-row items-center text-blue-hover'
                   >
                     <span>更多</span>
                     <Image
@@ -1090,7 +1054,7 @@ return;
                               }}
                             >
                               <span
-                                className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                                className={`text-blue-hover transition-colors duration-300 truncate ${
                                   selectedId === navItem.id
                                     ? 'text-blue-500'
                                     : 'text-white'
