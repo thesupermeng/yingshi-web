@@ -7,17 +7,17 @@ import { URL_USER } from '@/config/url';
 let ipAddress = ''
 
 const getIPAddress = async () => {
-  if(ipAddress != ''){
+  if (ipAddress != '') {
     return ipAddress;
   }
   const response = await fetch('https://geolocation-db.com/json/').then((d) => d.json())
-  .catch((e) => {
-    // console.log('IP ADDRESS ERROR!!!')
-    // throw e;
+    .catch((e) => {
+      // console.log('IP ADDRESS ERROR!!!')
+      // throw e;
 
-    // got error, use default ip address
-    ipAddress = '219.75.27.16'
-  });
+      // got error, use default ip address
+      ipAddress = '219.75.27.16'
+    });
 
   if (!response || !response.IPv4) {
     // got error, use default ip address
@@ -58,9 +58,9 @@ const addHeaderSignature = (
   const end = excludeInSignature
     ? `${timestamp}${salt}`
     : `${keys
-        .sort()
-        .map((k) => params.get(k))
-        .join('')}${timestamp}${salt}`;
+      .sort()
+      .map((k) => params.get(k))
+      .join('')}${timestamp}${salt}`;
 
   return md5(end).toString();
 };
@@ -127,30 +127,31 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
     isFormdata,
     excludeInSignature,
     returnFullResponse,
+    noToken,
+    extraOptions
   } = options;
 
   const requestBody = JSON.stringify(body);
   const requestOption = {
     method,
-    headers: await getHeader(requestBody, method, localStorage.getItem(LocalStorageKeys.AuthTokenHeader)),
+    headers: await getHeader(requestBody, method, getLocalstorage(LocalStorageKeys.AuthTokenHeader)),
+    ...extraOptions
   };
 
   let getParams = '';
   let resData;
   url = 'https://api.yingshi.tv/' + url
 
-
-
   if (method !== 'GET') {
-    url = url +  await getQuery(url);
+    url = url + await getQuery(url);
     requestOption.body = requestBody;
   } else {
     getParams = objectToGetParams(body);
 
-    if(body.class){
+    if (body.class) {
       getParams = getParams.replace(encodeURIComponent(body.class), decodeURIComponent(body.class));
     }
-    if(getParams != ''){
+    if (getParams != '') {
       url += '?' + getParams;
     }
   }
@@ -170,7 +171,7 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
       error: e,
     };
   }
-  if(resData.code === 401){
+  if (resData.code === 401) {
     return;
   } else if (resData.code === 0 || resData.code === 201) {
     if (saveUserToken) {
@@ -178,13 +179,14 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
     }
     if (saveAhaToken) {
       updateLocalstorage(LocalStorageKeys.AhaToken, resData.data.aha_token)
-      localStorage.setItem('AuthToken' ,resData.data.aha_token )
+      localStorage.setItem('AuthToken', resData.data.aha_token)
     }
     if (removeToken) {
       updateLocalstorage(LocalStorageKeys.AuthTokenHeader, undefined);
       updateLocalstorage(LocalStorageKeys.AhaToken, undefined);
     }
   }
+
   if (returnFullResponse) {
     return resData
   }
@@ -208,7 +210,7 @@ export const YingshiApi2 = async (url, body = {}, options = {}) => {
   const requestBody = JSON.stringify(body);
   const requestOption = {
     method,
-    headers: await getHeader(requestBody, method, localStorage.getItem(LocalStorageKeys.AuthTokenHeader)),
+    headers: await getHeader(requestBody, method, getLocalstorage(LocalStorageKeys.AuthTokenHeader)),
   };
 
   let getParams = '';
@@ -218,25 +220,24 @@ export const YingshiApi2 = async (url, body = {}, options = {}) => {
 
 
   if (method !== 'GET') {
-    url = url +  await getQuery(url);
     requestOption.body = requestBody;
   } else {
     getParams = objectToGetParams(body);
 
-    if(body.class){
+    if (body.class) {
       getParams = getParams.replace(encodeURIComponent(body.class), decodeURIComponent(body.class));
     }
-    if(getParams != ''){
+    if (getParams != '') {
       url += '?' + getParams;
     }
   }
 
- 
-    const response = await fetch(url, requestOption)
 
-    resData = response.json();
+  const response = await fetch(url, requestOption)
 
-  if(resData.code === 401){
+  resData = response.json();
+
+  if (resData.code === 401) {
     return;
   } else if (resData.code === 0 || resData.code === 201) {
     if (saveUserToken) {
@@ -244,7 +245,7 @@ export const YingshiApi2 = async (url, body = {}, options = {}) => {
     }
     if (saveAhaToken) {
       updateLocalstorage(LocalStorageKeys.AhaToken, resData.data.aha_token)
-      localStorage.setItem('AuthToken' ,resData.data.aha_token )
+      localStorage.setItem('AuthToken', resData.data.aha_token)
     }
     if (removeToken) {
       updateLocalstorage(LocalStorageKeys.AuthTokenHeader, undefined);
@@ -283,6 +284,18 @@ const objectToGetParams = (paramsObject) => {
 //   });
 //   return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
 // };
+
+export const getLocalstorage = (key, isSessionStorage = false) => {
+  const isServerSide = typeof window === 'undefined';
+
+  if (isServerSide) {
+    const { cookies } = require('next/headers');
+    return cookies().get(key)?.value;
+  }
+
+  const storage = isSessionStorage ? sessionStorage : localStorage;
+  return storage.getItem(key);
+};
 
 export const updateLocalstorage = (key, val, isSessionStorage = false) => {
   const storage = isSessionStorage ? sessionStorage : localStorage;

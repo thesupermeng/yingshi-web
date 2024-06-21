@@ -130,12 +130,12 @@ export default function Page() {
             <div className='d-flex container pt-3 ' style={{ width: '100%' }}>
               <div className='row w-screen'>
                 {searchResults?.List?.map((vod) => (
-                  <div className='col-md-6 mt-2 mb-2'>
+                  <div className='col-md-6 mt-2 mb-2' key={vod.vod_id}>
                     <div
                       className='topic-details-card'
                       onClick={(e) => {
                         e.preventDefault();
-                        router.push(`/play/${vod.type_id}/1/${vod.vod_id}`);
+                        router.push(`/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`);
                       }}
                     >
                       <div className='row '>
@@ -201,7 +201,7 @@ export default function Page() {
             <div className='d-flex container pt-3' style={{ width: '100%' }}>
               <div className='row'>
                 {searchResults?.List?.map((vod) => (
-                  <VodItemMobile vod={vod} />
+                  <VodItemMobile vod={vod} key={vod.vod_id}/>
                 ))}
               </div>
             </div>

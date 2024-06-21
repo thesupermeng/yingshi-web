@@ -252,3 +252,11 @@
   -ms-overflow-style: none ;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+
+@media (max-width: 960px) {
+  .md-hover-effect:hover {
+    opacity: 0.85 !important;
+    cursor: pointer !important;
+  }
+}

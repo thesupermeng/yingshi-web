@@ -1,175 +1,145 @@
 'use client';
-import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'next-i18next';
-import { SWRConfig } from 'swr';
-import { FBApi } from '@/util/FB_Api';
-
-import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
-import { YingshiApi } from '@/util/YingshiApi';
-
 import './i18n';
 import { LoadingPage } from '@/components/loading';
-import { FullPageContent } from '@/componentsH5/FullPageContent';
-import { H5Only } from '@/components/Fragments/EnvComponent';
 import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
 import { VideoHorizontalCard } from '@/components/videoItem/videoHorizontalCard';
-import { isWeb } from '@/util/common';
 import { AdsBanner } from '@/components/ads/adsBanner.js';
 export const RightBetCartWidth = 'w-[32rem]';
-import Image from 'next/image';
-import { useSelector } from 'react-redux';
 import { Carousel } from '@/components/carousel/carousel';
-import { arrowRight, ArrowRightIcon } from '@/asset/icons';
-import { Spinner } from '@/components/spinner';
-
+import { Suspense, useEffect, useState } from 'react';
+import { YingshiApi2 } from '@/util/YingshiApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
+import { YingshiApi } from '@/util/YingshiApi';
+import { getTypePage, getTopicListApi } from '@/app/actions';
+import VodListViewMore from '@/components/vodListViewMore';
+import TopicPagingList from '@/components/topicPagingList';
 
 export default function Home(params) {
-  const { t } = useTranslation();
-  const router = useRouter();
-  const pathname = usePathname();
-  const [loading, setLoading] = useState(true);
+  let paramsInput = params.category == undefined ? 0 : params.category;
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [classList, setClassList] = useState([]);
   const [categories, setCategories] = useState([]);
   const [yunying, setYunying] = useState([]);
   const [carousel, setCarousel] = useState([]);
-  const [stillCanLoad, setStillCanLoad] = useState(false);
   const [topicList, setTopicList] = useState(null);
   const [nextPage, setNextPage] = useState(0);
-  const [scrollY, setScrollY] = useState(0);
-  const [classList, setClassList] = useState([]);
-  let paramsInput = params.category == undefined ? 0 : params.category;
+  const [stillCanLoad, setStillCanLoad] = useState(
+    paramsInput == 0 ? true : false
+  );
 
-  const targetRef = useRef(null);
+  //banner ads
+  const [adsList, setAdsList] = useState([]);
+  const getAllAds = async () => {
+    return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
+  };
+  const initAds = async () => {
+    let allAds = await getAllAds();
+    sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
 
-  const getTypePage = async (idValue) => {
-    if (idValue == 99) {
-      return YingshiApi(
-        URL_YINGSHI_VOD.homeGetPages,
-        {
-          id: idValue,
-          dj: true,
-          page: 1,
-          limit: 60,
-          vod_limit: 6,
-        },
-        { method: 'GET' }
-      );
+    setAdsList(allAds.data);
+  };
+  useEffect(() => {
+    let adsList = sessionStorage.getItem('adsList');
+    adsList = JSON.parse(adsList);
+    if (adsList && adsList !== 'undefined') {
+      setAdsList(adsList);
     } else {
-      return YingshiApi(
-        URL_YINGSHI_VOD.homeGetPages,
-        {
-          id: idValue,
-        },
-        { method: 'GET' }
-      );
+      initAds();
     }
-  };
-
-  const getTopicListApi = async () => {
-    return YingshiApi(
-      URL_YINGSHI_VOD.playlistGetTopic + '?limit=5&page=' + nextPage,
-      {},
-      { method: 'GET' }
-    );
-  };
-
-  const getTopicList = () => {
-    let currentPage = nextPage;
-    getTopicListApi().then((data) => {
-      if (nextPage > 1) {
-        try {
-          setTopicList((prev) => [...prev, ...data.List]);
-        } catch (e) {
-          console.log(e);
-          console.log('crash');
-          console.log(topicList);
-          setTopicList(data.List);
-        }
-      } else {
-        setTopicList(data.List);
-      }
-      if (nextPage > data.TotalPageCount - 1) {
-        setStillCanLoad(false);
-      } else {
-        setStillCanLoad(true);
-        setNextPage(currentPage + 1);
-      }
-    });
-  };
+  }, []);
+  //end banner ads
 
   useEffect(() => {
-    if (stillCanLoad) {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          // setIsVisible(entry.intersectionRatio >= 0.5);
-          if (entry.intersectionRatio >= 0.5) {
-            getTopicList();
-            console.log('Element is at least 50% visible.');
-          } else {
-            console.log('Element is not yet 50% visible.');
+    setIsLoading(true);
+    Promise.all([getTypePage(paramsInput), (stillCanLoad && paramsInput == 0 && getTopicListApi(nextPage))]).then(([typePageData, topicListData]) => {
+        if (typePageData) {
+          if (paramsInput == 99) {
+            setClassList(typePageData.class_list);
           }
-        },
-        {
-          threshold: 0.5, // 50% visibility threshold
+          setCategories(typePageData.categories);
+          setYunying(typePageData.yunying);
+          setCarousel(typePageData.carousel);
         }
-      );
 
-      if (targetRef.current) {
-        observer.observe(targetRef.current);
-      }
+        if (topicListData) {
+          let currentPage = nextPage;
 
-      return () => {
-        if (targetRef.current) {
-          observer.unobserve(targetRef.current);
+          if (nextPage > 1) {
+            try {
+              setTopicList((prev) => [...prev, ...topicListData.List]);
+            } catch (e) {
+              console.log(e);
+              console.log('crash');
+              console.log(topicList);
+              setTopicList(topicListData.List);
+            }
+          } else {
+            setTopicList(topicListData.List);
+          }
+          if (nextPage > topicListData.TotalPageCount - 1) {
+            setStillCanLoad(false);
+          } else {
+            setStillCanLoad(true);
+            setNextPage(currentPage + 1);
+          }
         }
-      };
-    }
-  }, [nextPage, stillCanLoad]);
 
-  useEffect(() => {
-    if (paramsInput == 0) {
-      setStillCanLoad(true);
-      setTopicList(null);
-    } else {
-      setStillCanLoad(false);
-      setTopicList(null);
-      setNextPage(0);
-    }
-    setLoading(true);
-    getTypePage(paramsInput).then((data) => {
-      if (paramsInput == 99) {
-        setClassList(data.class_list);
+        setIsLoading(false);
       }
-      setCategories(data.categories);
-      setYunying(data.yunying);
-      setCarousel(data.carousel);
-      setLoading(false);
-    });
-  }, [paramsInput]);
+    );
+  }, []);
 
-  const handleClick = (item) => {
-    localStorage.setItem('videoTypeId', item.type_id);
-    localStorage.setItem('videoClass', item.type_name);
-    router.push(`/film-library`);
-  };
+  // let classList = [];
+  // let categories = [];
+  // let yunying = [];
+  // let carousel = [];
+  // let topicList = null;
+  // let nextPage = 0;
+  // let stillCanLoad = paramsInput == 0 ? true : false;
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-  });
+  // await Promise.all([getTypePage(paramsInput), getTopicListApi(nextPage)]).then(([typePageData, topicListData]) => {
+  //   if (typePageData) {
+  //     if (paramsInput == 99) {
+  //       classList = typePageData.class_list;
+  //     }
+  //     categories = typePageData.categories;
+  //     yunying = typePageData.yunying;
+  //     carousel = typePageData.carousel;
+  //   }
 
-  const handleScroll = () => {
-    console.log(window.scrollY);
-  };
+  //   if (topicListData) {
+  //     let currentPage = nextPage;
+
+  //     if (nextPage > 1) {
+  //       try {
+  //         topicList = [...topicList, ...topicListData.List];
+  //       } catch (e) {
+  //         console.log(e);
+  //         console.log('crash');
+  //         console.log(topicList);
+  //         topicList = topicListData.List;
+  //       }
+  //     } else {
+  //       topicList = topicListData.List;
+  //     }
+  //     if (nextPage > topicListData.TotalPageCount - 1) {
+  //       stillCanLoad = false;
+  //     } else {
+  //       stillCanLoad = true;
+  //       nextPage = currentPage + 1;
+  //     }
+  //   }
+  // })
 
   return (
     <div
       className='flex flex-1 justify-center flex-col'
       style={{ width: '100%' }}
-      onScroll={handleScroll}
     >
-      {loading ? (
+      {isLoading ? (
         <div>
           <LoadingPage full={false} />
         </div>
@@ -178,14 +148,16 @@ export default function Home(params) {
           {paramsInput != 99 ? (
             <div className='flex flex-col w-full'>
               <Carousel carouselItems={carousel} />
-              <AdsBanner navId={paramsInput} height='500px' />
+              <div className='container w-[100%]'>
+                <AdsBanner adsList={adsList} navId={'1-13'} height='500px' />
+              </div>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
                 <div className='container w-[100%]'>
                   {yunying != [] &&
                     yunying?.map((yy, idx) => {
                       return (
-                        <div id={yy.type_id} key={idx} className='lg:pt-3'>
+                        <div key={idx} className='lg:pt-3'>
                           <div className='flex justify-between'>
                             <span
                               style={{
@@ -198,7 +170,7 @@ export default function Home(params) {
                               {yy.type_name}
                             </span>
                           </div>
-                          <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
+                          <div className='grid grid-cols-3 md:grid-cols-6 lg:grid-cols-6 gap-5 py-2'>
                             {yy.vod_list?.slice(0, 6).map((vod, i) => {
                               return <VideoVerticalCard vod={vod} key={i} />;
                             })}
@@ -211,7 +183,11 @@ export default function Home(params) {
                       return (
                         <div key={idx}>
                           {idx % 2 ? (
-                            <AdsBanner navId={paramsInput} height='500px' />
+                            <AdsBanner
+                              adsList={adsList}
+                              navId={'1-13'}
+                              height='500px'
+                            />
                           ) : (
                             <div style={{ paddingTop: '20px' }}></div>
                           )}
@@ -228,18 +204,10 @@ export default function Home(params) {
                                 {category.type_name}
                               </span>
                               <div className='flex w-fit items-center cursor-pointer hover-blue'>
-                                <span
-                                  className='mr-1'
-                                  style={{
-                                    fontSize: '12px',
-                                    fontWeight: '400',
-                                    fontStyle: 'normal',
-                                    fontFamily: 'PingFang SC',
-                                  }}
-                                  onClick={() => handleClick(category)}
-                                >
-                                  更多
-                                </span>
+                                <VodListViewMore
+                                  type={'category'}
+                                  data={category}
+                                />
                                 <FontAwesomeIcon
                                   style={{
                                     fontSize: '14px',
@@ -251,7 +219,7 @@ export default function Home(params) {
                                 />
                               </div>
                             </div>
-                            <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
+                            <div className='grid grid-cols-3 md:grid-cols-6 lg:grid-cols-6 gap-5 py-2'>
                               {category.vod_list?.slice(0, 6).map((vod, i) => {
                                 return <VideoVerticalCard vod={vod} key={i} />;
                               })}
@@ -260,62 +228,12 @@ export default function Home(params) {
                         </div>
                       );
                     })}
-                  {topicList != null &&
-                    topicList?.map((topic, idx) => {
-                      return (
-                        <div key={idx}>
-                          {idx % 2 ? (
-                            <AdsBanner navId={paramsInput} height='500px' />
-                          ) : (
-                            <div style={{ paddingTop: '20px' }}></div>
-                          )}
-                          <div id={topic.topic_id} key={idx}>
-                            <div className='flex justify-between'>
-                              <span
-                                style={{
-                                  fontSize: '20px',
-                                  fontWeight: '600',
-                                  fontStyle: 'normal',
-                                  fontFamily: 'PingFang SC',
-                                }}
-                              >
-                                {topic.topic_name}
-                              </span>
-                              <div className='flex w-fit items-center cursor-pointer hover-blue'>
-                                <span
-                                  className='mr-1'
-                                  style={{
-                                    fontSize: '12px',
-                                    fontWeight: '400',
-                                    fontStyle: 'normal',
-                                    fontFamily: 'PingFang SC',
-                                  }}
-                                  onClick={() => {
-                                    router.push('/topic/' + topic.topic_id);
-                                  }}
-                                >
-                                  更多
-                                </span>
-                                <FontAwesomeIcon
-                                  style={{
-                                    fontSize: '14px',
-                                    fontWeight: '400',
-                                    fontStyle: 'normal',
-                                    fontFamily: 'PingFang SC',
-                                  }}
-                                  icon={faAngleRight}
-                                />
-                              </div>
-                            </div>
-                            <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
-                              {topic.vod_list?.slice(0, 6).map((vod, i) => {
-                                return <VideoVerticalCard vod={vod} key={i} />;
-                              })}
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
+                  <TopicPagingList
+                    data={topicList}
+                    navId={paramsInput}
+                    serverNextPage={nextPage}
+                    isStillCanLoad={stillCanLoad}
+                  />
                 </div>
               </div>
             </div>
@@ -345,22 +263,10 @@ export default function Home(params) {
                                 {category.type_name}
                               </span>
                               <div className='flex w-fit items-center cursor-pointer hover-blue'>
-                                <span
-                                  className='mr-1'
-                                  style={{
-                                    fontSize: '12px',
-                                    fontWeight: '400',
-                                    fontStyle: 'normal',
-                                    fontFamily: 'PingFang SC',
-                                  }}
-                                  onClick={(e) => {
-                                    router.push(
-                                      `/xvod/${category.vod_source_name}/${category.type_name}`
-                                    );
-                                  }}
-                                >
-                                  更多
-                                </span>
+                                <VodListViewMore
+                                  type={'xcategory'}
+                                  data={category}
+                                />
                                 <FontAwesomeIcon
                                   style={{
                                     fontSize: '14px',
@@ -372,7 +278,7 @@ export default function Home(params) {
                                 />
                               </div>
                             </div>
-                            <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
+                            <div className='grid grid-cols-3 md:grid-cols-6 lg:grid-cols-6 gap-5 py-2'>
                               {category.vod_list?.slice(0, 6).map((vod, i) => {
                                 return (
                                   <VideoHorizontalCard
@@ -413,22 +319,10 @@ export default function Home(params) {
                                 {category.type_name}
                               </span>
                               <div className='flex w-fit items-center cursor-pointer hover-blue'>
-                                <span
-                                  className='mr-1'
-                                  style={{
-                                    fontSize: '12px',
-                                    fontWeight: '400',
-                                    fontStyle: 'normal',
-                                    fontFamily: 'PingFang SC',
-                                  }}
-                                  onClick={(e) => {
-                                    router.push(
-                                      `/xvod/${category.vod_source_name}/${category.type_name}`
-                                    );
-                                  }}
-                                >
-                                  更多
-                                </span>
+                                <VodListViewMore
+                                  type={'xcategory'}
+                                  data={category}
+                                />
                                 <FontAwesomeIcon
                                   style={{
                                     fontSize: '14px',
@@ -440,7 +334,7 @@ export default function Home(params) {
                                 />
                               </div>
                             </div>
-                            <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
+                            <div className='grid grid-cols-3 md:grid-cols-6 lg:grid-cols-6 gap-5 py-2'>
                               {category.vod_list?.slice(0, 6).map((vod, i) => {
                                 return (
                                   <VideoHorizontalCard
@@ -461,9 +355,6 @@ export default function Home(params) {
           )}
         </>
       )}
-      <div ref={targetRef}>
-        {stillCanLoad && paramsInput == 0 && <Spinner></Spinner>}
-      </div>
     </div>
   );
 }

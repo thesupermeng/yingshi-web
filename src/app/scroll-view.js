@@ -246,7 +246,7 @@ export const ScrollView = ({ children }) => {
 
   return (
     <div
-      className='absolute w-full h-full flex flex-col overflow-y-auto overflow-x-hidden overscroll-none no-scrollbar'
+      className='absolute w-full h-full flex flex-col overflow-y-auto overflow-x-hidden overscroll-none no-scrollbar scroll-pt-[6em]'
       style={{ alignItems: 'center' }}
       ref={scrollableDivRef}
       onScroll={handleScroll}

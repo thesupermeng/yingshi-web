@@ -2,6 +2,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
+import Link from 'next/link';
 import {
   HistoryIcon,
   Logo,
@@ -156,7 +157,7 @@ const Header = () => {
   };
 
   const handleChange = (event) => {
-    setLoadingSearching(true);
+    
     const newValue = event.target.value;
 
     // Check if the first character is a space
@@ -164,8 +165,11 @@ const Header = () => {
       setSearchInput('');
       return; // Exit early if the first character is a space
     }
-
     setSearchInput(newValue);
+    return;
+
+    setLoadingSearching(true);
+   // setSearchInput(newValue);
 
     if (timeoutId) {
       clearTimeout(timeoutId);
@@ -260,18 +264,30 @@ const Header = () => {
     );
   };
 
+  const getHref = (id) => {
+    if (id == 998) {
+      return '/topic/index/page';
+    } else if (id == 999) {
+      return '/vod/show/by/time/id/1';
+    } else if (id === 0) {
+      return `/`;
+    } else {
+      return `/index/type/id/${id}`;
+    }
+  };
+
   const handleClick = (value) => {
     if (value == 998) {
-      router.push('/topic');
+      router.push('/topic/index/page');
     } else if (value == 999) {
       localStorage.removeItem('videoTypeId');
       localStorage.removeItem('videoClass');
-      router.push('/film-library');
+      router.push('/vod/show/by/time/id/1');
     } else if (value === 0) {
       router.push(`/`);
       setSearchInput('');
     } else {
-      router.push(`/category/${value}`);
+      router.push(`/index/type/id/${value}`);
       setSearchInput('');
     }
   };
@@ -341,12 +357,12 @@ const Header = () => {
       setSelectedId(parseInt(0));
     } else if (pathname.startsWith('/topic')) {
       setSelectedId(998);
-    } else if (pathname.startsWith('/film-library')) {
+    } else if (pathname.startsWith('/vod/show')) {
       setSelectedId(999);
-    } else if (pathname.startsWith('/play/')) {
+    } else if (pathname.startsWith('/vod/play/')) {
       setSelectedId(-1);
     } else {
-      const match = pathname.match(/\/category\/(\w+)/);
+      const match = pathname.match(/\/index\/type\/id\/(\d+)/);
       if (match) {
         setSelectedId(parseInt(match[1]));
       } else {
@@ -435,7 +451,7 @@ const Header = () => {
               }}
             />
           </div>
-          <div className='relative flex-1 md:ml-16'>
+          <div className='relative flex-1'>
             <input
               type='text'
               placeholder='输入搜索关键词'
@@ -471,47 +487,11 @@ const Header = () => {
           </div>
         </div>
         {openSearch ? (
-          <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100dvh-52px)] md:h-auto z-20 left-0 md:left-auto md:w-96 md:ml-16'>
+          <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100dvh-52px)] md:h-auto z-20 left-0 md:left-auto md:w-96'>
             <div className='py-3 px-4 bg-[#1d2023] md:rounded-md w-full h-full md:bg-[#18191ef5] md:w-96'>
               <div className='no-scrollbar overflow-y-scroll w-full h-full overflow-scroll overscroll-none'>
                 <div className='w-full h-[calc(100%+1px)]'>
-                  {searchInput ? (
-                    loadingSearching ? (
-                      <LoadingPage full={false} />
-                    ) : searchingList.length > 0 ? (
-                      searchingList.map((item, index) => {
-                        return (
-                          <div
-                            className='flex flex-row justify-between py-2.5'
-                            key={index}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setOpenSearch(false);
-                              setSearchInput('');
-                              handleAddSearchHistory();
-                              router.push(
-                                `/play/${item.type_id}/1/${item.vod_id}`
-                              );
-                            }}
-                          >
-                            <div className='flex flex-row'>
-                              <div className='text-sm'>{item.vod_name}</div>
-                            </div>
-                          </div>
-                        );
-                      })
-                    ) : (
-                      <div className='flex items-center justify-center flex-col h-full'>
-                        <Image
-                          className='mx-2'
-                          src={searchEmptyIcon}
-                          alt='empty'
-                          width={120}
-                        />
-                        <span>无搜索结果</span>
-                      </div>
-                    )
-                  ) : (
+                   
                     <>
                       {searchHistoryList.length > 0 ? (
                         <div>
@@ -568,7 +548,7 @@ const Header = () => {
                               e.preventDefault();
                               setOpenSearch(false);
                               router.push(
-                                `/play/${item.type_id}/1/${item.vod_id}`
+                                `/vod/play/id/${item.vod_id}/sid/${item.type_id}/nid/1`
                               );
                             }}
                           >
@@ -600,7 +580,7 @@ const Header = () => {
                         );
                       })}
                     </>
-                  )}
+                  
                 </div>
               </div>
             </div>
@@ -775,9 +755,10 @@ const Header = () => {
                           key={index}
                           className='flex flex-row hover:text-[#0085E0] gap-x-2 cursor-pointer'
                           onClick={() => {
-                            router.push(
-                              `/play/${item.tid}/${item.nid}/${item.vodid}`
-                            );
+                            const url = item.sourceId
+                              ? `/vod/play/id/${item.vodid}/sid/${item.tid}/nid/${item.nid}/source/${item.sourceId}`
+                              : `/vod/play/id/${item.vodid}/sid/${item.tid}/nid/${item.nid}`;
+                            router.push(url);
                             setOpenHistory(false);
                           }}
                         >
@@ -919,17 +900,19 @@ const Header = () => {
         <div className='border-l-2 border-white h-4' />
       </div>
 
-      <div className='flex flex-row pl-4 items-center'>
+      <Link
+        className='flex flex-row pl-4 items-center'
+        href='/myprofile'
+        onClick={(e) => {
+          if (!userInfo) {
+            e.preventDefault(); // Prevent the link from navigating
+            setOpenLogin(true);
+            return;
+          }
+        }}
+      >
         {/* md:flex */}
-        <div
-          onClick={() => {
-            if (userInfo) {
-              router.push('/myprofile');
-            } else {
-              setOpenLogin(true);
-            }
-          }}
-        >
+        <div>
           <Image
             className='cursor-pointer'
             src={userInfo ? ProfileBlue : userIcon}
@@ -937,7 +920,7 @@ const Header = () => {
             width={30}
           />
         </div>
-      </div>
+      </Link>
     </div>
   );
 
@@ -954,7 +937,7 @@ const Header = () => {
     >
       <div className='flex pb-2.5 md:pb-4 pt-3 justify-center container md:pl-0'>
         <div className='gap-y-2 flex-col w-full md:flex-row flex'>
-          <div className='flex-1 flex gap-x-2 md:justify-start '>
+          <div className='flex-1 flex gap-x-2 md:justify-between '>
             <div
               className={`flex justify-between w-24 md:w-28 ${
                 openSearch ? 'hidden md:flex' : ''
@@ -1006,16 +989,17 @@ const Header = () => {
           >
             {visibleItems?.map((navItem, index) => {
               return (
-                <div
+                <Link
+                  href={getHref(navItem.id)}
                   className='flex flex-1 flex-col items-center cursor-pointer header-tab'
                   id={navItem.id}
                   key={index}
                   onClick={() => {
-                    handleClick(navItem.id);
+                    //  handleClick(navItem.id);
                   }}
                 >
                   <span
-                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                    className={`text-blue-hover transition-colors duration-300 truncate ${
                       selectedId === navItem.id ? 'text-blue-500' : 'text-white'
                     }`}
                   >
@@ -1024,7 +1008,7 @@ const Header = () => {
                   {selectedId === navItem.id ? (
                     <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
                   ) : null}
-                </div>
+                </Link>
               );
             })}
             {hiddenItems.length > 0 && (
@@ -1032,7 +1016,7 @@ const Header = () => {
                 <div className='relative' ref={dropdownMoreRef}>
                   <button
                     onClick={handleOpenMore}
-                    className='flex flex-row items-center hover:text-blue-500'
+                    className='flex flex-row items-center text-blue-hover'
                   >
                     <span>更多</span>
                     <Image
@@ -1070,7 +1054,7 @@ const Header = () => {
                               }}
                             >
                               <span
-                                className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                                className={`text-blue-hover transition-colors duration-300 truncate ${
                                   selectedId === navItem.id
                                     ? 'text-blue-500'
                                     : 'text-white'
@@ -1094,7 +1078,7 @@ const Header = () => {
     </div>
   );
 
-  if (pathname.startsWith('/topic/') || pathname.startsWith('/xvod')) {
+  if (pathname.startsWith('/topic/detail/') || pathname.startsWith('/xvod')) {
     return (
       <div className={'desktop z-50 sticky top-0 w-screen'}>
         {defaultHeader}
@@ -1102,7 +1086,7 @@ const Header = () => {
     );
   }
 
-  if (pathname.startsWith('/film-library') || pathname.startsWith('/topic/')) {
+  if (pathname.startsWith('/vod/show')) {
     return (
       <>
         <div className={'mobile z-50 sticky top-0 w-screen'}>
@@ -1116,7 +1100,7 @@ const Header = () => {
     );
   }
 
-  if (pathname.startsWith('/play')) {
+  if (pathname.startsWith('/vod/play')) {
     return (
       <div className={'desktop z-50 sticky top-0 w-screen bg-[#000000]'}>
         {defaultHeader}
@@ -1130,7 +1114,7 @@ const Header = () => {
         <div className={'z-30 w-screen sticky top-0 mobile'}>
           <div className='flex py-3 mx-2.5'>
             <div className='gap-y-2 flex-col w-full md:flex-row flex'>
-              <div className='flex-1 flex gap-x-2 md:justify-start'>
+              <div className='flex-1 flex gap-x-2 md:justify-between'>
                 <div
                   className={`flex justify-between w-22 pl-2 pr-2 self-center ${
                     openSearch ? 'hidden' : ''
@@ -1163,7 +1147,7 @@ const Header = () => {
         <div className={'z-50 w-screen mobile sticky top-0 bg-[#101215]'}>
           <div className='flex py-3 mx-2.5'>
             <div className='gap-y-2 flex-col w-full md:flex-row flex'>
-              <div className='flex-1 flex gap-x-2 md:justify-start'>
+              <div className='flex-1 flex gap-x-2 md:justify-between'>
                 <div
                   className={`flex justify-between w-22 pl-3 ${
                     openSearch ? 'hidden' : ''
@@ -1186,9 +1170,9 @@ const Header = () => {
   if (pathname.startsWith('/myprofile')) {
     return (
       <>
-        <div className={'z-50 w-screen mobile sticky top-0'}>
+        <div className={'z-50 w-screen mobile sticky top-0 bg-[#101215]'}>
           {pathname === '/myprofile' && (
-            <div className='flex pt-3 mx-2.5'>
+            <div className='flex pt-3 pb-3 mx-2.5'>
               <div className='gap-y-2 flex-col w-full md:flex-row flex'>
                 <div className='flex-1 flex px-4 md:justify-start'>
                   <span className='text-topic-title'> 我的 </span>
@@ -1209,7 +1193,7 @@ const Header = () => {
       <div className={'z-30 w-screen mobile'}>
         <div className='flex py-3 mx-2.5'>
           <div className='gap-y-2 flex-col w-full md:flex-row flex'>
-            <div className='flex-1 flex gap-x-2 md:justify-start'>
+            <div className='flex-1 flex gap-x-2 md:justify-between'>
               <div
                 className={'flex w-[30px] h-[30px] justify-center items-center'}
               >
@@ -1232,7 +1216,7 @@ const Header = () => {
       <div className={'z-30 w-screen mobile sticky top-0 bg-[#101215]'}>
         <div className='flex py-3 mx-2.5'>
           <div className='gap-y-2 flex-col w-full md:flex-row flex'>
-            <div className='flex-1 flex gap-x-2 md:justify-start'>
+            <div className='flex-1 flex gap-x-2 md:justify-between'>
               {/*<div*/}
               {/*  className={'flex w-[30px] h-[30px] justify-center items-center'}*/}
               {/*>*/}
@@ -1279,7 +1263,7 @@ const Header = () => {
       <div className={'z-30 w-screen mobile sticky top-0 bg-[#101215]'}>
         <div className='flex py-4 mx-2.5'>
           <div className='gap-y-2 flex-col w-full md:flex-row flex'>
-            <div className='relative flex-1 flex gap-x-2 md:justify-start'>
+            <div className='relative flex-1 flex gap-x-2 md:justify-between'>
               <div
                 className={
                   'flex w-[30px] h-[30px] justify-center items-center z-10'
@@ -1314,4 +1298,5 @@ const Header = () => {
     <div className='z-50 sticky top-0 md:fixed w-screen'>{defaultHeader}</div>
   );
 };
+
 export default Header;

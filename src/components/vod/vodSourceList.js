@@ -1,9 +1,9 @@
-import Image from "next/image";
+import Image from 'next/image';
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
   PlaySourceIcon,
-} from "@/asset/icons";
+} from '@/asset/icons';
 
 import styles from './style.module.css';
 import { useState, useRef } from 'react';
@@ -39,13 +39,13 @@ export const VodSourceList = ({
 
       <ul
         ref={containerRef} // Use ref to access the container
-        className="flex flex-1 overflow-x-scroll space-x-2 hide-scrollbar"
+        className="flex flex-1 overflow-x-scroll space-x-2 hide-scrollbar "
       >
         {vodSources?.map((source) => (
           <li
             key={`key-vodSource-${source.source_id}`}
             id={`vodSource-${source.source_id}`}
-            className={`${styles.radioOptionCard} ${
+            className={`hover-effect cursor-pointer ${styles.radioOptionCard} ${
               vodSourceSelected.source_id === source.source_id
                 ? styles.selectedOptionCard
                 : styles.unselectedOptionCard

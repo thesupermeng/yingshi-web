@@ -29,29 +29,29 @@ export default function useYingshiUser() {
 
     }, [])
 
-    useEffect(() => {
-        if (!token || userInfo) {
-            // if no token or user info populated, no need populate again
-            console.log('if no token or user info populated, no need populate again')
-            return
-        }
+    // useEffect(() => {
+    //     if (!token || userInfo) {
+    //         if no token or user info populated, no need populate again
+    //         console.log('if no token or user info populated, no need populate again')
+    //         return
+    //     }
 
-        queryUserInfo().then(res => {
-            if(res)
-            {
-                dispatch(setYingshiUserInfo(res.user))
-            }
-            else
-            {
-                console.log('failed to setYingshiUserInfo')
-            }
+    //     queryUserInfo().then(res => {
+    //         if(res)
+    //         {
+    //             dispatch(setYingshiUserInfo(res.user))
+    //         }
+    //         else
+    //         {
+    //             console.log('failed to setYingshiUserInfo')
+    //         }
 
-        })
+    //     })
 
-    }, [token])
+    // }, [token])
 
     const refreshUserInfo = () => {
-        if (!token || userInfo) {
+        if (!token) {
             // if no token or user info populated, no need populate again
             console.log('if no token or user info populated, no need populate again')
             return

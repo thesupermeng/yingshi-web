@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -28,7 +29,7 @@ export const VideoHorizontalCard = ({ vod, typepage_id }) => {
           placeholder='blur'
           blurDataURL={'data:image/png;base64,' + base64PlaceholderString}
           onClick={(e) => {
-            router.push(`/play/${vod.type_id}/${nId}/${vod.vod_id}`);
+            router.push(`/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/${nId}`);
           }}
           alt='video'
           src={vod.vod_pic}

@@ -23,12 +23,12 @@ const MyFooter = () => {
   useEffect(() => {
     if (pathname.startsWith('/topic')) {
       setSelectedId(998);
-    } else if (pathname.startsWith('/film-library')) {
+    } else if (pathname.startsWith('/vod/show')) {
       setSelectedId(999);
-    } else if (pathname.startsWith('/play/')) {
+    } else if (pathname.startsWith('/vod/play/')) {
       setSelectedId(-1);
     } else {
-      const match = pathname.match(/\/category\/(\w+)/);
+      const match = pathname.match(/\/index\/type\/id\/(\w+)/);
       if (match) {
         setSelectedId(parseInt(match[1]));
       } else {
@@ -39,9 +39,10 @@ const MyFooter = () => {
 
   const handleClick = (value) => {
     if (value == 998) {
-      router.push('/topic');
+      router.push('/topic/index/page');
     } else if (value == 999) {
-      router.push('/film-library');
+      // router.push('/film-library');
+      router.push('/vod/show/by/time/id/1')
     } else if (value == 990) {
       router.push('/myprofile');
     } else if (value == 997) {

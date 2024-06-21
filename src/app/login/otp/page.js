@@ -14,6 +14,7 @@ import {
   setAhaToken,
   setYingshiUserLoginParam,
   setYingshiUserToken,
+  setYingshiUserInfo
 } from '@/store/yingshiUser';
 import { useLoginSuccessOpen } from '@/hook/yingshiScreenState/useLoginSuccessOpen';
 import CryptoJS from 'crypto-js';
@@ -149,9 +150,12 @@ export default function OTP() {
               dispatch(
                 setYingshiUserLoginParam({ ...loginParam, success: true })
               );
+              dispatch(setYingshiUserInfo(res.data.user))
               dispatch(setYingshiUserToken(res.data.access_token));
               dispatch(setAhaToken(res.data.aha_token));
-              localStorage.setItem('AuthToken', res.data.aha_token);
+              localStorage.setItem('AuthToken', res.data.aha_token)
+              
+              ;
               if (res.code === 0) {
                 router.back();
                 setOpenLoginSuccess(true);
@@ -180,6 +184,7 @@ export default function OTP() {
               dispatch(
                 setYingshiUserLoginParam({ ...loginParam, success: true })
               );
+              dispatch(setYingshiUserInfo(res.data.user))
               dispatch(setYingshiUserToken(res.data.access_token));
               dispatch(setAhaToken(res.data.aha_token));
               localStorage.setItem('AuthToken', res.data.aha_token);
@@ -230,7 +235,7 @@ export default function OTP() {
               <p className={'text-center text-[14px] mb-[26px]'}>
                 验证码已发送至{' '}
                 <span className={'text-[#0085E0]'}>
-                  +{loginParam.phonecode} {loginParam.phoneNumber}
+                  +{loginParam.phoneNumber}
                 </span>
               </p>
             </>

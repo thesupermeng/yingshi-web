@@ -4,17 +4,6 @@ import Image from 'next/image';
 import { Stopwatch } from '@/asset/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
-import {
-  loginEmail,
-  loginRequestEmailOtp,
-  loginRequestSmsOtp,
-  loginSms,
-} from '@/services/yingshiUser';
-import {
-  setAhaToken,
-  setYingshiUserLoginParam,
-  setYingshiUserToken,
-} from '@/store/yingshiUser';
 import { useLoginSuccessOpen } from '@/hook/yingshiScreenState/useLoginSuccessOpen';
 import PinHeader from './../../components/pinHeader';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
@@ -90,10 +79,8 @@ export default function OTP() {
 
   const handleResendOTP = () => {
     setCountdownTimer(totalCountdownTime);
-    console.log('handleResendOTP');
-    console.log('firstPin');
-    console.log(firstPin);
-    YingshiApi(
+
+    YingshiApi2(
       URL_YINGSHI_VOD.setAhaWithdrawalPin,
       {
         pin: firstPin,
@@ -129,14 +116,12 @@ export default function OTP() {
   // })
 
   const handleBackspace = (e, index) => {
-
     if (e.key === 'Backspace' && !e.target.value && index > 0) {
       inputRefs.current[index - 1].focus();
     }
   };
 
   const setUserPin = async () => {
-    console.log('setUserPin');
     try {
       let res = await YingshiApi2(
         URL_YINGSHI_VOD.setAhaWithdrawalPin,
@@ -146,11 +131,6 @@ export default function OTP() {
         },
         { method: 'POST' }
       );
-      console.log('res');
-
-      console.log(res);
-      console.log(res.message == 'Invalid OTP');
-      console.log(res.message === 'Invalid OTP');
 
       if (
         res.message == '验证码已发送，请稍后再试，验证码请求限制为每分钟一次'
@@ -166,7 +146,7 @@ export default function OTP() {
 
       if (resetMode == 'otp' && res.message == '成功') {
         setErrorMessage('');
-        console.log('success change pin');
+        // success change pin
 
         sessionStorage.setItem('loginMsg', '安全PIN码设置成功');
         let userInfoTemp = { ...userInfo };
@@ -180,12 +160,10 @@ export default function OTP() {
           dispatch(setShowPinSuccess(false));
         }, 2100);
 
-        router.replace(`/myprofile`);
-        //todo show success
+        router.back();
+        // router.replace(`/myprofile`);
       }
     } catch (err) {
-      console.log('err');
-      console.log(err);
       if (resetMode == 'otp') {
         setErrorMessage('验证码不正确');
       }
@@ -204,28 +182,20 @@ export default function OTP() {
   //  YingshiApi(URL_YINGSHI_VOD.homeGetNav, {}, { method: 'GET' });
 
   const handleChange = (value, index) => {
-
     const temp = value.target.value;
     if (!/^\d*$/.test(temp)) {
-    
       value.target.value = '';
     }
-
 
     setErrorMessage('');
     let newArr = [...otpRef.current];
     newArr[index] = value.target.value;
     otpRef.current = newArr;
 
-    console.log('otpRef');
-    console.log(otpRef);
-
     if (value && index < inputRefs.current.length - 1) {
       if (value.target.value !== '') {
         inputRefs.current[index + 1].focus();
       }
-      console.log('value');
-      console.log(value);
     } else if (value && index === inputRefs.current.length - 1) {
       //to do chatGPT
       // reset otpRef
@@ -238,12 +208,9 @@ export default function OTP() {
           return;
         }
 
-        console.log('second pin ');
-
         let temp2 = otpRef.current.join('');
 
         if (firstPin != temp2 && resetMode != 'otp') {
-          console.log('oi');
           setErrorMessage('PIN码不一致');
           return;
         }
@@ -350,7 +317,7 @@ export default function OTP() {
               {userInfo.user_phone !== 0 &&
                 userInfo.user_phone !== '0' &&
                 userInfo.user_email === '' && (
-                  <> {formatPhoneNumber(userInfo.user_phone)} </>
+                  <> +{userInfo.user_phone} </>
                 )}
             </span>
           </p>

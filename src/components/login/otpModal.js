@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogBody } from '@material-tailwind/react';
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import { loginEmail, loginRequestEmailOtp, loginRequestSmsOtp, loginSms } from '@/services/yingshiUser';
-import { setAhaToken, setYingshiUserLoginParam, setYingshiUserToken } from '@/store/yingshiUser';
+import { setAhaToken, setYingshiUserLoginParam, setYingshiUserToken , setYingshiUserInfo } from '@/store/yingshiUser';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -129,9 +129,7 @@ export default function OtpModal({ open, handler, onLogin, onRegister, onCloseOT
                 onRegister()
               }
 
-
               handleTikTokPixelEvent(res)
-
               dispatch(setYingshiUserToken(res.data.access_token))
               dispatch(setAhaToken(res.data.aha_token))
               localStorage.setItem('AuthToken' ,res.data.aha_token )
@@ -147,6 +145,8 @@ export default function OtpModal({ open, handler, onLogin, onRegister, onCloseOT
                 return
               }
 
+
+
               dispatch(setYingshiUserLoginParam({ success: true }))
 
 
@@ -158,9 +158,6 @@ export default function OtpModal({ open, handler, onLogin, onRegister, onCloseOT
               if (res.code === 201) {
                 onRegister()
               }
-
-
-
               handleTikTokPixelEvent(res)
               dispatch(setYingshiUserToken(res.data.access_token))
               dispatch(setAhaToken(res.data.aha_token))
@@ -204,7 +201,7 @@ export default function OtpModal({ open, handler, onLogin, onRegister, onCloseOT
 
               <div className={'px-[15px] flex flex-col items-center'}>
                 <p className={'text-white text-center font-medium font-[18px]'}>请输入 6 位数字，验证码已发送至</p>
-                <p className={'text-shayuBlue text-center font-medium font-[18px]'}>{loginParam.loginMode === 'sms' ? `+${loginParam.phonecode} ${loginParam.phoneNumber}` : loginParam.email}</p>
+                <p className={'text-shayuBlue text-center font-medium font-[18px]'}>{loginParam.loginMode === 'sms' ? `+${loginParam.phoneNumber}` : loginParam.email}</p>
               </div>
 
 

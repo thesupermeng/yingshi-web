@@ -28,15 +28,26 @@ import { Favicon } from '@/asset/icons';
 import Image from 'next/image';
 import { ScrollView } from './scroll-view';
 import ModalOverlays from '@/components/modalOverlays';
+import '@fortawesome/fontawesome-svg-core/styles.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const metadata = {
-  referrer: 'no-referrer',
-  title: Config.MetaTitle,
-  description:
-    '鲨鱼影视,全球华人在线视频媒体平台,免费点播,无广告无VIP！免费提供最新高清的电影,电视剧,综艺,动漫,台劇,日劇,泰劇,韩剧,美剧等。',
-};
+// export const metadata = {
+//   referrer: 'no-referrer',
+//   title: 'Config.MetaTitle',
+//   description:
+//     '鲨鱼影视,全球华人在线视频媒体平台,免费点播,无广告无VIP！免费提供最新高清的电影,电视剧,综艺,动漫,台劇,日劇,泰劇,韩剧,美剧等。',
+// };
+
+export async function generateMetadata({ params }) {
+  const title = `鲨鱼影视-海量高清视频免费在线观看`
+  return {
+    referrer: 'no-referrer',
+    title: title,
+    description:
+     '鲨鱼影视,全球华人在线视频媒体平台,免费点播,无广告无VIP！免费提供最新高清的电影,电视剧,综艺,动漫,台劇,日劇,泰劇,韩剧,美剧等。',
+  };
+}
 export const viewport = {
   themeColor: '#000000',
 };
@@ -69,7 +80,7 @@ export default function RootLayout({ children }) {
           t.src=v;s=b.getElementsByTagName(e)[0];
           s.parentNode.insertBefore(t,s)}(window, document,'script',
           'https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', '449002564517147');
+          fbq('init', '493542889715736');
           fbq('track', 'PageView');
         `}
       </Script>

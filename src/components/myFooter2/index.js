@@ -22,12 +22,11 @@ const MyFooter2 = () => {
   const router = useRouter();
 
   if (
-    pathname.startsWith('/play') ||
+    pathname.startsWith('/vod/play') ||
     pathname.startsWith('/search/') ||
     pathname.startsWith('/payment') ||
     pathname.startsWith('/login') ||
     pathname.startsWith('/setpin') ||
-    pathname.startsWith('/enterpin') ||
     pathname.startsWith('/privacy') ||
     pathname.startsWith('/service') ||
     pathname.startsWith('/sport') ||

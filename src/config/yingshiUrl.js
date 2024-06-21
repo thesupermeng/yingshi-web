@@ -10,7 +10,7 @@ export const URL_YINGSHI_USER = {
 
 export const URL_YINGSHI_VOD = {
   homeGetNav: 'nav/v1/navItems?channelId=WEB',
-  homeGetPages: 'page/v4/typepage',
+  homeGetPages: 'page/v4.5/typepage',
   getVodDetails: 'vod/v3/vod',
   playlistGetTopic: 'topic/v1/topic',
   playlistGetTopicDetail: 'topic/v1/topic/detail',
@@ -20,7 +20,7 @@ export const URL_YINGSHI_VOD = {
   getXVodDetails: 'svod/v2/vod',
   getAdsSlot: 'ads/v1/slot',
   getAdsVideoSlot: 'ads/v2/slot',
-
+  getAllAds: 'ads/v1/app',
   setAhaWithdrawalPin: 'users/v2/aha/setpin',
 };
 

@@ -33,24 +33,31 @@ export default function PaymentModal({open, handler}) {
 
   return (
     <>
-      <Dialog open={open} handler={handler} className={'relative bg-[#121212] rounded-[28px] p-0 outline-none'}
-              size={'sm'}
+      <Dialog open={open} handler={handler} className={'relative bg-[#121212] rounded-[28px] p-0 outline-none zoom-9'}
+              size={'md'}
               dismiss={{
                 outsidePress: false
               }}
       >
-        <DialogBody className={'p-[38px] w-full h-full flex flex-col'}>
+        <DialogBody className={'px-0 pt-4 w-full h-full flex flex-col'}>
+        <div style={{ height:'100vh' , overflow:'auto' , padding:'8px 0px'}}>
           <FontAwesomeIcon icon={faTimesCircle}
             className={'absolute top-4 right-4 cursor-pointer w-[35px] h-[35px] text-[#FFFFFF33] hover-effect'}
             onClick={handler}
           />
+        
+       
+        <div style={{padding:'0px 38px'}}>
           <PaymentHeader/>
           {/*<PaymentCountdown className={'mt-[28px]'}/>*/}
+         
           <span className={'hover-effect text-[#9C9C9C] text-[14px] mt-[5px] self-end'} onClick={handleShowPaymentDetail}>VIP明细</span>
           <PaymentProductsList className={'mt-[5px]'} productList={productList} onProductSelect={(product) => setProductSelected(product)}/>
           <PaymentMethods className={'mt-[26px]'} paymentOptions={productSelected?.payment_options ?? []} onMethodSelect={(method) => setPaymentMethodSelected(method)}/>
           <PaymentDisclaimer className={'mt-[30px]'}/>
           <PaymentPurchaseButton className={'mt-[15px]'} productInfo={productSelected} paymentInfo={paymentMethodSelected}/>
+          </div>
+          </div>
         </DialogBody>
       </Dialog>
 
