@@ -1,19 +1,39 @@
-'use client'
-import { useEffect, useRef, useState } from "react";
-import VodListViewMore from "../vodListViewMore";
+'use client';
+import { useEffect, useRef, useState } from 'react';
+import VodListViewMore from '../vodListViewMore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
-import { VideoVerticalCard } from "../videoItem/videoVerticalCard";
-import { AdsBanner } from "../ads/adsBanner";
-import { Spinner } from "../spinner";
-import { getTopicListApi } from "@/app/actions";
+import { VideoVerticalCard } from '../videoItem/videoVerticalCard';
+import { AdsBanner } from '../ads/adsBanner';
+import { Spinner } from '../spinner';
+import { getTopicListApi } from '@/app/actions';
 
 const TopicPagingList = ({ data, navId, serverNextPage, isStillCanLoad }) => {
-  const [topicList, setTopicList] = useState(data)
-  const [nextPage, setNextPage] = useState(serverNextPage)
-  const [stillCanLoad, setStillCanLoad] = useState(isStillCanLoad)
+  const [topicList, setTopicList] = useState(data);
+  const [nextPage, setNextPage] = useState(serverNextPage);
+  const [stillCanLoad, setStillCanLoad] = useState(isStillCanLoad);
 
   const targetRef = useRef(null);
+
+  //banner ads
+  const [adsList, setAdsList] = useState([]);
+  const getAllAds = async () => {
+    return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
+  };
+  const initAds = async () => {
+    let allAds = await getAllAds();
+    sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
+  };
+  useEffect(() => {
+    let adsList = sessionStorage.getItem('adsList');
+    adsList = JSON.parse(adsList);
+    if (adsList && adsList !== 'undefined') {
+      setAdsList(adsList);
+    } else {
+      initAds();
+    }
+  }, []);
+  //end banner ads
 
   useEffect(() => {
     if (stillCanLoad) {
@@ -72,7 +92,7 @@ const TopicPagingList = ({ data, navId, serverNextPage, isStillCanLoad }) => {
           return (
             <div key={idx}>
               {idx % 2 ? (
-                <AdsBanner navId={navId} height='500px' />
+                <AdsBanner adsList={adsList} navId={'1-13'} height='500px' />
               ) : (
                 <div style={{ paddingTop: '20px' }}></div>
               )}
@@ -114,7 +134,7 @@ const TopicPagingList = ({ data, navId, serverNextPage, isStillCanLoad }) => {
         {stillCanLoad && navId == 0 && <Spinner></Spinner>}
       </div>
     </>
-  )
-}
+  );
+};
 
 export default TopicPagingList;
