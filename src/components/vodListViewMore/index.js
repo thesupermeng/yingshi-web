@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 
 const VodListViewMore = ({ type, data }) => {
   const router = useRouter();
@@ -11,7 +11,7 @@ const VodListViewMore = ({ type, data }) => {
         localStorage.setItem('videoTypeId', item.type_id);
         localStorage.setItem('videoClass', item.type_name);
         // router.push(`/film-library`);
-        router.push(`vod/show/by/hits_day/class/${item.type_name}/id/${item.type_id}`);
+        router.push(`vod/show/by/time/class/${item.type_name}/id/${item.type_id}`);
         break;
       }
       case 'topic': {
