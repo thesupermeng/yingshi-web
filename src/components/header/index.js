@@ -273,7 +273,6 @@ const Header = () => {
     }
   };
 
-
   const handleClick = (value) => {
     if (value == 998) {
       router.push('/topic/index/page');
@@ -594,10 +593,10 @@ const Header = () => {
                                     index == 0
                                       ? 'rgba(0, 106, 178, 1)'
                                       : index == 1
-                                        ? 'rgba(0, 133, 224, 1)'
-                                        : index == 2
-                                          ? 'rgba(96, 191, 255, 1)'
-                                          : 'rgba(156, 156, 156, 1)',
+                                      ? 'rgba(0, 133, 224, 1)'
+                                      : index == 2
+                                      ? 'rgba(96, 191, 255, 1)'
+                                      : 'rgba(156, 156, 156, 1)',
                                 }}
                               >
                                 {index + 1}
@@ -789,9 +788,9 @@ const Header = () => {
                           key={index}
                           className='flex flex-row hover:text-[#0085E0] gap-x-2 cursor-pointer'
                           onClick={() => {
-                            const url = item.sourceId ?
-                              `/vod/play/id/${item.vodid}/sid/${item.tid}/nid/${item.nid}/source/${item.sourceId}`:
-                              `/vod/play/id/${item.vodid}/sid/${item.tid}/nid/${item.nid}`
+                            const url = item.sourceId
+                              ? `/vod/play/id/${item.vodid}/sid/${item.tid}/nid/${item.nid}/source/${item.sourceId}`
+                              : `/vod/play/id/${item.vodid}/sid/${item.tid}/nid/${item.nid}`;
                             router.push(url);
                             setOpenHistory(false);
                           }}
@@ -934,17 +933,19 @@ const Header = () => {
         <div className='border-l-2 border-white h-4' />
       </div>
 
-      <div className='flex flex-row pl-4 items-center'>
+      <Link
+        className='flex flex-row pl-4 items-center'
+        href='/myprofile'
+        onClick={(e) => {
+          if (!userInfo) {
+            e.preventDefault(); // Prevent the link from navigating
+            setOpenLogin(true);
+            return;
+          }
+        }}
+      >
         {/* md:flex */}
-        <div
-          onClick={() => {
-            if (userInfo) {
-              router.push('/myprofile');
-            } else {
-              setOpenLogin(true);
-            }
-          }}
-        >
+        <div>
           <Image
             className='cursor-pointer'
             src={userInfo ? ProfileBlue : userIcon}
@@ -952,7 +953,7 @@ const Header = () => {
             width={30}
           />
         </div>
-      </div>
+      </Link>
     </div>
   );
 
@@ -1008,7 +1009,7 @@ const Header = () => {
                       selectedId === navItem.id ? 'text-blue-500' : 'text-white'
                     }`}
                   >
-                 {navItem.name}
+                    {navItem.name}
                   </span>
                 </div>
               );
@@ -1022,12 +1023,12 @@ const Header = () => {
             {visibleItems?.map((navItem, index) => {
               return (
                 <Link
-                href={getHref(navItem.id)}
+                  href={getHref(navItem.id)}
                   className='flex flex-1 flex-col items-center cursor-pointer header-tab'
                   id={navItem.id}
                   key={index}
                   onClick={() => {
-                  //  handleClick(navItem.id);
+                    //  handleClick(navItem.id);
                   }}
                 >
                   <span
@@ -1035,7 +1036,7 @@ const Header = () => {
                       selectedId === navItem.id ? 'text-blue-500' : 'text-white'
                     }`}
                   >
-                     {navItem.name}
+                    {navItem.name}
                   </span>
                   {selectedId === navItem.id ? (
                     <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
