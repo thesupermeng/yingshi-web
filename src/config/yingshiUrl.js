@@ -20,7 +20,7 @@ export const URL_YINGSHI_VOD = {
   getXVodDetails: 'svod/v2/vod',
   getAdsSlot: 'ads/v1/slot',
   getAdsVideoSlot: 'ads/v2/slot',
-
+  getAllAds: 'ads/v1/app',
   setAhaWithdrawalPin: 'users/v2/aha/setpin',
 };
 

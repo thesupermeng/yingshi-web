@@ -1,4 +1,4 @@
-'use server'
+// 'use server'
 
 import { URL_YINGSHI_VOD } from "@/config/yingshiUrl";
 import { YingshiApi } from "@/util/YingshiApi";

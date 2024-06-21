@@ -1,7 +1,7 @@
-'use client'
+'use client';
 import { useEffect, useCallback, useState } from 'react';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
-import { YingshiApi } from '@/util/YingshiApi';
+import { YingshiApi, YingshiApi2 } from '@/util/YingshiApi';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 
 export const AdsBanner = ({
@@ -9,30 +9,30 @@ export const AdsBanner = ({
   height = '100px',
   backgroundColor = '#A7A7A71A',
   imgUrl = '',
-  navId = 0,
-  ads = null,
+  navId = '1-13',
+  // ads = null,
+  adsList = [],
 }) => {
-  // const [ads, setAds] = useState(null);
   const { isVip, userInfo } = useYingshiUser();
 
-  // const getAdsSlotAds = async (slotId) => {
-  //   return YingshiApi(
-  //     URL_YINGSHI_VOD.getAdsSlot,
-  //     {
-  //       slot_id: slotId,
-  //     },
-  //     { method: 'GET' }
-  //   );
-  // };
+  const [ads, setAds] = useState(null);
 
-  // useEffect(() => {
-  //   let slotId = 100 + navId;
-  //   if (slotId > 99 && slotId < 110) {
-  //     getAdsSlotAds(slotId).then((data) => {
-  //       setAds(data);
-  //     });
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (navId && navId != 0) {
+      const parts = navId?.split('-').map(Number);
+
+      const filteredAdsList = adsList.filter(
+        (ad) => ad.ads_id === 1 || ad.ads_id === 13
+      );
+
+
+      setAds(filteredAdsList);
+    } else {
+      console.log('no ads');
+    }
+  }, []);
+
+
 
   return (
     <>
@@ -46,9 +46,9 @@ export const AdsBanner = ({
           }}
         >
           <img
-            src={ads.ads_pic}
+            src={ads[0]?.ads_pic}
             onClick={() => {
-              window.open(ads.ads_url, '_blank');
+              window.open(ads[0].ads_url, '_blank');
             }}
           />
         </div>

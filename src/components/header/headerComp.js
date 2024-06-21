@@ -158,7 +158,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
   };
 
   const handleChange = (event) => {
-    setLoadingSearching(true);
+
     const newValue = event.target.value;
 
     // Check if the first character is a space
@@ -169,28 +169,31 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
 
     setSearchInput(newValue);
 
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
+    //remove auto complete
+    return 
+    // setLoadingSearching(true);
+    // if (timeoutId) {
+    //   clearTimeout(timeoutId);
+    // }
 
-    // Set a new timeout to call the function after 3 seconds
-    const newTimeoutId = setTimeout(async () => {
-      // Call your function here
-      // const encodedData = encodeURIComponent(newValue);
-      // console.log(encodedData)
-      if (newValue !== '') {
-        const res = await getSearchingList(newValue);
-        if (res.List != null) {
-          setSearchList(res.List);
-        } else {
-          setSearchList([]);
-        }
-        setLoadingSearching(false);
-      }
-    }, 2000);
+    // // Set a new timeout to call the function after 3 seconds
+    // const newTimeoutId = setTimeout(async () => {
+    //   // Call your function here
+    //   // const encodedData = encodeURIComponent(newValue);
+    //   // console.log(encodedData)
+    //   if (newValue !== '') {
+    //     const res = await getSearchingList(newValue);
+    //     if (res.List != null) {
+    //       setSearchList(res.List);
+    //     } else {
+    //       setSearchList([]);
+    //     }
+    //     setLoadingSearching(false);
+    //   }
+    // }, 2000);
 
-    // Update the timeoutId state
-    setTimeoutId(newTimeoutId);
+    // // Update the timeoutId state
+    // setTimeoutId(newTimeoutId);
   };
 
   const handleSearch = () => {
@@ -410,7 +413,7 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
               value={searchInput}
               onChange={handleChange}
               className='border-0 border-gray-300 text-white rounded-full pl-10 md:pl-4 md:pr-10 pr-4 py-2 focus:outline-none w-full md:w-60 header-search-input-desktop text-[14px]'
-              onClick={handleOpenSearch}
+              //onClick={handleOpenSearch}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   e.target.blur();
