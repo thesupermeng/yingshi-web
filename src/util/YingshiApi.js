@@ -134,7 +134,7 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
   const requestBody = JSON.stringify(body);
   const requestOption = {
     method,
-    headers: await getHeader(requestBody, method, !noToken && getLocalstorage(LocalStorageKeys.AuthTokenHeader)),
+    headers: await getHeader(requestBody, method, getLocalstorage(LocalStorageKeys.AuthTokenHeader)),
     ...extraOptions
   };
 
@@ -289,7 +289,7 @@ export const getLocalstorage = (key, isSessionStorage = false) => {
   const isServerSide = typeof window === 'undefined';
 
   if (isServerSide) {
-    const { cookies } = require("next/headers");
+    const { cookies } = require('next/headers');
     return cookies().get(key)?.value;
   }
 

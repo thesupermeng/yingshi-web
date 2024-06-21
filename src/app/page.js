@@ -1,5 +1,5 @@
 'use client';
-// import './i18n';
+import './i18n';
 import { LoadingPage } from '@/components/loading';
 import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
 import { VideoHorizontalCard } from '@/components/videoItem/videoHorizontalCard';
