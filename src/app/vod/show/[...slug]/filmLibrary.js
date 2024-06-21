@@ -293,36 +293,6 @@ export const FilmLibrary = () => {
     }
   }
 
-  const filterVideoList = (value, type) => {
-    if (!loadingVideoList) {
-      let params = { ...paramsFilter };
-
-      if (type == 'type') {
-        params.typeId = value;
-        params.by = 'time';
-        params.class = '全部类型';
-        params.area = '全部地区';
-        params.lang = '全部语言';
-        params.year = '全部时间';
-      } else if (type == 'by') {
-        params.by = value;
-      } else if (type == 'class') {
-        params.class = value;
-      } else if (type == 'area') {
-        params.area = value;
-      } else if (type == 'lang') {
-        params.lang = value;
-      } else if (type == 'year') {
-        params.year = value;
-      }
-      setParamsFilter(params);
-      setNextPage(1);
-      setVideoList([]);
-      setStillCanLoad(false);
-      setLoadingVideoList(true);
-    }
-  };
-
   return (
     <>
       <div className='flex flex-1 justify-center flex-col'>
