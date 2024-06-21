@@ -15,7 +15,7 @@ import styles from './style.module.css';
 import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
 import { ArrowLeftIcon } from '@/asset/icons';
 import Image from 'next/image';
-import {usePathname, useRouter} from 'next/navigation';
+import {useParams, usePathname, useRouter} from 'next/navigation';
 import { convertTimeStampToDateTime } from '@/util/date';
 import { FullPageContent } from '@/componentsH5/FullPageContent';
 import { LottieAnimation } from '@/components/lottie';
@@ -24,19 +24,9 @@ import { AdsPlayer } from './adsPlayer.js';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser.js';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 import {  YingshiApi2 } from '@/util/YingshiApi';
-export const PlayVod =
-({
-  vod,
-  vodId,
-  tId,
-  sourceId,
-  vodSourceSelected,
-  episodeSelected,
-  episodeGroups,
-  initialGroupSelected,
-  suggestedVods,
-  popularList
-}) => {
+import {Config} from '@/util/config';
+
+export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
   const router = useRouter();
   const path = usePathname();
   const { t } = useTranslation();
@@ -49,11 +39,13 @@ export const PlayVod =
   const playerDivRef = useRef(null);
   const playerRef = useRef(null);
 
-  // const [vodSourceSelected, setVodSourceSelected] = useState(details.sourceSelected);
-  // const [episodeSelected, setEpisodeSelected] = useState(details.selectedEpisode);
-  // const [episodeGroups, setEpisodeGroups] = useState(details.episodeGroups);
+  const [vod, setVod] = useState(null);
+  const [suggestedVods, setSuggestedVods] = useState([]);
+  const [vodSourceSelected, setVodSourceSelected] = useState(null);
+  const [episodeSelected, setEpisodeSelected] = useState(null);
+  const [episodeGroups, setEpisodeGroups] = useState([]);
   const [playerDivHeight, setPlayerDivHeight] = useState(0);
-  const [episodeGroupSelected, setEpisodeGroupSelected] = useState(initialGroupSelected);
+  const [episodeGroupSelected, setEpisodeGroupSelected] = useState({});
   const [desc, setDesc] = useState('');
   const [toggleJianJie, setToggleJianJie] = useState(false);
   const [toggleShowShareBoxStatus, setToggleShowShareBoxStatus] = useState(false);
@@ -62,15 +54,11 @@ export const PlayVod =
   const [ads, setAds] = useState(null);
   const [showAds, setShowAds] = useState(!isVip);
 
-
   const getAllAds = async () => {
     return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
   };
 
   const getAds = async () => {
-   
-    
-
     let adsList = sessionStorage.getItem('adsList');
     adsList = JSON.parse(adsList);
     if (adsList && adsList !== 'undefined') {
@@ -90,6 +78,52 @@ export const PlayVod =
       return filteredAdsList[0];
     }
   
+  };
+
+  const getVod = async () => {
+    if (tId == 0) {
+      return YingshiApi(
+        URL_YINGSHI_VOD.getVodDetails,
+        {
+          id: vodId,
+        },
+        {
+          method: 'GET',
+        }
+      );
+    } else {
+      return YingshiApi(
+        URL_YINGSHI_VOD.getVodDetails,
+        {
+          id: vodId,
+          tid: tId,
+        },
+        {
+          method: 'GET',
+        }
+      );
+    }
+  };
+
+  const getSuggestedVodType = async () =>{
+    return YingshiApi(
+      URL_YINGSHI_VOD.searchingList,
+      {
+        category: vod.vod_class ? vod.vod_class.split(',').shift() : '',
+        tid: vod.type_id ? vod.type_id.toString() : '',
+        limit: 12,
+      },
+      {
+        method: 'GET',
+        noToken: true,
+        extraOptions: {
+          next: {
+            cache: 'force-cache',
+            revalidate: 3600
+          }
+        }
+      }
+    );
   };
 
   useEffect(() => {
@@ -126,6 +160,95 @@ export const PlayVod =
       });
     }
   }, [isVip]);
+
+  useEffect(() => {
+    if (episodeSelected == null) {
+      if (isVip) {
+        setShowAds(false);
+      } else {
+        getAds().then((res) => {
+          setShowAds(true);
+          setAds(res);
+        });
+      }
+
+      getVod().then((data) => {
+        if (
+          data === undefined ||
+          data.length <= 0 ||
+          data.List === undefined ||
+          data.List?.length <= 0
+        )
+          return;
+
+        let res = data.List[0];
+        setVod(res);
+
+        if (res.vod_sources.length > 0) {
+          let index = 0;
+          if (sourceId)
+            index = res.vod_sources.findIndex(
+              (x) => x.source_id === sourceId
+            );
+
+          let source = res.vod_sources[index === -1 ? 0 : index];
+          setVodSourceSelected(source);
+
+          if (source.vod_play_list.urls.length > Config.vodEpisodeGroupMax) {
+            const tolGroup = Math.ceil(
+              source.vod_play_list.urls.length / Config.vodEpisodeGroupMax
+            );
+            const groups = [];
+
+            for (let i = 0; i < tolGroup; i++) {
+              groups.push({
+                from: i * Config.vodEpisodeGroupMax + 1,
+                to:
+                  tolGroup === i + 1
+                    ? source.vod_play_list.urls.length
+                    : (i + 1) * Config.vodEpisodeGroupMax,
+              });
+            }
+
+            setEpisodeGroups(groups);
+            setEpisodeGroupSelected(groups.length > 0 ?
+              groups.find(group => nId >= group.from && nId <= group.to) :
+              {}
+            );
+          } else {
+            const defaultGroup = {
+              from: 1,
+              to: source.vod_play_list.urls.length,
+            };
+
+            setEpisodeGroups([defaultGroup]);
+            setEpisodeGroupSelected(defaultGroup);
+          }
+
+          if (source.vod_play_list.urls.length > 0) {
+            if (nId && nId > 0 && nId < 9999) {
+              setEpisodeSelected(source.vod_play_list.urls[nId - 1]);
+            } else {
+              setEpisodeSelected(source.vod_play_list.urls[0]);
+            }
+          }
+        }
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (vod) {
+      getSuggestedVodType().then((data) => {
+        try {
+          setSuggestedVods(data.List);
+        } catch (e) {
+          // console.log(e);
+          setSuggestedVods([]);
+        }
+      });
+    }
+  }, [vod]);
 
   useEffect(() => {
     if (episodeSelected !== null) {
@@ -696,7 +819,7 @@ export const PlayVod =
             </div>
 
             <div className={styles.vodMetaContainer}>
-              <VodPopularList topic={popularList} />
+              <VodPopularList />
             </div>
 
             {/* <AdsBanner height='500px' /> */}
