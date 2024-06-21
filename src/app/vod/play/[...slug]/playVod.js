@@ -23,7 +23,7 @@ import { IrrLoading } from '@/asset/lottie';
 import { AdsPlayer } from './adsPlayer.js';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser.js';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
-
+import {  YingshiApi2 } from '@/util/YingshiApi';
 export const PlayVod =
 ({
   vod,
@@ -62,22 +62,34 @@ export const PlayVod =
   const [ads, setAds] = useState(null);
   const [showAds, setShowAds] = useState(!isVip);
 
+
+  const getAllAds = async () => {
+    return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
+  };
+
   const getAds = async () => {
-    return YingshiApi(
-      URL_YINGSHI_VOD.getAdsSlot,
-      {
-        slot_id: 146,
-        // ip: '219.75.27.16',
-        v: 1,
-      },
-      {
-        method: 'GET',
-        // headers: {
-        //   'App-Name': 'LANSHAYU',
-        //   'App-Channel': 'LANSHAYU',
-        // },
-      }
-    );
+   
+    
+
+    let adsList = sessionStorage.getItem('adsList');
+    adsList = JSON.parse(adsList);
+    if (adsList && adsList !== 'undefined') {
+      const filteredAdsList = adsList.filter(
+        (ad) => ad.ads_id === 105 
+      );
+ 
+      return filteredAdsList[0];
+    }
+    else {
+      let allAds = await getAllAds();
+      sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
+      const filteredAdsList = allAds.data.filter(
+        (ad) => ad.ads_id === 105 
+      );
+   
+      return filteredAdsList[0];
+    }
+  
   };
 
   useEffect(() => {
@@ -500,7 +512,7 @@ export const PlayVod =
                   <Image src={ArrowLeftIcon} alt='Icon' />
                 </div>
               </div>
-              {showAds ? (
+              {showAds && ads ? (
                 <AdsPlayer
                   className='aspect-[16/9]'
                   adsInfo={ads}
@@ -657,7 +669,7 @@ export const PlayVod =
                     <div>{vod.vod_name}</div>
                   </div>
                   <div></div>
-                  <div className='pb-6' style={{ color: '#9C9C9C' }}>
+                  <div className='pb-6 allow-select' style={{ color: '#9C9C9C' }}>
                     <div className='text-sm pt-1'>{desc}</div>
                     <div className='text-sm pt-1'>
                       更新: {convertTimeStampToDateTime(vod.vod_time).year}-

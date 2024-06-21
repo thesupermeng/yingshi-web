@@ -298,3 +298,10 @@ body {
 {
   zoom:0.83 !important;
 }
+
+
+
+.allow-select,
+.allow-select * {
+  user-select: text !important;
+}

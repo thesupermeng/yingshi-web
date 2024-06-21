@@ -58,8 +58,8 @@ VodEpisodeList = ({
     
     {/* PC */}
     <div className='lg:flex hidden relative'>
-      <div ref={selectedEpisodeGroupRef} id="episodeGroup-selected" style={{ width: 'fit-content' }} className={`${styles.radioOptionCard} ${styles.unselectedOptionCard}`} onClick={onEpisodeGroupDropBtnPress}>
-        <label htmlFor="episodeGroup-selected" className="flex flex-row space-x-1">
+      <div ref={selectedEpisodeGroupRef} id="episodeGroup-selected" style={{ width: 'fit-content' }} className={`hover-effect cursor-pointer ${styles.radioOptionCard} ${styles.unselectedOptionCard}`} onClick={onEpisodeGroupDropBtnPress}>
+        <label htmlFor="episodeGroup-selected" className="flex flex-row space-x-1 cursor-pointer">
           <span className="text-md">{episodeGroup.from}</span>
           <span className="text-md">-</span>
           <span className="text-md">{episodeGroup.to}</span>
@@ -90,9 +90,9 @@ VodEpisodeList = ({
     <ul className="lg:flex hidden flex-column " style={{ flexWrap: 'wrap', overflowX: 'auto' }}>
       {vodSource?.vod_play_list?.urls?.slice(episodeGroup.from - 1, episodeGroup.to).map((episode) => {
         return (
-          <li style={{ padding: '10px', margin: '4px', minWidth: '70px', justifyContent: 'center' }} key={`key-episode-${episode.nid}`} id={`episode-${episode.nid}`} className={`${styles.radioOptionCard} ${episodeSource.nid === episode.nid ? styles.selectedOptionCard : styles.unselectedOptionCard}`} onClick={() => selectEpisode(episode)}>
+          <li style={{ padding: '10px', margin: '4px', minWidth: '70px', justifyContent: 'center' }} key={`key-episode-${episode.nid}`} id={`episode-${episode.nid}`} className={`hover-effect cursor-pointer ${styles.radioOptionCard} ${episodeSource.nid === episode.nid ? styles.selectedOptionCard : styles.unselectedOptionCard}`} onClick={() => selectEpisode(episode)}>
             <label htmlFor={`episode-${episode.nid}`}>
-              <div className="text-sm">{episode.name}</div>
+              <div className="text-sm cursor-pointer">{episode.name}</div>
             </label>
           </li>
         )
