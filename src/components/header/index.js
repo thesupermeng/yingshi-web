@@ -157,7 +157,7 @@ const Header = () => {
   };
 
   const handleChange = (event) => {
-    setLoadingSearching(true);
+    
     const newValue = event.target.value;
 
     // Check if the first character is a space
@@ -165,8 +165,11 @@ const Header = () => {
       setSearchInput('');
       return; // Exit early if the first character is a space
     }
-
     setSearchInput(newValue);
+return;
+
+    setLoadingSearching(true);
+   // setSearchInput(newValue);
 
     if (timeoutId) {
       clearTimeout(timeoutId);
@@ -484,7 +487,7 @@ const Header = () => {
           </div>
         </div>
         {openSearch ? (
-          <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100dvh-52px)] md:h-auto z-20 left-0 md:left-auto md:w-96 md:ml-16'>
+          <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100dvh-52px)] md:h-auto z-20 left-0 md:left-auto md:w-96'>
             <div className='py-3 px-4 bg-[#1d2023] md:rounded-md w-full h-full md:bg-[#18191ef5] md:w-96'>
               <div className='no-scrollbar overflow-y-scroll w-full h-full overflow-scroll overscroll-none'>
                 <div className='w-full h-[calc(100%+1px)]'>
