@@ -90,7 +90,7 @@ export const Carousel = ({ carouselItems }) => {
                   </div>
                   <div className="slider-container" style={{ position: 'relative' }} onClick={(e) => {
                     e.preventDefault();
-                    router.push(`/vod/play/id/${item.vod.vod_id}/sid/${item.vod.type_id}/nid/1`);
+                    router.push(`/vod/play/id/${item.carousel_content_id}/sid/${item.carousel_vod_type_id}/nid/1`);
                   }}>
                     <img
 
@@ -110,10 +110,10 @@ export const Carousel = ({ carouselItems }) => {
         {carouselItems && carouselItems.length > 0 && (
           <div className="desktop d-flex" style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
             {carouselItems.map((item, index) => {
-              let desc = ' | ' + item.vod.vod_area
+              let desc = ' | ' + item.carousel_vod_area
               let vodClass = []
-              if (item.vod.vod_class != null) {
-                vodClass = item.vod.vod_class.split(',');
+              if (item.carousel_vod_class != null) {
+                vodClass = item.carousel_vod_class.split(',');
               }
               vodClass = vodClass.slice(0, 2);
               vodClass.forEach((item, i) => {
@@ -145,7 +145,7 @@ export const Carousel = ({ carouselItems }) => {
                     style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'pointer', opacity: 0.9, position: 'relative' }}
                     onClick={(e) => {
                       e.preventDefault();
-                      router.push(`/vod/play/id/${carouselItems[carouselIndex].vod.vod_id}/sid/${carouselItems[carouselIndex].vod.type_id}/nid/1`);
+                      router.push(`/vod/play/id/${carouselItems[carouselIndex].carousel_content_id}/sid/${carouselItems[carouselIndex].carousel_vod_type_id}/nid/1`);
                     }}
                   />
 
@@ -153,8 +153,8 @@ export const Carousel = ({ carouselItems }) => {
                     <div className="flex container">
                       <div className="col pt-3">
                         <p className="text-lg">{item.carousel_name}</p>
-                        <p className="text-sm pt-1" style={{ fontWeight: '200' }}>{item.vod.vod_year}{desc}</p>
-                        <p className="text-sm pt-1" style={{ fontWeight: '200' }}>{item.vod.vod_remarks}</p>
+                        <p className="text-sm pt-1" style={{ fontWeight: '200' }}>{item.carousel_vod_year}{desc}</p>
+                        <p className="text-sm pt-1" style={{ fontWeight: '200' }}>{item.carousel_vod_remarks}</p>
                         <div
                           style={{
                             cursor: 'pointer',
@@ -166,7 +166,7 @@ export const Carousel = ({ carouselItems }) => {
                           }}
                           onClick={(e) => {
                             e.preventDefault();
-                            router.push(`/vod/play/id/${carouselItems[carouselIndex].vod.vod_id}/sid/${carouselItems[carouselIndex].vod.type_id}/nid/1`);
+                            router.push(`/vod/play/id/${carouselItems[carouselIndex].carousel_content_id}/sid/${carouselItems[carouselIndex].carousel_type_id}/nid/1`);
                           }}
                           className="flex flex-row flex-wrap">
                           <Image
@@ -200,12 +200,12 @@ export const Carousel = ({ carouselItems }) => {
                             <div style={{ width: '100%', textAlign: 'center' }}>
                               <img
                                 className={styles.carousel_item_card}
-                                src={previewItem.vod.vod_pic}
+                                src={previewItem.carousel_vod_pic}
                                 alt={`Slide ${previewIndex}`}
                                 style={{ width: '100%', aspectRatio: '5/7', objectFit: 'cover', borderRadius: '12px' }}
                                 onClick={(e) => {
                                   e.preventDefault();
-                                  router.push(`/vod/play/id/${previewItem.vod.vod_id}/sid/${previewItem.vod.type_id}/nid/1`);
+                                  router.push(`/vod/play/id/${previewItem.carousel_content_id}/sid/${previewItem.carousel_type_id}/nid/1`);
                                 }}
                               />
                             </div>
