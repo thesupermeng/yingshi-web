@@ -657,7 +657,7 @@ export const PlayVod =
                     <div>{vod.vod_name}</div>
                   </div>
                   <div></div>
-                  <div className='pb-6' style={{ color: '#9C9C9C' }}>
+                  <div className='pb-6 allow-select' style={{ color: '#9C9C9C' }}>
                     <div className='text-sm pt-1'>{desc}</div>
                     <div className='text-sm pt-1'>
                       更新: {convertTimeStampToDateTime(vod.vod_time).year}-
