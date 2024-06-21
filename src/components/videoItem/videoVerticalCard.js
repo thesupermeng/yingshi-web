@@ -5,6 +5,7 @@ import { ImagePlaceholder } from '@/asset/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import base64PlaceholderString from '@/app/placeholder';
+import Link from 'next/link';
 
 export const VideoVerticalCard = ({ vod }) => {
   const router = useRouter();
@@ -18,23 +19,13 @@ export const VideoVerticalCard = ({ vod }) => {
   return (
     <div className='flex flex-col items-center md-hover-effect'>
       <div className='relative w-full aspect-[530/726] group mx-4 my-2 rounded-lg md-hover-effect'>
-        <div
-          className='absolute inset-0 flex rounded-lg lg:group-hover:improve-text-unblurry
-          lg:transition lg:group-hover:scale-150 lg:group-hover:duration-500
-          lg:group-hover:cursor-pointer group-hover:rounded-lg lg:group-hover:z-10 
-          lg:group-hover:rounded-lg'
-          onClick={(e) => {
-            e.preventDefault();
-            router.push(`/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`);
-          }}
+        <Link
+          href={`/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`}
+          className='absolute inset-0 flex rounded-lg lg:group-hover:improve-text-unblurry lg:transition lg:group-hover:scale-150 lg:group-hover:duration-500 lg:group-hover:cursor-pointer group-hover:rounded-lg lg:group-hover:z-10 lg:group-hover:rounded-lg'
         >
           <Image
             placeholder='blur'
             blurDataURL={'data:image/png;base64,' + base64PlaceholderString}
-            onClick={(e) => {
-              e.preventDefault();
-              router.push(`/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`);
-            }}
             alt='video'
             src={vod.vod_pic}
             style={{ borderRadius: '0.5rem !important', objectFit: 'cover' }}
@@ -44,7 +35,7 @@ export const VideoVerticalCard = ({ vod }) => {
           />
           <div className='bg-[#0000008c] h-[100%] w-full flex flex-col rounded-lg md:group-hover:z-10 lg:group-hover:block hidden'>
             <div className='rounded-t-lg w-full h-[45%] flex justify-center items-center'>
-              <div className='rounded-full bg-[#0085E0] w-10 h-10 flex justify-center items-center'>
+              <div className='rounded-full bg-[#FAC33D] w-10 h-10 flex justify-center items-center'>
                 <FontAwesomeIcon
                   style={{
                     fontSize: '18px',
@@ -55,7 +46,7 @@ export const VideoVerticalCard = ({ vod }) => {
             </div>
             <div className='bg-[#1D2023] rounded-b-lg w-full h-[55%] px-2 py-1.5 flex'>
               <div className='flex flex-col overflow-hidden'>
-                <span className='antialiased text-[10px]/4 text-[#0085E0] font-bold'>
+                <span className='antialiased text-[10px]/4 text-[#FAC33D] font-bold'>
                   {vod.vod_name}
                 </span>
                 <div className='flex flex-row gap-1 flex-wrap py-0.5'>
@@ -81,7 +72,7 @@ export const VideoVerticalCard = ({ vod }) => {
               </div>
             </div>
           </div>
-        </div>
+        </Link>
         {vod.vod_remarks !== undefined ? (
           <div className='flex absolute w-full bottom-1 px-1.5 justify-end'>
             <div className='bg-[#00000099] rounded-md p-1 max-w-full'>
