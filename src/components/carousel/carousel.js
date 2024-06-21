@@ -166,7 +166,7 @@ export const Carousel = ({ carouselItems }) => {
                           }}
                           onClick={(e) => {
                             e.preventDefault();
-                            router.push(`/vod/play/id/${carouselItems[carouselIndex].carousel_content_id}/sid/${carouselItems[carouselIndex].carousel_type_id}/nid/1`);
+                            router.push(`/vod/play/id/${carouselItems[carouselIndex].carousel_content_id}/sid/${carouselItems[carouselIndex].carousel_vod_type_id}/nid/1`);
                           }}
                           className="flex flex-row flex-wrap">
                           <Image
@@ -205,7 +205,7 @@ export const Carousel = ({ carouselItems }) => {
                                 style={{ width: '100%', aspectRatio: '5/7', objectFit: 'cover', borderRadius: '12px' }}
                                 onClick={(e) => {
                                   e.preventDefault();
-                                  router.push(`/vod/play/id/${previewItem.carousel_content_id}/sid/${previewItem.carousel_type_id}/nid/1`);
+                                  router.push(`/vod/play/id/${previewItem.carousel_content_id}/sid/${previewItem.carousel_vod_type_id}/nid/1`);
                                 }}
                               />
                             </div>
