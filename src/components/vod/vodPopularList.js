@@ -1,8 +1,29 @@
 import { useTranslation } from 'react-i18next';
 import Link from 'next/link';
+import {URL_YINGSHI_VOD} from '@/config/yingshiUrl';
+import {YingshiApi} from '@/util/YingshiApi';
+import {useEffect, useState} from 'react';
 
-export const VodPopularList = ({ topic }) => {
+export const VodPopularList = () => {
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(false);
+  const [topic, setTopic] = useState([]);
+
+  useEffect(() => {
+    initPage();
+  }, []);
+
+  const initPage = async () => {
+    setLoading(true);
+    fetchTopicDetail().then((result) => {
+      setTopic(result);
+      setLoading(false);
+    });
+  }
+
+  const fetchTopicDetail = async () => {
+    return YingshiApi(URL_YINGSHI_VOD.playlistGetTopicDetail + '?id=1', {}, { method: 'GET' });
+  }
 
   return <div className="p-4 space-y-4">
     <span className="text-lg">{topic?.topic_name ?? t('popularList')}</span>

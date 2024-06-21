@@ -10,10 +10,10 @@ import { Spinner } from '@/components/spinner';
 import styles from '../../style.module.css';
 import Link from 'next/link';
 
-export const Topic = ({ topics }) => {
-  const [topicList, setTopicList] = useState(topics.List);
-  const [stillCanLoad, setStillCanLoad] = useState(topics.Page < topics.TotalPageCount);
-  const [nextPage, setNextPage] = useState(topics.Page + 1);
+export const Topic = () => {
+  const [topicList, setTopicList] = useState([]);
+  const [stillCanLoad, setStillCanLoad] = useState(true);
+  const [nextPage, setNextPage] = useState(1);
 
   const targetRef = useRef(null);
   const router = useRouter();
@@ -30,7 +30,11 @@ export const Topic = ({ topics }) => {
     let currentPage = nextPage;
     const topicListing = await getTopicListApi();
 
-    setTopicList((prev) => [...prev, ...topicListing.List]);
+    if (nextPage > 1) {
+      setTopicList((prev) => [...prev, ...topicListing.List]);
+    } else {
+      setTopicList(topicListing.List);
+    }
 
     if (nextPage > topicListing.TotalPageCount -1) {
       setStillCanLoad(false);
@@ -39,6 +43,10 @@ export const Topic = ({ topics }) => {
       setNextPage(currentPage + 1);
     }
   };
+
+  useEffect(() => {
+    getTopicList();
+  }, []);
 
   useEffect(() => {
     if (stillCanLoad) {
@@ -82,116 +90,116 @@ export const Topic = ({ topics }) => {
           </div>
         </div>
 
-        {/* topic list  */}
-        <div className='d-flex container pb-6'>
-          <div className='row '>
-            {topicList.map((topic) => (
-              <div className='col-lg-4 col-md-6' key={topic.topic_id}>
-                {/* Render topic details here */}
-                <Link
-                  className='row topic-wrap'
-                  href={`/topic/detail/id/${topic.topic_id}`}
-                >
-                  <div className='col-12 mx-0 px-0'>
-                    <div className='d-flex topic-card'>
-                      <div style={{
-                        padding: '10px',
-                        width: '123px',
-                        borderRadius: '10px',
-                      }}
-                      >
-                        <img
-                          alt='topic items'
-                          className={`object-cover`}
-                          src={topic?.vod_list[0].vod_pic_list[0]}
-                          style={{
-                            borderRadius: '10px',
+            {/* topic list  */}
+            <div className='d-flex container pb-6'>
+              <div className='row '>
+                {topicList.map((topic) => (
+                  <div className='col-lg-4 col-md-6' key={topic.topic_id}>
+                    {/* Render topic details here */}
+                    <Link
+                      className='row topic-wrap'
+                      href={`/topic/detail/id/${topic.topic_id}`}
+                    >
+                      <div className='col-12 mx-0 px-0'>
+                        <div className='d-flex topic-card'>
+                          <div style={{
+                            padding: '10px',
                             width: '123px',
-                            height: '170px',
+                            borderRadius: '10px',
                           }}
-                        />
-                      </div>
-                      <div className='col d-flex flex-column justify-content-between'>
-                        <div>
-                          <div className='text-base font-bold pb-2'>
-                            {topic.topic_name}
+                          >
+                            <img
+                              alt='topic items'
+                              className={`object-cover`}
+                              src={topic?.vod_list[0].vod_pic_list[0]}
+                              style={{
+                                borderRadius: '10px',
+                                width: '123px',
+                                height: '170px',
+                              }}
+                            />
                           </div>
-                          <div className='text-xs topic-blurb'>
-                            {topic.topic_blurb.length > 105
-                              ? `${topic.topic_blurb.substring(0, 105)}...`
-                              : topic.topic_blurb}
-                          </div>
-                          <div className='text-primary pt-4 text-xs'>
-                            查看更多 <FontAwesomeIcon icon={faAngleRight}/>
+                          <div className='col d-flex flex-column justify-content-between'>
+                            <div>
+                              <div className='text-base font-bold pb-2'>
+                                {topic.topic_name}
+                              </div>
+                              <div className='text-xs topic-blurb'>
+                                {topic.topic_blurb.length > 105
+                                  ? `${topic.topic_blurb.substring(0, 105)}...`
+                                  : topic.topic_blurb}
+                              </div>
+                              <div className='text-primary pt-4 text-xs'>
+                                查看更多 <FontAwesomeIcon icon={faAngleRight}/>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* mobile  view  */}
+          <div className='mobile'>
+            <div className='row w-screen'>
+              {topicList.map((topic) => (
+                <Link
+                  className='mb-2 cursor-pointer'
+                  key={topic.topic_id}
+                  href={`/topic/detail/id/${topic.topic_id}`}
+                >
+                  <div className='col-12 pt-2 d-flex justify-content-between align-items-center pb-1 font-semibold'>
+                    <span>{topic.topic_name}</span>
+                    <span className='mr-2'>
+                  {' '}
+                      <FontAwesomeIcon icon={faAngleRight}/>
+                </span>
+                  </div>
+
+                  <div className='col-12 mobile-topic-desc'>
+                    {topic.topic_blurb.length > 52
+                      ? `${topic.topic_blurb.slice(0, 52)}...`
+                      : topic.topic_blurb}
+                  </div>
+
+                  <div className='col-12' key={topic.topic_id}>
+                    <div className='row g-2'>
+                      {topic?.vod_list?.slice(0, 3).map((vod) => (
+                        <div
+                          className='col-4 cursor-pointer'
+                          key={vod.vod_id}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            router.push(`/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`);
+                          }}
+                        >
+                          {' '}
+                          {/* Add px-1 class for horizontal padding */}
+                          <img
+                            alt='topic items'
+                            className={`object-cover w-100`}
+                            src={vod?.vod_pic_list[0]}
+                            style={{
+                              borderRadius: '10px',
+                              aspectRatio: '5/7',
+                              width: '100%',
+                            }}
+                          />
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </Link>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </div>
 
-      {/* mobile  view  */}
-      <div className='mobile'>
-        <div className='row w-screen'>
-          {topicList.map((topic) => (
-            <Link
-              className='mb-2 cursor-pointer'
-              key={topic.topic_id}
-              href={`/topic/detail/id/${topic.topic_id}`}
-            >
-              <div className='col-12 pt-2 d-flex justify-content-between align-items-center pb-1 font-semibold'>
-                <span>{topic.topic_name}</span>
-                <span className='mr-2'>
-                  {' '}
-                  <FontAwesomeIcon icon={faAngleRight}/>
-                </span>
-              </div>
-
-              <div className='col-12 mobile-topic-desc'>
-                {topic.topic_blurb.length > 52
-                  ? `${topic.topic_blurb.slice(0, 52)}...`
-                  : topic.topic_blurb}
-              </div>
-
-              <div className='col-12' key={topic.topic_id}>
-                <div className='row g-2'>
-                  {topic?.vod_list?.slice(0, 3).map((vod) => (
-                    <div
-                      className='col-4 cursor-pointer'
-                      key={vod.vod_id}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        router.push(`/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`);
-                      }}
-                    >
-                      {' '}
-                      {/* Add px-1 class for horizontal padding */}
-                      <img
-                        alt='topic items'
-                        className={`object-cover w-100`}
-                        src={vod?.vod_pic_list[0]}
-                        style={{
-                          borderRadius: '10px',
-                          aspectRatio: '5/7',
-                          width: '100%',
-                        }}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      {/* loading spinner  */}
-      <div ref={targetRef}>{stillCanLoad && <Spinner></Spinner>}</div>
+          {/* loading spinner  */}
+          <div ref={targetRef}>{stillCanLoad && <Spinner></Spinner>}</div>
 
       {!stillCanLoad &&
         <div className='flex items-center justify-center flex-col py-2'>

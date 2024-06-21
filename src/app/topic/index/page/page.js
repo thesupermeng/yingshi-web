@@ -1,42 +1,11 @@
-'use client'
-import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
-import { YingshiApi } from '@/util/YingshiApi';
 import { Topic } from '@/app/topic/index/page/topic';
-import { useEffect, useState } from 'react';
-import { LoadingPage } from '@/components/loading';
 
-export default function Page() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [topicList, setTopicList] = useState(null);
-
-  useEffect(() => {
-    setIsLoading(true);
-
-    getTopicListApi().then((result) => {
-      setTopicList(result);
-      setIsLoading(false);
-    })
-  }, []);
-  // const topicList = await getTopicListApi();
-
-  return (
-    <>
-      {isLoading
-        ? <div>
-          <LoadingPage full={false} />
-        </div>
-        : <Topic topics={topicList} />
-      }
-    </>
-  );
+export const metadata = {
+  title: '专题首页 - 精品专题 - 推荐专题 - 影视TV-海量高清视频免费在线观看',
+  description: '本站提供最新最全精品专题数据'
 }
 
-async function getTopicListApi() {
-  return YingshiApi(
-    URL_YINGSHI_VOD.playlistGetTopic + '?limit=18&page=1',
-    {},
-    {
-      method: 'GET'
-    }
-  );
+export default function Page() {
+
+  return <Topic />
 }

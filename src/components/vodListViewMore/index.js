@@ -11,7 +11,7 @@ const VodListViewMore = ({ type, data }) => {
         localStorage.setItem('videoTypeId', item.type_id);
         localStorage.setItem('videoClass', item.type_name);
         // router.push(`/film-library`);
-        router.push(`vod/show/by/time/class/${item.type_name}/id/${item.type_id}`);
+        router.push(`/vod/show/by/time/class/${item.type_name}/id/${item.type_id}`);
         break;
       }
       case 'topic': {
