@@ -315,11 +315,9 @@ export const FilmLibrary = () => {
     <>
       <div className='flex flex-1 justify-center flex-col'>
         <div className='flex w-screen flex-col items-center'>
-          <div
-            className={`bg-[#1D2023] w-screen h-auto p-1 z-20 top-[51px] md:static`}
-          >
+          <div className={` w-screen h-auto p-1 z-20 top-[51px] md:static`}>
             {filterTypeList && (
-              <>
+              <div className={`bg-[#1D2023] pt-2`}>
                 <div className='flex md:flex-wrap gap-x-4 gap-y-2 pl-4 py-2 container'>
                   {filterTypeList.map((item, index) => {
                     return (
@@ -568,36 +566,49 @@ export const FilmLibrary = () => {
                     />
                   </div>
                 </div>
-              </>
+              </div>
+            )}
+
+            {/* bottom section  111 */}
+            {loading ? (
+              <LoadingPage full={false} />
+            ) : (
+              <div className='w-screen flex flex-1 flex-col'>
+                {videoList !== null ? (
+                  <div className='container grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-4'>
+                    {videoList.map((vod, i) => {
+                      return <VideoVerticalCard vod={vod} key={i} />;
+                    })}
+                  </div>
+                ) : !loadingVideoList ? (
+                  <div
+                    className='w-screen flex flex-1 flex-col'
+                    style={{ minHeight: '300px' }}
+                  >
+                    <div className='flex flex-1 justify-center items-center flex-col'>
+                      <Image
+                        className='mx-2'
+                        src={searchEmptyIcon}
+                        alt='empty'
+                        width={120}
+                      />
+                      <span>暂无数据</span>
+                    </div>
+                  </div>
+                ) : null}
+              </div>
             )}
           </div>
-          {/* bottom section  111 */}
-          {loading ? (
-            <LoadingPage full={false} />
-          ) : (
-            <div className='w-screen flex flex-1 flex-col'>
-              {videoList !== null ? (
-                <div className='container grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-4'>
-                  {videoList.map((vod, i) => {
-                    return <VideoVerticalCard vod={vod} key={i} />;
-                  })}
-                </div>
-              ) : !loadingVideoList ? (
-                <div className='flex flex-1 justify-center items-center flex-col'>
-                  <Image
-                    className='mx-2'
-                    src={searchEmptyIcon}
-                    alt='empty'
-                    width={120}
-                  />
-                  <span>暂无数据</span>
-                </div>
-              ) : null}
-            </div>
-          )}
         </div>
         <div ref={targetRef}>
-          {(stillCanLoad || loadingVideoList) && <Spinner></Spinner>}
+          {(stillCanLoad || loadingVideoList) && (
+            <div
+              className='w-screen flex flex-1 flex-col'
+              style={{ minHeight: '300px' }}
+            >
+              <Spinner></Spinner>
+            </div>
+          )}
         </div>
       </div>
     </>
