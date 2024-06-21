@@ -1,4 +1,5 @@
 import './globals.css';
+import './theme.css';
 import '../asset/style/custom-bs.css';
 import '../asset/style/cms.css';
 
