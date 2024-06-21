@@ -15,7 +15,7 @@ export const AdsBanner = ({
 }) => {
   const { isVip, userInfo } = useYingshiUser();
 
-  const [ads, setAds] = useState([]);
+  const [ads, setAds] = useState(null);
 
   useEffect(() => {
     if (navId && navId != 0) {
@@ -25,13 +25,14 @@ export const AdsBanner = ({
         (ad) => ad.ads_id === 1 || ad.ads_id === 13
       );
 
-      console.log('filteredAdsList');
-      console.log(filteredAdsList);
+
       setAds(filteredAdsList);
     } else {
       console.log('no ads');
     }
   }, []);
+
+
 
   return (
     <>

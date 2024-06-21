@@ -7,7 +7,8 @@ import { VideoVerticalCard } from '../videoItem/videoVerticalCard';
 import { AdsBanner } from '../ads/adsBanner';
 import { Spinner } from '../spinner';
 import { getTopicListApi } from '@/app/actions';
-
+import { YingshiApi2 } from '@/util/YingshiApi';
+import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 const TopicPagingList = ({ data, navId, serverNextPage, isStillCanLoad }) => {
   const [topicList, setTopicList] = useState(data);
   const [nextPage, setNextPage] = useState(serverNextPage);
@@ -23,12 +24,16 @@ const TopicPagingList = ({ data, navId, serverNextPage, isStillCanLoad }) => {
   const initAds = async () => {
     let allAds = await getAllAds();
     sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
+    console.log('init')
+    console.log(allAds.data)
+    setAdsList(allAds.data);
   };
   useEffect(() => {
     let adsList = sessionStorage.getItem('adsList');
     adsList = JSON.parse(adsList);
     if (adsList && adsList !== 'undefined') {
       setAdsList(adsList);
+      
     } else {
       initAds();
     }

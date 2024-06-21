@@ -23,7 +23,7 @@ import { IrrLoading } from '@/asset/lottie';
 import { AdsPlayer } from './adsPlayer.js';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser.js';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
-
+import {  YingshiApi2 } from '@/util/YingshiApi';
 export const PlayVod =
 ({
   vod,
@@ -77,18 +77,16 @@ export const PlayVod =
       const filteredAdsList = adsList.filter(
         (ad) => ad.ads_id === 105 
       );
-      console.log('qtp')
-      console.log(filteredAdsList[0])
+ 
       return filteredAdsList[0];
     }
     else {
       let allAds = await getAllAds();
       sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
-      const filteredAdsList = allAds.filter(
+      const filteredAdsList = allAds.data.filter(
         (ad) => ad.ads_id === 105 
       );
-      console.log('qtp')
-      console.log(filteredAdsList[0])
+   
       return filteredAdsList[0];
     }
   

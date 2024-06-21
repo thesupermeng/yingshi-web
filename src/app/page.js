@@ -7,7 +7,7 @@ import { AdsBanner } from '@/components/ads/adsBanner.js';
 export const RightBetCartWidth = 'w-[32rem]';
 import { Carousel } from '@/components/carousel/carousel';
 import { Suspense, useEffect, useState } from 'react';
-
+import { YingshiApi2 } from '@/util/YingshiApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
@@ -38,6 +38,8 @@ export default function Home(params) {
   const initAds = async () => {
     let allAds = await getAllAds();
     sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
+
+    setAdsList(allAds.data);
   };
   useEffect(() => {
     let adsList = sessionStorage.getItem('adsList');
