@@ -157,7 +157,7 @@ export const VodCard = ({
           <span className="absolute bottom-2 left-0 text-xs bg-black/50 rounded-r py-0.5 pr-0.5">{vodRemark}</span>
         </div>
 
-        <div className="flex flex-col lg:w-2/3">
+        <div className="flex flex-col lg:w-2/3 allow-select">
           <div className="flex flex-row">
             <span className="text-lg pr-5 line-clamp-2">{vodName}</span>
             <div className="lg:hidden flex flex-row space-x-2 py-1" onClick={() => setOpenIntroBottomSheet(true)}>

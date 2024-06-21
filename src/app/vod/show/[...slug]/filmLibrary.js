@@ -10,18 +10,19 @@ import { Spinner } from '@/components/spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
-import Link from 'next/link';
-import {usePathname} from 'next/navigation';
+import {useParams, usePathname, useRouter} from 'next/navigation';
 
 const getIsScroll = (state) => state.isScroll;
 const getIsTop = (state) => state.isTop;
 
-export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, videos }) => {
-  const [loading, setLoading] = useState(false);
-  const [videoList, setVideoList] = useState(videos ? videos.List : null);
-  const [loadingVideoList, setLoadingVideoList] = useState(false);
-  const [stillCanLoad, setStillCanLoad] = useState(videos.Page < videos.TotalPageCount);
-  const [nextPage, setNextPage] = useState(videos.Page + 1);
+export const FilmLibrary = () => {
+  const [loading, setLoading] = useState(true);
+  const [filterTypeList, setFilterTypeList] = useState(null);
+  const [paramsFilter, setParamsFilter] = useState(null);
+  const [videoList, setVideoList] = useState(null);
+  const [loadingVideoList, setLoadingVideoList] = useState(true);
+  const [stillCanLoad, setStillCanLoad] = useState(false);
+  const [nextPage, setNextPage] = useState(0);
   const [collapse, setCollapse] = useState(false);
   const [buttonUncollapse, setButtonUncollapse] = useState(false);
 
@@ -30,6 +31,56 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
 
   const targetRef = useRef(null);
   const path = usePathname();
+  const params = useParams();
+  const router = useRouter();
+
+  const advanceFilterItem = [
+    {
+      text: '新上线',
+      value: 'time',
+    },
+    {
+      text: '热播榜',
+      value: 'hits_day',
+    },
+    {
+      text: '好评榜',
+      value: 'score',
+    },
+  ];
+
+  const getFilterTypeList = async () => {
+    return YingshiApi(URL_YINGSHI_VOD.filteringTypeList, {}, { method: 'GET' });
+  };
+
+  const getFilterParams = (path, filterTypeList) => {
+    const filterParams = {}
+    for (let i = 0; i < path.length; i+=2) {
+      filterParams[path[i]] = decodeURIComponent(path[i+1]);
+    }
+
+    const typeInfo = filterTypeList.find((item) => item.type_id === parseInt(filterParams.id));
+    if (!typeInfo) {
+      router.push('/404');
+    }
+
+    const { class: classList, area: areaList, lang: langList, year: yearList } = typeInfo.type_extend_obj;
+
+    const isValidClass = filterParams.class ? classList.split(',').includes(filterParams.class) : false;
+    const isValidArea = filterParams.area ? areaList.split(',').includes(filterParams.area) : false;
+    const isValidLang = filterParams.lang ? langList.split(',').includes(filterParams.lang) : false;
+    const isValidYear = filterParams.year ? yearList.split(',').includes(filterParams.year) : false;
+
+    return {
+      order: 'desc',
+      typeId: parseInt(filterParams.id),
+      by: filterParams.by ? filterParams.by : advanceFilterItem[0].value,
+      class: isValidClass ? filterParams.class : '全部类型',
+      area: isValidArea ? filterParams.area : '全部地区',
+      lang: isValidLang ? filterParams.lang : '全部语言',
+      year: isValidYear ? filterParams.year : '全部时间',
+    };
+  }
 
   const getSearchingListApi = async (params) => {
     return YingshiApi(
@@ -53,7 +104,11 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
     let currentPage = nextPage;
     const videoListing = await getSearchingListApi(paramsFilter);
 
-    setVideoList((prev) => [...prev, ...videoListing.List]);
+    if (nextPage > 1) {
+      setVideoList((prev) => [...prev, ...videoListing.List]);
+    } else {
+      setVideoList(videoListing.List);
+    }
 
     if (nextPage > videoListing.TotalPageCount - 1) {
       setStillCanLoad(false);
@@ -61,6 +116,8 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
       setStillCanLoad(true);
       setNextPage(currentPage + 1);
     }
+
+    setLoadingVideoList(false);
   };
 
   useEffect(() => {
@@ -79,6 +136,29 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
       }
     }
   }, [isScrolling]);
+
+  useEffect(() => {
+    setLoading(true);
+    // Simulating asynchronous data fetching
+    const fetchData = async () => {
+      const filteringTypeList = await getFilterTypeList();
+      const filterParams = getFilterParams(params.slug, filteringTypeList);
+
+      setFilterTypeList(filteringTypeList);
+      setParamsFilter(filterParams);
+      setNextPage(1);
+      setLoading(false);
+      return true;
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (paramsFilter !== null) {
+      getSearchingList();
+    }
+  }, [paramsFilter]);
 
   const loadMore = () => {
     getSearchingList();
@@ -213,21 +293,56 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
     }
   }
 
+  const filterVideoList = (value, type) => {
+    if (!loadingVideoList) {
+      let params = { ...paramsFilter };
+
+      if (type == 'type') {
+        params.typeId = value;
+        params.by = 'time';
+        params.class = '全部类型';
+        params.area = '全部地区';
+        params.lang = '全部语言';
+        params.year = '全部时间';
+      } else if (type == 'by') {
+        params.by = value;
+      } else if (type == 'class') {
+        params.class = value;
+      } else if (type == 'area') {
+        params.area = value;
+      } else if (type == 'lang') {
+        params.lang = value;
+      } else if (type == 'year') {
+        params.year = value;
+      }
+      setParamsFilter(params);
+      setNextPage(1);
+      setVideoList([]);
+      setStillCanLoad(false);
+      setLoadingVideoList(true);
+    }
+  };
+
   return (
     <>
       <div className='flex flex-1 justify-center flex-col'>
-        <div className="flex w-screen flex-col items-center">
+        {loading ? (
+          <LoadingPage full={false} />
+        ) : (
+          <div className="flex w-screen flex-col items-center">
           <div
             className={`bg-[#1D2023] w-screen h-auto p-1 z-20 top-[51px] md:static`}
           >
             <div className="flex md:flex-wrap gap-x-4 gap-y-2 pl-4 py-2 container">
               {filterTypeList.map((item, index) => {
                 return (
-                  <Link
+                  <div
                     className="flex flex-col items-center cursor-pointer"
                     id={item.type_id}
                     key={index}
-                    href={`/vod/show/by/${advanceFilterItem[0].value}/id/${item.type_id}`}
+                    onClick={() => {
+                      router.push(`/vod/show/by/${advanceFilterItem[0].value}/id/${item.type_id}`)
+                    }}
                   >
                     <span
                       className={`hover:text-yellow-500 transition-colors duration-300 truncate ${
@@ -241,7 +356,7 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                     {paramsFilter.typeId === item.type_id ? (
                       <div className="border-2 border-yellow-500 w-5 h-0.5 rounded-lg"></div>
                     ) : null}
-                  </Link>
+                  </div>
                 );
               })}
             </div>
@@ -257,13 +372,15 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
               <div className="flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar">
                 {advanceFilterItem.map((item, index) => {
                   return (
-                    <Link
+                    <div
                       className={`flex flex-col items-center cursor-pointer ${
                         paramsFilter.by === item.value ? 'bg-[#FAC33D1F]' : ''
                       } p-2 rounded-md`}
                       id={item.value}
                       key={index}
-                      href={generatePath(item.value, 'by')}
+                      onClick={() => {
+                        router.replace(generatePath(item.value, 'by'));
+                      }}
                     >
                       <span
                         className={`text-sm hover:text-yellow-500 transition-colors duration-300 truncate ${
@@ -274,7 +391,7 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                       >
                         {item.text}
                       </span>
-                    </Link>
+                    </div>
                   );
                 })}
               </div>
@@ -286,16 +403,17 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                 <div className="flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar">
                   {listConverter('class').map((item, index) => {
                     return (
-                      <Link
+                      <div
                           className={`flex flex-col items-center cursor-pointer ${
                               paramsFilter.class === item ? 'bg-[#FAC33D1F]' : ''
                           } p-2 rounded-md`}
                           id={item}
                           key={index}
-                          href={item === '全部类型' ?
-                              path.replace(/\/class\/[^/]+/, '') :
-                              generatePath(item, 'class')
-                          }
+                          onClick={() => {
+                            item === '全部类型' ?
+                              router.replace(path.replace(/\/class\/[^/]+/, '')) :
+                              router.replace(generatePath(item, 'class'));
+                          }}
                       >
                         <span
                           className={`text-sm hover:text-yellow-500 transition-colors duration-300 truncate ${
@@ -306,7 +424,7 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                         >
                           {item}
                         </span>
-                      </Link>
+                      </div>
                     );
                   })}
                 </div>
@@ -319,16 +437,17 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                 <div className="flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar">
                   {listConverter('area').map((item, index) => {
                     return (
-                      <Link
+                      <div
                         className={`flex flex-col items-center cursor-pointer ${
                           paramsFilter.area === item ? 'bg-[#FAC33D1F]' : ''
                         } p-2 rounded-md`}
                         id={item}
                         key={index}
-                        href={item === '全部地区' ?
-                          path.replace(/\/area\/[^/]+/, '') :
-                          generatePath(item, 'area')
-                        }
+                        onClick={() => {
+                          item === '全部地区' ?
+                            router.replace(path.replace(/\/area\/[^/]+/, '')) :
+                            router.replace(generatePath(item, 'area'));
+                        }}
                       >
                         <span
                           className={`text-sm hover:text-yellow-500 transition-colors duration-300 truncate ${
@@ -339,7 +458,7 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                         >
                           {item}
                         </span>
-                      </Link>
+                      </div>
                     );
                   })}
                 </div>
@@ -352,16 +471,17 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                 <div className="flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar">
                   {listConverter('lang').map((item, index) => {
                     return (
-                      <Link
+                      <div
                         className={`flex flex-col items-center cursor-pointer ${
                           paramsFilter.lang === item ? 'bg-[#FAC33D1F]' : ''
                         } p-2 rounded-md`}
                         id={item}
                         key={index}
-                        href={item === '全部语言' ?
-                            path.replace(/\/lang\/[^/]+/, '') :
-                            generatePath(item, 'lang')
-                        }
+                        onClick={() => {
+                          item === '全部语言' ?
+                            router.replace(path.replace(/\/lang\/[^/]+/, '')) :
+                            router.replace(generatePath(item, 'lang'));
+                        }}
                       >
                         <span
                           className={`text-sm hover:text-yellow-500 transition-colors duration-300 truncate ${
@@ -372,7 +492,7 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                         >
                           {item}
                         </span>
-                      </Link>
+                      </div>
                     );
                   })}
                 </div>
@@ -385,16 +505,17 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                 <div className="flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar">
                   {listConverter('year').map((item, index) => {
                     return (
-                      <Link
+                      <div
                         className={`flex flex-col items-center cursor-pointer ${
                           paramsFilter.year === item ? 'bg-[#FAC33D1F]' : ''
                         } p-2 rounded-md`}
                         id={item}
                         key={index}
-                        href={item === '全部时间' ?
-                            path.replace(/\/year\/[^/]+/, '') :
-                            generatePath(item, 'year')
-                        }
+                        onClick={() => {
+                          item === '全部时间' ?
+                            router.replace(path.replace(/\/year\/[^/]+/, '')) :
+                            router.replace(generatePath(item, 'year'));
+                        }}
                       >
                         <span
                           className={`text-sm hover:text-yellow-500 transition-colors duration-300 truncate ${
@@ -405,7 +526,7 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                         >
                           {item}
                         </span>
-                      </Link>
+                      </div>
                     );
                   })}
                 </div>
@@ -454,7 +575,7 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                   return <VideoVerticalCard vod={vod} key={i} />;
                 })}
               </div>
-            ) : (
+            ) : !loadingVideoList ? (
               <div className="flex flex-1 justify-center items-center flex-col">
                 <Image
                   className="mx-2"
@@ -464,11 +585,12 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
                 />
                 <span>暂无数据</span>
               </div>
-            )}
+            ) : null}
           </div>
         </div>
+        )}
         <div ref={targetRef}>
-          {(stillCanLoad) && <Spinner></Spinner>}
+          {(stillCanLoad || loadingVideoList) && <Spinner></Spinner>}
         </div>
       </div>
     </>
