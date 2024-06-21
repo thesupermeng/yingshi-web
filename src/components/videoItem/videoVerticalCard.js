@@ -5,6 +5,7 @@ import { ImagePlaceholder } from '@/asset/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import base64PlaceholderString from '@/app/placeholder';
+import Link from 'next/link';
 
 export const VideoVerticalCard = ({ vod }) => {
   const router = useRouter();
@@ -18,23 +19,13 @@ export const VideoVerticalCard = ({ vod }) => {
   return (
     <div className='flex flex-col items-center md-hover-effect'>
       <div className='relative w-full aspect-[530/726] group mx-4 my-2 rounded-lg md-hover-effect'>
-        <div
-          className='absolute inset-0 flex rounded-lg lg:group-hover:improve-text-unblurry
-          lg:transition lg:group-hover:scale-150 lg:group-hover:duration-500
-          lg:group-hover:cursor-pointer group-hover:rounded-lg lg:group-hover:z-10 
-          lg:group-hover:rounded-lg'
-          onClick={(e) => {
-            e.preventDefault();
-            router.push(`/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`);
-          }}
+        <Link
+          href={`/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`}
+          className='absolute inset-0 flex rounded-lg lg:group-hover:improve-text-unblurry lg:transition lg:group-hover:scale-150 lg:group-hover:duration-500 lg:group-hover:cursor-pointer group-hover:rounded-lg lg:group-hover:z-10 lg:group-hover:rounded-lg'
         >
           <Image
             placeholder='blur'
             blurDataURL={'data:image/png;base64,' + base64PlaceholderString}
-            onClick={(e) => {
-              e.preventDefault();
-              router.push(`/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`);
-            }}
             alt='video'
             src={vod.vod_pic}
             style={{ borderRadius: '0.5rem !important', objectFit: 'cover' }}
@@ -81,7 +72,7 @@ export const VideoVerticalCard = ({ vod }) => {
               </div>
             </div>
           </div>
-        </div>
+        </Link>
         {vod.vod_remarks !== undefined ? (
           <div className='flex absolute w-full bottom-1 px-1.5 justify-end'>
             <div className='bg-[#00000099] rounded-md p-1 max-w-full'>
