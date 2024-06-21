@@ -36,14 +36,7 @@ async function getTopicListApi() {
     URL_YINGSHI_VOD.playlistGetTopic + '?limit=18&page=1',
     {},
     {
-      method: 'GET',
-      noToken: true,
-      extraOptions: {
-        next: {
-          cache: 'force-cache',
-          revalidate: 3600
-        }
-      }
+      method: 'GET'
     }
   );
 }

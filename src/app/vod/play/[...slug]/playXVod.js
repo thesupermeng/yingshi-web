@@ -19,8 +19,11 @@ import { FullPageContent } from '@/componentsH5/FullPageContent';
 import { LottieAnimation } from '@/components/lottie';
 import { IrrLoading } from '@/asset/lottie';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser.js';
+import {YingshiApi} from '@/util/YingshiApi';
+import {URL_YINGSHI_VOD} from '@/config/yingshiUrl';
+import {Config} from '@/util/config';
 
-export const PlayXVod = ({ nId, vod, vodUrl, vodDetails, suggestedVods, popularList  }) => {
+export const PlayXVod = ({ vodId, tId, nId  }) => {
   const router = useRouter();
   const { t } = useTranslation();
 
@@ -29,10 +32,13 @@ export const PlayXVod = ({ nId, vod, vodUrl, vodDetails, suggestedVods, popularL
   const playerDivRef = useRef(null);
 
   const [playerDivHeight, setPlayerDivHeight] = useState(0);
-  const [vodSourceSelected, setVodSourceSelected] = useState(vodDetails.sourceSelected);
-  const [episodeSelected, setEpisodeSelected] = useState(vodDetails.selectedEpisode);
-  const [episodeGroups, setEpisodeGroups] = useState(vodDetails.episodeGroups);
-  const [episodeGroupSelected, setEpisodeGroupSelected] = useState(vodDetails.selectedEpisodeGroups);
+  const [vod, setVod] = useState(null);
+  const [vodUrl, setVodUrl] = useState('');
+  const [suggestedVods, setSuggestedVods] = useState([]);
+  const [vodSourceSelected, setVodSourceSelected] = useState(null);
+  const [episodeSelected, setEpisodeSelected] = useState(null);
+  const [episodeGroups, setEpisodeGroups] = useState([]);
+  const [episodeGroupSelected, setEpisodeGroupSelected] = useState({});
 
   const [toggleJianJie, setToggleJianJie] = useState(false);
   const [desc, setDesc] = useState('');
@@ -40,6 +46,53 @@ export const PlayXVod = ({ nId, vod, vodUrl, vodDetails, suggestedVods, popularL
   const [vodShareContent, setVodShareContent] = useState('');
   const [showToastMessage, setShowToastMessage] = useState(false);
   const { isVip, userInfo } = useYingshiUser();
+
+  const getXVod = async () => {
+    if (tId == 0) {
+      return YingshiApi(
+        URL_YINGSHI_VOD.getXVodDetails,
+        {
+          id: vodId,
+          xMode: true,
+        },
+        {
+          method: 'GET',
+        }
+      );
+    } else {
+      return YingshiApi(
+        URL_YINGSHI_VOD.getXVodDetails,
+        {
+          id: vodId,
+          tid: tId,
+          xMode: true,
+        },
+        {
+          method: 'GET',
+        }
+      );
+    }
+  };
+
+  const getSuggestedXVodType = async (vod_class, vod_source_name) => {
+    // const randomInt = Math.floor(Math.random() * 10) + 1;
+    const randomInt = 4;
+    let url =
+      URL_YINGSHI_VOD.getXVodDetails +
+      '?limit=12&page=' +
+      randomInt +
+      '&vod_source_name=' +
+      vod_source_name +
+      '&class=' +
+      vod_class;
+
+    return YingshiApi(
+      url,
+      {},
+      {
+        method: 'GET',
+      });
+  }
 
   useEffect(() => {
     let content = '';
@@ -131,6 +184,80 @@ export const PlayXVod = ({ nId, vod, vodUrl, vodDetails, suggestedVods, popularL
       }
 
       localStorage.setItem('artplayer_settings', JSON.stringify(artPlayerData));
+    }
+  }, [vod]);
+
+  useEffect(() => {
+    if (episodeSelected == null) {
+      getXVod().then((data) => {
+        // console.log('xData');
+        if (
+          data === undefined ||
+          data.length <= 0 ||
+          data.List === undefined ||
+          data.List?.length <= 0
+        )
+          return;
+
+        let res = data.List[0];
+        if (res?.vod_play_list?.url_count > 0) {
+          setVodUrl(res?.vod_play_list?.urls[0].url);
+        }
+        setVod(res);
+
+        if (res.vod_sources?.length > 0) {
+          let source = res.vod_sources[0];
+          setVodSourceSelected(source);
+
+          if (source.vod_play_list.urls.length > Config.vodEpisodeGroupMax) {
+            const tolGroup = Math.ceil(
+              source.vod_play_list.urls.length / Config.vodEpisodeGroupMax
+            );
+            const groups = [];
+
+            for (let i = 0; i < tolGroup; i++) {
+              groups.push({
+                from: i * Config.vodEpisodeGroupMax + 1,
+                to:
+                  tolGroup === i + 1
+                    ? source.vod_play_list.urls.length
+                    : (i + 1) * Config.vodEpisodeGroupMax,
+              });
+            }
+
+            setEpisodeGroups(groups);
+            setEpisodeGroupSelected(groups.length > 0 ? groups[0] : {});
+          } else {
+            const defaultGroup = {
+              from: 1,
+              to: source.vod_play_list.urls.length,
+            };
+
+            setEpisodeGroups([defaultGroup]);
+            setEpisodeGroupSelected(defaultGroup);
+          }
+
+          if (source.vod_play_list.urls.length > 0) {
+            if (nId && nId > 0 && nId < 9999) {
+              setEpisodeSelected(source.vod_play_list.urls[nId - 1]);
+            } else {
+              setEpisodeSelected(source.vod_play_list.urls[0]);
+            }
+          }
+        }
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (vod) {
+      getSuggestedXVodType(vod.vod_class, vod.vod_source_name).then((data) => {
+        // console.log('dasdaaa');
+        // console.log(data);
+        if (data) {
+          setSuggestedVods(data.List);
+        }
+      });
     }
   }, [vod]);
 
@@ -602,7 +729,7 @@ export const PlayXVod = ({ nId, vod, vodUrl, vodDetails, suggestedVods, popularL
             </div>
 
             <div className={styles.vodMetaContainer}>
-              <VodPopularList topic={popularList} />
+              <VodPopularList />
             </div>
 
             {/* <AdsBanner height='500px' /> */}

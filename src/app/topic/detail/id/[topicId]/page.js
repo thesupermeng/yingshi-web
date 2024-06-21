@@ -1,7 +1,8 @@
 import TopicDetails from '@/app/topic/detail/id/[topicId]/topicDetails';
 
-export default async function Page({ params }) {
+export default function Page() {
+
   return (
-    <TopicDetails topicId={params.topicId} />
+    <TopicDetails />
   );
 }

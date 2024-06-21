@@ -1,29 +1,38 @@
+'use client';
 import styles from './../../../style.module.css';
 import TopicHeader from '@/components/topicHeader';
 import VodItemDesktop from '@/components/vodItemDesktop'
 import VodItemMobile from '@/components/vodItemMobile'
 import { YingshiApi } from '@/util/YingshiApi';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
+import {useEffect, useState} from 'react';
+import {useParams} from 'next/navigation';
 
-async function getTopicDetailsApi(topicId) {
-  return YingshiApi(
-    URL_YINGSHI_VOD.playlistGetTopicDetail + '?id=' + topicId,
-    {},
-    {
-      method: 'GET',
-      noToken: true,
-      extraOptions: {
-        next: {
-          cache: 'force-cache',
-          revalidate: 3600
-        }
-      }
-    }
-  );
-}
+export default function TopicDetails() {
+  const { topicId } = useParams();
+  const [topicObj, setTopicObj] = useState(null);
 
-export default async function TopicDetails({ topicId}) {
-  const topicObj = await getTopicDetailsApi(topicId);
+  const getTopicDetailsApi = async () => {
+    return YingshiApi(
+      URL_YINGSHI_VOD.playlistGetTopicDetail + '?id=' + topicId,
+      {},
+      { method: 'GET' }
+    );
+  };
+
+  const getTopicDetails = async () => {
+    console.log('topicId');
+    console.log(topicId);
+
+    let res = await getTopicDetailsApi();
+    setTopicObj(res);
+    console.log('res');
+    console.log(res);
+  };
+
+  useEffect(() => {
+    getTopicDetails();
+  }, []);
 
   return (
     <>
@@ -50,13 +59,13 @@ export default async function TopicDetails({ topicId}) {
 
             <div className='d-flex container pt-3' style={{ width: '100%' }}>
               <div className='topic-header-text-sub'>
-                (共{topicObj.vod_list.length}部)
+                (共{topicObj?.vod_list?.length || 0}部)
               </div>
             </div>
 
             <div className='d-flex container pt-3' style={{ width: '100%' }}>
               <div className='row'>
-                {topicObj.vod_list.map((vod, index) => (
+                {topicObj?.vod_list?.map((vod, index) => (
                   <VodItemDesktop vod={vod} key={index} />
                 ))}
               </div>
@@ -73,11 +82,11 @@ export default async function TopicDetails({ topicId}) {
               </div>
 
               <div className='topic-header-text-sub mt-3'>
-                (共{topicObj.vod_list.length}部)
+                (共{topicObj?.vod_list?.length || 0}部)
               </div>
               {/* mobile vod list  */}
               <div className='row mt-2'>
-                {topicObj.vod_list.map((vod, index) => (
+                {topicObj?.vod_list?.map((vod, index) => (
                   <VodItemMobile vod={vod} key={index} />
                 ))}
               </div>

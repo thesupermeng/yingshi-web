@@ -5,23 +5,24 @@ import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { YingshiApi } from '@/util/YingshiApi';
 import Image from 'next/image';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { Spinner } from '@/components/spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
-import Link from 'next/link';
-import {usePathname} from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 
 const getIsScroll = (state) => state.isScroll;
 const getIsTop = (state) => state.isTop;
 
-export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, videos }) => {
-  const [loading, setLoading] = useState(false);
-  const [videoList, setVideoList] = useState(videos ? videos.List : null);
-  const [loadingVideoList, setLoadingVideoList] = useState(false);
-  const [stillCanLoad, setStillCanLoad] = useState(videos.Page < videos.TotalPageCount);
-  const [nextPage, setNextPage] = useState(videos.Page + 1);
+export const FilmLibrary = () => {
+  const [loading, setLoading] = useState(true);
+  const [filterTypeList, setFilterTypeList] = useState(null);
+  const [paramsFilter, setParamsFilter] = useState(null);
+  const [videoList, setVideoList] = useState(null);
+  const [loadingVideoList, setLoadingVideoList] = useState(true);
+  const [stillCanLoad, setStillCanLoad] = useState(false);
+  const [nextPage, setNextPage] = useState(0);
   const [collapse, setCollapse] = useState(false);
   const [buttonUncollapse, setButtonUncollapse] = useState(false);
 
@@ -30,6 +31,71 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
 
   const targetRef = useRef(null);
   const path = usePathname();
+  const params = useParams();
+  const router = useRouter();
+
+  const advanceFilterItem = [
+    {
+      text: '新上线',
+      value: 'time',
+    },
+    {
+      text: '热播榜',
+      value: 'hits_day',
+    },
+    {
+      text: '好评榜',
+      value: 'score',
+    },
+  ];
+
+  const getFilterTypeList = async () => {
+    return YingshiApi(URL_YINGSHI_VOD.filteringTypeList, {}, { method: 'GET' });
+  };
+
+  const getFilterParams = (path, filterTypeList) => {
+    const filterParams = {};
+    for (let i = 0; i < path.length; i += 2) {
+      filterParams[path[i]] = decodeURIComponent(path[i + 1]);
+    }
+
+    const typeInfo = filterTypeList.find(
+      (item) => item.type_id === parseInt(filterParams.id)
+    );
+    if (!typeInfo) {
+      router.push('/404');
+    }
+
+    const {
+      class: classList,
+      area: areaList,
+      lang: langList,
+      year: yearList,
+    } = typeInfo.type_extend_obj;
+
+    const isValidClass = filterParams.class
+      ? classList.split(',').includes(filterParams.class)
+      : false;
+    const isValidArea = filterParams.area
+      ? areaList.split(',').includes(filterParams.area)
+      : false;
+    const isValidLang = filterParams.lang
+      ? langList.split(',').includes(filterParams.lang)
+      : false;
+    const isValidYear = filterParams.year
+      ? yearList.split(',').includes(filterParams.year)
+      : false;
+
+    return {
+      order: 'desc',
+      typeId: parseInt(filterParams.id),
+      by: filterParams.by ? filterParams.by : advanceFilterItem[0].value,
+      class: isValidClass ? filterParams.class : '全部类型',
+      area: isValidArea ? filterParams.area : '全部地区',
+      lang: isValidLang ? filterParams.lang : '全部语言',
+      year: isValidYear ? filterParams.year : '全部时间',
+    };
+  };
 
   const getSearchingListApi = async (params) => {
     return YingshiApi(
@@ -53,7 +119,11 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
     let currentPage = nextPage;
     const videoListing = await getSearchingListApi(paramsFilter);
 
-    setVideoList((prev) => [...prev, ...videoListing.List]);
+    if (nextPage > 1) {
+      setVideoList((prev) => [...prev, ...videoListing.List]);
+    } else {
+      setVideoList(videoListing.List);
+    }
 
     if (nextPage > videoListing.TotalPageCount - 1) {
       setStillCanLoad(false);
@@ -61,6 +131,8 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
       setStillCanLoad(true);
       setNextPage(currentPage + 1);
     }
+
+    setLoadingVideoList(false);
   };
 
   useEffect(() => {
@@ -79,6 +151,41 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
       }
     }
   }, [isScrolling]);
+
+  useLayoutEffect(() => {
+    setLoading(true);
+
+    // Simulating asynchronous data fetching
+    const fetchData = async () => {
+      let filteringTypeList;
+      let filterParams;
+      let flagList = sessionStorage.getItem('filteringTypeList');
+      if (flagList && flagList !== 'undefined') {
+        filteringTypeList = JSON.parse(flagList);
+      } else {
+        filteringTypeList = await getFilterTypeList();
+        sessionStorage.setItem(
+          'filteringTypeList',
+          JSON.stringify(filteringTypeList)
+        );
+      }
+
+      filterParams = getFilterParams(params.slug, filteringTypeList);
+      setFilterTypeList(filteringTypeList);
+      setParamsFilter(filterParams);
+      setNextPage(1);
+      setLoading(false);
+      return true;
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (paramsFilter !== null) {
+      getSearchingList();
+    }
+  }, [paramsFilter]);
 
   const loadMore = () => {
     getSearchingList();
@@ -116,36 +223,24 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
   const listConverter = (type) => {
     let list = [];
     if (type == 'class') {
-      list =
-        filterTypeList[
-          filterTypeList.findIndex(
-            (item) => item.type_id === paramsFilter.typeId
-          )
-        ].type_extend_obj.class.split(',');
+      list = filterTypeList[
+        filterTypeList.findIndex((item) => item.type_id === paramsFilter.typeId)
+      ].type_extend_obj.class.split(',');
       list.unshift('全部类型');
     } else if (type == 'area') {
-      list =
-        filterTypeList[
-          filterTypeList.findIndex(
-            (item) => item.type_id === paramsFilter.typeId
-          )
-        ].type_extend_obj.area.split(',');
+      list = filterTypeList[
+        filterTypeList.findIndex((item) => item.type_id === paramsFilter.typeId)
+      ].type_extend_obj.area.split(',');
       list.unshift('全部地区');
     } else if (type == 'lang') {
-      list =
-        filterTypeList[
-          filterTypeList.findIndex(
-            (item) => item.type_id === paramsFilter.typeId
-          )
-        ].type_extend_obj.lang.split(',');
+      list = filterTypeList[
+        filterTypeList.findIndex((item) => item.type_id === paramsFilter.typeId)
+      ].type_extend_obj.lang.split(',');
       list.unshift('全部语言');
     } else if (type == 'year') {
-      list =
-        filterTypeList[
-          filterTypeList.findIndex(
-            (item) => item.type_id === paramsFilter.typeId
-          )
-        ].type_extend_obj.year.split(',');
+      list = filterTypeList[
+        filterTypeList.findIndex((item) => item.type_id === paramsFilter.typeId)
+      ].type_extend_obj.year.split(',');
       list.unshift('全部时间');
     }
 
@@ -204,271 +299,316 @@ export const FilmLibrary = ({ advanceFilterItem, filterTypeList, paramsFilter, v
         case 'area':
           return path.replace(/\/by\//, `/area/${value}/by/`);
         case 'lang':
-          return path.replace(/\/id\/[^/]+/, match => `${match}/${type}/${value}`);
+          return path.replace(
+            /\/id\/[^/]+/,
+            (match) => `${match}/${type}/${value}`
+          );
         case 'year':
           return `${path}/year/${value}`;
         default:
           return path;
       }
     }
-  }
+  };
 
   return (
     <>
       <div className='flex flex-1 justify-center flex-col'>
-        <div className="flex w-screen flex-col items-center">
-          <div
-            className={`bg-[#1D2023] w-screen h-auto p-1 z-20 top-[51px] md:static`}
-          >
-            <div className="flex md:flex-wrap gap-x-4 gap-y-2 pl-4 py-2 container">
-              {filterTypeList.map((item, index) => {
-                return (
-                  <Link
-                    className="flex flex-col items-center cursor-pointer"
-                    id={item.type_id}
-                    key={index}
-                    href={`/vod/show/by/${advanceFilterItem[0].value}/id/${item.type_id}`}
-                  >
-                    <span
-                      className={`hover:text-blue-500 transition-colors duration-300 truncate ${
-                        paramsFilter.typeId === item.type_id
-                          ? 'text-blue-500'
-                          : 'text-white'
-                      }`}
-                    >
-                      {item.type_name}
-                    </span>
-                    {paramsFilter.typeId === item.type_id ? (
-                      <div className="border-2 border-blue-500 w-5 h-0.5 rounded-lg"></div>
-                    ) : null}
-                  </Link>
-                );
-              })}
-            </div>
-            <div
-              className={`transition-all duration-500 md:h-fit md:visible md:py-2
+        <div className='flex w-screen flex-col items-center'>
+          <div className={` w-screen h-auto p-1 z-20 top-[51px] md:static`}>
+            {filterTypeList && (
+              <div className={`bg-[#1D2023] pt-2`}>
+                <div className='flex md:flex-wrap gap-x-4 gap-y-2 pl-4 py-2 container'>
+                  {filterTypeList.map((item, index) => {
+                    return (
+                      <div
+                        className='flex flex-col items-center cursor-pointer'
+                        id={item.type_id}
+                        key={index}
+                        onClick={() => {
+                          router.push(
+                            `/vod/show/by/${advanceFilterItem[0].value}/id/${item.type_id}`
+                          );
+                        }}
+                      >
+                        <span
+                          className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                            paramsFilter.typeId === item.type_id
+                              ? 'text-blue-500'
+                              : 'text-white'
+                          }`}
+                        >
+                          {item.type_name}
+                        </span>
+                        {paramsFilter.typeId === item.type_id ? (
+                          <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
+                        ) : null}
+                      </div>
+                    );
+                  })}
+                </div>
+                <div
+                  className={`transition-all duration-500 md:h-fit md:visible md:py-2
               ease-out ${
                 collapse
                   ? 'opacity-0 h-0 collapse'
                   : `h-[${heightFilter()}px] py-2 `
               }
               flex flex-col divide-y divide-gray-800 container md:flex md:opacity-100`}
-            >
-              <div className="flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar">
-                {advanceFilterItem.map((item, index) => {
-                  return (
-                    <Link
-                      className={`flex flex-col items-center cursor-pointer ${
-                        paramsFilter.by === item.value ? 'bg-[#0085E01f]' : ''
-                      } p-2 rounded-md`}
-                      id={item.value}
-                      key={index}
-                      href={generatePath(item.value, 'by')}
-                    >
-                      <span
-                        className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
-                          paramsFilter.by === item.value
-                            ? 'text-blue-500'
-                            : 'text-white'
-                        }`}
-                      >
-                        {item.text}
-                      </span>
-                    </Link>
-                  );
-                })}
-              </div>
-              {filterTypeList[
-                filterTypeList.findIndex(
-                  (item) => item.type_id === paramsFilter.typeId
-                )
-              ].type_extend_obj.class != '' && (
-                <div className="flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar">
-                  {listConverter('class').map((item, index) => {
-                    return (
-                      <Link
+                >
+                  <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar'>
+                    {advanceFilterItem.map((item, index) => {
+                      return (
+                        <div
                           className={`flex flex-col items-center cursor-pointer ${
-                              paramsFilter.class === item ? 'bg-[#0085E01f]' : ''
+                            paramsFilter.by === item.value
+                              ? 'bg-[#FAC33D1F]'
+                              : ''
                           } p-2 rounded-md`}
-                          id={item}
+                          id={item.value}
                           key={index}
-                          href={item === '全部类型' ?
-                              path.replace(/\/class\/[^/]+/, '') :
-                              generatePath(item, 'class')
-                          }
-                      >
-                        <span
-                          className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
-                            paramsFilter.class === item
-                              ? 'text-blue-500'
-                              : 'text-white'
-                          }`}
+                          onClick={() => {
+                            router.replace(generatePath(item.value, 'by'));
+                          }}
                         >
-                          {item}
-                        </span>
-                      </Link>
-                    );
-                  })}
+                          <span
+                            className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                              paramsFilter.by === item.value
+                                ? 'text-blue-500'
+                                : 'text-white'
+                            }`}
+                          >
+                            {item.text}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  {filterTypeList[
+                    filterTypeList.findIndex(
+                      (item) => item.type_id === paramsFilter.typeId
+                    )
+                  ].type_extend_obj.class != '' && (
+                    <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar'>
+                      {listConverter('class').map((item, index) => {
+                        return (
+                          <div
+                            className={`flex flex-col items-center cursor-pointer ${
+                              paramsFilter.class === item
+                                ? 'bg-[#FAC33D1F]'
+                                : ''
+                            } p-2 rounded-md`}
+                            id={item}
+                            key={index}
+                            onClick={() => {
+                              item === '全部类型'
+                                ? router.replace(
+                                    path.replace(/\/class\/[^/]+/, '')
+                                  )
+                                : router.replace(generatePath(item, 'class'));
+                            }}
+                          >
+                            <span
+                              className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                                paramsFilter.class === item
+                                  ? 'text-blue-500'
+                                  : 'text-white'
+                              }`}
+                            >
+                              {item}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                  {filterTypeList[
+                    filterTypeList.findIndex(
+                      (item) => item.type_id === paramsFilter.typeId
+                    )
+                  ].type_extend_obj.area != '' && (
+                    <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar'>
+                      {listConverter('area').map((item, index) => {
+                        return (
+                          <div
+                            className={`flex flex-col items-center cursor-pointer ${
+                              paramsFilter.area === item ? 'bg-[#FAC33D1F]' : ''
+                            } p-2 rounded-md`}
+                            id={item}
+                            key={index}
+                            onClick={() => {
+                              item === '全部地区'
+                                ? router.replace(
+                                    path.replace(/\/area\/[^/]+/, '')
+                                  )
+                                : router.replace(generatePath(item, 'area'));
+                            }}
+                          >
+                            <span
+                              className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                                paramsFilter.area === item
+                                  ? 'text-blue-500'
+                                  : 'text-white'
+                              }`}
+                            >
+                              {item}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                  {filterTypeList[
+                    filterTypeList.findIndex(
+                      (item) => item.type_id === paramsFilter.typeId
+                    )
+                  ].type_extend_obj.lang != '' && (
+                    <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar'>
+                      {listConverter('lang').map((item, index) => {
+                        return (
+                          <div
+                            className={`flex flex-col items-center cursor-pointer ${
+                              paramsFilter.lang === item ? 'bg-[#FAC33D1F]' : ''
+                            } p-2 rounded-md`}
+                            id={item}
+                            key={index}
+                            onClick={() => {
+                              item === '全部语言'
+                                ? router.replace(
+                                    path.replace(/\/lang\/[^/]+/, '')
+                                  )
+                                : router.replace(generatePath(item, 'lang'));
+                            }}
+                          >
+                            <span
+                              className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                                paramsFilter.lang === item
+                                  ? 'text-blue-500'
+                                  : 'text-white'
+                              }`}
+                            >
+                              {item}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                  {filterTypeList[
+                    filterTypeList.findIndex(
+                      (item) => item.type_id === paramsFilter.typeId
+                    )
+                  ].type_extend_obj.year != '' && (
+                    <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar'>
+                      {listConverter('year').map((item, index) => {
+                        return (
+                          <div
+                            className={`flex flex-col items-center cursor-pointer ${
+                              paramsFilter.year === item ? 'bg-[#FAC33D1F]' : ''
+                            } p-2 rounded-md`}
+                            id={item}
+                            key={index}
+                            onClick={() => {
+                              item === '全部时间'
+                                ? router.replace(
+                                    path.replace(/\/year\/[^/]+/, '')
+                                  )
+                                : router.replace(generatePath(item, 'year'));
+                            }}
+                          >
+                            <span
+                              className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                                paramsFilter.year === item
+                                  ? 'text-blue-500'
+                                  : 'text-white'
+                              }`}
+                            >
+                              {item}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
-              )}
-              {filterTypeList[
-                filterTypeList.findIndex(
-                  (item) => item.type_id === paramsFilter.typeId
-                )
-              ].type_extend_obj.area != '' && (
-                <div className="flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar">
-                  {listConverter('area').map((item, index) => {
-                    return (
-                      <Link
-                        className={`flex flex-col items-center cursor-pointer ${
-                          paramsFilter.area === item ? 'bg-[#0085E01f]' : ''
-                        } p-2 rounded-md`}
-                        id={item}
-                        key={index}
-                        href={item === '全部地区' ?
-                          path.replace(/\/area\/[^/]+/, '') :
-                          generatePath(item, 'area')
-                        }
-                      >
-                        <span
-                          className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
-                            paramsFilter.area === item
-                              ? 'text-blue-500'
-                              : 'text-white'
-                          }`}
-                        >
-                          {item}
-                        </span>
-                      </Link>
-                    );
-                  })}
-                </div>
-              )}
-              {filterTypeList[
-                filterTypeList.findIndex(
-                  (item) => item.type_id === paramsFilter.typeId
-                )
-              ].type_extend_obj.lang != '' && (
-                <div className="flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar">
-                  {listConverter('lang').map((item, index) => {
-                    return (
-                      <Link
-                        className={`flex flex-col items-center cursor-pointer ${
-                          paramsFilter.lang === item ? 'bg-[#0085E01f]' : ''
-                        } p-2 rounded-md`}
-                        id={item}
-                        key={index}
-                        href={item === '全部语言' ?
-                            path.replace(/\/lang\/[^/]+/, '') :
-                            generatePath(item, 'lang')
-                        }
-                      >
-                        <span
-                          className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
-                            paramsFilter.lang === item
-                              ? 'text-blue-500'
-                              : 'text-white'
-                          }`}
-                        >
-                          {item}
-                        </span>
-                      </Link>
-                    );
-                  })}
-                </div>
-              )}
-              {filterTypeList[
-                filterTypeList.findIndex(
-                  (item) => item.type_id === paramsFilter.typeId
-                )
-              ].type_extend_obj.year != '' && (
-                <div className="flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar">
-                  {listConverter('year').map((item, index) => {
-                    return (
-                      <Link
-                        className={`flex flex-col items-center cursor-pointer ${
-                          paramsFilter.year === item ? 'bg-[#0085E01f]' : ''
-                        } p-2 rounded-md`}
-                        id={item}
-                        key={index}
-                        href={item === '全部时间' ?
-                            path.replace(/\/year\/[^/]+/, '') :
-                            generatePath(item, 'year')
-                        }
-                      >
-                        <span
-                          className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
-                            paramsFilter.year === item
-                              ? 'text-blue-500'
-                              : 'text-white'
-                          }`}
-                        >
-                          {item}
-                        </span>
-                      </Link>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-            <div
-              className={`transition-all duration-500 md:h-fit
+                <div
+                  className={`transition-all duration-500 md:h-fit
               ease-out ${!collapse ? 'opacity-0 h-0 z-10' : 'h-[36px] py-2'}
               flex justify-between items-center px-4 container text-sm md:hidden`}
-            >
-              <div>
-                {
-                  advanceFilterItem.find(
-                    (item) => item.value === paramsFilter.by
-                  ).text
-                }
+                >
+                  <div>
+                    {
+                      advanceFilterItem.find(
+                        (item) => item.value === paramsFilter.by
+                      ).text
+                    }
+                  </div>
+                  <div className='rounded-full w-1 h-1 bg-blue-500'></div>
+                  <div>{paramsFilter.class}</div>
+                  <div className='rounded-full w-1 h-1 bg-blue-500'></div>
+                  <div>{paramsFilter.area}</div>
+                  <div className='rounded-full w-1 h-1 bg-blue-500'></div>
+                  <div>{paramsFilter.lang}</div>
+                  <div className='rounded-full w-1 h-1 bg-blue-500'></div>
+                  <div>{paramsFilter.year}</div>
+                  <div
+                    className='cursor-pointer'
+                    onClick={() => {
+                      setCollapse(false);
+                      setTimeout(() => {
+                        setButtonUncollapse(true);
+                      }, 300);
+                    }}
+                  >
+                    <FontAwesomeIcon
+                      className='text-blue-500 '
+                      icon={faAngleDown}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="rounded-full w-1 h-1 bg-blue-500"></div>
-              <div>{paramsFilter.class}</div>
-              <div className="rounded-full w-1 h-1 bg-blue-500"></div>
-              <div>{paramsFilter.area}</div>
-              <div className="rounded-full w-1 h-1 bg-blue-500"></div>
-              <div>{paramsFilter.lang}</div>
-              <div className="rounded-full w-1 h-1 bg-blue-500"></div>
-              <div>{paramsFilter.year}</div>
-              <div
-                className="cursor-pointer"
-                onClick={() => {
-                  setCollapse(false);
-                  setTimeout(() => {
-                    setButtonUncollapse(true);
-                  }, 300);
-                }}
-              >
-                <FontAwesomeIcon
-                  className="text-blue-500 "
-                  icon={faAngleDown}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="w-screen flex flex-1 flex-col">
-            {videoList !== null ? (
-              <div className='container grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-4'>
-                {videoList.map((vod, i) => {
-                  return <VideoVerticalCard vod={vod} key={i} />;
-                })}
-              </div>
+            )}
+
+            {/* bottom section  111 */}
+            {loading ? (
+              <LoadingPage full={false} />
             ) : (
-              <div className="flex flex-1 justify-center items-center flex-col">
-                <Image
-                  className="mx-2"
-                  src={searchEmptyIcon}
-                  alt="empty"
-                  width={120}
-                />
-                <span>暂无数据</span>
+              <div className='w-screen flex flex-1 flex-col'>
+                {videoList !== null ? (
+                  <div className='container grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-4'>
+                    {videoList.map((vod, i) => {
+                      return <VideoVerticalCard vod={vod} key={i} />;
+                    })}
+                  </div>
+                ) : !loadingVideoList ? (
+                  <div
+                    className='w-screen flex flex-1 flex-col'
+                    style={{ minHeight: '300px' }}
+                  >
+                    <div className='flex flex-1 justify-center items-center flex-col'>
+                      <Image
+                        className='mx-2'
+                        src={searchEmptyIcon}
+                        alt='empty'
+                        width={120}
+                      />
+                      <span>暂无数据</span>
+                    </div>
+                  </div>
+                ) : null}
               </div>
             )}
           </div>
         </div>
         <div ref={targetRef}>
-          {(stillCanLoad) && <Spinner></Spinner>}
+          {(stillCanLoad || loadingVideoList) && (
+            <div
+              className='w-screen flex flex-1 flex-col'
+              style={{ minHeight: '300px' }}
+            >
+              <Spinner></Spinner>
+            </div>
+          )}
         </div>
       </div>
     </>
