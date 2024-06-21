@@ -32,3 +32,8 @@ a:hover {
   color: inherit !important;
   text-decoration: none !important;
 }
+
+.allow-select,
+.allow-select * {
+  user-select: text !important;
+}
