@@ -2,6 +2,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import Image from 'next/image';
 import { useTranslation } from 'next-i18next';
+import Link from 'next/link';
 import {
   HistoryIcon,
   Logo,
@@ -260,6 +261,19 @@ const Header = () => {
     );
   };
 
+  const getHref = (id) => {
+    if (id == 998) {
+      return '/topic/index/page';
+    } else if (id == 999) {
+      return '/vod/show/by/time/id/1';
+    } else if (id === 0) {
+      return `/`;
+    } else {
+      return `/index/type/id/${id}`;
+    }
+  };
+
+
   const handleClick = (value) => {
     if (value == 998) {
       router.push('/topic/index/page');
@@ -271,7 +285,7 @@ const Header = () => {
       router.push(`/`);
       setSearchInput('');
     } else {
-      router.push(`/category/${value}`);
+      router.push(`/index/type/id/${value}`);
       setSearchInput('');
     }
   };
@@ -346,7 +360,7 @@ const Header = () => {
     } else if (pathname.startsWith('/vod/play/')) {
       setSelectedId(-1);
     } else {
-      const match = pathname.match(/\/category\/(\w+)/);
+      const match = pathname.match(/\/index\/type\/id\/(\d+)/);
       if (match) {
         setSelectedId(parseInt(match[1]));
       } else {
@@ -995,7 +1009,7 @@ const Header = () => {
                       selectedId === navItem.id ? 'text-yellow-500' : 'text-white'
                     }`}
                   >
-                    {navItem.name}
+                 {navItem.name}
                   </span>
                 </div>
               );
@@ -1008,12 +1022,13 @@ const Header = () => {
           >
             {visibleItems?.map((navItem, index) => {
               return (
-                <div
+                <Link
+                href={getHref(navItem.id)}
                   className='flex flex-1 flex-col items-center cursor-pointer header-tab'
                   id={navItem.id}
                   key={index}
                   onClick={() => {
-                    handleClick(navItem.id);
+                  //  handleClick(navItem.id);
                   }}
                 >
                   <span
@@ -1021,12 +1036,12 @@ const Header = () => {
                       selectedId === navItem.id ? 'text-yellow-500' : 'text-white'
                     }`}
                   >
-                    {navItem.name}
+                     {navItem.name}
                   </span>
                   {selectedId === navItem.id ? (
                     <div className='border-2 border-yellow-500 w-5 h-0.5 rounded-lg'></div>
                   ) : null}
-                </div>
+                </Link>
               );
             })}
             {hiddenItems.length > 0 && (
