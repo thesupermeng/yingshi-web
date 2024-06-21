@@ -140,7 +140,9 @@ export const YingshiApi = async (url, body = {}, options = {}) => {
 
   let getParams = '';
   let resData;
-  url = 'https://api.yingshi.tv/' + url
+  
+  // url = 'https://api.yingshi.tv/' + url
+  url = 'http://192.168.0.94:3000/' + url
 
   if (method !== 'GET') {
     url = url + await getQuery(url);
@@ -215,7 +217,9 @@ export const YingshiApi2 = async (url, body = {}, options = {}) => {
 
   let getParams = '';
   let resData;
-  url = 'https://api.yingshi.tv/' + url
+
+  // url = 'https://api.yingshi.tv/' + url
+  url = 'http://192.168.0.94:3000/' + url
 
 
 
