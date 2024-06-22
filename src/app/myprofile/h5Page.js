@@ -9,7 +9,7 @@ import {
   LogoutGrey,
   PinIconGrey,
 } from '@/asset/icons';
-import { handleCompletePaymentAha } from '@/util/universalEvent';
+
 import { getNewAhaToken, logout } from '@/services/yingshiUser';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -195,8 +195,12 @@ export default function H5Page({ params }) {
   };
 
   useEffect(() => {
- 
-   
+    // dispatch(setIsSessionExpired(true))
+
+    window.addEventListener('message', iframeMessageListener);
+    return () => {
+      window.removeEventListener('message', iframeMessageListener);
+    };
   }, []);
 
   useEffect(() => {
@@ -271,13 +275,7 @@ export default function H5Page({ params }) {
               onSignin={() => setOpenSignInUp(true)}
             />
           </div>
-          <VipCard onClick={()=>{
- handleCompletePaymentAha({
-  currency: 'USD',
-  value: 13,
-});
-
-          }} />
+          <VipCard onClick={handleOnClickVip} />
         </div>
       </div>
 
@@ -291,7 +289,6 @@ export default function H5Page({ params }) {
             allow='clipboard-read; clipboard-write'
           />
 
-          {/* <h1> { ahaToken } </h1> */}
         </div>
       )}
 
