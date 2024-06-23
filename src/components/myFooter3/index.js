@@ -116,7 +116,7 @@ const TabItem = ({ onClick, active, icon, iconActive, title }) => {
     >
       <div className='d-flex'>
         <img
-          alt='鲨鱼影视'
+          alt='影视TV'
           src={active ? iconActive : icon}
           width={22}
           style={{ cursor: 'pointer' }}

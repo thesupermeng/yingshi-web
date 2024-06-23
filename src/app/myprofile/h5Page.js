@@ -337,7 +337,7 @@ export default function H5Page({ params }) {
               'text-center text-white text-[17px] font-medium mb-[12px]'
             }
           >
-            鲨鱼影视
+            影视TV
           </p>
           <p className={'text-[14px] text-white'}>
             如果本站提供内容侵犯了您的版权，请来函说明，本网站将立即删除，保护版权所有者的权益。

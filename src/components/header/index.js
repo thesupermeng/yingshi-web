@@ -857,7 +857,7 @@ const Header = () => {
                 <img src={AppImage} alt='AppImage' width={200} />
               </div>
               <div className='flex-1 flex flex-col justify-center items-center pr-2 gap-y-2'>
-                <img alt='鲨鱼影视' src={Logo} width={120} />
+                <img alt='影视TV' src={Logo} width={120} />
                 <span className='text-sm'>您每一天的影视平台</span>
                 <div className='flex flex-row gap-x-5 pt-2'>
                   <div className='flex flex-col items-center gap-2'>
@@ -944,7 +944,7 @@ const Header = () => {
               }`}
             >
               <img
-                alt='鲨鱼影视'
+                alt='影视TV'
                 src={Logo}
                 style={{ cursor: 'pointer' }}
                 onClick={() => {
@@ -973,7 +973,7 @@ const Header = () => {
                 >
                   <span
                     className={`truncate ${
-                      selectedId === navItem.id ? 'text-blue-500' : 'text-white'
+                      selectedId === navItem.id ? 'text-yellow-500' : 'text-white'
                     }`}
                   >
                     {navItem.name}
@@ -999,14 +999,14 @@ const Header = () => {
                   }}
                 >
                   <span
-                    className={`text-blue-hover transition-colors duration-300 truncate ${
-                      selectedId === navItem.id ? 'text-blue-500' : 'text-white'
+                    className={`text-yellow-hover transition-colors duration-300 truncate ${
+                      selectedId === navItem.id ? 'text-yellow-500' : 'text-white'
                     }`}
                   >
                     {navItem.name}
                   </span>
                   {selectedId === navItem.id ? (
-                    <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
+                    <div className='border-2 border-yellow-500 w-5 h-0.5 rounded-lg'></div>
                   ) : null}
                 </Link>
               );
@@ -1016,7 +1016,7 @@ const Header = () => {
                 <div className='relative' ref={dropdownMoreRef}>
                   <button
                     onClick={handleOpenMore}
-                    className='flex flex-row items-center text-blue-hover'
+                    className='flex flex-row items-center text-yellow-hover'
                   >
                     <span>更多</span>
                     <img
@@ -1054,9 +1054,9 @@ const Header = () => {
                               }}
                             >
                               <span
-                                className={`text-blue-hover transition-colors duration-300 truncate ${
+                                className={`text-yellow-hover transition-colors duration-300 truncate ${
                                   selectedId === navItem.id
-                                    ? 'text-blue-500'
+                                    ? 'text-yellow-500'
                                     : 'text-white'
                                 }`}
                               >
@@ -1285,7 +1285,7 @@ const Header = () => {
                 {/*{pathname.startsWith('/privacy') &&*/}
                 {/*  <span className={'text-white'}>隐私协议</span>*/}
                 {/*}*/}
-                <img src={Logo} alt={'鲨鱼影视'} />
+                <img src={Logo} alt={'影视TV'} />
               </div>
             </div>
           </div>
