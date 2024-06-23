@@ -158,7 +158,7 @@ export default function Home(params) {
             <div className='flex flex-col w-full'>
               <Carousel carouselItems={carousel} />
               <div className='container w-[100%]'>
-                <AdsBanner adsList={adsList} navId={'1-13'} height='500px' />
+                <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
               </div>
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
@@ -193,7 +193,7 @@ export default function Home(params) {
                         <div key={idx}>
                           {idx % 2 ? (
                             <AdsBanner
-                              adsList={adsList}
+                            pathName={pathName}
                               navId={'1-13'}
                               height='500px'
                             />

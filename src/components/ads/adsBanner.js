@@ -9,53 +9,79 @@ export const AdsBanner = ({
   height = '100px',
   backgroundColor = '#A7A7A71A',
   imgUrl = '',
-  navId = '1-13',
+  // navId = '1-13',
   // ads = null,
   adsList = [],
+  pathName = '/',
 }) => {
+  let navId = '1-13';
   const { isVip, userInfo } = useYingshiUser();
-
 
   const [ads, setAds] = useState(null);
 
   const findAdBySlotId = (ads, slotId) => {
-    if(!ads)
-      {
-        return
-      }
-    console.log('==========')
-    let result =  ads.filter(ad => ad.slot_id_list_array && ad.slot_id_list_array.includes(slotId));
-    return result[0]
+    if (!ads) {
+      return;
+    }
+    console.log('==========');
+    let result = ads.filter(
+      (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(slotId)
+    );
+    return result[0];
   };
 
-
   useEffect(() => {
+    var pathFlag = pathName.substr(pathName.length - 1);
+
+    if (pathFlag == '/') {
+      navId = '1-13';
+    }
+    //综合
+    if (
+      pathFlag == '1' ||
+      pathFlag == '2' ||
+      pathFlag == '3' ||
+      pathFlag == '4' ||
+      pathFlag == '5'
+    ) {
+      navId = '4-16';
+    }
+    //韩剧
+    if (pathFlag == '6') {
+      navId = '9-17';
+    }
+    //美剧
+    if (pathFlag == '7') {
+      navId = '10-18';
+    }
+    console.log('pathFlag');
+
+    console.log(pathFlag);
+    console.log('navId');
+
+    console.log(navId);
     if (navId && navId != 0) {
       const parts = navId?.split('-').map(Number);
 
-      const filteredAdsList = []
-      
+      const filteredAdsList = [];
+
       // adsList.filter(
       //   (ad) => ad.ads_id === 1 || ad.ads_id === 13
       // );
 
       parts.forEach((item, index) => {
-      let result  =  findAdBySlotId(adsList, item);
-      filteredAdsList.push(result)
+        let result = findAdBySlotId(adsList, item);
+        filteredAdsList.push(result);
 
-
-      console.log('filteredAdsList')
-      console.log(filteredAdsList)
+        console.log('filteredAdsList');
+        console.log(filteredAdsList);
       });
-
 
       setAds(filteredAdsList);
     } else {
       console.log('no ads');
     }
   }, []);
-
-
 
   return (
     <>
@@ -69,20 +95,19 @@ export const AdsBanner = ({
           }}
         >
           <img
-          className='desktop'
+            className='desktop'
             src={ads[0]?.ads_pic}
             onClick={() => {
               window.open(ads[0].ads_url, '_blank');
             }}
           />
-   <img
-      className='mobile'
+          <img
+            className='mobile'
             src={ads[1]?.ads_pic}
             onClick={() => {
               window.open(ads[0].ads_url, '_blank');
             }}
           />
-
         </div>
       ) : (
         <div className='rounded-xl'></div>
