@@ -25,7 +25,7 @@ const FloatingPill = () => {
     if(isIOS){
       redirectUrl = "https://apps.apple.com/cn/app/id6474402534";
     }else{
-      redirectUrl = "https://play.google.com/store/apps/details?id=com.yingshitv&hl=en";
+      redirectUrl = "https://yingshi.tv/static/assets/yingshi.apk";
     }
 
     window.location.href = redirectUrl

@@ -880,7 +880,7 @@ const Header = () => {
                     </div>
                     <QRCode
                       className='rounded-md'
-                      value='https://play.google.com/store/apps/details?id=com.yingshitv'
+                      value='https://yingshi.tv/static/assets/yingshi.apk'
                       renderAs='canvas'
                       size={120}
                       includeMargin={true}
