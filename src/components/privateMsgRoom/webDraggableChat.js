@@ -43,7 +43,7 @@ export const WebDraggableChat = () => {
         }`}
       >
         <div className='flex items-center justify-center'>
-          <Image
+          <img
             src={DragChatIcon}
             alt='DragChatIcon'
             width={36}
@@ -53,7 +53,7 @@ export const WebDraggableChat = () => {
           />
         </div>
 
-        <Image
+        <img
           onClick={() => dispatch(togglePrivateRoom(false))}
           src={CrossWhite}
           alt='CrossWhite'

@@ -60,7 +60,7 @@ export default function H5Page() {
           {/*>*/}
           {/*  <source src={'./video/vip_background.mp4'} type={'video/mp4'}/>*/}
           {/*</video>*/}
-          <Image src={VipBackgroundImage} alt={'vip background image'}/>
+          <img src={VipBackgroundImage} alt={'vip background image'}/>
           <div
             className={styles.gradient_overlay + ' absolute top-0 left-0 w-full h-full'}
           />

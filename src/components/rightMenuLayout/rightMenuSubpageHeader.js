@@ -9,7 +9,7 @@ export const RightMenuSubpageHeader = ({ label, onBack, right = null }) => {
     >
       <div className='flex items-center justify-between w-full'>
         <div className='flex items-center gap-2'>
-          <Image
+          <img
             src={BackHover}
             alt='back'
             width={40}

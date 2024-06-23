@@ -83,7 +83,7 @@ export const HostRecomendationCard = ({
               {opData?.od}
             </span>
             {oddChange ? (
-              <Image
+              <img
                 alt='odd up'
                 src={oddChange > 0 ? IconArrowUpGreen : IconArrowDownRed}
                 className='animate-pulse'

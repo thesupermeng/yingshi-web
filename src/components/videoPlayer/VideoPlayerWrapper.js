@@ -107,7 +107,7 @@ export default function VideoPlayerWrapper({
       {/* {(focusStream?.img_url || focusStream?.streamer?.cover_image) &&
         !isLiveFullScreen &&
         showThumbnail && (
-          <Image
+          <img
           src={
             focusStream?.img_url
             ? focusStream?.img_url

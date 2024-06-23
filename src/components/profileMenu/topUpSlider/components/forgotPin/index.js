@@ -20,7 +20,7 @@ export default function ForgotPin() {
   return (
     <FullScreenModal>
       <div className='w-[500px] flex-initial flex flex-col rounded-3xl bg-[#121212] p-7 text-center relative'>
-        <Image
+        <img
           alt='close'
           src={CrossWhite}
           className='absolute w-9 h-9 opacity-20 hover:opacity-100 self-end cursor-pointer'

@@ -46,7 +46,7 @@ export const DropdownH5 = ({ placeholder, selectionList, selectedVal }) => {
                 value={data.value}
               >
                 <label className='float-left'>{data.value}</label>
-                <Image
+                <img
                   src={selected?.value === data.value ? RedUnselect : RedSelect}
                   alt='red'
                   width={18}

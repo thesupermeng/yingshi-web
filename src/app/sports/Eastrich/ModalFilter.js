@@ -45,7 +45,7 @@ export const ModalFilterLeagues = ({ setShowModal }) => {
   return (
     <FullScreenModal>
       <div className='flex self-stretch flex-1 my-20 mx-40 bg-[#121212E5] p-8 rounded-xl py-20 px-40 flex-col overflow-hidden'>
-        <Image
+        <img
           alt='close'
           src={CrossWhite}
           className='w-10 h-10 opacity-20 absolute top-[100px] right-[180px] hover:opacity-100 cursor-pointer'
@@ -76,7 +76,7 @@ export const ModalFilterLeagues = ({ setShowModal }) => {
                   }`}
                   onClick={() => toggleLeague(lg.id, !isTick)}
                 >
-                  <ImageWithFallback
+                  <imgWithFallback
                     alt='flag'
                     src={lg.lurl}
                     width={20}
@@ -85,7 +85,7 @@ export const ModalFilterLeagues = ({ setShowModal }) => {
                   />
                   {lg.na} ({lg.mt})
                   <div className='flex-1' />
-                  <Image
+                  <img
                     alt='check'
                     src={isTick ? CheckBoxRed : CheckBox0}
                     className=''

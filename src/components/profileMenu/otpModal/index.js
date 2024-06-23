@@ -70,7 +70,7 @@ const OtpModal = ({
   return (
     <FullScreenModal>
       <div className='relative flex-initial flex flex-col rounded-3xl bg-[#121212] p-7'>
-        <Image
+        <img
           alt='close'
           src={CrossWhite}
           className='cursor-pointer z-10 w-10 h-10 opacity-20 absolute top-[20px] right-[20px]  hover:opacity-100'

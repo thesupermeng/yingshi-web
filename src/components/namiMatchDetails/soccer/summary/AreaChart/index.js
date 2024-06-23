@@ -78,7 +78,7 @@ export default function SummaryChart({ matchUpdateData }) {
           const size = e.type === 1 || e.type === 29 ? 8 : 10;
           if (EventIcon[e.type]) {
             return (
-              <Image
+              <img
                 src={EventIcon[e.type] || ''}
                 alt='icon'
                 width={size}
@@ -134,12 +134,12 @@ export default function SummaryChart({ matchUpdateData }) {
           <div className={styles.leftContent}>
             {home?.icon && (
               <div className={styles.teamIconContainer}>
-                <Image src={home?.icon} width={15} height={15} alt='icon' />
+                <img src={home?.icon} width={15} height={15} alt='icon' />
               </div>
             )}
             {away?.icon && (
               <div className={styles.teamIconContainer}>
-                <Image src={away?.icon} width={15} height={15} alt='icon' />
+                <img src={away?.icon} width={15} height={15} alt='icon' />
               </div>
             )}
           </div>

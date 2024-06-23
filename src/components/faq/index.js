@@ -17,7 +17,7 @@ const AccordionCustom = ({ faq, open, handleOpen }) => {
         open ? (
           <div className='w-[15.75px] h-[3.50px] bg-white rounded-[1px]'></div>
         ) : (
-          <Image src={Plus} alt='plus' width={15} className='' />
+          <img src={Plus} alt='plus' width={15} className='' />
         )
       }
       className='bg-[#191A1D] rounded-xl px-5 text-white'

@@ -56,15 +56,15 @@ export default function H5Page({ params }) {
       isRequireLogin: false,
       href: '/myprofile/watchHistory',
     },
-    // {
-    //   title: '安全PIN码',
-    //   icon: PinIconGrey,
-    //   onClick: () => {},
-    //   isSelected: false,
-    //   platform: 'mobile',
-    //   isRequireLogin: true,
-    //   href: '/setpin',
-    // },
+    {
+      title: '安全PIN码',
+      icon: PinIconGrey,
+      onClick: () => {},
+      isSelected: false,
+      platform: 'mobile',
+      isRequireLogin: true,
+      href: '/setpin',
+    },
     {
       title: '我要反馈',
       icon: FeedbackIconGrey,
@@ -238,7 +238,7 @@ export default function H5Page({ params }) {
       {/*       onClick={() => setOpenSignInUp(false)}>*/}
       {/*    <div*/}
       {/*      className={'w-[270px] h-[195px] rounded-[14px] bg-[#222222CC] flex flex-col items-center justify-center'}>*/}
-      {/*      <Image src={TickAnimation} alt={'Login success'} width={95} height={95}/>*/}
+      {/*      <img src={TickAnimation} alt={'Login success'} width={95} height={95}/>*/}
       {/*      <span className={'text-[17px]'}>登录成功</span>*/}
       {/*    </div>*/}
       {/*  </div>*/}
@@ -280,7 +280,7 @@ export default function H5Page({ params }) {
       </div>
 
       {/*aha iframe  background: '#1D2023', */}
-      {/* {userInfo && frameToken && frameToken != -1 && (
+      {userInfo && frameToken && frameToken != -1 && (
         <div style={{ borderRadius: '12px', marginBottom: '16px' }}>
           <iframe
             className={'h-[74px] w-full rounded-[12px]'}
@@ -288,8 +288,9 @@ export default function H5Page({ params }) {
             scrolling={'no'}
             allow='clipboard-read; clipboard-write'
           />
+
         </div>
-      )} */}
+      )}
 
       {/* background: '#1D2023', */}
       {frameToken == -1 && userInfo && (
@@ -336,7 +337,7 @@ export default function H5Page({ params }) {
               'text-center text-white text-[17px] font-medium mb-[12px]'
             }
           >
-            影视TV
+            鲨鱼影视
           </p>
           <p className={'text-[14px] text-white'}>
             如果本站提供内容侵犯了您的版权，请来函说明，本网站将立即删除，保护版权所有者的权益。

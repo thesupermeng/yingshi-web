@@ -82,7 +82,7 @@ const TeamStatsSoccer = () => {
       <div className='flex flex-col gap-2 text-sm'>
         <div className='flex justify-between items-center'>
           {matchDetail?.ts?.[0]?.lurl && (
-            <Image
+            <img
               src={matchDetail?.ts?.[0]?.lurl}
               width={25}
               height={25}
@@ -92,7 +92,7 @@ const TeamStatsSoccer = () => {
           <p>{matchDetail?.ts?.[0]?.na}</p>
           <p>{matchDetail?.ts?.[1]?.na}</p>
           {matchDetail?.ts?.[1]?.lurl && (
-            <Image
+            <img
               src={matchDetail?.ts?.[1]?.lurl}
               width={25}
               height={25}

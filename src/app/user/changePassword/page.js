@@ -62,7 +62,7 @@ export default function ChangePassword() {
     return (
       <FullPageContent>
         <div className='flex-1 flex flex-col items-center justify-center gap-5'>
-          <Image alt='tick' src={RedTickRound} className='w-[60px] h-[60px]' />
+          <img alt='tick' src={RedTickRound} className='w-[60px] h-[60px]' />
           <div className='text-base font-semibold'>
             {t('newPasswordChanged')}
           </div>

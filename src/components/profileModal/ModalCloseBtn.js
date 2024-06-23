@@ -7,7 +7,7 @@ export const ModalCloseBtn = () => {
   const dispatch = useDispatch();
   return (
     <div className='absolute top-4 right-4 flex flex-initial'>
-      <Image
+      <img
         onClick={() => {
           dispatch(setProfileModal(null));
         }}

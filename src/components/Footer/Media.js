@@ -15,9 +15,9 @@ export const Media = () => {
         © EastRicher.com {'\n'}All Rights Reserved Copyrights 2024
       </pre>
       {/* <div className='flex flex-row gap-4'>
-        <Image alt='a' src={Img1} />
-        <Image alt='a' src={Img2} />
-        <Image alt='a' src={Img3} />
+        <img alt='a' src={Img1} />
+        <img alt='a' src={Img2} />
+        <img alt='a' src={Img3} />
       </div> */}
     </div>
   );

@@ -16,7 +16,7 @@ export default function ProfileCard({userInfo, isVip, isH5, onSignin}) {
   return (
     <div className={'flex gap-[15px] items-center'}>
       <div className="flex justify-center">
-        <Image
+        <img
           src={iconProfile}
           alt="profile"
           height={50}
@@ -30,7 +30,7 @@ export default function ProfileCard({userInfo, isVip, isH5, onSignin}) {
                   {userInfo ? userInfo.user_name : '游客您好'}
                 </span>
           {isVip &&
-            <Image
+            <img
               src={vipProfileIcon}
               alt="profile"
               width={22}
@@ -46,7 +46,7 @@ export default function ProfileCard({userInfo, isVip, isH5, onSignin}) {
       {isH5 &&
         <div className="flex items-center justify-center">
           {userInfo &&
-            <Image
+            <img
               src={editIcon}
               alt="edit"
               onClick={() => {

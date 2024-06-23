@@ -26,7 +26,7 @@ export default function BetCartHeader({ onClose, showSettingsIcon = true }) {
         <HeaderBetSlip onClick={onClick} />
         <div className='flex flex-row gap-4 items-center flex-initial'>
           {showSettingsIcon && (
-            <Image
+            <img
               alt='setting'
               src={GearIcon}
               onClick={() => {
@@ -36,14 +36,14 @@ export default function BetCartHeader({ onClose, showSettingsIcon = true }) {
             />
           )}
           {Object.keys(options).length > 0 && (
-            <Image
+            <img
               alt='delete'
               src={TrashIcon}
               className='w-5 h-5 cursor-pointer'
               onClick={() => setShowDelModal(true)}
             />
           )}
-          <Image
+          <img
             alt='close'
             src={CrossWhite}
             className='w-9 h-9 opacity-20 hover:opacity-100 cursor-pointer'

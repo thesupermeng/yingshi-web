@@ -42,7 +42,7 @@ export default function ScoreInformation({
         <div className='flex items-center text-xs'>
           <span className='w-[30px] h-[30px] mr-2 rounded-full overflow-hidden'>
             {matchDetailsData?.home?.icon && (
-              <Image
+              <img
                 alt='icon'
                 src={matchDetailsData?.home?.icon}
                 width={30}
@@ -57,7 +57,7 @@ export default function ScoreInformation({
           <p>{matchDetailsData?.away?.name_en}</p>
           <span className='w-[30px] h-[30px] ml-2 rounded-full overflow-hidden'>
             {matchDetailsData?.away?.icon && (
-              <Image
+              <img
                 alt='icon'
                 src={matchDetailsData?.away?.icon}
                 width={30}

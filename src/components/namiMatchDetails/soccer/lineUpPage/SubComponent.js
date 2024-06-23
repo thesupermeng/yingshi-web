@@ -20,7 +20,7 @@ export default function SubComponent({
         <div className='flex justify-between mt-5'>
           {showTeamIcon && (
             <div className={`flex gap-2 ${isWeb() ? 'text-md' : 'text-sm'}`}>
-              <Image
+              <img
                 src={homeTeam.icon}
                 width={isWeb() ? 30 : 24}
                 height={isWeb() ? 30 : 24}
@@ -45,7 +45,7 @@ export default function SubComponent({
                   ? awayTeam?.short_name_en
                   : awayTeam?.name_en}
               </p>
-              <Image
+              <img
                 src={awayTeam.icon}
                 width={isWeb() ? 30 : 24}
                 height={isWeb() ? 30 : 24}

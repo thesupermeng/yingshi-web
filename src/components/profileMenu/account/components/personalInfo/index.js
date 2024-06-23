@@ -69,14 +69,14 @@ const PersonalInfo = ({ toggleSheet = () => {} }) => {
         >
           <p className='text-errorRed text-sm'>{t('avatar')}</p>
           <div className='flex'>
-            <ImageWithFallback
+            <imgWithFallback
               src={user?.avatar}
               fallbackSrc={Avatar}
               width={22}
               height={22}
               className='rounded-full w-[22px] h-[22px] object-cover'
             />
-            <Image src={Arrow} alt='arrow' />
+            <img src={Arrow} alt='arrow' />
           </div>
         </button>
 

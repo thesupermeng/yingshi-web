@@ -48,7 +48,7 @@ export default function DropZoneH5({
       <Files receivedFile={receivedFiles} onDel={onDel} />
       {isExceed ? (
         <div className='bg-[#781427] rounded-[5px] px-2 py-1 flex items-center gap-2 mt-5'>
-          <Image src={SignIcon} alt='sign' width={20} height={20} />
+          <img src={SignIcon} alt='sign' width={20} height={20} />
           <p className='text-[11px] text-[#666]'>
             {t('maximumOnlyAllowUpload2Documents')}
           </p>
@@ -65,7 +65,7 @@ export default function DropZoneH5({
         <div className='flex flex-1 items-center justify-between p-3 relative'>
           <div className='flex items-center text-[13px]' onClick={open}>
             <input {...getInputProps()} />
-            <Image
+            <img
               src={UploadIcon}
               className='mx-auto'
               width={22}

@@ -66,7 +66,7 @@ export const TayaSportsPagingFooter = ({ customCss }) => {
         isArrow={true}
         val={1}
       >
-        <Image
+        <img
           alt='L'
           src={IconArrowWhite}
           className={`rotate-90 ${current === 1 ? 'opacity-30' : 'opacity-70'}`}
@@ -93,7 +93,7 @@ export const TayaSportsPagingFooter = ({ customCss }) => {
         isArrow={true}
         val={pageTotal}
       >
-        <Image
+        <img
           alt='R'
           src={IconArrowWhite}
           className={`-rotate-90 ${

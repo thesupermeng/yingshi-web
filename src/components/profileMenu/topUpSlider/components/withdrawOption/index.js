@@ -73,7 +73,7 @@ export const WithdrawOption = ({ editMode }) => {
               className='w-full flex flex-1 gap-3 rounded-[4px] items-center justify-between'
               onClick={() => onSelect(m)}
             >
-              <Image
+              <img
                 src={m?.method?.icon_url}
                 width={30}
                 height={30}
@@ -90,7 +90,7 @@ export const WithdrawOption = ({ editMode }) => {
                 </p>
               </div>
               {editMode || eMode ? (
-                <Image
+                <img
                   src={Dustbin}
                   alt='dustbin'
                   width={20}
@@ -104,7 +104,7 @@ export const WithdrawOption = ({ editMode }) => {
                   }}
                 />
               ) : (
-                <Image
+                <img
                   className='flex-none'
                   alt='check'
                   src={selected?.id === m.id ? CheckBoxRed : CheckBox0}
@@ -125,7 +125,7 @@ export const WithdrawOption = ({ editMode }) => {
             className='justify-center cursor-pointer'
             onClick={onClick}
           >
-            <Image src={AddIcon} alt='addicon' width={20} height={20} />
+            <img src={AddIcon} alt='addicon' width={20} height={20} />
             <p className='opacity-50'>{t('addWithdrawalMethod')}</p>
           </SideBlock>
         )}

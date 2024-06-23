@@ -35,7 +35,7 @@ export default function Player(props) {
     if (totalAssist > 0) {
       return (
         <div className='relative'>
-          <Image src={AssistGoal} width={12} height={12} alt='assist'></Image>
+          <img src={AssistGoal} width={12} height={12} alt='assist'></img>
           {totalAssist > 1 && (
             <div className='absolute -top-2 -left-2 w-[12px] h-[12px] bg-white rounded-full !text-[#141414] text-[10px]'>
               <p>{totalAssist}</p>
@@ -51,12 +51,12 @@ export default function Player(props) {
       if (incident.type === 9) {
         return (
           <div key={'subsitution' + playerId}>
-            <Image
+            <img
               width={12}
               height={12}
               alt='sub'
               src={incident.in_player.id === playerId ? SubInV2 : SubOutV2}
-            ></Image>
+            ></img>
           </div>
         );
       }
@@ -78,7 +78,7 @@ export default function Player(props) {
     if (totalOwnGoal > 0 && type === 17) {
       return (
         <div className='relative'>
-          <Image width={14} height={14} alt='ownGoal' src={OwnGoal}></Image>
+          <img width={14} height={14} alt='ownGoal' src={OwnGoal}></img>
           {totalOwnGoal > 1 && (
             <div className='absolute -right-2 -top-1 w-[12px] h-[12px] bg-white rounded-full !text-[#141414] text-[10px]'>
               <p>{totalOwnGoal}</p>
@@ -91,12 +91,12 @@ export default function Player(props) {
     if (totalPenatlyGoal > 0 && type === 8) {
       return (
         <div className='relative'>
-          <Image
+          <img
             src={PenaltyGoal}
             width={14}
             height={14}
             alt='penaltyGoal'
-          ></Image>
+          ></img>
           {totalPenatlyGoal > 1 && (
             <div className='absolute -right-2 -top-1 w-[12px] h-[12px] bg-white rounded-full !text-[#141414] text-[10px]'>
               <p>{totalPenatlyGoal}</p>
@@ -109,7 +109,7 @@ export default function Player(props) {
     if (totalGoal > 0 && type === 1) {
       return (
         <div className='relative'>
-          <Image width={14} height={14} alt='goal' src={Goal}></Image>
+          <img width={14} height={14} alt='goal' src={Goal}></img>
           {totalGoal > 1 && (
             <div className='absolute -right-2 -top-1 w-[12px] h-[12px] bg-white rounded-full !text-[#141414] text-[10px] text-center'>
               <p>{totalGoal}</p>
@@ -137,7 +137,7 @@ export default function Player(props) {
     if (cardType) {
       return (
         <div>
-          <Image 
+          <img 
             width={`${isWeb() ? 17 : cardType === YellowToRedCard ? 12 : 15 }`} 
             height={`${isWeb() ? 17 : cardType === YellowToRedCard ? 12 : 15 }`} 
             alt='card' 
@@ -193,7 +193,7 @@ export default function Player(props) {
           } ${isWeb() ? 'h-[35px] w-[35px]' : 'h-[25px] w-[25px]'}`}
         >
           {player?.logo ? (
-            <Image
+            <img
               src={player?.logo}
               width={isWeb() ? 35 : 25}
               height={isWeb() ? 35 : 25}
@@ -203,7 +203,7 @@ export default function Player(props) {
               } object-contain`}
             />
           ) : (
-            <Image
+            <img
               src={team === 'home' ? RedShirt : BlueShirt}
               width={isWeb() ? 30 : 15}
               height={isWeb() ? 30 : 15}

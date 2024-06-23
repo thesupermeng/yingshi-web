@@ -22,7 +22,7 @@ export const VideoPlayerCenter = ({ id }) => {
           : 'py-[0.38rem] text-sm gap-1.5 z-10'
       } px-3 rounded-xl backdrop-blur-[7px] bg-[#282A2575] items-center text-white font-medium flex flex-initial whitespace-nowrap`}
     >
-      <Image alt='live' src={LiveCamIcon} className='w-5 h-5' />
+      <img alt='live' src={LiveCamIcon} className='w-5 h-5' />
       {t('visitLiveRoom')}
     </div>
   );

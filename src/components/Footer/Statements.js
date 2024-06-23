@@ -9,7 +9,7 @@ export const Statements = ({ children }) => {
 
   return (
     <div className='flex flex-1 flex-col gap-3 justify-start'>
-      <Image alt='Taya' src={EastRichWhiteLogoWithText} />
+      <img alt='Taya' src={EastRichWhiteLogoWithText} />
       <div className='text-[13px] font-normal'>
         {t('engageInSportsWageringOnEvents')}
       </div>

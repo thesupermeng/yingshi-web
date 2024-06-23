@@ -44,7 +44,7 @@ export const BasketballScore = () => {
       <div className='flex justify-between items-center text-[13px]'>
         <div className='flex items-center gap-1'>
           {matchDetail?.ts?.[0]?.lurl && (
-            <Image
+            <img
               src={matchDetail?.ts?.[0]?.lurl}
               width={25}
               height={25}
@@ -56,7 +56,7 @@ export const BasketballScore = () => {
         <div className='flex items-center gap-1'>
           <p>{matchDetail?.ts?.[1]?.na}</p>
           {matchDetail?.ts?.[1]?.lurl && (
-            <Image
+            <img
               src={matchDetail?.ts?.[1]?.lurl}
               width={25}
               height={25}

@@ -27,7 +27,7 @@ export default function Download() {
 
   return (
     <FullPageContent className='z-[9999]'>
-      <Image
+      <img
         src={LandingPageBg}
         alt='landingPageBg'
         fill

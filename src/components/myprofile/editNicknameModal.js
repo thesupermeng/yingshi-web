@@ -63,7 +63,7 @@ export default function EditNicknameModal({ open, handler, onSuccess }) {
               {/*<p className={'text-[16px] text-[#9C9C9C] text-center mt-[15px]'}>请输入2-18个字符</p>*/}
 
               <p className={'text-[22px] text-white text-center font-medium mb-[20px]'}>个人信息</p>
-              <Image src={ProfileBlue} alt={'profile icon'} width={100} height={100} />
+              <img src={ProfileBlue} alt={'profile icon'} width={100} height={100} />
 
               <div className={'flex flex-col mt-[19px] w-full'}>
                 <span className={'text-[15px] text-white self-start font-semibold'}>昵称</span>

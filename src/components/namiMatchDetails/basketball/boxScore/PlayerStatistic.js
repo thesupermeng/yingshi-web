@@ -26,7 +26,7 @@ export default function PlayerStatistic({ data, teamData, status, home }) {
         </div>
         <div className='flex justify-end gap-2 mt-3'>
           <div className='flex items-center gap-1'>
-            <Image
+            <img
               src={home ? basketballHomeTeam.src : basketballAwayStarter}
               width={21}
               height={21}
@@ -34,7 +34,7 @@ export default function PlayerStatistic({ data, teamData, status, home }) {
             <p className='text-sm text-theme-sub'>{t('starters')}</p>
           </div>
           <div className='flex items-center gap-1'>
-            <Image
+            <img
               src={basketballAwayTeam}
               width={21}
               height={21}
@@ -43,7 +43,7 @@ export default function PlayerStatistic({ data, teamData, status, home }) {
             <p className='text-sm text-theme-sub'>{t('bench')}</p>
           </div>
           <div className='flex items-center gap-1'>
-            <Image src={basketball} width={21} height={21} alt='basketball' />
+            <img src={basketball} width={21} height={21} alt='basketball' />
             <p className='text-sm text-theme-sub'>{t('onTheCourt')}</p>
           </div>
         </div>

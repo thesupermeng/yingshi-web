@@ -28,7 +28,7 @@ export const MiniFollowBet = ({ bet, onVisible }) => {
         className={`${currentState} flex gap-3 bg-[#00000080] rounded-[4px] item-center p-2 justify-center`}
       >
         <div className='flex gap-1'>
-          <ImageWithFallback
+          <imgWithFallback
             fallbackSrc={Avatar}
             src={message.avatar}
             alt='avatar'

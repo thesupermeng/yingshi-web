@@ -112,7 +112,7 @@ export default function WithdrawMethod() {
               </p>
             ) : (
               <>
-                <Image
+                <img
                   className='rounded-[4px] w-[26px] h-[26px]'
                   src={selected?.icon_url}
                   alt='payment-icon'
@@ -124,7 +124,7 @@ export default function WithdrawMethod() {
               </>
             )}
           </div>
-          <Image
+          <img
             alt='dropdown'
             src={IconChevron}
             width={10}
@@ -144,7 +144,7 @@ export default function WithdrawMethod() {
               }}
             >
               <div className='flex items-center'>
-                <Image
+                <img
                   className='rounded-[4px] w-[26px] h-[26px]'
                   src={s?.icon_url}
                   alt='payment-icon'
@@ -154,7 +154,7 @@ export default function WithdrawMethod() {
                 />
                 <p className='text-[13px] pl-2'>{s?.name}</p>
               </div>
-              <Image
+              <img
                 alt='check'
                 src={selected?.id === s?.id ? CheckBoxRed : CheckBox0}
               />
@@ -172,7 +172,7 @@ export default function WithdrawMethod() {
               </div>
             </div> */}
             <div className='flex items-center'>
-              <Image src={IconRoundWarningSign} alt='warning' />
+              <img src={IconRoundWarningSign} alt='warning' />
               <p className='text-[13px] text-white mx-2'>
                 {t('networkWarning')}
               </p>
@@ -192,7 +192,7 @@ export default function WithdrawMethod() {
               <QRFileInput onFileUpload={handleQRFileUpload} />
             </div>
             <div className='flex items-center'>
-              <Image src={IconRoundWarningSign} alt='warning' />
+              <img src={IconRoundWarningSign} alt='warning' />
               <p className='text-[13px] text-white mx-2'>
                 {t('addressWarning')}
               </p>

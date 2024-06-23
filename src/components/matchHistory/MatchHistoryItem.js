@@ -77,7 +77,7 @@ export default function MatchHistoryItem({ item, sportType, id }) {
     return (
       <span className='flex items-center justify-between text-[13px] gap-1'>
         <span className='flex items-center gap-2'>
-          <Image src={item?.icon} alt='icon' width={20} height={20} />
+          <img src={item?.icon} alt='icon' width={20} height={20} />
           <p>{item?.short_name_en || item?.name_en || ' '}</p>
         </span>
 

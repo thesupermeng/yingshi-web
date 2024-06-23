@@ -15,7 +15,7 @@ export const WebRecommendationSlider = () => {
     <div className='ml-20 min-h-[150px] flex items-center absolute right-10 bottom-1/4 cursor-pointer'>
       {showRecommendation && (
         <>
-          <Image
+          <img
             src={CrossWhite}
             alt='cross'
             width={30}
@@ -36,7 +36,7 @@ export const WebRecommendationSlider = () => {
         </>
       )}
       {hostRecommendationList.length > 0 && !showRecommendation && (
-        <Image
+        <img
           src={Bookmark}
           alt='Bookmark'
           width={60}

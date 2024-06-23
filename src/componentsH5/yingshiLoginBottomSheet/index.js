@@ -157,7 +157,7 @@ export default function YingshiLoginBottomSheet({ visible, onDismiss }) {
                         {/*<div className={'flex flex-col gap-[12px] mt-[20px]'} >*/}
                         {/*    <p className={'text-[#9C9C9C] text-[13px] text-center'}>使用以下方式登录</p>*/}
                         {/*    <button className={'w-full h-12 flex items-center bg-[#1D2023] rounded-lg px-[20px]'}>*/}
-                        {/*        <Image src={GoogleIcon} alt={'Google Icon'} width={24} height={24} />*/}
+                        {/*        <img src={GoogleIcon} alt={'Google Icon'} width={24} height={24} />*/}
                         {/*        <span className={'font-semibold text-[17px] text-white flex-1'}>使用Google账号登录</span>*/}
                         {/*    </button>*/}
                         {/*</div>*/}

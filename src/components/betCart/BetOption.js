@@ -174,7 +174,7 @@ export const BetOption = ({
                 </div>
                 {oddChange > 0 && (
                   <div className={`flex-initial items-center animate-pulse`}>
-                    <Image
+                    <img
                       alt='odd change'
                       src={
                         oddChange === 1 ? IconArrowUpGreen : IconArrowDownRed
@@ -276,7 +276,7 @@ export const BetOption = ({
                   isWeb() ? 'text-sm' : 'text-[13px]'
                 }`}
               >
-                <Image
+                <img
                   alt='delete'
                   src={TrashIcon}
                   className='w-3 h-3 mr-1 cursor-pointer'
@@ -299,7 +299,7 @@ export const BetOption = ({
                 </div>
                 {oddChange > 0 && (
                   <div className={`flex-initial items-center animate-pulse`}>
-                    <Image
+                    <img
                       alt='odd change'
                       src={
                         oddChange === 1 ? IconArrowUpGreen : IconArrowDownRed

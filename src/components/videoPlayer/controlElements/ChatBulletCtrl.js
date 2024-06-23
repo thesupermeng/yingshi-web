@@ -11,7 +11,7 @@ export const ChatBulletCtrl = () => {
   const dispatch = useDispatch();
   return (
     <div className='w-fit h-auto px-2 flex items-center justify-center'>
-      <Image
+      <img
         src={
           showChatBullet ? IconChatBubbleHollow : IconChatBubbleHollowDisabled
         }

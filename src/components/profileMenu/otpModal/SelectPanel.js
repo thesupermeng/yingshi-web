@@ -44,7 +44,7 @@ export default function SelectPanel({ setShowSelection, setSelection }) {
       >
         <p>{t('selectYourCountry')}</p>
         <div className='flex items-center gap-3 my-5'>
-          <Image src={searchIcon} alt='search' width={20} />
+          <img src={searchIcon} alt='search' width={20} />
           <input
             className='bg-transparent'
             placeholder={t('search')}
@@ -64,7 +64,7 @@ export default function SelectPanel({ setShowSelection, setSelection }) {
             >
               {/* <p>{d.icon}</p> */}
               {CountryIcons[d.icon] ? (
-                <Image
+                <img
                   className='w-[20px] h-[20px]'
                   alt={d.icon}
                   src={CountryIcons[d.icon]}

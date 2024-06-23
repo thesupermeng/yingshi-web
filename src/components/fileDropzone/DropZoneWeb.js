@@ -54,7 +54,7 @@ export default function DropZoneWeb({
         className='flex flex-1 flex-col justify-center items-center h-full'
       >
         <input {...getInputProps()} />
-        <Image
+        <img
           onClick={open}
           src={UploadIcon}
           className='cursor-pointer mx-auto'
@@ -65,7 +65,7 @@ export default function DropZoneWeb({
 
         {isExceed ? (
           <div className='bg-[#781427] rounded-[5px] px-2 py-1 flex items-center gap-2 mt-3'>
-            <Image src={SignIcon} alt='sign' width={20} height={20} />
+            <img src={SignIcon} alt='sign' width={20} height={20} />
             <p className='text-[11px] '>
               {t(`maximumOnlyAllowUpload${maxFiles}Document`)}
             </p>

@@ -586,7 +586,7 @@ export const FilmLibrary = () => {
                     style={{ minHeight: '300px' }}
                   >
                     <div className='flex flex-1 justify-center items-center flex-col'>
-                      <Image
+                      <img
                         className='mx-2'
                         src={searchEmptyIcon}
                         alt='empty'

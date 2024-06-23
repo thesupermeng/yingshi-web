@@ -13,10 +13,10 @@ export default function PlayerControl() {
         <div className='flex justify-between flex-initial'>
           <div className='flex flex-row items-center'>
             <div className='ml-3 py-1 px-2 items-center rounded-[6.25rem] bg-black/50 backdrop-blur-[2px] flex flex-row gap-1'>
-              <Image alt='viewer' src={Play} className='w-[20px] h-[20px]' />
+              <img alt='viewer' src={Play} className='w-[20px] h-[20px]' />
             </div>
             <div className='ml-3 py-1 px-2 items-center rounded-[6.25rem] bg-black/50 backdrop-blur-[2px] flex flex-row gap-1'>
-              <Image alt='viewer' src={Reload} className='w-[20px] h-[20px]' />
+              <img alt='viewer' src={Reload} className='w-[20px] h-[20px]' />
             </div>
           </div>
           <div className='flex flex-row gap-3'>

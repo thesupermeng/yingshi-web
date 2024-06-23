@@ -72,7 +72,7 @@ export const FinishSetupModal = () => {
           </H5Only>
           {isAllDone ? (
             <div className='flex-1 flex flex-col items-center justify-center gap-5'>
-              <Image
+              <img
                 alt='tick'
                 src={RedTickRound}
                 className='w-[60px] h-[60px]'

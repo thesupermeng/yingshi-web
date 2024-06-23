@@ -17,14 +17,14 @@ export const BalanceHeader = () => {
     <div className='rounded-xl flex flex-col justify-between px-4 py-5 bg-tayaGrey'>
       <div className='flex justify-between'>
         <div className='flex items-center'>
-          <Image src={BalWallet} alt='wallet' />
+          <img src={BalWallet} alt='wallet' />
           <p className=' text-sm ml-1.5 font-medium'>{t('yourBalance')}</p>
         </div>
         <div className='flex items-center'>
           <p className=' font-bold ml-1.5 mr-2'>
             {formatCredit(user?.sum?.balance, false)}
           </p>
-          <Image src={USDT} alt='usdt' />
+          <img src={USDT} alt='usdt' />
         </div>
       </div>
       {

@@ -71,7 +71,7 @@ export default function TopUpMethod() {
               onClick={() => setIsTick(m)}
             >
               <div className='flex items-center gap-3'>
-                <Image
+                <img
                   className='rounded-[4px] w-[26px] h-[26px]'
                   src={m.icon_url}
                   alt='payment-icon'
@@ -81,7 +81,7 @@ export default function TopUpMethod() {
                 />
                 <p className='text-[13px]'>{m.name}</p>
               </div>
-              <Image
+              <img
                 alt='check'
                 src={isTick?.id === m.id ? CheckBoxRed : CheckBox0}
                 className='cursor-pointer'
@@ -97,7 +97,7 @@ export default function TopUpMethod() {
         >
           {selectedAcc?.account_name ? (
             <>
-              <Image
+              <img
                 src={selectedAcc?.method?.icon_url}
                 width={30}
                 height={30}
@@ -114,7 +114,7 @@ export default function TopUpMethod() {
             </>
           ) : (
             <div className='flex gap-2 '>
-              <Image src={Wallet} width={30} height={30} alt='wallet' />
+              <img src={Wallet} width={30} height={30} alt='wallet' />
               <div className='flex flex-col '>
                 <p className='text-sm'>{t('withdrawalOption')}</p>
                 <p className='opacity-50 text-xs'>
@@ -124,7 +124,7 @@ export default function TopUpMethod() {
             </div>
           )}
 
-          <Image src={ArrowRight} alt='arrow' height={20} width={30} />
+          <img src={ArrowRight} alt='arrow' height={20} width={30} />
         </div>
       )}
 
