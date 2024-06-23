@@ -62,15 +62,15 @@ const MyFooter = () => {
       iconActive: homeTabActive,
       title: '首页',
     },
-    {
-      onClick: () => {
-        handleClick(997);
-      },
-      active: pathname.startsWith('/sport'),
-      icon: AhaLogo,
-      iconActive: AhaLogoActive,
-      title: 'aha体育',
-    },
+    // {
+    //   onClick: () => {
+    //     handleClick(997);
+    //   },
+    //   active: pathname.startsWith('/sport'),
+    //   icon: AhaLogo,
+    //   iconActive: AhaLogoActive,
+    //   title: 'aha体育',
+    // },
     {
       onClick: () => {
         handleClick(998);
@@ -116,7 +116,7 @@ const TabItem = ({ onClick, active, icon, iconActive, title }) => {
     >
       <div className='d-flex'>
         <Image
-          alt='鲨鱼影视'
+          alt='影视TV'
           src={active ? iconActive : icon}
           width={22}
           style={{ cursor: 'pointer' }}
