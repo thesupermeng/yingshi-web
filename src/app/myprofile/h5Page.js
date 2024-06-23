@@ -56,15 +56,15 @@ export default function H5Page({ params }) {
       isRequireLogin: false,
       href: '/myprofile/watchHistory',
     },
-    {
-      title: '安全PIN码',
-      icon: PinIconGrey,
-      onClick: () => {},
-      isSelected: false,
-      platform: 'mobile',
-      isRequireLogin: true,
-      href: '/setpin',
-    },
+    // {
+    //   title: '安全PIN码',
+    //   icon: PinIconGrey,
+    //   onClick: () => {},
+    //   isSelected: false,
+    //   platform: 'mobile',
+    //   isRequireLogin: true,
+    //   href: '/setpin',
+    // },
     {
       title: '我要反馈',
       icon: FeedbackIconGrey,
@@ -197,10 +197,10 @@ export default function H5Page({ params }) {
   useEffect(() => {
     // dispatch(setIsSessionExpired(true))
 
-    window.addEventListener('message', iframeMessageListener);
-    return () => {
-      window.removeEventListener('message', iframeMessageListener);
-    };
+    // window.addEventListener('message', iframeMessageListener);
+    // return () => {
+    //   window.removeEventListener('message', iframeMessageListener);
+    // };
   }, []);
 
   useEffect(() => {
@@ -280,7 +280,7 @@ export default function H5Page({ params }) {
       </div>
 
       {/*aha iframe  background: '#1D2023', */}
-      {userInfo && frameToken && frameToken != -1 && (
+      {/* {userInfo && frameToken && frameToken != -1 && (
         <div style={{ borderRadius: '12px', marginBottom: '16px' }}>
           <iframe
             className={'h-[74px] w-full rounded-[12px]'}
@@ -290,7 +290,7 @@ export default function H5Page({ params }) {
           />
 
         </div>
-      )}
+      )} */}
 
       {/* background: '#1D2023', */}
       {frameToken == -1 && userInfo && (
