@@ -15,10 +15,11 @@ import { YingshiApi } from '@/util/YingshiApi';
 import { getTypePage, getTopicListApi } from '@/app/actions';
 import VodListViewMore from '@/components/vodListViewMore';
 import TopicPagingList from '@/components/topicPagingList';
+import { usePathname } from 'next/navigation';
 
 export default function Home(params) {
   let paramsInput = params.category == undefined ? 0 : params.category;
-
+  const pathName = usePathname();
   const [isLoading, setIsLoading] = useState(false);
   const [classList, setClassList] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -44,6 +45,8 @@ export default function Home(params) {
     setAdsList(allAds.data);
   };
   useLayoutEffect(() => {
+    console.log('pathName')
+    console.log(pathName)
     let adsList = initAdsList;
     if(!adsList)
       {
