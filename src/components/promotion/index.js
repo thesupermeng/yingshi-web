@@ -18,7 +18,7 @@ export const Promotion = () => {
   return (
     <RightMenuLayout>
       <div className='flex items-center p-5' onClick={() => onClickBack()}>
-        <img
+        <Image
           alt='back'
           className='cursor-pointer flex-initial w-9 h-9 opacity-20 hover:opacity-100 transition-all mr-5'
           src={IconArrowLeft}

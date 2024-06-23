@@ -23,12 +23,12 @@ const Sidebar = () => {
     >
       <div className='flex-initial flex flex-row py-1 mb-1 relative'>
         <Link className='flex flex-row items-center gap-2' href='/home'>
-          <img
+          <Image
             src={EastRichRedBlackLogo}
             alt='Taya'
             className='w-[3.5rem] h-[3.5rem] mx-[0.4rem]'
           />
-          <img
+          <Image
             src={EastRichWhiteRedText}
             alt='Taya'
             className={`flex-initial h-[3.65rem] w-[9rem] ${

@@ -62,7 +62,7 @@ export default function Page() {
       >
         <div className='flex flex-1 items-center justify-center gap-10'>
           <label className='flex flex-col items-center'>
-            <img src={Camera} alt='camera' width={50} height={50} />
+            <Image src={Camera} alt='camera' width={50} height={50} />
             <input
               type='file'
               accept='image/*'
@@ -72,7 +72,7 @@ export default function Page() {
             <p>{t('camera')}</p>
           </label>
           <label className='flex flex-col items-center'>
-            <img src={Gallery} alt='camera' width={50} height={50} />
+            <Image src={Gallery} alt='camera' width={50} height={50} />
             <input
               type='file'
               accept='image/*'

@@ -30,7 +30,7 @@ export const LivePage = ({ streamer }) => {
       <div className='relative flex flex-1 group'>
         <VideoPlayerWrapper src={streamer?.live?.src}>
           {!isPause && (
-            <img
+            <Image
               alt='PlayBlackBg'
               src={PlayBlackBg}
               className={`absolute cursor-pointer z-10`}

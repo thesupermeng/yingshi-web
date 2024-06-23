@@ -41,7 +41,7 @@ export const UserGuideBanner = ({ config, reward, minAmount }) => {
       }`}
     >
       <div className='flex flex-col items-center justify-center mx-5'>
-        <img src={UserGuideBg} alt='UserGuideBg' width={316} />
+        <Image src={UserGuideBg} alt='UserGuideBg' width={316} />
 
         <div className='-mt-6 w-[316px] bg-black shadow flex flex-col items-center justify-center text-center py-5'>
           <p className='text-[22px] font-semibold'>{t('limitedTimeOffer')}</p>
@@ -95,7 +95,7 @@ export const UserGuideBanner = ({ config, reward, minAmount }) => {
         </div>
 
         <button onClick={() => setShowUserGuide(false)}>
-          <img
+          <Image
             src={GreyCross}
             alt='GreyCross'
             width={26.88}

@@ -45,7 +45,7 @@ export const GameProviderFilter = ({ setShowFilterModal }) => {
   return (
     <FullScreenModal>
       <div className='flex self-center w-[946px] flex-initial bg-[#121212E5] p-9 rounded-xl flex-col overflow-hidden'>
-        <img
+        <Image
           alt='close'
           src={CrossWhite}
           className='w-9 h-9 opacity-20 hover:opacity-100 self-end cursor-pointer'
@@ -77,7 +77,7 @@ export const GameProviderFilter = ({ setShowFilterModal }) => {
                 onClick={() => toggleProvider(provider.id)}
               >
                 {icon ? (
-                  <img alt='icon' src={icon} width={20} height={20} />
+                  <Image alt='icon' src={icon} width={20} height={20} />
                 ) : null}
 
                 <div
@@ -90,7 +90,7 @@ export const GameProviderFilter = ({ setShowFilterModal }) => {
                   {provider.name}
                 </div>
 
-                <img
+                <Image
                   alt='check'
                   className='hover:opacity-100'
                   src={

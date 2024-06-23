@@ -21,7 +21,7 @@ export default function Overview({ matchDetailsData }) {
       <div className='flex justify-between mb-5'>
         <div className='flex items-center w-[50%]'>
           <span className='overflow-hidden rounded-full flex justify-center items-center w-[24px] h-[24px]'>
-            <imgWithFallback
+            <ImageWithFallback
               className='object-cover'
               src={matchDetailsData?.away?.icon}
               alt='logo'
@@ -43,7 +43,7 @@ export default function Overview({ matchDetailsData }) {
               : matchDetailsData?.away?.name_en}
           </p>
           <span className='overflow-hidden rounded-full flex justify-center items-center w-[24px] h-[24px]'>
-            <imgWithFallback
+            <ImageWithFallback
               className='object-cover'
               src={matchDetailsData?.away?.icon}
               alt='logo'

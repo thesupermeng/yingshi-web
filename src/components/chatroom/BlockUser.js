@@ -15,7 +15,7 @@ export const BlockUser = () => {
         isWeb() ? 'left-0 right-4' : 'w-[calc(100vw - 32px)] left-0'
       } py-1.5 px-3 bg-[#781427] rounded justify-between flex-row flex flex-1 gap-1.5`}
     >
-      <img
+      <Image
         src={IconWarningSign}
         alt='!'
         className='flex flex-initial w-4 h-4'

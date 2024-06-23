@@ -82,7 +82,7 @@ export default function DeleteAccount() {
           <FullPageContent>
             <div className='flex-1 flex flex-col items-center justify-center gap-2 z-10'>
               <div className='flex flex-col items-center justify-center'>
-                <img
+                <Image
                   src={RedTickRound}
                   alt='loading...'
                   width={55}

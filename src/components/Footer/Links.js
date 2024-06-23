@@ -33,7 +33,7 @@ export const Links = () => {
           <LinkCol title={t('paymentMethods')}>
             <div className='flex flex-row flex-wrap flex-initial items-center gap-3'>
               <div className='bg-white px-3 py-1 rounded-md'>
-                <img src={USDT} alt='USDT' width={20} height={20} />
+                <Image src={USDT} alt='USDT' width={20} height={20} />
               </div>
             </div>
           </LinkCol>
@@ -65,7 +65,7 @@ export const Links = () => {
           <LinkCol title={t('paymentMethods')}>
             <div className='flex flex-row flex-initial items-center gap-3'>
               <div className='bg-white px-3 py-1 rounded-md'>
-                <img src={USDT} alt='USDT' width={20} height={20} />
+                <Image src={USDT} alt='USDT' width={20} height={20} />
               </div>
             </div>
           </LinkCol>
@@ -85,7 +85,7 @@ export const AboutUsLinksData = [
 const LinkEntry = ({ text, href }) => {
   return (
     <div className='flex flex-row flex-initial items-center gap-3'>
-      <img alt='a' src={RightArrow} />
+      <Image alt='a' src={RightArrow} />
       <Link
         href={href}
         className='text-xs font-semibold hover:text-red-600 transition-all'

@@ -352,7 +352,7 @@ export default function OTP() {
             )}
             {countdownTimer !== 0 && (
               <div className={'flex gap-[3px] justify-center items-center'}>
-                <img
+                <Image
                   src={Stopwatch}
                   width={26}
                   height={26}

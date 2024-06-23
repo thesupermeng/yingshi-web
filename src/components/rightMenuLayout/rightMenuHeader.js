@@ -45,7 +45,7 @@ export const RightMenuHeader = ({
       </div>
 
       <button onClick={onCloseClick}>
-        <img
+        <Image
           className='w-9 h-9 opacity-20 hover:opacity-100'
           src={CrossWhite}
           alt='close'

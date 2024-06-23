@@ -29,7 +29,7 @@ const QrcodeGenerator = ({ size = 150 }) => {
   return (
     <>
       {qr ? (
-        <img
+        <Image
           width={size}
           height={size}
           src={qr}

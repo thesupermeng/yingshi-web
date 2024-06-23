@@ -39,7 +39,7 @@ const DropdownItem = ({ icon, text, onClick, countType }) => (
     onClick={onClick}
   >
     <div className='flex'>
-      <img alt={text} src={icon} width={20} />
+      <Image alt={text} src={icon} width={20} />
       <p className='text-sm ml-1.5 font-medium'>{text}</p>
     </div>
 
@@ -151,7 +151,7 @@ const Profile = () => {
             className='py-[0.38rem] px-2 flex flex-initial flex-row gap-2 rounded-[2.5rem] bg-white/5 items-center'
           >
             <div className='place-content-center flex flex-initial rounded-full my-auto w-[36px] h-[36px]'>
-              <imgWithFallback
+              <ImageWithFallback
                 src={user?.avatar}
                 fallbackSrc={Avatar}
                 width={36}
@@ -167,7 +167,7 @@ const Profile = () => {
                 dropdownOpen ? 'rotate-180' : ''
               }`}
             >
-              <img alt='arrow' src={IconArrowWhite} />
+              <Image alt='arrow' src={IconArrowWhite} />
             </div>
           </button>
         </MenuHandler>

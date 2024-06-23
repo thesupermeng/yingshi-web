@@ -61,7 +61,7 @@ export default function NavHeader({
       >
         {showBack && (
           <>
-            <img
+            <Image
               alt='back'
               src={IconChevron}
               width={17}

@@ -108,7 +108,7 @@ export default function BetCart() {
       >
         {Object.entries(showOptions).length === 0 ? (
           <div className='flex flex-col items-center justify-center flex-1 gap-3'>
-            <img src={EmptyData} alt='empty' width={80} height={80}></img>
+            <Image src={EmptyData} alt='empty' width={80} height={80}></Image>
             <p className='text-[#6F7076] text-lg font-medium'>
               {t('yourBetSlipIsEmpty')}
             </p>

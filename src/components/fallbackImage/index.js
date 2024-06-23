@@ -8,7 +8,7 @@ export const ImageWithFallback = ({
 }) => {
   return (
     <ErrorBoundary key={`img-error-${src}`} noLog>
-      <img
+      <Image
         src={src || fallbackSrc}
         onError={(e) => {
           e.target.srcset = fallbackSrc?.src || fallbackSrc;

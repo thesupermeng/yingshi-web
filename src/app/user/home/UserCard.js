@@ -25,7 +25,7 @@ export const UserCard = () => {
   return (
     <div className='flex flex-col items-stretch rounded-xl backdrop-blur-2xl h-[148px] p-3 bg-tayaGrey'>
       <div className='flex-1 flex flex-row justify-between items-center '>
-        <imgWithFallback
+        <ImageWithFallback
           alt='user'
           width={48}
           height={48}
@@ -49,7 +49,7 @@ export const UserCard = () => {
           )}
         </div>
         {isLogin && (
-          <img
+          <Image
             alt='edit'
             src={ProfileEdit}
             className='w-4 h-4 flex-initial mr-5'
@@ -81,7 +81,7 @@ export const UserCard = () => {
             <div className='text-[#FFFFFF8C] text-[13px] font-normal'>
               {t('youAreNotLoggedInClickHereToLogIn')}
             </div>
-            <img
+            <Image
               alt='login'
               src={ArrowRight}
               className='flex'

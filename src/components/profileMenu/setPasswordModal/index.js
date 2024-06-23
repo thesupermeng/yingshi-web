@@ -184,7 +184,7 @@ const SetPasswordModal = ({
             onChange={passwordDebounce}
           />
           <div className='mt-auto mb-auto' onClick={passwordClick}>
-            <img alt='eye' src={showPass ? PasswordEye1 : PasswordEye} />
+            <Image alt='eye' src={showPass ? PasswordEye1 : PasswordEye} />
           </div>
         </div>
         <div
@@ -202,7 +202,7 @@ const SetPasswordModal = ({
             className={`bg-transparent w-11/12 h-full p-3 outline-none`}
           />
           <div className='mt-auto mb-auto' onClick={confirmPasswordClick}>
-            <img
+            <Image
               alt='eye'
               src={showConfirmPass ? PasswordEye1 : PasswordEye}
             />
@@ -228,7 +228,7 @@ const SetPasswordModal = ({
         )}
         <div>
           <div className='flex mt-3'>
-            <img alt='tick' src={validLength ? Tick : OpacityTick} />
+            <Image alt='tick' src={validLength ? Tick : OpacityTick} />
             <div
               className={
                 validLength ? 'text-sm ml-2' : 'text-sm ml-2 opacity-25'
@@ -239,7 +239,7 @@ const SetPasswordModal = ({
           </div>
           {/* extra rules */}
           {/* <div className='flex mt-3'>
-            <img alt='ticks' src={upLowCase ? Tick : OpacityTick} />
+            <Image alt='ticks' src={upLowCase ? Tick : OpacityTick} />
             <div
               className={upLowCase ? 'text-sm ml-2' : 'text-sm ml-2 opacity-25'}
             >
@@ -247,13 +247,13 @@ const SetPasswordModal = ({
             </div>
           </div> */}
           {/* <div className='flex mt-3'>
-            <img alt='tick' src={digit ? Tick : OpacityTick} />
+            <Image alt='tick' src={digit ? Tick : OpacityTick} />
             <div className={digit ? 'text-sm ml-2' : 'text-sm ml-2 opacity-25'}>
               {t('passwordRules3')}
             </div>
           </div> */}
           <div className='flex mt-3'>
-            <img alt='tick' src={specialChar ? Tick : OpacityTick} />
+            <Image alt='tick' src={specialChar ? Tick : OpacityTick} />
             <div
               className={
                 specialChar ? 'text-sm ml-2' : 'text-sm ml-2 opacity-25'
@@ -263,7 +263,7 @@ const SetPasswordModal = ({
             </div>
           </div>
           <div className='flex mt-3'>
-            <img alt='tick' src={noSpaceRepeat ? Tick : OpacityTick} />
+            <Image alt='tick' src={noSpaceRepeat ? Tick : OpacityTick} />
             <div
               className={
                 noSpaceRepeat ? 'text-sm ml-2' : 'text-sm ml-2 opacity-25'

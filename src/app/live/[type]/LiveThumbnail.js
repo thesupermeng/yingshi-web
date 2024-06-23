@@ -18,7 +18,7 @@ export const LiveThumbnail = ({ width, data }) => {
       <div className='relative flex flex-initial w-full overflow-hidden'>
         <div className='w-full aspect-[16/9] rounded-xl overflow-hidden'>
           {(data?.img_url || data?.streamer?.cover_image) && (
-            <imgWithFallback
+            <ImageWithFallback
               src={data?.img_url ? data?.img_url : data?.streamer?.cover_image}
               fill
               fallbackSrc={IconDefaultGames}
@@ -37,7 +37,7 @@ export const LiveThumbnail = ({ width, data }) => {
             {t('live')}
           </div>
           <div className='flex flex-row rounded-[6.6rem] backdrop-blur-sm px-1 items-center bg-black'>
-            <img
+            <Image
               alt='thumb'
               className='flex self-center w-4 h-3 ml-1'
               src={ViewerIcon}
@@ -51,7 +51,7 @@ export const LiveThumbnail = ({ width, data }) => {
       <div className='flex flex-col gap-1.5 flex-1 p-3 bg-tayaGrey'>
         <div className='flex flex-row flex-initial items-center'>
           {data?.streamer?.avatar && (
-            <imgWithFallback
+            <ImageWithFallback
               width={isWeb() ? 40 : 20}
               height={isWeb() ? 40 : 20}
               alt='thumb'

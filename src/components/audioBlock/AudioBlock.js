@@ -53,11 +53,11 @@ export const AudioBlock = ({ onClick = () => {}, onEnded = () => {} }) => {
       >
         <div className='relative w-[50px] h-[50px] rounded-full overflow-hidden'>
           {audioRedux?.image ? ( //xl: not handling if there is no image to fill the empty space, as confirm with mq, audio ann will always be accompanied by an avatar image
-            <img alt='avatar' src={audioRedux?.image} fill />
+            <Image alt='avatar' src={audioRedux?.image} fill />
           ) : null}
           {/* this will only show if auto play disabled(safari) */}
           {!isAudioAnnPlaying && (
-            <img
+            <Image
               src={PlayBlackBg}
               alt='play button'
               className='opacity-90'
@@ -83,14 +83,14 @@ export const AudioBlock = ({ onClick = () => {}, onEnded = () => {} }) => {
           <div className='flex flex-row items-center justify-start gap-2'>
             {/* this will be hidden if auto play is diabled. */}
             {isAudioAnnPlaying && (
-              <img alt='audio' src={AudioGif} width={20} height={20} />
+              <Image alt='audio' src={AudioGif} width={20} height={20} />
             )}
             <div className='text-white text-13 font-normal'>
               {audioData?.desc}
             </div>
           </div>
         </div>
-        <img
+        <Image
           alt='go'
           src={IconChevron}
           className='flex-initial w-[10px] h-[18px] rotate-180'

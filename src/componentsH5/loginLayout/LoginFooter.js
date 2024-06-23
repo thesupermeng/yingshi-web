@@ -84,13 +84,13 @@ export const LoginFooter = ({
           }}
         >
           {config?.toggle?.['t&c'] === 'false' ? (
-            <img
+            <Image
               alt='tick'
               src={RadioBoxRed}
               className='inline w-[15px] h-[15px] mr-1.5'
             />
           ) : (
-            <img
+            <Image
               alt='tick'
               src={termsTicked ? RadioBoxRed : RadioBox0}
               className='inline w-[15px] h-[15px] mr-1.5'

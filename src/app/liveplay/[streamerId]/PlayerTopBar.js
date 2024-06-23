@@ -31,13 +31,13 @@ export default function PlayerTopBar() {
           onClick={() => onClickBack()}
         >
           {isWeb() ? (
-            <img
+            <Image
               alt='back'
               src={IconArrowLeft}
               className='flex-initial w-[52px] h-[52px] opacity-20 hover:opacity-100'
             />
           ) : (
-            <img
+            <Image
               alt='back'
               src={IconChevron}
               className='flex-initial w-[52px] h-[52px] opacity-20 hover:opacity-100'
@@ -45,7 +45,7 @@ export default function PlayerTopBar() {
           )}
         </div>
 
-        <imgWithFallback
+        <ImageWithFallback
           src={focusStream?.streamer?.avatar}
           alt='image'
           width={56}
@@ -66,7 +66,7 @@ export default function PlayerTopBar() {
         </div>
 
         <div className='inline-flex flex-row items-center gap-2'>
-          <img alt='viewer' src={ViewerIcon} className='w-[18px] h-[12px]' />
+          <Image alt='viewer' src={ViewerIcon} className='w-[18px] h-[12px]' />
           <div className='text-white text-sm font-medium leading-[150%]'>
             {getFollowerCount(focusStream?.current_view)}
           </div>

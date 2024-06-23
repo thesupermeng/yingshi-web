@@ -78,12 +78,12 @@ export const PromotionModal = () => {
                 }`}
               >
                 {modalContent.image ? (
-                  <img src={modalContent.image} alt='promotion image' fill />
+                  <Image src={modalContent.image} alt='promotion image' fill />
                 ) : (
                   <LoadingSpinner />
                 )}
               </div>
-              <img
+              <Image
                 src={CrossWhite}
                 alt='CrossWhite'
                 className='w-[1.6rem] h-[1.6rem] opacity-50 hover:opacity-100'

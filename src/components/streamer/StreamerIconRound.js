@@ -40,7 +40,7 @@ export const StreamerIconRound = ({
       onClick={onClick}
     >
       {img && (
-        <img
+        <Image
           alt='streamer'
           src={img}
           style={{
@@ -58,7 +58,7 @@ export const StreamerIconRound = ({
             !isWeb() && 'h-[13px]'
           }`}
         >
-          <img src={liveIcon} alt='icon' width={8} height={8} />
+          <Image src={liveIcon} alt='icon' width={8} height={8} />
           <div className='text-[9px] font-medium text-white'>{t('live').toUpperCase()}</div>
         </div>
       ) : null}

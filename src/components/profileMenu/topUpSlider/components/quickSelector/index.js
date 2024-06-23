@@ -80,7 +80,7 @@ export const QuickSelector = ({
           className='bg-[#191A1D] rounded-[8px] p-3 ml-2 cursor-pointer'
           onClick={toggleSheet}
         >
-          <img src={Edit} width={20} height={20} alt='edit' />
+          <Image src={Edit} width={20} height={20} alt='edit' />
         </div>
       </div>
 

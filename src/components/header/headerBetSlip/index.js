@@ -32,7 +32,7 @@ const BetSlip = ({ onClick, withText = true }) => {
       }`}
     >
       <div className='cart relative place-content-center flex flex-initial items-center'>
-        <img
+        <Image
           alt='bet slip'
           src={count === 0 ? IconCartEmpty : IconCartNumber}
         />

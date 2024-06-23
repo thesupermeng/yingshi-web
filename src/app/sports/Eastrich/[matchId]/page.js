@@ -31,7 +31,7 @@ export default function Page({ params }) {
       <WEBOnly>
         <div className='flex flex-1 flex-col px-12 relative'>
           <Link href='/sports/Eastrich'>
-            <img
+            <Image
               alt='back'
               src={IconArrowWhite}
               className='absolute right-full rotate-90 w-4 h-5'

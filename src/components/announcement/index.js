@@ -51,7 +51,7 @@ const Announcement = () => {
             ) : (
               <></>
             )}
-            <img
+            <Image
               alt='arrow'
               src={IconArrowWhite}
               className={`flex flex-initial transition w-3 h-3 ${
@@ -83,7 +83,7 @@ const Announcement = () => {
             ) : (
               <></>
             )}
-            <img
+            <Image
               alt='arrow'
               src={IconArrowWhite}
               className={`flex flex-initial transition w-3 h-3 ${

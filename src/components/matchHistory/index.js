@@ -22,7 +22,7 @@ export default function MatchHistory({
         {sportType === 1 && (
           <div className='flex items-center justify-around mt-3'>
             <span className='bg-white rounded-full w-[50px] h-[50px] flex justify-center items-center'>
-              <img
+              <Image
                 className='w-[40px] h-[40px] object-contain'
                 src={team?.icon}
                 width={50}
@@ -72,7 +72,7 @@ export default function MatchHistory({
           <div className='flex justify-between mt-3'>
             <div className='flex items-center gap-5'>
               <span className='bg-white rounded-full w-[50px] h-[50px] flex justify-center items-center'>
-                <img
+                <Image
                   className='object-contain '
                   src={team?.icon}
                   alt='logo'
@@ -123,7 +123,7 @@ export default function MatchHistory({
         >
           <div className='flex gap-3'>
             <span className='w-[24px] h-[24px] bg-white rounded-full flex items-center justify-center overflow-hidden'>
-              <img
+              <Image
                 src={data && data[0]?.competition?.icon}
                 alt='icon'
                 width={16}
@@ -137,7 +137,7 @@ export default function MatchHistory({
             </p>
           </div>
 
-          <img
+          <Image
             className={`flex-initial transition-transform duration-500 ease-in-out ${
               isExpand ? 'rotate-180' : 'rotate-0'
             }`}

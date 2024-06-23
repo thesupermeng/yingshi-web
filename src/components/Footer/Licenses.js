@@ -25,7 +25,7 @@ export const Licenses = () => {
             className='self-center grayscale hover:grayscale-0'
             onClick={() => onClickIcon(item.url)}
           >
-            <img
+            <Image
               src={item.image}
               alt={item.name}
               width={110}

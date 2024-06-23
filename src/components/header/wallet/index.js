@@ -19,7 +19,7 @@ const Wallet = () => {
 
   return (
     <div className='flex flex-initial rounded-[2.5rem] bg-white/5 place-content-center py-3 px-4'>
-      <img
+      <Image
         className='w-[24px] h-[24px] mt-auto mb-auto mr-2'
         alt='wallet'
         src={Icon}
@@ -28,7 +28,7 @@ const Wallet = () => {
         {formatCredit(user?.sum?.balance, true)}
       </div>
       {/* <div className='w-[2.8125rem] h-[2.8125rem] flex flex-initial rounded-[2.5rem] bg-tayaRed place-content-center'>
-        <img alt='wallet' src={Icon} className='w-' />
+        <Image alt='wallet' src={Icon} className='w-' />
       </div> */}
     </div>
   );

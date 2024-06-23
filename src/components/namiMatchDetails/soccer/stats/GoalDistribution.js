@@ -72,7 +72,7 @@ export default function GoalDistribution({
       <div className='flex'>
         <div className='w-[40%] flex items-center'>
           <span className='bg-white rounded-full min-w-[28px] h-[28px] flex justify-center items-center'>
-            <img
+            <Image
               className='w-[20px] h-[20px] object-contain'
               src={detail?.icon}
               alt='logo'

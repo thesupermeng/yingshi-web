@@ -24,7 +24,7 @@ export const StreamerInfo = () => {
       }`}
     >
       <div className='flex items-center gap-3 '>
-        <img
+        <Image
           alt='streamer'
           src={streamer.avatar || Avatar}
           className={`object-cover rounded-full ${
@@ -80,7 +80,7 @@ export const StreamerInfo = () => {
           onClick={() => setShowShareModal(true)}
           className='inline-flex bg-white bg-opacity-5 rounded-[22px] py-2 items-center px-5 gap-1 cursor-pointer'
         >
-          <img src={ShareVideo} width={22} height={22} alt='share' />
+          <Image src={ShareVideo} width={22} height={22} alt='share' />
           <p>{t('share')}</p>
         </div>
       ) : (

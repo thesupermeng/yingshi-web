@@ -37,7 +37,7 @@ export const CounterFAB = ({ reward, minAmount, onTimeup, startTime = 0 }) => {
       }}
       className='fixed bottom-1/2 transform translate-y-1/2 right-0 w-fit z-10 h-fit flex flex-col items-center'
     >
-      <img src={TimerIcon} alt='TimerIcon' width={70} />
+      <Image src={TimerIcon} alt='TimerIcon' width={70} />
       <div className='absolute top-5 text-[5.455px] text-tayaRed text-center font-bold'>
         <p>{t('limited')} </p>
         <p>{t('timeOffer')}</p>

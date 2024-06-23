@@ -82,7 +82,7 @@ const ResultDicesIcon = ({ diceResult }) => {
       {diceResult?.result?.rolls.map((number, index) => {
         const icon = DICE_FACE[number] || null;
         return (
-          <img
+          <Image
             key={`${diceResult.id}${index}`}
             width={isWeb() ? 30 : 22}
             height={isWeb() ? 30 : 22}
@@ -92,7 +92,7 @@ const ResultDicesIcon = ({ diceResult }) => {
         );
       })}
       {diceResult?.result?.odd_even && (
-        <img
+        <Image
           width={isWeb() ? 30 : 22}
           height={isWeb() ? 30 : 22}
           src={icon4}

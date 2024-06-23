@@ -29,7 +29,7 @@ export const GameCard = ({ data = {}, onClick }) => {
       }`}
     >
       <div className='relative flex w-full aspect-[430/326] overflow-hidden'>
-        <img
+        <Image
           placeholder='blur'
           blurDataURL={IconDefaultGames.src}
           onClick={(e) => {
@@ -56,7 +56,7 @@ export const GameCard = ({ data = {}, onClick }) => {
       <div className={`${isWeb() ? 'p-3' : 'p-2'}`}>
         <div className=''>
           {(isWeb() ? vendor?.web_icon : vendor?.app_icon) ? (
-            <img
+            <Image
               alt='vendor'
               src={isWeb() ? vendor.web_icon : vendor.app_icon}
               className='inline w-5 h-5 rounded-sm'
@@ -101,7 +101,7 @@ const BeforePlay = ({ isLogin, id }) => {
             router.push(`/games/${id}`);
           }}
         >
-          <img alt='real' src={GameMoney} /> {t('realPlay')}
+          <Image alt='real' src={GameMoney} /> {t('realPlay')}
         </div>
       ) : (
         <div
@@ -120,7 +120,7 @@ const BeforePlay = ({ isLogin, id }) => {
           router.push(`/games/${id}`);
         }}
       >
-        <img alt='fun' src={GameJoypad} />
+        <Image alt='fun' src={GameJoypad} />
         {t('funPlay')}
       </div>
     </div>

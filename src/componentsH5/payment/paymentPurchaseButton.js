@@ -76,7 +76,7 @@ export default function PaymentPurchaseButton({productInfo, paymentInfo, classNa
           <DialogBody className={'p-0 w-full h-full'}>
             <div
               className={'w-full h-full rounded-[14px] flex flex-col items-center justify-center'}>
-              <img src={CrossRed} alt={'Login success'} width={95} height={95} className={'p-2'}/>
+              <Image src={CrossRed} alt={'Login success'} width={95} height={95} className={'p-2'}/>
               <span className={'text-[17px] text-white'}>支付失败，请稍后再试</span>
             </div>
           </DialogBody>

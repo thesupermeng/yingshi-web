@@ -34,7 +34,7 @@ export default function TayaSportsList({ allExpand }) {
   if (isLoading) {
     return (
       <div className='flex flex-1 items-center justify-center'>
-        <img
+        <Image
           src={loadingGIF}
           width={100}
           height={100}

@@ -21,7 +21,7 @@ const FootballTiles = (props) => {
 
   return (
     <div className='relative mt-3 text-sm'>
-      <img
+      <Image
         src={FootballField}
         className='w-full'
         width={100}
@@ -60,7 +60,7 @@ const FootballTiles = (props) => {
 
       <div className='flex items-center gap-2 mt-2 text-sm absolute bottom-2 ml-5'>
         <div className='rounded-[50%] overflow-hidden h-[28px] w-[28px]'>
-          <img
+          <Image
             src={lineUp?.away?.icon}
             width={28}
             height={28}

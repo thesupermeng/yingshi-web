@@ -52,7 +52,7 @@ export const ResetPassword = ({ submitText, onSubmit, errorMsg = '' }) => {
   const PasswordRuleRow = ({ isValid, text }) => {
     return (
       <div className='flex'>
-        <img
+        <Image
           alt='tick'
           src={isValid ? Tick : OpacityTick}
           className='w-[18px] h-[18px]'

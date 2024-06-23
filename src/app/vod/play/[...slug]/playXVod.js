@@ -553,7 +553,7 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
                     marginTop: '0.4rem',
                   }}
                 >
-                  <img src={ArrowLeftIcon} alt='Icon' />
+                  <Image src={ArrowLeftIcon} alt='Icon' />
                 </div>
               </div>
               <Artplayer
@@ -699,7 +699,7 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
                     onClick={openJianJie}
                   >
                     <div className='mx-3' style={{ margin: 'auto' }}>
-                      <img src={ArrowLeftIcon} alt='Icon' />
+                      <Image src={ArrowLeftIcon} alt='Icon' />
                     </div>
                     <div>{vod.vod_name}</div>
                   </div>

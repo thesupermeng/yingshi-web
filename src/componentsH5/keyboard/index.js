@@ -55,7 +55,7 @@ export default function Keyboard({
         className='flex items-center justify-center bg-[#191919] rounded-lg'
         onClick={removeLastDigit}
       >
-        <img src={remove} alt='remove' width={24} />
+        <Image src={remove} alt='remove' width={24} />
       </div>
     );
   };

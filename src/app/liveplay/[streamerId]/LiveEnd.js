@@ -30,7 +30,7 @@ export const LiveEnd = ({ streamer }) => {
           className='absolute top-7 left-[60px]'
           onClick={() => onClickBack()}
         >
-          <img
+          <Image
             alt='back'
             src={IconArrowLeft}
             className='flex-initial w-[52px] h-[52px] opacity-20 hover:opacity-100'
@@ -47,7 +47,7 @@ export const LiveEnd = ({ streamer }) => {
               {getFollowerCount(streamer?.follower_count)}&nbsp;{t('followers')}
             </div>
             {streamer?.avatar && (
-              <imgWithFallback
+              <ImageWithFallback
                 alt='icon'
                 src={streamer.avatar}
                 width={100}

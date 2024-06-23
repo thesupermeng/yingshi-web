@@ -68,7 +68,7 @@ export default function Mute({ onClick }) {
           />
         </div>
       </div>
-      <img
+      <Image
         src={muted || tempMuted ? Muted : volume > 0.5 ? Volume2 : Volume1}
         alt='volume'
         onClick={(e) => {

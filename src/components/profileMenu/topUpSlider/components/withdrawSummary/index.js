@@ -88,7 +88,7 @@ export const WithdrawSummary = () => {
 
         <div className='my-2'>
           <div className='flex items-center'>
-            <img src={IconRoundWarningSign} alt='warning' />
+            <Image src={IconRoundWarningSign} alt='warning' />
             <p className='ml-2 text-[13px]'>
               {t('confirmYourWithdrawalAddress')}
             </p>

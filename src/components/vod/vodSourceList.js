@@ -32,7 +32,7 @@ export const VodSourceList = ({
             className={styles.arrowCard}
             onClick={() => handleScroll(-100)} // Adjust scroll offset as needed
           >
-            <img src={ArrowLeftIcon} alt="Icon" />
+            <Image src={ArrowLeftIcon} alt="Icon" />
           </div>
         </div>
       )}
@@ -57,7 +57,7 @@ export const VodSourceList = ({
               className="flex flex-row space-x-1 items-center"
             >
               <div className="w-6 h-6 flex justify-center items-center">
-                <img style={{ paddingRight: '2px' }} src={PlaySourceIcon} alt="Icon" />
+                <Image style={{ paddingRight: '2px' }} src={PlaySourceIcon} alt="Icon" />
               </div>
               <span className="whitespace-nowrap text-sm">{source.source_name}</span>
             </div>
@@ -73,7 +73,7 @@ export const VodSourceList = ({
             className={styles.arrowCard}
             onClick={() => handleScroll(100)} // Adjust scroll offset as needed
           >
-            <img src={ArrowRightIcon} alt="Icon" />
+            <Image src={ArrowRightIcon} alt="Icon" />
           </div>
         </div>
       )}

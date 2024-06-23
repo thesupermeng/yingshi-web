@@ -31,16 +31,16 @@ const Layout = ({ children }) => {
         }`}
       >
         {pathname === href ? (
-          <img className={`w-7 h-7`} src={activeImg} alt='Icon' />
+          <Image className={`w-7 h-7`} src={activeImg} alt='Icon' />
         ) : (
           <>
-            <img
+            <Image
               className='w-0 h-7 object-contain group-hover:w-7'
               src={activeImg}
               alt='Icon'
             />
 
-            <img
+            <Image
               className={`w-7 h-7 object-contain group-hover:w-0`}
               src={inactiveImg}
               alt='Icon'

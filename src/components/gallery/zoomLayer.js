@@ -24,24 +24,24 @@ export default function ZoomLayer({ data, handleGalleryClick, current }) {
     <>
       <div className=' group fixed inset-0 z-40 flex items-center justify-center bg-[#121212]'>
         <div className='absolute top-5 right-5' onClick={handleGalleryClick}>
-          <img src={Glyph} alt='cross' width={40} height={40} />
+          <Image src={Glyph} alt='cross' width={40} height={40} />
         </div>
         <div
           className={`absolute left-10  ${isFirstPage ? 'opacity-30' : ''}`}
           onClick={goToPreviousPage}
         >
-          <img src={ArrowWhiteLeft} width={40} height={40} alt='left' />
+          <Image src={ArrowWhiteLeft} width={40} height={40} alt='left' />
         </div>
 
         {data[currentPage].type === 0 ? (
           <div className='flex items-center justify-center h-full duration-300 ease-in-out'>
-            <img
+            <Image
               src={data[currentPage].src}
               className='object-cover'
               width={500}
               height={500}
               alt='pic'
-            ></img>
+            ></Image>
           </div>
         ) : (
           <div className='flex items-center justify-center duration-300 ease-in-out'>
@@ -64,7 +64,7 @@ export default function ZoomLayer({ data, handleGalleryClick, current }) {
           }`}
           onClick={goToNextPage}
         >
-          <img src={ArrowWhiteLeft} width={40} height={40} alt='right' />
+          <Image src={ArrowWhiteLeft} width={40} height={40} alt='right' />
         </div>
       </div>
     </>

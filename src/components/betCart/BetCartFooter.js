@@ -195,7 +195,7 @@ export default function BetCartFooter({
           <Row
             left={
               <div className='flex gap-2'>
-                <img src={RedWallet} alt='wallet' width={20} height={20} />
+                <Image src={RedWallet} alt='wallet' width={20} height={20} />
                 <p>Balance</p>
               </div>
             }
@@ -205,7 +205,7 @@ export default function BetCartFooter({
                 onClick={onClickTopup}
               >
                 ({formatCredit(user?.sum?.balance)})
-                <img
+                <Image
                   alt='topup'
                   src={IconArrowWhite}
                   className='w-3 h-3 ml-2 -rotate-90'

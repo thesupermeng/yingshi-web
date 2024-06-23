@@ -46,7 +46,7 @@ export const GameTypes = () => {
                 }
               >
                 {isWeb() ? (
-                  <img
+                  <Image
                     alt={type.label}
                     width={22}
                     height={22}

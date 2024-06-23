@@ -36,7 +36,7 @@ export const FlytoBetSlip = ({ onEnd, from }) => {
   return createPortal(
     <>
       {fromRect.x && (
-        <img
+        <Image
           src={EastRichBetTicket}
           alt='ticket'
           className={`fixed z-40`}

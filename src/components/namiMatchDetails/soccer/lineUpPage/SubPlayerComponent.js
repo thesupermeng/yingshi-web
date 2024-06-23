@@ -174,7 +174,7 @@ export default function SubPlayerComponent({
                 isHome ? 'bg-[#5C0012]' : 'bg-[#004781]'
               } rounded-full w-[35px] h-[35px] overflow-hidden flex justify-center`}
             >
-              <img
+              <Image
                 src={data.logo}
                 width={30}
                 height={30}
@@ -191,7 +191,7 @@ export default function SubPlayerComponent({
                   isHome ? 'bg-[#5C0012]' : 'bg-[#004781]'
                 } rounded-full w-[35px] h-[35px] overflow-hidden flex justify-center`}
               >
-                <img
+                <Image
                   src={data.player?.icon}
                   width={30}
                   height={30}
@@ -199,14 +199,14 @@ export default function SubPlayerComponent({
                 />
               </div>
               {isInjury && data?.player && (
-                <img src={InjuryV2} alt='injury' width={16} height={16} className='absolute top-6 -left-1'/>
+                <Image src={InjuryV2} alt='injury' width={16} height={16} className='absolute top-6 -left-1'/>
               )}
             </>
           ) : isInjury && data?.player ? (
-            <img src={InjuryV2} alt='injury' width={30} height={30} />
+            <Image src={InjuryV2} alt='injury' width={30} height={30} />
           ) : (
             <div className='bg-[#27282D] rounded-[35px] w-[35px] h-[35px] items-center flex justify-center'>
-              <img
+              <Image
                 src={isHome ? RedShirt : BlueShirt}
                 width={20}
                 height={20}
@@ -217,12 +217,12 @@ export default function SubPlayerComponent({
 
           {checkYellowCard() && (
             <div className='-right-1 -bottom-1 h-[18px] w-[18px] absolute flex items-center justify-center'>
-              <img src={YellowCard} width={17} alt='yellow' />
+              <Image src={YellowCard} width={17} alt='yellow' />
             </div>
           )}
           {checkYellowToRedCard() && (
             <div className='-right-1 -bottom-1 bg-white rounded-full h-[16px] w-[16px] absolute flex items-center justify-center'>
-              <img
+              <Image
                 source={YellowToRedCard}
                 width={5.33}
                 className='h-[8px]'
@@ -232,7 +232,7 @@ export default function SubPlayerComponent({
           )}
           {checkRedCard() && (
             <div className='-right-1 -bottom-1 bg-white rounded-full h-[16px] w-[16px] absolute flex items-center justify-center'>
-              <img src={RedCard} width={5.33} className='h-[8px]' alt='red' />
+              <Image src={RedCard} width={5.33} className='h-[8px]' alt='red' />
             </div>
           )}
         </div>
@@ -264,7 +264,7 @@ export default function SubPlayerComponent({
         {checkSubIn() && (
           <div className='flex gap-1'>
             <div className='img-base'>
-              <img src={SubInV2} width={14} alt='subin' />
+              <Image src={SubInV2} width={14} alt='subin' />
             </div>
             <p className='text-[10px]'>{`${subInTime}'`}</p>
           </div>
@@ -272,7 +272,7 @@ export default function SubPlayerComponent({
         {checkSubOut() && (
           <div className='flex gap-1'>
             <div className='img-base'>
-              <img src={SubOutV2} width={14} alt='subout' />
+              <Image src={SubOutV2} width={14} alt='subout' />
             </div>
             <p className='text-[10px]'>{`${subOutTime}'`}</p>
           </div>
@@ -280,7 +280,7 @@ export default function SubPlayerComponent({
         {checkGoal() && (
           <div className='flex gap-1'>
             <div className='img-base'>
-              <img src={Goal} width={8} alt='goal' />
+              <Image src={Goal} width={8} alt='goal' />
             </div>
             <p className='text-[10px]'>{` x${goalCount}`}</p>
           </div>
@@ -288,7 +288,7 @@ export default function SubPlayerComponent({
         {checkAssist() && (
           <div className='flex gap-1'>
             <div className='img-base'>
-              <img src={AssistGoal} width={8} alt='assistGoal' />
+              <Image src={AssistGoal} width={8} alt='assistGoal' />
             </div>
             <p className='text-[10px]'>{` x${assistCount}`}</p>
           </div>
@@ -296,7 +296,7 @@ export default function SubPlayerComponent({
         {checkOwnGoal() && (
           <div className='flex gap-1'>
             <div className='img-base'>
-              <img src={OwnGoal} width={8} alt='ownGoal' />
+              <Image src={OwnGoal} width={8} alt='ownGoal' />
             </div>
             <p className='text-[10px]'>{` x${ownGoalCount}`}</p>
           </div>
@@ -304,7 +304,7 @@ export default function SubPlayerComponent({
         {checkPenaltyGoal() && (
           <div className='flex gap-1'>
             <div className='img-base'>
-              <img src={PenaltyGoal} width={8} alt='penaly' height={8} />
+              <Image src={PenaltyGoal} width={8} alt='penaly' height={8} />
             </div>
             <p className='text-[10px]'>{` x${penaltyGoalCount}`}</p>
           </div>

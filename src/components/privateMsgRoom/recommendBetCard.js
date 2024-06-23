@@ -28,7 +28,7 @@ export const RecommendBetCard = ({ chatInfo, setShowFlyAnimation }) => {
         <div className='overflow-hidden rounded-xl'>
           <div className='flex flex-col'>
             <div className='flex items-center'>
-              <img src={Bookmark} alt='book' width={18} height={18} />
+              <Image src={Bookmark} alt='book' width={18} height={18} />
               <p className='text-sm'>{t('recommendedBet')}</p>
             </div>
 

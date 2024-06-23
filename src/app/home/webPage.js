@@ -185,7 +185,7 @@ const RenderChatroom = () => {
 
 const NavArrow = ({ tw, isShow, onClick }) => {
   return (
-    <img
+    <Image
       alt='arrow'
       src={IconArrowWhite}
       width={16}
@@ -194,13 +194,13 @@ const NavArrow = ({ tw, isShow, onClick }) => {
         isShow ? 'opacity-0' : 'opacity-100'
       }`}
       onClick={onClick}
-    ></img>
+    ></Image>
   );
 };
 
 const PrevNextImg = ({ isPrev, src }) => {
   return src ? (
-    <imgWithFallback
+    <ImageWithFallback
       alt={isPrev ? 'prev' : 'next'}
       width={1600}
       height={900}

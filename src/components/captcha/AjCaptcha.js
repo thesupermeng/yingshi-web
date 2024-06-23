@@ -75,7 +75,7 @@ export const CaptchaIframe = () => {
             </div>
           ) : null}
         </div>
-        <img
+        <Image
           src={CrossWhite}
           width={40}
           alt='close'
