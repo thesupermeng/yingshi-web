@@ -16,7 +16,7 @@ export default function PaymentStatusModal({transactionDetail, open, handler}){
           {isQueryError &&
             <div
               className={'w-full h-full rounded-[14px] flex flex-col items-center justify-center'}>
-              <img src={CrossRed} alt={'Error'} width={95} height={95} className={'p-[15px]'}/>
+              <Image src={CrossRed} alt={'Error'} width={95} height={95} className={'p-[15px]'}/>
               <span className={'text-[17px] text-white'}>{msg}</span>
               {/*<span className={'text-[17px] text-white'}>你已成为VIP用户</span>*/}
             </div>
@@ -24,7 +24,7 @@ export default function PaymentStatusModal({transactionDetail, open, handler}){
           {!isQueryError && completed &&
             <div
               className={'w-full h-full rounded-[14px] flex flex-col items-center justify-center'}>
-              <img src={TickAnimation} alt={'Login success'} width={95} height={95}/>
+              <Image src={TickAnimation} alt={'Login success'} width={95} height={95}/>
               <span className={'text-[17px] text-white'}>付款成功</span>
               <span className={'text-[17px] text-white'}>你已成为VIP用户</span>
             </div>

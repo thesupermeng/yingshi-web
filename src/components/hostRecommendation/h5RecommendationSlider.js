@@ -30,7 +30,7 @@ export const HostRecommendation = () => {
     <Accordion
       open={show}
       icon={
-        <img
+        <Image
           className={`-translate-x-4 w-3 h-3 transition-transform duration-500 ease-in-out ${
             show ? 'rotate-180' : 'rotate-0'
           }`}
@@ -47,7 +47,7 @@ export const HostRecommendation = () => {
         onClick={() => hostRecommendationList?.length > 0 && setShow(!show)}
         className='gap-2 text-[13px] !text-white px-2.5 !border-0 bg-[#050505] !justify-start'
       >
-        <img src={Bookmark} alt='Bookmark' width={16} height={16} />
+        <Image src={Bookmark} alt='Bookmark' width={16} height={16} />
         Recommended by Host ({hostRecommendationList?.length})
         {isLogin && (
           <div
@@ -60,7 +60,7 @@ export const HostRecommendation = () => {
           >
             <p>{formatCredit(user?.sum?.balance, false)}</p>
             <div className='bg-tayaRed rounded-full flex items-center justify-center p-1'>
-              <img src={Plus} alt='plus' width={10} height={10} />
+              <Image src={Plus} alt='plus' width={10} height={10} />
             </div>
           </div>
         )}

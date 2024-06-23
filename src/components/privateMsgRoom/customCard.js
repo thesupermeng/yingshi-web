@@ -91,7 +91,7 @@ export const CustomCard = ({ chatInfo }) => {
               title={chatInfo?.video?.h5?.title}
             />
           ) : (
-            <imgWithFallback
+            <ImageWithFallback
               src={imgSrc}
               alt='img'
               width={264}

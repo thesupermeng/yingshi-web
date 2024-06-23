@@ -11,14 +11,14 @@ export default function InjurieSusp({ homePlayerList, awayPlayerList }) {
           homePlayerList.map((item, index) => (
             <div className='flex' key={index}>
               <div className='relative'>
-                <img
+                <Image
                   className='w-[30px] h-[30px] rounded-full bg-[#5C0012]'
                   src={item.player.icon}
                   alt='avatar'
                   width={30}
                   height={30}
                 />
-                <img
+                <Image
                   className=' w-[14px] h-[14px] absolute bottom-[2px] right-[-2px]'
                   src={InjuryV2.src}
                   alt='avatar'
@@ -40,14 +40,14 @@ export default function InjurieSusp({ homePlayerList, awayPlayerList }) {
           awayPlayerList.map((item, index) => (
             <div className='flex' key={index}>
               <div className='relative'>
-                <img
+                <Image
                   className='w-[30px] h-[30px] rounded-full bg-[#013C6B]'
                   src={item.player.icon}
                   alt='avatar'
                   width={30}
                   height={30}
                 />
-                <img
+                <Image
                   className=' w-[14px] h-[14px] absolute bottom-[2px] right-[-2px]'
                   src={InjuryV2.src}
                   alt='avatar'

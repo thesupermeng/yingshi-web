@@ -80,7 +80,7 @@ export const Voucher = ({
     >
       <div className='flex flex-1'>
         <div className=' flex items-center justify-center relative pl-5 pr-2 overflow-hidden'>
-          <imgWithFallback
+          <ImageWithFallback
             src={voucherInfo.image}
             fallbackSrc={VoucherIcon}
             width={60}
@@ -119,7 +119,7 @@ export const Voucher = ({
 
       {isUsed || isExpired ? (
         <div className='absolute top-10 right-5 rotate-[-30deg]'>
-          <img
+          <Image
             src={isUsed ? UsedStamp : InvalidStamp}
             alt='Stamp'
             width={60}

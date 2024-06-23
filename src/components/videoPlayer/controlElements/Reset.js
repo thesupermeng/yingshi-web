@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 export const Reset = ({ size }) => {
   return (
-    <img
+    <Image
       src={Reload}
       alt='reload'
       onClick={reloadPlayer}

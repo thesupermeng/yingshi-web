@@ -36,7 +36,7 @@ export default function Comparison({ matchDetailsData }) {
       <div className='flex justify-between'>
         <div className='flex items-center w-[50%]'>
           <span className='overflow-hidden rounded-full flex justify-center items-center w-[24px] h-[24px]'>
-            <imgWithFallback
+            <ImageWithFallback
               className='object-cover'
               src={matchDetailsData?.home?.icon}
               alt='logo'
@@ -56,7 +56,7 @@ export default function Comparison({ matchDetailsData }) {
               matchDetailsData?.away?.name_en}
           </p>
           <span className='overflow-hidden rounded-full flex justify-center items-center w-[24px] h-[24px]'>
-            <imgWithFallback
+            <ImageWithFallback
               className='object-cover'
               src={matchDetailsData?.away?.icon}
               alt='logo'

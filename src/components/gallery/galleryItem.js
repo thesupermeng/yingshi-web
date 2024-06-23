@@ -6,7 +6,7 @@ const GalleryItem = ({ data, handleGalleryClick }) => {
   const videoItem = (
     <div className='flex flex-1 object-contain bg-[#09090960] relative'>
       <video src={data?.src} width={'100%'} height={'100%'}></video>
-      <img
+      <Image
         src={VideoIcon}
         alt='videoIcon'
         width={25}
@@ -17,12 +17,12 @@ const GalleryItem = ({ data, handleGalleryClick }) => {
   );
 
   const imageItem = (
-    <img
+    <Image
       src={data?.src}
       width={200}
       height={200}
       className='flex flex-1 object-contain bg-[#09090960]'
-    ></img>
+    ></Image>
   );
 
   const renderedItem = () => {

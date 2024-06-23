@@ -5,7 +5,7 @@ import { Tooltip } from 'react-tooltip';
 export const Expand = ({ isExpand }) => {
   return (
     <>
-      <img
+      <Image
         data-tooltip-id='collapsed-tooltip'
         data-tooltip-content={isExpand ? 'Hide' : 'Show'} // Use a ternary operator
         data-tooltip-place='right'

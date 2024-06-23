@@ -88,7 +88,7 @@ const Tile = ({ isLock, content = {}, onPress, css = '' }) => {
       } min-w-1/2 p-1.5 rounded-md flex flex-col items-center border border-transparent hover:rounded-md hover:border-white/40 hover:bg-[#242B3E8E] ${css} h-[56px]`}
     >
       {isLock ? (
-        <img
+        <Image
           alt='lock'
           src={IconLockOdd}
           className={`flex flex-initial py-1.5 opacity-20 h-[40px] w-auto`}

@@ -124,12 +124,12 @@ export const QuickBetSlider = () => {
       <div className='flex flex-col flex-initial px-4 pt-2 rounded-t-xl bg-tayaGrey text-[13px]'>
         <div className='flex justify-between'>
           <div className='flex gap-2'>
-            <img src={CreditCardIcon} alt='wallet' width={17} />
+            <Image src={CreditCardIcon} alt='wallet' width={17} />
             <p>{t('balance')}</p>
           </div>
           <div className='flex gap-2'>
             <p>({formatCredit(user?.sum?.balance)})</p>
-            <img src={ArrowRight} width={17} alt='arrow' />
+            <Image src={ArrowRight} width={17} alt='arrow' />
           </div>
         </div>
       </div>

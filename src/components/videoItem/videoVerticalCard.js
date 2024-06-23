@@ -23,7 +23,7 @@ export const VideoVerticalCard = ({ vod }) => {
           href={`/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`}
           className='absolute inset-0 flex rounded-lg lg:group-hover:improve-text-unblurry lg:transition lg:group-hover:scale-150 lg:group-hover:duration-500 lg:group-hover:cursor-pointer group-hover:rounded-lg lg:group-hover:z-10 lg:group-hover:rounded-lg'
         >
-          <img
+          <Image
             placeholder='blur'
             blurDataURL={'data:image/png;base64,' + base64PlaceholderString}
             alt='video'

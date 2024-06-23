@@ -19,7 +19,7 @@ export const OutrightRow = ({ data }) => {
             className='flex flex-row items-center justify-between gap-1 rounded-xl bg-tayaGrey px-2.5 py-3.5'
           >
             {row.lg?.lurl ? (
-              <img
+              <Image
                 alt='league icon'
                 src={row.lg.lurl}
                 width={24}
@@ -28,7 +28,7 @@ export const OutrightRow = ({ data }) => {
               />
             ) : null}
             <div className='flex-1 font-semibold text-[15px]'>{row.lg.na}</div>
-            <img
+            <Image
               alt='arrow'
               src={IconArrowWhite}
               className='-rotate-90 mr-4'

@@ -50,7 +50,7 @@ export const NotificationList = () => {
             </div>
             <div className='h-[0.1875rem] w-6 rounded-t-2xl bg-tayaRed ml-auto mr-auto mt-1'></div>
           </button>
-          <img
+          <Image
             alt='close'
             src={CrossWhite}
             className='w-9 h-9 opacity-20 hover:opacity-100 cursor-pointer'

@@ -169,7 +169,7 @@ export const Carousel = ({ carouselItems }) => {
                             router.push(`/vod/play/id/${carouselItems[carouselIndex].carousel_content_id}/sid/${carouselItems[carouselIndex].carousel_vod_type_id}/nid/1`);
                           }}
                           className="flex flex-row flex-wrap">
-                          <img
+                          <Image
                             style={{ paddingRight: '0.5rem' }}
                             src={PlayRightIcon}
                             alt="Icon"

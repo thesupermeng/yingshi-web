@@ -46,7 +46,7 @@ const BetCoinIcon = () => {
       className={`cursor-pointer absolute w-20 h-20 right-0 top-[10rem] flex items-center justify-center rounded-l-full bg-black/30 origin-top-right hover:scale-110 hover:bg-black/50 transition-transform backdrop-blur-md overflow-hidden`}
       onClick={onClick}
     >
-      <img
+      <Image
         alt='coin'
         width={60}
         height={60}

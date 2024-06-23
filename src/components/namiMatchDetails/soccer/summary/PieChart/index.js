@@ -39,7 +39,7 @@ const CenterStats = (props) => {
 
   return (
     <div className='relative mx-1 text-xs rounded-full'>
-      <img
+      <Image
         src={isHome ? InOutTargetRed : InOutTargetBlue}
         alt='InOutTargetRed'
         width={62}
@@ -68,7 +68,7 @@ const LeftRightStats = (props) => {
   return (
     <div className='flex flex-col items-center gap-2 px-1'>
       {statsIcon === 'flag' ? (
-        <img src={CornerKickIcon} alt='cornerKick' width={20} />
+        <Image src={CornerKickIcon} alt='cornerKick' width={20} />
       ) : (
         <span
           className={`block ${

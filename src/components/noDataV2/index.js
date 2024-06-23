@@ -7,7 +7,7 @@ export const NodataV2 = () => {
   const { t } = useTranslation();
   return (
     <div className='flex flex-col items-center justify-center flex-1 min-h-[30vh]'>
-      <img src={NodataV2Icon} alt='nodata' width={46} height={50} />
+      <Image src={NodataV2Icon} alt='nodata' width={46} height={50} />
       <p className='text-[#808686] text-sm'>{t('noDataAtTheMoment')}</p>
     </div>
   );

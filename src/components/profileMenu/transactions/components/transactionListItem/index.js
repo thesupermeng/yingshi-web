@@ -34,7 +34,7 @@ const TransactionListItem = ({ data }) => {
   return (
     <div className='flex justify-between px-2 py-2.5'>
       <div className='flex gap-1'>
-        <img src={OrderType[data.order_type]?.icon} alt={'tranIcon'} />
+        <Image src={OrderType[data.order_type]?.icon} alt={'tranIcon'} />
         <div>
           <p className='text-[#FFFFFF] font-semibold'>{data.type_detail}</p>
           {wagerRatio ? (

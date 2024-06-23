@@ -37,7 +37,7 @@ export default function Weather() {
     <div className='flex w-full bg-center text-[9px] p-3 bg-tayaGrey rounded-[3px] gap-5'>
       <div className='flex flex-col items-center gap-1 '>
         <span className='flex items-center justify-center mr-1'>
-          <img
+          <Image
             src={currentWeather?.icon?.src}
             alt='weather'
             width={28}
@@ -54,7 +54,7 @@ export default function Weather() {
       <div className='grid grid-cols-2 gap-1'>
         {weatherParameters.map((param) => (
           <div key={param.key} className='flex text-[9px] gap-2 items-center'>
-            <img
+            <Image
               src={param.icon}
               width={17}
               alt={param.label.toLowerCase()}

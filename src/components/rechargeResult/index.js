@@ -99,7 +99,7 @@ export const RechargeResult = ({ receivedParams }) => {
           {deposit_bonus && (
             <div className='bg-[#DE173E33] rounded-lg mx-5 p-3 flex flex-col gap-3 mt-3'>
               <div className='flex gap-2 items-center'>
-                <img
+                <Image
                   src={DepositBonusIcon}
                   alt='DepositBonusIcon'
                   width={22}

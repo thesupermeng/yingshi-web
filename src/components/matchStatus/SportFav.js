@@ -12,7 +12,7 @@ export const SportFav = ({ id, sport_id }) => {
     setIsFav(favSports.map((a) => a.game_id).includes(id));
   }, [favSports]);
   return isLogin ? (
-    <img
+    <Image
       className='cursor-pointer'
       onClick={(e) => {
         e.preventDefault();

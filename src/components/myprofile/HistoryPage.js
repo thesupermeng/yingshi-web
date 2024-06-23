@@ -106,7 +106,7 @@ export default function HistoryPage() {
                   >
                     清除记录
                   </span>
-                  <img className='mx-1' src={clear} alt='clear' width={10} />
+                  <Image className='mx-1' src={clear} alt='clear' width={10} />
                 </div>
               </div>
             
@@ -131,7 +131,7 @@ export default function HistoryPage() {
             </div>
             {watchHistoryList.length === 0 && (
               <div className='flex-col items-center flex'>
-                <img
+                <Image
                   className='mx-2'
                   src={searchEmptyIcon}
                   alt='empty'
@@ -167,7 +167,7 @@ export default function HistoryPage() {
                   router.back();
                 }}
               >
-                <img src={ArrowLeftIcon} alt={'back button'} height={16} />
+                <Image src={ArrowLeftIcon} alt={'back button'} height={16} />
               </div>
               <div
                 className={
@@ -214,7 +214,7 @@ export default function HistoryPage() {
 
           {watchHistoryList.length === 0 && (
             <div className='flex-col items-center flex'>
-              <img
+              <Image
                 className='mx-2'
                 src={searchEmptyIcon}
                 alt='empty'
@@ -258,14 +258,14 @@ function HistoryCard({ vod, onClick }) {
                 'h-[126px] rounded-[12px] overflow-hidden relative mb-2'
               }
             >
-              <img
+              <Image
                 src={ImagePlaceholder}
                 alt={`Image for ${vod.vodname}`}
                 fill={true}
                 objectFit={'cover'}
                 className={'absolute'}
               />
-              <img
+              <Image
                 src={vod.vodpic}
                 alt={`Image for ${vod.vodname}`}
                 fill={true}
@@ -294,14 +294,14 @@ function HistoryCard({ vod, onClick }) {
                 'h-[87px] w-[154px] rounded-[12px] overflow-hidden relative'
               }
             >
-              <img
+              <Image
                 src={ImagePlaceholder}
                 alt={`Image for ${vod.vodname}`}
                 fill={true}
                 objectFit={'cover'}
                 className={'absolute'}
               />
-              <img
+              <Image
                 src={vod.vodpic}
                 alt={`Image for ${vod.vodname}`}
                 fill={true}

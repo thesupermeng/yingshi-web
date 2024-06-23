@@ -27,7 +27,7 @@ export const BottomSlideSheet = ({
       >
         {children}
         {withClose && (
-          <img
+          <Image
             alt='close'
             onClick={() => {
               setShow(false);

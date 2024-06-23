@@ -52,7 +52,7 @@ const AccountHeader = ({ selected, setSelected, user }) => {
         />
       </div>
       <button onClick={onClose}>
-        <img
+        <Image
           alt='close'
           className='w-9 h-9 opacity-20 hover:opacity-100'
           src={CrossWhite}

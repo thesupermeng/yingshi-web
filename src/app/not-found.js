@@ -8,7 +8,7 @@ export default function NotFound() {
   return (
     <FullPageContent className='flex flex-col flex-1 items-center justify-center text-[#808686]'>
       <p> {i18n.t('pageNotFound')}</p>
-      <img src={Icon404} alt='404' width={300} />
+      <Image src={Icon404} alt='404' width={300} />
       <p>{i18n.t('wereSorryThePageYouRequestedNotFound')}</p>
       <a
         href='/'

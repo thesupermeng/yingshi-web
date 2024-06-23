@@ -38,7 +38,7 @@ const QuickTopUp = ({ setQuickTopUpAmt, quickTopUpAmt, qtpSelected }) => {
       )}
 
       <div className='flex flex-row gap-1 items-start my-1.5'>
-        <img alt='!' src={IconInfo} />
+        <Image alt='!' src={IconInfo} />
         <div className='text-white text-13 font-medium'>
           Please ensure that the entered amount is the same amount on the
           third-party payment platform (CoinPal) to complete the deposit.

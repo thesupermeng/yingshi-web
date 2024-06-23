@@ -25,7 +25,7 @@ export const VideoHorizontalCard = ({ vod, typepage_id }) => {
   return (
     <div className='flex flex-col items-center'>
       <div className='relative flex w-full aspect-[726/430] group mx-4 my-3 rounded-lg'>
-        <img
+        <Image
           placeholder='blur'
           blurDataURL={'data:image/png;base64,' + base64PlaceholderString}
           onClick={(e) => {

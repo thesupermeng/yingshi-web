@@ -40,7 +40,7 @@ export const GamePopup = ({ data, setShowPopup }) => {
         } transition-all duration-300 fixed z-[55] left-0 right-0 flex flex-row px-4 pt-4 pb-5 gap-4 bg-black/[0.66]  backdrop-blur rounded-xl overflow-hidden`}
       >
         <div className='relative aspect-[430/326] w-[150px] flex flex-initial rounded-lg overflow-hidden'>
-          <img
+          <Image
             alt='game'
             src={app_icon}
             fill
@@ -50,7 +50,7 @@ export const GamePopup = ({ data, setShowPopup }) => {
         <div className='flex flex-col flex-1 gap-2 px-2'>
           <div className='flex flex-initial flex-row mt-2'>
             {vendor.app_icon ? (
-              <img
+              <Image
                 alt='vendor'
                 src={vendor.app_icon}
                 className='inline w-3.5 h-3.5'
@@ -74,7 +74,7 @@ export const GamePopup = ({ data, setShowPopup }) => {
                 router.push(`/games/${id}`);
               }}
             >
-              <img alt='real' src={GameMoney} /> {t('realPlay')}
+              <Image alt='real' src={GameMoney} /> {t('realPlay')}
             </div>
           ) : (
             <div
@@ -93,12 +93,12 @@ export const GamePopup = ({ data, setShowPopup }) => {
               router.push(`/games/${id}`);
             }}
           >
-            <img alt='fun' src={GameJoypad} />
+            <Image alt='fun' src={GameJoypad} />
             {t('funPlay')}
           </div>
         </div>
 
-        <img
+        <Image
           alt='close'
           onClick={() => {
             setShow(false);

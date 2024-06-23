@@ -73,7 +73,7 @@ const TeamRow = ({ data, score }) => {
   // const score = '';
   return (
     <div className='flex flex-row items-center justify-between gap-2 mt-2'>
-      <img
+      <Image
         alt='teamicon'
         width={26}
         height={26}
@@ -129,7 +129,7 @@ export const MatchInfo = ({ leagueTw = '', withVideoIcon }) => {
         </div>
         {withVideoIcon
           ? data.as && (
-              <img
+              <Image
                 alt='live'
                 src={FBAnimation}
                 className='w-7 h-7 mb-4 mx-1 cursor-pointer'
@@ -137,7 +137,7 @@ export const MatchInfo = ({ leagueTw = '', withVideoIcon }) => {
               />
             )
           : null}
-        {/* <img alt='live' src={} className='w-5 h-5 mb-4 mr-2' /> */}
+        {/* <Image alt='live' src={} className='w-5 h-5 mb-4 mr-2' /> */}
       </div>
       <TeamRow
         data={ts[0] || {}}

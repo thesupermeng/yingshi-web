@@ -18,14 +18,14 @@ export default function Files({ receivedFile, onDel }) {
                     onClick={() => onDel(idx)}
                     className='absolute bg-tayaRed -right-3 -top-3 w-[26px] h-[26px] rounded-full p-[5px]'
                   >
-                    <img
+                    <Image
                       alt='delete'
                       src={DeleteBin}
                       width={26}
                       height={26}
                     />
                   </button>
-                  <img
+                  <Image
                     alt={file.name + ' ' + file.size}
                     width={122}
                     height={86}
@@ -41,7 +41,7 @@ export default function Files({ receivedFile, onDel }) {
                     onClick={() => onDel(idx)}
                     className='ml-[-16px] mt-[-10px] bg-tayaRed right-0 w-[26px] h-[26px] rounded-full p-[5px] gap-[14.444px] float-right'
                   >
-                    <img
+                    <Image
                       alt='deleteBin'
                       src={DeleteBin}
                       width={26}
@@ -49,12 +49,12 @@ export default function Files({ receivedFile, onDel }) {
                     />
                   </button>
                   <div className='flex justify-center w-[122px] h-[86px] rounded-lg bg-[#171717]'>
-                    <img
+                    <Image
                       alt='pdfIcon'
                       width={35}
                       height={39}
                       src={PdfIcon}
-                    ></img>
+                    ></Image>
                   </div>
                 </div>
               );

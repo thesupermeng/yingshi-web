@@ -75,15 +75,15 @@ const SportBlock = ({ data, count, onClick }) => {
       }`}
     >
       {sportsType === code ? (
-        <img alt={text} src={iconActive} className='hover:text-white/100' />
+        <Image alt={text} src={iconActive} className='hover:text-white/100' />
       ) : (
         <>
-          <img
+          <Image
             alt={text}
             src={icon}
             className='block group-hover:hidden hover:text-[#7B7B7B]'
           />
-          <img
+          <Image
             alt={text}
             src={iconActive}
             className='hidden group-hover:block group-hover:text-white/100'
@@ -109,7 +109,7 @@ const SportBlockH5 = ({ data, count, onClick }) => {
           : 'text-white/50 bg-tayaGrey'
       }`}
     >
-      <img
+      <Image
         alt={text}
         src={sportsType === code ? iconActive : icon}
         className=''
@@ -179,7 +179,7 @@ export default function HeaderMatchSportsType() {
               <div
                 className={`relative rounded-md bg-tayaGrey px-2 py-1 flex flex-1 flex-col justify-between items-center`}
               >
-                <img alt='filter' src={Filter} width={16} />
+                <Image alt='filter' src={Filter} width={16} />
                 {filterLeagues.length ? (
                   <div className='absolute flex items-center justify-center w-6 h-6 rounded-full -top-3 -right-3 bg-tayaRed'>
                     <div className='text-xs font-bold'>

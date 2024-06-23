@@ -9,7 +9,7 @@ export const QrCodeModal = ({ setShowQrModal = () => {} }) => {
   return (
     <div className='fixed flex flex-col gap-3 z-50 inset-0 items-center justify-center backdrop-blur-sm bg-black bg-opacity-60'>
       <div className='shadow-sm flex items-center justify-between flex-col p-5 relative rounded-[28px] bg-[#121212] min-w-[475px] min-h-[349px]'>
-        <img
+        <Image
           onClick={() => setShowQrModal(false)}
           src={CrossWhite}
           alt='cross'
@@ -26,14 +26,14 @@ export const QrCodeModal = ({ setShowQrModal = () => {} }) => {
         </span>
 
         <div className='flex items-center justify-center divide-x-2 divide-[#BDBDBD]'>
-          <img
+          <Image
             src={AppleStoreIcon}
             alt='AppleStoreIcon'
             width={48}
             height={48}
             className='px-2'
           />
-          <img
+          <Image
             src={AndroidIcon}
             alt='AppleStoreIcon'
             width={48}

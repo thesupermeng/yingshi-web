@@ -53,7 +53,7 @@ const DropzoneWithoutClick = () => {
     <section className='mt-7 outline-dashed outline-2 rounded-lg h-[14.4375rem] flex justify-center items-center'>
       <div {...getRootProps({ className: 'dropzone' })}>
         <input {...getInputProps()} />
-        <img src={UploadImg} className='mx-auto' alt='upload' />
+        <Image src={UploadImg} className='mx-auto' alt='upload' />
         <p className=' text-sm text-[#FFFFFF]'>
           {t('dragAndDropYourPhotoHere')}
         </p>

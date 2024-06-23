@@ -11,7 +11,7 @@ export const Pageheader = ({ navItem = {}, children }) => {
   return (
     <div className='flex flex-1 flex-row items-start mb-6'>
       <div className='flex flex-initial flex-row self-center items-center'>
-        <img
+        <Image
           alt='sports'
           className='w-[1.875rem] h-[1.875rem] flex flex-initial'
           src={navItem.iconActive}

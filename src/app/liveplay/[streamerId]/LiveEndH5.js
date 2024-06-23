@@ -29,7 +29,7 @@ export const LiveEndH5 = ({ streamer }) => {
                 {t('followers')}
               </div>
               {streamer?.avatar && (
-                <imgWithFallback
+                <ImageWithFallback
                   alt='icon'
                   src={streamer.avatar}
                   width={100}

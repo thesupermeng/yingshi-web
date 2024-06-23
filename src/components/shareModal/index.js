@@ -65,7 +65,7 @@ export default function ShareModal({ setShowShareModal }) {
               setShowShareModal(false);
             }}
           >
-            <img
+            <Image
               src={Close}
               width={20}
               height={20}
@@ -84,7 +84,7 @@ export default function ShareModal({ setShowShareModal }) {
                 key={idx}
                 url={shareUrl}
               >
-                <img
+                <Image
                   src={M.icon}
                   alt='icon'
                   width={44}
@@ -100,7 +100,7 @@ export default function ShareModal({ setShowShareModal }) {
             onClick={copy}
             className='flex flex-col items-center justify-center gap-1 hover:opacity-75'
           >
-            <img
+            <Image
               src={copyLink}
               alt='icon'
               width={44}

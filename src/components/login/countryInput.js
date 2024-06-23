@@ -44,8 +44,8 @@ export default function CountryInput({ name, placeholder, validator, onChange, e
       <Popover open={openCountry} handler={() => setOpenCountry(x => !x)} placement={'bottom-start'}>
         <PopoverHandler>
           <div className='flex px-[12px] py-[14px] gap-[10px] items-center bg-[#1D2023] rounded-[6px] w-fit h-[47px]' onClick={handleClick}>
-            <img src={flag} alt={'country flag'} width={20} height={20} />
-            <img src={CaretDown} alt={'more'} />
+            <Image src={flag} alt={'country flag'} width={20} height={20} />
+            <Image src={CaretDown} alt={'more'} />
           </div>
         </PopoverHandler>
         <PopoverContent className={'w-[300px] bg-[#191A1D] border-[#191A1D] p-[12px] z-[10000] text-white'}> {/* modal z-index 9999, so need to be above */}
@@ -108,7 +108,7 @@ function CountrySelectItem({ country, onClick, isSelected }) {
 
   return (
     <div className={`flex gap-[15px] p-[12px] rounded-[6px] ${selectedStyles} hover:bg-[#0085E010]`} onClick={handleOnClick} data-name={'test'}>
-      <img src={country.country_flag} alt={country.country_iso3} width={22} height={22} />
+      <Image src={country.country_flag} alt={country.country_iso3} width={22} height={22} />
       <span className={'w-[45px]'}>+{country.country_phonecode}</span>
       <span className={'flex-1'}>{country.country_name}</span>
     </div>

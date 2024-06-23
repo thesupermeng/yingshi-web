@@ -104,7 +104,7 @@ const OrderHistoryListItemParlay = ({ ListItem, isSettled }) => {
             className={`flex cursor-pointer ${isExpand ? 'rotate-180' : ''}`}
             onClick={() => setIsExpand(!isExpand)}
           >
-            <img alt='expand' src={IconArrowWhite} />
+            <Image alt='expand' src={IconArrowWhite} />
           </div>
         </div>
       </div>

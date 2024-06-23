@@ -46,9 +46,9 @@ export default function UserCenter() {
           <div>
             <span className={'text-white text-[16px] font-semibold'}>个人信息</span>
             <div className={'flex bg-[#1D2023] rounded-[10px] px-[20px] py-[17px] items-center gap-[12px] mt-[14px]'}>
-              <img src={ProfileBlue} alt={'profile icon'} width={56}/>
+              <Image src={ProfileBlue} alt={'profile icon'} width={56}/>
               <span className={'text-white text-[15px] font-semibold flex-1'}>{userInfo?.user_name}</span>
-              <img src={editIcon} alt={'edit'} width={30} onClick={handleOpenEditNickname}
+              <Image src={editIcon} alt={'edit'} width={30} onClick={handleOpenEditNickname}
                      className={'cursor-pointer'}/>
             </div>
           </div>
@@ -83,7 +83,7 @@ export default function UserCenter() {
                   router.back();
                 }}
               >
-                <img src={ArrowLeftIcon} alt={'back button'} height={16}/>
+                <Image src={ArrowLeftIcon} alt={'back button'} height={16}/>
               </div>
               <div
                 className={
@@ -98,7 +98,7 @@ export default function UserCenter() {
         <div className={'flex flex-col gap-[16px] px-4 py-2'}>
           <div className={'h-12 w-full flex justify-between items-center bg-[#1D2023] rounded-[10px] px-[21px]'}>
             <span className={'text-[#9C9C9C] text-[15px] font-medium'}>头像</span>
-            <img src={ProfileBlue} alt={'Profile picture'} width={30} height={30}/>
+            <Image src={ProfileBlue} alt={'Profile picture'} width={30} height={30}/>
           </div>
 
           <div className={'h-12 w-full flex justify-between items-center bg-[#1D2023] rounded-[10px] px-[21px]'} onClick={handleOpenEditNickname}>

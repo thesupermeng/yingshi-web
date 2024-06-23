@@ -26,7 +26,7 @@ export const BalanceOption = ({ icon, text, link, type, ...props }) => {
         {...props}
       >
         <div className='relative'>
-          <img alt={text} src={icon} className='w-6 h-6' />
+          <Image alt={text} src={icon} className='w-6 h-6' />
           <Count type={type} className={'absolute -right-1 -top-2'} />
         </div>
         <div className='font-medium text-[15px] truncate'>{t(text)}</div>

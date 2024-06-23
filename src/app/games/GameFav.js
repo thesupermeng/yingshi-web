@@ -12,7 +12,7 @@ export const GameFav = ({ id }) => {
     setIsFav(favGames.includes(parseInt(id)));
   }, [favGames]);
   return isLogin ? (
-    <img
+    <Image
       className='cursor-pointer'
       onClick={(e) => {
         e.stopPropagation();

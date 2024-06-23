@@ -98,7 +98,7 @@ export default function TayaSportSingleMatch({ match, nsg }) {
           </div>
           <div className={`flex flex-row ${web ? '' : 'text-xs'}`}>
             {t('bet')} ({match.tms}){' '}
-            <img alt='right' src={IconArrowWhite} className='-rotate-90' />
+            <Image alt='right' src={IconArrowWhite} className='-rotate-90' />
           </div>
         </div>
       )}
@@ -288,7 +288,7 @@ export default function TayaSportSingleMatch({ match, nsg }) {
               </div>
               <div className={`flex flex-row items-center pl-4 max-h-24`}>
                 <div className='self-center text-sm'>({match.tms}) </div>
-                <img
+                <Image
                   alt='right'
                   src={IconArrowWhite}
                   className='-rotate-90'
@@ -451,7 +451,7 @@ export default function TayaSportSingleMatch({ match, nsg }) {
               </div>
               <div className={`flex flex-row items-center pl-4 max-h-24`}>
                 <div className='self-center text-sm'>({match.tms}) </div>
-                <img
+                <Image
                   alt='right'
                   src={IconArrowWhite}
                   className='-rotate-90'
@@ -608,7 +608,7 @@ const Team = ({ data = {}, score }) => {
         web ? 'min-h-[30px] flex-initial' : ''
       }`}
     >
-      <img
+      <Image
         alt='teamIcon'
         src={data?.lurl || TeamIconIrrPlaceholder}
         width={20}

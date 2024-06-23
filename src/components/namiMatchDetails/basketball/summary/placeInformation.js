@@ -62,7 +62,7 @@ export default function PlaceInformation({ matchUpdateData }) {
   return (
     <div className='flex flex-col items-center px-5 my-8'>
       <div className='relative rounded-md'>
-        <img alt='bg' src={CourtBg.src} width={456} height={407} />
+        <Image alt='bg' src={CourtBg.src} width={456} height={407} />
 
         <div className='red-circle rounded-full absolute top-[15%] left-[10%]'>
           <p>
@@ -113,7 +113,7 @@ export default function PlaceInformation({ matchUpdateData }) {
               <div className='flex justify-around gap-3'>
                 <p className='text-tayaRed'>{t.home}</p>
                 <span>
-                  <img src={t.icon} alt='rebound' width={22} height={22} />
+                  <Image src={t.icon} alt='rebound' width={22} height={22} />
                 </span>
                 <p className='text-[#0790FF]'>{t.away}</p>
               </div>

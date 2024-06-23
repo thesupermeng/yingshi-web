@@ -238,7 +238,7 @@ export default function H5Page({ params }) {
       {/*       onClick={() => setOpenSignInUp(false)}>*/}
       {/*    <div*/}
       {/*      className={'w-[270px] h-[195px] rounded-[14px] bg-[#222222CC] flex flex-col items-center justify-center'}>*/}
-      {/*      <img src={TickAnimation} alt={'Login success'} width={95} height={95}/>*/}
+      {/*      <Image src={TickAnimation} alt={'Login success'} width={95} height={95}/>*/}
       {/*      <span className={'text-[17px]'}>登录成功</span>*/}
       {/*    </div>*/}
       {/*  </div>*/}

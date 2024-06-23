@@ -31,11 +31,11 @@ export const MatchAnimation = () => {
   return url ? (
     <div className={shiftAnimationVideo || showRightSidebar ? 'fixed right-[33rem] bottom-7 w-[400px] bg-transparent' :'fixed right-7 bottom-7 w-[400px] bg-transparent'}>
       <div className='bg-[#101010] flex flex-row px-3 py-2 gap-3 rounded-t-lg overflow-hidden'>
-        <img alt='pip' src={FBAnimation} />
+        <Image alt='pip' src={FBAnimation} />
         <div className='flex-1 whitespace-normal text-normal font-medium'>
           {title}
         </div>
-        <img
+        <Image
           alt='cross'
           src={Close}
           onClick={() => closePip()}

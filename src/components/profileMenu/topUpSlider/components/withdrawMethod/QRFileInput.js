@@ -6,7 +6,7 @@ import { isWeb } from '@/util/common';
 const QRFileInput = ({ onFileUpload }) => {
   return (
     <label>
-      <img
+      <Image
         src={IconQRRed}
         alt='qr-icon'
         width={isWeb() ? 20 : 15}

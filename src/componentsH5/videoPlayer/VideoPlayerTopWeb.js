@@ -23,7 +23,7 @@ export const VideoPlayerTopWeb = () => {
           isWeb() ? '' : 'text-[10px] py-1'
         }`}
       >
-        <img alt='viewer' src={ViewerIcon} className='w-[22px] h-[14px]' />
+        <Image alt='viewer' src={ViewerIcon} className='w-[22px] h-[14px]' />
         {getFollowerCount(focusStream?.current_view) || 0}
       </div>
     </div>

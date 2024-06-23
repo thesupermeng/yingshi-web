@@ -82,7 +82,7 @@ export const DownloadSlides = ({ setShowQrModal }) => {
           }`}
         >
           {slidesContent?.[slideIdx]?.image && (
-            <img
+            <Image
               src={slidesContent?.[slideIdx]?.image}
               alt='slides-content'
               width={isWeb() ? 511 : 341}
@@ -122,7 +122,7 @@ export const DownloadSlides = ({ setShowQrModal }) => {
           </button>
         </div>
       </div>
-      <img
+      <Image
         src={CrossWhite}
         alt='CrossWhite'
         className='w-[1.6rem] h-[1.6rem] opacity-50 hover:opacity-100'

@@ -10,7 +10,7 @@ export default function PinSuccess({open, handler, msg}) {
       <DialogBody className={'p-0 w-full h-full'}>
         <div
           className={'w-full h-full rounded-[14px] flex flex-col items-center justify-center'}>
-          <img src={TickAnimation} alt={'Login success'} width={95} height={95}/>
+          <Image src={TickAnimation} alt={'Login success'} width={95} height={95}/>
           <span className={'text-[17px] text-white'}>{msg}</span>
         </div>
       </DialogBody>

@@ -92,7 +92,7 @@ export const CalendarComp = ({ setSelectedDateRange, call = () => {} }) => {
           className='cursor-pointer flex py-1 bg-tayaGrey rounded-md px-1 gap-1'
           onClick={() => setShowCalendar(!showCalendar)}
         >
-          <img
+          <Image
             src={IconCalendarWhite}
             alt='calendar'
             width={20}

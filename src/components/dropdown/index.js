@@ -41,13 +41,13 @@ const Dropdown = ({
         onClick={() => setShowSelection(!showSelection)}
       >
         {icon && (
-          <img
+          <Image
             className={`mr-3`}
             src={icon}
             width={20}
             height={20}
             alt='icon'
-          ></img>
+          ></Image>
         )}
         <input
           className={`w-11/12 bg-tayaGrey placeholder:text-errorRed pointer-events-none ${
@@ -58,13 +58,13 @@ const Dropdown = ({
           value={selected?.value}
           disabled
         ></input>
-        <img
+        <Image
           className={`${showSelection ? 'rotate-180' : ''}`}
           src={CaretDown}
           width={16}
           height={16}
           alt='arrow'
-        ></img>
+        ></Image>
       </div>
       {showSelection && (
         <div className='top-10 absolute bg-tayaGrey w-full overflow-auto no-scrollbar z-10 max-h-[200px]'>

@@ -12,7 +12,7 @@ export const BottomPrivateMsgRow = () => {
       <QuickQuestion setInput={setInput} />
       <div className='w-full flex flex-row p-3 gap-2 items-center'>
         <label className='flex flex-col items-center'>
-          <img src={ImportImg} alt='import' width={50} height={50} />
+          <Image src={ImportImg} alt='import' width={50} height={50} />
           <input
             type='file'
             accept='image/*'
@@ -21,7 +21,7 @@ export const BottomPrivateMsgRow = () => {
           />
         </label>
         <BottomChatInput input={input} setInput={setInput} />
-        <img
+        <Image
           src={input.length > 0 ? IconSendChatActive : IconSendChat}
           width={30}
           height={30}

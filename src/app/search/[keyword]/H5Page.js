@@ -211,7 +211,7 @@ export default function Page() {
           {!searchResults?.List && 
 
             <div className='flex items-center justify-center flex-col h-full pt-6 mt-6'>
-              <img
+              <Image
                 className='mx-2'
                 src={searchEmptyIcon}
                 alt='empty'

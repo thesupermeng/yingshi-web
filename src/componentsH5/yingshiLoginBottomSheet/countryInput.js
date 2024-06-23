@@ -36,8 +36,8 @@ export default function CountryInput({ name, placeholder, validator, onChange, e
     return (
         <div className={'flex gap-[14px]'}>
             <div className='flex px-[12px] py-[14px] gap-[10px] items-center bg-[#1D2023] rounded-[6px] w-fit h-[47px]' onClick={handleClick}>
-                <img src={flag} alt={'country flag'} width={20} height={20} />
-                <img src={CaretDown} alt={'more'} />
+                <Image src={flag} alt={'country flag'} width={20} height={20} />
+                <Image src={CaretDown} alt={'more'} />
             </div>
             <TextInput name={name} placeholder={placeholder} validator={validator} onChange={onChange}
                 errorMessage={errorMessage} isShowIcon={isShowIcon} prefixText={prefix}
@@ -85,7 +85,7 @@ function CountrySelectItem({ country, onClick, isSelected }) {
 
     return (
         <div className={`flex gap-[15px] p-[12px] rounded-[6px] ${selectedStyles}`} onClick={handleOnClick} data-name={'test'}>
-            <img src={country.country_flag} alt={country.country_iso3} width={22} height={22} />
+            <Image src={country.country_flag} alt={country.country_iso3} width={22} height={22} />
             <span className={'w-[45px]'}>+{country.country_phonecode}</span>
             <span className={'flex-1'}>{country.country_name}</span>
         </div>

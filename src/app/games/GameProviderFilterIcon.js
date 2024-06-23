@@ -21,7 +21,7 @@ export const GameProviderFilterIcon = () => {
           isWeb() ? 'px-3 py-2 rounded-xl' : 'mr-4 px-1.5 py-1.5 rounded-lg'
         }`}
       >
-        <img
+        <Image
           alt='filter'
           src={Filter}
           width={isWeb() ? 20 : 17}

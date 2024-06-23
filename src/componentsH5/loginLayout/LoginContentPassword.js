@@ -33,7 +33,7 @@ export const LoginContentPassword = ({
           setPasswordTypeIdx((passwordTypeIdx + 1) % PasswordType.length);
         }}
       >
-        <img
+        <Image
           alt='eye'
           src={
             PasswordType[passwordTypeIdx] === 'password'

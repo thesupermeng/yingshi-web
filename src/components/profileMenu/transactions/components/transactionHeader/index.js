@@ -22,7 +22,7 @@ const TransactionHeader = () => {
         <div className='h-[0.1875rem] w-6 rounded-t-2xl bg-tayaRed ml-auto mr-auto mt-1'></div>
       </button>
       <button onClick={onCloseClick}>
-        <img
+        <Image
           className='w-9 h-9 opacity-20 hover:opacity-100'
           src={CrossWhite}
           alt='close'

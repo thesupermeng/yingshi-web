@@ -45,7 +45,7 @@ const FloatingPill = () => {
       }}
       onClick={redirectDownload}
     >
-      <div><img src={Favicon} alt='icon' width={22} /></div>
+      <div><Image src={Favicon} alt='icon' width={22} /></div>
       <div className='pl-2'>打开影视APP，看精彩流畅视频</div>
     </div>
   )
