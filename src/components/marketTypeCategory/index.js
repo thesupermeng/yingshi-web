@@ -41,7 +41,7 @@ const Move = ({ direction, onClick }) => {
           : 'bg-gradient-to-l right-0 justify-end'
       } from-[#121212] to-[#09090900]`}
     >
-      <Image
+      <img
         alt='arrow'
         src={IconArrowWhite}
         style={{ width: `${PaddingOffset}px` }}

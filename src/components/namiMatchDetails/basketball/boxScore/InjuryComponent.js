@@ -7,7 +7,7 @@ export default function InjuryComponent({ data, isHome = true }) {
   return (
     <div className='flex'>
       <div className='relative'>
-        <Image
+        <img
           src={isHome ? basketballHomeTeam : basketballHomeAway}
           width={30}
           height={30}

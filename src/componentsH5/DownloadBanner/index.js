@@ -54,7 +54,7 @@ export const DownloadBanner = () => {
             className={`common-transition top-0 fixed flex flex-none -order-1 w-full flex-row items-center gap-1.5 bg-black px-2.5 py-1.5 z-20`}
           >
             <div className='relative shrink-0 w-9 h-9 rounded-lg bg-[#DC1D3F] overflow-hidden flex items-center justify-center'>
-              <Image
+              <img
                 src={EastRichWhiteLogo}
                 alt='TayaLogo'
                 width={30}

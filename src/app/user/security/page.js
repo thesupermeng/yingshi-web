@@ -16,10 +16,10 @@ const Option = ({ label, icon = '', tw, onClick }) => {
       className={`bg-tayaGrey rounded-xl py-4 flex gap-4 px-3 text-md ${tw}`}
       onClick={() => onClick()}
     >
-      {icon ? <Image src={icon} alt='icon' width={25} height={25} /> : ''}
+      {icon ? <img src={icon} alt='icon' width={25} height={25} /> : ''}
 
       <p className='flex-1'>{label}</p>
-      <Image src={ArrowRight} alt='icon' width={25} height={25} />
+      <img src={ArrowRight} alt='icon' width={25} height={25} />
     </div>
   );
 };

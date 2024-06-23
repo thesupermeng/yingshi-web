@@ -25,7 +25,7 @@ const LiveType = memo(({ selected, typeData = null, onClick }) => {
         }`
       }
     >
-      <ImageWithFallback
+      <imgWithFallback
         alt={data.name}
         width={isWeb() ? 22 : 18}
         height={isWeb() ? 22 : 18}

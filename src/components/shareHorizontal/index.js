@@ -67,7 +67,7 @@ export const ShareHorizontal = ({ className = '', setShowShareBox }) => {
             key={index}
             className={` ${index >= 5 && !showDropDown ? 'hidden' : ''}`}
           >
-            <Image src={item} alt='Icon' className='rounded-full' />
+            <img src={item} alt='Icon' className='rounded-full' />
           </div>
         ))}
       </div>
@@ -77,7 +77,7 @@ export const ShareHorizontal = ({ className = '', setShowShareBox }) => {
       >
         {sharingMethod.map((item, index) => (
           <div key={index}>
-            <Image src={item} alt='Icon' className='rounded-full' />
+            <img src={item} alt='Icon' className='rounded-full' />
           </div>
         ))}
       </div>
@@ -101,7 +101,7 @@ export const ShareHorizontal = ({ className = '', setShowShareBox }) => {
 
   //   <div className='grid grid-cols-5 gap-4 md:flex md:flex-1 md:space-x-2' onClick={share} style={{ cursor: 'pointer' }}>
   //     <div className="">
-  //       <Image
+  //       <img
   //         width={ '3px' }
   //         src={WhatsappIcon}
   //         alt="Icon"
@@ -111,55 +111,55 @@ export const ShareHorizontal = ({ className = '', setShowShareBox }) => {
   //       />
   //     </div>
   //     <div className="">
-  //       <Image
+  //       <img
   //         src={MessengerIcon}
   //         alt="Icon"
   //       />
   //     </div>
   //     <div className="">
-  //       <Image
+  //       <img
   //         src={TelegramIcon}
   //         alt="Icon"
   //       />
   //     </div>
   //     <div className="">
-  //       <Image
+  //       <img
   //         src={LineIcon}
   //         alt="Icon"
   //       />
   //     </div>
   //     <div className="">
-  //       <Image
+  //       <img
   //         src={WechatIcon}
   //         alt="Icon"
   //       />
   //     </div>
   //     <div className="">
-  //       <Image
+  //       <img
   //         src={CameraIcon}
   //         alt="Icon"
   //       />
   //     </div>
   //     <div className="">
-  //       <Image
+  //       <img
   //         src={WeiboIcon}
   //         alt="Icon"
   //       />
   //     </div>
   //     <div className="">
-  //       <Image
+  //       <img
   //         src={QqIcon}
   //         alt="Icon"
   //       />
   //     </div>
   //     <div className="">
-  //       <Image
+  //       <img
   //         src={Facebook2Icon}
   //         alt="Icon"
   //       />
   //     </div>
   //     <div className="">
-  //       <Image
+  //       <img
   //         src={CopyLink2Icon}
   //         alt="Icon"
   //       />

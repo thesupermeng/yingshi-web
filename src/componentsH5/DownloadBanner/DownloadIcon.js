@@ -29,7 +29,7 @@ export const DownloadIcon = () => {
       {showPromoIcon && (
         <div className='fixed right-2 bottom-[10.5rem] w-fit h-fit z-10'>
           <div className='w-full flex flex-row-reverse mb-1'>
-            <Image
+            <img
               src={CrossWhite}
               alt='CrossWhite'
               className='w-3 h-3 opacity-50 hover:opacity-100'
@@ -37,7 +37,7 @@ export const DownloadIcon = () => {
             />
           </div>
           <div className='w-fit h-fit' onClick={onClickDownloadApp}>
-            <Image
+            <img
               src={FreeUSDTPromoIcon}
               alt='FreeUSDTPromoIcon'
               className='w-[3.4rem] h-[1.9rem] -rotate-[5deg]'

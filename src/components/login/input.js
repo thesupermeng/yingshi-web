@@ -58,7 +58,7 @@ export default function TextInput({name, placeholder, validator, onChange, error
                 {validator && // if validator exist
                     _value && // if value is not empty
                     isShowIcon && // prop
-                <Image
+                <img
                     src={icon}
                     alt="Icon"
                 />}

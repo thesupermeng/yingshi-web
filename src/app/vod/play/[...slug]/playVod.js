@@ -632,7 +632,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                     marginTop: '0.4rem',
                   }}
                 >
-                  <Image src={ArrowLeftIcon} alt='Icon' />
+                  <img src={ArrowLeftIcon} alt='Icon' />
                 </div>
               </div>
               {showAds && ads ? (
@@ -787,7 +787,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                     onClick={openJianJie}
                   >
                     <div className='mx-3' style={{ margin: 'auto' }}>
-                      <Image src={ArrowLeftIcon} alt='Icon' />
+                      <img src={ArrowLeftIcon} alt='Icon' />
                     </div>
                     <div>{vod.vod_name}</div>
                   </div>

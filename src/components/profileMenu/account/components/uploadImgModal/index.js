@@ -21,7 +21,7 @@ const UploadImgModal = ({avatarSelected}) => {
             <div></div>
             <div>{t('changeAvatar')}</div>
             <button onClick={onClose}>
-              <Image className='w-9 h-9 opacity-20 hover:opacity-100' src={CrossWhite} alt='close' />
+              <img className='w-9 h-9 opacity-20 hover:opacity-100' src={CrossWhite} alt='close' />
             </button>
           </div>
           <div>

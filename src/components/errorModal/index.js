@@ -33,7 +33,7 @@ const ErrorModalComp = () => {
     >
       <div className='gap-3 flex flex-col py-8 px-10 items-center justify-center flex-initial backdrop-blur-lg rounded bg-[#191A1D80] text-white text-lg font-semibold'>
         {attention && (
-          <Image src={Attention} alt='attention' width={54} height={54} />
+          <img src={Attention} alt='attention' width={54} height={54} />
         )}
         <div className=' opacity-90'>{title}</div>
         <div className=' opacity-90 text-center'>{message}</div>

@@ -10,7 +10,7 @@ export const PlayPause = ({ size }) => {
   const { isPause } = useSelector((e) => e.videoPlayer);
 
   return (
-    <Image
+    <img
       src={isPause ? Pause : Play}
       alt='reload'
       onClick={(e) => {

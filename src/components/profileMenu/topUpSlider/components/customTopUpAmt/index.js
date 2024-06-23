@@ -38,7 +38,7 @@ const CustomTopUpAmt = ({
       <WEBOnly>
         <div className='rounded-xl flex justify-between px-5 py-3.5 mb-2 bg-tayaGrey'>
           <div className='flex w-full self-stretch items-center'>
-            <Image src={USDT} alt='usdt' />
+            <img src={USDT} alt='usdt' />
             <input
               value={selectedAmt}
               className='flex-1 text-sm ml-2 font-medium text-[#FFFFFF]/[.7] bg-tayaGrey outline-none'
@@ -54,7 +54,7 @@ const CustomTopUpAmt = ({
           onClick={onClick}
         >
           <div className='flex items-center'>
-            <Image src={USDT} alt='usdt' />
+            <img src={USDT} alt='usdt' />
             <input
               value={selectedAmt}
               readOnly={true}

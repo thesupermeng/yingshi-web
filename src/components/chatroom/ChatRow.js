@@ -17,7 +17,7 @@ function ChatRow({ msg }) {
           isWeb() ? 'w-10 h-10' : 'w-[30px] h-[30px]'
         }`}
       >
-        <ImageWithFallback
+        <imgWithFallback
           alt='avatar'
           fill
           sizes='50px'

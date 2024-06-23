@@ -8,7 +8,7 @@ export default function TopUpAttention({ onConfirm }) {
   return (
     <div className='z-[200] flex items-center justify-center flex-1 bg-black absolute inset-0 py-5 px-[30px] gap-3'>
       <div className='z-[200] w-[350px] bg-black flex-col flex flex-none py-5 px-[30px] gap-3 items-center justify-center'>
-        <Image alt='!' src={IconAttention} />
+        <img alt='!' src={IconAttention} />
         <div className='text-center text-[17px] font-bold text-white'>
           Attention
         </div>

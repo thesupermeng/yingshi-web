@@ -133,7 +133,7 @@ const InputDateField = ({
           placeholder={placeholder}
           type='text'
         />
-        <Image
+        <img
           alt='calendar'
           className='absolute top-2/4 -translate-y-2/4 right-2'
           src={IconCalendar}

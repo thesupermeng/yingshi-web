@@ -70,7 +70,7 @@ export const SpeechBubble = () => {
             className='cursor-pointer  bg-white rounded-full w-[46px] h-[46px] flex items-center justify-center'
           >
             <UnreadMsg />
-            <Image
+            <img
               src={SpeechBubbleIcon}
               alt='SpeechBubbleIcon'
               width={22}

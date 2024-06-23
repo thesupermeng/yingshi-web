@@ -54,7 +54,7 @@ export default function HeaderFilterRow({ allExpand, setAllExpand }) {
               }}
               className={`cursor-pointer relative rounded-md bg-tayaGrey px-3 py-2 flex flex-1 flex-col justify-between items-center`}
             >
-              <Image alt='filter' src={Filter} />
+              <img alt='filter' src={Filter} />
               {filterLeagues.length ? (
                 <div className='absolute flex items-center justify-center w-6 h-6 rounded-full -top-3 -right-3 bg-tayaRed'>
                   <div className='text-xs font-bold'>
@@ -68,7 +68,7 @@ export default function HeaderFilterRow({ allExpand, setAllExpand }) {
               <div
                 className={`w-[30px] h-[28px] relative rounded-md bg-tayaGrey flex flex-1 flex-col justify-center items-center`}
               >
-                <Image alt='filter' src={Filter} width={16} />
+                <img alt='filter' src={Filter} width={16} />
                 {filterLeagues.length ? (
                   <div className='absolute flex items-center justify-center w-6 h-6 rounded-full -top-3 -right-3 bg-tayaRed'>
                     <div className='text-xs font-bold'>
@@ -94,10 +94,10 @@ export default function HeaderFilterRow({ allExpand, setAllExpand }) {
             className={`rounded-md bg-tayaGrey px-3 py-2 flex gap-2 flex-1 flex-col justify-between items-center`}
           >
             <div className='rounded'>
-              <Image src={IconArrowWhite} className='flex rotate-180' alt='a' />
+              <img src={IconArrowWhite} className='flex rotate-180' alt='a' />
             </div>
             <div className='rounded'>
-              <Image src={IconArrowWhite} className='flex' alt='a' />
+              <img src={IconArrowWhite} className='flex' alt='a' />
             </div>
           </div> */}
         </div>

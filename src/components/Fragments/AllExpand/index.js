@@ -10,12 +10,12 @@ export default function index({ tw = '', isExpand, onClick }) {
         isWeb() ? 'px-3 h-[38px]' : 'px-2'
       } cursor-pointer rounded-md bg-tayaGrey  py-2 flex flex-col gap-1 flex-initial justify-around items-center ${tw} `}
     >
-      <Image
+      <img
         src={IconArrowWhite}
         className={`flex common-transition ${isExpand ? 'rotate-180' : ''}`}
         alt='a'
       />
-      <Image
+      <img
         src={IconArrowWhite}
         className={`flex common-transition ${!isExpand ? 'rotate-180' : ''}`}
         alt='a'

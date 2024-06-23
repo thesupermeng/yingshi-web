@@ -34,7 +34,7 @@ export const VideoPlayerTopH5 = () => {
         <div
           className={`rounded-[6.25rem] bg-black/50 backdrop-blur-[2px] flex flex-row gap-1 text-[11px] px-1 items-center`}
         >
-          <Image alt='viewer' src={ViewerIcon} className='w-[20px] h-[12px]' />
+          <img alt='viewer' src={ViewerIcon} className='w-[20px] h-[12px]' />
           <span className=''>
             {getFollowerCount(focusStream?.current_view) || 0}
           </span>
@@ -67,7 +67,7 @@ const StreamerInfoH5 = () => {
   return (
     <div className='flex gap-2 items-center'>
       {isFollowing ? (
-        <Image
+        <img
           alt='streamer'
           src={streamer.avatar || Avatar}
           className={`object-cover rounded-full h-[2rem] w-[2rem]`}
@@ -83,7 +83,7 @@ const StreamerInfoH5 = () => {
           }}
         >
           <div className='absolute bg-tayaRed w-[0.86rem] h-[0.86rem] rounded-full bottom-0 left-1/2 translate-y-1/2 -translate-x-1/2 flex justify-center items-center'>
-            <Image
+            <img
               alt='streamer'
               src={Plus}
               className={`object-contain rounded-full h-2 w-2 `}
@@ -92,7 +92,7 @@ const StreamerInfoH5 = () => {
             />
           </div>
 
-          <Image
+          <img
             alt='streamer'
             src={streamer.avatar || Avatar}
             className={`object-cover rounded-full h-[2rem] w-[2rem]`}

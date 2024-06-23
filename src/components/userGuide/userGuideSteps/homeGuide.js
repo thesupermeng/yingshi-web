@@ -84,7 +84,7 @@ export const HomeGuide = () => {
             style={{ width: toRect.width, height: toRect.height }}
           >
             <div className='relative'>
-              <Image alt={'deposit'} src={ProfileDeposit} className='w-6 h-6' />
+              <img alt={'deposit'} src={ProfileDeposit} className='w-6 h-6' />
             </div>
             <div className='font-medium text-[15px] truncate'>
               {t('deposit')}

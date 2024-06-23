@@ -40,7 +40,7 @@ function PlayerComponent(props) {
 
           <div className='flex items-center gap-2 mt-2'>
             <div className='bg-[#7D0018] flex items-center justify-center rounded-full overflow-hidden h-[30px] w-[30px]'>
-              <Image
+              <img
                 width={25}
                 height={25}
                 src={homeImage}
@@ -79,7 +79,7 @@ function PlayerComponent(props) {
               <p className='text-[#96979B]'>{awayRank}</p>
             </div>
             <div className='bg-[#004781] flex items-center justify-center rounded-full overflow-hidden h-[30px] w-[30px]'>
-              <Image
+              <img
                 width={34}
                 src={awayImage}
                 height={34}

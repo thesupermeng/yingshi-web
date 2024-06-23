@@ -24,7 +24,7 @@ export default function Page({ params }) {
         label={t('betSlip')}
         right={
           <div className='flex'>
-            <Image
+            <img
               alt='setting'
               src={GearIcon}
               className='w-6 h-6 mr-3 p-[2.4px]'
@@ -34,7 +34,7 @@ export default function Page({ params }) {
               }}
             />
             {Object.keys(options).length > 0 && (
-              <Image
+              <img
                 alt='delete'
                 src={TrashIcon}
                 className='w-6 h-6 mr-3 p-[2.4px] cursor-pointer'

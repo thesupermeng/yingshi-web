@@ -91,7 +91,7 @@ export const PromotionDetail = () => {
     <>
       <ScrollContentVertical>
         {currentPromotion?.image ? (
-          <Image
+          <img
             alt='promo'
             className={`object-contain w-full ${
               isWeb() ? 'h-[240px]' : 'h-[190px]'

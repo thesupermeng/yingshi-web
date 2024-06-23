@@ -47,7 +47,7 @@ export const TayaSportSection = ({ lg, list = [], allExpand }) => {
       >
         <div className='flex flex-row items-center gap-2'>
           {lg?.lurl && (
-            <Image alt='flag' src={lg.lurl} width={24} height={24} />
+            <img alt='flag' src={lg.lurl} width={24} height={24} />
           )}
           <div className={`flex ${!web ? 'text-[15px]' : ''}`}>
             {lg?.na} (
@@ -62,7 +62,7 @@ export const TayaSportSection = ({ lg, list = [], allExpand }) => {
             </div>
           )}
 
-          <Image
+          <img
             className={`w-4 h-4 transition-transform duration-500 ease-in-out ${
               isExpand ? 'rotate-180' : 'rotate-0'
             }`}

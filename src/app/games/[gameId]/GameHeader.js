@@ -50,7 +50,7 @@ export default function GameHeader({ id }) {
       <div className='flex-1 ml-2.5'>
         <div className=''>
           {vendorIcon && (
-            <Image
+            <img
               alt='icon'
               src={vendorIcon}
               className='inline w-3.5 h-3.5'
@@ -75,7 +75,7 @@ export default function GameHeader({ id }) {
       />
 
       {isWeb() ? (
-        <Image
+        <img
           onClick={toggleFullScreen}
           alt='full screen'
           src={gameFullScreen ? FullScreenExitIcon : FullScreenIcon}
@@ -83,7 +83,7 @@ export default function GameHeader({ id }) {
         />
       ) : null}
 
-      <Image
+      <img
         alt='full screen'
         src={Close}
         className='ml-4 opacity-70 hover:opacity-100 cursor-pointer'

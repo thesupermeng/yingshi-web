@@ -47,7 +47,7 @@ export default function FeedbackForm() {
                  onClick={() => setIsShowSuccess(false)}>
               <div
                 className={'w-[270px] h-[195px] rounded-[14px] bg-[#222222CC] flex flex-col items-center justify-center'}>
-                <Image src={FeedbackAnimation} alt={'Submit success'} width={95} height={95}/>
+                <img src={FeedbackAnimation} alt={'Submit success'} width={95} height={95}/>
                 <span className={'text-[17px]'}>反馈提交成功</span>
               </div>
             </div>
@@ -88,7 +88,7 @@ export default function FeedbackForm() {
                onClick={() => setIsShowSuccess(false)}>
             <div
               className={'w-[270px] h-[195px] rounded-[14px] bg-[#222222CC] flex flex-col items-center justify-center'}>
-              <Image src={FeedbackAnimation} alt={'Submit success'} width={95} height={95}/>
+              <img src={FeedbackAnimation} alt={'Submit success'} width={95} height={95}/>
               <span className={'text-[17px]'}>反馈提交成功</span>
             </div>
           </div>
@@ -104,7 +104,7 @@ export default function FeedbackForm() {
                   router.back();
                 }}
               >
-                <Image src={ArrowLeftIcon} alt={'back button'} height={16}/>
+                <img src={ArrowLeftIcon} alt={'back button'} height={16}/>
               </div>
               <div
                 className={

@@ -55,7 +55,7 @@ const ForgotPasswordModal = ({
           </div>
           <div>
             <button onClick={onClose}>
-              <Image
+              <img
                 className='w-9 h-9 opacity-20 hover:opacity-100'
                 src={CrossWhite}
                 alt='close'

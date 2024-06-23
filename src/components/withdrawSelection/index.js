@@ -23,14 +23,14 @@ const Selection = ({
         onClick={() => setShowSelection(!showSelection)}
       >
         {selected?.icon_url && (
-          <Image
+          <img
             className={`mr-3 rounded-[4px]`}
             src={selected?.icon_url}
             width={20}
             height={20}
             alt='icon'
             onError={(e) => (e.target.src = GCash.src)}
-          ></Image>
+          ></img>
         )}
         <input
           className={`w-11/12 bg-tayaGrey placeholder:text-errorRed ${
@@ -41,13 +41,13 @@ const Selection = ({
           value={selected ? selected?.name : ''}
           disabled
         ></input>
-        <Image
+        <img
           className={`${showSelection ? 'rotate-180' : ''}`}
           src={CaretDown}
           width={16}
           height={16}
           alt='arrow'
-        ></Image>
+        ></img>
       </div>
       {showSelection && (
         <div className='absolute bg-tayaGrey w-full overflow-auto no-scrollbar z-10'>
@@ -59,7 +59,7 @@ const Selection = ({
                 className='flex gap-2 p-[12px] w-full bg-tayaGrey hover:bg-tayaRed/[.12]'
               >
                 {data.icon_url && (
-                  <Image
+                  <img
                     src={data.icon_url}
                     width={20}
                     height={20}

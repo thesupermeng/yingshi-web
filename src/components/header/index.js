@@ -442,7 +442,7 @@ const Header = () => {
               openSearch ? 'flex md:hidden' : 'hidden'
             }`}
           >
-            <Image
+            <img
               alt='back'
               src={leftArrow}
               onClick={() => {
@@ -467,7 +467,7 @@ const Header = () => {
               }}
             />
             <div className='absolute inset-y-0 left-3 flex items-center justify-center md:hidden'>
-              <Image
+              <img
                 src={searchIcon}
                 alt='search'
                 width={20}
@@ -476,7 +476,7 @@ const Header = () => {
               />
             </div>
             <div className='absolute inset-y-0 right-3 items-center justify-center hidden md:flex'>
-              <Image
+              <img
                 src={searchIcon}
                 alt='search'
                 width={20}
@@ -507,7 +507,7 @@ const Header = () => {
                               >
                                 清除
                               </span>
-                              <Image
+                              <img
                                 className='mx-1'
                                 src={clear}
                                 alt='clear'
@@ -619,7 +619,7 @@ const Header = () => {
         }}
       >
         <div className='flex h-full flex-row cursor-pointer rounded-full md:bg-[#1D2023] md:px-4 md:ml-2 md:rounded-full  md:py-1'>
-          <Image className='mr-2' src={vipIcon} alt='vip' width={25} />
+          <img className='mr-2' src={vipIcon} alt='vip' width={25} />
           <div className='flex items-center'>
             <span className='text-[#F4DBBA] text-[14px] md:text-[16px]'>
               VIP会员
@@ -647,7 +647,7 @@ const Header = () => {
               </span>
               <div className='py-2 grid grid-rows-2 grid-flow-col gap-2'>
                 <div className='flex items-center'>
-                  <Image
+                  <img
                     className='mr-2'
                     src={vipLightIcon}
                     alt='vip'
@@ -656,7 +656,7 @@ const Header = () => {
                   <span className='text-sm text-[#F4DBBA]'>VIP尊贵标识</span>
                 </div>
                 <div className='flex items-center'>
-                  <Image
+                  <img
                     className='mr-2'
                     src={noADIcon}
                     alt='noAD'
@@ -665,13 +665,13 @@ const Header = () => {
                   <span className='text-sm text-[#F4DBBA]'>纯净广告</span>
                 </div>
                 <div className='flex items-center'>
-                  <Image className='mr-2' src={glyph} alt='glyph' width={24} />
+                  <img className='mr-2' src={glyph} alt='glyph' width={24} />
                   <span className='text-sm text-[#F4DBBA]'>
                     解锁全部影视内容
                   </span>
                 </div>
                 <div className='flex items-center'>
-                  <Image
+                  <img
                     className='mr-2'
                     src={subtractIcon}
                     alt='noAD'
@@ -713,7 +713,7 @@ const Header = () => {
             router.push('/myprofile/watchHistory');
           }}
         >
-          <Image
+          <img
             className={`cursor-pointer `}
             src={HistoryIcon}
             alt='history'
@@ -784,7 +784,7 @@ const Header = () => {
                 </div>
               ) : (
                 <div className='flex-col items-center flex'>
-                  <Image
+                  <img
                     className='mx-2'
                     src={searchEmptyIcon}
                     alt='empty'
@@ -813,7 +813,7 @@ const Header = () => {
                 >
                   清除记录
                 </span>
-                <Image className='mx-1' src={clear} alt='clear' width={10} />
+                <img className='mx-1' src={clear} alt='clear' width={10} />
               </div>
             </div>
           </div>
@@ -834,7 +834,7 @@ const Header = () => {
         }}
       >
         <div className='h-full flex flex-row cursor-pointer'>
-          <Image className='mx-2' src={PhoneIcon} alt='app' width={14} />
+          <img className='mx-2' src={PhoneIcon} alt='app' width={14} />
           <div className='flex items-center md:flex hidden'>APP</div>
         </div>
         {openApp ? (
@@ -854,15 +854,15 @@ const Header = () => {
               style={{ backgroundColor: '#18191ef5' }}
             >
               <div className='flex-none w-[200px]'>
-                <Image src={AppImage} alt='AppImage' width={200} />
+                <img src={AppImage} alt='AppImage' width={200} />
               </div>
               <div className='flex-1 flex flex-col justify-center items-center pr-2 gap-y-2'>
-                <Image alt='鲨鱼影视' src={Logo} width={120} />
+                <img alt='鲨鱼影视' src={Logo} width={120} />
                 <span className='text-sm'>您每一天的影视平台</span>
                 <div className='flex flex-row gap-x-5 pt-2'>
                   <div className='flex flex-col items-center gap-2'>
                     <div className='flex flex-row  items-center'>
-                      <Image alt='appleStore' src={AppleStoreIcon} width={25} />
+                      <img alt='appleStore' src={AppleStoreIcon} width={25} />
                       <span className='text-xs'>iOS App 下载</span>
                     </div>
                     <QRCode
@@ -875,7 +875,7 @@ const Header = () => {
                   </div>
                   <div className='flex flex-col items-center gap-2'>
                     <div className='flex flex-row items-center'>
-                      <Image alt='playStore' src={AndroidIcon} width={25} />
+                      <img alt='playStore' src={AndroidIcon} width={25} />
                       <span className='text-xs'>安卓 App 下载</span>
                     </div>
                     <QRCode
@@ -913,7 +913,7 @@ const Header = () => {
       >
         {/* md:flex */}
         <div>
-          <Image
+          <img
             className='cursor-pointer'
             src={userInfo ? ProfileBlue : userIcon}
             alt='user'
@@ -943,7 +943,7 @@ const Header = () => {
                 openSearch ? 'hidden md:flex' : ''
               }`}
             >
-              <Image
+              <img
                 alt='鲨鱼影视'
                 src={Logo}
                 style={{ cursor: 'pointer' }}
@@ -1019,7 +1019,7 @@ const Header = () => {
                     className='flex flex-row items-center text-blue-hover'
                   >
                     <span>更多</span>
-                    <Image
+                    <img
                       className='mx-1'
                       alt='more'
                       src={moreIcon}
@@ -1120,7 +1120,7 @@ const Header = () => {
                     openSearch ? 'hidden' : ''
                   }`}
                 >
-                  <Image
+                  <img
                     alt='back'
                     src={leftArrow}
                     //  style={{ width: '12px' }}
@@ -1197,7 +1197,7 @@ const Header = () => {
               <div
                 className={'flex w-[30px] h-[30px] justify-center items-center'}
               >
-                <Image
+                <img
                   src={ArrowLeftIcon}
                   alt={'back button'}
                   onClick={() => router.back()}
@@ -1220,7 +1220,7 @@ const Header = () => {
               {/*<div*/}
               {/*  className={'flex w-[30px] h-[30px] justify-center items-center'}*/}
               {/*>*/}
-              {/*  <Image*/}
+              {/*  <img*/}
               {/*    src={ArrowLeftIcon}*/}
               {/*    alt={'back button'}*/}
               {/*    onClick={() => router.push('/myprofile')}*/}
@@ -1272,7 +1272,7 @@ const Header = () => {
                   router.back();
                 }}
               >
-                <Image src={ArrowLeftIcon} alt={'back button'} height={16} />
+                <img src={ArrowLeftIcon} alt={'back button'} height={16} />
               </div>
               <div
                 className={
@@ -1285,7 +1285,7 @@ const Header = () => {
                 {/*{pathname.startsWith('/privacy') &&*/}
                 {/*  <span className={'text-white'}>隐私协议</span>*/}
                 {/*}*/}
-                <Image src={Logo} alt={'鲨鱼影视'} />
+                <img src={Logo} alt={'鲨鱼影视'} />
               </div>
             </div>
           </div>

@@ -171,7 +171,7 @@ export default function LoginModal({ open, handler, onRegsiter }) {
           {/*</div>*/}
           {/*<div className={'flex flex-col gap-[12px]'}>*/}
           {/*  <Button className={'w-full h-12 flex items-center bg-[#1D2023] rounded-lg px-[20px] normal-case'}>*/}
-          {/*    <Image src={GoogleIcon} alt={'Google Icon'} width={24} height={24}/>*/}
+          {/*    <img src={GoogleIcon} alt={'Google Icon'} width={24} height={24}/>*/}
           {/*    <span className={'font-semibold text-[15px] text-white flex-1'}>继续使用 Google</span>*/}
           {/*  </Button>*/}
           {/*</div>*/}

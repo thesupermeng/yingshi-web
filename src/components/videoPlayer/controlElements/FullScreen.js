@@ -20,7 +20,7 @@ export default function FullScreen({ onClick }) {
   };
 
   return (
-    <Image
+    <img
       onClick={fullScreenClick}
       alt='full screen'
       src={isFull ? FullScreenExitIcon : FullScreenIcon}

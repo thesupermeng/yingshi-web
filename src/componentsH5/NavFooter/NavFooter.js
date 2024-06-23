@@ -42,7 +42,7 @@ export const FooterButton = ({ data, ...props }) => {
       }}
       className='flex flex-col items-center justify-center gap-1.5'
     >
-      <Image
+      <img
         alt={text}
         src={pathname.startsWith(link) ? iconActive : icon}
         //  width={22}

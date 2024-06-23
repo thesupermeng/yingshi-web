@@ -8,7 +8,7 @@ export default function VipCard({onClick}) {
     <div className={'w-full'}>
       <div className={'flex h-[58px] bg-[#D1AC7D] rounded-lg p-1.5 items-center gap-1'}>
         <div className={'w-12 h-12 flex justify-center items-center'}>
-          <Image src={VipBlackIcon} alt={'VIP icon'}/>
+          <img src={VipBlackIcon} alt={'VIP icon'}/>
         </div>
         <div className={'flex flex-col flex-1 pl-1'}>
           <span className={'text-[15px] text-[#1D2023] font-semibold'}>成为VIP</span>

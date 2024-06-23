@@ -89,7 +89,7 @@ const MyFooter2 = () => {
           onClick={downloadApp}
         >
           <div>
-            <Image src={Favicon} alt='icon' width={22} />
+            <img src={Favicon} alt='icon' width={22} />
           </div>
           <div className='pl-2'>下载影视APP，看精彩流畅视频</div>
         </div>

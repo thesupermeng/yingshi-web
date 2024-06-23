@@ -92,7 +92,7 @@ export const LiveFooterH5 = ({ focusTab, setFocusTab }) => {
         )}
         {focusTab !== LiveFooterType.Chat && (
           <div className='relative'>
-            <Image
+            <img
               alt='icon'
               src={CommentIcon}
               className={`mx-auto flex items-center justify-center self-center ${IconSizeTw}`}
@@ -120,7 +120,7 @@ export const LiveFooterH5 = ({ focusTab, setFocusTab }) => {
             focusInput ? 'flex-initial w-0' : 'flex-1'
           }`}
         >
-          <Image
+          <img
             alt='icon'
             src={CoinIconLive}
             className={`${IconSizeTw}`}
@@ -137,7 +137,7 @@ export const LiveFooterH5 = ({ focusTab, setFocusTab }) => {
             focusInput ? 'flex-initial w-0' : 'flex-1'
           }`}
         >
-          <Image
+          <img
             alt='icon'
             src={DicesIconWithBackground}
             className={`${IconSizeTw}`}
@@ -154,7 +154,7 @@ export const LiveFooterH5 = ({ focusTab, setFocusTab }) => {
             focusInput ? 'flex-initial w-0' : 'flex-1'
           }`}
         >
-          <Image
+          <img
             alt='icon'
             src={StatsData}
             className={`${IconSizeTw}`}
@@ -171,7 +171,7 @@ export const LiveFooterH5 = ({ focusTab, setFocusTab }) => {
             focusInput ? 'flex-initial w-0' : 'flex-1'
           }`}
         >
-          <Image
+          <img
             alt='icon'
             src={DocuWithMagGlassIcon}
             className={`${IconSizeTw}`}

@@ -133,7 +133,7 @@ export const VoucherSidebar = ({ useNow }) => {
 
             {!useNow && (
               <div className='flex no-shrink gap-1 bg-[#613200] rounded-md mt-3 px-3 py-1 items-center'>
-                <Image
+                <img
                   src={SignIcon}
                   alt='signicon'
                   width={20}

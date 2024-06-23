@@ -68,7 +68,7 @@ export const VoucherRow = () => {
       }}
     >
       <div className='gap-2 items-center flex flex-row'>
-        <Image src={VoucherIcon} alt='VoucherIcon' width={20} height={20} />
+        <img src={VoucherIcon} alt='VoucherIcon' width={20} height={20} />
         <p>{t('myVoucher')}</p>
       </div>
 
@@ -84,7 +84,7 @@ export const VoucherRow = () => {
         </div>
       ) : (
         <div className='flex items-center gap-1'>
-          <Image src={IconArrowWhite} alt='arrowRight' className='-rotate-90' />
+          <img src={IconArrowWhite} alt='arrowRight' className='-rotate-90' />
         </div>
       )}
     </div>

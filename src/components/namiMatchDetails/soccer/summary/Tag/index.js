@@ -49,7 +49,7 @@ export default function Tag() {
               className='flex flex-col items-center justify-center mt-5 text-xs text-center'
             >
               <span className='h-8'>
-                <Image src={tag.icon} alt={tag.name} width={20} />
+                <img src={tag.icon} alt={tag.name} width={20} />
               </span>
               <p className='flex-grow'>{tag.name}</p>
             </div>

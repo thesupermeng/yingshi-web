@@ -55,7 +55,7 @@ export default function PaymentDetailModal({open, handler}) {
 
           {history.length === 0 &&
             <div className="flex-col items-center flex my-5">
-              <Image
+              <img
                 className="mx-2"
                 src={searchEmptyIcon}
                 alt="empty"

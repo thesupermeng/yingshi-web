@@ -86,7 +86,7 @@ const Move = ({ direction, onClick }) => {
           : 'bg-gradient-to-l right-0'
       } from-[#090909FF] from-50% via-[#090909E6] to-[#09090900]`}
     >
-      <Image
+      <img
         alt='arrow'
         src={IconArrowWhite}
         className={`${direction === 'left' ? 'rotate-90' : '-rotate-90'}`}

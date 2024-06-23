@@ -74,7 +74,7 @@ export default function SendChat({ onFocus, onBlur }) {
             <p className='text-opacity-50 text-white text-[15px] leading-normal'>
               {input.length}/{CHAT.MAX_CHAR}
             </p>
-            <Image
+            <img
               src={input.length > 0 ? IconSendChatActive : IconSendChat}
               alt='iconSendChat'
               width={37.5}

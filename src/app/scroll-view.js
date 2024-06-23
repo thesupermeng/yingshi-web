@@ -105,7 +105,7 @@ export const ScrollView = ({ children }) => {
           className='fixed bottom-16 right-16 rounded-md z-20 bg-[#2c313ae6] desktop'
           onClick={scrollToTop}
         >
-          <Image src={backtoTopIcon} alt='arrowUp' width={50} />
+          <img src={backtoTopIcon} alt='arrowUp' width={50} />
         </button>
       )}
     </div>

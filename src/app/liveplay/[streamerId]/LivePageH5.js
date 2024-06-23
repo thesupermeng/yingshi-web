@@ -107,7 +107,7 @@ export const LivePageH5 = ({ streamer }) => {
         right={
           <div className='flex gap-2'>
             {/* {matchId ? ( */}
-            <Image
+            <img
               alt='video'
               src={showPlayer ? VideoOn : VideoOff}
               onClick={() => {
@@ -118,7 +118,7 @@ export const LivePageH5 = ({ streamer }) => {
             {/* ) : null} */}
 
             {(matchDetail?.as?.[0] || namiMatchDetail?.mlive_2d_url) && (
-              <Image
+              <img
                 alt='2D'
                 src={showAnimation ? Field2D : Field2DGray}
                 onClick={() => {
@@ -154,7 +154,7 @@ export const LivePageH5 = ({ streamer }) => {
               id={`h5liveVideo${streamer?.id}`}
             >
               {!isPause && (
-                <Image
+                <img
                   alt='PlayBlackBg'
                   src={PlayBlackBg}
                   className={`absolute cursor-pointer z-10 scale-[0.7]`}
@@ -245,7 +245,7 @@ const HeaderScore = ({ data }) => {
 
   return (
     <div className='flex flex-1 justify-center items-center font-normal text-sm gap-1'>
-      <ImageWithFallback
+      <imgWithFallback
         alt='teamIcon'
         src={homeTeamIcon || TeamIconIrrPlaceholder}
         width={20}
@@ -255,7 +255,7 @@ const HeaderScore = ({ data }) => {
       <div>{homeTeamScore ? homeTeamScore : 0}</div>
       <div> - </div>
       <div>{awayTeamScore ? awayTeamScore : 0}</div>
-      <ImageWithFallback
+      <imgWithFallback
         alt='teamIcon'
         src={awayTeamIcon || TeamIconIrrPlaceholder}
         width={20}

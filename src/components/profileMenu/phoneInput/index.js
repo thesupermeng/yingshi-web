@@ -75,7 +75,7 @@ const PhoneInput = ({
           onClick={() => setShowSelection(!showSelection)}
         >
           {CountryIcons[selectedCountry.icon] ? (
-            <Image
+            <img
               alt='country'
               className='w-[20px] h-[20px] mr-3'
               src={CountryIcons[selectedCountry.icon]}
@@ -83,13 +83,13 @@ const PhoneInput = ({
           ) : (
             <p className='mr-3'>{selectedCountry.icon}</p>
           )}
-          <Image
+          <img
             className={`cursor-pointer ${showSelection ? 'rotate-180' : ''}`}
             src={CaretDown}
             width={16}
             height={16}
             alt='arrow'
-          ></Image>
+          ></img>
         </div>
         {showSelection && (
           <SelectPanel
@@ -113,7 +113,7 @@ const PhoneInput = ({
           inputMode='tel'
           className={`bg-transparent h-11 p-3 w-10/12 rounded-lg outline-none`}
         ></input>
-        {validPhoneNum && <Image alt='img' className='mr-2.5' src={Valid} />}
+        {validPhoneNum && <img alt='img' className='mr-2.5' src={Valid} />}
       </div>
     </div>
   );

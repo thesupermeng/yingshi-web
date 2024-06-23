@@ -21,7 +21,7 @@ const PasswordInput = ({placeholder='Password', passValue, isValid=true}) => {
     value={keyedPass}
   />
   <div className='mt-auto mb-auto' onClick={passwordClick}>
-    <Image src={showPass ? PasswordEye1 : PasswordEye} alt='img' />
+    <img src={showPass ? PasswordEye1 : PasswordEye} alt='img' />
   </div>
 </div>
 }

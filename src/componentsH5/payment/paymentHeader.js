@@ -24,7 +24,7 @@ const benefits = [
 export default function PaymentHeader({className}) {
   return (
     <div className={`flex flex-col w-full items-center ${className}`}>
-      <Image src={PaymentTitle} alt={'Title'} width={282}/>
+      <img src={PaymentTitle} alt={'Title'} width={282}/>
       <div className={'mobile  w-full'}>
         <div className="flex flex-col items-center">
           <div className={`${styles.benefit_container_border} w-full mt-[32px] min-w-[290px]`}>
@@ -67,13 +67,13 @@ function BenefitItem({icon, title, className = ''}) {
     <>
       <div className={`mobile ${className}`}>
         <div className={'flex items-center gap-1'}>
-          <Image src={icon} alt={`${title} icon`} width={20} height={20}/>
+          <img src={icon} alt={`${title} icon`} width={20} height={20}/>
           <span className={'text-[12px] text-[#F4DBBA] font-normal'}>{title}</span>
         </div>
       </div>
       <div className={`desktop ${className}`}>
         <div className={'flex items-center gap-1'}>
-          <Image src={icon} alt={`${title} icon`} width={28} height={28}/>
+          <img src={icon} alt={`${title} icon`} width={28} height={28}/>
           <span className={'text-[15px] text-[#F4DBBA] font-normal'}>{title}</span>
         </div>
       </div>

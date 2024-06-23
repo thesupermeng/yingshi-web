@@ -35,7 +35,7 @@ export default function Gallery({ data, selected }) {
         </div>
       ) : (
         <div className='flex flex-col items-center justify-center flex-1 gap-2 py-20'>
-          <Image src={NoDataSearch} alt='nodata' width={80} height={80} />
+          <img src={NoDataSearch} alt='nodata' width={80} height={80} />
           <p className='text-[#6F7076] text-[18px] font-[Inter]'>
             {t('noData')}
           </p>

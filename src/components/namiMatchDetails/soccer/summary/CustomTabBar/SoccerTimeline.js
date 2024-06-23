@@ -88,7 +88,7 @@ export default function SoccerTimeline() {
             }}
             icon={
               <span className='flex items-center justify-center'>
-                <Image src={Clock} alt='clock' width={20} height={20} />
+                <img src={Clock} alt='clock' width={20} height={20} />
               </span>
             }
           />
@@ -131,7 +131,7 @@ export default function SoccerTimeline() {
                     position={item.position === 1 ? 'left' : 'right'}
                   >
                     <div className={`flex items-center ${item.position === 1 ? 'flex-row-reverse' : ''}`}>
-                      <Image
+                      <img
                         src={SubInV2}
                         className='w-[15px]'
                         alt='football-icon'
@@ -143,7 +143,7 @@ export default function SoccerTimeline() {
                       </p>
                     </div>
                     <div className={`flex items-center ${item.position === 1 ? 'flex-row-reverse' : ''}`}>
-                      <Image
+                      <img
                         src={SubOutV2}
                         className='w-[15px]'
                         alt='football-icon'
@@ -177,7 +177,7 @@ export default function SoccerTimeline() {
                   >
                     <div className='bg-[#1C1C1C]'>
                       <div className={`flex ${item.position === 1 ? 'flex-row-reverse' : ''}`}>
-                        <Image
+                        <img
                           src={
                             item.type === 3
                               ? YellowCard
@@ -219,7 +219,7 @@ export default function SoccerTimeline() {
                     position={item.position === 1 ? 'left' : 'right'}
                   >
                     <div className={`flex items-center ${item.position === 1 ? 'flex-row-reverse' : ''}`}>
-                      <Image
+                      <img
                         src={
                           item.type === 1
                             ? Goal
@@ -237,7 +237,7 @@ export default function SoccerTimeline() {
                     {
                       item.assist1_id &&
                       <div className={`flex items-center ${item.position === 1 ? 'flex-row-reverse' : ''}`}>
-                        <Image
+                        <img
                           src={AssistGoal}
                           className='w-[16px]'
                           alt='assistgoal-icon'
@@ -260,7 +260,7 @@ export default function SoccerTimeline() {
               justifyContent: 'center',
               marginTop: '20px',
             }}
-            icon={<Image src={Whistle} alt='Whistle' width={30} />}
+            icon={<img src={Whistle} alt='Whistle' width={30} />}
           />
         </VerticalTimeline>
       </div>

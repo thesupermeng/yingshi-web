@@ -2,6 +2,10 @@ const { i18n } = require('./next-i18next.config');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    // unoptimized: true,
+    minimumCacheTTL: 31536000,
+  },
   reactStrictMode: false,
   // async headers() {
   //   return [

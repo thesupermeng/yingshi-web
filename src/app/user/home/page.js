@@ -41,11 +41,11 @@ const Option = ({
       {...props}
       className={`rounded-xl py-4 flex gap-4 px-3 text-md items-center ${className}`}
     >
-      <Image src={icon} alt='icon' width={25} height={25} />
+      <img src={icon} alt='icon' width={25} height={25} />
       <p className='flex-1 text-[15px]'>{label}</p>
       <Count type={type} />
       {showNewTag && <NewTag />}
-      <Image src={ArrowRight} alt='icon' width={25} height={25} />
+      <img src={ArrowRight} alt='icon' width={25} height={25} />
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 const TeamIcon = ({ url }) => {
   if (url)
     return (
-      <Image
+      <img
         className='bg-white rounded-full'
         alt='team'
         src={url}

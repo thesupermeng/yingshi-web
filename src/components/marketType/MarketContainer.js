@@ -46,7 +46,7 @@ export const MarketContainer = ({ title, initExpand = true, children }) => {
         }`}
       >
         {title}
-        <Image
+        <img
           className={`w-[18px] h-[18px] flex-initial transition-transform duration-500 ease-in-out ${
             isExpand ? 'rotate-180' : 'rotate-0'
           }`}
@@ -268,7 +268,7 @@ export const MarketTile = ({
               </div>
 
               {oddChange ? (
-                <Image
+                <img
                   alt='odd up'
                   src={oddChange > 0 ? IconArrowUpGreen : IconArrowDownRed}
                   className={`absolute top-1 ${
@@ -316,7 +316,7 @@ export const LockTile = ({ customCss = '' }) => {
           : ''
       }  rounded-md flex items-center justify-center bg-[#222222] self-stretch ${customCss}`}
     >
-      <Image
+      <img
         alt='lock'
         src={IconLockOdd}
         className={`flex flex-initial py-1.5 opacity-20`}

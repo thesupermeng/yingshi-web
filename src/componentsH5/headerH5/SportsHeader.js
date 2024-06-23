@@ -22,7 +22,7 @@ export default function SportsHeader() {
         }`}
       >
         {pathname === href && (
-          <Image src={logo} alt='icon' width={logo === FbLogo ? 15 : 24} />
+          <img src={logo} alt='icon' width={logo === FbLogo ? 15 : 24} />
         )}
         <p>{label}</p>
       </Link>

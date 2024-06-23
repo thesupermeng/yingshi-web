@@ -21,7 +21,7 @@ export const FollowBet = ({ msg }) => {
     <div className='bg-[#C991551A] w-full p-3 rounded-xl'>
       <div className='flex w-full justify-between'>
         <div className='flex gap-2 items-start justify-start'>
-          <ImageWithFallback
+          <imgWithFallback
             src={msg?.avatar}
             alt='placeholder'
             width={30}

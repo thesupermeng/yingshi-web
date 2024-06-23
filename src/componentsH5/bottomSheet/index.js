@@ -25,7 +25,7 @@ function BottomSheet({
       >
         <div className='w-10 h-1 rounded-[20px] bg-[#333] m-auto'></div>
         {showCloseButton && (
-          <Image
+          <img
             src={CloseWithBorder}
             alt='close'
             width={24}

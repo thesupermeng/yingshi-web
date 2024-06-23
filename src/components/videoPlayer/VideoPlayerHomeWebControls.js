@@ -58,7 +58,7 @@ const VideoPlayerHomeWebControls = forwardRef(
                     LIVE
                   </div>
                   <div className='ml-3 py-1 px-2 items-center rounded-[6.25rem] bg-black/50 backdrop-blur-[2px] flex flex-row gap-1'>
-                    <Image
+                    <img
                       alt='viewer'
                       src={ViewerIcon}
                       className='w-[22px] h-[14px]'

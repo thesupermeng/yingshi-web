@@ -36,7 +36,7 @@ export default function PaymentMethods({className, paymentOptions, onMethodSelec
         {/*  isSelected={selectedMethod === 2}*/}
         {/*>*/}
         {/*  <div className={'flex'}>*/}
-        {/*    行用卡支付 <Image src={VisaMasterAmex} alt={'Visa Master Amex icon'} className={'ml-2'}/>*/}
+        {/*    行用卡支付 <img src={VisaMasterAmex} alt={'Visa Master Amex icon'} className={'ml-2'}/>*/}
         {/*  </div>*/}
         {/*</Method>*/}
       </div>
@@ -50,7 +50,7 @@ function Method({children, icon, isSelected, onClick}) {
       onClick={onClick}
     >
       <div className={'h-[24px] w-[34px] relative'}>
-        <Image src={icon} alt={'payment icon'} fill layout={'fill'} className={'object-contain'}/>
+        <img src={icon} alt={'payment icon'} fill layout={'fill'} className={'object-contain'}/>
       </div>
       <span className={'flex-1 text-white text-[14px] font-medium'}>{children}</span>
       {isSelected &&

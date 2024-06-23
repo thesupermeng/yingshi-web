@@ -48,7 +48,7 @@ const BetError = ({ type, data = null }) => {
         type.tw
       }`}
     >
-      {type.img && <Image alt='img' src={type.img} />}
+      {type.img && <img alt='img' src={type.img} />}
       <div>{typeof type.txt === 'function' ? type.txt(data) : type.txt}</div>
     </div>
   );

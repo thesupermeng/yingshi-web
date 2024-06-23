@@ -15,7 +15,7 @@ export const LeagueSection = ({ data, tickedLeagues, onToggle }) => {
             data-letter={lg.na[0]}
             onClick={() => onToggle(lg.id, !isTick)}
           >
-            <Image
+            <img
               alt='flag'
               src={lg.lurl}
               width={20}
@@ -24,7 +24,7 @@ export const LeagueSection = ({ data, tickedLeagues, onToggle }) => {
             />
             {lg.na} ({lg.mt})
             <div className='flex-1' />
-            <Image
+            <img
               alt='check'
               src={isTick ? CheckBoxRed : CheckBox0}
             />

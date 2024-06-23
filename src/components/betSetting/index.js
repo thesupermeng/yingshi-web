@@ -35,7 +35,7 @@ export default function BetSetting() {
         className='py-2 px-2 items-center justify-start flex flex-row cursor-pointer'
         onClick={onClick}
       >
-        <Image alt='i' src={isChecked ? RedChecked : UnChecked} />
+        <img alt='i' src={isChecked ? RedChecked : UnChecked} />
         <div className='text-white text-[15px] font-medium ml-1.5'>{text}</div>
       </div>
     );
@@ -60,7 +60,7 @@ export default function BetSetting() {
           <div className='flex-initial text-tayaRed text-base font-medium'>
             {t('betSetting')}
           </div>
-          <Image
+          <img
             alt='close'
             src={CrossWhite}
             className='w-9 h-9 opacity-20 hover:opacity-100 cursor-pointer'

@@ -16,7 +16,7 @@ export const ProviderSection = ({ data, tickedProviders, onToggle }) => {
             data-letter={provider.name[0]}
             onClick={() => onToggle(provider.id, !isTick)}
           >
-            <ImageWithFallback
+            <imgWithFallback
               alt='flag'
               src={provider.app_icon}
               width={20}
@@ -26,7 +26,7 @@ export const ProviderSection = ({ data, tickedProviders, onToggle }) => {
             />
             {provider.name}
             <div className='flex-1' />
-            <Image
+            <img
               alt='check'
               src={isTick ? CheckBoxRed : CheckBox0}
               className=''

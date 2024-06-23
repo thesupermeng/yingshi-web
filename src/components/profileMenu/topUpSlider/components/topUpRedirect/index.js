@@ -12,7 +12,7 @@ export default function TopUpRedirect() {
   return (
     <div className='z-[200] absolute inset-0 flex flex-col items-center justify-center flex-1'>
       <div className='text-[17px] gap-1 flex flex-col py-8 px-16 items-center justify-center flex-initial backdrop-blur-lg rounded bg-[#191A1D80] text-white font-semibold'>
-        <Image src={FlyingPlane} alt='flying' width={80} height={80} />
+        <img src={FlyingPlane} alt='flying' width={80} height={80} />
         <div className='opacity-90'>{t('youreBeingRedirected')}</div>
         <div className='opacity-90'>{t('toCheckout')}</div>
       </div>

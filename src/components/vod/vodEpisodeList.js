@@ -64,7 +64,7 @@ VodEpisodeList = ({
           <span className="text-md">-</span>
           <span className="text-md">{episodeGroup.to}</span>
           <span className="text-md">{t('集')}</span>
-          <Image
+          <img
             style={{ paddingLeft: '4px' }}
             src={ArrowDownFillIcon}
             alt="Icon"
@@ -115,7 +115,7 @@ VodEpisodeList = ({
               <span className="text-md">{episodeGroup.to}</span>
               <span className="text-md">{t('集')}</span>
               <span style={{ margin: 'auto', paddingLeft: '0.5rem' }}>
-                <Image
+                <img
                   src={ArrowRightIcon}
                   alt="Icon"
                 />

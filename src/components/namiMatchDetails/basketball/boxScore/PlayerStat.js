@@ -38,7 +38,7 @@ export default function PlayerStat({ playerData, status, viewMore, home }) {
               <tr key={idx} className='flex items-center gap-1  truncate h-10'>
                 <td className='shrink-0'>
                   <div className='relative'>
-                    <Image
+                    <img
                       src={
                         item[6][22] == 0
                           ? home
@@ -59,7 +59,7 @@ export default function PlayerStat({ playerData, status, viewMore, home }) {
                 <td className='flex '>
                   <p className='text-sm truncate w-[100px]'>{item[3]}</p>
                   {status == 1 && item[6][21] == 0 && (
-                    <Image
+                    <img
                       src={basketball.src}
                       width={24}
                       height={24}

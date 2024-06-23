@@ -34,7 +34,7 @@ export const LoginLayout = ({ type, children, onNext }) => {
       <div className='relative flex-initial aspect-[393/259] bg-tayaRed'>
         <div className='flex flex-col inset-0 text-center bg-transparent'>
           <NavHeader className={'!bg-transparent'} />
-          <Image
+          <img
             alt='EastRich'
             src={EastRichLogoWithText}
             className='w-[224.8px] mx-auto mt-3'

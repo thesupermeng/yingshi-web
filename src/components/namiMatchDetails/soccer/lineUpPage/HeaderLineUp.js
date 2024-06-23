@@ -20,7 +20,7 @@ export default function HeaderLineUp(props) {
           } rounded-[50%] overflow-hidden flex items-center justify-center`}
         >
           {teamIcon && (
-            <Image
+            <img
               src={teamIcon}
               width={isWeb() ? 30 : 25}
               height={isWeb() ? 30 : 25}

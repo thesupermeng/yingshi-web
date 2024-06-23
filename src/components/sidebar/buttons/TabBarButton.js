@@ -113,7 +113,7 @@ export const NavButtons = ({ isExpand, type, pathname }) => {
     >
       {isActive ? (
         // active icon
-        <Image
+        <img
           alt={type}
           className='flex-none w-6 h-6'
           src={NavItem[type]?.iconActive}
@@ -121,13 +121,13 @@ export const NavButtons = ({ isExpand, type, pathname }) => {
       ) : (
         <>
           {/* inactive and hover */}
-          <Image
+          <img
             alt={type}
             className='flex-none hidden w-6 h-6 group-hover:block'
             src={NavItem[type]?.iconHover}
           />
           {/* inactive normal */}
-          <Image
+          <img
             alt={type}
             className='flex-none block w-6 h-6 group-hover:hidden'
             src={NavItem[type]?.icon}

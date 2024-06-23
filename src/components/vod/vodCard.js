@@ -86,7 +86,7 @@ export const VodCard = ({
         <div style={{ paddingRight: '0.8rem' }} onClick={() => {
           setOpenIntroBottomSheet(false);
         }}>
-          <Image
+          <img
             src={CloseX}
             alt="Icon"
           />
@@ -125,7 +125,7 @@ export const VodCard = ({
               <span className="text-lg pr-5 line-clamp-2">{vodName}</span>
               <div className="lg:hidden flex flex-row space-x-2 py-1" onClick={() => setOpenIntroBottomSheet(true)}>
                 {/* <span className="text-sm text-white/75" style={{ fontWeight: '300' }}>{t('简介')}</span>
-                <Image
+                <img
                   src={ArrowRightIcon}
                   alt="Icon"
                 /> */}
@@ -135,7 +135,7 @@ export const VodCard = ({
             <span className="text-sm text-white/75 py-1" style={{ fontWeight: '300', color: '#9C9C9C' }}>{t('更新')}: {_vodUpdateDate.year}-{_vodUpdateDate.month}-{_vodUpdateDate.day}</span>
             <div className="lg:flex hidden flex-row space-x-2 py-1 cursor-pointer" onClick={webOpenJianJie}>
               <span className="text-sm text-white/75" style={{ fontWeight: '300', color: '#9C9C9C' }}>{t('简介')}</span>
-              <Image
+              <img
                 src={ArrowRightIcon}
                 alt="Icon"
               />
@@ -162,7 +162,7 @@ export const VodCard = ({
             <span className="text-lg pr-5 line-clamp-2">{vodName}</span>
             <div className="lg:hidden flex flex-row space-x-2 py-1" onClick={() => setOpenIntroBottomSheet(true)}>
               <span className="text-sm text-white/75" style={{ fontWeight: '300' }}>{t('简介')}</span>
-              <Image
+              <img
                 src={ArrowRightIcon}
                 alt="Icon"
               />
@@ -172,7 +172,7 @@ export const VodCard = ({
           <span className="text-sm text-white/75 py-1" style={{ fontWeight: '300', color: '#9C9C9C' }}>{t('更新')}: {_vodUpdateDate.year}-{_vodUpdateDate.month}-{_vodUpdateDate.day}</span>
           <div className="lg:flex hidden flex-row space-x-2 py-1 cursor-pointer" onClick={webOpenJianJie}>
             <span className="text-sm text-white/75" style={{ fontWeight: '300', color: '#9C9C9C' }}>{t('简介')}</span>
-            <Image
+            <img
               src={ArrowRightIcon}
               alt="Icon"
             />

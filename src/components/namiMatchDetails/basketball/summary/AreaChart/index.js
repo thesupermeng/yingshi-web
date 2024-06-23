@@ -53,12 +53,12 @@ export default function SummaryChart({ liveRoomUpdate }) {
           <div className={styles.leftContent}>
             {home?.icon && (
               <div className={styles.teamIconContainer}>
-                <Image src={home?.icon} width={15} height={15} alt='icon' />
+                <img src={home?.icon} width={15} height={15} alt='icon' />
               </div>
             )}
             {away?.icon && (
               <div className={styles.teamIconContainer}>
-                <Image src={away?.icon} width={15} height={15} alt='icon' />
+                <img src={away?.icon} width={15} height={15} alt='icon' />
               </div>
             )}
           </div>
