@@ -60,8 +60,10 @@ const MyFooter2 = () => {
   const downloadApp = () => {
     const os = getOperatingSystem();
     if (os === 'Android') {
-      window.location.href =
-        'https://play.google.com/store/apps/details?id=com.yingshitv&hl=en'; // Make sure app_download_link is defined
+      // Make sure app_download_link is defined
+      // window.location.href =
+      //   'https://play.google.com/store/apps/details?id=com.yingshitv&hl=en'; 
+        window.open('https://yingshi.tv/static/assets/yingshi.apk', '_blank');
     } else if (os === 'iOS' || os === 'MacOS') {
       window.location.href = 'https://apps.apple.com/cn/app/id6474402534';
       // Additional iOS handling code here if needed
