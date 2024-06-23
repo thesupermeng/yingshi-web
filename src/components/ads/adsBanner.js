@@ -15,15 +15,38 @@ export const AdsBanner = ({
 }) => {
   const { isVip, userInfo } = useYingshiUser();
 
+
   const [ads, setAds] = useState(null);
+
+  const findAdBySlotId = (ads, slotId) => {
+    if(!ads)
+      {
+        return
+      }
+    console.log('==========')
+    let result =  ads.filter(ad => ad.slot_id_list_array && ad.slot_id_list_array.includes(slotId));
+    return result[0]
+  };
+
 
   useEffect(() => {
     if (navId && navId != 0) {
       const parts = navId?.split('-').map(Number);
 
-      const filteredAdsList = adsList.filter(
-        (ad) => ad.ads_id === 1 || ad.ads_id === 13
-      );
+      const filteredAdsList = []
+      
+      // adsList.filter(
+      //   (ad) => ad.ads_id === 1 || ad.ads_id === 13
+      // );
+
+      parts.forEach((item, index) => {
+      let result  =  findAdBySlotId(adsList, item);
+      filteredAdsList.push(result)
+
+
+      console.log('filteredAdsList')
+      console.log(filteredAdsList)
+      });
 
 
       setAds(filteredAdsList);
@@ -46,11 +69,20 @@ export const AdsBanner = ({
           }}
         >
           <img
+          className='desktop'
             src={ads[0]?.ads_pic}
             onClick={() => {
               window.open(ads[0].ads_url, '_blank');
             }}
           />
+   <img
+      className='mobile'
+            src={ads[1]?.ads_pic}
+            onClick={() => {
+              window.open(ads[0].ads_url, '_blank');
+            }}
+          />
+
         </div>
       ) : (
         <div className='rounded-xl'></div>

@@ -6,7 +6,7 @@ import { VideoHorizontalCard } from '@/components/videoItem/videoHorizontalCard'
 import { AdsBanner } from '@/components/ads/adsBanner.js';
 export const RightBetCartWidth = 'w-[32rem]';
 import { Carousel } from '@/components/carousel/carousel';
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useLayoutEffect, useState } from 'react';
 import { YingshiApi2 } from '@/util/YingshiApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
@@ -15,10 +15,11 @@ import { YingshiApi } from '@/util/YingshiApi';
 import { getTypePage, getTopicListApi } from '@/app/actions';
 import VodListViewMore from '@/components/vodListViewMore';
 import TopicPagingList from '@/components/topicPagingList';
+import { usePathname } from 'next/navigation';
 
 export default function Home(params) {
   let paramsInput = params.category == undefined ? 0 : params.category;
-
+  const pathName = usePathname();
   const [isLoading, setIsLoading] = useState(false);
   const [classList, setClassList] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -30,7 +31,9 @@ export default function Home(params) {
     paramsInput == 0 ? true : false
   );
 
+
   //banner ads
+  const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
   const [adsList, setAdsList] = useState([]);
   const getAllAds = async () => {
     return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
@@ -41,9 +44,15 @@ export default function Home(params) {
 
     setAdsList(allAds.data);
   };
-  useEffect(() => {
-    let adsList = sessionStorage.getItem('adsList');
-    adsList = JSON.parse(adsList);
+  useLayoutEffect(() => {
+    console.log('pathName')
+    console.log(pathName)
+    let adsList = initAdsList;
+    if(!adsList)
+      {
+        adsList = JSON.parse(sessionStorage.getItem('adsList'));
+      }
+ 
     if (adsList && adsList !== 'undefined') {
       setAdsList(adsList);
     } else {
