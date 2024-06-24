@@ -56,7 +56,7 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <>
-    <Script id="facebook-pixel">
+    {/* <Script id="facebook-pixel">
         {`
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -69,7 +69,7 @@ export default function RootLayout({ children }) {
           fbq('init', '493542889715736');
           fbq('track', 'PageView');
         `}
-      </Script>
+      </Script> */}
       <Script
         src='https://www.googletagmanager.com/gtag/js?id=G-HGN89T8ESW'
         strategy='afterInteractive'
