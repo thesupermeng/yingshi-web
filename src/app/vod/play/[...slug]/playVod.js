@@ -84,7 +84,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
         }
    
       if (adsList && adsList !== 'undefined') {
-       setAdsList(adsList);
+      //  setAdsList(adsList);
        let result = adsList.filter(
         (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(144));
 
@@ -176,9 +176,11 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
 
       getVod().then((data) => {
         if (
+          data == null||
           data === undefined ||
           data.length <= 0 ||
           data.List === undefined ||
+          data.List === null ||
           data.List?.length <= 0
         )
           return;
