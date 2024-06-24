@@ -29,7 +29,7 @@ export const VideoHorizontalCard = ({ vod, typepage_id }) => {
     const isSingleWord = !/\s/.test(name);
   
     // Truncate if single word and longer than 10 characters
-    if (isSingleWord && name.length > 13) {
+    if (isSingleWord && name.length > 14) {
       return name.substring(0, 10) + '...';
     }
   

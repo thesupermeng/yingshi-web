@@ -305,3 +305,14 @@ body {
 .allow-select * {
   user-select: text !important;
 }
+
+
+[data-rsbs-overlay],
+[data-rsbs-backdrop],
+[data-rsbs-root]:after {
+  z-index: 51 !important;
+}
+[data-rsbs-backdrop] {
+  z-index: 50 !important; 
+
+}
