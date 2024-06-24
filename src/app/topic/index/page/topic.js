@@ -44,9 +44,9 @@ export const Topic = () => {
     }
   };
 
-  useEffect(() => {
-    getTopicList();
-  }, []);
+  // useEffect(() => {
+  //   getTopicList();
+  // }, []);
 
   useEffect(() => {
     if (stillCanLoad) {
