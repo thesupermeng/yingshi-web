@@ -97,8 +97,6 @@ const initCarousel = () =>{
     let temp = findAdBySlotId(adsList, item);
     result.push(temp);
   });
-   console.log('result')
-   console.log(result)
    let tempCarou; 
    if(result &&result !=undefined && result.length>0 && result[0] !=undefined && !isVip)
     {
@@ -116,25 +114,17 @@ const initCarousel = () =>{
           "ads_url": result[0].ads_url
        }
 
-       console.log('tempCarou')
-       console.log(tempCarou)
     }
-   console.log('result')
-   console.log(result)
    if(tempCarou)
     {
 
       let tempObj = [{...tempCarou} , ...carouselItemsProps]
       setCarouselItems(tempObj)
-      console.log('tempObj')
-      console.log(tempObj)
     }
    else
    {
     setCarouselItems(carouselItemsProps)
    }
-   console.log('carouselItems')
-   console.log(carouselItems)
 }
 
   useLayoutEffect(() => {
@@ -209,7 +199,6 @@ const initCarousel = () =>{
                         window.open(item.ads_url, '_blank');
                         return 
                       }
-                      console.log('111111')
                     router.push(`/vod/play/id/${item.carousel_content_id}/sid/${item.carousel_vod_type_id}/nid/1`);
                   }}>
                     <img
@@ -270,7 +259,6 @@ const initCarousel = () =>{
                           window.open(carouselItems[carouselIndex].ads_url, '_blank');
                           return 
                         }
-                        console.log('111111')
                       router.push(`/vod/play/id/${carouselItems[carouselIndex].carousel_content_id}/sid/${carouselItems[carouselIndex].carousel_vod_type_id}/nid/1`);
                     }}
                   />
@@ -300,7 +288,6 @@ const initCarousel = () =>{
                               }
                               else
                               {
-                                console.log('2222')
                                 router.push(`/vod/play/id/${carouselItems[carouselIndex].carousel_content_id}/sid/${carouselItems[carouselIndex].carousel_vod_type_id}/nid/1`);
                               }
                              
@@ -353,7 +340,6 @@ const initCarousel = () =>{
                                       window.open(previewItem.ads_url, '_blank');
                                       return 
                                     }
-                                    console.log('111111')
                                   router.push(`/vod/play/id/${previewItem.carousel_content_id}/sid/${previewItem.carousel_vod_type_id}/nid/1`);
                                 }}
                               />
