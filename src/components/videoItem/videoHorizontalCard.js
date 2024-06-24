@@ -22,6 +22,21 @@ export const VideoHorizontalCard = ({ vod, typepage_id }) => {
 
   const nId = typepage_id != 99 ? 1 : 9999;
 
+  const truncateVodName = (name) => {
+    if (!name) return '';
+  
+    // Check if the name is a single word
+    const isSingleWord = !/\s/.test(name);
+  
+    // Truncate if single word and longer than 10 characters
+    if (isSingleWord && name.length > 13) {
+      return name.substring(0, 10) + '...';
+    }
+  
+    return name;
+  };
+  
+
   return (
     <div className='flex flex-col items-center'>
       <div className='relative flex w-full aspect-[726/430] group mx-4 my-3 rounded-lg'>
@@ -49,7 +64,8 @@ export const VideoHorizontalCard = ({ vod, typepage_id }) => {
         ) : null}
       </div>
       <span className='text-center text-sm mx-1 line-clamp-2'>
-        {vod.vod_name}
+        {/* {vod.vod_name} */}
+        {truncateVodName(vod.vod_name)}
       </span>
     </div>
   );
