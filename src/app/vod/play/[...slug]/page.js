@@ -10,13 +10,20 @@ export async function generateMetadata({ params }) {
   const vod = nId != 9999 ? await getVod(vodId, tId) : await getXVod(vodId, tId);
 
   if (vod && vod.List) {
-    const title = `${vod.List[0].vod_name}在线观看 - 影视TV-海量高清视频免费在线观看`
+    const title = `${vod.List[0].vod_name}在线观看 - 影视TV-海量高清视频免费在线观看`;
+    const blurb = vod.List[0].vod_blurb;
+    let keywordsArray = blurb.split(' '); // Split the blurb into an array of words using space as the delimiter
+  
+    if (keywordsArray.length > 10) {
+      keywordsArray = keywordsArray.slice(0, 10);
+    }
     return {
       title: title,
-      description: vod.List[0].vod_blurb
+      description: blurb,
+      keywords : keywordsArray, 
     };
   }
-}
+
 
 export default function Page({ params }) {
   const path = params.slug;
