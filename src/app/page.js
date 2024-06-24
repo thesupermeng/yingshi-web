@@ -5,6 +5,7 @@ import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
 import { VideoHorizontalCard } from '@/components/videoItem/videoHorizontalCard';
 import { AdsBanner } from '@/components/ads/adsBanner.js';
 export const RightBetCartWidth = 'w-[32rem]';
+import { useSelector, useDispatch } from 'react-redux';
 import { Carousel } from '@/components/carousel/carousel';
 import { Suspense, useEffect, useLayoutEffect, useState } from 'react';
 import { YingshiApi2 } from '@/util/YingshiApi';
@@ -16,7 +17,9 @@ import { getTypePage, getTopicListApi } from '@/app/actions';
 import VodListViewMore from '@/components/vodListViewMore';
 import TopicPagingList from '@/components/topicPagingList';
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
+const getHeaderMenu = (state) => state.headerMenu;
 export default function Home(params) {
   let paramsInput = params.category == undefined ? 0 : params.category;
   const pathName = usePathname();
@@ -27,10 +30,13 @@ export default function Home(params) {
   const [carousel, setCarousel] = useState([]);
   const [topicList, setTopicList] = useState(null);
   const [nextPage, setNextPage] = useState(0);
+
+  const headerMenu = useSelector(getHeaderMenu);
+
+  const [headerMenuState, setHeaderMenuState] = useState(null);
   const [stillCanLoad, setStillCanLoad] = useState(
     paramsInput == 0 ? true : false
   );
-
 
   //banner ads
   const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
@@ -45,13 +51,11 @@ export default function Home(params) {
     setAdsList(allAds.data);
   };
   useLayoutEffect(() => {
-
     let adsList = initAdsList;
-    if(!adsList)
-      {
-        adsList = JSON.parse(sessionStorage.getItem('adsList'));
-      }
- 
+    if (!adsList) {
+      adsList = JSON.parse(sessionStorage.getItem('adsList'));
+    }
+
     if (adsList && adsList !== 'undefined') {
       setAdsList(adsList);
     } else {
@@ -61,46 +65,55 @@ export default function Home(params) {
   //end banner ads
 
   useEffect(() => {
+    console.log('headerMenu');
+    console.log(headerMenu.headerMenu);
+    setHeaderMenuState(headerMenu.headerMenu);
+  }, [headerMenu]);
+
+  useEffect(() => {
     setIsLoading(true);
-    Promise.all([getTypePage(paramsInput), (stillCanLoad && paramsInput == 0 && getTopicListApi(nextPage))]).then(([typePageData, topicListData]) => {
-        if (typePageData) {
-          if (paramsInput == 99) {
-            setClassList(typePageData.class_list);
-          }
-          setCategories(typePageData.categories);
-          setYunying(typePageData.yunying);
+    Promise.all([
+      getTypePage(paramsInput),
+      stillCanLoad && paramsInput == 0 && getTopicListApi(nextPage),
+    ]).then(([typePageData, topicListData]) => {
+      if (typePageData) {
+        // if (paramsInput == 99) {
+        //   setClassList(typePageData.class_list);
+        // }
+        setClassList(typePageData.class_list);
+        console.log('class_list');
+        console.log(typePageData.class_list);
+        setCategories(typePageData.categories);
+        setYunying(typePageData.yunying);
 
-    
+        setCarousel(typePageData.carousel);
+      }
 
-          setCarousel(typePageData.carousel);
-        }
+      if (topicListData) {
+        let currentPage = nextPage;
 
-        if (topicListData) {
-          let currentPage = nextPage;
-
-          if (nextPage > 1) {
-            try {
-              setTopicList((prev) => [...prev, ...topicListData.List]);
-            } catch (e) {
-              console.log(e);
-              console.log('crash');
-              console.log(topicList);
-              setTopicList(topicListData.List);
-            }
-          } else {
+        if (nextPage > 1) {
+          try {
+            setTopicList((prev) => [...prev, ...topicListData.List]);
+          } catch (e) {
+            console.log(e);
+            console.log('crash');
+            console.log(topicList);
             setTopicList(topicListData.List);
           }
-          if (nextPage > topicListData.TotalPageCount - 1) {
-            setStillCanLoad(false);
-          } else {
-            setStillCanLoad(true);
-            setNextPage(currentPage + 1);
-          }
+        } else {
+          setTopicList(topicListData.List);
         }
-
-        setIsLoading(false);
+        if (nextPage > topicListData.TotalPageCount - 1) {
+          setStillCanLoad(false);
+        } else {
+          setStillCanLoad(true);
+          setNextPage(currentPage + 1);
+        }
       }
-    );
+
+      setIsLoading(false);
+    });
   }, []);
 
   return (
@@ -116,10 +129,67 @@ export default function Home(params) {
         <>
           {paramsInput != 99 ? (
             <div className='flex flex-col w-full'>
-              <Carousel  adsList={adsList} carouselItemsProps={carousel} pathName={pathName}  />
+              <Carousel
+                adsList={adsList}
+                carouselItemsProps={carousel}
+                pathName={pathName}
+              />
               <div className='container w-[100%]'>
-                <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
+                <AdsBanner
+                  adsList={adsList}
+                  pathName={pathName}
+                  height='500px'
+                />
               </div>
+              <div
+                className='container w-full overflow-x-auto max-w-full'
+                style={{
+                  display: 'flex',
+                  gap: '12px',
+                  overflowX: 'auto',
+                  scrollbarWidth: 'none',
+                  padding: '14px 8px 27px 8px',
+                }}
+              >
+                {classList != [] &&
+                  paramsInput != 99 &&
+                  headerMenuState &&
+                  classList && (
+                    <>
+                      <Link
+                        href={`/vod/show/by/time/id/${paramsInput}`}
+                        className='btn btn-dark hover-effect text-white mr-8 px-5 py-3'
+                        style={{ flex: '0 0 auto', borderRadius: '10px' }}
+                      >
+                        全部
+                        {/* {headerMenuState.id[paramsInput]?.name} */}
+                        {
+                          headerMenuState.find(
+                            (item) => item.id === paramsInput
+                          ).name
+                        }
+                      </Link>
+                    </>
+                  )}
+
+                {classList != [] &&
+                  paramsInput != 99 &&
+                  classList &&
+                  classList?.map((cItem, cIndex) => {
+                    return (
+                      <Link
+                        href={`/vod/show/by/time/class/${cItem}/id/${paramsInput}`}
+                        key={cIndex + '-class'}
+                        className='btn btn-dark hover-effect text-white mr-8 px-5 py-3'
+                        style={{ flex: '0 0 auto', borderRadius: '10px' }}
+                      >
+                        {cItem}
+                      </Link>
+                    );
+                  }) //class list map
+                }
+              </div>
+
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
                 <div className='container w-[100%]'>
@@ -153,7 +223,7 @@ export default function Home(params) {
                         <div key={idx}>
                           {idx % 2 ? (
                             <AdsBanner
-                            pathName={pathName}
+                              pathName={pathName}
                               navId={'1-13'}
                               height='500px'
                             />

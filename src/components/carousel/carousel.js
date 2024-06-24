@@ -307,10 +307,10 @@ const initCarousel = () =>{
 
                       <div style={{ display: 'flex', flexDirection: 'row', zIndex: '10', width: '80%', justifyContent: 'flex-end' }}>
                         {carouselItems.map((previewItem, previewIndex) => (
-<>
+
                   
                           <div
-                           key={previewItem.carousel_content_id + '-1'}
+                           key={previewItem.carousel_content_id + '-key'}
                             className="hidden xl:flex"
                             style={{
 
@@ -350,7 +350,7 @@ const initCarousel = () =>{
                             </div>
                           </div>
                      
-                      </>
+                     
                       ))}
                       </div>
                     </div>
