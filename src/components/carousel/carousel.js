@@ -107,7 +107,7 @@ const initCarousel = () =>{
           "carousel_pic_pc": result[0].ads_pic,
           "carousel_pic_mobile": result[1].ads_pic,
           "carousel_vod_pic": result[0].ads_thumbnail,
-          "carousel_vod_area": result[0].ads_tag,
+          "carousel_vod_area": '',
           "carousel_vod_year": result[0].ads_event_title,
           "carousel_vod_type_id": 0,
           "carousel_content_id": 0,
