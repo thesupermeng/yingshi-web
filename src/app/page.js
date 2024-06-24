@@ -45,8 +45,7 @@ export default function Home(params) {
     setAdsList(allAds.data);
   };
   useLayoutEffect(() => {
-    console.log('pathName')
-    console.log(pathName)
+
     let adsList = initAdsList;
     if(!adsList)
       {
@@ -70,6 +69,9 @@ export default function Home(params) {
           }
           setCategories(typePageData.categories);
           setYunying(typePageData.yunying);
+
+    
+
           setCarousel(typePageData.carousel);
         }
 
@@ -101,48 +103,6 @@ export default function Home(params) {
     );
   }, []);
 
-  // let classList = [];
-  // let categories = [];
-  // let yunying = [];
-  // let carousel = [];
-  // let topicList = null;
-  // let nextPage = 0;
-  // let stillCanLoad = paramsInput == 0 ? true : false;
-
-  // await Promise.all([getTypePage(paramsInput), getTopicListApi(nextPage)]).then(([typePageData, topicListData]) => {
-  //   if (typePageData) {
-  //     if (paramsInput == 99) {
-  //       classList = typePageData.class_list;
-  //     }
-  //     categories = typePageData.categories;
-  //     yunying = typePageData.yunying;
-  //     carousel = typePageData.carousel;
-  //   }
-
-  //   if (topicListData) {
-  //     let currentPage = nextPage;
-
-  //     if (nextPage > 1) {
-  //       try {
-  //         topicList = [...topicList, ...topicListData.List];
-  //       } catch (e) {
-  //         console.log(e);
-  //         console.log('crash');
-  //         console.log(topicList);
-  //         topicList = topicListData.List;
-  //       }
-  //     } else {
-  //       topicList = topicListData.List;
-  //     }
-  //     if (nextPage > topicListData.TotalPageCount - 1) {
-  //       stillCanLoad = false;
-  //     } else {
-  //       stillCanLoad = true;
-  //       nextPage = currentPage + 1;
-  //     }
-  //   }
-  // })
-
   return (
     <div
       className='flex flex-1 justify-center flex-col'
@@ -156,7 +116,7 @@ export default function Home(params) {
         <>
           {paramsInput != 99 ? (
             <div className='flex flex-col w-full'>
-              <Carousel carouselItems={carousel} />
+              <Carousel  adsList={adsList} carouselItemsProps={carousel} pathName={pathName}  />
               <div className='container w-[100%]'>
                 <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
               </div>

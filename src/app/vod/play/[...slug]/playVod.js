@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState, useRef } from 'react';
 import { YingshiApi } from '@/util/YingshiApi';
@@ -53,32 +53,50 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
   const [showToastMessage, setShowToastMessage] = useState(false);
   const [ads, setAds] = useState(null);
   const [showAds, setShowAds] = useState(!isVip);
+  const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
 
   const getAllAds = async () => {
     return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
   };
 
   const getAds = async () => {
-    let adsList = sessionStorage.getItem('adsList');
-    adsList = JSON.parse(adsList);
-    if (adsList && adsList !== 'undefined') {
-      const filteredAdsList = adsList.filter(
-        (ad) => ad.ads_id === 105 
-      );
- 
-      return filteredAdsList[0];
-    }
-    else {
-      let allAds = await getAllAds();
-      sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
-      const filteredAdsList = allAds.data.filter(
-        (ad) => ad.ads_id === 105 
-      );
-   
-      return filteredAdsList[0];
-    }
+    console.log('play screen init')
+    let allAds = await getAllAds();
+    sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
+
+    let result = allAds.data.filter(
+      (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(144));
+    setShowAds(true);
+    setAds(result[0]);
   
   };
+
+  useLayoutEffect(() => {
+   
+    if (isVip) {
+      setShowAds(false);
+    } else {
+
+      let adsList = initAdsList;
+      if(!adsList)
+        {
+          adsList = JSON.parse(sessionStorage.getItem('adsList'));
+        }
+   
+      if (adsList && adsList !== 'undefined') {
+      //  setAdsList(adsList);
+       let result = adsList.filter(
+        (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(144));
+
+
+        setShowAds(true);
+        setAds(result[0]);
+      } else {
+        getAds();
+      }
+   
+    }
+  }, [isVip]);
 
   const getVod = async () => {
     if (tId == 0) {
@@ -150,33 +168,19 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
     }
   }, [vod]);
 
-  useEffect(() => {
-    if (isVip) {
-      setShowAds(false);
-    } else {
-      getAds().then((res) => {
-        setShowAds(true);
-        setAds(res);
-      });
-    }
-  }, [isVip]);
+
 
   useEffect(() => {
     if (episodeSelected == null) {
-      if (isVip) {
-        setShowAds(false);
-      } else {
-        getAds().then((res) => {
-          setShowAds(true);
-          setAds(res);
-        });
-      }
+    
 
       getVod().then((data) => {
         if (
+          data == null||
           data === undefined ||
           data.length <= 0 ||
           data.List === undefined ||
+          data.List === null ||
           data.List?.length <= 0
         )
           return;
