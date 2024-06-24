@@ -23,7 +23,7 @@ export async function generateMetadata({ params }) {
       keywords : keywordsArray, 
     };
   }
-
+}
 
 export default function Page({ params }) {
   const path = params.slug;

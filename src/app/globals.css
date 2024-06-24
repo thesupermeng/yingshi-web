@@ -299,3 +299,19 @@ body {
   zoom:0.90 !important;
 }
 
+
+.allow-select,
+.allow-select * {
+  user-select: text !important;
+}
+
+
+[data-rsbs-overlay],
+[data-rsbs-backdrop],
+[data-rsbs-root]:after {
+  z-index: 51 !important;
+}
+[data-rsbs-backdrop] {
+  z-index: 50 !important; 
+
+}
