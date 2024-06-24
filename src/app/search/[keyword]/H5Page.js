@@ -149,7 +149,7 @@ export default function Page() {
                               <img
                                 alt='vod'
                                 className={`object-cover`}
-                                src={vod?.vod_pic_list[0]}
+                                src={vod?.vod_pic}
                                 style={{
                                   borderRadius: '10px',
                                   width: '132px',

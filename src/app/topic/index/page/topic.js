@@ -111,7 +111,7 @@ export const Topic = () => {
                             <img
                               alt='topic items'
                               className={`object-cover`}
-                              src={topic?.vod_list[0].vod_pic_list[0]}
+                              src={topic?.vod_list[0].vod_pic}
                               style={{
                                 borderRadius: '10px',
                                 width: '123px',
@@ -182,7 +182,7 @@ export const Topic = () => {
                           <img
                             alt='topic items'
                             className={`object-cover w-100`}
-                            src={vod?.vod_pic_list[0]}
+                            src={vod?.vod_pic}
                             style={{
                               borderRadius: '10px',
                               aspectRatio: '5/7',
