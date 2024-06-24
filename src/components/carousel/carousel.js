@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import styles from './style.module.css';
 import Image from 'next/image';
 import { PlayRightIcon } from '@/asset/icons';
@@ -8,12 +8,14 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-export const Carousel = ({ carouselItems }) => {
+export const Carousel = ({ carouselItemsProps  ,   pathName = '/' ,   adsList = []}) => {
   const router = useRouter();
 
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [currentlyHover, setCurrentlyHover] = useState(false);
   const [carouselVodId, setCarouselVodId] = useState(0);
+  const [carouselItems, setCarouselItems] = useState(null);
+  let navId = '126-135';
 
   var settings = {
     infinite: true,
@@ -22,6 +24,7 @@ export const Carousel = ({ carouselItems }) => {
     slidesToScroll: 1,
     autoplay: true,
     dots: true, // Add dots
+
     appendDots: (dots) => (
       <div
         style={{
@@ -38,7 +41,117 @@ export const Carousel = ({ carouselItems }) => {
 
   };
 
+  const findAdBySlotId = (ads, slotId) => {
+    if (!ads) {
+      return;
+    }
+
+    let result = ads.filter(
+      (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(slotId)
+    );
+    return result[0];
+  };
+
+
+
+  useLayoutEffect(() => {
+   
+    
+    var pathFlag = pathName.substr(pathName.length - 1);
+
+    if (pathFlag == '/') {
+        navId = '126-135';
+    }
+    //1 
+    if (pathFlag == '1') {
+      navId = '127-136';
+    }
+
+    //综艺
+    if (pathFlag == '2') {
+      navId = '128-137';
+    }
+ //综艺
+    if (pathFlag == '3') {
+      navId = '130-139';
+    }
+
+      // 动漫
+    if (pathFlag == '4') {
+      navId = '131-140';
+    }
+
+     // 记录片
+    if (pathFlag == '5') {
+      navId = '132-141';
+    }
+    //韩剧
+    if (pathFlag == '6') {
+      navId = '133-142';
+    }
+    //美剧
+    if (pathFlag == '7') {
+      navId = '134-143';
+    }
+
+
+
+ 
+
+     let result = []
+     const parts = navId?.split('-').map(Number);
+     parts.forEach((item, index) => {
+      let temp = findAdBySlotId(adsList, item);
+      result.push(temp);
+
+  
+    });
+
+     console.log('result')
+     console.log(result)
+     let tempCarou; 
+     if(result &&result !=undefined && result.length>0 && result[0] !=undefined)
+      {
+         tempCarou = {
+             "carousel_id": 0,
+            "carousel_name": result[0].ads_event_title,
+            "carousel_remarks": "",
+            "carousel_pic_pc": result[0].ads_pic,
+            "carousel_pic_mobile": result[1].ads_pic,
+            "carousel_vod_pic": result[0].ads_pic,
+            "carousel_vod_area": result[0].ads_tag,
+            "carousel_vod_year": result[0].ads_event_title,
+            "carousel_vod_type_id": 0,
+            "carousel_content_id": 0,
+            "ads_url": result[0].ads_url
+            
+          
+         }
+      }
+
+
+
+     console.log('result')
+     console.log(result)
+
+     if(tempCarou)
+      {
+
+        let tempObj = [{...tempCarou} , ...carouselItemsProps]
+        setCarouselItems(tempObj)
+      }
+     else
+     {
+      setCarouselItems(carouselItemsProps)
+     }
+     console.log('carouselItems')
+     console.log(carouselItems)
+    
+
+  }, []);
+
   useEffect(() => {
+
     if (!currentlyHover) {
       let autoSwipeCarousel = null;
       if (carouselItems != null) {
@@ -79,6 +192,8 @@ export const Carousel = ({ carouselItems }) => {
 
   return (
     <>
+    {carouselItems &&(
+      <>
       <div className="mobile" style={{ position: 'relative', width: '100%', aspectRatio: '2/1', overflow: 'hidden' }}>
         <div className="mobile">
           <Slider {...settings}>
@@ -90,6 +205,13 @@ export const Carousel = ({ carouselItems }) => {
                   </div>
                   <div className="slider-container" style={{ position: 'relative' }} onClick={(e) => {
                     e.preventDefault();
+
+                    if(item.carousel_content_id == 0 )
+                      {
+                        window.open(item.ads_url, '_blank');
+                        return 
+                      }
+                      console.log('111111')
                     router.push(`/vod/play/id/${item.carousel_content_id}/sid/${item.carousel_vod_type_id}/nid/1`);
                   }}>
                     <img
@@ -106,7 +228,7 @@ export const Carousel = ({ carouselItems }) => {
           </Slider>
         </div>
       </div>
-      <div className="desktop" style={{ position: 'relative', width: '100%', aspectRatio: '5/2', overflow: 'hidden' }}>
+      <div className="desktop" style={{ position: 'relative', width: '100%', aspectRatio: '5/2', overflow: 'hidden' , cursor:'pointer' }}>
         {carouselItems && carouselItems.length > 0 && (
           <div className="desktop d-flex" style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0 }}>
             {carouselItems.map((item, index) => {
@@ -145,6 +267,12 @@ export const Carousel = ({ carouselItems }) => {
                     style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'pointer', opacity: 0.9, position: 'relative' }}
                     onClick={(e) => {
                       e.preventDefault();
+                      if(carouselItems[carouselIndex].carousel_content_id == 0 )
+                        {
+                          window.open(carouselItems[carouselIndex].ads_url, '_blank');
+                          return 
+                        }
+                        console.log('111111')
                       router.push(`/vod/play/id/${carouselItems[carouselIndex].carousel_content_id}/sid/${carouselItems[carouselIndex].carousel_vod_type_id}/nid/1`);
                     }}
                   />
@@ -155,6 +283,7 @@ export const Carousel = ({ carouselItems }) => {
                         <p className="text-lg">{item.carousel_name}</p>
                         <p className="text-sm pt-1" style={{ fontWeight: '200' }}>{item.carousel_vod_year}{desc}</p>
                         <p className="text-sm pt-1" style={{ fontWeight: '200' }}>{item.carousel_vod_remarks}</p>
+                         {item?.carousel_id !=0  && 
                         <div
                           style={{
                             cursor: 'pointer',
@@ -166,20 +295,35 @@ export const Carousel = ({ carouselItems }) => {
                           }}
                           onClick={(e) => {
                             e.preventDefault();
-                            router.push(`/vod/play/id/${carouselItems[carouselIndex].carousel_content_id}/sid/${carouselItems[carouselIndex].carousel_vod_type_id}/nid/1`);
+                            if(carouselItems[carouselIndex].carousel_content_id == 0 )
+                              {
+                                window.open(carouselItems[carouselIndex].ads_url, '_blank');
+                                return 
+                              }
+                              else
+                              {
+                                console.log('2222')
+                                router.push(`/vod/play/id/${carouselItems[carouselIndex].carousel_content_id}/sid/${carouselItems[carouselIndex].carousel_vod_type_id}/nid/1`);
+                              }
+                             
                           }}
-                          className="flex flex-row flex-wrap">
+                          className="flex flex-row flex-wrap hover-effect">
                           <Image
                             style={{ paddingRight: '0.5rem' }}
                             src={PlayRightIcon}
                             alt="Icon"
                           />
+                        
                           <div className="text-sm">看正片</div>
+                         
                         </div>
+                      }
                       </div>
 
                       <div style={{ display: 'flex', flexDirection: 'row', zIndex: '10', width: '80%', justifyContent: 'flex-end' }}>
                         {carouselItems.map((previewItem, previewIndex) => (
+<>
+                        {previewItem.carousel_id !=0 &&
                           <div
                             className="hidden xl:flex"
                             style={{
@@ -205,6 +349,12 @@ export const Carousel = ({ carouselItems }) => {
                                 style={{ width: '100%', aspectRatio: '5/7', objectFit: 'cover', borderRadius: '12px' }}
                                 onClick={(e) => {
                                   e.preventDefault();
+                                  if(previewItem.carousel_content_id == 0 )
+                                    {
+                                      window.open(previewItem.ads_url, '_blank');
+                                      return 
+                                    }
+                                    console.log('111111')
                                   router.push(`/vod/play/id/${previewItem.carousel_content_id}/sid/${previewItem.carousel_vod_type_id}/nid/1`);
                                 }}
                               />
@@ -214,7 +364,9 @@ export const Carousel = ({ carouselItems }) => {
                               <p className="line-clamp-1">{previewItem.carousel_name}</p>
                             </div>
                           </div>
-                        ))}
+                       }
+                      </>
+                      ))}
                       </div>
                     </div>
 
@@ -226,6 +378,9 @@ export const Carousel = ({ carouselItems }) => {
           </div>
         )}
       </div>
+      </>
+       )
+ }
     </>
   );
 };

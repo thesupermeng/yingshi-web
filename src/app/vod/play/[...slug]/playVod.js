@@ -176,9 +176,11 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
 
       getVod().then((data) => {
         if (
+          data == null||
           data === undefined ||
           data.length <= 0 ||
           data.List === undefined ||
+          data.List === null ||
           data.List?.length <= 0
         )
           return;
