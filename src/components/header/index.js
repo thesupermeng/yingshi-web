@@ -246,7 +246,7 @@ const Header = () => {
 
   const getTopTenList = async () => {
     return YingshiApi(
-      URL_YINGSHI_VOD.playlistGetTopicDetail + '?id=1',
+      URL_YINGSHI_VOD.topTenList + '?id=1',
       {},
       { method: 'GET' }
     );
@@ -334,7 +334,7 @@ const Header = () => {
     const fetchData = async () => {
       let menuItem = await getTopNav();
       const topTenItem = await getTopTenList();
-      setTopTenList(topTenItem.vod_list);
+      setTopTenList(topTenItem);
       menuItem.push({
         id: 998,
         name: '播单',
