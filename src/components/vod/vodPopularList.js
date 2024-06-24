@@ -32,7 +32,7 @@ export const VodPopularList = () => {
       <Link
         href={`/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`}
         key={`key-vodTopic-${index}`}
-        className="flex flex-row space-x-4 items-center cursor-pointer"
+        className="flex flex-row space-x-4 items-center cursor-pointer hover-effect"
       >
         <span className={index === 0
           ? 'text-red-500'

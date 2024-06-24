@@ -289,7 +289,6 @@ export default function H5Page({ params }) {
             allow='clipboard-read; clipboard-write'
           />
 
-          {/* <h1> { ahaToken } </h1> */}
         </div>
       )}
 

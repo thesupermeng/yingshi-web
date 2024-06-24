@@ -157,7 +157,7 @@ const Header = () => {
   };
 
   const handleChange = (event) => {
-    setLoadingSearching(true);
+    
     const newValue = event.target.value;
 
     // Check if the first character is a space
@@ -165,8 +165,11 @@ const Header = () => {
       setSearchInput('');
       return; // Exit early if the first character is a space
     }
-
     setSearchInput(newValue);
+    return;
+
+    setLoadingSearching(true);
+   // setSearchInput(newValue);
 
     if (timeoutId) {
       clearTimeout(timeoutId);
@@ -484,47 +487,11 @@ const Header = () => {
           </div>
         </div>
         {openSearch ? (
-          <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100dvh-52px)] md:h-auto z-20 left-0 md:left-auto md:w-96 md:ml-16'>
+          <div className='absolute flex flex-col items-center pt-1 w-full h-[calc(100dvh-52px)] md:h-auto z-20 left-0 md:left-auto md:w-96'>
             <div className='py-3 px-4 bg-[#1d2023] md:rounded-md w-full h-full md:bg-[#18191ef5] md:w-96'>
               <div className='no-scrollbar overflow-y-scroll w-full h-full overflow-scroll overscroll-none'>
                 <div className='w-full h-[calc(100%+1px)]'>
-                  {searchInput ? (
-                    loadingSearching ? (
-                      <LoadingPage full={false} />
-                    ) : searchingList.length > 0 ? (
-                      searchingList.map((item, index) => {
-                        return (
-                          <div
-                            className='flex flex-row justify-between py-2.5'
-                            key={index}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setOpenSearch(false);
-                              setSearchInput('');
-                              handleAddSearchHistory();
-                              router.push(
-                                `/vod/play/id/${item.vod_id}/sid/${item.type_id}/nid/1`
-                              );
-                            }}
-                          >
-                            <div className='flex flex-row'>
-                              <div className='text-sm'>{item.vod_name}</div>
-                            </div>
-                          </div>
-                        );
-                      })
-                    ) : (
-                      <div className='flex items-center justify-center flex-col h-full'>
-                        <Image
-                          className='mx-2'
-                          src={searchEmptyIcon}
-                          alt='empty'
-                          width={120}
-                        />
-                        <span>无搜索结果</span>
-                      </div>
-                    )
-                  ) : (
+                   
                     <>
                       {searchHistoryList.length > 0 ? (
                         <div>
@@ -613,7 +580,7 @@ const Header = () => {
                         );
                       })}
                     </>
-                  )}
+                  
                 </div>
               </div>
             </div>
@@ -913,7 +880,7 @@ const Header = () => {
                     </div>
                     <QRCode
                       className='rounded-md'
-                      value='https://play.google.com/store/apps/details?id=com.yingshitv'
+                      value='https://yingshi.tv/static/assets/yingshi.apk'
                       renderAs='canvas'
                       size={120}
                       includeMargin={true}
@@ -1032,7 +999,7 @@ const Header = () => {
                   }}
                 >
                   <span
-                    className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                    className={`text-blue-hover transition-colors duration-300 truncate ${
                       selectedId === navItem.id ? 'text-blue-500' : 'text-white'
                     }`}
                   >
@@ -1049,7 +1016,7 @@ const Header = () => {
                 <div className='relative' ref={dropdownMoreRef}>
                   <button
                     onClick={handleOpenMore}
-                    className='flex flex-row items-center hover:text-blue-500'
+                    className='flex flex-row items-center text-blue-hover'
                   >
                     <span>更多</span>
                     <Image
@@ -1087,7 +1054,7 @@ const Header = () => {
                               }}
                             >
                               <span
-                                className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                                className={`text-blue-hover transition-colors duration-300 truncate ${
                                   selectedId === navItem.id
                                     ? 'text-blue-500'
                                     : 'text-white'

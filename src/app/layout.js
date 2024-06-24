@@ -147,7 +147,7 @@ export default function RootLayout({ children }) {
               <div className='w-full grow flex justify-center '>{children}</div>
               {/* <div className=''>{children}</div> */}
 
-              {/* <MyFooter2 /> */}
+              <MyFooter2 />
               <MyFooter />
               <div
                 className='px-8 py-3 desktop'
