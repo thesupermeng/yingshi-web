@@ -639,10 +639,10 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                   <Image src={ArrowLeftIcon} alt='Icon' />
                 </div>
               </div>
-              {showAds && ads && !isVip ? (
+              {showAds && !isVip ? ( //  && ads
                 <AdsPlayer
                   className='aspect-[16/9]'
-                  adsInfo={ads}
+                  adsInfo={'ads'}
                   handleAdsPlayerEndPlay={handleAdsPlayerEndPlay}
                 />
               ) : (

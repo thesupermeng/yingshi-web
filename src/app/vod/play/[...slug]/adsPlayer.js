@@ -62,7 +62,8 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
   const handleHrefLink = () => {
     if (isPlaying) {
       //  pauseVideo();
-      window.open(adsInfo.ads_url, '_blank');
+      // 1111111
+      window.open('https://aha888.vip/home?channelCode=100006', '_blank');
     }
   };
 
@@ -113,8 +114,8 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
       >
         <source
           src={
-            //'https://oss.yingshi.tv/videos/vod/vi/aha-qiantiepian-15sec.mp4'
-            adsInfo.ads_pic
+          'https://oss.yingshi.tv/videos/vod/vi/yingshi-ads.mp4'  //11111
+          //   adsInfo.ads_pic
           }
           type='video/mp4'
         />
