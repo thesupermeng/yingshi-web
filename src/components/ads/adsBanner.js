@@ -80,7 +80,7 @@ export const AdsBanner = ({
 
   return (
     <>
-      {ads ? (
+      {(ads && !isVip )? (
         <div
           className='my-6'
           style={{

@@ -7,9 +7,11 @@ import { useRouter } from 'next/navigation';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 
 export const Carousel = ({ carouselItemsProps  ,   pathName = '/' ,   adsList = []}) => {
   const router = useRouter();
+  const { isVip, userInfo } = useYingshiUser();
 
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [currentlyHover, setCurrentlyHover] = useState(false);
@@ -52,103 +54,89 @@ export const Carousel = ({ carouselItemsProps  ,   pathName = '/' ,   adsList = 
     return result[0];
   };
 
+const initCarousel = () =>{
+  var pathFlag = pathName.substr(pathName.length - 1);
 
+  if (pathFlag == '/') {
+      navId = '126-135';
+  }
+  //1 
+  if (pathFlag == '1') {
+    navId = '127-136';
+  }
+
+  //综艺
+  if (pathFlag == '2') {
+    navId = '128-137';
+  }
+//综艺
+  if (pathFlag == '3') {
+    navId = '130-139';
+  }
+
+    // 动漫
+  if (pathFlag == '4') {
+    navId = '131-140';
+  }
+
+   // 记录片
+  if (pathFlag == '5') {
+    navId = '132-141';
+  }
+  //韩剧
+  if (pathFlag == '6') {
+    navId = '133-142';
+  }
+  //美剧
+  if (pathFlag == '7') {
+    navId = '134-143';
+  }
+   let result = []
+   const parts = navId?.split('-').map(Number);
+   parts.forEach((item, index) => {
+    let temp = findAdBySlotId(adsList, item);
+    result.push(temp);
+  });
+   let tempCarou; 
+   if(result &&result !=undefined && result.length>0 && result[0] !=undefined && !isVip)
+    {
+       tempCarou = {
+           "carousel_id": 0,
+          "carousel_name": result[0].ads_event_title,
+          "carousel_remarks": "",
+          "carousel_pic_pc": result[0].ads_pic,
+          "carousel_pic_mobile": result[1].ads_pic,
+          "carousel_vod_pic": result[0].ads_thumbnail,
+          "carousel_vod_area": '',
+          "carousel_vod_year": result[0].ads_event_title,
+          "carousel_vod_type_id": 0,
+          "carousel_content_id": 0,
+          "ads_url": result[0].ads_url
+       }
+
+    }
+   if(tempCarou)
+    {
+
+      let tempObj = [{...tempCarou} , ...carouselItemsProps]
+      setCarouselItems(tempObj)
+    }
+   else
+   {
+    setCarouselItems(carouselItemsProps)
+   }
+}
 
   useLayoutEffect(() => {
-   
-    
-    var pathFlag = pathName.substr(pathName.length - 1);
-
-    if (pathFlag == '/') {
-        navId = '126-135';
-    }
-    //1 
-    if (pathFlag == '1') {
-      navId = '127-136';
-    }
-
-    //综艺
-    if (pathFlag == '2') {
-      navId = '128-137';
-    }
- //综艺
-    if (pathFlag == '3') {
-      navId = '130-139';
-    }
-
-      // 动漫
-    if (pathFlag == '4') {
-      navId = '131-140';
-    }
-
-     // 记录片
-    if (pathFlag == '5') {
-      navId = '132-141';
-    }
-    //韩剧
-    if (pathFlag == '6') {
-      navId = '133-142';
-    }
-    //美剧
-    if (pathFlag == '7') {
-      navId = '134-143';
-    }
-
-
-
- 
-
-     let result = []
-     const parts = navId?.split('-').map(Number);
-     parts.forEach((item, index) => {
-      let temp = findAdBySlotId(adsList, item);
-      result.push(temp);
-
-  
-    });
-
-     console.log('result')
-     console.log(result)
-     let tempCarou; 
-     if(result &&result !=undefined && result.length>0 && result[0] !=undefined)
-      {
-         tempCarou = {
-             "carousel_id": 0,
-            "carousel_name": result[0].ads_event_title,
-            "carousel_remarks": "",
-            "carousel_pic_pc": result[0].ads_pic,
-            "carousel_pic_mobile": result[1].ads_pic,
-            "carousel_vod_pic": result[0].ads_pic,
-            "carousel_vod_area": result[0].ads_tag,
-            "carousel_vod_year": result[0].ads_event_title,
-            "carousel_vod_type_id": 0,
-            "carousel_content_id": 0,
-            "ads_url": result[0].ads_url
-            
-          
-         }
-      }
-
-
-
-     console.log('result')
-     console.log(result)
-
-     if(tempCarou)
-      {
-
-        let tempObj = [{...tempCarou} , ...carouselItemsProps]
-        setCarouselItems(tempObj)
-      }
-     else
-     {
-      setCarouselItems(carouselItemsProps)
-     }
-     console.log('carouselItems')
-     console.log(carouselItems)
-    
-
+    initCarousel()
   }, []);
+
+
+
+  useEffect(() => {
+
+    initCarousel()
+  }, [isVip]);
 
   useEffect(() => {
 
@@ -199,7 +187,7 @@ export const Carousel = ({ carouselItemsProps  ,   pathName = '/' ,   adsList = 
           <Slider {...settings}>
             {carouselItems != null && carouselItems.length > 0 && carouselItems.map((item, index) => {
               return (
-                <div key={index}>
+                <div key={index + '-top'}>
                   <div style={{ zIndex: '1', position: 'absolute', bottom: '0', paddingLeft: '1.2rem', paddingBottom: '2rem' }}>
                     {item.carousel_name}
                   </div>
@@ -211,7 +199,6 @@ export const Carousel = ({ carouselItemsProps  ,   pathName = '/' ,   adsList = 
                         window.open(item.ads_url, '_blank');
                         return 
                       }
-                      console.log('111111')
                     router.push(`/vod/play/id/${item.carousel_content_id}/sid/${item.carousel_vod_type_id}/nid/1`);
                   }}>
                     <img
@@ -243,7 +230,7 @@ export const Carousel = ({ carouselItemsProps  ,   pathName = '/' ,   adsList = 
               })
               return (
                 <div
-                  key={index}
+                  key={index + '-btn'}
                   className="wrap-is-me"
                   style={{
                     width: '100%',
@@ -272,7 +259,6 @@ export const Carousel = ({ carouselItemsProps  ,   pathName = '/' ,   adsList = 
                           window.open(carouselItems[carouselIndex].ads_url, '_blank');
                           return 
                         }
-                        console.log('111111')
                       router.push(`/vod/play/id/${carouselItems[carouselIndex].carousel_content_id}/sid/${carouselItems[carouselIndex].carousel_vod_type_id}/nid/1`);
                     }}
                   />
@@ -302,7 +288,6 @@ export const Carousel = ({ carouselItemsProps  ,   pathName = '/' ,   adsList = 
                               }
                               else
                               {
-                                console.log('2222')
                                 router.push(`/vod/play/id/${carouselItems[carouselIndex].carousel_content_id}/sid/${carouselItems[carouselIndex].carousel_vod_type_id}/nid/1`);
                               }
                              
@@ -323,8 +308,9 @@ export const Carousel = ({ carouselItemsProps  ,   pathName = '/' ,   adsList = 
                       <div style={{ display: 'flex', flexDirection: 'row', zIndex: '10', width: '80%', justifyContent: 'flex-end' }}>
                         {carouselItems.map((previewItem, previewIndex) => (
 <>
-                        {previewItem.carousel_id !=0 &&
+                  
                           <div
+                           key={previewItem.carousel_content_id + '-1'}
                             className="hidden xl:flex"
                             style={{
 
@@ -337,7 +323,7 @@ export const Carousel = ({ carouselItemsProps  ,   pathName = '/' ,   adsList = 
                               marginRight: '1rem',
                               cursor: 'pointer',
                             }}
-                            key={previewIndex}
+                         
                             onMouseEnter={() => onHover(previewIndex)}
                             onMouseLeave={() => onUnhover(previewIndex)}
                           >
@@ -354,17 +340,16 @@ export const Carousel = ({ carouselItemsProps  ,   pathName = '/' ,   adsList = 
                                       window.open(previewItem.ads_url, '_blank');
                                       return 
                                     }
-                                    console.log('111111')
                                   router.push(`/vod/play/id/${previewItem.carousel_content_id}/sid/${previewItem.carousel_vod_type_id}/nid/1`);
                                 }}
                               />
                             </div>
-                            <div key={previewIndex} style={{ paddingRight: '10px', paddingLeft: '10px', textAlign: 'center', fontSize: '12px', paddingTop: '6px' }}>
+                            <div key={previewIndex + '-3'} style={{ paddingRight: '10px', paddingLeft: '10px', textAlign: 'center', fontSize: '12px', paddingTop: '6px' }}>
                               {/* {renderShortString(previewItem.carousel_name)} */}
                               <p className="line-clamp-1">{previewItem.carousel_name}</p>
                             </div>
                           </div>
-                       }
+                     
                       </>
                       ))}
                       </div>
