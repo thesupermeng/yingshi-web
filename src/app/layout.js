@@ -79,7 +79,6 @@ export default function RootLayout({ children }) {
           window.dataLayer = window.dataLayer || [];
           function gtag(){window.dataLayer.push(arguments);}
           gtag('js', new Date());
-
           gtag('config', 'G-HGN89T8ESW');
         `}
       </Script>
@@ -168,10 +167,11 @@ export default function RootLayout({ children }) {
                   }}
                 >
                   版权声明：影视TV内容均来自互联网，不提供存储/录制/上传。
+                  版权声明：影视TV内容均来自互联网
                   <br />
                   如果影视TV提供内容侵犯了您的版权，请发送电子邮件至
-                  <a href='mailto:shayuyingshi@gmail.com'>
-                    shayuyingshi@gmail.com
+                  <a href='mailto:contactus@yingshi.tv'>
+                  contactus@yingshi.tv
                   </a>
                   进行说明，我们将立即删除内容，保护版权所有者的权益。
                   <br />
@@ -184,7 +184,7 @@ export default function RootLayout({ children }) {
                     用户服务协议
                   </a>
                   <br />
-                  Copyright © 2024 shayuyingshi.com All Rights Reserved
+                  Copyright © 2024 yingshi.tv All Rights Reserved
                 </div>
               </div>
             </ScrollView>
