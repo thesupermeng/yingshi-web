@@ -23,7 +23,7 @@ export const AdsBanner = ({
     if (!ads) {
       return;
     }
-    console.log('==========');
+
     let result = ads.filter(
       (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(slotId)
     );
@@ -54,12 +54,8 @@ export const AdsBanner = ({
     if (pathFlag == '7') {
       navId = '10-18';
     }
-    console.log('pathFlag');
+ 
 
-    console.log(pathFlag);
-    console.log('navId');
-
-    console.log(navId);
     if (navId && navId != 0) {
       const parts = navId?.split('-').map(Number);
 
@@ -73,8 +69,7 @@ export const AdsBanner = ({
         let result = findAdBySlotId(adsList, item);
         filteredAdsList.push(result);
 
-        console.log('filteredAdsList');
-        console.log(filteredAdsList);
+    
       });
 
       setAds(filteredAdsList);
