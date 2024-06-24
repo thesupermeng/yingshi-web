@@ -61,7 +61,7 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
 
   const handleHrefLink = () => {
     if (isPlaying) {
-      pauseVideo();
+      //  pauseVideo();
       window.open(adsInfo.ads_url, '_blank');
     }
   };
