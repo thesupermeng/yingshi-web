@@ -49,8 +49,8 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
   };
 
   const handleOnStopCount = () => {
-    clearInterval(intervalIdRef.current);
-    setIsPlaying(false);
+    // clearInterval(intervalIdRef.current);
+    // setIsPlaying(false);
     const isMobile = window.innerWidth < 768;
     if (!userInfo) {
       setIsLoginOpen(true);
