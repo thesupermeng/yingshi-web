@@ -115,7 +115,7 @@ export default function H5Page({ params }) {
   };
 
   const handleClickEmail = () => {
-    window.location = 'mailto:shayuyingshi@gmail.com';
+    window.location = 'mailto:contactus@yingshi.tv';
   };
 
   // temp end
@@ -348,7 +348,7 @@ export default function H5Page({ params }) {
               className={'text-shayuBlue text-[14px]'}
               onClick={handleClickEmail}
             >
-              shayuyingshi@gmail.com
+              contactus@yingshi.tv
             </span>
           </div>
           <Button

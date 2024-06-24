@@ -407,8 +407,8 @@ export default function Page({ params }) {
                     您可在我们的产品功能页面的“设置”中找到“问题与反馈”在线提交反馈意见；
                     <br />
                     1.2 您可以向我们开通的
-                    <a href='mailto:shayuyingshi@gmail.com'>
-                      shayuyingshi@gmail.com
+                    <a href='mailto:contactus@yingshi.tv'>
+                      contactus@yingshi.tv
                     </a>
                     客服邮箱发送邮件与我们联系；
                     <br />
