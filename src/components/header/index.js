@@ -753,7 +753,7 @@ const Header = () => {
                       return (
                         <div
                           key={index}
-                          className='flex flex-row hover:text-[#0085E0] gap-x-2 cursor-pointer'
+                          className='flex flex-row hover:text-[#FAC33D] gap-x-2 cursor-pointer'
                           onClick={() => {
                             const url = item.sourceId
                               ? `/vod/play/id/${item.vodid}/sid/${item.tid}/nid/${item.nid}/source/${item.sourceId}`
