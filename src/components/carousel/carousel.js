@@ -108,13 +108,16 @@ const initCarousel = () =>{
           "carousel_remarks": "",
           "carousel_pic_pc": result[0].ads_pic,
           "carousel_pic_mobile": result[1].ads_pic,
-          "carousel_vod_pic": result[0].ads_pic,
+          "carousel_vod_pic": result[0].ads_thumbnail,
           "carousel_vod_area": result[0].ads_tag,
           "carousel_vod_year": result[0].ads_event_title,
           "carousel_vod_type_id": 0,
           "carousel_content_id": 0,
           "ads_url": result[0].ads_url
        }
+
+       console.log('tempCarou')
+       console.log(tempCarou)
     }
    console.log('result')
    console.log(result)
@@ -123,6 +126,8 @@ const initCarousel = () =>{
 
       let tempObj = [{...tempCarou} , ...carouselItemsProps]
       setCarouselItems(tempObj)
+      console.log('tempObj')
+      console.log(tempObj)
     }
    else
    {
@@ -192,7 +197,7 @@ const initCarousel = () =>{
           <Slider {...settings}>
             {carouselItems != null && carouselItems.length > 0 && carouselItems.map((item, index) => {
               return (
-                <div key={index}>
+                <div key={index + '-top'}>
                   <div style={{ zIndex: '1', position: 'absolute', bottom: '0', paddingLeft: '1.2rem', paddingBottom: '2rem' }}>
                     {item.carousel_name}
                   </div>
@@ -236,7 +241,7 @@ const initCarousel = () =>{
               })
               return (
                 <div
-                  key={index}
+                  key={index + '-btn'}
                   className="wrap-is-me"
                   style={{
                     width: '100%',
@@ -316,8 +321,9 @@ const initCarousel = () =>{
                       <div style={{ display: 'flex', flexDirection: 'row', zIndex: '10', width: '80%', justifyContent: 'flex-end' }}>
                         {carouselItems.map((previewItem, previewIndex) => (
 <>
-                        {previewItem.carousel_id !=0 &&
+                  
                           <div
+                           key={previewItem.carousel_content_id + '-1'}
                             className="hidden xl:flex"
                             style={{
 
@@ -330,7 +336,7 @@ const initCarousel = () =>{
                               marginRight: '1rem',
                               cursor: 'pointer',
                             }}
-                            key={previewIndex}
+                         
                             onMouseEnter={() => onHover(previewIndex)}
                             onMouseLeave={() => onUnhover(previewIndex)}
                           >
@@ -352,12 +358,12 @@ const initCarousel = () =>{
                                 }}
                               />
                             </div>
-                            <div key={previewIndex} style={{ paddingRight: '10px', paddingLeft: '10px', textAlign: 'center', fontSize: '12px', paddingTop: '6px' }}>
+                            <div key={previewIndex + '-3'} style={{ paddingRight: '10px', paddingLeft: '10px', textAlign: 'center', fontSize: '12px', paddingTop: '6px' }}>
                               {/* {renderShortString(previewItem.carousel_name)} */}
                               <p className="line-clamp-1">{previewItem.carousel_name}</p>
                             </div>
                           </div>
-                       }
+                     
                       </>
                       ))}
                       </div>
