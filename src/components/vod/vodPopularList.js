@@ -22,13 +22,13 @@ export const VodPopularList = () => {
   }
 
   const fetchTopicDetail = async () => {
-    return YingshiApi(URL_YINGSHI_VOD.playlistGetTopicDetail + '?id=1', {}, { method: 'GET' });
+    return YingshiApi(URL_YINGSHI_VOD.topTenList + '?id=1', {}, { method: 'GET' });
   }
 
   return <div className="p-4 space-y-4">
-    <span className="text-lg">{topic?.topic_name ?? t('popularList')}</span>
+    <span className="text-lg">热搜总榜</span>
 
-    {topic?.vod_list?.map((vod, index) => (
+    {topic?.map((vod, index) => (
       <Link
         href={`/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`}
         key={`key-vodTopic-${index}`}
