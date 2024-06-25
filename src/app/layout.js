@@ -137,10 +137,7 @@ export default function RootLayout({ children }) {
             <ModalOverlays />
             <ScrollView>
               <Header />
-
               <div className='w-full grow flex justify-center '>{children}</div>
-              {/* <div className=''>{children}</div> */}
-
               <MyFooter2 />
               <MyFooter />
               <div
