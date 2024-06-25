@@ -99,7 +99,8 @@ const TopicPagingList = ({ data, navId, serverNextPage, isStillCanLoad }) => {
               {idx % 2 ? (
                 <AdsBanner adsList={adsList} navId={'1-13'} height='500px' />
               ) : (
-                <div style={{ paddingTop: '20px' }}></div>
+                // <div style={{ paddingTop: '20px' }}></div>
+                <></>
               )}
               <div id={topic.topic_id} key={idx}>
                 <div className='flex justify-between'>
