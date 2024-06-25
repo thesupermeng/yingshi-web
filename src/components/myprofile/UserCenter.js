@@ -64,7 +64,7 @@ export default function UserCenter() {
               <div className={'flex bg-[#1D2023] rounded-[10px] px-[20px] py-[25px] items-center gap-[20px] mt-[14px]'}>
                 <span className={'text-[#9C9C9C] text-[15px] font-semibold'}>手机号码</span>
                 <span
-                  className={'text-white text-[15px] font-semibold flex-1'}>+{userInfo.country.country_phonecode} {userInfo.user_phone}</span>
+                  className={'text-white text-[15px] font-semibold flex-1'}>+{userInfo.user_phone}</span>
               </div>
             }
           </div>

@@ -3,15 +3,15 @@
 import { URL_YINGSHI_VOD } from "@/config/yingshiUrl";
 import { YingshiApi } from "@/util/YingshiApi";
 
-export const getTypePage = async (idValue) => {
+export const getTypePage = async (idValue, nextPage = 1) => {
   if (idValue == 99) {
     return YingshiApi(
       URL_YINGSHI_VOD.homeGetPages,
       {
         id: idValue,
         dj: true,
-        page: 1,
-        limit: 60,
+        page: nextPage,
+        limit: 10,
         vod_limit: 6,
       },
       {
