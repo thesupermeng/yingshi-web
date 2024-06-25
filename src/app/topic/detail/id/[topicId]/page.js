@@ -5,7 +5,7 @@ import {URL_YINGSHI_VOD} from '@/config/yingshiUrl';
 export async function generateMetadata({ params }) {
   const getTopicDetailsApi = async () => {
     return YingshiApi(
-      URL_YINGSHI_VOD.searchingListSlim + '?id=' + params.topicId,
+      URL_YINGSHI_VOD.playlistGetTopicDetail + '?id=' + params.topicId,
       {},
       { method: 'GET' }
     );
