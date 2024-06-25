@@ -60,7 +60,7 @@ const MyFooter = () => {
     pathname.startsWith('/setpin') ||
     pathname.startsWith('/privacy') ||
     pathname.startsWith('/service') ||
-   // pathname.startsWith('/sport') ||
+    // pathname.startsWith('/sport') ||
     pathname.startsWith('/myprofile/watchHistory') ||
     pathname.startsWith('/myprofile/userCenter') ||
     pathname.startsWith('/myprofile/feedback') ||
@@ -70,7 +70,7 @@ const MyFooter = () => {
     pathname.startsWith('/sport/user/deposit') ||
     pathname.startsWith('/sport/user/withdraw') ||
     pathname.startsWith('/sport/user/transaction') ||
-    pathname.startsWith('/sport/user/history') 
+    pathname.startsWith('/sport/user/history')
   ) {
     return <></>;
   }
@@ -113,21 +113,21 @@ const MyFooter = () => {
       title: '我的',
     },
   ];
-
+  console.log('tabs: ', tabs)
   return (
-    <div className='w-full' style={{paddingBottom : '100px'}}>
-    <div className='mobile fixed bottom-0 w-full' >
-      <div
-        className='w-full bg-[#161616eb] pt-2 pb-2'
-        style={{ backdropFilter: 'blur(3px)' }}
-      >
-        <div className='flex'>
-          {tabs.map((tab, index) => (
-            <TabItem key={index} {...tab} />
-          ))}
+    <div className='w-full mobile' style={{ paddingBottom: '100px' }}>
+      <div className='fixed bottom-0 w-full' >
+        <div
+          className='w-full bg-[#161616eb] pt-2 pb-2'
+          style={{ backdropFilter: 'blur(3px)' }}
+        >
+          <div className='flex'>
+            {tabs.map((tab, index) => (
+              <TabItem key={index} {...tab} />
+            ))}
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 };
