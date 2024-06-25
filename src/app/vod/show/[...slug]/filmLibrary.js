@@ -365,7 +365,7 @@ export const FilmLibrary = () => {
         </div>
 
         <div className='flex w-screen flex-col items-center'>
-          <div className={` w-screen p-1 z-10 top-[51px] md:static`}>
+          <div className={` w-screen p-1 z-10 top-[48px] md:static sticky`}>
             {filterTypeList && (
               <div className={`bg-[#1D2023] pt-2`}>
                 <div className='flex md:flex-wrap gap-x-4 gap-y-2 pl-4 py-2 container'>
