@@ -415,16 +415,16 @@ export const FilmLibrary = () => {
                             }}
                           >
                             <span
-                              className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                              className={`hover:text-yellow-500 transition-colors duration-300 truncate ${
                                 paramsFilter.typeId === item.type_id
-                                  ? 'text-blue-500'
+                                  ? 'text-yellow-500'
                                   : 'text-white'
                               }`}
                             >
                               {item.type_name}
                             </span>
                             {paramsFilter.typeId === item.type_id ? (
-                              <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
+                              <div className='border-2 border-yellow-500 w-5 h-0.5 rounded-lg'></div>
                             ) : null}
                           </div>
                         );
@@ -455,9 +455,9 @@ export const FilmLibrary = () => {
                               }}
                             >
                               <span
-                                className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                                className={`text-sm hover:text-yellow-500 transition-colors duration-300 truncate ${
                                   paramsFilter.by === item.value
-                                    ? 'text-blue-500'
+                                    ? 'text-yellow-500'
                                     : 'text-white'
                                 }`}
                               >
@@ -494,9 +494,9 @@ export const FilmLibrary = () => {
                                 }}
                               >
                                 <span
-                                  className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                                  className={`text-sm hover:text-yellow-500 transition-colors duration-300 truncate ${
                                     paramsFilter.class === item
-                                      ? 'text-blue-500'
+                                      ? 'text-yellow-500'
                                       : 'text-white'
                                   }`}
                                 >
@@ -534,9 +534,9 @@ export const FilmLibrary = () => {
                                 }}
                               >
                                 <span
-                                  className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                                  className={`text-sm hover:text-yellow-500 transition-colors duration-300 truncate ${
                                     paramsFilter.area === item
-                                      ? 'text-blue-500'
+                                      ? 'text-yellow-500'
                                       : 'text-white'
                                   }`}
                                 >
@@ -574,9 +574,9 @@ export const FilmLibrary = () => {
                                 }}
                               >
                                 <span
-                                  className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                                  className={`text-sm hover:text-yellow-500 transition-colors duration-300 truncate ${
                                     paramsFilter.lang === item
-                                      ? 'text-blue-500'
+                                      ? 'text-yellow-500'
                                       : 'text-white'
                                   }`}
                                 >
@@ -614,9 +614,9 @@ export const FilmLibrary = () => {
                                 }}
                               >
                                 <span
-                                  className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                                  className={`text-sm hover:text-yellow-500 transition-colors duration-300 truncate ${
                                     paramsFilter.year === item
-                                      ? 'text-blue-500'
+                                      ? 'text-yellow-500'
                                       : 'text-white'
                                   }`}
                                 >
@@ -640,13 +640,13 @@ export const FilmLibrary = () => {
                           ).text
                         }
                       </div>
-                      <div className='rounded-full w-1 h-1 bg-blue-500'></div>
+                      <div className='rounded-full w-1 h-1 bg-yellow-500'></div>
                       <div>{paramsFilter.class}</div>
-                      <div className='rounded-full w-1 h-1 bg-blue-500'></div>
+                      <div className='rounded-full w-1 h-1 bg-yellow-500'></div>
                       <div>{paramsFilter.area}</div>
-                      <div className='rounded-full w-1 h-1 bg-blue-500'></div>
+                      <div className='rounded-full w-1 h-1 bg-yellow-500'></div>
                       <div>{paramsFilter.lang}</div>
-                      <div className='rounded-full w-1 h-1 bg-blue-500'></div>
+                      <div className='rounded-full w-1 h-1 bg-yellow-500'></div>
                       <div>{paramsFilter.year}</div>
                       <div
                         className='cursor-pointer'
@@ -658,7 +658,7 @@ export const FilmLibrary = () => {
                         }}
                       >
                         <FontAwesomeIcon
-                          className='text-blue-500 '
+                          className='text-yellow-500 '
                           icon={faAngleDown}
                         />
                       </div>
