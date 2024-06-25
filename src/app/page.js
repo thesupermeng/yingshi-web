@@ -173,7 +173,7 @@ export default function Home(params) {
                         {
                           headerMenuState.find(
                             (item) => item.id === paramsInput
-                          ).name
+                          )?.name
                         }
                       </Link>
                     </>
