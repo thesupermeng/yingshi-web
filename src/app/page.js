@@ -18,6 +18,7 @@ import VodListViewMore from '@/components/vodListViewMore';
 import TopicPagingList from '@/components/topicPagingList';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { VideoWithTitleHorizontalCard } from '@/components/videoItem/videoWithTitleHorizontalCard';
 
 const getHeaderMenu = (state) => state.headerMenu;
 export default function Home(params) {
@@ -36,6 +37,9 @@ export default function Home(params) {
   const [headerMenuState, setHeaderMenuState] = useState(null);
   const [stillCanLoad, setStillCanLoad] = useState(
     paramsInput == 0 ? true : false
+  );
+  const [still99CanLoad, setStill99CanLoad] = useState(
+    paramsInput == 99 ? true : false
   );
 
   //banner ads
@@ -87,6 +91,8 @@ export default function Home(params) {
         setYunying(typePageData.yunying);
 
         setCarousel(typePageData.carousel);
+      } else if (paramsInput == 99 && typePageData === undefined) {
+        setStill99CanLoad(false)
       }
 
       if (topicListData) {
@@ -141,6 +147,10 @@ export default function Home(params) {
                   height='500px'
                 />
               </div>
+              {classList != [] &&
+                  paramsInput != 99 &&
+                  headerMenuState &&
+                  classList && (
               <div
                 className='container w-full overflow-x-auto max-w-full'
                 style={{
@@ -148,13 +158,10 @@ export default function Home(params) {
                   gap: '12px',
                   overflowX: 'auto',
                   scrollbarWidth: 'none',
-                  padding: '14px 8px 27px 8px',
+                  padding: '10px 8px 22px 8px',
                 }}
               >
-                {classList != [] &&
-                  paramsInput != 99 &&
-                  headerMenuState &&
-                  classList && (
+              
                     <>
                       <Link
                         href={`/vod/show/by/time/id/${paramsInput}`}
@@ -170,7 +177,7 @@ export default function Home(params) {
                         }
                       </Link>
                     </>
-                  )}
+               
 
                 {classList != [] &&
                   paramsInput != 99 &&
@@ -189,6 +196,9 @@ export default function Home(params) {
                   }) //class list map
                 }
               </div>
+  )}
+
+
 
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
@@ -282,55 +292,12 @@ export default function Home(params) {
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                   {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
                   <div className='pt-4 container  w-[100%]'>
-                    {categories != [] &&
-                      categories?.map((category, idx) => {
-                        return (
-                          <div
-                            id={category.type_id}
-                            key={idx}
-                            style={{ paddingTop: '3rem' }}
-                          >
-                            <div className='flex justify-between'>
-                              <span
-                                style={{
-                                  fontSize: '20px',
-                                  fontWeight: '600',
-                                  fontStyle: 'normal',
-                                  fontFamily: 'PingFang SC',
-                                }}
-                              >
-                                {category.type_name}
-                              </span>
-                              <div className='flex w-fit items-center cursor-pointer hover-blue'>
-                                <VodListViewMore
-                                  type={'xcategory'}
-                                  data={category}
-                                />
-                                <FontAwesomeIcon
-                                  style={{
-                                    fontSize: '14px',
-                                    fontWeight: '400',
-                                    fontStyle: 'normal',
-                                    fontFamily: 'PingFang SC',
-                                  }}
-                                  icon={faAngleRight}
-                                />
-                              </div>
-                            </div>
-                            <div className='grid grid-cols-3 md:grid-cols-6 lg:grid-cols-6 gap-5 py-2'>
-                              {category.vod_list?.slice(0, 6).map((vod, i) => {
-                                return (
-                                  <VideoHorizontalCard
-                                    vod={vod}
-                                    key={i}
-                                    typepage_id={paramsInput}
-                                  />
-                                );
-                              })}
-                            </div>
-                          </div>
-                        );
-                      })}
+                    <VideoWithTitleHorizontalCard
+                      data={categories}
+                      navId={paramsInput}
+                      isStillCanLoad={still99CanLoad}
+                      platform='web'
+                    />
                   </div>
                 </div>
               </div>
@@ -338,55 +305,12 @@ export default function Home(params) {
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                   {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
                   <div className='pt-1 container  w-[100%]'>
-                    {categories != [] &&
-                      categories?.map((category, idx) => {
-                        return (
-                          <div
-                            id={category.type_id}
-                            key={idx}
-                            style={{ paddingTop: '1rem' }}
-                          >
-                            <div className='flex justify-between'>
-                              <span
-                                style={{
-                                  fontSize: '20px',
-                                  fontWeight: '600',
-                                  fontStyle: 'normal',
-                                  fontFamily: 'PingFang SC',
-                                }}
-                              >
-                                {category.type_name}
-                              </span>
-                              <div className='flex w-fit items-center cursor-pointer hover-blue'>
-                                <VodListViewMore
-                                  type={'xcategory'}
-                                  data={category}
-                                />
-                                <FontAwesomeIcon
-                                  style={{
-                                    fontSize: '14px',
-                                    fontWeight: '400',
-                                    fontStyle: 'normal',
-                                    fontFamily: 'PingFang SC',
-                                  }}
-                                  icon={faAngleRight}
-                                />
-                              </div>
-                            </div>
-                            <div className='grid grid-cols-3 md:grid-cols-6 lg:grid-cols-6 gap-5 py-2'>
-                              {category.vod_list?.slice(0, 6).map((vod, i) => {
-                                return (
-                                  <VideoHorizontalCard
-                                    vod={vod}
-                                    key={i}
-                                    typepage_id={paramsInput}
-                                  />
-                                );
-                              })}
-                            </div>
-                          </div>
-                        );
-                      })}
+                    <VideoWithTitleHorizontalCard
+                      data={categories}
+                      navId={paramsInput}
+                      isStillCanLoad={still99CanLoad}
+                      platform='mobile'
+                    />
                   </div>
                 </div>
               </div>
