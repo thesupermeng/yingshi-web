@@ -238,7 +238,8 @@ export default function Home(params) {
                               height='500px'
                             />
                           ) : (
-                            <div style={{ paddingTop: '20px' }}></div>
+                            // <div style={{ paddingTop: '20px' }}></div>
+                            <></>
                           )}
                           <div id={category.type_id} key={idx}>
                             <div className='flex justify-between'>
