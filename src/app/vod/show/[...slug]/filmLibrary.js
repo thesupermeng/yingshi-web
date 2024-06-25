@@ -11,6 +11,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
 import { useParams, usePathname, useRouter } from 'next/navigation';
+import { AdsBanner } from '@/components/ads/adsBanner.js';
+
 
 const getIsScroll = (state) => state.isScroll;
 const getIsTop = (state) => state.isTop;
@@ -25,7 +27,7 @@ export const FilmLibrary = () => {
   const [nextPage, setNextPage] = useState(0);
   const [collapse, setCollapse] = useState(false);
   const [buttonUncollapse, setButtonUncollapse] = useState(false);
-
+  const pathName = usePathname();
   const isScrolling = useSelector(getIsScroll);
   const isAtTop = useSelector(getIsTop);
 
@@ -48,6 +50,37 @@ export const FilmLibrary = () => {
       value: 'score',
     },
   ];
+
+
+    //banner ads
+    const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
+    const [adsList, setAdsList] = useState([]);
+    const getAllAds = async () => {
+      return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
+    };
+    const initAds = async () => {
+      let allAds = await getAllAds();
+      sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
+  
+      setAdsList(allAds.data);
+    };
+  
+    useLayoutEffect(() => {
+      console.log('test');
+      let adsList = initAdsList;
+      if (!adsList) {
+        adsList = JSON.parse(sessionStorage.getItem('adsList'));
+      }
+  
+      if (adsList && adsList !== 'undefined') {
+        console.log('adsList 111');
+        console.log(adsList);
+        setAdsList(adsList);
+      } else {
+        initAds();
+      }
+    }, []);
+    //end banner ads
 
   const getFilterTypeList = async () => {
     return YingshiApi(URL_YINGSHI_VOD.filteringTypeList, {}, { method: 'GET' });
@@ -314,6 +347,10 @@ export const FilmLibrary = () => {
   return (
     <>
       <div className='flex flex-1 justify-center flex-col'>
+      <div className=' w-[100%]'>
+              <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
+            </div>
+            
         <div className='flex w-screen flex-col items-center'>
           <div className={` w-screen h-auto p-1 z-20 top-[51px] md:static`}>
             {filterTypeList && (

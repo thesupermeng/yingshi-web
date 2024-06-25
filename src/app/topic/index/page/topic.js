@@ -183,6 +183,11 @@ export const Topic = () => {
         {/* mobile  view  */}
         <div className='mobile'>
           <div className='row w-screen'>
+          {adsList && (
+            <div className=' w-[100%]'>
+              <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
+            </div>
+          )}
             {topicList.map((topic) => (
               <Link
                 className='mb-2 cursor-pointer'

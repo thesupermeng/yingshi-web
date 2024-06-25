@@ -61,6 +61,10 @@ export const AdsBanner = ({
       navId = '11-14';
     }
 
+    if (pathName.startsWith('/vod/show')) {
+      navId = '12-15';
+    }
+
     if (navId && navId != 0) {
       const parts = navId?.split('-').map(Number);
 
