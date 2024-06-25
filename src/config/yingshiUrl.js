@@ -13,7 +13,7 @@ export const URL_YINGSHI_VOD = {
   homeGetPages: 'page/v4.5/typepage',
   getVodDetails: 'vod/v3/vod',
   playlistGetTopic: 'topic/v1/topic',
-  playlistGetTopicDetail: 'topic/v1/topic/detail',
+  playlistGetTopicDetail: 'topic/v2/topic/detail',
   topTenList: 'topic/v1/topic/hot',
   searchingList: 'vod/v3/vod',
   searchingListSlim: 'vod/v1/vod/similar',
