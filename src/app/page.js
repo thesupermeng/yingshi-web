@@ -141,6 +141,10 @@ export default function Home(params) {
                   height='500px'
                 />
               </div>
+              {classList != [] &&
+                  paramsInput != 99 &&
+                  headerMenuState &&
+                  classList && (
               <div
                 className='container w-full overflow-x-auto max-w-full'
                 style={{
@@ -148,13 +152,10 @@ export default function Home(params) {
                   gap: '12px',
                   overflowX: 'auto',
                   scrollbarWidth: 'none',
-                  padding: '14px 8px 27px 8px',
+                  padding: '10px 8px 22px 8px',
                 }}
               >
-                {classList != [] &&
-                  paramsInput != 99 &&
-                  headerMenuState &&
-                  classList && (
+              
                     <>
                       <Link
                         href={`/vod/show/by/time/id/${paramsInput}`}
@@ -170,7 +171,7 @@ export default function Home(params) {
                         }
                       </Link>
                     </>
-                  )}
+               
 
                 {classList != [] &&
                   paramsInput != 99 &&
@@ -189,6 +190,9 @@ export default function Home(params) {
                   }) //class list map
                 }
               </div>
+  )}
+
+
 
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
