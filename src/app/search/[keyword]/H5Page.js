@@ -47,7 +47,7 @@ export default function Page() {
     console.log(keyword);
     console.log('decodedKeyword');
     console.log(decodedKeyword);
-    
+
 
     let res = await getSearchResultApi();
 
@@ -110,7 +110,7 @@ export default function Page() {
                     搜索"{decodedKeyword}" ，找到
                     <span className='search-count text-theme'>
                       {isSearching === false ? (
-                    <span>{searchResults?.List ? searchResults.List.length : 0}</span>
+                        <span>{searchResults?.List ? searchResults.List.length : 0}</span>
                       ) : (
                         <FontAwesomeIcon icon={faSpinner} spin />
                       )}</span>
@@ -140,12 +140,12 @@ export default function Page() {
                     >
                       <div className='row '>
                         <div className='col-12'>
-                          <div className='row'>
-                            <div  style={{
-                                  width: '132px',
-                                  paddingLeft: '0px',
-                                  paddingRight: '0px',
-                                }}>
+                          <div className='row flex-nowrap'>
+                            <div style={{
+                              width: '132px',
+                              paddingLeft: '0px',
+                              paddingRight: '0px',
+                            }}>
                               <img
                                 alt='vod'
                                 className={`object-cover`}
@@ -174,13 +174,13 @@ export default function Page() {
                                   ? vod.vod_actor?.substring(0, 35) + '...'
                                   : vod.vod_actor}
                               </div>
-                              <div className='topic-details-title-sub text-secondary '>
+                              <div className='topic-details-title-sub text-secondary text-break'>
                                 {vod?.vod_blurb?.length > 75
                                   ? vod.vod_blurb.substring(0, 73) + '...'
                                   : vod.vod_blurb}
                               </div>
                               <button className='btn btn-topic-play'>
-                                <FontAwesomeIcon style={{ color: 'white' }}  icon={faPlay} />{' '}
+                                <FontAwesomeIcon style={{ color: 'white' }} icon={faPlay} />{' '}
                                 <span className='ml-2 text-white'> 立即播放 </span>
                               </button>
                             </div>
@@ -201,14 +201,14 @@ export default function Page() {
             <div className='d-flex container pt-3' style={{ width: '100%' }}>
               <div className='row'>
                 {searchResults?.List?.map((vod) => (
-                  <VodItemMobile vod={vod} key={vod.vod_id}/>
+                  <VodItemMobile vod={vod} key={vod.vod_id} />
                 ))}
               </div>
             </div>
           </div>
 
 
-          {!searchResults?.List && 
+          {!searchResults?.List &&
 
             <div className='flex items-center justify-center flex-col h-full pt-6 mt-6'>
               <Image
@@ -238,7 +238,7 @@ export default function Page() {
       {yunying != [] &&
         <div className='flex flex-col w-full mb-8 mb-8 px-1.5'>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-          {/* md:mx-20 mx-2.5  */}
+            {/* md:mx-20 mx-2.5  */}
             <div className='pt-8 mt-8 lg:w-[80%] w-[100%] container'>
               {yunying?.map((yy, idx) => {
                 return (
