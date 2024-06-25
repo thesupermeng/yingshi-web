@@ -84,7 +84,14 @@ export const VideoVerticalCard = ({ vod }) => {
           </div>
         ) : null}
       </div>
-      <span className='text-center text-sm mx-1 md-hover-effect'>
+      <span className='text-center text-sm mx-1 md-hover-effect' style={{
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        display: "-webkit-box",
+        lineClamp: 2,
+        WebkitLineClamp: 2,
+        WebkitBoxOrient: "vertical",
+      }}>
         {vod.vod_name}
       </span>
     </div>
