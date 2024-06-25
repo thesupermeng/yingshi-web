@@ -6,9 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import base64PlaceholderString from '@/app/placeholder';
 import Link from 'next/link';
+import { useState } from 'react';
 
 export const VideoVerticalCard = ({ vod }) => {
   const router = useRouter();
+  const [imageError, setImageError] = useState(false);
 
   const listConverter = (strings) => {
     let list = [];
@@ -27,11 +29,12 @@ export const VideoVerticalCard = ({ vod }) => {
             placeholder='blur'
             blurDataURL={'data:image/png;base64,' + base64PlaceholderString}
             alt='video'
-            src={vod.vod_pic}
+            src={imageError ? ImagePlaceholder : vod.vod_pic}
             style={{ borderRadius: '0.5rem !important', objectFit: 'cover' }}
             fill
             sizes='100%'
             className='rounded-lg'
+            onError={(e) => setImageError(true)}
           />
           <div className='bg-[#0000008c] h-[100%] w-full flex flex-col rounded-lg md:group-hover:z-10 lg:group-hover:block hidden'>
             <div className='rounded-t-lg w-full h-[45%] flex justify-center items-center'>
@@ -81,7 +84,9 @@ export const VideoVerticalCard = ({ vod }) => {
           </div>
         ) : null}
       </div>
-      <span className='text-center text-sm mx-1 md-hover-effect'>{vod.vod_name}</span>
+      <span className='text-center text-sm mx-1 md-hover-effect'>
+        {vod.vod_name}
+      </span>
     </div>
   );
 };
