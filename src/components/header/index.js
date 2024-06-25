@@ -809,7 +809,7 @@ const Header = () => {
                 <Image src={AppImage} alt='AppImage' width={200} />
               </div>
               <div className='flex-1 flex flex-col justify-center items-center pr-2 gap-y-2'>
-                <Image alt='鲨鱼TV' src={Logo} width={120} />
+                <Image alt='影视TV' src={Logo} width={120} />
                 <span className='text-sm'>您每一天的影视平台</span>
                 <div className='flex flex-row gap-x-5 pt-2'>
                   <div className='flex flex-col items-center gap-2'>
@@ -896,7 +896,7 @@ const Header = () => {
               }`}
             >
               <Image
-                alt='鲨鱼TV'
+                alt='影视TV'
                 src={Logo}
                 style={{ cursor: 'pointer' }}
                 onClick={() => {
@@ -1237,7 +1237,7 @@ const Header = () => {
                 {/*{pathname.startsWith('/privacy') &&*/}
                 {/*  <span className={'text-white'}>隐私协议</span>*/}
                 {/*}*/}
-                <Image src={Logo} alt={'鲨鱼TV'} />
+                <Image src={Logo} alt={'影视TV'} />
               </div>
             </div>
           </div>
