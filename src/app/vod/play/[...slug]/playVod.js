@@ -114,7 +114,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
         URL_YINGSHI_VOD.getVodDetails,
         {
           id: vodId,
-          // tid: tId, // 111111  seo issue
+          tid: tId,
         },
         {
           method: 'GET',
