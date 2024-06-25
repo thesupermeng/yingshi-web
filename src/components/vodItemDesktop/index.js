@@ -53,7 +53,7 @@ const VodItemDesktop = ({ vod }) => {
                     : vod.vod_blurb}
                 </div>
                 <button className='btn btn-topic-play'>
-                  <FontAwesomeIcon icon={faPlay}  style={{ color: 'white' }} /> <span className='ml-2'> 立即播放 </span>
+                  <FontAwesomeIcon icon={faPlay}  style={{ color: 'black' }} /> <span className='ml-2'> 立即播放 </span>
                 </button>
               </div>
             </div>
