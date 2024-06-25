@@ -25,7 +25,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'https://api.hongdel.top/:path*',
+        destination: 'https://api.yingshi.tv/:path*',
       },
     ];
   },
