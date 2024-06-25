@@ -148,20 +148,20 @@ export default function Home(params) {
                 />
               </div>
               {classList != [] &&
-                  paramsInput != 99 &&
-                  headerMenuState &&
-                  classList && (
-              <div
-                className='container w-full overflow-x-auto max-w-full'
-                style={{
-                  display: 'flex',
-                  gap: '12px',
-                  overflowX: 'auto',
-                  scrollbarWidth: 'none',
-                  padding: '10px 8px 22px 8px',
-                }}
-              >
-              
+                paramsInput != 99 &&
+                headerMenuState &&
+                classList && (
+                  <div
+                    className='container w-full overflow-x-auto max-w-full'
+                    style={{
+                      display: 'flex',
+                      gap: '12px',
+                      overflowX: 'auto',
+                      scrollbarWidth: 'none',
+                      padding: '10px 8px 10px 8px',
+                    }}
+                  >
+
                     <>
                       <Link
                         href={`/vod/show/by/time/id/${paramsInput}`}
@@ -177,26 +177,26 @@ export default function Home(params) {
                         }
                       </Link>
                     </>
-               
 
-                {classList != [] &&
-                  paramsInput != 99 &&
-                  classList &&
-                  classList?.map((cItem, cIndex) => {
-                    return (
-                      <Link
-                        href={`/vod/show/by/time/class/${cItem}/id/${paramsInput}`}
-                        key={cIndex + '-class'}
-                        className='btn btn-dark hover-effect text-white btn-dark-catagory'
-                        style={{ flex: '0 0 auto', borderRadius: '10px' }}
-                      >
-                        {cItem}
-                      </Link>
-                    );
-                  }) //class list map
-                }
-              </div>
-  )}
+
+                    {classList != [] &&
+                      paramsInput != 99 &&
+                      classList &&
+                      classList?.map((cItem, cIndex) => {
+                        return (
+                          <Link
+                            href={`/vod/show/by/time/class/${cItem}/id/${paramsInput}`}
+                            key={cIndex + '-class'}
+                            className='btn btn-dark hover-effect text-white btn-dark-catagory'
+                            style={{ flex: '0 0 auto', borderRadius: '10px' }}
+                          >
+                            {cItem}
+                          </Link>
+                        );
+                      }) //class list map
+                    }
+                  </div>
+                )}
 
 
 
@@ -231,15 +231,12 @@ export default function Home(params) {
                     categories?.map((category, idx) => {
                       return (
                         <div key={idx}>
-                          {idx % 2 ? (
+                          {(idx % 2 !== 0) && (
                             <AdsBanner
                               pathName={pathName}
                               navId={'1-13'}
                               height='500px'
                             />
-                          ) : (
-                            // <div style={{ paddingTop: '20px' }}></div>
-                            <></>
                           )}
                           <div id={category.type_id} key={idx}>
                             <div className='flex justify-between'>
