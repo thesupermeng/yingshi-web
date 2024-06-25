@@ -84,7 +84,7 @@ export const AdsBanner = ({
       console.log('no ads');
     }
   }, []);
-  console.log('ads: ', ads)
+
   return (
     <>
       {ads && !isVip ? (
