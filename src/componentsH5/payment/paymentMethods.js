@@ -46,7 +46,7 @@ export default function PaymentMethods({className, paymentOptions, onMethodSelec
 
 function Method({children, icon, isSelected, onClick}) {
   return (
-    <div className={`hover-effect col-5 flex items-center rounded-[8px] gap-[10px] py-3 px-4 ${isSelected? 'border-2 border-[#D3AC7B]': ''} ${styles.payment_method_background}` }
+    <div className={`hover-effect col-lg-5 flex items-center rounded-[8px] gap-[10px] py-3 px-4 ${isSelected? 'border-2 border-[#D3AC7B]': ''} ${styles.payment_method_background}` }
       onClick={onClick}
     >
       <div className={'h-[24px] w-[34px] relative'}>
