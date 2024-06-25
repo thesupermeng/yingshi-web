@@ -3,7 +3,7 @@ import { searchEmptyIcon } from '@/asset/icons';
 import { LoadingPage } from '@/components/loading';
 import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
-import { YingshiApi } from '@/util/YingshiApi';
+import { YingshiApi  , YingshiApi2} from '@/util/YingshiApi';
 import Image from 'next/image';
 import { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { Spinner } from '@/components/spinner';
