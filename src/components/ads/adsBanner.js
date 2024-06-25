@@ -54,7 +54,12 @@ export const AdsBanner = ({
     if (pathFlag == '7') {
       navId = '10-18';
     }
- 
+
+    console.log('ads banner');
+    console.log(adsList);
+    if (pathName.startsWith('/topic')) {
+      navId = '11-14';
+    }
 
     if (navId && navId != 0) {
       const parts = navId?.split('-').map(Number);
@@ -68,19 +73,17 @@ export const AdsBanner = ({
       parts.forEach((item, index) => {
         let result = findAdBySlotId(adsList, item);
         filteredAdsList.push(result);
-
-    
       });
 
       setAds(filteredAdsList);
     } else {
       console.log('no ads');
     }
-  }, []);
+  }, [adsList]);
 
   return (
     <>
-      {(ads && !isVip )? (
+      {ads && !isVip ? (
         <div
           className='my-6'
           style={{
