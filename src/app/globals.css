@@ -315,3 +315,16 @@ body {
   z-index: 50 !important; 
 
 }
+
+.margin-banner
+{
+  margin: 1.5rem 0rem;
+}
+
+/* mobile */
+@media (max-width: 768px) {
+  .margin-banner
+  {
+    margin: 0.88rem 0rem;
+  }
+}

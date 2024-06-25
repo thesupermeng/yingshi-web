@@ -55,8 +55,8 @@ export const AdsBanner = ({
       navId = '10-18';
     }
 
-    console.log('ads banner');
-    console.log(adsList);
+    // console.log('ads banner');
+    // console.log(adsList);
     if (pathName.startsWith('/topic')) {
       navId = '11-14';
     }
@@ -87,9 +87,9 @@ export const AdsBanner = ({
 
   return (
     <>
-      {ads && !isVip ? (
+      {(ads && !isVip && navId && navId != 0 && ads.length>0 ) ? (
         <div
-          className='my-6'
+          className='margin-banner'
           style={{
             display: 'flex',
             justifyContent: 'center',
@@ -107,7 +107,7 @@ export const AdsBanner = ({
             className='mobile'
             src={ads[1]?.ads_pic}
             onClick={() => {
-              window.open(ads[0].ads_url, '_blank');
+              window.open(ads[1].ads_url, '_blank');
             }}
           />
         </div>

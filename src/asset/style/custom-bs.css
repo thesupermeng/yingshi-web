@@ -2417,17 +2417,22 @@ a:not([href]):not([class]):hover {
   margin-bottom: 30px;
 }
 
-
 .header-search-input-desktop
 {
   border-radius: 10px !important;
 }
-
-
 }
 
 .hover-effect:hover
 {
   opacity: 0.85;
   cursor: pointer !important;
+}
+
+.btn-dark-catagory
+{
+  padding: 10px 24px ;
+  margin-right: 15px;
+  font-size: 14px;
+  font-weight: 400;
 }

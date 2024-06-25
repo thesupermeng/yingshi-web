@@ -13,7 +13,6 @@ import { useSelector } from 'react-redux';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { AdsBanner } from '@/components/ads/adsBanner.js';
 
-
 const getIsScroll = (state) => state.isScroll;
 const getIsTop = (state) => state.isTop;
 
@@ -51,36 +50,35 @@ export const FilmLibrary = () => {
     },
   ];
 
+  //banner ads
+  const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
+  const [adsList, setAdsList] = useState([]);
+  const getAllAds = async () => {
+    return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
+  };
+  const initAds = async () => {
+    let allAds = await getAllAds();
+    sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
 
-    //banner ads
-    const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
-    const [adsList, setAdsList] = useState([]);
-    const getAllAds = async () => {
-      return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
-    };
-    const initAds = async () => {
-      let allAds = await getAllAds();
-      sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
-  
-      setAdsList(allAds.data);
-    };
-  
-    useLayoutEffect(() => {
-      console.log('test');
-      let adsList = initAdsList;
-      if (!adsList) {
-        adsList = JSON.parse(sessionStorage.getItem('adsList'));
-      }
-  
-      if (adsList && adsList !== 'undefined') {
-        console.log('adsList 111');
-        console.log(adsList);
-        setAdsList(adsList);
-      } else {
-        initAds();
-      }
-    }, []);
-    //end banner ads
+    setAdsList(allAds.data);
+  };
+
+  useLayoutEffect(() => {
+    console.log('test');
+    let adsList = initAdsList;
+    if (!adsList) {
+      adsList = JSON.parse(sessionStorage.getItem('adsList'));
+    }
+
+    if (adsList && adsList !== 'undefined') {
+      console.log('adsList 111');
+      console.log(adsList);
+      setAdsList(adsList);
+    } else {
+      initAds();
+    }
+  }, []);
+  //end banner ads
 
   const getFilterTypeList = async () => {
     return YingshiApi(URL_YINGSHI_VOD.filteringTypeList, {}, { method: 'GET' });
@@ -256,24 +254,36 @@ export const FilmLibrary = () => {
   const listConverter = (type) => {
     let list = [];
     if (type == 'class') {
-      list = filterTypeList[
-        filterTypeList.findIndex((item) => item.type_id === paramsFilter.typeId)
-      ].type_extend_obj.class.split(',');
+      list =
+        filterTypeList[
+          filterTypeList.findIndex(
+            (item) => item.type_id === paramsFilter.typeId
+          )
+        ].type_extend_obj.class.split(',');
       list.unshift('全部类型');
     } else if (type == 'area') {
-      list = filterTypeList[
-        filterTypeList.findIndex((item) => item.type_id === paramsFilter.typeId)
-      ].type_extend_obj.area.split(',');
+      list =
+        filterTypeList[
+          filterTypeList.findIndex(
+            (item) => item.type_id === paramsFilter.typeId
+          )
+        ].type_extend_obj.area.split(',');
       list.unshift('全部地区');
     } else if (type == 'lang') {
-      list = filterTypeList[
-        filterTypeList.findIndex((item) => item.type_id === paramsFilter.typeId)
-      ].type_extend_obj.lang.split(',');
+      list =
+        filterTypeList[
+          filterTypeList.findIndex(
+            (item) => item.type_id === paramsFilter.typeId
+          )
+        ].type_extend_obj.lang.split(',');
       list.unshift('全部语言');
     } else if (type == 'year') {
-      list = filterTypeList[
-        filterTypeList.findIndex((item) => item.type_id === paramsFilter.typeId)
-      ].type_extend_obj.year.split(',');
+      list =
+        filterTypeList[
+          filterTypeList.findIndex(
+            (item) => item.type_id === paramsFilter.typeId
+          )
+        ].type_extend_obj.year.split(',');
       list.unshift('全部时间');
     }
 
@@ -347,12 +357,12 @@ export const FilmLibrary = () => {
   return (
     <>
       <div className='flex flex-1 justify-center flex-col'>
-      <div className=' w-[100%]'>
-              <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
-            </div>
-            
+        <div className=' w-[100%]'>
+          <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
+        </div>
+
         <div className='flex w-screen flex-col items-center'>
-          <div className={` w-screen h-auto p-1 z-20 top-[51px] md:static`}>
+          <div className={` w-screen p-1 z-10 top-[51px] md:static`}>
             {filterTypeList && (
               <div className={`bg-[#1D2023] pt-2`}>
                 <div className='flex md:flex-wrap gap-x-4 gap-y-2 pl-4 py-2 container'>
@@ -605,37 +615,37 @@ export const FilmLibrary = () => {
                 </div>
               </div>
             )}
-
-            {/* bottom section  111 */}
-            {loading ? (
-              <LoadingPage full={false} />
-            ) : (
-              <div className='w-screen flex flex-1 flex-col'>
-                {videoList !== null ? (
-                  <div className='container grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-4'>
-                    {videoList.map((vod, i) => {
-                      return <VideoVerticalCard vod={vod} key={i} />;
-                    })}
-                  </div>
-                ) : !loadingVideoList ? (
-                  <div
-                    className='w-screen flex flex-1 flex-col'
-                    style={{ minHeight: '300px' }}
-                  >
-                    <div className='flex flex-1 justify-center items-center flex-col'>
-                      <Image
-                        className='mx-2'
-                        src={searchEmptyIcon}
-                        alt='empty'
-                        width={120}
-                      />
-                      <span>暂无数据</span>
-                    </div>
-                  </div>
-                ) : null}
-              </div>
-            )}
           </div>
+
+          {/* bottom section  111 */}
+          {loading ? (
+            <LoadingPage full={false} />
+          ) : (
+            <div className='w-screen flex flex-1 flex-col'>
+              {videoList !== null ? (
+                <div className='container grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-4'>
+                  {videoList.map((vod, i) => {
+                    return <VideoVerticalCard vod={vod} key={i} />;
+                  })}
+                </div>
+              ) : !loadingVideoList ? (
+                <div
+                  className='w-screen flex flex-1 flex-col'
+                  style={{ minHeight: '300px' }}
+                >
+                  <div className='flex flex-1 justify-center items-center flex-col'>
+                    <Image
+                      className='mx-2'
+                      src={searchEmptyIcon}
+                      alt='empty'
+                      width={120}
+                    />
+                    <span>暂无数据</span>
+                  </div>
+                </div>
+              ) : null}
+            </div>
+          )}
         </div>
         <div ref={targetRef}>
           {(stillCanLoad || loadingVideoList) && (

@@ -165,7 +165,7 @@ export default function Home(params) {
                     <>
                       <Link
                         href={`/vod/show/by/time/id/${paramsInput}`}
-                        className='btn btn-dark hover-effect text-white mr-8 px-5 py-3'
+                        className='btn btn-dark hover-effect text-white btn-dark-catagory'
                         style={{ flex: '0 0 auto', borderRadius: '10px' }}
                       >
                         全部
@@ -187,7 +187,7 @@ export default function Home(params) {
                       <Link
                         href={`/vod/show/by/time/class/${cItem}/id/${paramsInput}`}
                         key={cIndex + '-class'}
-                        className='btn btn-dark hover-effect text-white mr-8 px-5 py-3'
+                        className='btn btn-dark hover-effect text-white btn-dark-catagory'
                         style={{ flex: '0 0 auto', borderRadius: '10px' }}
                       >
                         {cItem}
