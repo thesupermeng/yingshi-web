@@ -120,9 +120,8 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
         />
       </video>
       <div
-        className={`absolute bg-[#00000099] py-1 px-2 rounded-full items-center top-2 right-2 ${
-          remaining !== null ? 'flex' : 'hidden'
-        }`}
+        className={`absolute bg-[#00000099] py-1 px-2 rounded-full items-center top-2 right-2 ${remaining !== null ? 'flex' : 'hidden'
+          }`}
       >
         <span className='text-sm nowrap'>{remaining}秒&nbsp;|&nbsp;</span>
         <span
@@ -143,9 +142,8 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
         />
       </div>
       <div
-        className={`rounded-full bg-[#00000099] w-14 h-14 flex justify-center items-center absolute cursor-pointer ${
-          isPlaying ? 'hidden' : 'flex'
-        }`}
+        className={`rounded-full bg-[#ffffffcc] w-14 h-14 flex justify-center items-center absolute cursor-pointer ${isPlaying ? 'hidden' : 'flex'
+          }`}
         onClick={() => {
           playVideo();
         }}
@@ -161,9 +159,8 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
   ) : (
     <div className='flex w-full h-full relative justify-center items-center'>
       <div
-        className={`absolute bg-[#00000099] py-1 px-2 rounded-full items-center top-2 right-2 ${
-          remaining !== null ? 'flex' : 'hidden'
-        }`}
+        className={`absolute bg-[#00000099] py-1 px-2 rounded-full items-center top-2 right-2 ${remaining !== null ? 'flex' : 'hidden'
+          }`}
       >
         <span className='text-sm nowrap'>{remaining}秒&nbsp;|&nbsp;</span>
         <span
@@ -184,9 +181,8 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
         />
       </div>
       <div
-        className={`rounded-full bg-[#00000099] w-14 h-14 flex justify-center items-center absolute cursor-pointer ${
-          isPlaying ? 'hidden' : 'flex'
-        }`}
+        className={`rounded-full bg-[#ffffffcc] w-14 h-14 flex justify-center items-center absolute cursor-pointer ${isPlaying ? 'hidden' : 'flex'
+          }`}
         onClick={() => {
           handleStartCountDown();
         }}
