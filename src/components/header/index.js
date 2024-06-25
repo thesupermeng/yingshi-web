@@ -1063,7 +1063,7 @@ const Header = () => {
   if (pathname.startsWith('/search/')) {
     return (
       <>
-        <div className={'z-30 w-screen sticky top-0 mobile'}>
+        <div className={'z-30 w-screen sticky top-0 mobile bg-black'}>
           <div className='flex py-3 mx-2.5'>
             <div className='gap-y-2 flex-col w-full md:flex-row flex'>
               <div className='flex-1 flex gap-x-2 md:justify-between'>
