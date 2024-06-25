@@ -163,7 +163,7 @@ export const VideoWithTitleHorizontalCard = ({
           );
         })}
       <div ref={targetRef}>
-        {stillCanLoad && navId == 0 && <Spinner></Spinner>}
+        {stillCanLoad && navId == 99 && <Spinner></Spinner>}
       </div>
     </>
   );
