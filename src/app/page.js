@@ -65,8 +65,8 @@ export default function Home(params) {
   //end banner ads
 
   useEffect(() => {
-    console.log('headerMenu');
-    console.log(headerMenu.headerMenu);
+    // console.log('headerMenu');
+    // console.log(headerMenu.headerMenu);
     setHeaderMenuState(headerMenu.headerMenu);
   }, [headerMenu]);
 
@@ -81,8 +81,8 @@ export default function Home(params) {
         //   setClassList(typePageData.class_list);
         // }
         setClassList(typePageData.class_list);
-        console.log('class_list');
-        console.log(typePageData.class_list);
+        // console.log('class_list');
+        // console.log(typePageData.class_list);
         setCategories(typePageData.categories);
         setYunying(typePageData.yunying);
 
@@ -97,8 +97,8 @@ export default function Home(params) {
             setTopicList((prev) => [...prev, ...topicListData.List]);
           } catch (e) {
             console.log(e);
-            console.log('crash');
-            console.log(topicList);
+            // console.log('crash');
+            // console.log(topicList);
             setTopicList(topicListData.List);
           }
         } else {
