@@ -253,38 +253,41 @@ export const FilmLibrary = () => {
 
   const listConverter = (type) => {
     let list = [];
-    if (type == 'class') {
-      list =
-        filterTypeList[
+
+    try {
+      if (type == 'class') {
+        list = filterTypeList[
           filterTypeList.findIndex(
             (item) => item.type_id === paramsFilter.typeId
           )
         ].type_extend_obj.class.split(',');
-      list.unshift('全部类型');
-    } else if (type == 'area') {
-      list =
-        filterTypeList[
+        list.unshift('全部类型');
+      } else if (type == 'area') {
+        list = filterTypeList[
           filterTypeList.findIndex(
             (item) => item.type_id === paramsFilter.typeId
           )
         ].type_extend_obj.area.split(',');
-      list.unshift('全部地区');
-    } else if (type == 'lang') {
-      list =
-        filterTypeList[
+        list.unshift('全部地区');
+      } else if (type == 'lang') {
+        list = filterTypeList[
           filterTypeList.findIndex(
             (item) => item.type_id === paramsFilter.typeId
           )
         ].type_extend_obj.lang.split(',');
-      list.unshift('全部语言');
-    } else if (type == 'year') {
-      list =
-        filterTypeList[
+        list.unshift('全部语言');
+      } else if (type == 'year') {
+        list = filterTypeList[
           filterTypeList.findIndex(
             (item) => item.type_id === paramsFilter.typeId
           )
         ].type_extend_obj.year.split(',');
-      list.unshift('全部时间');
+        list.unshift('全部时间');
+      }
+    } catch (e) {
+      console.log(e);
+      console.log('crash in 片库');
+      return [];
     }
 
     return list;
