@@ -87,9 +87,9 @@ export const AdsBanner = ({
 
   return (
     <>
-      {(ads && !isVip && navId && navId != 0 && ads.length>0 ) ? (
+      {(ads && !isVip && navId && navId != 0 && ads.length > 0) ? (
         <div
-          className={(ads[0] !== undefined || ads[1] != undefined) && 'margin-banner'}
+          className={(ads[0] !== undefined || ads[1] !== undefined) && 'margin-banner'}
           style={{
             display: 'flex',
             justifyContent: 'center',
