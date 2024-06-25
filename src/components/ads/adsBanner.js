@@ -83,7 +83,7 @@ export const AdsBanner = ({
     } else {
       console.log('no ads');
     }
-  }, [adsList]);
+  }, []);
 
   return (
     <>
