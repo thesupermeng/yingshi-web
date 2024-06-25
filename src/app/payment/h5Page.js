@@ -16,8 +16,10 @@ import {getTransactionDetail, getYingshiProducts} from '@/services/yingshiPaymen
 import PaymentStatusModal from '@/componentsH5/payment/paymentStatusModal';
 import {VipBackgroundImage} from '@/asset/image';
 import Image from 'next/image';
+import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 
 export default function H5Page() {
+  const {token} = useYingshiUser()
   const router = useRouter()
   const [productSelected, setProductSelected] = useState(null)
   const [paymentMethodSelected, setPaymentMethodSelected] = useState(null)
@@ -39,10 +41,13 @@ export default function H5Page() {
   }, [transactionId])
 
   useEffect(() => {
-    getYingshiProducts().then((res) => {
-      setProductList(res['4_fang_items'])
-    })
-  }, [])
+    if (token !== 'null'){
+      console.log('is not null')
+      getYingshiProducts().then((res) => {
+        if (res) setProductList(res['4_fang_items'])
+      })
+    }
+  }, [token])
 
   return (
     <div className={'relative w-full h-full'}>
