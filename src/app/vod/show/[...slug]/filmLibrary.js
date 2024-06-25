@@ -129,19 +129,51 @@ export const FilmLibrary = () => {
   };
 
   const getSearchingListApi = async (params) => {
+    const defaultParams = 
+    {
+      order: 'desc',
+      limit: 30,
+      page: nextPage,
+      tid: params.typeId,
+      // class: params.class == '全部类型' ? '' : params.class,
+      // by: params.by,
+      // area: params.area == '全部地区' ? '' : params.area,
+      // lang: params.lang == '全部语言' ? '' : params.lang,
+      // year: params.year == '全部时间' ? '' : params.year,
+    }
+
+    let inputParams = defaultParams
+    if (params.class != '全部类型'){
+      inputParams={
+        ...inputParams,
+        class: params.class
+      } 
+    }
+
+    if (params.area != '全部地区'){
+      inputParams={
+        ...inputParams,
+        area: params.area
+      } 
+    }
+
+    if (params.lang != '全部语言'){
+      inputParams={
+        ...inputParams,
+        lang: params.lang
+      } 
+    }
+
+    if (params.year != '全部时间'){
+      inputParams={
+        ...inputParams,
+        year: params.year
+      } 
+    }
+
     return YingshiApi(
       URL_YINGSHI_VOD.searchingList,
-      {
-        order: 'desc',
-        limit: 30,
-        page: nextPage,
-        tid: params.typeId,
-        class: params.class == '全部类型' ? '' : params.class,
-        by: params.by,
-        area: params.area == '全部地区' ? '' : params.area,
-        lang: params.lang == '全部语言' ? '' : params.lang,
-        year: params.year == '全部时间' ? '' : params.year,
-      },
+      inputParams,
       { method: 'GET' }
     );
   };
@@ -359,7 +391,7 @@ export const FilmLibrary = () => {
 
   return (
     <>
-      <div className='flex flex-1 justify-center flex-col'>
+      <div className='flex flex-1 justify-start flex-col'>
         <div className=' w-[100%]'>
           <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
         </div>
@@ -622,7 +654,7 @@ export const FilmLibrary = () => {
 
           {/* bottom section  111 */}
           {loading ? (
-            <LoadingPage full={false} />
+            <LoadingPage full={true} />
           ) : (
             <div className='w-screen flex flex-1 flex-col'>
               {videoList !== null ? (
