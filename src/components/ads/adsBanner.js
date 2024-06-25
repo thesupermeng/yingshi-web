@@ -84,12 +84,12 @@ export const AdsBanner = ({
       console.log('no ads');
     }
   }, []);
-
+  console.log('ads: ', ads)
   return (
     <>
       {ads && !isVip ? (
         <div
-          className='my-6'
+          className={(ads[0] !== undefined || ads[1] != undefined) && 'my-6'}
           style={{
             display: 'flex',
             justifyContent: 'center',
