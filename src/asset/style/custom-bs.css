@@ -2435,4 +2435,15 @@ a:not([href]):not([class]):hover {
   margin-right: 15px;
   font-size: 14px;
   font-weight: 400;
+  margin-top: 18px !important;
+    margin-bottom: 18px !important;
+}
+
+/* mobile */
+@media (max-width: 768px) {
+  .btn-dark-catagory
+  {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+  }
 }
