@@ -47,6 +47,17 @@ export async function generateMetadata({ params }) {
     title: title,
     description:
      '影视TV,全球华人在线视频媒体平台,免费点播,免费提供最新高清的电影,电视剧,综艺,动漫,台劇,日劇,泰劇,韩剧,美剧等。',
+    keywords : [
+      '在线影院',
+      '在线观看',
+      '在线看电影',
+      '海外影院',
+      '免费电影',
+      '免费电视剧',
+      '韩剧',
+      '美剧',
+      '影视TV'
+    ]
   };
 }
 export const viewport = {
