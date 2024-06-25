@@ -37,6 +37,7 @@ import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 import { isMobile } from 'react-device-detect';
 import { usePaymentOpen } from '@/hook/yingshiScreenState/usePaymentOpen';
+import { VideoHorizontalHistoryCard } from '../videoItem/videoHorizontalHistoryCard';
 
 const getHeaderMenu = (state) => state.headerMenu;
 const getCurrentScrollPosition = (state) => state.currentScrollPosition;
@@ -139,25 +140,7 @@ const Header = () => {
     }
   };
 
-  const secondsToHHMMSS = (seconds) => {
-    // Convert seconds to integer
-    seconds = parseInt(seconds);
-
-    // Calculate hours, minutes, and remaining seconds
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const remainingSeconds = seconds % 60;
-
-    // Format hours, minutes, and remaining seconds as HH:MM:SS
-    const formattedTime = `${String(hours).padStart(2, '0')}:${String(
-      minutes
-    ).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
-
-    return formattedTime;
-  };
-
   const handleChange = (event) => {
-    
     const newValue = event.target.value;
 
     // Check if the first character is a space
@@ -169,7 +152,7 @@ const Header = () => {
     return;
 
     setLoadingSearching(true);
-   // setSearchInput(newValue);
+    // setSearchInput(newValue);
 
     if (timeoutId) {
       clearTimeout(timeoutId);
@@ -491,96 +474,94 @@ const Header = () => {
             <div className='py-3 px-4 bg-[#1d2023] md:rounded-md w-full h-full md:bg-[#18191ef5] md:w-96'>
               <div className='no-scrollbar overflow-y-scroll w-full h-full overflow-scroll overscroll-none'>
                 <div className='w-full h-[calc(100%+1px)]'>
-                   
-                    <>
-                      {searchHistoryList.length > 0 ? (
-                        <div>
-                          <div className='flex flex-row justify-between items-center pb-2'>
-                            <div className='text-sm'>历史搜索</div>
-                            <div
-                              className='flex flex-row'
-                              onClick={handleClearSearchHistory}
-                            >
-                              <span
-                                className='text-xs'
-                                style={{ color: 'rgba(156, 156, 156, 1)' }}
-                              >
-                                清除
-                              </span>
-                              <Image
-                                className='mx-1'
-                                src={clear}
-                                alt='clear'
-                                width={10}
-                              />
-                            </div>
-                          </div>
-                          <div className='flex flex-wrap py-2 gap-2'>
-                            {searchHistoryList.map((item, index) => {
-                              return (
-                                <div
-                                  className='py-1 px-2 rounded-lg cursor-pointer hover-effect'
-                                  style={{
-                                    background: 'rgba(255, 255, 255, 0.06)',
-                                    color: 'rgba(156, 156, 156, 1)',
-                                  }}
-                                  key={index}
-                                  onClick={() => {
-                                    goToSeachResult(item);
-                                  }}
-                                >
-                                  {item}
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      ) : null}
-                      <div className='flex flex-row justify-between'>
-                        <div className='text-sm'>热搜总榜</div>
-                      </div>
-                      {topTenList.map((item, index) => {
-                        return (
+                  <>
+                    {searchHistoryList.length > 0 ? (
+                      <div>
+                        <div className='flex flex-row justify-between items-center pb-2'>
+                          <div className='text-sm'>历史搜索</div>
                           <div
-                            className='flex flex-row justify-between py-2.5 cursor-pointer search-hot-item'
-                            key={index}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setOpenSearch(false);
-                              router.push(
-                                `/vod/play/id/${item.vod_id}/sid/${item.type_id}/nid/1`
-                              );
-                            }}
+                            className='flex flex-row'
+                            onClick={handleClearSearchHistory}
                           >
-                            <div className='flex flex-row'>
-                              <div
-                                className='text-sm w-8 text-center font-bold'
-                                style={{
-                                  color:
-                                    index == 0
-                                      ? 'rgba(0, 106, 178, 1)'
-                                      : index == 1
-                                      ? 'rgba(0, 133, 224, 1)'
-                                      : index == 2
-                                      ? 'rgba(96, 191, 255, 1)'
-                                      : 'rgba(156, 156, 156, 1)',
-                                }}
-                              >
-                                {index + 1}
-                              </div>
-                              <div className='text-sm'>{item.vod_name}</div>
-                            </div>
-                            <div
-                              className='text-xs pr-4'
+                            <span
+                              className='text-xs'
                               style={{ color: 'rgba(156, 156, 156, 1)' }}
                             >
-                              {item.type_name}
-                            </div>
+                              清除
+                            </span>
+                            <Image
+                              className='mx-1'
+                              src={clear}
+                              alt='clear'
+                              width={10}
+                            />
                           </div>
-                        );
-                      })}
-                    </>
-                  
+                        </div>
+                        <div className='flex flex-wrap py-2 gap-2'>
+                          {searchHistoryList.map((item, index) => {
+                            return (
+                              <div
+                                className='py-1 px-2 rounded-lg cursor-pointer hover-effect'
+                                style={{
+                                  background: 'rgba(255, 255, 255, 0.06)',
+                                  color: 'rgba(156, 156, 156, 1)',
+                                }}
+                                key={index}
+                                onClick={() => {
+                                  goToSeachResult(item);
+                                }}
+                              >
+                                {item}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ) : null}
+                    <div className='flex flex-row justify-between'>
+                      <div className='text-sm'>热搜总榜</div>
+                    </div>
+                    {topTenList.map((item, index) => {
+                      return (
+                        <div
+                          className='flex flex-row justify-between py-2.5 cursor-pointer search-hot-item'
+                          key={index}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setOpenSearch(false);
+                            router.push(
+                              `/vod/play/id/${item.vod_id}/sid/${item.type_id}/nid/1`
+                            );
+                          }}
+                        >
+                          <div className='flex flex-row'>
+                            <div
+                              className='text-sm w-8 text-center font-bold'
+                              style={{
+                                color:
+                                  index == 0
+                                    ? 'rgba(0, 106, 178, 1)'
+                                    : index == 1
+                                    ? 'rgba(0, 133, 224, 1)'
+                                    : index == 2
+                                    ? 'rgba(96, 191, 255, 1)'
+                                    : 'rgba(156, 156, 156, 1)',
+                              }}
+                            >
+                              {index + 1}
+                            </div>
+                            <div className='text-sm'>{item.vod_name}</div>
+                          </div>
+                          <div
+                            className='text-xs pr-4'
+                            style={{ color: 'rgba(156, 156, 156, 1)' }}
+                          >
+                            {item.type_name}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </>
                 </div>
               </div>
             </div>
@@ -750,36 +731,7 @@ const Header = () => {
                     .slice()
                     .reverse()
                     .map((item, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className='flex flex-row hover:text-[#0085E0] gap-x-2 cursor-pointer'
-                          onClick={() => {
-                            const url = item.sourceId
-                              ? `/vod/play/id/${item.vodid}/sid/${item.tid}/nid/${item.nid}/source/${item.sourceId}`
-                              : `/vod/play/id/${item.vodid}/sid/${item.tid}/nid/${item.nid}`;
-                            router.push(url);
-                            setOpenHistory(false);
-                          }}
-                        >
-                          <div className='w-28 flex-none'>
-                            <img
-                              className='rounded-md w-28 h-16 object-cover'
-                              src={item.vodpic}
-                            />
-                          </div>
-                          <div className='flex-1 flex flex-col truncate gap-y-1'>
-                            <span className='text-sm truncate '>
-                              {item.vodname}
-                            </span>
-                            {/* <span className='text-xs truncate'>{item.tid == 2?' ':`第${item.nid}集` }</span> */}
-                            <span className='text-xs truncate'>{`第${item.nid}集`}</span>
-                            <span className='text-xs text-white'>
-                              观看至 {secondsToHHMMSS(item.watchtimes)}
-                            </span>
-                          </div>
-                        </div>
-                      );
+                      return <VideoHorizontalHistoryCard key={index} vod={item} index={index} displayStyle={'side-content'} setOpenHistory={setOpenHistory}/>;
                     })}
                 </div>
               ) : (

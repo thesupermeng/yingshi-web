@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Button, Dialog, DialogBody, Progress } from '@material-tailwind/react';
 import { useRouter } from 'next/navigation';
+import { VideoHorizontalHistoryCard } from '../videoItem/videoHorizontalHistoryCard';
 
 const getObjectValue = (obj, targetKey) => {
   // Check if the object is defined and if it contains the 'times' key
@@ -11,23 +12,6 @@ const getObjectValue = (obj, targetKey) => {
   } else {
     return 0; // Return null if the key is not found
   }
-};
-
-const secondsToHHMMSS = (seconds) => {
-  // Convert seconds to integer
-  seconds = parseInt(seconds);
-
-  // Calculate hours, minutes, and remaining seconds
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
-  const remainingSeconds = seconds % 60;
-
-  // Format hours, minutes, and remaining seconds as HH:MM:SS
-  const formattedTime = `${String(hours).padStart(2, '0')}:${String(
-    minutes
-  ).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
-
-  return formattedTime;
 };
 
 export default function HistoryPage() {
@@ -109,23 +93,22 @@ export default function HistoryPage() {
                   <Image className='mx-1' src={clear} alt='clear' width={10} />
                 </div>
               </div>
-            
-
           </div>
           <div>
-            <div className={'flex flex-wrap justify-start gap-x-2'}>
+            <div className={'flex grid grid-cols-3 gap-2 mb-2'}>
               {watchHistoryList
                 .slice()
                 .reverse()
                 .map((vod, idx) => {
                   return (
-                    <HistoryCard
-                      key={idx}
-                      vod={vod}
-                      onClick={() => {
-                        router.push(`/vod/play/id/${vod.vodid}/sid/${vod.tid}/nid/${vod.nid}`);
-                      }}
-                    />
+                    <VideoHorizontalHistoryCard key={idx} vod={vod} index={idx} displayStyle={'bottom-content'} />
+                    // <HistoryCard
+                    //   key={idx}
+                    //   vod={vod}
+                    //   onClick={() => {
+                    //     router.push(`/vod/play/id/${vod.vodid}/sid/${vod.tid}/nid/${vod.nid}`);
+                    //   }}
+                    // />
                   );
                 })}
             </div>
@@ -194,19 +177,20 @@ export default function HistoryPage() {
       <div className={'mobile'}>
         <div className={'flex flex-col'}>
           {watchHistoryList.length !== 0 && (
-            <div className={'flex-1 flex flex-col px-4 overflow-hidden'}>
+            <div className={'flex-1 flex flex-col px-4 gap-4 overflow-hidden mb-2'}>
               {watchHistoryList
                 .slice()
                 .reverse()
                 .map((vod, idx) => {
                   return (
-                    <HistoryCard
-                      key={idx}
-                      vod={vod}
-                      onClick={() => {
-                        router.push(`/vod/play/id/${vod.vodid}/sid/${vod.tid}/nid/${vod.nid}`);
-                      }}
-                    />
+                    <VideoHorizontalHistoryCard key={idx} vod={vod} index={idx} displayStyle={'side-content'}/>
+                    // <HistoryCard
+                    //   key={idx}
+                    //   vod={vod}
+                    //   onClick={() => {
+                    //     router.push(`/vod/play/id/${vod.vodid}/sid/${vod.tid}/nid/${vod.nid}`);
+                    //   }}
+                    // />
                   );
                 })}
             </div>
@@ -241,87 +225,87 @@ export default function HistoryPage() {
 //   "watchtimes": 74.832744
 // }
 
-function HistoryCard({ vod, onClick }) {
-  if (!vod) return null;
-  else {
-    return (
-      <>
-        <div className={'desktop'}>
-          <div
-            className={
-              'flex flex-col w-[224px] mb-2 cursor-pointer hover:text-shayuBlue'
-            }
-            onClick={onClick}
-          >
-            <div
-              className={
-                'h-[126px] rounded-[12px] overflow-hidden relative mb-2'
-              }
-            >
-              <Image
-                src={ImagePlaceholder}
-                alt={`Image for ${vod.vodname}`}
-                fill={true}
-                objectFit={'cover'}
-                className={'absolute'}
-              />
-              <Image
-                src={vod.vodpic}
-                alt={`Image for ${vod.vodname}`}
-                fill={true}
-                objectFit={'cover'}
-              />
-              {/* add placeholder  */}
-            </div>
-            <span className={'hover:text-inherit text-[15px] mb-1'}>
-              {vod.vodname}
-            </span>
-            <span className={'text-white text-[12px] mb-1'}>
-              观看至 {secondsToHHMMSS(vod.watchtimes)}
-            </span>
-            {/*<Progress*/}
-            {/*  value={10}*/}
-            {/*  size={'sm'}*/}
-            {/*  color={'blue'}*/}
-            {/*  className={'bg-[#FFFFFF38]'}*/}
-            {/*/>*/}
-          </div>
-        </div>
-        <div className={'mobile'}>
-          <div className={'flex gap-3 my-[12px]'} onClick={onClick}>
-            <div
-              className={
-                'h-[87px] w-[154px] rounded-[12px] overflow-hidden relative'
-              }
-            >
-              <Image
-                src={ImagePlaceholder}
-                alt={`Image for ${vod.vodname}`}
-                fill={true}
-                objectFit={'cover'}
-                className={'absolute'}
-              />
-              <Image
-                src={vod.vodpic}
-                alt={`Image for ${vod.vodname}`}
-                fill={true}
-                objectFit={'cover'}
-              />
-              {/* add placeholder  */}
-            </div>
-            <div className={'flex-1 flex flex-col justify-evenly truncate'}>
-              <span className={'text-[17px] font-medium truncate'}>{vod.vodname}</span>
-              <span className='text-xs '>{`第${vod.nid}集`}</span>
-              <span className={'text-[12px]'}>
-                观看至 {secondsToHHMMSS(vod.watchtimes)}
-              </span>
-            </div>
-          </div>
-        </div>
-      </>
-    );
-  }
-}
+// function HistoryCard({ vod, onClick }) {
+//   if (!vod) return null;
+//   else {
+//     return (
+//       <>
+//         <div className={'desktop'}>
+//           <div
+//             className={
+//               'flex flex-col w-[224px] mb-2 cursor-pointer hover:text-shayuBlue'
+//             }
+//             onClick={onClick}
+//           >
+//             <div
+//               className={
+//                 'h-[126px] rounded-[12px] overflow-hidden relative mb-2'
+//               }
+//             >
+//               <Image
+//                 src={ImagePlaceholder}
+//                 alt={`Image for ${vod.vodname}`}
+//                 fill={true}
+//                 objectFit={'cover'}
+//                 className={'absolute'}
+//               />
+//               <Image
+//                 src={vod.vodpic}
+//                 alt={`Image for ${vod.vodname}`}
+//                 fill={true}
+//                 objectFit={'cover'}
+//               />
+//               {/* add placeholder  */}
+//             </div>
+//             <span className={'hover:text-inherit text-[15px] mb-1'}>
+//               {vod.vodname}
+//             </span>
+//             <span className={'text-white text-[12px] mb-1'}>
+//               观看至 {secondsToHHMMSS(vod.watchtimes)}
+//             </span>
+//             {/*<Progress*/}
+//             {/*  value={10}*/}
+//             {/*  size={'sm'}*/}
+//             {/*  color={'blue'}*/}
+//             {/*  className={'bg-[#FFFFFF38]'}*/}
+//             {/*/>*/}
+//           </div>
+//         </div>
+//         <div className={'mobile'}>
+//           <div className={'flex gap-3 my-[12px]'} onClick={onClick}>
+//             <div
+//               className={
+//                 'h-[87px] w-[154px] rounded-[12px] overflow-hidden relative'
+//               }
+//             >
+//               <Image
+//                 src={ImagePlaceholder}
+//                 alt={`Image for ${vod.vodname}`}
+//                 fill={true}
+//                 objectFit={'cover'}
+//                 className={'absolute'}
+//               />
+//               <Image
+//                 src={vod.vodpic}
+//                 alt={`Image for ${vod.vodname}`}
+//                 fill={true}
+//                 objectFit={'cover'}
+//               />
+//               {/* add placeholder  */}
+//             </div>
+//             <div className={'flex-1 flex flex-col justify-evenly truncate'}>
+//               <span className={'text-[17px] font-medium truncate'}>{vod.vodname}</span>
+//               <span className='text-xs '>{`第${vod.nid}集`}</span>
+//               <span className={'text-[12px]'}>
+//                 观看至 {secondsToHHMMSS(vod.watchtimes)}
+//               </span>
+//             </div>
+//           </div>
+//         </div>
+//       </>
+//     );
+//   }
+// }
 
 function ConfirmClearHistoryModal({ open, handler, onConfirm, onCancel }) {
   return (
