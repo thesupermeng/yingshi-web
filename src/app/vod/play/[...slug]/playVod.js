@@ -125,9 +125,9 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
 
   const getSuggestedVodType = async () =>{
     return YingshiApi(
-      URL_YINGSHI_VOD.searchingList,
+      URL_YINGSHI_VOD.searchingListSlim,
       {
-        category: vod.vod_class ? vod.vod_class.split(',').shift() : '',
+        class: vod.vod_class ? vod.vod_class.split(',').shift() : '',
         tid: vod.type_id ? vod.type_id.toString() : '',
         limit: 12,
       },
