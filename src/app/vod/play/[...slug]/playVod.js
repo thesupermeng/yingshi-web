@@ -809,7 +809,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                     <div
                       className='text-md pt-3 py-2'
                       style={{
-                        color: 'rgb(33 150 243 / var(--tw-text-opacity))',
+                        color: 'rgb(250 198 69 / var(--tw-text-opacity))',
                       }}
                     >
                       简介
