@@ -48,7 +48,7 @@ export const VideoHorizontalHistoryCard = ({
       key={index}
       className={`flex ${
         displayStyle == 'side-content' ? 'flex-row' : 'flex-col'
-      }  hover:text-[#0085E0] gap-x-2 cursor-pointer`}
+      }  hover:text-[#FAC33D] gap-x-2 cursor-pointer`}
       onClick={() => {
         const url = vod.sourceId
           ? `/vod/play/id/${vod.vodid}/sid/${vod.tid}/nid/${vod.nid}/source/${vod.sourceId}`
