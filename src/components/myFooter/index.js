@@ -113,7 +113,7 @@ const MyFooter = () => {
       title: '我的',
     },
   ];
-  console.log('tabs: ', tabs)
+
   return (
     <div className='w-full mobile' style={{ paddingBottom: '100px' }}>
       <div className='fixed bottom-0 w-full' >
