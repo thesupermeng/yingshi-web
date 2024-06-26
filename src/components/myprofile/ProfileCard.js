@@ -55,7 +55,7 @@ export default function ProfileCard({userInfo, isVip, isH5, onSignin}) {
             />
           }
           {!userInfo &&
-            <button className={'bg-[#FAC33D] color-white w-20 h-8 rounded-md border-2 border-[#FAC33D33] text-sm'}
+            <button className={'bg-[#FAC33D] text-[#1D2023] w-20 h-8 rounded-md border-2 border-[#FAC33D33] text-sm'}
                     onClick={onSignin}>
               登录
             </button>

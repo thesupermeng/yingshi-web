@@ -136,7 +136,7 @@ export default function FeedbackForm() {
                     placeholder={'请详细描述您的问题和建议'} onChange={handleChange} maxLength={200} value={feedback}/>
           </div>
           <span className={'self-end text-[#9C9C9C] mb-[14px]'}>{feedback.length}/200</span>
-          <Button className={'bg-shayuBlue text-[17px] font-semibold text-white'}
+          <Button className={'bg-shayuBlue text-[17px] font-semibold text-[#1D2023]'}
                   disabled={!canSubmit} onClick={handleSubmit} size={'sm'}>提交</Button>
         </div>
       </div>

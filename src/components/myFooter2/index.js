@@ -91,7 +91,7 @@ const MyFooter2 = () => {
           <div>
             <Image src={Favicon} alt='icon' width={22} />
           </div>
-          <div className='pl-2'>下载影视APP，看精彩流畅视频</div>
+          <div className='pl-2 text-[#1D2023]'>下载影视APP，看精彩流畅视频</div>
         </div>
       </div>
     </div>
