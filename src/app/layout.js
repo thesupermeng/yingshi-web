@@ -42,7 +42,7 @@ const inter = Inter({ subsets: ['latin'] });
 // };
 
 export async function generateMetadata({ params }) {
-  const title = `影视TV-海量高清视频免费在线观看`
+  const title = `影视TV - 海量高清视频免费在线观看`
   return {
     referrer: 'no-referrer',
     title: title,

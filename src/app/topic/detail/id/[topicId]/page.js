@@ -14,7 +14,7 @@ export async function generateMetadata({ params }) {
 
   if (topic) {
     return {
-      title: `${topic.topic_name}专题详情- 影视TV-海量高清视频免费在线观看`,
+      title: `${topic.topic_name}专题详情 - 影视TV-海量高清视频免费在线观看`,
       description: `本站提供${topic.topic_name},最新最全精品专题数据`
     };
   }

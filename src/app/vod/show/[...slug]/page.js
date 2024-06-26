@@ -2,8 +2,11 @@ import { FilmLibrary } from './filmLibrary';
 
 export async function generateMetadata({ params }) {
   const { id } = generateFilterParams(params.slug);
-  let title;
+  let title = '';
+  let category = ''
 
+
+  category = getClassFromArray(params.slug);
   switch (id) {
     case 1:
       title = '电视剧';
@@ -25,8 +28,10 @@ export async function generateMetadata({ params }) {
       break;
   }
 
+
+
   return {
-    title: `推荐${title}- 影视TV-海量高清视频免费在线观看`,
+    title: `${category}${title} - 影视TV-海量高清视频免费在线观看`,
     description: '全球华人在线视频媒体平台,免费点播,免费提供最新高清的电影,电视剧,综艺,动漫,台劇,日劇,泰劇,韩剧,美剧等。',
   }
 }
@@ -46,3 +51,19 @@ function generateFilterParams(path) {
     id: parseInt(filterParams.id)
   }
 }
+
+function getClassFromArray(arr) {
+  // Check if 'class' is present in the array
+  const classIndex = arr.indexOf('class');
+  
+  // If 'class' is found and there is a following part, return it
+  if (classIndex !== -1 && arr[classIndex + 1]) {
+    return decodeURIComponent(arr[classIndex + 1])+'-';
+  }
+  
+  // If 'class' is not found, return an empty string
+  return '';
+}
+
+
+
