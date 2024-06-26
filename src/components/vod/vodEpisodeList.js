@@ -73,7 +73,7 @@ VodEpisodeList = ({
       </div>
 
       {showDropdown &&
-        <ul className={`flex flex-col overflow-y-scroll max-h-48 ${styles.dropdownContainer} no-scrollbar`}>
+        <ul className={`flex flex-col overflow-y-scroll max-h-48 ${styles.dropdownContainer} no-scrollbar overscroll-none`}>
           {episodeGroups.map((group, index) => (
             <li style={{ background: '#1D2023E0 !important', width: `${selectedEpisodeGroupDivWidth}px`, marginBottom: '2px'}} key={`key-episodeGroup-${index}`} id={`episodeGroup-${index}`} className={`${styles.radioOptionCard} ${episodeGroup === group ? styles.selectedOptionDropdownGroup : styles.unselectedOptionDropdownGroup}`} onClick={() => onEpisodeGroupPress(group)}>
               <label htmlFor={`episodeGroup-${index}`} className="flex flex-row space-x-1">
@@ -87,7 +87,7 @@ VodEpisodeList = ({
         </ul>
       }
     </div>
-    <ul className="lg:flex hidden flex-column no-scrollbar" style={{ flexWrap: 'wrap', overflowX: 'auto' }}>
+    <ul className="lg:flex hidden flex-column no-scrollbar overscroll-none" style={{ flexWrap: 'wrap', overflowX: 'auto' }}>
       {vodSource?.vod_play_list?.urls?.slice(episodeGroup.from - 1, episodeGroup.to).map((episode) => {
         return (
           <li style={{ padding: '10px', margin: '4px', minWidth: '70px', justifyContent: 'center' }} key={`key-episode-${episode.nid}`} id={`episode-${episode.nid}`} className={`hover-effect cursor-pointer ${styles.radioOptionCard} ${episodeSource.nid === episode.nid ? styles.selectedOptionCard : styles.unselectedOptionCard}`} onClick={() => selectEpisode(episode)}>

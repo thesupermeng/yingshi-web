@@ -215,7 +215,7 @@
 {
   /* background-image: linear-gradient(to bottom, black 15%, transparent 15%); */
   background-image: linear-gradient(black, transparent);
-  backdrop-filter: blur(3px); 
+  /* backdrop-filter: blur(3px);  */
 }
 .custom-link
 {
