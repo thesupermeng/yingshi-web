@@ -144,17 +144,17 @@ const handleClickService = () => {
                 />
               </>
             }
-            <span className={'text-[15px] text-[#9C9C9C]'}>请输入邀请码</span>
+            {/* <span className={'text-[15px] text-[#9C9C9C]'}>请输入邀请码</span>
             <TextInput
               name="referralCode"
               placeholder={'邀请码（选填）'}
               onChange={handleInput}
               isShowIcon={false}
-            />
+            /> */}
           </div>
           {/* button */}
           <Button className={'w-full rounded-[10px] h-auto bg-shayuBlue py-2 text-[17px] font-semibold'}
-            onClick={handleRegister} disabled={isInputError || isInputEmpty || !isAgreementChecked}>下一步</Button>
+            onClick={handleRegister} disabled={isInputError || isInputEmpty || !isAgreementChecked}>获取验证码</Button>
           {/* agreement */}
           <div className={'flex items-center justify-center'}>
             {/*<div*/}

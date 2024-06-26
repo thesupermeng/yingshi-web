@@ -130,13 +130,13 @@ export default function YingshiLoginBottomSheet({ visible, onDismiss }) {
                                 setCountryPrefix={setCountryPrefix}
                             />
                         }
-                        <TextInput
+                        {/* <TextInput
                             name="referralCode"
                             placeholder={'邀请码（选填）'}
                             onChange={handleInput}
                             isShowIcon={false}
-                        />
-                        <Button className={'h-12 w-full rounded-[10px] disabled:bg-[#1D2023] enabled:bg-[#FAC33D] disabled:text-[#9C9C9C] enabled:text-white text-[17px]'} onClick={handleRegister} disabled={isInputError || isInputEmpty || !isAgreementChecked}>下一步</Button>
+                        /> */}
+                        <Button className={'h-12 w-full rounded-[10px] disabled:bg-[#1D2023] enabled:bg-[#FAC33D] disabled:text-[#9C9C9C] enabled:text-white text-[17px]'} onClick={handleRegister} disabled={isInputError || isInputEmpty || !isAgreementChecked}>获取验证码</Button>
                         <div className={'flex items-center justify-center mt-[20px]'}>
                             <Checkbox
                                 defaultChecked={isAgreementChecked}
