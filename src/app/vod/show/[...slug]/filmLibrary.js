@@ -12,21 +12,17 @@ import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { AdsBanner } from '@/components/ads/adsBanner.js';
+import {useFilterTypeList, useSearchingListApi} from '@/util/swr';
 
 const getIsScroll = (state) => state.isScroll;
 const getIsTop = (state) => state.isTop;
 
 export const FilmLibrary = () => {
-  const [loading, setLoading] = useState(true);
-  const [filterTypeList, setFilterTypeList] = useState(null);
+  const filterTypeList = useFilterTypeList();
   const [paramsFilter, setParamsFilter] = useState(null);
-  const [videoList, setVideoList] = useState(null);
-  const [loadingVideoList, setLoadingVideoList] = useState(true);
-  const [stillCanLoad, setStillCanLoad] = useState(false);
-  const [nextPage, setNextPage] = useState(0);
+  const [initialLoading, setInitialLoading] = useState(!filterTypeList);
   const [collapse, setCollapse] = useState(false);
   const [buttonUncollapse, setButtonUncollapse] = useState(false);
-  const pathName = usePathname();
   const isScrolling = useSelector(getIsScroll);
   const isAtTop = useSelector(getIsTop);
 
@@ -34,6 +30,12 @@ export const FilmLibrary = () => {
   const path = usePathname();
   const params = useParams();
   const router = useRouter();
+
+  const { data, size, setSize } = useSearchingListApi(paramsFilter);
+
+  const videoList = data ? [].concat(...data) : [];
+  const stillCanLoad = data && !(size > data[0].TotalPageCount - 1);
+  const isLoadingMore = !data || (size > 0 && data && typeof data[size - 1] === 'undefined');
 
   const advanceFilterItem = [
     {
@@ -80,10 +82,6 @@ export const FilmLibrary = () => {
   }, []);
   //end banner ads
 
-  const getFilterTypeList = async () => {
-    return YingshiApi(URL_YINGSHI_VOD.filteringTypeList, {}, { method: 'GET' });
-  };
-
   const getFilterParams = (path, filterTypeList) => {
     const filterParams = {};
     for (let i = 0; i < path.length; i += 2) {
@@ -128,69 +126,6 @@ export const FilmLibrary = () => {
     };
   };
 
-  const getSearchingListApi = async (params) => {
-    const defaultParams = {
-      order: 'desc',
-      limit: 30,
-      page: nextPage,
-      tid: params.typeId,
-    };
-
-    let inputParams = defaultParams;
-    if (params.class != '全部类型') {
-      inputParams = {
-        ...inputParams,
-        class: params.class,
-      };
-    }
-
-    if (params.area != '全部地区') {
-      inputParams = {
-        ...inputParams,
-        area: params.area,
-      };
-    }
-
-    if (params.lang != '全部语言') {
-      inputParams = {
-        ...inputParams,
-        lang: params.lang,
-      };
-    }
-
-    if (params.year != '全部时间') {
-      inputParams = {
-        ...inputParams,
-        year: params.year,
-      };
-    }
-
-    return YingshiApi(URL_YINGSHI_VOD.searchingList, inputParams, {
-      method: 'GET',
-    });
-  };
-
-  const getSearchingList = async () => {
-    let currentPage = nextPage;
-    const videoListing = await getSearchingListApi(paramsFilter);
-
-    if (nextPage > 1) {
-      setVideoList((prev) => [...prev, ...videoListing.List]);
-    } else {
-      setVideoList(videoListing.List);
-      setLoading(false);
-    }
-
-    if (nextPage > videoListing.TotalPageCount - 1) {
-      setStillCanLoad(false);
-    } else {
-      setStillCanLoad(true);
-      setNextPage(currentPage + 1);
-    }
-
-    setLoadingVideoList(false);
-  };
-
   useEffect(() => {
     if (!isAtTop.res) {
       setCollapse(true);
@@ -209,52 +144,25 @@ export const FilmLibrary = () => {
   }, [isScrolling]);
 
   useLayoutEffect(() => {
-    setLoading(true);
-
-    // Simulating asynchronous data fetching
-    const fetchData = async () => {
-      let filteringTypeList;
-      let filterParams;
-      let flagList = sessionStorage.getItem('filteringTypeList');
-      if (flagList && flagList !== 'undefined') {
-        filteringTypeList = JSON.parse(flagList);
-      } else {
-        filteringTypeList = await getFilterTypeList();
-        sessionStorage.setItem(
-          'filteringTypeList',
-          JSON.stringify(filteringTypeList)
-        );
-      }
-
-      filterParams = getFilterParams(params.slug, filteringTypeList);
-      setFilterTypeList(filteringTypeList);
+    if (filterTypeList) {
+      const filterParams = getFilterParams(params.slug, filterTypeList);
       setParamsFilter(filterParams);
-      setNextPage(1);
-      // setLoading(false);
-      return true;
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (paramsFilter !== null) {
-      getSearchingList();
     }
-  }, [paramsFilter]);
-
-  const loadMore = () => {
-    getSearchingList();
-  };
+  }, [filterTypeList]);
 
   useEffect(() => {
-    if (stillCanLoad) {
+    if (data) {
+      setInitialLoading(false);
+    }
+  }, [paramsFilter, data]);
+
+  useEffect(() => {
+    if (stillCanLoad && !isLoadingMore) {
       const observer = new IntersectionObserver(
         ([entry]) => {
-          // setIsVisible(entry.intersectionRatio >= 0.5);
           if (entry.intersectionRatio >= 0.5) {
-            loadMore();
-            console.log('Element is at least 50% visible.');
+            setSize(size + 1);
+            console.log('Element is atx least 50% visible.');
           } else {
             console.log('Element is not yet 50% visible.');
           }
@@ -274,7 +182,7 @@ export const FilmLibrary = () => {
         }
       };
     }
-  }, [nextPage, stillCanLoad]);
+  }, [isLoadingMore, stillCanLoad]);
 
   const listConverter = (type) => {
     let list = [];
@@ -390,16 +298,16 @@ export const FilmLibrary = () => {
     <>
       <div className='flex flex-1 justify-start flex-col'>
         <div className=' w-[100%]'>
-          <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
+          <AdsBanner adsList={adsList} pathName={path} height='500px' />
         </div>
 
         <div className='flex w-screen flex-col items-center'>
-          {loading ? (
+          { initialLoading ? (
             <LoadingPage full={true} />
           ) : (
             <>
               <div className={` w-screen p-1 z-10 top-[48px] md:static sticky`}>
-                {filterTypeList && (
+                {filterTypeList && paramsFilter && (
                   <div className={`bg-[#1D2023] pt-2`}>
                     <div className='flex md:flex-wrap gap-x-4 gap-y-2 pl-4 py-2 container'>
                       {/* 111111111 filter 短剧 */}
@@ -669,15 +577,14 @@ export const FilmLibrary = () => {
               </div>
 
               {/* bottom section  111 */}
-
               <div className='w-screen flex flex-1 flex-col'>
-                {videoList !== null ? (
+                {videoList.length > 0 && videoList[0].List !== null ? (
                   <div className='container grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-4'>
-                    {videoList.map((vod, i) => {
-                      return <VideoVerticalCard vod={vod} key={i} />;
+                    {videoList.map((page, i) => {
+                      return page.List.map((vod, i) => <VideoVerticalCard vod={vod} key={i} />)
                     })}
                   </div>
-                ) : !loadingVideoList ? (
+                ) : !isLoadingMore ? (
                   <div
                     className='w-screen flex flex-1 flex-col'
                     style={{ minHeight: '300px' }}
@@ -698,7 +605,7 @@ export const FilmLibrary = () => {
           )}
         </div>
         <div ref={targetRef}>
-          {(stillCanLoad || loadingVideoList) && (
+          {(stillCanLoad || isLoadingMore) && (
             <div
               className='w-screen flex flex-1 flex-col'
               style={{ minHeight: '300px' }}
