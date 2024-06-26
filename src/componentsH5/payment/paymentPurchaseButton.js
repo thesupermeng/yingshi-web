@@ -22,91 +22,107 @@ export default function PaymentPurchaseButton({productInfo, paymentInfo, classNa
     setShowPaymentFailed(x => !x)
   }
 
-  // const handleOnPurchase = () => {
-  //   setIsPaymentProcessing(true)
-  //   postPayOrder({ productId: productInfo.product_id, zfType: paymentInfo.payment_type_code })
-  //     .then(res => {
-  //       if (res.code === 0) {
-  //         if (res.data.paymentData.url) {
-  //           window.location.href = res.data.paymentData.url
-  //           if (isMobile) {
-  //             router.push(res.data.paymentData.url)
-  //           } else {
-  //             window.open(res.data.paymentData.url, '_blank')
-  //           }
-
-  //         } else if (res.data.paymentData.html) {
-  //           const target = isMobile ? '_self' : '_blank';
-
-  //           Open a new tab/window
-  //           const newTab = window.open('', target);
-  //           Write the HTML content into the new tab
-  //           newTab.document.write(res.data.paymentData.html.replaceAll('\\', ''));
-  //           newTab.document.close();
-  //         }
-  //       } else {
-  //         setShowPaymentFailed(true)
-  //         setTimeout(() => {
-  //           setShowPaymentFailed(false)
-  //         }, 3000)
-  //       }
-  //       setIsPaymentProcessing(false)
-
-  //       setIsOpenPayment(false)
-  //       setShowPaymentPending(true)
-
-  //     })
-  //     .finally(() => {
-  //       setIsPaymentProcessing(false)
-  //     })
-
-  // }
-
   const handleOnPurchase = () => {
-    setIsPaymentProcessing(true);
-  
-    let newTab;
-    if (!isMobile && /iPad|iPhone|iPod/.test(navigator.userAgent)) {
-      newTab = window.open('', '_blank');
+ 
+    let i=1
+    if (!isMobile && /iPad|iPhone|iPod/.test(navigator.userAgent) || i==1) {
+      localStorage.setItem('productId' , productInfo.product_id)
+      localStorage.setItem('zfType' , paymentInfo.payment_type_code)
+      window.open('/purchase-redirect', '_blank');
+      setIsOpenPayment(false)
+      setShowPaymentPending(true)
+      return; 
     }
-  
+
+
+    setIsPaymentProcessing(true)
     postPayOrder({ productId: productInfo.product_id, zfType: paymentInfo.payment_type_code })
       .then(res => {
         if (res.code === 0) {
           if (res.data.paymentData.url) {
+            window.location.href = res.data.paymentData.url
             if (isMobile) {
-              router.push(res.data.paymentData.url);
+              router.push(res.data.paymentData.url)
             } else {
-              if (newTab) {
-                newTab.location.href = res.data.paymentData.url;
-              } else {
-                window.open(res.data.paymentData.url, '_blank');
-              }
+              window.open(res.data.paymentData.url, '_blank')
             }
+
           } else if (res.data.paymentData.html) {
             const target = isMobile ? '_self' : '_blank';
-  
-            if (newTab) {
-              newTab.document.write(res.data.paymentData.html.replaceAll('\\', ''));
-              newTab.document.close();
-            } else {
-              const newWindow = window.open('', target);
-              newWindow.document.write(res.data.paymentData.html.replaceAll('\\', ''));
-              newWindow.document.close();
-            }
+
+           //  Open a new tab/window
+            const newTab = window.open('', target);
+            //  Write the HTML content into the new tab
+            newTab.document.write(res.data.paymentData.html.replaceAll('\\', ''));
+            newTab.document.close();
           }
         } else {
-          setShowPaymentFailed(true);
+          setShowPaymentFailed(true)
           setTimeout(() => {
-            setShowPaymentFailed(false);
-          }, 3000);
+            setShowPaymentFailed(false)
+          }, 3000)
         }
+        setIsPaymentProcessing(false)
+
+        setIsOpenPayment(false)
+        setShowPaymentPending(true)
+
+      })
+      .finally(() => {
+        setIsPaymentProcessing(false)
+      })
+
+  }
+
+  // const handleOnPurchase = () => {
+
+
+  //   setIsPaymentProcessing(true);
   
-        setIsPaymentProcessing(false);
-        setIsOpenPayment(false);
-        setShowPaymentPending(true);
-      });
-  };
+  //   let newTab;
+  //   if (!isMobile && /iPad|iPhone|iPod/.test(navigator.userAgent)) {
+  //     newTab = window.open('', '_blank');
+  //   }
+  
+  //   postPayOrder({ productId: productInfo.product_id, zfType: paymentInfo.payment_type_code })
+  //     .then(res => {
+  //       if (res.code === 0) {
+  //         if (res.data.paymentData.url) {
+  //           if (isMobile) {
+  //             router.push(res.data.paymentData.url);
+  //           } else {
+  //             if (newTab) {
+  //               newTab.location.href = res.data.paymentData.url;
+  //             } else {
+  //               window.open(res.data.paymentData.url, '_blank');
+  //             }
+  //           }
+  //         } else if (res.data.paymentData.html) {
+  //           const target = isMobile ? '_self' : '_blank';
+  
+  //           if (newTab) {
+  //             newTab.document.write(res.data.paymentData.html.replaceAll('\\', ''));
+  //             newTab.document.close();
+  //           } else {
+  //             const newWindow = window.open('', target);
+  //             newWindow.document.write(res.data.paymentData.html.replaceAll('\\', ''));
+  //             newWindow.document.close();
+  //           }
+  //         }
+  //       } else {
+  //         setShowPaymentFailed(true);
+  //         setTimeout(() => {
+  //           setShowPaymentFailed(false);
+  //         }, 3000);
+  //       }
+  
+  //       setIsPaymentProcessing(false);
+  //       setIsOpenPayment(false);
+  //       setShowPaymentPending(true);
+  //     });
+
+
+  // };
 
   return (
     <>
