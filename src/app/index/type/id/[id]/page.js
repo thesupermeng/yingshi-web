@@ -25,6 +25,15 @@ export async function generateMetadata({ params }) {
     case '5':
       title = '纪录片';
       break;
+      case '6':
+        title = '韩剧';
+      break;
+      case '7':
+      title = '欧美剧';
+      break;
+      case '99':
+      title = '午夜场';
+      break;
     case '46':
       title = '短剧';
       break;
