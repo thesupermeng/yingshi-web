@@ -29,6 +29,7 @@ import Image from 'next/image';
 import { ScrollView } from './scroll-view';
 import ModalOverlays from '@/components/modalOverlays';
 import '@fortawesome/fontawesome-svg-core/styles.css';
+import MyFooterCopyRight from '@/components/myFooterCopyright';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -140,43 +141,7 @@ export default function RootLayout({ children }) {
               <div className='w-full grow flex justify-center '>{children}</div>
               <MyFooter2 />
               <MyFooter />
-              <div
-                className='px-8 py-3 desktop'
-                style={{
-                  marginTop: '2rem',
-                  width: '100%',
-                  textAlign: 'center',
-                  backgroundColor: '#1D2023',
-                  fontSize: '14px',
-                  borderTop: '1px solid hsla(0, 0%, 100%, .05)',
-                }}
-              >
-                <div
-                  style={{
-                    color: '#6B6B6B !important',
-                    lineHeight: '24px',
-                  }}
-                >
-                  版权声明：鲨鱼影视内容均来自互联网，不提供存储/录制/上传。
-                  <br />
-                  如果鲨鱼影视提供内容侵犯了您的版权，请发送电子邮件至
-                  <a href='mailto:shayuyingshi@gmail.com'>
-                    shayuyingshi@gmail.com
-                  </a>
-                  进行说明，我们将立即删除内容，保护版权所有者的权益。
-                  <br />
-                  <br />
-                  <a className='hover-blue custom-link' href={'/privacy'}>
-                    隐私协议
-                  </a>
-                  &nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
-                  <a className='hover-blue custom-link' href={'/service'}>
-                    用户服务协议
-                  </a>
-                  <br />
-                  Copyright © 2024 shayuyingshi.com All Rights Reserved
-                </div>
-              </div>
+           <MyFooterCopyRight/>
             </ScrollView>
 
             {/* <div className='w-screen h-[100dvh] flex flex-col bg-[#000000]'>
