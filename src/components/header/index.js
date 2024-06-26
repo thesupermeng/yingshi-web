@@ -43,6 +43,10 @@ const getHeaderMenu = (state) => state.headerMenu;
 const getCurrentScrollPosition = (state) => state.currentScrollPosition;
 
 const Header = () => {
+
+
+
+
   const dispatch = useDispatch();
   const containerRef = useRef(null);
   const dropdownMoreRef = useRef(null);
@@ -1209,6 +1213,13 @@ const Header = () => {
   if (pathname.startsWith('/enterpin')) {
     return null;
   }
+
+  if (
+    pathname.startsWith('/purchase-redirect') 
+  ) {
+    return <></>;
+  }
+
 
   if (pathname.startsWith('/service') || pathname.startsWith('/privacy')) {
     return (
