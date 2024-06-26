@@ -1034,7 +1034,7 @@ const Header = () => {
     </div>
   );
 
-  if (pathname.startsWith('/topic/detail/') || pathname.startsWith('/xvod')) {
+  if (pathname.startsWith('/topic/detail/') || pathname.startsWith('/xvod') || pathname.startsWith('/download')) {
     return (
       <div className={'desktop z-50 sticky top-0 w-screen'}>
         {defaultHeader}
