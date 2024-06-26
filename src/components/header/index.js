@@ -854,7 +854,7 @@ const Header = () => {
 
       <Link
         className='flex flex-row pl-4 items-center'
-        href='/myprofile'
+        href='/myprofile/userCenter'
         onClick={(e) => {
           if (!userInfo) {
             e.preventDefault(); // Prevent the link from navigating
