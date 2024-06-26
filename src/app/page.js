@@ -152,7 +152,7 @@ export default function Home(params) {
                 headerMenuState &&
                 classList && (
                   <div
-                    className='container w-full overflow-x-auto max-w-full'
+                    className='container w-full overflow-x-auto max-w-full no-scrollbar'
                     style={{
                       display: 'flex',
                       gap: '12px',
