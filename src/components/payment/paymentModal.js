@@ -34,7 +34,7 @@ export default function PaymentModal({open, handler}) {
 
   return (
     <>
-      <Dialog open={open} handler={handler} className={'relative bg-[#121212] rounded-[28px] p-0 outline-none'}
+      <Dialog open={open} handler={handler} className={'relative bg-[#121212] rounded-[28px] p-0 outline-none zoom-9'}
               size={'md'}
               dismiss={{
                 outsidePress: false
