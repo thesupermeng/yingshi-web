@@ -5,31 +5,22 @@ export async function generateMetadata({ params }) {
   let title;
 
   switch (id) {
-    case '1':
+    case 1:
       title = '电视剧';
       break;
-    case '2':
+    case 2:
       title = '电影';
       break;
-    case '3':
+    case 3:
       title = '综艺';
       break;
-    case '4':
+    case 4:
       title = '动漫';
       break;
-    case '5':
+    case 5:
       title = '纪录片';
       break;
-      case '6':
-        title = '韩剧';
-      break;
-      case '7':
-      title = '欧美剧';
-      break;
-      case '99':
-      title = '午夜场';
-      break;
-    case '46':
+    case 46:
       title = '短剧';
       break;
   }
