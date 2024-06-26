@@ -283,6 +283,13 @@ export default function Home(params) {
                   />
                 </div>
               </div>
+              <div className='container w-[100%]'>
+                <AdsBanner
+                  adsList={adsList}
+                  pathName={pathName}
+                  height='500px'
+                />
+              </div>
             </div>
           ) : (
             <>
