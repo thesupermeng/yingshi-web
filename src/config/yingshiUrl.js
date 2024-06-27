@@ -24,6 +24,7 @@ export const URL_YINGSHI_VOD = {
   getAdsVideoSlot: 'ads/v2/slot',
   getAllAds: 'ads/v1/app',
   setAhaWithdrawalPin: 'users/v2/aha/setpin',
+  getExtraInfo: 'vod/v1/episode/info',
 };
 
 export const URL_YINGSHI_PAYMENT = {

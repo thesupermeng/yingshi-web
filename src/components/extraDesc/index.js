@@ -1,0 +1,103 @@
+import { useTranslation } from 'react-i18next';
+import { useEffect, useState, useRef } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { YingshiApi } from '@/util/YingshiApi';
+import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
+import styles from './style.module.css';
+
+export const ExtraDesc = ({ vod = '', episodeSelected = '' }) => {
+
+  if (!vod && !episodeSelected && vod?.type_id !=1 ) {
+     // vod?.type_id !=1 only 短剧有 extra desc
+    return null;
+  }
+
+  // Extra Info state and fetch
+  const [extraInfo, setExtraInfo] = useState('');
+  // Toggle
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [needsShowMore, setNeedsShowMore] = useState(false);
+  const contentRef = useRef(null);
+
+  useEffect(() => {
+    console.log('vod')
+    console.log(vod)
+    // Check if the content exceeds 3 lines
+    const lineHeight = parseInt(
+      window.getComputedStyle(contentRef.current).lineHeight
+    );
+    const maxHeight = lineHeight * 3; // Maximum height for 3 lines
+    if (contentRef.current.scrollHeight > maxHeight) {
+      setNeedsShowMore(true);
+    }
+  }, [extraInfo]);
+
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const getExtraInfo = async () => {
+    return YingshiApi(
+      URL_YINGSHI_VOD.getExtraInfo,
+      {
+        id: vod.vod_id,
+        ep_no: episodeSelected?.name,
+      },
+      { method: 'GET' }
+    );
+  };
+
+  const initData = async () => {
+    let res = await getExtraInfo();
+    if (res && res !== undefined) {
+      setExtraInfo(res.gpt_content);
+    }
+  };
+
+  useEffect(() => {
+    initData();
+  }, []);
+
+
+  return (
+    <div
+      className={`allow-select row px-4 py-4`}
+      style={{
+        backgroundColor: '#1e2023',
+        borderRadius: '12px',
+        marginRight: '2px',
+      }}
+    >
+      <div className={`col-12 pb-3`}>
+        <span className={'text-white'} style={{ fontSize: '18px' }}>
+          分类剧情: 第{episodeSelected?.name}集
+        </span>
+      </div>
+
+      <div className='col-12' style={{ fontSize: '14px' }}>
+        <span
+          ref={contentRef}
+          className={`text-secondary  ${styles.collapsible}${
+            isExpanded ? 'expanded' : ''
+          }`}
+        >
+          {extraInfo}
+        </span>
+        {needsShowMore && (
+          <div
+            className={`${styles['show-more-button']} text-theme`}
+            onClick={toggleExpand}
+          >
+            {isExpanded ? '收起' : '展开'}
+            {/* <span className={`${styles['arrow-down']}`}>{isExpanded ? '↑' : '↓'}</span> */}
+            <FontAwesomeIcon
+              icon={isExpanded ? faChevronUp : faChevronDown}
+              className={`${styles['arrow-down']}`}
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};

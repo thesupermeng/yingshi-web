@@ -141,7 +141,7 @@ export const VodCard = ({
               />
             </div>
             {/* H5 Share Horizontal */}
-            <div className="lg:hidden flex">
+            <div className="lg:hidden flex vod-share">
               <ShareHorizontal
                 className={'w-[90%]'}
                 setShowShareBox={setShowShareBox}
@@ -178,7 +178,7 @@ export const VodCard = ({
             />
           </div>
           {/* H5 Share Horizontal */}
-          <div className="lg:hidden flex">
+          <div className="lg:hidden flex vod-share">
             <ShareHorizontal
               className={'w-[90%]'}
               setShowShareBox={setShowShareBox}

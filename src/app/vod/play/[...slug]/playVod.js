@@ -6,6 +6,7 @@ import { YingshiApi } from '@/util/YingshiApi';
 import Artplayer from './player.js';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { ShareHorizontal } from '@/components/shareHorizontal';
+import { ExtraDesc } from '@/components/extraDesc';
 import { VodCard } from '@/components/vod/vodCard.js';
 import { VodSourceList } from '@/components/vod/vodSourceList.js';
 import { VodEpisodeList } from '@/components/vod/vodEpisodeList.js';
@@ -15,7 +16,7 @@ import styles from './style.module.css';
 import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
 import { ArrowLeftIcon } from '@/asset/icons';
 import Image from 'next/image';
-import {useParams, usePathname, useRouter} from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import { convertTimeStampToDateTime } from '@/util/date';
 import { FullPageContent } from '@/componentsH5/FullPageContent';
 import { LottieAnimation } from '@/components/lottie';
@@ -23,8 +24,8 @@ import { IrrLoading } from '@/asset/lottie';
 import { AdsPlayer } from './adsPlayer.js';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser.js';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
-import {  YingshiApi2 } from '@/util/YingshiApi';
-import {Config} from '@/util/config';
+import { YingshiApi2 } from '@/util/YingshiApi';
+import { Config } from '@/util/config';
 
 export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
   const router = useRouter();
@@ -48,7 +49,9 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
   const [episodeGroupSelected, setEpisodeGroupSelected] = useState({});
   const [desc, setDesc] = useState('');
   const [toggleJianJie, setToggleJianJie] = useState(false);
-  const [toggleShowShareBoxStatus, setToggleShowShareBoxStatus] = useState(false);
+  const [toggleShowShareBoxStatus, setToggleShowShareBoxStatus] = useState(
+    false
+  );
   const [vodShareContent, setVodShareContent] = useState('');
   const [showToastMessage, setShowToastMessage] = useState(false);
   const [ads, setAds] = useState(null);
@@ -60,41 +63,37 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
   };
 
   const getAds = async () => {
-    console.log('play screen init')
+    console.log('play screen init');
     let allAds = await getAllAds();
     sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
 
     let result = allAds.data.filter(
-      (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(144));
+      (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(144)
+    );
     setShowAds(true);
     setAds(result[0]);
-  
   };
 
   useLayoutEffect(() => {
-   
     if (isVip) {
       setShowAds(false);
     } else {
-
       let adsList = initAdsList;
-      if(!adsList)
-        {
-          adsList = JSON.parse(sessionStorage.getItem('adsList'));
-        }
-   
-      if (adsList && adsList !== 'undefined') {
-      //  setAdsList(adsList);
-       let result = adsList.filter(
-        (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(144));
+      if (!adsList) {
+        adsList = JSON.parse(sessionStorage.getItem('adsList'));
+      }
 
+      if (adsList && adsList !== 'undefined') {
+        //  setAdsList(adsList);
+        let result = adsList.filter(
+          (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(144)
+        );
 
         setShowAds(true);
         setAds(result[0]);
       } else {
         getAds();
       }
-   
     }
   }, [isVip]);
 
@@ -123,7 +122,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
     }
   };
 
-  const getSuggestedVodType = async () =>{
+  const getSuggestedVodType = async () => {
     return YingshiApi(
       URL_YINGSHI_VOD.searchingListSlim,
       {
@@ -138,9 +137,9 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
         extraOptions: {
           next: {
             cache: 'force-cache',
-            revalidate: 3600
-          }
-        }
+            revalidate: 3600,
+          },
+        },
       }
     );
   };
@@ -169,15 +168,11 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
     }
   }, [vod]);
 
-
-
   useEffect(() => {
     if (episodeSelected == null) {
-    
-
       getVod().then((data) => {
         if (
-          data == null||
+          data == null ||
           data === undefined ||
           data.length <= 0 ||
           data.List === undefined ||
@@ -192,9 +187,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
         if (res.vod_sources.length > 0) {
           let index = 0;
           if (sourceId)
-            index = res.vod_sources.findIndex(
-              (x) => x.source_id === sourceId
-            );
+            index = res.vod_sources.findIndex((x) => x.source_id === sourceId);
 
           let source = res.vod_sources[index === -1 ? 0 : index];
           setVodSourceSelected(source);
@@ -216,9 +209,10 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
             }
 
             setEpisodeGroups(groups);
-            setEpisodeGroupSelected(groups.length > 0 ?
-              groups.find(group => nId >= group.from && nId <= group.to) :
-              {}
+            setEpisodeGroupSelected(
+              groups.length > 0
+                ? groups.find((group) => nId >= group.from && nId <= group.to)
+                : {}
             );
           } else {
             const defaultGroup = {
@@ -343,9 +337,9 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
   const onSelectSource = (source) => {
     if (source.source_id !== vodSourceSelected.source_id) {
       const pattern = /\/source\/\d+/;
-      const url = pattern.test(path) ?
-        path.replace(pattern, `/source/${source.source_id}`) :
-        `${path}/source/${source.source_id}`;
+      const url = pattern.test(path)
+        ? path.replace(pattern, `/source/${source.source_id}`)
+        : `${path}/source/${source.source_id}`;
 
       router.replace(url);
     }
@@ -371,7 +365,12 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
       return;
     }
 
-    router.replace(`${path.replace(/(\/nid\/)\d+/, `$1${vodSourceSelected?.vod_play_list?.urls[indexFound + 1].nid + 1}`)}`);
+    router.replace(
+      `${path.replace(
+        /(\/nid\/)\d+/,
+        `$1${vodSourceSelected?.vod_play_list?.urls[indexFound + 1].nid + 1}`
+      )}`
+    );
   };
 
   useEffect(() => {
@@ -409,9 +408,10 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
   const copyContentToClipboard = () => {
     let content = vodShareContent.replaceAll('</br>', ' ');
     console.log(content);
-  
+
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(content)
+      navigator.clipboard
+        .writeText(content)
         .then(() => {
           setShowToastMessage(true);
           setToggleShowShareBoxStatus(false);
@@ -424,11 +424,11 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
       // Fallback method for unsupported browsers
       const textarea = document.createElement('textarea');
       textarea.value = content;
-      textarea.style.position = 'fixed';  // Prevent scrolling to bottom of page in MS Edge.
+      textarea.style.position = 'fixed'; // Prevent scrolling to bottom of page in MS Edge.
       document.body.appendChild(textarea);
       textarea.focus();
       textarea.select();
-      
+
       try {
         document.execCommand('copy');
         setShowToastMessage(true);
@@ -437,11 +437,10 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
       } catch (err) {
         console.error('Fallback: Oops, unable to copy', err);
       }
-      
+
       document.body.removeChild(textarea);
     }
   };
-  
 
   const handleAdsPlayerEndPlay = () => {
     setShowAds(false);
@@ -699,8 +698,9 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                       : true,
                     muted: false,
                   }}
-                  getInstance={(art) => {//console.info(art)
-                    }}
+                  getInstance={(art) => {
+                    //console.info(art)
+                  }}
                   onVideoEnd={onVideoEnd}
                   episodeSelected={episodeSelected}
                   vodSourceSelected={vodSourceSelected}
@@ -720,6 +720,9 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                 }}
               />
             </div>
+
+            <ExtraDesc vod={vod} episodeSelected={episodeSelected} />
+
             <VodContent
               vodContent={vod.vod_blurb}
               vodEpisodeSelected={episodeSelected}
@@ -835,7 +838,10 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                     <div>{vod.vod_name}</div>
                   </div>
                   <div></div>
-                  <div className='pb-6 allow-select' style={{ color: '#9C9C9C' }}>
+                  <div
+                    className='pb-6 allow-select'
+                    style={{ color: '#9C9C9C' }}
+                  >
                     <div className='text-sm pt-1'>{desc}</div>
                     <div className='text-sm pt-1'>
                       更新: {convertTimeStampToDateTime(vod.vod_time).year}-
