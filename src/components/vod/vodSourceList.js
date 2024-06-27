@@ -35,7 +35,7 @@ export const VodSourceList = ({
 
   return (
     <div className='w-full flex flex-row'>
-      {vodSources?.length > 3 && (
+      {vodSources?.length > 1 && (
         <div className='lg:flex hidden'>
           <div
             id='control-left'
@@ -85,7 +85,7 @@ export const VodSourceList = ({
           </div>
         ))}
       </div>
-      {vodSources?.length > 3 && (
+      {vodSources?.length > 1 && (
         <div className='lg:flex hidden'>
           <div
             id='control-right'
