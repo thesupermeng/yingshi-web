@@ -127,9 +127,10 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
     return YingshiApi(
       URL_YINGSHI_VOD.searchingListSlim,
       {
-        class: vod.vod_class ? vod.vod_class.split(',').shift() : '',
         tid: vod.type_id ? vod.type_id.toString() : '',
         limit: 12,
+        id: vod.vod_id,
+        class: vod.vod_class ? vod.vod_class.split(',').shift() : '',
       },
       {
         method: 'GET',

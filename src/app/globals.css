@@ -357,3 +357,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
 
 
 }
+
+.h-\[35px\] {
+  height: 35px !important;
+}
