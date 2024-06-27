@@ -7,9 +7,8 @@ import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import styles from './style.module.css';
 
 export const ExtraDesc = ({ vod = '', episodeSelected = '' }) => {
-
-  if (!vod && !episodeSelected && vod?.type_id !=1 ) {
-     // vod?.type_id !=1 only 短剧有 extra desc
+  if (!vod && !episodeSelected && vod?.type_id != 1) {
+    // vod?.type_id !=1 only 短剧有 extra desc
     return null;
   }
 
@@ -21,8 +20,9 @@ export const ExtraDesc = ({ vod = '', episodeSelected = '' }) => {
   const contentRef = useRef(null);
 
   useEffect(() => {
-    console.log('vod')
-    console.log(vod)
+    if (extraInfo == '') {
+      return;
+    }
     // Check if the content exceeds 3 lines
     const lineHeight = parseInt(
       window.getComputedStyle(contentRef.current).lineHeight
@@ -50,7 +50,7 @@ export const ExtraDesc = ({ vod = '', episodeSelected = '' }) => {
 
   const initData = async () => {
     let res = await getExtraInfo();
-    if (res && res !== undefined) {
+    if (res && res !== undefined && res.gpt_content) {
       setExtraInfo(res.gpt_content);
     }
   };
@@ -59,45 +59,48 @@ export const ExtraDesc = ({ vod = '', episodeSelected = '' }) => {
     initData();
   }, []);
 
-
   return (
-    <div
-      className={`allow-select row px-4 py-4`}
-      style={{
-        backgroundColor: '#1e2023',
-        borderRadius: '12px',
-        marginRight: '2px',
-      }}
-    >
-      <div className={`col-12 pb-3`}>
-        <span className={'text-white'} style={{ fontSize: '18px' }}>
-          分类剧情: 第{episodeSelected?.name}集
-        </span>
-      </div>
-
-      <div className='col-12' style={{ fontSize: '14px' }}>
-        <span
-          ref={contentRef}
-          className={`text-secondary  ${styles.collapsible}${
-            isExpanded ? 'expanded' : ''
-          }`}
+    <>
+      {extraInfo != '' && (
+        <div
+          className={`allow-select row px-4 py-4`}
+          style={{
+            backgroundColor: '#1e2023',
+            borderRadius: '12px',
+            marginRight: '2px',
+          }}
         >
-          {extraInfo}
-        </span>
-        {needsShowMore && (
-          <div
-            className={`${styles['show-more-button']} text-theme`}
-            onClick={toggleExpand}
-          >
-            {isExpanded ? '收起' : '展开'}
-            {/* <span className={`${styles['arrow-down']}`}>{isExpanded ? '↑' : '↓'}</span> */}
-            <FontAwesomeIcon
-              icon={isExpanded ? faChevronUp : faChevronDown}
-              className={`${styles['arrow-down']}`}
-            />
+          <div className={`col-12 pb-3`}>
+            <span className={'text-white'} style={{ fontSize: '18px' }}>
+              分类剧情: 第{episodeSelected?.name}集
+            </span>
           </div>
-        )}
-      </div>
-    </div>
+
+          <div className='col-12' style={{ fontSize: '14px' }}>
+            <span
+              ref={contentRef}
+              className={`text-secondary  ${styles.collapsible}${
+                isExpanded ? 'expanded' : ''
+              }`}
+            >
+              {extraInfo}
+            </span>
+            {needsShowMore && (
+              <div
+                className={`${styles['show-more-button']} text-theme`}
+                onClick={toggleExpand}
+              >
+                {isExpanded ? '收起' : '展开'}
+                {/* <span className={`${styles['arrow-down']}`}>{isExpanded ? '↑' : '↓'}</span> */}
+                <FontAwesomeIcon
+                  icon={isExpanded ? faChevronUp : faChevronDown}
+                  className={`${styles['arrow-down']}`}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
