@@ -1,0 +1,22 @@
+.collapsible {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+  transition: height 0.3s ease;
+}
+
+.collapsible.expanded {
+  -webkit-line-clamp: unset; /* Show all lines */
+}
+
+.show-more-button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.arrow-down {
+  margin-left: 5px;
+}

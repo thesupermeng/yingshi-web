@@ -1,8 +1,8 @@
 import Image from 'next/image';
-import {ArrowLeftIcon, editIcon, ProfileBlue, profileIcon} from '@/asset/icons';
+import {ArrowLeftIcon, editIcon, guestUser, MemberUser, profileIcon, VipUser} from '@/asset/icons';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import EditNicknameModal from '@/components/myprofile/editNicknameModal';
-import {useState} from 'react';
+import {useEffect, useLayoutEffect, useState} from 'react';
 import LoginSuccess from '@/components/login/loginSuccess';
 import {useRouter} from 'next/navigation';
 
@@ -20,6 +20,12 @@ export default function UserCenter() {
   const handleOpenSuccessAlert = () => {
     setOpenSuccessAlert(x => !x)
   }
+
+  useLayoutEffect(()=> {
+    if (!userInfo){
+      router.push(`/`);
+    }
+  }, [])
 
   return (
     <>
@@ -46,7 +52,17 @@ export default function UserCenter() {
           <div>
             <span className={'text-white text-[16px] font-semibold'}>个人信息</span>
             <div className={'flex bg-[#1D2023] rounded-[10px] px-[20px] py-[17px] items-center gap-[12px] mt-[14px]'}>
-              <Image src={ProfileBlue} alt={'profile icon'} width={56}/>
+            <Image
+                src={
+                  userInfo?.group_id == 2
+                    ? MemberUser
+                    : userInfo?.group_id == 3
+                    ? VipUser
+                    : guestUser
+                }
+                alt={'profile icon'}
+                width={56}
+              />
               <span className={'text-white text-[15px] font-semibold flex-1'}>{userInfo?.user_name}</span>
               <Image src={editIcon} alt={'edit'} width={30} onClick={handleOpenEditNickname}
                      className={'cursor-pointer'}/>
@@ -98,7 +114,16 @@ export default function UserCenter() {
         <div className={'flex flex-col gap-[16px] px-4 py-2'}>
           <div className={'h-12 w-full flex justify-between items-center bg-[#1D2023] rounded-[10px] px-[21px]'}>
             <span className={'text-[#9C9C9C] text-[15px] font-medium'}>头像</span>
-            <Image src={ProfileBlue} alt={'Profile picture'} width={30} height={30}/>
+            <Image
+                src={
+                  userInfo?.group_id == 2
+                    ? MemberUser
+                    : userInfo?.group_id == 3
+                    ? VipUser
+                    : guestUser
+                }
+                alt={'Profile picture'} width={30} height={30}
+              />
           </div>
 
           <div className={'h-12 w-full flex justify-between items-center bg-[#1D2023] rounded-[10px] px-[21px]'} onClick={handleOpenEditNickname}>
