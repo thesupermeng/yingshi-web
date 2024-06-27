@@ -7,12 +7,12 @@ ENV TZ=Asia/Shanghai
 
 WORKDIR /app
 
-# Copy package.json and package-lock.json (if available)
+# Copy package.json and package-lock.json (if available) COPY package-lock.json .
 COPY package.json .
-COPY package-lock.json .
+
 
 # Install dependencies
-RUN npm install
+# RUN npm install
 
 # Copy the rest of the application files
 COPY . .
