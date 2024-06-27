@@ -12,7 +12,7 @@ import {
   searchEmptyIcon,
   leftArrow,
   clear,
-  userIcon,
+  guestUser,
   vipIcon,
   vipLightIcon,
   glyph,
@@ -22,7 +22,8 @@ import {
   AppImage,
   AppleStoreIcon,
   AndroidIcon,
-  ProfileBlue,
+  MemberUser,
+  VipUser,
 } from '@/asset/icons';
 import { usePathname, useRouter } from 'next/navigation';
 import { use, useEffect, useRef, useState } from 'react';
@@ -43,10 +44,6 @@ const getHeaderMenu = (state) => state.headerMenu;
 const getCurrentScrollPosition = (state) => state.currentScrollPosition;
 
 const Header = () => {
-
-
-
-
   const dispatch = useDispatch();
   const containerRef = useRef(null);
   const dropdownMoreRef = useRef(null);
@@ -735,7 +732,15 @@ const Header = () => {
                     .slice()
                     .reverse()
                     .map((item, index) => {
-                      return <VideoHorizontalHistoryCard key={index} vod={item} index={index} displayStyle={'side-content'} setOpenHistory={setOpenHistory}/>;
+                      return (
+                        <VideoHorizontalHistoryCard
+                          key={index}
+                          vod={item}
+                          index={index}
+                          displayStyle={'side-content'}
+                          setOpenHistory={setOpenHistory}
+                        />
+                      );
                     })}
                 </div>
               ) : (
@@ -871,9 +876,15 @@ const Header = () => {
         <div>
           <Image
             className='cursor-pointer'
-            src={userInfo ? ProfileBlue : userIcon}
+            src={
+              userInfo?.group_id == 2
+                ? MemberUser
+                : userInfo?.group_id == 3
+                ? VipUser
+                : guestUser
+            }
             alt='user'
-            width={30}
+            width={userInfo?.group_id == 3 ? 34 : 30}
           />
         </div>
       </Link>
@@ -1214,12 +1225,9 @@ const Header = () => {
     return null;
   }
 
-  if (
-    pathname.startsWith('/purchase-redirect') 
-  ) {
+  if (pathname.startsWith('/purchase-redirect')) {
     return <></>;
   }
-
 
   if (pathname.startsWith('/service') || pathname.startsWith('/privacy')) {
     return (
