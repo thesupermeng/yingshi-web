@@ -378,14 +378,14 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
                 className=''
                 style={{
                   width: '400px',
-                  height: '30%',
+                  // height: '30%',
                   zIndex: '999',
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
                   flexDirection: 'column',
                   background: '#1D2023',
-                  padding: '1rem 1rem 0rem 1rem',
+                  padding: '1rem 1rem 1rem 1rem',
                   borderRadius: '12px',
                 }}
               >
@@ -413,7 +413,7 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
                   }}
                 >
                   <div
-                    className='text-sm'
+                    className='text-sm truncate'
                     ref={shareContentRef}
                     dangerouslySetInnerHTML={{ __html: vodShareContent }}
                   ></div>
@@ -459,14 +459,14 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
             className=''
             style={{
               width: '90%',
-              height: '30%',
+              // height: '30%',
               zIndex: '1',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
               flexDirection: 'column',
               background: '#1D2023',
-              padding: '1rem 1rem 0rem 1rem',
+              padding: '1rem 1rem 1rem 1rem',
               borderRadius: '12px',
             }}
             onClick={toggleShowShareBox}
@@ -493,7 +493,7 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
               }}
             >
               <div
-                className='text-sm'
+                className='text-sm truncate'
                 ref={shareContentRef}
                 dangerouslySetInnerHTML={{ __html: vodShareContent }}
               ></div>
