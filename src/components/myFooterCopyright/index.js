@@ -21,7 +21,8 @@ const MyFooterCopyRight = () => {
     pathname.startsWith('/sport/user/withdraw') ||
     pathname.startsWith('/sport/user/transaction') ||
     pathname.startsWith('/sport/user/history') ||
-    pathname.startsWith('/purchase-redirect')
+    pathname.startsWith('/purchase-redirect') ||
+    pathname.startsWith('/download')
   ) {
     return <></>;
   }
