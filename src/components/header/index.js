@@ -412,7 +412,7 @@ const Header = () => {
     };
   }, []);
 
-  if (loading) {
+  if (loading && !pathname.startsWith('/download')) {
     return <LoadingPage full={true} />;
   }
 
