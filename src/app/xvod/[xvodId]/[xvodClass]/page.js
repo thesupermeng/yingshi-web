@@ -125,7 +125,7 @@ export default function Page() {
 
         {!isLoading && (
           <div>
-            <div className={`${styles.containerHeader} desktop`}></div>
+            {/* <div className={`${styles.containerHeader} desktop`}></div> */}
 
             <div
               className='d-flex container pb-6'

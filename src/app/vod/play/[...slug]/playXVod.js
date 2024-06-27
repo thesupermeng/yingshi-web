@@ -316,12 +316,48 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
     }
   };
 
+  // const copyContentToClipboard = () => {
+  //   let content = vodShareContent.replaceAll('</br>', ' ');
+  //   navigator.clipboard.writeText(content);
+  //   setShowToastMessage(true);
+  //   setToggleShowShareBoxStatus(false);
+  //   const timeout = setTimeout(() => setShowToastMessage(false), 2000);
+  // };
+
   const copyContentToClipboard = () => {
     let content = vodShareContent.replaceAll('</br>', ' ');
-    navigator.clipboard.writeText(content);
-    setShowToastMessage(true);
-    setToggleShowShareBoxStatus(false);
-    const timeout = setTimeout(() => setShowToastMessage(false), 2000);
+    console.log(content);
+  
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(content)
+        .then(() => {
+          setShowToastMessage(true);
+          setToggleShowShareBoxStatus(false);
+          const timeout = setTimeout(() => setShowToastMessage(false), 2000);
+        })
+        .catch((err) => {
+          console.error('Failed to copy text to clipboard', err);
+        });
+    } else {
+      // Fallback method for unsupported browsers
+      const textarea = document.createElement('textarea');
+      textarea.value = content;
+      textarea.style.position = 'fixed';  // Prevent scrolling to bottom of page in MS Edge.
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      
+      try {
+        document.execCommand('copy');
+        setShowToastMessage(true);
+        setToggleShowShareBoxStatus(false);
+        const timeout = setTimeout(() => setShowToastMessage(false), 2000);
+      } catch (err) {
+        console.error('Fallback: Oops, unable to copy', err);
+      }
+      
+      document.body.removeChild(textarea);
+    }
   };
 
   return (
@@ -378,14 +414,14 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
                 className=''
                 style={{
                   width: '400px',
-                  height: '30%',
+                  // height: '30%',
                   zIndex: '999',
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
                   flexDirection: 'column',
                   background: '#1D2023',
-                  padding: '1rem 1rem 0rem 1rem',
+                  padding: '1rem 1rem 1rem 1rem',
                   borderRadius: '12px',
                 }}
               >
@@ -413,7 +449,7 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
                   }}
                 >
                   <div
-                    className='text-sm'
+                    className='text-sm truncate'
                     ref={shareContentRef}
                     dangerouslySetInnerHTML={{ __html: vodShareContent }}
                   ></div>
@@ -459,14 +495,14 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
             className=''
             style={{
               width: '90%',
-              height: '30%',
+              // height: '30%',
               zIndex: '1',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
               flexDirection: 'column',
               background: '#1D2023',
-              padding: '1rem 1rem 0rem 1rem',
+              padding: '1rem 1rem 1rem 1rem',
               borderRadius: '12px',
             }}
             onClick={toggleShowShareBox}
@@ -493,7 +529,7 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
               }}
             >
               <div
-                className='text-sm'
+                className='text-sm truncate'
                 ref={shareContentRef}
                 dangerouslySetInnerHTML={{ __html: vodShareContent }}
               ></div>

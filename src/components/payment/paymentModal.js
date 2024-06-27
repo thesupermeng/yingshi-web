@@ -1,4 +1,4 @@
-import { Dialog, DialogBody } from '@material-tailwind/react';
+import { Dialog, DialogBody, DialogHeader } from '@material-tailwind/react';
 import PaymentHeader from '@/componentsH5/payment/paymentHeader';
 import PaymentCountdown from '@/componentsH5/payment/paymentCountdown';
 import { useEffect, useState } from 'react';
@@ -37,26 +37,54 @@ export default function PaymentModal({ open, handler }) {
       <Dialog
         open={open}
         handler={handler}
-        className={
-          'relative bg-[#121212] rounded-[28px] outline-none'
-        }
-        size={'md'}
+        className={'relative bg-[#121212] rounded-[28px] outline-none h-[90vh]'}
+        size={'sm'}
         dismiss={{
           outsidePress: false,
         }}
       >
-        <DialogBody className='w-full'>
-          <div className='relative w-full max-h-[90vh] overflow-y-scroll overscroll-none no-scrollbar'>
-            <div className='w-full sticky -top-0 pl-2 pr-2 bg-[#121212] z-50'>
-              <FontAwesomeIcon
-                icon={faTimesCircle}
-                className={
-                  'absolute top-2 right-2 cursor-pointer w-[35px] h-[35px] text-[#FFFFFF33] hover-effect'
-                }
-                onClick={handler}
-              />
-              <PaymentHeader />
-            </div>
+        <DialogBody className='w-full h-full flex flex-col'>
+          <div className='w-full relative mb-[10px]'>
+            <FontAwesomeIcon
+              icon={faTimesCircle}
+              className='absolute top-2 right-2 cursor-pointer w-[35px] h-[35px] text-[#FFFFFF33] hover-effect'
+              onClick={handler}
+            />
+            <PaymentHeader />
+          </div>
+          <div className='flex-1 overflow-auto styling-scrollbar pl-2 pr-2'>
+            <span
+              className={
+                'hover-effect text-[#9C9C9C] text-[14px] mt-[5px] self-end'
+              }
+              onClick={handleShowPaymentDetail}
+            >
+              VIP明细
+            </span>
+            <PaymentProductsList
+              className={'mt-[5px]'}
+              productList={productList}
+              onProductSelect={(product) => setProductSelected(product)}
+            />
+            <PaymentMethods
+              className={'mt-[26px]'}
+              paymentOptions={productSelected?.payment_options ?? []}
+              onMethodSelect={(method) => setPaymentMethodSelected(method)}
+            />
+          </div>
+          <div className='w-full'>
+            <PaymentDisclaimer className='mt-[30px]' />
+            <PaymentPurchaseButton
+              className='mt-[15px]'
+              productInfo={productSelected}
+              paymentInfo={paymentMethodSelected}
+            />
+          </div>
+        </DialogBody>
+
+        {/* <DialogBody className='w-full'>
+          <div className='relative w-full h-full overflow-y-scroll overscroll-none no-scrollbar'>
+            
             <div className='w-full pt-2 pl-2 pr-2'>
               <div className='w-full'>
                 <span
@@ -84,27 +112,6 @@ export default function PaymentModal({ open, handler }) {
                 paymentInfo={paymentMethodSelected}
               />
             </div>
-          </div>
-        </DialogBody>
-
-        {/* <DialogBody className={'px-0 pt-4 w-full h-full flex flex-col'}>
-        <div style={{ height:'90vh' , overflow:'auto' , padding:'8px 0px'}}>
-          <FontAwesomeIcon icon={faTimesCircle}
-            className={'absolute top-4 right-4 cursor-pointer w-[35px] h-[35px] text-[#FFFFFF33] hover-effect'}
-            onClick={handler}
-          />
-        
-       
-        <div style={{padding:'0px 38px'}}>
-          <PaymentHeader/>
-          {/*<PaymentCountdown className={'mt-[28px]'}/>
-         
-          <span className={'hover-effect text-[#9C9C9C] text-[14px] mt-[5px] self-end'} onClick={handleShowPaymentDetail}>VIP明细</span>
-          <PaymentProductsList className={'mt-[5px]'} productList={productList} onProductSelect={(product) => setProductSelected(product)}/>
-          <PaymentMethods className={'mt-[26px]'} paymentOptions={productSelected?.payment_options ?? []} onMethodSelect={(method) => setPaymentMethodSelected(method)}/>
-          <PaymentDisclaimer className={'mt-[30px]'}/>
-          <PaymentPurchaseButton className={'mt-[15px]'} productInfo={productSelected} paymentInfo={paymentMethodSelected}/>
-          </div>
           </div>
         </DialogBody> */}
       </Dialog>
