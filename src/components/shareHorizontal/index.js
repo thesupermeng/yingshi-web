@@ -43,7 +43,7 @@ export const ShareHorizontal = ({ className = '', setShowShareBox }) => {
 
   return (
     <div
-      className={`flex space-x-4 md:items-center items-start ${className} m-0`}
+      className={`flex space-x-4 md:items-center items-start ${className} m-0`} style={{alignItems:'center'}}
     >
       <div className='text-nowrap pt-1'>
         <div className='lg:hidden flex'>
@@ -67,7 +67,7 @@ export const ShareHorizontal = ({ className = '', setShowShareBox }) => {
             key={index}
             className={` ${index >= 5 && !showDropDown ? 'hidden' : ''}`}
           >
-            <Image src={item} alt='Icon' className='rounded-full' />
+            <Image src={item} alt='Icon' className='rounded-full share-icn' />
           </div>
         ))}
       </div>
@@ -77,7 +77,7 @@ export const ShareHorizontal = ({ className = '', setShowShareBox }) => {
       >
         {sharingMethod.map((item, index) => (
           <div key={index}>
-            <Image src={item} alt='Icon' className='rounded-full' />
+            <Image src={item} alt='Icon' className='rounded-full share-icn' />
           </div>
         ))}
       </div>

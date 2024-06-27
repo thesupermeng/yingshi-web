@@ -2,11 +2,11 @@ import { useTranslation } from 'react-i18next';
 import { useEffect, useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
-import { YingshiApi } from '@/util/YingshiApi';
+import { YingshiApi  , getIPAddress} from '@/util/YingshiApi';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import styles from './style.module.css';
 
-export const ExtraDesc = ({ vod = '', episodeSelected = '' }) => {
+export const ExtraDesc = ({ vod = '', episodeSelected = '' , isMobile = false }) => {
   if (!vod && !episodeSelected && vod?.type_id != 1) {
     // vod?.type_id !=1 only 短剧有 extra desc
     return null;
@@ -62,8 +62,9 @@ export const ExtraDesc = ({ vod = '', episodeSelected = '' }) => {
   return (
     <>
       {extraInfo != '' && (
+        <>
         <div
-          className={`allow-select row px-4 py-4`}
+          className={`allow-select row px-4 py-4 desktop`}
           style={{
             backgroundColor: '#1e2023',
             borderRadius: '12px',
@@ -100,6 +101,48 @@ export const ExtraDesc = ({ vod = '', episodeSelected = '' }) => {
             )}
           </div>
         </div>
+
+        {/* mobile  */}
+        <div
+          className={`allow-select row mobile pb-4`}
+          style={{
+            backgroundColor: '#1e2023',
+            borderRadius: '12px',
+            marginRight: '2px',
+          }}
+        >
+          <div className={`col-12 pb-2 pt-2`}>
+            <span className={'text-white'} style={{ fontSize: '14px' }}>
+              分类剧情: 第{episodeSelected?.name}集
+            </span>
+          </div>
+
+          <div className='col-12' style={{ fontSize: '12px' }}>
+            <span
+              ref={contentRef}
+              className={`text-secondary  ${styles.collapsible}${
+                isExpanded ? 'expanded' : ''
+              }`}
+            >
+              {extraInfo}
+            </span>
+            {needsShowMore && (
+              <div
+                className={`${styles['show-more-button']} text-theme`}
+                onClick={toggleExpand}
+              >
+                {isExpanded ? '收起' : '展开'}
+                {/* <span className={`${styles['arrow-down']}`}>{isExpanded ? '↑' : '↓'}</span> */}
+                <FontAwesomeIcon
+                  icon={isExpanded ? faChevronUp : faChevronDown}
+                  className={`${styles['arrow-down']}`}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+
+</>
       )}
     </>
   );

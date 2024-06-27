@@ -721,8 +721,9 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
               />
             </div>
 
+<div className='desktop'>  
             <ExtraDesc vod={vod} episodeSelected={episodeSelected} />
-
+            </div>
             <VodContent
               vodContent={vod.vod_blurb}
               vodEpisodeSelected={episodeSelected}
@@ -746,6 +747,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                     vodEpisodeInfo={vod.vod_episode_info}
                     vod={vod}
                     setShowShareBox={toggleShowShareBox}
+                    episodeSelected={episodeSelected} 
                   />
 
                   <VodSourceList
@@ -806,6 +808,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                     vod={vod}
                     openJianJie={openJianJie}
                     setShowShareBox={toggleShowShareBox}
+                    episodeSelected={episodeSelected} 
                   />
 
                   <VodSourceList
