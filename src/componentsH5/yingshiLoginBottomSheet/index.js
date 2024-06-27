@@ -97,7 +97,9 @@ export default function YingshiLoginBottomSheet({ visible, onDismiss }) {
 
     return (
         <BottomSheet
-            onDismiss={onDismiss}
+            onDismiss={()=>{setTimeout(() => {
+                onDismiss()
+              }, 100);}}
             open={visible}
             snapPoints={({ minHeight, maxHeight }) => minHeight}
         >
