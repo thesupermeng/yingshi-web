@@ -14,7 +14,7 @@ export default function PaymentMethods({className, paymentOptions, onMethodSelec
   return (
     <div className={`flex flex-col w-full gap-4 ${className}`}>
       <p className={'text-[#D3AC7B] text-[18px] font-semibold'}>支付方式</p>
-      <div className={'flex flex-col gap-3 w-full'}>
+      <div className={'grid grid-cols-2 gap-4'}>
         {paymentOptions.map((option, index) => {
           return (
             <Method
