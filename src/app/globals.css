@@ -260,7 +260,7 @@ body {
 }
 
 .styling-scrollbar {
-  display: block;
+  /* display: block; */
 }
 
 .styling-scrollbar::-webkit-scrollbar {
