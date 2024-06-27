@@ -316,12 +316,48 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
     }
   };
 
+  // const copyContentToClipboard = () => {
+  //   let content = vodShareContent.replaceAll('</br>', ' ');
+  //   navigator.clipboard.writeText(content);
+  //   setShowToastMessage(true);
+  //   setToggleShowShareBoxStatus(false);
+  //   const timeout = setTimeout(() => setShowToastMessage(false), 2000);
+  // };
+
   const copyContentToClipboard = () => {
     let content = vodShareContent.replaceAll('</br>', ' ');
-    navigator.clipboard.writeText(content);
-    setShowToastMessage(true);
-    setToggleShowShareBoxStatus(false);
-    const timeout = setTimeout(() => setShowToastMessage(false), 2000);
+    console.log(content);
+  
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(content)
+        .then(() => {
+          setShowToastMessage(true);
+          setToggleShowShareBoxStatus(false);
+          const timeout = setTimeout(() => setShowToastMessage(false), 2000);
+        })
+        .catch((err) => {
+          console.error('Failed to copy text to clipboard', err);
+        });
+    } else {
+      // Fallback method for unsupported browsers
+      const textarea = document.createElement('textarea');
+      textarea.value = content;
+      textarea.style.position = 'fixed';  // Prevent scrolling to bottom of page in MS Edge.
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      
+      try {
+        document.execCommand('copy');
+        setShowToastMessage(true);
+        setToggleShowShareBoxStatus(false);
+        const timeout = setTimeout(() => setShowToastMessage(false), 2000);
+      } catch (err) {
+        console.error('Fallback: Oops, unable to copy', err);
+      }
+      
+      document.body.removeChild(textarea);
+    }
   };
 
   return (
