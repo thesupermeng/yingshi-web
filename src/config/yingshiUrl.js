@@ -16,7 +16,7 @@ export const URL_YINGSHI_VOD = {
   topicListing: 'topic/v1/list',
   playlistGetTopicDetail: 'topic/v2/topic/detail',
   topTenList: 'topic/v1/topic/hot',
-  searchingList: 'vod/v3/vod', /// TODO remove in future
+  searchingList: 'vod/v1/vod/list',
   searchVod: 'vod/v1/search',
   searchingListSlim: 'vod/v1/vod/similar',
   filteringTypeList: 'type/v2/type',
