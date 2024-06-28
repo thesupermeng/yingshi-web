@@ -2437,6 +2437,7 @@ a:not([href]):not([class]):hover {
   font-weight: 400;
   margin-top: 18px !important;
     margin-bottom: 18px !important;
+    border: none !important;
 }
 
 /* mobile */
