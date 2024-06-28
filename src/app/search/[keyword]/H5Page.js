@@ -35,7 +35,7 @@ export default function Page() {
 
   const getSearchResultApi = async () => {
     return YingshiApi(
-      URL_YINGSHI_VOD.searchingList + '?wd=' + keyword + '&limit=35&page=1',
+      URL_YINGSHI_VOD.searchVod + '?wd=' + keyword + '&limit=35&page=1',
       {},
       { method: 'GET' }
     );
