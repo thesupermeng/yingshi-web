@@ -157,7 +157,7 @@ export const ExtraDesc = ({ vod = '', episodeSelected = '' , isMobile = false })
           }}
         >
           <div className={`col-12 pb-3`} style={{display:'flex' , alignItems:'center' , justifyContent:'space-between'}}>
-            <span className={'text-white'} style={{ fontSize: '16px' }}>
+            <span className={'text-white'} style={{ fontSize: '14px' }}>
               分集剧情: 第{displayEpisode}集
             </span>
 
@@ -170,7 +170,7 @@ export const ExtraDesc = ({ vod = '', episodeSelected = '' , isMobile = false })
                 {isExpanded ? '收起' : '展开'}
                 {/* <span className={`${styles['arrow-down']}`}>{isExpanded ? '↑' : '↓'}</span> */}
                 <FontAwesomeIcon
-                 style={{ fontSize: '16px' }}
+                 style={{ fontSize: '14px' }}
                   icon={isExpanded ? faChevronUp : faChevronDown}
                   className={`${styles['arrow-down2']}`}
                 />
