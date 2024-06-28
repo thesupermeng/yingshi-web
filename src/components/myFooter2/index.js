@@ -90,12 +90,11 @@ const MyFooter2 = () => {
     <div className='mobile fixed bottom-[60px] w-full'>
       <div className='justify-center flex'>
         <div
-          className='flex'
+          className='flex bg-theme'
           style={{
             color: '#FFF',
             position: 'absolute',
             bottom: '2rem',
-            background: '#0085E0',
             fontSize: '0.9rem',
             padding: '0.4rem 1.5rem',
             borderRadius: '1rem',
@@ -105,7 +104,7 @@ const MyFooter2 = () => {
           <div>
             <Image src={Favicon} alt='icon' width={22} />
           </div>
-          <div className='pl-2'>下载影视APP，看精彩流畅视频</div>
+          <div className='pl-2 text-black'>下载影视APP，看精彩流畅视频</div>
         </div>
       </div>
     </div>
