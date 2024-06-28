@@ -87,6 +87,7 @@ const MyFooter2 = () => {
   };
 
   return (
+    <>
     <div className='mobile fixed bottom-[60px] w-full'>
       <div className='justify-center flex'>
         <div
@@ -108,6 +109,8 @@ const MyFooter2 = () => {
         </div>
       </div>
     </div>
+    <div className='mobile' style={{paddingBottom : '80px'}}></div>
+    </>
   );
 };
 export default MyFooter2;
