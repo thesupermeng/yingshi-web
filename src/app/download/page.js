@@ -37,7 +37,7 @@ export default function Download() {
       />
       <div className="flex space-x-10 z-10">
         <div className='flex-1 flex flex-col justify-center items-center pr-2 gap-y-2'>
-          <Image alt='鲨鱼影视' src={Logo} width={200}/>
+          <Image alt='影视TV' src={Logo} width={200}/>
           <span className='text-m'>海量高清视频免费观看</span>
           <div className='flex flex-row gap-x-5 pt-2'>
             <div className='flex flex-col items-center gap-2'>
