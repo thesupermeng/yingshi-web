@@ -2,23 +2,18 @@
 import Link from 'next/link';
 import { usePathname, useParams, useRouter } from 'next/navigation';
 import { useTranslation } from 'next-i18next';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './../style.module.css';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { YingshiApi } from '@/util/YingshiApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import VodItemMobile from './../../../components/vodItemMobile'
+import VodItemMobile from './../../../components/vodItemMobile';
 import { Spinner } from './../../../components/spinner';
 import Image from 'next/image';
 import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
-
-import {
-
-  searchEmptyIcon,
-
-} from '@/asset/icons';
+import { searchEmptyIcon } from '@/asset/icons';
 
 export default function Page() {
   const { keyword } = useParams();
@@ -27,45 +22,52 @@ export default function Page() {
   const [isSearching, setIsSearching] = useState(true);
   const router = useRouter();
   const [yunying, setYunying] = useState([]);
-
-
-  //todo remove this 
-  const topicObj = false;
-
+  const [stillCanLoad, setStillCanLoad] = useState(false);
+  const [nextPage, setNextPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const targetRef = useRef(null);
 
   const getSearchResultApi = async () => {
     return YingshiApi(
-      URL_YINGSHI_VOD.searchVod + '?wd=' + keyword + '&limit=35&page=1',
+      URL_YINGSHI_VOD.searchVod +
+        '?wd=' +
+        keyword +
+        '&limit=20&page=' +
+        nextPage,
       {},
       { method: 'GET' }
     );
   };
 
   const getSearchResult = async () => {
-    setIsSearching(true)
-    console.log('keyword');
-    console.log(keyword);
-    console.log('decodedKeyword');
-    console.log(decodedKeyword);
+    if (nextPage == 1) setIsSearching(true);
 
-
-    let res = await getSearchResultApi();
-
-    console.log('result is ')
-    console.log(res)
-    if (res?.Total == 0) {
-      let res2 = await getTypePageApi()
-      console.log('result 2  is ')
-      console.log(res2)
+    let currentPage = nextPage;
+    let searchingVodList = await getSearchResultApi();
+    console.log(searchingVodList);
+    if (searchingVodList?.Total == 0) {
+      let res2 = await getTypePageApi();
+      // console.log('result 2  is ');
+      // console.log(res2);
       setYunying(res2.yunying);
-
+    }
+    if (nextPage > 1) {
+      setSearchResults((prev) => [...prev, ...searchingVodList?.List]);
+    } else {
+      setTotal(searchingVodList?.Total);
+      setSearchResults(searchingVodList?.List);
+      setIsSearching(false);
     }
 
-    setSearchResults(res);
-    setIsSearching(false)
+    if (nextPage > searchingVodList.TotalPageCount - 1) {
+      setStillCanLoad(false);
+    } else {
+      setStillCanLoad(true);
+      setNextPage(currentPage + 1);
+    }
   };
 
-  // if empty seatch result 
+  // if empty seatch result
   const getTypePageApi = async (idValue) => {
     return YingshiApi(
       URL_YINGSHI_VOD.homeGetPages,
@@ -78,24 +80,47 @@ export default function Page() {
     );
   };
 
-  useEffect(() => {
-    getSearchResult();
-  }, []);
+  // useEffect(() => {
+  //   getSearchResult();
+  // }, []);
 
   useEffect(() => {
-    console.log('set result is ')
-    console.log(searchResults)
-  }, [searchResults]);
+    if (isSearching) {
+      getSearchResult();
+    } else {
+      if (stillCanLoad) {
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.intersectionRatio >= 0.5) {
+              console.log('test');
+              getSearchResult();
+              console.log('Element is at least 50% visible.');
+            } else {
+              console.log('Element is not yet 50% visible.');
+            }
+          },
+          {
+            threshold: 0.5, // 50% visibility threshold
+          }
+        );
+        if (targetRef.current) {
+          observer.observe(targetRef.current);
+        }
+        return () => {
+          if (targetRef.current) {
+            observer.unobserve(targetRef.current);
+          }
+        };
+      }
+    }
+  }, [nextPage, stillCanLoad]);
 
   return (
     <div className='flex flex-col'>
-
       {/* loading spinner  */}
       <div className='mobile'>
         <div>{isSearching && <Spinner></Spinner>}</div>
       </div>
-
-
 
       <div className='desktop'>
         <div className={styles.containerHeader}>
@@ -105,16 +130,14 @@ export default function Page() {
                 <div className='topic-container-header container content-end'>
                   <div className='topic-header-text'>{decodedKeyword}</div>
                   <div className='topic-header-text-sub'>
-
-
                     搜索"{decodedKeyword}" ，找到
                     <span className='search-count text-theme'>
                       {isSearching === false ? (
-                        <span>{searchResults?.List ? searchResults.List.length : 0}</span>
+                        <span>{total}</span>
                       ) : (
                         <FontAwesomeIcon icon={faSpinner} spin />
-                      )}</span>
-
+                      )}
+                    </span>
                     部影视作品
                   </div>
                 </div>
@@ -123,29 +146,33 @@ export default function Page() {
           </div>
         </div>
       </div>
-      {searchResults && (
+      {!isSearching && (
         <>
           {/* desktop  view  */}
           <div className='desktop'>
             <div className='d-flex container pt-3 ' style={{ width: '100%' }}>
               <div className='row w-screen'>
-                {searchResults?.List?.map((vod) => (
+                {searchResults?.map((vod) => (
                   <div className='col-md-6 mt-2 mb-2' key={vod.vod_id}>
                     <div
                       className='topic-details-card'
                       onClick={(e) => {
                         e.preventDefault();
-                        router.push(`/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`);
+                        router.push(
+                          `/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`
+                        );
                       }}
                     >
                       <div className='row '>
                         <div className='col-12'>
                           <div className='row flex-nowrap'>
-                            <div style={{
-                              width: '132px',
-                              paddingLeft: '0px',
-                              paddingRight: '0px',
-                            }}>
+                            <div
+                              style={{
+                                width: '132px',
+                                paddingLeft: '0px',
+                                paddingRight: '0px',
+                              }}
+                            >
                               <img
                                 alt='vod'
                                 className={`object-cover`}
@@ -180,8 +207,14 @@ export default function Page() {
                                   : vod.vod_blurb}
                               </div>
                               <button className='btn btn-topic-play'>
-                                <FontAwesomeIcon style={{ color: 'white' }} icon={faPlay} />{' '}
-                                <span className='ml-2 text-white'> 立即播放 </span>
+                                <FontAwesomeIcon
+                                  style={{ color: 'white' }}
+                                  icon={faPlay}
+                                />{' '}
+                                <span className='ml-2 text-white'>
+                                  {' '}
+                                  立即播放{' '}
+                                </span>
                               </button>
                             </div>
                           </div>
@@ -196,20 +229,16 @@ export default function Page() {
 
           {/* movile   view  */}
 
-
           <div className='mobile'>
             <div className='d-flex container pt-3' style={{ width: '100%' }}>
               <div className='row'>
-                {searchResults?.List?.map((vod) => (
+                {searchResults?.map((vod) => (
                   <VodItemMobile vod={vod} key={vod.vod_id} />
                 ))}
               </div>
             </div>
           </div>
-
-
-          {!searchResults?.List &&
-
+          {!searchResults && (
             <div className='flex items-center justify-center flex-col h-full pt-6 mt-6'>
               <Image
                 className='mx-2'
@@ -218,24 +247,27 @@ export default function Page() {
                 width={120}
               />
 
-
-              <span className="text-xs pt-2">    抱歉没有搜索到"{decodedKeyword}"的相关视频</span>
-              <span className="text-xs pt-2">  为你推荐更多精彩内容</span>
-
-
-
+              <span className='text-xs pt-2'>
+                {' '}
+                抱歉没有搜索到"{decodedKeyword}"的相关视频
+              </span>
+              <span className='text-xs pt-2'> 为你推荐更多精彩内容</span>
             </div>
+          )}
+          {/* loading spinner  */}
+          <div ref={targetRef}>
+            {!isSearching && stillCanLoad && <Spinner></Spinner>}
+          </div>
 
-
-          }
-
+          {!stillCanLoad && total !== 0 && (
+            <div className='flex items-center justify-center flex-col py-2'>
+              <span className='test-xs text-muted'>没有更多了</span>
+            </div>
+          )}
         </>
       )}
-      {/* topic list  */}
-      {/* <div className='d-flex container pb-6'>
-        <div className='row '></div>
-      </div> */}
-      {yunying != [] &&
+
+      {yunying != [] && (
         <div className='flex flex-col w-full mb-8 mb-8 px-1.5'>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             {/* md:mx-20 mx-2.5  */}
@@ -267,8 +299,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-      }
-
+      )}
     </div>
   );
 }
