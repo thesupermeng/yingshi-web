@@ -11,10 +11,10 @@ export default function PaymentProductsList({
 }) {
   const [selectedProduct, setSelectedProduct] = useState(0);
   const listRef = useRef();
-  const { events } = useDraggable(listRef, {
-    applyRubberBandEffect: true,
-    activeMouseButton: 'Left',
-  });
+  // const { events } = useDraggable(listRef, {
+  //   applyRubberBandEffect: true,
+  //   activeMouseButton: 'Left',
+  // });
 
   useEffect(() => {
     if (productList && productList.length > 0) {
@@ -23,20 +23,19 @@ export default function PaymentProductsList({
     }
   }, [productList]);
 
-  const handleWheel = (e) => {
-    const container = listRef.current;
-    if (container) {
-      // e.preventDefault();
-      container.scrollLeft += e.deltaY;
-    }
-  };
+  // const handleWheel = (e) => {
+  //   const container = listRef.current;
+  //   if (container) {
+  //     // e.preventDefault();
+  //     container.scrollLeft += e.deltaY;
+  //   }
+  // };
 
   return (
     <div
-      className={`h-[164px] w-full overflow-x-scroll no-scrollbar flex flex-nowrap gap-[20px] items-center ${className}`}
+      className={`h-[164px] w-full overflow-x-hidden no-scrollbar flex flex-nowrap flex-row gap-[16px] items-center ${className}`}
       ref={listRef}
-      // onw={handleWheel}
-      {...events}
+      // {...events}
     >
       {productList.map((product, index) => {
         return (
@@ -62,9 +61,9 @@ function Product({ isBest, isSelected, productInfo, onProductSelect }) {
       className={`${
         isSelected ? 'h-[160px] border-2 border-[#D4AE7F]' : 'h-[150px]'
       } 
-      ${style.product_card_animation}
-      w-[117px] rounded-[8px] overflow-hidden flex flex-col flex-none relative hover-effect
-      `}
+        ${style.product_card_animation}
+         rounded-[8px] overflow-hidden flex flex-col flex-1 relative hover-effect
+        `}
       onClick={onProductSelect}
     >
       <div className={'flex-1 w-full absolute'}>
