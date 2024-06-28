@@ -91,8 +91,6 @@ export default function Home(params) {
 
   const initIp = async() => {
     let ipObj = await getIPAddress2();
-    console.log('ipObj')
-    console.log(ipObj)
     if(ipObj && ipObj.IPv4 &&ipObj.country_code)
     sessionStorage.setItem('ipAddress' ,ipObj.IPv4)
     dispatch(setIsUserChina(ipObj))

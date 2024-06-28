@@ -6,6 +6,27 @@ import { YingshiApi  , getIPAddress} from '@/util/YingshiApi';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import styles from './style.module.css';
 
+function extractNumbers(input) {
+
+  console.log('extractNumbers')
+  console.log(input)
+  // Define a regular expression to match all digits
+  const numberPattern = /\d+/g;
+  
+  // Use match to find all digits in the input string
+  const matches = input.match(numberPattern);
+  
+  // If there are no matches, return an empty string
+  if (!matches) {
+    return 0;
+  }
+
+  // Join all matched digits to form a single number
+  const result = matches.join('');
+  
+  return Number(result);
+}
+
 export const ExtraDesc = ({ vod = '', episodeSelected = '' , isMobile = false }) => {
   if (!vod && !episodeSelected && vod?.type_id != 1) {
     // vod?.type_id !=1 only 短剧有 extra desc
@@ -18,9 +39,15 @@ export const ExtraDesc = ({ vod = '', episodeSelected = '' , isMobile = false })
   const [isExpanded, setIsExpanded] = useState(false);
   const [needsShowMore, setNeedsShowMore] = useState(false);
   const [needsShowMore2, setNeedsShowMore2] = useState(false);
+
+  const [displayEpisode, setDisplayEpisode] = useState(0);
+
   const contentRef = useRef(null);
   const contentRef2 = useRef(null);
   useEffect(() => {
+  
+  
+
     if (extraInfo == '') {
       return;
     }
@@ -41,6 +68,12 @@ export const ExtraDesc = ({ vod = '', episodeSelected = '' , isMobile = false })
         if (contentRef2.current.scrollHeight > maxHeight2) {
           setNeedsShowMore2(true);
         }
+
+
+
+        //  setDisplayEpisode
+
+   
   }, [extraInfo]);
 
   const toggleExpand = () => {
@@ -48,11 +81,12 @@ export const ExtraDesc = ({ vod = '', episodeSelected = '' , isMobile = false })
   };
 
   const getExtraInfo = async () => {
+    setDisplayEpisode(extractNumbers(episodeSelected?.name))
     return YingshiApi(
       URL_YINGSHI_VOD.getExtraInfo,
       {
         id: vod.vod_id,
-        ep_no: episodeSelected?.name,
+        ep_no: extractNumbers(episodeSelected?.name),
       },
       { method: 'GET' }
     );
@@ -81,9 +115,9 @@ export const ExtraDesc = ({ vod = '', episodeSelected = '' , isMobile = false })
             marginRight: '2px',
           }}
         >
-          <div className={`col-12 pb-3`}>
+          <div className={`col-12 pb-1 pt-2`}>
             <span className={'text-white'} style={{ fontSize: '18px' }}>
-              分集剧情: 第{episodeSelected?.name}集
+              分集剧情: 第{displayEpisode}集
             </span>
           </div>
 
@@ -114,17 +148,35 @@ export const ExtraDesc = ({ vod = '', episodeSelected = '' , isMobile = false })
 
         {/* mobile  */}
         <div
-          className={`allow-select row mobile pb-4`}
+          className={`allow-select row mobile py-4 px-3 mt-2`}
           style={{
             backgroundColor: '#1e2023',
             borderRadius: '12px',
-            marginRight: '2px',
+            backgroundColor :'#1D2023',
+            borderRadius:'12px'
           }}
         >
-          <div className={`col-12 pb-2 pt-2`}>
+          <div className={`col-12 pb-3`} style={{display:'flex' , alignItems:'center' , justifyContent:'space-between'}}>
             <span className={'text-white'} style={{ fontSize: '14px' }}>
               分集剧情: 第{episodeSelected?.name}集
             </span>
+
+            {needsShowMore2 && (
+              <div
+                className={`${styles['show-more-button2']} text-theme`}
+                style={{ fontSize: '14px' }}
+                onClick={toggleExpand}
+              >
+                {isExpanded ? '收起' : '展开'}
+                {/* <span className={`${styles['arrow-down']}`}>{isExpanded ? '↑' : '↓'}</span> */}
+                <FontAwesomeIcon
+                 style={{ fontSize: '14px' }}
+                  icon={isExpanded ? faChevronUp : faChevronDown}
+                  className={`${styles['arrow-down2']}`}
+                />
+              </div>
+            )}
+
           </div>
 
           <div className='col-12' style={{ fontSize: '12px' }}>
@@ -136,19 +188,7 @@ export const ExtraDesc = ({ vod = '', episodeSelected = '' , isMobile = false })
             >
               {extraInfo}
             </span>
-            {needsShowMore2 && (
-              <div
-                className={`${styles['show-more-button2']} text-theme`}
-                onClick={toggleExpand}
-              >
-                {isExpanded ? '收起' : '展开'}
-                {/* <span className={`${styles['arrow-down']}`}>{isExpanded ? '↑' : '↓'}</span> */}
-                <FontAwesomeIcon
-                  icon={isExpanded ? faChevronUp : faChevronDown}
-                  className={`${styles['arrow-down2']}`}
-                />
-              </div>
-            )}
+       
           </div>
         </div>
 
