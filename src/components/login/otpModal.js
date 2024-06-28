@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faTimes, faTimesCircle} from '@fortawesome/free-solid-svg-icons';
+import {trackLoginSignUp} from '@/util/universalEvent';
 
 const totalCountdownTime = 60 // seconds
 
@@ -85,6 +86,8 @@ export default function OtpModal({ open, handler, onLogin, onRegister , onCloseO
               if (res.code === 201) {
                 onRegister()
               }
+
+              trackLoginSignUp(res.data.user)
               dispatch(setYingshiUserInfo(res.data.user))
               dispatch(setYingshiUserToken(res.data.access_token))
               dispatch(setAhaToken(res.data.aha_token))
@@ -110,6 +113,8 @@ export default function OtpModal({ open, handler, onLogin, onRegister , onCloseO
               if (res.code === 201) {
                 onRegister()
               }
+
+              trackLoginSignUp(res.data.user)
               dispatch(setYingshiUserInfo(res.data.user))
               dispatch(setYingshiUserToken(res.data.access_token))
               dispatch(setAhaToken(res.data.aha_token))
