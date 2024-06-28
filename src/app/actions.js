@@ -45,7 +45,7 @@ export const getTypePage = async (idValue, nextPage = 1) => {
 
 export const getTopicListApi = async (nextPage) => {
   return YingshiApi(
-    URL_YINGSHI_VOD.playlistGetTopic + '?limit=5&page=' + nextPage,
+    URL_YINGSHI_VOD.topicListing + '?limit=5&page=' + nextPage,
     {},
     {
       method: 'GET',

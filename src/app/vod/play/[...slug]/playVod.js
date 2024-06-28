@@ -734,7 +734,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
               className='lg:hidden flex flex-col space-y-4'
               style={{ width: '100%' }}
             >
-              <div className=''>
+              <div className='vod-episode-list'>
                 <div className={`space-y-4 ${styles.vodMetaContainer}`}>
                   <VodCard
                     imgSource={vod.vod_pic}
@@ -767,8 +767,21 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                       maxHeight: 300,
                     }}
                   />
+
+
                 </div>
+
+
+                <div className={`mobile`}>  
+            <ExtraDesc vod={vod} episodeSelected={episodeSelected} />
+            </div>
+                
               </div>
+            
+
+
+
+
             </div>
             <div className='flex justify-center'>
               <div className='lg:w-[100%] w-[90%]'>

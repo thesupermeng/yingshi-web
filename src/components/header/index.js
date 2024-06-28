@@ -74,9 +74,6 @@ const Header = () => {
   const [searchHistoryList, setSearchHistoryList] = useState([]);
   const [watchHistoryList, setWatchHistoryList] = useState([]);
   const [topTenList, setTopTenList] = useState([]);
-  const [searchingList, setSearchList] = useState([]);
-  const [timeoutId, setTimeoutId] = useState(null);
-  const [loadingSearching, setLoadingSearching] = useState(false);
   const [headerBlack, setHeaderBlack] = useState(false);
   const [_, setOpenLogin] = useLoginOpen();
   const [__, setOpenPayment] = usePaymentOpen();
@@ -164,32 +161,6 @@ const Header = () => {
     }
     setSearchInput(newValue);
     return;
-
-    setLoadingSearching(true);
-    // setSearchInput(newValue);
-
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-
-    // Set a new timeout to call the function after 3 seconds
-    const newTimeoutId = setTimeout(async () => {
-      // Call your function here
-      // const encodedData = encodeURIComponent(newValue);
-      // console.log(encodedData)
-      if (newValue !== '') {
-        const res = await getSearchingList(newValue);
-        if (res.List != null) {
-          setSearchList(res.List);
-        } else {
-          setSearchList([]);
-        }
-        setLoadingSearching(false);
-      }
-    }, 2000);
-
-    // Update the timeoutId state
-    setTimeoutId(newTimeoutId);
   };
 
   const handleSearch = () => {
@@ -245,18 +216,6 @@ const Header = () => {
     return YingshiApi(
       URL_YINGSHI_VOD.topTenList + '?id=1',
       {},
-      { method: 'GET' }
-    );
-  };
-
-  const getSearchingList = async (value) => {
-    return YingshiApi(
-      URL_YINGSHI_VOD.searchingList,
-      {
-        wd: value,
-        limit: 15,
-        page: 1,
-      },
       { method: 'GET' }
     );
   };
@@ -617,7 +576,9 @@ const Header = () => {
           <Image className='mr-2' src={vipIcon} alt='vip' width={25} />
           <div className='flex items-center'>
             <span className='text-[#F4DBBA] text-[14px] md:text-[14px] text-nowrap'>
-              {isVip ? `VIP ${userInfo.user_vip_time_duration_days} 天` : '开通VIP'}
+              {isVip
+                ? `VIP ${userInfo.user_vip_time_duration_days} 天`
+                : '开通VIP'}
             </span>
           </div>
         </div>
