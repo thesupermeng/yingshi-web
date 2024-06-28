@@ -11,10 +11,10 @@ export default function PaymentProductsList({
 }) {
   const [selectedProduct, setSelectedProduct] = useState(0);
   const listRef = useRef();
-  // const { events } = useDraggable(listRef, {
-  //   applyRubberBandEffect: true,
-  //   activeMouseButton: 'Left',
-  // });
+  const { events } = useDraggable(listRef, {
+    applyRubberBandEffect: true,
+    activeMouseButton: 'Left',
+  });
 
   useEffect(() => {
     if (productList && productList.length > 0) {
