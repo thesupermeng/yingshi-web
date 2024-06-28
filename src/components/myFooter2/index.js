@@ -76,7 +76,7 @@ const MyFooter2 = () => {
       // Make sure app_download_link is defined
       // window.location.href =
       //   'https://play.google.com/store/apps/details?id=com.yingshitv&hl=en';
-      window.open('https://yingshi.tv/static/assets/yingshi.apk', '_blank');
+      window.open('https://oss.yingshi.tv/assets/yingshi.apk', '_blank');
     } else if (os === 'iOS' || os === 'MacOS') {
       window.location.href = iosLink;
 
