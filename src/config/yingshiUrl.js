@@ -5,7 +5,7 @@ export const URL_YINGSHI_USER = {
   countryList: 'country/v1/country',
   updateUser: 'users/v1/update',
   feedback: 'feedback/v2/submit',
-  refreshAhaToken: 'users/v2/aha/refresh'
+  refreshAhaToken: 'users/v2/aha/refresh',
 };
 
 export const URL_YINGSHI_VOD = {
@@ -16,7 +16,8 @@ export const URL_YINGSHI_VOD = {
   topicListing: 'topic/v1/list',
   playlistGetTopicDetail: 'topic/v2/topic/detail',
   topTenList: 'topic/v1/topic/hot',
-  searchingList: 'vod/v3/vod',
+  searchingList: 'vod/v3/vod', /// TODO remove in future
+  searchVod: 'vod/v1/search',
   searchingListSlim: 'vod/v1/vod/similar',
   filteringTypeList: 'type/v2/type',
   getXVodDetails: 'svod/v2/vod',
