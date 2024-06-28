@@ -823,48 +823,54 @@ const Header = () => {
                 borderBottom: '10px solid #18191f5',
               }}
             />
-            <div
-              className='p-2 flex flex-row rounded-md rounded-tr-none'
-              style={{ backgroundColor: '#18191ef5' }}
-            >
-              <div className='flex-none w-[200px]'>
-                <Image src={AppImage} alt='AppImage' width={200} />
-              </div>
-              <div className='flex-1 flex flex-col justify-center items-center pr-2 gap-y-2'>
-                <Image alt='影视TV' src={Logo} width={120} />
-                <span className='text-sm'>您每一天的影视平台</span>
-                <div className='flex flex-row gap-x-5 pt-2'>
-                  <div className='flex flex-col items-center gap-2'>
-                    <div className='flex flex-row  items-center'>
-                      <Image alt='appleStore' src={AppleStoreIcon} width={25} />
-                      <span className='text-xs'>iOS App 下载</span>
-                    </div>
-                    <QRCode
-                      className='rounded-md'
-                      value={iosLink}
-                      renderAs='canvas'
-                      size={120}
-                      includeMargin={true}
-                    />
-                  </div>
-                  <div className='flex flex-col items-center gap-2'>
-                    <div className='flex flex-row items-center'>
-                      <Image alt='playStore' src={AndroidIcon} width={25} />
-                      <span className='text-xs'>安卓 App 下载</span>
-                    </div>
-
-                    <QRCode
-                      className='rounded-md'
-                      value='https://oss.yingshi.tv/assets/yingshi.apk'
-                      renderAs='canvas'
-                      size={120}
-                      includeMargin={true}
-                    />
-                  </div>
+            <Link href='/download'>
+              <div
+                className='p-2 flex flex-row rounded-md rounded-tr-none cursor-pointer hover-download'
+                style={{ backgroundColor: '#18191ef5' }}
+              >
+                <div className='flex-none w-[200px]'>
+                  <Image src={AppImage} alt='AppImage' width={200} />
                 </div>
-                <span className='text-sm'>扫码即可下载手机APP</span>
+                <div className='flex-1 flex flex-col justify-center items-center pr-2 gap-y-2'>
+                  <Image alt='影视TV' src={Logo} width={120} />
+                  <span className='text-sm'>您每一天的影视平台</span>
+                  <div className='flex flex-row gap-x-5 pt-2'>
+                    <div className='flex flex-col items-center gap-2'>
+                      <div className='flex flex-row  items-center'>
+                        <Image
+                          alt='appleStore'
+                          src={AppleStoreIcon}
+                          width={25}
+                        />
+                        <span className='text-xs'>iOS App 下载</span>
+                      </div>
+                      <QRCode
+                        className='rounded-md'
+                        value={iosLink}
+                        renderAs='canvas'
+                        size={120}
+                        includeMargin={true}
+                      />
+                    </div>
+                    <div className='flex flex-col items-center gap-2'>
+                      <div className='flex flex-row items-center'>
+                        <Image alt='playStore' src={AndroidIcon} width={25} />
+                        <span className='text-xs'>安卓 App 下载</span>
+                      </div>
+
+                      <QRCode
+                        className='rounded-md'
+                        value='https://oss.yingshi.tv/assets/yingshi.apk'
+                        renderAs='canvas'
+                        size={120}
+                        includeMargin={true}
+                      />
+                    </div>
+                  </div>
+                  <span className='text-sm'>扫码即可下载手机APP</span>
+                </div>
               </div>
-            </div>
+            </Link>
           </div>
         ) : null}
       </div>
@@ -954,7 +960,9 @@ const Header = () => {
                 >
                   <span
                     className={`truncate ${
-                      selectedId === navItem.id ? 'text-yellow-500' : 'text-white'
+                      selectedId === navItem.id
+                        ? 'text-yellow-500'
+                        : 'text-white'
                     }`}
                   >
                     {navItem.name}
@@ -981,7 +989,9 @@ const Header = () => {
                 >
                   <span
                     className={`text-yellow-hover transition-colors duration-300 truncate ${
-                      selectedId === navItem.id ? 'text-yellow-500' : 'text-white'
+                      selectedId === navItem.id
+                        ? 'text-yellow-500'
+                        : 'text-white'
                     }`}
                   >
                     {navItem.name}
@@ -1059,7 +1069,11 @@ const Header = () => {
     </div>
   );
 
-  if (pathname.startsWith('/topic/detail/') || pathname.startsWith('/xvod') || pathname.startsWith('/download')) {
+  if (
+    pathname.startsWith('/topic/detail/') ||
+    pathname.startsWith('/xvod') ||
+    pathname.startsWith('/download')
+  ) {
     return (
       <div className={'desktop z-50 sticky top-0 w-screen'}>
         {defaultHeader}
