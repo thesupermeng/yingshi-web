@@ -16,7 +16,16 @@ import { usePathname, useRouter } from 'next/navigation';
 
 import { AppIcon } from '@/asset/icons';
 
+
 const MyFooter2 = () => {
+
+  const getIsUserChina = (state) => state.yingshiScreen.isUserChina;
+  const isUserChina = useSelector(getIsUserChina);
+  const [iosLink, setIosLink] = useState('https://apps.apple.com/cn/app/id6474402534');
+  useEffect(() => {
+    setIosLink(isUserChina.link_jump);
+  }, [isUserChina]);
+
   const dispatch = useDispatch();
   const pathname = usePathname();
   const router = useRouter();
@@ -67,7 +76,11 @@ const MyFooter2 = () => {
       //   'https://play.google.com/store/apps/details?id=com.yingshitv&hl=en'; 
         window.open('https://yingshi.tv/static/assets/yingshi.apk', '_blank');
     } else if (os === 'iOS' || os === 'MacOS') {
-      window.location.href = 'https://apps.apple.com/cn/app/id6474402534';
+
+   // window.location.href = 'https://apps.apple.com/cn/app/id6474402534';
+
+      window.location.href = iosLink
+      
       // Additional iOS handling code here if needed
     } else {
       console.log('Operating system not supported');

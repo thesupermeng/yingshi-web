@@ -7,6 +7,7 @@ export const setShowPaymentPending = (d) => yingshiScreen.actions.setShowPayment
 export const setShowPinSuccess = (d) => yingshiScreen.actions.setShowPinSuccess(d)
 export const setShowWithdrawalSuccess = (d) => yingshiScreen.actions.setShowWithdrawalSuccess(d)
 export const setIsSessionExpired = (d) => yingshiScreen.actions.setIsSessionExpired(d)
+export const setIsUserChina = (d) => yingshiScreen.actions.setIsUserChina(d)
 
 
 export const yingshiScreen = createSlice({
@@ -19,6 +20,7 @@ export const yingshiScreen = createSlice({
     isShowPinSuccess: false,
     isShowWithdrawalSuccess: '',
     isSessionExpired:false,
+    isUserChina:false,
   },
   reducers: {
     setShowLogin: (state, action) => {
@@ -41,6 +43,11 @@ export const yingshiScreen = createSlice({
     },
     setIsSessionExpired: (state, action) => {
       state.isSessionExpired = action.payload;
+    },
+    setIsUserChina: (state, action) => {
+      // console.log('setIsUserChina')
+      // console.log(action.payload  )
+      state.isUserChina = action.payload;
     },
   }
 

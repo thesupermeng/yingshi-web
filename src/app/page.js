@@ -8,7 +8,7 @@ export const RightBetCartWidth = 'w-[32rem]';
 import { useSelector, useDispatch } from 'react-redux';
 import { Carousel } from '@/components/carousel/carousel';
 import { Suspense, useEffect, useLayoutEffect, useState } from 'react';
-import { YingshiApi2 } from '@/util/YingshiApi';
+import { YingshiApi2  , getIPAddress2} from '@/util/YingshiApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
@@ -19,9 +19,13 @@ import TopicPagingList from '@/components/topicPagingList';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { VideoWithTitleHorizontalCard } from '@/components/videoItem/videoWithTitleHorizontalCard';
+import { setIsUserChina } from '@/store/yingshiScreen';
 
 const getHeaderMenu = (state) => state.headerMenu;
 export default function Home(params) {
+
+  const dispatch = useDispatch();
+
   let paramsInput = params.category == undefined ? 0 : params.category;
   const pathName = usePathname();
   const [isLoading, setIsLoading] = useState(false);
@@ -31,6 +35,10 @@ export default function Home(params) {
   const [carousel, setCarousel] = useState([]);
   const [topicList, setTopicList] = useState(null);
   const [nextPage, setNextPage] = useState(0);
+
+  const getIsUserChina = (state) => state.yingshiScreen.isUserChina;
+  const isUserChina = useSelector(getIsUserChina);
+
 
   const headerMenu = useSelector(getHeaderMenu);
 
@@ -73,6 +81,30 @@ export default function Home(params) {
     // console.log(headerMenu.headerMenu);
     setHeaderMenuState(headerMenu.headerMenu);
   }, [headerMenu]);
+
+
+
+  useLayoutEffect(() => {
+   // init ip 
+    initIp()
+  }, []);
+
+  const initIp = async() => {
+    let ipObj = await getIPAddress2();
+    console.log('ipObj')
+    console.log(ipObj)
+    if(ipObj && ipObj.IPv4 &&ipObj.country_code)
+    sessionStorage.setItem('ipAddress' ,ipObj.IPv4)
+    dispatch(setIsUserChina(ipObj))
+
+
+  }
+
+  // useEffect(() => {
+  //   console.log('isUserChina')
+  //   console.log(isUserChina)
+  // }, [isUserChina]);
+
 
   useEffect(() => {
     setIsLoading(true);
