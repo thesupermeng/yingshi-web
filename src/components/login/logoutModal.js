@@ -20,9 +20,9 @@ export default function LogoutModal({open, handler, onConfirm, onCancel}) {
             <span className={'text-[17px] text-white text-center'}>您是否确定要退出登录？</span>
             <div className={'flex gap-2'}>
               <Button tabIndex={-1} className={'flex-1 text-[16px] text-[#9C9C9C] bg-transparent'} size={'sm'}
-                      onClick={onCancel} variant={'outlined'}>取消</Button>
-              <Button tabIndex={-1} className={'flex-1 text-[16px] text-shayuBlue'} color={'blue'} size={'sm'}
-                      onClick={onConfirm} variant={'outlined'}>确定</Button>
+                      onClick={onCancel} variant={'text'}>取消</Button>
+              <Button tabIndex={-1} className={'flex-1 text-[16px] text-shayuBlue'} size={'sm'}
+                      onClick={onConfirm} variant={'text'}>确定</Button>
             </div>
         </div>
         </div>

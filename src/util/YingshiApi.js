@@ -6,10 +6,20 @@ import { URL_USER } from '@/config/url';
 
 let ipAddress = ''
 
-const getIPAddress = async () => {
-  if (ipAddress != '') {
-    return ipAddress;
+export const getIPAddress = async () => {
+
+  if (ipAddress != '' ) {
+    return  ipAddress;
   }
+  try{
+    if (sessionStorage?.getItem('ipAddress') != undefined) {
+      return sessionStorage.getItem('ipAddress');
+    }
+  }catch(e){
+   console.log('session storage not defined')
+  }
+ 
+
   const response = await fetch('https://geolocation-db.com/json/').then((d) => d.json())
     .catch((e) => {
       // console.log('IP ADDRESS ERROR!!!')
@@ -26,6 +36,43 @@ const getIPAddress = async () => {
 
   ipAddress = response.IPv4;
   return ipAddress;
+}
+
+export const getIPAddress2 = async () => {
+  if (sessionStorage.getItem('userLocation') != undefined) {
+    return JSON.parse(sessionStorage.getItem('userLocation')); ;
+  }
+
+  const response = await fetch('https://geolocation-db.com/json/').then((d) => d.json())
+    .catch((e) => {
+    
+    return null 
+    });
+
+  if (!response || !response.IPv4) {
+    // got error, use default ip address
+    return null 
+  }
+  let superLinkObl = 'https://apps.apple.com/cn/app/id6474402534';
+  if(response.country_code !='CN'  && response.country_code !='China' )
+    {
+      superLinkObl = await getSuperLink();
+    }
+ 
+
+  
+  response.link_jump = superLinkObl;
+  sessionStorage.setItem('userLocation', JSON.stringify(response));
+  return response;
+}
+
+export const getSuperLink = async () => {
+  const response = await fetch('https://api.ziqoixtv.com/api/mdm/link/d6td3171').then((d) => d.json())
+    .catch((e) => {
+
+    return 'https://apps.apple.com/cn/app/id6474402534' 
+    });
+  return response.link_jump;
 }
 
 const ServerTimeOffset = { value: 0, set: false };

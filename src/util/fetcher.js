@@ -3,8 +3,8 @@ import {getLocalstorage, updateLocalstorage} from '@/util/YingshiApi';
 
 let ipAddress = ''
 const getIPAddress = async () => {
-  if (ipAddress != '') {
-    return ipAddress;
+  if (ipAddress != '' || sessionStorage.getItem('ipAddress') != undefined) {
+    return sessionStorage.getItem('ipAddress') ||  ipAddress;
   }
   const response = await fetch('https://geolocation-db.com/json/').then((d) => d.json())
     .catch((e) => {

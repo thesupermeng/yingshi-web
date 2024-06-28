@@ -40,7 +40,7 @@ export { default as moreIcon } from './more.svg';
 export { default as searchEmptyIcon } from './searchEmptyIcon.svg';
 export { default as leftArrow } from './leftArrow.svg';
 export { default as clear } from './clear.svg';
-export { default as userIcon } from './userIcon.svg';
+export { default as guestUser } from './guestUser.png';
 export { default as vipIcon } from './vipIcon.svg';
 export { default as glyph } from './glyph.svg';
 export { default as noADIcon } from './noADIcon.svg';
@@ -56,43 +56,42 @@ export { default as profileIcon } from './profile_icon.svg';
 export { default as vipProfileIcon } from './ysVIPIcon.svg';
 export { default as editIcon } from './ysEdit.svg';
 export { default as arrowRight } from './arrowRight.svg';
-export { default as Stopwatch } from './stopwatch.svg'
-export { default as VipBlackIcon} from './vipBlack.svg'
-export { default as HistoryIconGrey} from './history_icon_grey.svg'
-export { default as AboutusIconGrey} from './aboutus_icon_grey.svg'
-export { default as FeedbackIconGrey} from './feedback_icon_grey.svg'
+export { default as Stopwatch } from './stopwatch.svg';
+export { default as VipBlackIcon } from './vipBlack.svg';
+export { default as HistoryIconGrey } from './history_icon_grey.svg';
+export { default as AboutusIconGrey } from './aboutus_icon_grey.svg';
+export { default as FeedbackIconGrey } from './feedback_icon_grey.svg';
 
-export { default as PinIconGrey} from './pin.svg'
+export { default as PinIconGrey } from './pin.svg';
 
-export { default as FavouriteIconGrey} from './favourites_icon_grey.svg'
-export { default as ArrowRigthGrey} from './arrowRightGrey.svg'
-export { default as Favicon} from './../../app/yingshi.tv_logo-32x32.png'
-export { default as PersonIconGrey} from './personGrey.svg'
-export { default as LogoutGrey} from './logoutGrey.svg'
+export { default as FavouriteIconGrey } from './favourites_icon_grey.svg';
+export { default as ArrowRigthGrey } from './arrowRightGrey.svg';
+export { default as Favicon } from './../../app/yingshi.tv_logo-32x32.png';
+export { default as PersonIconGrey } from './personGrey.svg';
+export { default as LogoutGrey } from './logoutGrey.svg';
 export { default as ImagePlaceholder } from './../../app/placeholder.png';
-export { default as backtoTopIcon } from './backtoTopIcon.svg'
-export { default as GoogleIcon} from './googleIcon.png'
+export { default as backtoTopIcon } from './backtoTopIcon.svg';
+export { default as GoogleIcon } from './googleIcon.png';
 export { default as AppIcon } from './appIcon.svg';
 export { default as AppImage } from './appImage.png';
 
-export { default as HistoryIconBlue} from './history_icon_blue.svg'
-export { default as FeedbackIconBlue} from './feedback_icon_blue.svg'
-export { default as PersonIconBlue} from './personBlue.svg'
-export { default as LogoutBlue} from './logoutBlue.svg'
-export { default as ArrowRightBlue } from './arrowRightBlue.svg'
+export { default as HistoryIconBlue } from './history_icon_blue.svg';
+export { default as FeedbackIconBlue } from './feedback_icon_blue.svg';
+export { default as PersonIconBlue } from './personBlue.svg';
+export { default as LogoutBlue } from './logoutBlue.svg';
+export { default as ArrowRightBlue } from './arrowRightBlue.svg';
 
 export { default as WarningIcon } from './warningIcon.svg';
-export { default as PaymentTitle } from './payment_title.svg'
+export { default as PaymentTitle } from './payment_title.svg';
 
-export { default as WechatPayIcon } from './wechatPayMethodIcon.svg'
-export { default as AlipayIcon } from './alipayMethodIcon.svg'
-export { default as CreditCardPayIcon } from './creditCardMethodIcon.svg'
-export { default as VisaMasterAmex } from './visaMasterAmex.svg'
-export { default as ProfileBlue } from './profileBlue.png';
+export { default as WechatPayIcon } from './wechatPayMethodIcon.svg';
+export { default as AlipayIcon } from './alipayMethodIcon.svg';
+export { default as CreditCardPayIcon } from './creditCardMethodIcon.svg';
+export { default as VisaMasterAmex } from './visaMasterAmex.svg';
+export { default as MemberUser } from './memberUser.png';
 export { default as AhaLogo } from './ahaLogo.svg';
 export { default as AhaLogoActive } from './ahaLogoActive.svg';
-
-
+export { default as VipUser } from './vipUser.png';
 
 // profiles
 export { default as AnimationTick } from './profile/animationTick.gif';

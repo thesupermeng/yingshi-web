@@ -24,8 +24,9 @@ export default function PaymentModal({ open, handler }) {
   };
 
   useEffect(() => {
-    if (token !== 'null') {
-      console.log('is not null');
+    if (token !== null && token !== 'null' && token !== '' && token !== undefined) {
+      console.log(`native product in paymentmodel, check null is string null or null->`, token)
+
       getYingshiProducts().then((res) => {
         if (res) setProductList(res['4_fang_items']);
       });
@@ -38,7 +39,7 @@ export default function PaymentModal({ open, handler }) {
         open={open}
         handler={handler}
         className={'relative bg-[#121212] rounded-[28px] outline-none h-[90vh]'}
-        size={'sm'}
+        size={'md'}
         dismiss={{
           outsidePress: false,
         }}
@@ -81,39 +82,6 @@ export default function PaymentModal({ open, handler }) {
             />
           </div>
         </DialogBody>
-
-        {/* <DialogBody className='w-full'>
-          <div className='relative w-full h-full overflow-y-scroll overscroll-none no-scrollbar'>
-            
-            <div className='w-full pt-2 pl-2 pr-2'>
-              <div className='w-full'>
-                <span
-                  className={
-                    'hover-effect text-[#9C9C9C] text-[14px] mt-[5px] self-end'
-                  }
-                  onClick={handleShowPaymentDetail}
-                >
-                  VIP明细
-                </span>
-                <PaymentProductsList
-                  className={'mt-[5px]'}
-                  productList={productList}
-                  onProductSelect={(product) => setProductSelected(product)}
-                />
-                <PaymentMethods className={'mt-[26px]'} paymentOptions={productSelected?.payment_options ?? []} onMethodSelect={(method) => setPaymentMethodSelected(method)}/>
-          
-              </div>
-            </div>
-            <div className='w-full sticky bottom-0 pl-2 pr-2 bg-[#121212]'>
-              <PaymentDisclaimer className={'mt-[30px]'} />
-              <PaymentPurchaseButton
-                className={'mt-[15px]'}
-                productInfo={productSelected}
-                paymentInfo={paymentMethodSelected}
-              />
-            </div>
-          </div>
-        </DialogBody> */}
       </Dialog>
 
       <PaymentDetailModal

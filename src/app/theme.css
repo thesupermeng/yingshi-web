@@ -39,3 +39,8 @@ a:hover {
 }
 
 /* #00-85E0 --> #FAC33D */
+
+.bg-theme
+{
+  background-color: #FAC33D !important;
+}

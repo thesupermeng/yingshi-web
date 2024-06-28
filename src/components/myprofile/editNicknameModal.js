@@ -3,14 +3,14 @@ import { Button, Dialog, DialogBody } from '@material-tailwind/react';
 import { useEffect, useState } from 'react';
 import { updateUserInfo } from '@/services/yingshiUser';
 import Image from 'next/image';
-import { ProfileBlue, profileIcon } from '@/asset/icons';
+import { MemberUser, VipUser, profileIcon } from '@/asset/icons';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function EditNicknameModal({ open, handler, onSuccess }) {
-  const { userInfo, refreshUserInfo } = useYingshiUser()
+  const { isVip, userInfo, refreshUserInfo } = useYingshiUser()
   const [nickname, setNickname] = useState(userInfo ? userInfo.user_name : '')
   const [errorMsg, setErrorMsg] = useState(null)
   const [isOriginal, setIsOriginal] = useState(true)
@@ -63,7 +63,14 @@ export default function EditNicknameModal({ open, handler, onSuccess }) {
               {/*<p className={'text-[16px] text-[#9C9C9C] text-center mt-[15px]'}>请输入2-18个字符</p>*/}
 
               <p className={'text-[22px] text-white text-center font-medium mb-[20px]'}>个人信息</p>
-              <Image src={ProfileBlue} alt={'profile icon'} width={100} height={100} />
+              <Image
+                src={
+                  isVip ? VipUser : MemberUser
+                }
+                alt={'profile icon'}
+                width={100}
+                height={100}
+              />
 
               <div className={'flex flex-col mt-[19px] w-full'}>
                 <span className={'text-[15px] text-white self-start font-semibold'}>昵称</span>

@@ -12,7 +12,7 @@ import {
   searchEmptyIcon,
   leftArrow,
   clear,
-  userIcon,
+  guestUser,
   vipIcon,
   vipLightIcon,
   glyph,
@@ -22,7 +22,8 @@ import {
   AppImage,
   AppleStoreIcon,
   AndroidIcon,
-  ProfileBlue,
+  MemberUser,
+  VipUser,
 } from '@/asset/icons';
 import { usePathname, useRouter } from 'next/navigation';
 import { use, useEffect, useRef, useState } from 'react';
@@ -43,10 +44,6 @@ const getHeaderMenu = (state) => state.headerMenu;
 const getCurrentScrollPosition = (state) => state.currentScrollPosition;
 
 const Header = () => {
-
-
-
-
   const dispatch = useDispatch();
   const containerRef = useRef(null);
   const dropdownMoreRef = useRef(null);
@@ -83,6 +80,19 @@ const Header = () => {
   const [headerBlack, setHeaderBlack] = useState(false);
   const [_, setOpenLogin] = useLoginOpen();
   const [__, setOpenPayment] = usePaymentOpen();
+
+  const getIsUserChina = (state) => state.yingshiScreen.isUserChina;
+  const isUserChina = useSelector(getIsUserChina);
+  const [iosLink, setIosLink] = useState(
+    'https://apps.apple.com/cn/app/id6474402534'
+  );
+  useEffect(() => {
+    try {
+      setIosLink(isUserChina.link_jump);
+    } catch (e) {
+      setIosLink('https://apps.apple.com/cn/app/id6474402534');
+    }
+  }, [isUserChina]);
 
   const handleOpenMore = () => {
     setOpenMore(!openMore);
@@ -606,8 +616,8 @@ const Header = () => {
         <div className='flex h-full flex-row cursor-pointer rounded-full md:bg-[#1D2023] md:px-4 md:ml-2 md:rounded-full  md:py-1'>
           <Image className='mr-2' src={vipIcon} alt='vip' width={25} />
           <div className='flex items-center'>
-            <span className='text-[#F4DBBA] text-[14px] md:text-[16px]'>
-              VIP会员
+            <span className='text-[#F4DBBA] text-[14px] md:text-[14px] text-nowrap'>
+              {isVip ? `VIP ${userInfo.user_vip_time_duration_days} 天` : '开通VIP'}
             </span>
           </div>
         </div>
@@ -735,7 +745,15 @@ const Header = () => {
                     .slice()
                     .reverse()
                     .map((item, index) => {
-                      return <VideoHorizontalHistoryCard key={index} vod={item} index={index} displayStyle={'side-content'} setOpenHistory={setOpenHistory}/>;
+                      return (
+                        <VideoHorizontalHistoryCard
+                          key={index}
+                          vod={item}
+                          index={index}
+                          displayStyle={'side-content'}
+                          setOpenHistory={setOpenHistory}
+                        />
+                      );
                     })}
                 </div>
               ) : (
@@ -805,47 +823,54 @@ const Header = () => {
                 borderBottom: '10px solid #18191f5',
               }}
             />
-            <div
-              className='p-2 flex flex-row rounded-md rounded-tr-none'
-              style={{ backgroundColor: '#18191ef5' }}
-            >
-              <div className='flex-none w-[200px]'>
-                <Image src={AppImage} alt='AppImage' width={200} />
-              </div>
-              <div className='flex-1 flex flex-col justify-center items-center pr-2 gap-y-2'>
-                <Image alt='影视TV' src={Logo} width={120} />
-                <span className='text-sm'>您每一天的影视平台</span>
-                <div className='flex flex-row gap-x-5 pt-2'>
-                  <div className='flex flex-col items-center gap-2'>
-                    <div className='flex flex-row  items-center'>
-                      <Image alt='appleStore' src={AppleStoreIcon} width={25} />
-                      <span className='text-xs'>iOS App 下载</span>
-                    </div>
-                    <QRCode
-                      className='rounded-md'
-                      value='https://apps.apple.com/cn/app/id6474402534'
-                      renderAs='canvas'
-                      size={120}
-                      includeMargin={true}
-                    />
-                  </div>
-                  <div className='flex flex-col items-center gap-2'>
-                    <div className='flex flex-row items-center'>
-                      <Image alt='playStore' src={AndroidIcon} width={25} />
-                      <span className='text-xs'>安卓 App 下载</span>
-                    </div>
-                    <QRCode
-                      className='rounded-md'
-                      value='https://oss.yingshi.tv/assets/yingshi.apk'
-                      renderAs='canvas'
-                      size={120}
-                      includeMargin={true}
-                    />
-                  </div>
+            <Link href='/download'>
+              <div
+                className='p-2 flex flex-row rounded-md rounded-tr-none cursor-pointer hover-download'
+                style={{ backgroundColor: '#18191ef5' }}
+              >
+                <div className='flex-none w-[200px]'>
+                  <Image src={AppImage} alt='AppImage' width={200} />
                 </div>
-                <span className='text-sm'>扫码即可下载手机APP</span>
+                <div className='flex-1 flex flex-col justify-center items-center pr-2 gap-y-2'>
+                  <Image alt='影视TV' src={Logo} width={120} />
+                  <span className='text-sm'>您每一天的影视平台</span>
+                  <div className='flex flex-row gap-x-5 pt-2'>
+                    <div className='flex flex-col items-center gap-2'>
+                      <div className='flex flex-row  items-center'>
+                        <Image
+                          alt='appleStore'
+                          src={AppleStoreIcon}
+                          width={25}
+                        />
+                        <span className='text-xs'>iOS App 下载</span>
+                      </div>
+                      <QRCode
+                        className='rounded-md'
+                        value={iosLink}
+                        renderAs='canvas'
+                        size={120}
+                        includeMargin={true}
+                      />
+                    </div>
+                    <div className='flex flex-col items-center gap-2'>
+                      <div className='flex flex-row items-center'>
+                        <Image alt='playStore' src={AndroidIcon} width={25} />
+                        <span className='text-xs'>安卓 App 下载</span>
+                      </div>
+
+                      <QRCode
+                        className='rounded-md'
+                        value='https://oss.yingshi.tv/assets/yingshi.apk'
+                        renderAs='canvas'
+                        size={120}
+                        includeMargin={true}
+                      />
+                    </div>
+                  </div>
+                  <span className='text-sm'>扫码即可下载手机APP</span>
+                </div>
               </div>
-            </div>
+            </Link>
           </div>
         ) : null}
       </div>
@@ -871,9 +896,9 @@ const Header = () => {
         <div>
           <Image
             className='cursor-pointer'
-            src={userInfo ? ProfileBlue : userIcon}
+            src={isVip ? VipUser : userInfo ? MemberUser : guestUser}
             alt='user'
-            width={30}
+            width={isVip ? 34 : 30}
           />
         </div>
       </Link>
@@ -929,7 +954,9 @@ const Header = () => {
                 >
                   <span
                     className={`truncate ${
-                      selectedId === navItem.id ? 'text-yellow-500' : 'text-white'
+                      selectedId === navItem.id
+                        ? 'text-yellow-500'
+                        : 'text-white'
                     }`}
                   >
                     {navItem.name}
@@ -956,7 +983,9 @@ const Header = () => {
                 >
                   <span
                     className={`text-yellow-hover transition-colors duration-300 truncate ${
-                      selectedId === navItem.id ? 'text-yellow-500' : 'text-white'
+                      selectedId === navItem.id
+                        ? 'text-yellow-500'
+                        : 'text-white'
                     }`}
                   >
                     {navItem.name}
@@ -1034,7 +1063,11 @@ const Header = () => {
     </div>
   );
 
-  if (pathname.startsWith('/topic/detail/') || pathname.startsWith('/xvod') || pathname.startsWith('/download')) {
+  if (
+    pathname.startsWith('/topic/detail/') ||
+    pathname.startsWith('/xvod') ||
+    pathname.startsWith('/download')
+  ) {
     return (
       <div className={'desktop z-50 sticky top-0 w-screen'}>
         {defaultHeader}
@@ -1214,12 +1247,9 @@ const Header = () => {
     return null;
   }
 
-  if (
-    pathname.startsWith('/purchase-redirect') 
-  ) {
+  if (pathname.startsWith('/purchase-redirect')) {
     return <></>;
   }
-
 
   if (pathname.startsWith('/service') || pathname.startsWith('/privacy')) {
     return (

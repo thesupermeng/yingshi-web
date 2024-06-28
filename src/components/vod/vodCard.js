@@ -8,6 +8,7 @@ import 'react-spring-bottom-sheet/dist/style.css'
 import styles from './style.module.css';
 import { CloseX } from '@/asset/icons';
 import { ArrowLeftIcon, ArrowRightIcon } from '@/asset/icons';
+import { ExtraDesc } from '../extraDesc';
 
 export const VodCard = ({
   imgSource,
@@ -25,6 +26,7 @@ export const VodCard = ({
   openJianJie,
   setShowShareBox,
   xMode = false,
+  episodeSelected = '',
 }) => {
   const { t } = useTranslation();
 
@@ -141,7 +143,7 @@ export const VodCard = ({
               />
             </div>
             {/* H5 Share Horizontal */}
-            <div className="lg:hidden flex">
+            <div className="lg:hidden flex vod-share">
               <ShareHorizontal
                 className={'w-[90%]'}
                 setShowShareBox={setShowShareBox}
@@ -177,13 +179,19 @@ export const VodCard = ({
               alt="Icon"
             />
           </div>
+
+          <div className='mobile'>  
+            <ExtraDesc isMobile={true} vod={vod} episodeSelected={episodeSelected} />
+            </div>
           {/* H5 Share Horizontal */}
-          <div className="lg:hidden flex">
+          <div className="lg:hidden flex vod-share">
             <ShareHorizontal
               className={'w-[90%]'}
               setShowShareBox={setShowShareBox}
             />
           </div>
+
+         
         </div>
       </>
 
