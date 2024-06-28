@@ -27,7 +27,7 @@ import {
 } from '@/asset/icons';
 import { usePathname, useRouter } from 'next/navigation';
 import { use, useEffect, useRef, useState } from 'react';
-import { YingshiApi } from '@/util/YingshiApi';
+import { YingshiApi, getIPAddress2 } from '@/util/YingshiApi';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { LoadingPage } from '@/components/loading';
 import { setHeaderMenu } from '@/store/headerData';
@@ -39,6 +39,7 @@ import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 import { isMobile } from 'react-device-detect';
 import { usePaymentOpen } from '@/hook/yingshiScreenState/usePaymentOpen';
 import { VideoHorizontalHistoryCard } from '../videoItem/videoHorizontalHistoryCard';
+import { setIsUserChina } from '@/store/yingshiScreen';
 
 const getHeaderMenu = (state) => state.headerMenu;
 const getCurrentScrollPosition = (state) => state.currentScrollPosition;
@@ -373,6 +374,20 @@ const Header = () => {
       document.removeEventListener('mousedown', handleClickOutsideSearch);
     };
   }, []);
+
+  useEffect(() => {
+    // init ip 
+     initIp()
+   }, []);
+ 
+   const initIp = async() => {
+     let ipObj = await getIPAddress2();
+     if(ipObj && ipObj.IPv4 &&ipObj.country_code)
+     sessionStorage.setItem('ipAddress' ,ipObj.IPv4)
+     dispatch(setIsUserChina(ipObj))
+
+   }
+
 
   useEffect(() => {
     const metaTag = document.querySelector('meta[name="viewport"]');
