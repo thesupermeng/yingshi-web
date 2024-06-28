@@ -52,6 +52,10 @@ const Header = () => {
   const dropdownHistoryRef = useRef(null);
   const dropdownAppRef = useRef(null);
 
+
+ 
+
+
   const { t } = useTranslation();
 
   const headerMenu = useSelector(getHeaderMenu);
@@ -80,6 +84,15 @@ const Header = () => {
   const [headerBlack, setHeaderBlack] = useState(false);
   const [_, setOpenLogin] = useLoginOpen();
   const [__, setOpenPayment] = usePaymentOpen();
+
+
+  const getIsUserChina = (state) => state.yingshiScreen.isUserChina;
+  const isUserChina = useSelector(getIsUserChina);
+  const [iosLink, setIosLink] = useState('https://apps.apple.com/cn/app/id6474402534');
+  useEffect(() => {
+    setIosLink(isUserChina.link_jump);
+  }, [isUserChina]);
+
 
   const handleOpenMore = () => {
     setOpenMore(!openMore);
@@ -828,7 +841,7 @@ const Header = () => {
                     </div>
                     <QRCode
                       className='rounded-md'
-                      value='https://apps.apple.com/cn/app/id6474402534'
+                      value={iosLink}
                       renderAs='canvas'
                       size={120}
                       includeMargin={true}
@@ -839,6 +852,7 @@ const Header = () => {
                       <Image alt='playStore' src={AndroidIcon} width={25} />
                       <span className='text-xs'>安卓 App 下载</span>
                     </div>
+
                     <QRCode
                       className='rounded-md'
                       value='https://oss.yingshi.tv/assets/yingshi.apk'
@@ -846,6 +860,8 @@ const Header = () => {
                       size={120}
                       includeMargin={true}
                     />
+
+
                   </div>
                 </div>
                 <span className='text-sm'>扫码即可下载手机APP</span>
