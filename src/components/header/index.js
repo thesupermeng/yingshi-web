@@ -388,6 +388,7 @@ const Header = () => {
 
    }
 
+
   useEffect(() => {
     const metaTag = document.querySelector('meta[name="viewport"]');
     metaTag.name = 'viewport';
