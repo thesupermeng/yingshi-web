@@ -84,7 +84,7 @@ export default function Home(params) {
 
 
 
-  useLayoutEffect(() => {
+  useEffect(() => {
    // init ip 
     initIp()
   }, []);
