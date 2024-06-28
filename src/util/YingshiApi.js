@@ -45,7 +45,7 @@ export const getIPAddress2 = async () => {
     return null 
   }
   let superLinkObl = 'https://apps.apple.com/cn/app/id6474402534';
-  if(response.country_code !='CN' ||response.country_code !='China' )
+  if(response.country_code !='CN'  && response.country_code !='China' )
     {
       superLinkObl = await getSuperLink();
     }

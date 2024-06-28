@@ -77,8 +77,6 @@ const MyFooter2 = () => {
         window.open('https://yingshi.tv/static/assets/yingshi.apk', '_blank');
     } else if (os === 'iOS' || os === 'MacOS') {
 
-   // window.location.href = 'https://apps.apple.com/cn/app/id6474402534';
-
       window.location.href = iosLink
       
       // Additional iOS handling code here if needed
