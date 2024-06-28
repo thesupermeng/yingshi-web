@@ -35,7 +35,7 @@ const MyFooter2 = () => {
   const router = useRouter();
 
   if (
-    pathname.startsWith('/vod/play') ||
+   //  pathname.startsWith('/vod/play') ||
     pathname.startsWith('/search/') ||
     pathname.startsWith('/payment') ||
     pathname.startsWith('/login') ||
