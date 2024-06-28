@@ -7,10 +7,19 @@ import { URL_USER } from '@/config/url';
 let ipAddress = ''
 
 export const getIPAddress = async () => {
-  let x = sessionStorage.getItem('ipAddress');
-  if (ipAddress != '' || sessionStorage.getItem('ipAddress') != undefined) {
-    return sessionStorage.getItem('ipAddress') ||  ipAddress;
+
+  if (ipAddress != '' ) {
+    return  ipAddress;
   }
+  try{
+    if (sessionStorage?.getItem('ipAddress') != undefined) {
+      return sessionStorage.getItem('ipAddress');
+    }
+  }catch(e){
+   console.log('session storage not defined')
+  }
+ 
+
   const response = await fetch('https://geolocation-db.com/json/').then((d) => d.json())
     .catch((e) => {
       // console.log('IP ADDRESS ERROR!!!')
