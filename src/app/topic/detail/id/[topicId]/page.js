@@ -5,7 +5,7 @@ import {URL_YINGSHI_VOD} from '@/config/yingshiUrl';
 export async function generateMetadata({ params }) {
   const getTopicDetailsApi = async () => {
     return YingshiApi(
-      URL_YINGSHI_VOD.searchingListSlim + '?id=' + params.topicId,
+      URL_YINGSHI_VOD.playlistGetTopicDetail + '?id=' + params.topicId,
       {},
       { method: 'GET' }
     );
@@ -14,7 +14,7 @@ export async function generateMetadata({ params }) {
 
   if (topic) {
     return {
-      title: `${topic.topic_name}专题详情- 鲨鱼影视-海量高清视频免费在线观看`,
+      title: `${topic.topic_name}专题详情 - 鲨鱼影视-海量高清视频免费在线观看`,
       description: `本站提供${topic.topic_name},最新最全精品专题数据`
     };
   }
