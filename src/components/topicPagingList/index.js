@@ -96,12 +96,15 @@ const TopicPagingList = ({ data, navId, serverNextPage, isStillCanLoad }) => {
         topicList?.map((topic, idx) => {
           return (
             <div key={idx}>
-              {idx % 2 ? (
+              {/*{idx % 2 ? (*/}
+              {/*  <AdsBanner adsList={adsList} navId={'1-13'} height='500px' />*/}
+              {/*) : (*/}
+              {/*  <div style={{ paddingTop: '20px' }}></div>*/}
+              {/*)}*/}
+              {(idx % 2 !== 0) && (
                 <AdsBanner adsList={adsList} navId={'1-13'} height='500px' />
-              ) : (
-                <div style={{ paddingTop: '20px' }}></div>
               )}
-              <div id={topic.topic_id} key={idx}>
+              <div id={topic.topic_id} key={idx} className={'pt-3'}>
                 <div className='flex justify-between'>
                   <span
                     style={{
@@ -126,7 +129,7 @@ const TopicPagingList = ({ data, navId, serverNextPage, isStillCanLoad }) => {
                     />
                   </div>
                 </div>
-                <div className='grid grid-cols-3 md:grid-cols-6 lg:grid-cols-6 gap-5 py-2'>
+                <div className='grid grid-cols-3 md:grid-cols-6 lg:grid-cols-6 gap-x-5 gap-y-2 py-2'>
                   {topic.vod_list?.slice(0, 6).map((vod, i) => {
                     return <VideoVerticalCard vod={vod} key={i} />;
                   })}

@@ -12,7 +12,7 @@ import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { AdsBanner } from '@/components/ads/adsBanner.js';
-import {useFilterTypeList, useSearchingListApi} from '@/util/swr';
+import { useFilterTypeList, useSearchingListApi } from '@/util/swr';
 
 const getIsScroll = (state) => state.isScroll;
 const getIsTop = (state) => state.isTop;
@@ -35,7 +35,8 @@ export const FilmLibrary = () => {
 
   const videoList = data ? [].concat(...data) : [];
   const stillCanLoad = data && !(size > data[0].TotalPageCount - 1);
-  const isLoadingMore = !data || (size > 0 && data && typeof data[size - 1] === 'undefined');
+  const isLoadingMore =
+    !data || (size > 0 && data && typeof data[size - 1] === 'undefined');
 
   const advanceFilterItem = [
     {
@@ -302,7 +303,7 @@ export const FilmLibrary = () => {
         </div>
 
         <div className='flex w-screen flex-col items-center'>
-          { initialLoading ? (
+          {initialLoading ? (
             <LoadingPage full={true} />
           ) : (
             <>
@@ -311,33 +312,35 @@ export const FilmLibrary = () => {
                   <div className={`bg-[#1D2023] pt-2`}>
                     <div className='flex md:flex-wrap gap-x-4 gap-y-2 pl-4 py-2 container'>
                       {/* 111111111 filter 短剧 */}
-                      {filterTypeList.filter((item) => item.type_id !== 46).map((item, index) => {
-                        return (
-                          <div
-                            className='flex flex-col items-center cursor-pointer'
-                            id={item.type_id}
-                            key={index}
-                            onClick={() => {
-                              router.push(
-                                `/vod/show/by/${advanceFilterItem[0].value}/id/${item.type_id}`
-                              );
-                            }}
-                          >
-                            <span
-                              className={`hover:text-blue-500 transition-colors duration-300 truncate ${
-                                paramsFilter.typeId === item.type_id
-                                  ? 'text-blue-500'
-                                  : 'text-white'
-                              }`}
+                      {filterTypeList
+                        .filter((item) => item.type_id !== 46)
+                        .map((item, index) => {
+                          return (
+                            <div
+                              className='flex flex-col items-center cursor-pointer'
+                              id={item.type_id}
+                              key={index}
+                              onClick={() => {
+                                router.push(
+                                  `/vod/show/by/${advanceFilterItem[0].value}/id/${item.type_id}`
+                                );
+                              }}
                             >
-                              {item.type_name}
-                            </span>
-                            {paramsFilter.typeId === item.type_id ? (
-                              <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
-                            ) : null}
-                          </div>
-                        );
-                      })}
+                              <span
+                                className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                                  paramsFilter.typeId === item.type_id
+                                    ? 'text-blue-500'
+                                    : 'text-white'
+                                }`}
+                              >
+                                {item.type_name}
+                              </span>
+                              {paramsFilter.typeId === item.type_id ? (
+                                <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
+                              ) : null}
+                            </div>
+                          );
+                        })}
                     </div>
                     <div
                       className={`transition-all duration-500 md:h-fit md:visible md:py-2
@@ -576,12 +579,13 @@ export const FilmLibrary = () => {
                 )}
               </div>
 
-              {/* bottom section  111 */}
               <div className='w-screen flex flex-1 flex-col'>
                 {videoList.length > 0 && videoList[0].List !== null ? (
                   <div className='container grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-4'>
                     {videoList.map((page, i) => {
-                      return page.List.map((vod, i) => <VideoVerticalCard vod={vod} key={i} />)
+                      return page.List.map((vod, i) => (
+                        <VideoVerticalCard vod={vod} key={i} />
+                      ));
                     })}
                   </div>
                 ) : !isLoadingMore ? (

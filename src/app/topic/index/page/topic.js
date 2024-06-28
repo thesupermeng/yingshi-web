@@ -10,6 +10,7 @@ import { AdsBanner } from '@/components/ads/adsBanner.js';
 import styles from '../../style.module.css';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { getTopicListApi } from '@/app/actions';
 
 export const Topic = () => {
   const [topicList, setTopicList] = useState([]);
@@ -33,7 +34,6 @@ export const Topic = () => {
   };
 
   useLayoutEffect(() => {
-    console.log('test');
     let adsList = initAdsList;
     if (!adsList) {
       adsList = JSON.parse(sessionStorage.getItem('adsList'));
@@ -49,17 +49,17 @@ export const Topic = () => {
   }, []);
   //end banner ads
 
-  const getTopicListApi = async () => {
-    return YingshiApi(
-      URL_YINGSHI_VOD.playlistGetTopic + '?limit=18&page=' + nextPage,
-      {},
-      { method: 'GET' }
-    );
-  };
+  // const getTopicListApi = async () => {
+  //   return YingshiApi(
+  //     URL_YINGSHI_VOD.topicListing + '?limit=18&page=' + nextPage,
+  //     {},
+  //     { method: 'GET' }
+  //   );
+  // };
 
   const getTopicList = async () => {
     let currentPage = nextPage;
-    const topicListing = await getTopicListApi();
+    const topicListing = await getTopicListApi(nextPage);
 
     if (nextPage > 1) {
       setTopicList((prev) => [...prev, ...topicListing.List]);
