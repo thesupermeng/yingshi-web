@@ -52,10 +52,6 @@ const Header = () => {
   const dropdownHistoryRef = useRef(null);
   const dropdownAppRef = useRef(null);
 
-
- 
-
-
   const { t } = useTranslation();
 
   const headerMenu = useSelector(getHeaderMenu);
@@ -85,14 +81,18 @@ const Header = () => {
   const [_, setOpenLogin] = useLoginOpen();
   const [__, setOpenPayment] = usePaymentOpen();
 
-
   const getIsUserChina = (state) => state.yingshiScreen.isUserChina;
   const isUserChina = useSelector(getIsUserChina);
-  const [iosLink, setIosLink] = useState('https://apps.apple.com/cn/app/id6474402534');
+  const [iosLink, setIosLink] = useState(
+    'https://apps.apple.com/cn/app/id6474402534'
+  );
   useEffect(() => {
-    setIosLink(isUserChina.link_jump);
+    try {
+      setIosLink(isUserChina.link_jump);
+    } catch (e) {
+      setIosLink('https://apps.apple.com/cn/app/id6474402534');
+    }
   }, [isUserChina]);
-
 
   const handleOpenMore = () => {
     setOpenMore(!openMore);
@@ -860,8 +860,6 @@ const Header = () => {
                       size={120}
                       includeMargin={true}
                     />
-
-
                   </div>
                 </div>
                 <span className='text-sm'>扫码即可下载手机APP</span>
