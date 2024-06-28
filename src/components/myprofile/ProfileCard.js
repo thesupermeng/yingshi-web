@@ -11,7 +11,7 @@ export default function ProfileCard({userInfo, isVip, isH5, onSignin}) {
   const dispatch = useDispatch()
   const router = useRouter()
 
-  const iconProfile = userInfo?.group_id == 2 ? MemberUser : userInfo?.group_id == 3? VipUser : profileIcon
+  const iconProfile = isVip ? VipUser : userInfo ? MemberUser : profileIcon
 
   return (
     <div className={'flex gap-[15px] items-center'}>

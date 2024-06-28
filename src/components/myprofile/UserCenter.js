@@ -7,7 +7,7 @@ import LoginSuccess from '@/components/login/loginSuccess';
 import {useRouter} from 'next/navigation';
 
 export default function UserCenter() {
-  const { userInfo, refreshUserInfo } = useYingshiUser()
+  const { isVip, userInfo, refreshUserInfo } = useYingshiUser()
   const [openEditNickname, setOpenEditNickname] = useState(false)
   const [openSuccessAlert, setOpenSuccessAlert] = useState(false)
 
@@ -53,13 +53,7 @@ export default function UserCenter() {
             <span className={'text-white text-[16px] font-semibold'}>个人信息</span>
             <div className={'flex bg-[#1D2023] rounded-[10px] px-[20px] py-[17px] items-center gap-[12px] mt-[14px]'}>
             <Image
-                src={
-                  userInfo?.group_id == 2
-                    ? MemberUser
-                    : userInfo?.group_id == 3
-                    ? VipUser
-                    : guestUser
-                }
+                src={ isVip ? VipUser : MemberUser }
                 alt={'profile icon'}
                 width={56}
               />
@@ -115,13 +109,7 @@ export default function UserCenter() {
           <div className={'h-12 w-full flex justify-between items-center bg-[#1D2023] rounded-[10px] px-[21px]'}>
             <span className={'text-[#9C9C9C] text-[15px] font-medium'}>头像</span>
             <Image
-                src={
-                  userInfo?.group_id == 2
-                    ? MemberUser
-                    : userInfo?.group_id == 3
-                    ? VipUser
-                    : guestUser
-                }
+                src={ isVip ? VipUser : MemberUser }
                 alt={'Profile picture'} width={30} height={30}
               />
           </div>

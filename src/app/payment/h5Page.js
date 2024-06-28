@@ -41,8 +41,8 @@ export default function H5Page() {
   }, [transactionId])
 
   useEffect(() => {
-    if (token !== 'null'){
-      // console.log('is not null here 2', token)
+    if (token !== null && token !== 'null' && token !== '' && token !== undefined) {
+      console.log('native product in payment h5page, check null is string null or null', token)
       getYingshiProducts().then((res) => {
         if (res) setProductList(res['4_fang_items'])
       })
@@ -54,18 +54,17 @@ export default function H5Page() {
       {/* background */}
       <div className={'w-full'}>
         <div className={'relative bg-[#14161A]'}>
-          {/* <video
-           autoPlay
-           loop
-           muted
-           playsInline
-           controls={false}
-           className={'w-full h-full object-cover pb-1'}
-           poster={'./img/vip_background_fallback.jpg'}
-           onError={(e)=> {console.log(e)}}
-          >
-           <source src={'./video/vip_background.mp4'} type={'video/mp4'}/>
-          </video> */}
+          {/*<video*/}
+          {/*  autoPlay*/}
+          {/*  loop*/}
+          {/*  muted*/}
+          {/*  playsInline*/}
+          {/*  controls={false}*/}
+          {/*  className={'w-full h-full object-cover pb-1'}*/}
+          {/*  poster={'./img/vip_background_fallback.jpg'}*/}
+          {/*>*/}
+          {/*  <source src={'./video/vip_background.mp4'} type={'video/mp4'}/>*/}
+          {/*</video>*/}
           <Image src={VipBackgroundImage} alt={'vip background image'}/>
           <div
             className={styles.gradient_overlay + ' absolute top-0 left-0 w-full h-full'}

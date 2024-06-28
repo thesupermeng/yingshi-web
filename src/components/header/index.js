@@ -616,8 +616,8 @@ const Header = () => {
         <div className='flex h-full flex-row cursor-pointer rounded-full md:bg-[#1D2023] md:px-4 md:ml-2 md:rounded-full  md:py-1'>
           <Image className='mr-2' src={vipIcon} alt='vip' width={25} />
           <div className='flex items-center'>
-            <span className='text-[#F4DBBA] text-[14px] md:text-[16px]'>
-              VIP会员
+            <span className='text-[#F4DBBA] text-[14px] md:text-[14px] text-nowrap'>
+              {isVip ? `VIP ${userInfo.user_vip_time_duration_days} 天` : '开通VIP'}
             </span>
           </div>
         </div>
@@ -896,15 +896,9 @@ const Header = () => {
         <div>
           <Image
             className='cursor-pointer'
-            src={
-              userInfo?.group_id == 2
-                ? MemberUser
-                : userInfo?.group_id == 3
-                ? VipUser
-                : guestUser
-            }
+            src={isVip ? VipUser : userInfo ? MemberUser : guestUser}
             alt='user'
-            width={userInfo?.group_id == 3 ? 34 : 30}
+            width={isVip ? 34 : 30}
           />
         </div>
       </Link>

@@ -24,8 +24,9 @@ export default function PaymentModal({ open, handler }) {
   };
 
   useEffect(() => {
-    if (token !== 'null') {
-      console.log('native product in paymentmodel', token)
+    if (token !== null && token !== 'null' && token !== '' && token !== undefined) {
+      console.log(`native product in paymentmodel, check null is string null or null->`, token)
+
       getYingshiProducts().then((res) => {
         if (res) setProductList(res['4_fang_items']);
       });
@@ -38,7 +39,7 @@ export default function PaymentModal({ open, handler }) {
         open={open}
         handler={handler}
         className={'relative bg-[#121212] rounded-[28px] outline-none h-[90vh]'}
-        size={'sm'}
+        size={'md'}
         dismiss={{
           outsidePress: false,
         }}

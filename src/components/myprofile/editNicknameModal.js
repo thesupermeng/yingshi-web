@@ -3,14 +3,14 @@ import { Button, Dialog, DialogBody } from '@material-tailwind/react';
 import { useEffect, useState } from 'react';
 import { updateUserInfo } from '@/services/yingshiUser';
 import Image from 'next/image';
-import { MemberUser, VipUser, guestUser, profileIcon } from '@/asset/icons';
+import { MemberUser, VipUser, profileIcon } from '@/asset/icons';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function EditNicknameModal({ open, handler, onSuccess }) {
-  const { userInfo, refreshUserInfo } = useYingshiUser()
+  const { isVip, userInfo, refreshUserInfo } = useYingshiUser()
   const [nickname, setNickname] = useState(userInfo ? userInfo.user_name : '')
   const [errorMsg, setErrorMsg] = useState(null)
   const [isOriginal, setIsOriginal] = useState(true)
@@ -65,11 +65,7 @@ export default function EditNicknameModal({ open, handler, onSuccess }) {
               <p className={'text-[22px] text-white text-center font-medium mb-[20px]'}>个人信息</p>
               <Image
                 src={
-                  userInfo?.group_id == 2
-                    ? MemberUser
-                    : userInfo?.group_id == 3
-                    ? VipUser
-                    : guestUser
+                  isVip ? VipUser : MemberUser
                 }
                 alt={'profile icon'}
                 width={100}
