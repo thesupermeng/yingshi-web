@@ -83,7 +83,7 @@ export const ExtraDesc = ({ vod = '', episodeSelected = '' , isMobile = false })
         >
           <div className={`col-12 pb-3`}>
             <span className={'text-white'} style={{ fontSize: '18px' }}>
-              分类剧情: 第{episodeSelected?.name}集
+              分集剧情: 第{episodeSelected?.name}集
             </span>
           </div>
 
@@ -123,7 +123,7 @@ export const ExtraDesc = ({ vod = '', episodeSelected = '' , isMobile = false })
         >
           <div className={`col-12 pb-2 pt-2`}>
             <span className={'text-white'} style={{ fontSize: '14px' }}>
-              分类剧情: 第{episodeSelected?.name}集
+              分集剧情: 第{episodeSelected?.name}集
             </span>
           </div>
 
