@@ -16,14 +16,18 @@ import { usePathname, useRouter } from 'next/navigation';
 
 import { AppIcon } from '@/asset/icons';
 
-
 const MyFooter2 = () => {
-
   const getIsUserChina = (state) => state.yingshiScreen.isUserChina;
   const isUserChina = useSelector(getIsUserChina);
-  const [iosLink, setIosLink] = useState('https://apps.apple.com/cn/app/id6474402534');
+  const [iosLink, setIosLink] = useState(
+    'https://apps.apple.com/cn/app/id6474402534'
+  );
   useEffect(() => {
-    setIosLink(isUserChina.link_jump);
+    try {
+      setIosLink(isUserChina.link_jump);
+    } catch (e) {
+      setIosLink('https://apps.apple.com/cn/app/id6474402534');
+    }
   }, [isUserChina]);
 
   const dispatch = useDispatch();
@@ -47,9 +51,7 @@ const MyFooter2 = () => {
     pathname.startsWith('/sport/user/withdraw') ||
     pathname.startsWith('/sport/user/transaction') ||
     pathname.startsWith('/sport/user/history') ||
-    pathname.startsWith('/purchase-redirect') 
-
-
+    pathname.startsWith('/purchase-redirect')
   ) {
     return <></>;
   }
@@ -73,12 +75,11 @@ const MyFooter2 = () => {
     if (os === 'Android') {
       // Make sure app_download_link is defined
       // window.location.href =
-      //   'https://play.google.com/store/apps/details?id=com.yingshitv&hl=en'; 
-        window.open('https://yingshi.tv/static/assets/yingshi.apk', '_blank');
+      //   'https://play.google.com/store/apps/details?id=com.yingshitv&hl=en';
+      window.open('https://yingshi.tv/static/assets/yingshi.apk', '_blank');
     } else if (os === 'iOS' || os === 'MacOS') {
+      window.location.href = iosLink;
 
-      window.location.href = iosLink
-      
       // Additional iOS handling code here if needed
     } else {
       console.log('Operating system not supported');
