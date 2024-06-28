@@ -17,8 +17,9 @@ export const ExtraDesc = ({ vod = '', episodeSelected = '' , isMobile = false })
   // Toggle
   const [isExpanded, setIsExpanded] = useState(false);
   const [needsShowMore, setNeedsShowMore] = useState(false);
+  const [needsShowMore2, setNeedsShowMore2] = useState(false);
   const contentRef = useRef(null);
-
+  const contentRef2 = useRef(null);
   useEffect(() => {
     if (extraInfo == '') {
       return;
@@ -31,6 +32,15 @@ export const ExtraDesc = ({ vod = '', episodeSelected = '' , isMobile = false })
     if (contentRef.current.scrollHeight > maxHeight) {
       setNeedsShowMore(true);
     }
+
+        // Check if the content exceeds 3 lines ---- mobile
+        const lineHeight2 = parseInt(
+          window.getComputedStyle(contentRef2.current).lineHeight
+        );
+        const maxHeight2 = lineHeight * 3; // Maximum height for 3 lines
+        if (contentRef2.current.scrollHeight > maxHeight2) {
+          setNeedsShowMore2(true);
+        }
   }, [extraInfo]);
 
   const toggleExpand = () => {
@@ -119,23 +129,23 @@ export const ExtraDesc = ({ vod = '', episodeSelected = '' , isMobile = false })
 
           <div className='col-12' style={{ fontSize: '12px' }}>
             <span
-              ref={contentRef}
-              className={`text-secondary  ${styles.collapsible}${
+              ref={contentRef2}
+              className={`text-secondary  ${styles.collapsible2}${
                 isExpanded ? 'expanded' : ''
               }`}
             >
               {extraInfo}
             </span>
-            {needsShowMore && (
+            {needsShowMore2 && (
               <div
-                className={`${styles['show-more-button']} text-theme`}
+                className={`${styles['show-more-button2']} text-theme`}
                 onClick={toggleExpand}
               >
                 {isExpanded ? '收起' : '展开'}
                 {/* <span className={`${styles['arrow-down']}`}>{isExpanded ? '↑' : '↓'}</span> */}
                 <FontAwesomeIcon
                   icon={isExpanded ? faChevronUp : faChevronDown}
-                  className={`${styles['arrow-down']}`}
+                  className={`${styles['arrow-down2']}`}
                 />
               </div>
             )}
