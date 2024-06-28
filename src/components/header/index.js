@@ -292,11 +292,10 @@ const Header = () => {
       let menuItem = await getTopNav();
       const topTenItem = await getTopTenList();
       setTopTenList(topTenItem);
-      // TODO
-      // menuItem.push({
-      //   id: 998,
-      //   name: '播单',
-      // });
+      menuItem.push({
+        id: 998,
+        name: '播单',
+      });
       // TODO
       // menuItem.push({
       //   id: 999,
