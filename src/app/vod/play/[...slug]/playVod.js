@@ -265,11 +265,11 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
 
       let watchHistory = {
         tid: tId,
-        nid: episodeSelected.nid + 1,
+        nid: episodeSelected?.nid + 1,
         vodid: vodId,
         vodpic: vod.vod_pic,
         vodname: vod.vod_name,
-        vodurl: episodeSelected.url,
+        vodurl: episodeSelected?.url,
         watchtimes: 0,
         sourceId: sourceId,
       };
@@ -350,7 +350,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
   };
 
   const onSelectEpisode = (episode) => {
-    router.replace(`${path.replace(/(\/nid\/)\d+/, `$1${episode.nid + 1}`)}`);
+    router.replace(`${path.replace(/(\/nid\/)\d+/, `$1${episode?.nid + 1}`)}`);
   };
 
   const onVideoEnd = () => {
