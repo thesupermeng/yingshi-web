@@ -1,5 +1,5 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://shayuyingshi.com/google.xml
-Sitemap: https://shayuyingshi.com/google2.xml
+Sitemap: https://yingshi.tv/google.xml
+Sitemap: https://yingshi.tv/google2.xml
