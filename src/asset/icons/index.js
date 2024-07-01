@@ -192,6 +192,7 @@ export { default as AndroidIcon } from './general/android.svg';
 export { default as AppleStoreIcon } from './general/appleStore.svg';
 export { default as DocuWithMagGlassIcon } from './general/docuWithMagGlassIcon.png';
 export { default as PlaySourceIcon } from './general/playSource.svg';
+export { default as PlaySourceActive } from './general/playSourceActive.svg';
 
 //socialMedia
 export { default as copyLink } from './socialMedia/copyLink.svg';
