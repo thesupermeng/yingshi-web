@@ -332,3 +332,8 @@ export { default as CloseX } from './close.svg';
 
 //countries
 export { default as CNFlag } from './countryIcons/cn.png';
+
+export { default as DownloadIcon } from './download/download_apk_pro.svg';
+export { default as AppStoreIcon } from './download/app_store.svg';
+export { default as GreenTickIcon } from './download/green-tick.svg';
+export { default as CopyIcon } from './download/copy_code.svg';
