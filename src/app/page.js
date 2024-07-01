@@ -408,7 +408,7 @@ export default function Home(params) {
                     }
 
                     <>
-                      <div className='collapse px-0' id='collapse-desktop'>
+                      <div className='collapse px-0' id='collapseDesktop'>
                         {xClassList &&
                           xClassList.slice(33).map((cItem, cIndex) => (
                             <Link
@@ -431,43 +431,59 @@ export default function Home(params) {
                         }}
                       >
                         {isCollapsed ? (
-                          <a
-                            className='btn btn-theme px-3 mr-1'
+                          <button
+                            className='btn btn-theme px-3 mr-1 text-white'
+                            type='button'
                             data-toggle='collapse'
-                            href='#collapse-desktop'
-                            role='button'
+                            data-target='#collapseDesktop'
                             aria-expanded='false'
-                            aria-controls='collapse-desktop'
+                            aria-controls='collapseDesktop'
                             onClick={handleToggle}
                           >
                             展开{' '}
-                            <FontAwesomeIcon
-                              style={{
-                                fontStyle: 'normal',
-                                fontFamily: 'PingFang SC',
-                              }}
-                              icon={faChevronDown}
-                            />
-                          </a>
+                            <a
+                              data-toggle='collapse'
+                              href='#collapseDesktop'
+                              role='button'
+                              aria-expanded='false'
+                              aria-controls='collapseDesktop'
+                            >
+                              <FontAwesomeIcon
+                                style={{
+                                  fontStyle: 'normal',
+                                  fontFamily: 'PingFang SC',
+                                }}
+                                icon={faChevronDown}
+                              />
+                            </a>
+                          </button>
                         ) : (
-                          <a
-                            className='btn  btn-theme'
+                          <button
+                            className='btn  btn-theme text-white'
+                            type='button'
                             data-toggle='collapse'
-                            href='#collapse-desktop'
-                            role='button'
-                            aria-expanded='true'
-                            aria-controls='collapse-desktop'
+                            data-target='#collapseDesktop'
+                            aria-expanded='false'
+                            aria-controls='collapseDesktop'
                             onClick={handleToggle}
                           >
                             收起
-                            <FontAwesomeIcon
-                              style={{
-                                fontStyle: 'normal',
-                                fontFamily: 'PingFang SC',
-                              }}
-                              icon={faChevronUp}
-                            />
-                          </a>
+                            <a
+                              data-toggle='collapse'
+                              href='#collapseDesktop'
+                              role='button'
+                              aria-expanded='false'
+                              aria-controls='collapseDesktop'
+                            >
+                              <FontAwesomeIcon
+                                style={{
+                                  fontStyle: 'normal',
+                                  fontFamily: 'PingFang SC',
+                                }}
+                                icon={faChevronUp}
+                              />
+                            </a>
+                          </button>
                         )}
                       </div>
                     </>

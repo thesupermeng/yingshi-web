@@ -2481,7 +2481,7 @@ tbody.collapse.show {
   position: relative;
   height: 0;
   overflow: hidden;
-  transition: height 0.45s ease;
+  transition: height 0.35s ease;
 }
 
 .navbar-collapse {
