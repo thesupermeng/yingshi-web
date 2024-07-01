@@ -188,7 +188,7 @@ export const Carousel = ({
             style={{
               position: 'relative',
               width: '100%',
-              aspectRatio: '2/1',
+              aspectRatio: '1.9/1',
               overflow: 'hidden',
             }}
           >

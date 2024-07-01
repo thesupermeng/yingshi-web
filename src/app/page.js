@@ -185,7 +185,6 @@ export default function Home(params) {
                     className='container w-full overflow-x-auto max-w-full'
                     style={{
                       display: 'flex',
-                      gap: '12px',
                       overflowX: 'auto',
                       scrollbarWidth: 'none',
                       padding: '10px 8px 10px 8px',
@@ -217,8 +216,8 @@ export default function Home(params) {
                           <Link
                             href={`/vod/show/by/time/class/${cItem}/id/${paramsInput}`}
                             key={cIndex + '-class'}
-                            className='btn btn-dark hover-effect text-white btn-dark-catagory'
-                            style={{ flex: '0 0 auto', borderRadius: '10px' }}
+                            className='btn btn-dark hover-effect text-white btn-dark-catagory text-nowrap'
+                            style={{ borderRadius: '10px' }}
                           >
                             {cItem}
                           </Link>
