@@ -863,9 +863,9 @@ const Header = () => {
         }}
       >
         {/* md:flex */}
-        <div>
+        <div className='relative'>
           <Image
-            className='cursor-pointer'
+            className={`cursor-pointer ${isVip}`}
             src={isVip ? VipUser : userInfo ? MemberUser : guestUser}
             alt='user'
             width={isVip ? 34 : 30}
