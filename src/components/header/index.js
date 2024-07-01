@@ -868,7 +868,7 @@ const Header = () => {
             className={`cursor-pointer ${isVip}`}
             src={isVip ? VipUser : userInfo ? MemberUser : guestUser}
             alt='user'
-            width={isVip ? 34 : 30}
+            width={36}
           />
         </div>
       </Link>
