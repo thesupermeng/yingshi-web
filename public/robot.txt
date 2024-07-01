@@ -1,5 +1,0 @@
-User-agent: *
-Disallow:
-
-Sitemap: https://shayuyingshi.com/google.xml
-Sitemap: https://shayuyingshi.com/google2.xml

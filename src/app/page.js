@@ -8,7 +8,7 @@ export const RightBetCartWidth = 'w-[32rem]';
 import { useSelector, useDispatch } from 'react-redux';
 import { Carousel } from '@/components/carousel/carousel';
 import { Suspense, useEffect, useLayoutEffect, useState } from 'react';
-import { YingshiApi2  , getIPAddress2} from '@/util/YingshiApi';
+import { YingshiApi2, getIPAddress2 } from '@/util/YingshiApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
@@ -21,15 +21,27 @@ import Link from 'next/link';
 import { VideoWithTitleHorizontalCard } from '@/components/videoItem/videoWithTitleHorizontalCard';
 import { setIsUserChina } from '@/store/yingshiScreen';
 
+import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+
+const splitArrayIntoChunks = (array, chunkSize) => {
+  let results = [];
+  for (let i = 0; i < array.length; i += chunkSize) {
+    results.push(array.slice(i, i + chunkSize));
+  }
+  return results;
+};
+
 const getHeaderMenu = (state) => state.headerMenu;
 export default function Home(params) {
-
   const dispatch = useDispatch();
 
   let paramsInput = params.category == undefined ? 0 : params.category;
   const pathName = usePathname();
   const [isLoading, setIsLoading] = useState(false);
   const [classList, setClassList] = useState([]);
+  const [xClassList, setXClassList] = useState([]);
+  const [xClassList2, setXClassList2] = useState([]);
+
   const [categories, setCategories] = useState([]);
   const [yunying, setYunying] = useState([]);
   const [carousel, setCarousel] = useState([]);
@@ -38,7 +50,6 @@ export default function Home(params) {
 
   const getIsUserChina = (state) => state.yingshiScreen.isUserChina;
   const isUserChina = useSelector(getIsUserChina);
-
 
   const headerMenu = useSelector(getHeaderMenu);
 
@@ -49,6 +60,12 @@ export default function Home(params) {
   const [still99CanLoad, setStill99CanLoad] = useState(
     paramsInput == 99 ? true : false
   );
+
+  const [isCollapsed, setIsCollapsed] = useState(true);
+
+  const handleToggle = () => {
+    setIsCollapsed(!isCollapsed);
+  };
 
   //banner ads
   const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
@@ -82,27 +99,77 @@ export default function Home(params) {
     setHeaderMenuState(headerMenu.headerMenu);
   }, [headerMenu]);
 
+  useEffect(() => {
+    if (paramsInput == 99 && classList != []) {
+      const mapList = {
+        自拍偷拍: 'senlin',
+        制服丝袜: 'senlin',
+        cosplay: 'senlin',
+        剧情介绍: 'senlin',
+        瑜伽裤: 'senlin',
+        风情旗袍: 'senlin',
+        可爱学生: 'senlin',
+        恋腿狂魔: 'senlin',
+        闷骚护士: 'senlin',
+        古装扮演: 'senlin',
+        兽耳系列: 'senlin',
+        野外露出: 'senlin',
+        萝莉少女: 'senlin',
+        台湾辣妹: 'senlin',
+        唯美港姐: 'senlin',
+        韩国御姐: 'senlin',
+        换脸明星: 'naixx',
+        抖阴短片: 'naixx',
+        强奸乱伦: 'senlin',
+        欺辱凌辱: 'senlin',
+        口交颜射: 'senlin',
+        多人多P: 'senlin',
+        巨乳美乳: 'senlin',
+        女同性恋: 'senlin',
+        男同性恋: 'senlin',
+        网红头条: 'aosika',
+        网红流出: 'senlin',
+        人妻熟女: 'senlin',
+        女优系列: 'senlin',
+        日韩主播: 'naixx',
+        重口激情: 'naixx',
+      };
 
+      let tempList = [];
+
+      for (let i = 0; i < classList.length; i++) {
+        const item = classList[i];
+        const mappedValue = mapList[item] || 'huanggua';
+        tempList.push({ item, mappedValue });
+      }
+
+      console.log(tempList); // For debugging: logs the array with mapped values
+      setXClassList(tempList);
+
+      const chunkSize = Math.ceil(tempList.length / 4);
+      const chunkedArray = splitArrayIntoChunks(tempList, chunkSize);
+      setXClassList2(chunkedArray);
+      console.log('chunkedArray');
+      console.log(chunkedArray);
+    }
+  }, [paramsInput, classList]);
 
   useLayoutEffect(() => {
-   // init ip 
-    initIp()
+    // init ip
+    initIp();
   }, []);
 
-  const initIp = async() => {
+  const initIp = async () => {
     let ipObj = await getIPAddress2();
-    if(ipObj && ipObj.IPv4 &&ipObj.country_code)
-    sessionStorage.setItem('ipAddress' ,ipObj.IPv4)
-    dispatch(setIsUserChina(ipObj))
-
-
-  }
+    if (ipObj && ipObj.IPv4 && ipObj.country_code)
+      sessionStorage.setItem('ipAddress', ipObj.IPv4);
+    dispatch(setIsUserChina(ipObj));
+  };
 
   // useEffect(() => {
   //   console.log('isUserChina')
   //   console.log(isUserChina)
   // }, [isUserChina]);
-
 
   useEffect(() => {
     setIsLoading(true);
@@ -122,7 +189,7 @@ export default function Home(params) {
 
         setCarousel(typePageData.carousel);
       } else if (paramsInput == 99 && typePageData === undefined) {
-        setStill99CanLoad(false)
+        setStill99CanLoad(false);
       }
 
       if (topicListData) {
@@ -190,7 +257,6 @@ export default function Home(params) {
                       padding: '10px 8px 10px 8px',
                     }}
                   >
-
                     <>
                       <Link
                         href={`/vod/show/by/time/id/${paramsInput}`}
@@ -207,27 +273,25 @@ export default function Home(params) {
                       </Link>
                     </>
 
-
-                    {classList != [] &&
-                      paramsInput != 99 &&
-                      classList &&
-                      classList?.map((cItem, cIndex) => {
-                        return (
-                          <Link
-                            href={`/vod/show/by/time/class/${cItem}/id/${paramsInput}`}
-                            key={cIndex + '-class'}
-                            className='btn btn-dark hover-effect text-white btn-dark-catagory text-nowrap'
-                            style={{ borderRadius: '10px' }}
-                          >
-                            {cItem}
-                          </Link>
-                        );
-                      }) //class list map
+                    {
+                      classList != [] &&
+                        paramsInput != 99 &&
+                        classList &&
+                        classList?.map((cItem, cIndex) => {
+                          return (
+                            <Link
+                              href={`/vod/show/by/time/class/${cItem}/id/${paramsInput}`}
+                              key={cIndex + '-class'}
+                              className='btn btn-dark hover-effect text-white btn-dark-catagory text-nowrap'
+                              style={{ borderRadius: '10px' }}
+                            >
+                              {cItem}
+                            </Link>
+                          );
+                        }) //class list map
                     }
                   </div>
                 )}
-
-
 
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
@@ -260,7 +324,7 @@ export default function Home(params) {
                     categories?.map((category, idx) => {
                       return (
                         <div key={idx} className={'pt-3'}>
-                          {(idx % 2 !== 0) && (
+                          {idx % 2 !== 0 && (
                             <AdsBanner
                               pathName={pathName}
                               navId={'1-13'}
@@ -291,7 +355,7 @@ export default function Home(params) {
                                     fontStyle: 'normal',
                                     fontFamily: 'PingFang SC',
                                   }}
-                                  icon={faAngleRight}
+                                  icon={faChevronDown}
                                 />
                               </div>
                             </div>
@@ -322,10 +386,97 @@ export default function Home(params) {
             </div>
           ) : (
             <>
+              {/* 午夜场 desktop   111111 */}
               <div className='desktop flex flex-col w-full'>
+                {/* 午夜场 class  desktop */}
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
-                  <div className='pt-4 container  w-[100%]'>
+                  <div className='row col-12 container pt-4 mt-5 px-0'>
+                    {
+                      xClassList &&
+                        xClassList.slice(0, 33).map((cItem, cIndex) => {
+                          return (
+                            <Link
+                              href={`/xvod/${cItem.mappedValue}/${cItem.item}`}
+                              key={cIndex + 30 + '-xclass'}
+                              className='btn btn-dark hover-effect text-white btn-dark-catagory btn-dark-catagory-x text-nowrap col-lg-1 col-md-1 col-sm-2'
+                              style={{ borderRadius: '6px' }}
+                            >
+                              {cItem.item}
+                            </Link>
+                          );
+                        }) // classList map for index 0-29
+                    }
+
+                    <>
+                      <div className='collapse px-0' id='collapse-desktop'>
+                        {xClassList &&
+                          xClassList.slice(33).map((cItem, cIndex) => (
+                            <Link
+                              href={`/xvod/${cItem.mappedValue}/${cItem.item}`}
+                              key={cIndex + 30 + '-xclass'}
+                              className='btn btn-dark hover-effect text-white btn-dark-catagory btn-dark-catagory-x text-nowrap col-lg-1 col-md-1 col-sm-2'
+                              style={{ borderRadius: '6px' }}
+                            >
+                              {cItem.item}
+                            </Link>
+                          ))}
+                      </div>
+
+                      <div
+                        className='pl-0 pr-2'
+                        style={{
+                          borderRadius: '6px',
+                          display: 'flex',
+                          justifyContent: 'flex-start',
+                        }}
+                      >
+                        {isCollapsed ? (
+                          <a
+                            className='btn btn-theme px-3 mr-1'
+                            data-toggle='collapse'
+                            href='#collapse-desktop'
+                            role='button'
+                            aria-expanded='false'
+                            aria-controls='collapse-desktop'
+                            onClick={handleToggle}
+                          >
+                            展开{' '}
+                            <FontAwesomeIcon
+                              style={{
+                                fontStyle: 'normal',
+                                fontFamily: 'PingFang SC',
+                              }}
+                              icon={faChevronDown}
+                            />
+                          </a>
+                        ) : (
+                          <a
+                            className='btn  btn-theme'
+                            data-toggle='collapse'
+                            href='#collapse-desktop'
+                            role='button'
+                            aria-expanded='true'
+                            aria-controls='collapse-desktop'
+                            onClick={handleToggle}
+                          >
+                            收起
+                            <FontAwesomeIcon
+                              style={{
+                                fontStyle: 'normal',
+                                fontFamily: 'PingFang SC',
+                              }}
+                              icon={faChevronUp}
+                            />
+                          </a>
+                        )}
+                      </div>
+                    </>
+                  </div>
+                </div>
+                {/* end 午夜场 class desktop */}
+
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <div className=' container  w-[100%]'>
                     <VideoWithTitleHorizontalCard
                       data={categories}
                       navId={paramsInput}
@@ -335,7 +486,43 @@ export default function Home(params) {
                   </div>
                 </div>
               </div>
+              {/* 午夜场 mobile   111111 */}
               <div className='mobile flex flex-col w-full'>
+                {/* 午夜场 class  mobile */}
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '5px',
+                    justifyContent: 'center',
+                  }}
+                >
+                  {xClassList2.map((chunk, chunkIndex) => (
+                    <div
+                      key={chunkIndex + 'parnt'}
+                      className='container px-2 pt-2 mt-1 custom-scroll'
+                      style={{ display: 'flex', overflowX: 'auto', gap: '5px' }}
+                    >
+                      {chunk.map((cItem, cIndex) => (
+                        <Link
+                          href={`/xvod/${cItem.mappedValue}/${cItem.item}`}
+                          key={chunkIndex + cItem.item + '-xmobile-class'}
+                          className='btn btn-dark hover-effect text-white btn-dark-catagory btn-dark-catagory-x text-nowrap'
+                          style={{
+                            borderRadius: '6px',
+                            minWidth: '90px',
+                            flexShrink: 0,
+                          }}
+                        >
+                          {cItem.item}
+                        </Link>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+
+                {/* end 午夜场 class mobile */}
+
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                   {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
                   <div className='pt-1 container  w-[100%]'>
