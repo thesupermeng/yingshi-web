@@ -14,7 +14,7 @@ export default function ProfileCard({userInfo, isVip, isH5, onSignin}) {
   const iconProfile = isVip ? VipUser : userInfo ? MemberUser : profileIcon
 
   return (
-    <div className={'flex gap-[15px] items-center'}>
+    <div className={'flex gap-[12px] items-center'}>
       <div className="flex justify-center">
         <Image
           src={iconProfile}
