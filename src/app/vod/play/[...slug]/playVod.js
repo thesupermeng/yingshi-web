@@ -545,11 +545,11 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                     padding: '0.3rem 1.2rem',
                     background: '#FAC33D',
                     borderRadius: '12px',
-                    margin: '0.5rem',
+                    margin: '0.5rem 0.5rem 0rem 0.5rem',
                   }}
                   onClick={copyContentToClipboard}
                 >
-                  <span className='text-sm cursor-pointer'>一键复制</span>
+                  <span className='text-sm cursor-pointer text-[#000000]'>一键复制</span>
                 </div>
               </div>
             </div>

@@ -539,11 +539,11 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
                 padding: '0.5rem 1.2rem',
                 background: '#FAC33D',
                 borderRadius: '12px',
-                margin: '0.5rem',
+                margin: '0.5rem 0.5rem 0rem 0.5rem',
               }}
               onClick={copyContentToClipboard}
             >
-              <span className='text-sm'>一键复制</span>
+              <span className='text-sm text-[#000000]'>一键复制</span>
             </div>
           </div>
         </div>
