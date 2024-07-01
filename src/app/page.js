@@ -501,7 +501,7 @@ export default function Home(params) {
                     <div
                       key={chunkIndex + 'parnt'}
                       className='container px-2 pt-2 mt-1 custom-scroll'
-                      style={{ display: 'flex', overflowX: 'auto', gap: '5px' }}
+                      style={{ display: 'flex', overflowX: 'auto', gap: '8px' }}
                     >
                       {chunk.map((cItem, cIndex) => (
                         <Link
@@ -509,8 +509,8 @@ export default function Home(params) {
                           key={chunkIndex + cItem.item + '-xmobile-class'}
                           className='btn btn-dark hover-effect text-white btn-dark-catagory btn-dark-catagory-x text-nowrap'
                           style={{
-                            borderRadius: '6px',
-                            minWidth: '90px',
+                            borderRadius: '7px',
+                            minWidth: '100px',
                             flexShrink: 0,
                           }}
                         >
