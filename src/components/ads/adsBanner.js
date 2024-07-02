@@ -27,7 +27,12 @@ export const AdsBanner = ({
     let result = ads.filter(
       (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(slotId)
     );
-    return result[0];
+    if (result.length > 0) {
+      const randomIndex = Math.floor(Math.random() * result.length);
+      return result[randomIndex];
+    } else {
+      return result[0];
+    }
   };
 
   useEffect(() => {

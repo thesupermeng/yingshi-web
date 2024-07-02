@@ -70,8 +70,16 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
     let result = allAds.data.filter(
       (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(144)
     );
+
+    if (result.length > 0) {
+      // Generate a random index between 0 and the length of the result array
+      const randomIndex = Math.floor(Math.random() * result.length);
+      // Set the ad to a randomly selected element from the result array
+      setAds(result[randomIndex]);
+    } else {
+      setAds(result[0]);
+    }
     setShowAds(true);
-    setAds(result[0]);
   };
 
   useLayoutEffect(() => {
@@ -88,9 +96,14 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
         let result = adsList.filter(
           (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(144)
         );
+        if (result.length > 0) {
+          const randomIndex = Math.floor(Math.random() * result.length);
+          setAds(result[randomIndex]);
+        } else {
+          setAds(result[0]);
+        }
 
         setShowAds(true);
-        setAds(result[0]);
       } else {
         getAds();
       }
@@ -721,8 +734,8 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
               />
             </div>
 
-<div className='desktop'>  
-            <ExtraDesc vod={vod} episodeSelected={episodeSelected} />
+            <div className='desktop'>
+              <ExtraDesc vod={vod} episodeSelected={episodeSelected} />
             </div>
             <VodContent
               vodContent={vod.vod_blurb}
@@ -747,7 +760,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                     vodEpisodeInfo={vod.vod_episode_info}
                     vod={vod}
                     setShowShareBox={toggleShowShareBox}
-                    episodeSelected={episodeSelected} 
+                    episodeSelected={episodeSelected}
                   />
 
                   <VodSourceList
@@ -767,21 +780,12 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                       maxHeight: 300,
                     }}
                   />
-
-
                 </div>
 
-
-                <div className={`mobile`}>  
-            <ExtraDesc vod={vod} episodeSelected={episodeSelected} />
-            </div>
-                
+                <div className={`mobile`}>
+                  <ExtraDesc vod={vod} episodeSelected={episodeSelected} />
+                </div>
               </div>
-            
-
-
-
-
             </div>
             <div className='flex justify-center'>
               <div className='lg:w-[100%] w-[90%]'>
@@ -821,7 +825,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                     vod={vod}
                     openJianJie={openJianJie}
                     setShowShareBox={toggleShowShareBox}
-                    episodeSelected={episodeSelected} 
+                    episodeSelected={episodeSelected}
                   />
 
                   <VodSourceList
