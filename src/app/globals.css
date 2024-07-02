@@ -362,3 +362,12 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
 .h-\[35px\] {
   height: 35px !important;
 }
+
+
+.custom-scroll {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+.custom-scroll::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}

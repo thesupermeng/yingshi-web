@@ -38,3 +38,8 @@ package-lock.json
 
 # Prettier Setting
 .prettierrc
+
+public/robots.txt
+public/google.xml
+public/google2.xml
+public/episode_info.xml
