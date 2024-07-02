@@ -423,16 +423,17 @@ export default function Home(params) {
                       </div>
 
                       <div
-                        className='pl-0 pr-2'
+                        className='pr-2'
                         style={{
                           borderRadius: '6px',
                           display: 'flex',
                           justifyContent: 'flex-start',
+                          paddingLeft:'0px'
                         }}
                       >
                         {isCollapsed ? (
                           <button
-                            className='btn btn-theme px-3 mr-1 text-white'
+                            className='btn btn-theme px-3 mr-1'
                             type='button'
                             data-toggle='collapse'
                             data-target='#collapseDesktop'
@@ -459,7 +460,7 @@ export default function Home(params) {
                           </button>
                         ) : (
                           <button
-                            className='btn  btn-theme text-white'
+                            className='btn  btn-theme'
                             type='button'
                             data-toggle='collapse'
                             data-target='#collapseDesktop'
