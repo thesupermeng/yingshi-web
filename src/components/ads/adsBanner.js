@@ -18,7 +18,8 @@ export const AdsBanner = ({
   const { isVip, userInfo } = useYingshiUser();
 
   const [ads, setAds] = useState(null);
-
+  const allSameProperty = (arr, prop) =>
+    arr.every((item) => item[prop] === arr[0][prop]);
   const findAdBySlotId = (ads, slotId) => {
     if (!ads) {
       return;
@@ -27,8 +28,13 @@ export const AdsBanner = ({
     let result = ads.filter(
       (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(slotId)
     );
-    if (result.length > 0) {
+    result = result.sort((a, b) => b.ads_sort - a.ads_sort);
+
+    const sameSortFlag = allSameProperty(result, 'ads_sort');
+
+    if (result.length > 0 && sameSortFlag) {
       const randomIndex = Math.floor(Math.random() * result.length);
+
       return result[randomIndex];
     } else {
       return result[0];
@@ -92,9 +98,13 @@ export const AdsBanner = ({
 
   return (
     <>
-      {(ads && !isVip && navId && navId != 0 && ads.length > 0) ? (
+      {ads && !isVip && navId && navId != 0 && ads.length > 0 ? (
         <div
-          className={(ads[0] !== undefined || ads[1] !== undefined) ? 'margin-banner' : null}
+          className={
+            ads[0] !== undefined || ads[1] !== undefined
+              ? 'margin-banner'
+              : null
+          }
           style={{
             display: 'flex',
             justifyContent: 'center',
