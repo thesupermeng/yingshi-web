@@ -47,9 +47,15 @@ a:hover {
 .bg-theme
 {
   background-color:rgb(51, 162, 244) !important;
+  background: rgb(51, 162, 244) !important;
 }
 
 .btn-theme
 {
   background-color: rgb(51, 162, 244) !important;
+}
+
+.text-theme
+{
+  color:  rgb(51, 162, 244) !important;
 }
