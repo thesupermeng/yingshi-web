@@ -263,6 +263,15 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
   }, [vod]);
 
   useEffect(() => {
+    const randomAds = async() =>{
+await getAds();
+    }
+
+    randomAds();
+  }, [vod]);
+  
+
+  useEffect(() => {
     if (episodeSelected !== null) {
       if (playerRef.current) {
         playerRef.current.pause();
@@ -554,15 +563,16 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                   ></div>
                 </div>
                 <div
+                className='bg-theme'
                   style={{
                     padding: '0.3rem 1.2rem',
-                    background: '#FAC33D',
+             
                     borderRadius: '12px',
-                    margin: '0.5rem 0.5rem 0rem 0.5rem',
+                    margin: '0.5rem',
                   }}
                   onClick={copyContentToClipboard}
                 >
-                  <span className='text-sm cursor-pointer text-[#000000]'>一键复制</span>
+                  <span className='text-sm cursor-pointer'>一键复制</span>
                 </div>
               </div>
             </div>
@@ -634,9 +644,10 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
               ></div>
             </div>
             <div
+                className='bg-theme'
               style={{
                 padding: '0.5rem 1.2rem',
-                background: '#FAC33D',
+          
                 borderRadius: '12px',
                 margin: '0.5rem',
               }}
@@ -693,7 +704,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
               {showAds && !isVip ? ( //  && ads
                 <AdsPlayer
                   className='aspect-[16/9]'
-                  adsInfo={'ads'}
+                  adsInfo={ads}
                   handleAdsPlayerEndPlay={handleAdsPlayerEndPlay}
                 />
               ) : (

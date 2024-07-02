@@ -8,8 +8,6 @@ import styles from './style.module.css';
 
 function extractNumbers(input) {
 
-  console.log('extractNumbers')
-  console.log(input)
   // Define a regular expression to match all digits
   const numberPattern = /\d+/g;
   

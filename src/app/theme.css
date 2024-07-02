@@ -43,6 +43,7 @@ a:hover {
 .bg-theme
 {
   background-color: #FAC33D !important;
+  background: #FAC33D !important;
 }
 
 
@@ -50,4 +51,9 @@ a:hover {
 {
   background-color: #FAC33D  !important;
   color: black !important;
+}
+
+.text-theme
+{
+  color: #FAC33D  !important;
 }
