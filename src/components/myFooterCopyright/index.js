@@ -45,9 +45,9 @@ const MyFooterCopyRight = () => {
           lineHeight: '24px',
         }}
       >
-        版权声明：影视TV内容均来自互联网，不提供存储/录制/上传。
+        版权声明：鲨鱼TV内容均来自互联网，不提供存储/录制/上传。
         <br />
-        如果影视TV提供内容侵犯了您的版权，请发送电子邮件至
+        如果鲨鱼TV提供内容侵犯了您的版权，请发送电子邮件至
         <a href='mailto:contactus@yingshi.tv'>contactus@yingshi.tv</a>
         进行说明，我们将立即删除内容，保护版权所有者的权益。
         <br />

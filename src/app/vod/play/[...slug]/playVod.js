@@ -175,7 +175,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
 
       content += '《' + vod.vod_name + '》高清播放';
       content += '</br>' + window.location.href;
-      content += '</br>影视TV-海量高清视频在线观看';
+      content += '</br>鲨鱼TV-海量高清视频在线观看';
 
       setVodShareContent(content);
     }
@@ -261,6 +261,15 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
       });
     }
   }, [vod]);
+
+  useEffect(() => {
+    const randomAds = async() =>{
+await getAds();
+    }
+
+    randomAds();
+  }, [vod]);
+  
 
   useEffect(() => {
     if (episodeSelected !== null) {
@@ -554,9 +563,10 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                   ></div>
                 </div>
                 <div
+                className='bg-theme'
                   style={{
                     padding: '0.3rem 1.2rem',
-                    background: '#FAC33D',
+             
                     borderRadius: '12px',
                     margin: '0.5rem',
                   }}
@@ -634,9 +644,10 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
               ></div>
             </div>
             <div
+                className='bg-theme'
               style={{
                 padding: '0.5rem 1.2rem',
-                background: '#FAC33D',
+          
                 borderRadius: '12px',
                 margin: '0.5rem',
               }}
@@ -693,7 +704,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
               {showAds && !isVip ? ( //  && ads
                 <AdsPlayer
                   className='aspect-[16/9]'
-                  adsInfo={'ads'}
+                  adsInfo={ads}
                   handleAdsPlayerEndPlay={handleAdsPlayerEndPlay}
                 />
               ) : (
