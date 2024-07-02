@@ -199,16 +199,16 @@ export { default as copyLink } from './socialMedia/copyLink.svg';
 export { default as facebook } from './socialMedia/facebook.svg';
 export { default as tumblr } from './socialMedia/tumblr.svg';
 export { default as twitter } from './socialMedia/twitter.svg';
-export { default as whatsapp } from './socialMedia/whatsapp.svg';
-export { default as CameraIcon } from './socialMedia/camera.svg';
-export { default as CopyLink2Icon } from './socialMedia/copyLink2.svg';
-export { default as Facebook2Icon } from './socialMedia/facebook2.svg';
-export { default as LineIcon } from './socialMedia/line.svg';
-export { default as MessengerIcon } from './socialMedia/messenger.svg';
-export { default as QqIcon } from './socialMedia/qq.svg';
-export { default as TelegramIcon } from './socialMedia/telegram.svg';
-export { default as WechatIcon } from './socialMedia/wechat.svg';
-export { default as WeiboIcon } from './socialMedia/weibo.svg';
+export { default as whatsapp } from './socialMedia/whatsapp.png';
+export { default as CameraIcon } from './socialMedia/camera.png';
+export { default as CopyLink2Icon } from './socialMedia/copyLink2.png';
+export { default as Facebook2Icon } from './socialMedia/facebook2.png';
+export { default as LineIcon } from './socialMedia/line.png';
+export { default as MessengerIcon } from './socialMedia/messenger.png';
+export { default as QqIcon } from './socialMedia/qq.png';
+export { default as TelegramIcon } from './socialMedia/telegram.png';
+export { default as WechatIcon } from './socialMedia/wechat.png';
+export { default as WeiboIcon } from './socialMedia/weibo.png';
 
 //topUp
 export { default as GCash } from './topUp/gcash.svg';
