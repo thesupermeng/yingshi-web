@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback, useState, useLayoutEffect } from 'react';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { YingshiApi, YingshiApi2 } from '@/util/YingshiApi';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
@@ -11,12 +11,13 @@ export const AdsBanner = ({
   imgUrl = '',
   // navId = '1-13',
   // ads = null,
-  adsList = [],
+  // adsList = [],
   pathName = '/',
 }) => {
   let navId = '1-13';
   const { isVip, userInfo } = useYingshiUser();
 
+  const adsList = JSON.parse(sessionStorage.getItem('adsList'));
   const [ads, setAds] = useState(null);
 
   const findAdBySlotId = (ads, slotId) => {
@@ -92,9 +93,13 @@ export const AdsBanner = ({
 
   return (
     <>
-      {(ads && !isVip && navId && navId != 0 && ads.length > 0) ? (
+      {ads && !isVip && navId && navId != 0 && ads.length > 0 ? (
         <div
-          className={(ads[0] !== undefined || ads[1] !== undefined) ? 'margin-banner' : null}
+          className={
+            ads[0] !== undefined || ads[1] !== undefined
+              ? 'margin-banner'
+              : null
+          }
           style={{
             display: 'flex',
             justifyContent: 'center',

@@ -111,21 +111,28 @@ export const Topic = () => {
           <div className={styles.containerHeader}>
             <div className='d-flex' style={{ width: '100%' }}>
               <div className='overlay' style={{ width: '100%' }}>
-                <div className='topic-container-header container px-0 d-flex  flex-column'>
-                  <div className='topic-header-text'>播单</div>
+                <div className=' container px-0 d-flex flex-col'>
+                  {adsList && (
+                    <div className=' w-full container'>
+                      <AdsBanner
+                        adsList={adsList}
+                        pathName={pathName}
+                        height='500px'
+                      />
+                    </div>
+                  )}
+                  <div className='w-fit'>
+                    <div className='topic-header-text w-fit'>播单</div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-          {adsList && (
-            <div className=' w-[100%]'>
-              <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
-            </div>
-          )}
+
           {/* topic list  */}
           <div className='d-flex container pb-6'>
-            <div className='row '>
-              {topicList.map((topic) => (
+            <div className='row'>
+              {topicList.map((topic, idx) => (
                 <div className='col-lg-4 col-md-6' key={topic.topic_id}>
                   {/* Render topic details here */}
                   <Link
@@ -179,65 +186,68 @@ export const Topic = () => {
         {/* mobile  view  */}
         <div className='mobile'>
           <div className='row w-screen'>
-            {adsList && (
-              <div className=' w-[100%]'>
-                <AdsBanner
-                  adsList={adsList}
-                  pathName={pathName}
-                  height='500px'
-                />
-              </div>
-            )}
-            {topicList.map((topic) => (
-              <Link
-                className='mb-2 cursor-pointer'
-                key={topic.topic_id}
-                href={`/topic/detail/id/${topic.topic_id}`}
-              >
-                <div className='col-12 pt-2 d-flex justify-content-between align-items-center pb-1 font-semibold'>
-                  <span>{topic.topic_name}</span>
-                  <span className='mr-2'>
-                    {' '}
-                    <FontAwesomeIcon icon={faAngleRight} />
-                  </span>
-                </div>
-
-                <div className='col-12 mobile-topic-desc'>
-                  {topic.topic_blurb.length > 52
-                    ? `${topic.topic_blurb.slice(0, 52)}...`
-                    : topic.topic_blurb}
-                </div>
-
-                <div className='col-12' key={topic.topic_id}>
-                  <div className='row g-2'>
-                    {topic?.vod_list?.slice(0, 3).map((vod) => (
-                      <div
-                        className='col-4 cursor-pointer'
-                        key={vod.vod_id}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          router.push(
-                            `/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`
-                          );
-                        }}
-                      >
-                        {' '}
-                        {/* Add px-1 class for horizontal padding */}
-                        <img
-                          alt='topic items'
-                          className={`object-cover w-100`}
-                          src={vod?.vod_pic}
-                          style={{
-                            borderRadius: '10px',
-                            aspectRatio: '5/7',
-                            width: '100%',
-                          }}
-                        />
-                      </div>
-                    ))}
+            <div className=' w-full'>
+              <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
+            </div>
+            {topicList.map((topic, idx) => (
+              <div className='w-full' key={topic.topic_id}>
+                {(idx + 1) % 5 == 0 && (
+                  <AdsBanner
+                    pathName={pathName}
+                    navId={'1-13'}
+                    height='500px'
+                  />
+                )}
+                <Link
+                  className='mb-2 cursor-pointer'
+                  // key={topic.topic_id}
+                  href={`/topic/detail/id/${topic.topic_id}`}
+                >
+                  <div className='col-12 pt-2 d-flex justify-content-between align-items-center pb-1 font-semibold'>
+                    <span>{topic.topic_name}</span>
+                    <span className='mr-2'>
+                      {' '}
+                      <FontAwesomeIcon icon={faAngleRight} />
+                    </span>
                   </div>
-                </div>
-              </Link>
+
+                  <div className='col-12 mobile-topic-desc'>
+                    {topic.topic_blurb.length > 52
+                      ? `${topic.topic_blurb.slice(0, 52)}...`
+                      : topic.topic_blurb}
+                  </div>
+
+                  <div className='col-12' key={topic.topic_id}>
+                    <div className='row g-2'>
+                      {topic?.vod_list?.slice(0, 3).map((vod) => (
+                        <div
+                          className='col-4 cursor-pointer'
+                          key={vod.vod_id}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            router.push(
+                              `/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`
+                            );
+                          }}
+                        >
+                          {' '}
+                          {/* Add px-1 class for horizontal padding */}
+                          <img
+                            alt='topic items'
+                            className={`object-cover w-100`}
+                            src={vod?.vod_pic}
+                            style={{
+                              borderRadius: '10px',
+                              aspectRatio: '5/7',
+                              width: '100%',
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </Link>
+              </div>
             ))}
           </div>
         </div>
