@@ -263,6 +263,15 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
   }, [vod]);
 
   useEffect(() => {
+    const randomAds = async() =>{
+await getAds();
+    }
+
+    randomAds();
+  }, [vod]);
+  
+
+  useEffect(() => {
     if (episodeSelected !== null) {
       if (playerRef.current) {
         playerRef.current.pause();
@@ -278,11 +287,11 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
 
       let watchHistory = {
         tid: tId,
-        nid: episodeSelected.nid + 1,
+        nid: episodeSelected?.nid + 1,
         vodid: vodId,
         vodpic: vod.vod_pic,
         vodname: vod.vod_name,
-        vodurl: episodeSelected.url,
+        vodurl: episodeSelected?.url,
         watchtimes: 0,
         sourceId: sourceId,
       };
@@ -363,7 +372,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
   };
 
   const onSelectEpisode = (episode) => {
-    router.replace(`${path.replace(/(\/nid\/)\d+/, `$1${episode.nid + 1}`)}`);
+    router.replace(`${path.replace(/(\/nid\/)\d+/, `$1${episode?.nid + 1}`)}`);
   };
 
   const onVideoEnd = () => {
@@ -554,9 +563,10 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                   ></div>
                 </div>
                 <div
+                className='bg-theme'
                   style={{
                     padding: '0.3rem 1.2rem',
-                    background: '#0085E0',
+             
                     borderRadius: '12px',
                     margin: '0.5rem',
                   }}
@@ -634,9 +644,10 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
               ></div>
             </div>
             <div
+                className='bg-theme'
               style={{
                 padding: '0.5rem 1.2rem',
-                background: '#0085E0',
+          
                 borderRadius: '12px',
                 margin: '0.5rem',
               }}
@@ -690,7 +701,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                   <Image src={ArrowLeftIcon} alt='Icon' />
                 </div>
               </div>
-              {showAds && ads && !isVip ? (
+              {showAds && !isVip ? ( //  && ads
                 <AdsPlayer
                   className='aspect-[16/9]'
                   adsInfo={ads}
@@ -874,7 +885,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                     <div
                       className='text-md pt-3 py-2'
                       style={{
-                        color: 'rgb(33 150 243 / var(--tw-text-opacity))',
+                        color: 'rgb(250 198 69 / var(--tw-text-opacity))',
                       }}
                     >
                       简介
