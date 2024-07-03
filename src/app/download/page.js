@@ -4,27 +4,40 @@ import useGetConfig from '@/hook/user/useGetConfig';
 import { getMobileOperatingSystem } from '@/util/common';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import {AndroidIcon, AppImage, AppleStoreIcon, Logo} from '@/asset/icons';
 import QRCode from 'qrcode.react';
+import {useSelector} from 'react-redux';
 
 export default function Download() {
   const { config } = useGetConfig();
   // const router = useRouter();
-
+  const getIsUserChina = (state) => state.yingshiScreen.isUserChina;
+  const isUserChina = useSelector(getIsUserChina);
+  const [iosLink, setIosLink] = useState(
+    'https://apps.apple.com/cn/app/id6474402534'
+  );
   useEffect(() => {
-    const userMobileOS = getMobileOperatingSystem();
-
-    if (config) {
-      if (userMobileOS === 'Android' || userMobileOS === 'Windows Phone') {
-        window.location.href = config?.download_url?.android;
-      } else if (userMobileOS === 'iOS') {
-        window.location.href = config?.download_url?.ios;
-      } else {
-        window.location.href = '/';
-      }
+    try {
+      setIosLink(isUserChina.link_jump);
+    } catch (e) {
+      setIosLink('https://apps.apple.com/cn/app/id6474402534');
     }
-  }, [config]);
+  }, [isUserChina]);
+
+  // useEffect(() => {
+  //   const userMobileOS = getMobileOperatingSystem();
+  //
+  //   if (config) {
+  //     if (userMobileOS === 'Android' || userMobileOS === 'Windows Phone') {
+  //       window.location.href = config?.download_url?.android;
+  //     } else if (userMobileOS === 'iOS') {
+  //       window.location.href = config?.download_url?.ios;
+  //     } else {
+  //       window.location.href = '/';
+  //     }
+  //   }
+  // }, [config]);
 
   return (
     <div className="relative w-full grow flex justify-center items-center">
@@ -47,7 +60,7 @@ export default function Download() {
               </div>
               <QRCode
                 className='rounded-md'
-                value='https://apps.apple.com/cn/app/id6474402534'
+                value={iosLink}
                 renderAs='canvas'
                 size={220}
                 includeMargin={true}
