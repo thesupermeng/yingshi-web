@@ -8,11 +8,14 @@ import {
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 import { useRouter } from 'next/navigation';
+import { usePaymentOpen } from '@/hook/yingshiScreenState/usePaymentOpen';
+import { isMobile } from 'react-device-detect';
 
 export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
   const router = useRouter();
   const { userInfo } = useYingshiUser();
   const [isLoginOpen, setIsLoginOpen] = useLoginOpen();
+  const [__, setOpenPayment] = usePaymentOpen();
 
   const adsPlayerRef = useRef(null);
 
@@ -68,12 +71,19 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
   };
 
   const handleOnSkipAd = () => {
-    const isMobile = window.innerWidth < 768;
-
-    if (!userInfo) {
-      setIsLoginOpen(true);
+    if (isMobile) {
+      if (!userInfo) {
+        // router.push('/myprofile?login=true');
+        setIsLoginOpen(true);
+      } else {
+        router.push('/payment');
+      }
     } else {
-      router.push('/payment');
+      if (!userInfo) {
+        setIsLoginOpen(true);
+      } else {
+        setOpenPayment(true);
+      }
     }
 
     pauseVideo();
