@@ -1,5 +1,0 @@
-User-agent: *
-Disallow:
-
-Sitemap: https://yingshi.tv/google.xml
-Sitemap: https://yingshi.tv/google2.xml
