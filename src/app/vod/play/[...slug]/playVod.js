@@ -932,8 +932,8 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
               <VodPopularList />
             </div>
 
-            <div className='lg:flex hidden'>
-              <AdsBanner pathName={path} height='500px' />
+            <div className='lg:flex hidden '>
+              <AdsBanner pathName={path} height='500px' isPlayVertival={true} />
             </div>
           </div>
         </div>
