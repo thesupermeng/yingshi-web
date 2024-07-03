@@ -16,7 +16,7 @@ import styles from './style.module.css';
 import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
 import { ArrowLeftIcon } from '@/asset/icons';
 import Image from 'next/image';
-import { useParams, usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { convertTimeStampToDateTime } from '@/util/date';
 import { FullPageContent } from '@/componentsH5/FullPageContent';
 import { LottieAnimation } from '@/components/lottie';
@@ -213,8 +213,10 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
           data.List === undefined ||
           data.List === null ||
           data.List?.length <= 0
-        )
+        ) {
+          router.push('/404');
           return;
+        }
 
         let res = data.List[0];
         setVod(res);
