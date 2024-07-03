@@ -3,6 +3,7 @@ import style from './styles.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { useDraggable } from 'react-use-draggable-scroll';
+import { isMobile } from 'react-device-detect';
 
 export default function PaymentProductsList({
   className,
@@ -11,10 +12,10 @@ export default function PaymentProductsList({
 }) {
   const [selectedProduct, setSelectedProduct] = useState(0);
   const listRef = useRef();
-  // const { events } = useDraggable(listRef, {
-  //   applyRubberBandEffect: true,
-  //   activeMouseButton: 'Left',
-  // });
+  const { events } = useDraggable(listRef, {
+    applyRubberBandEffect: true,
+    activeMouseButton: 'Left',
+  });
 
   useEffect(() => {
     if (productList && productList.length > 0) {
@@ -23,19 +24,19 @@ export default function PaymentProductsList({
     }
   }, [productList]);
 
-  // const handleWheel = (e) => {
-  //   const container = listRef.current;
-  //   if (container) {
-  //     // e.preventDefault();
-  //     container.scrollLeft += e.deltaY;
-  //   }
-  // };
+  const handleWheel = (e) => {
+    const container = listRef.current;
+    if (container) {
+      // e.preventDefault();
+      container.scrollLeft += e.deltaY;
+    }
+  };
 
   return (
     <div
-      className={`h-[164px] w-full overflow-x-hidden no-scrollbar flex flex-nowrap flex-row gap-[16px] items-center ${className}`}
+      className={`h-[164px] w-full ${isMobile? 'overflow-x-scroll': 'overflow-x-hidden'} no-scrollbar flex flex-nowrap flex-row gap-[16px] items-center ${className}`}
       ref={listRef}
-      // {...events}
+      {...events}
     >
       {productList.map((product, index) => {
         return (
@@ -62,7 +63,7 @@ function Product({ isBest, isSelected, productInfo, onProductSelect }) {
         isSelected ? 'h-[160px] border-2 border-[#D4AE7F]' : 'h-[150px]'
       } 
         ${style.product_card_animation}
-         rounded-[8px] overflow-hidden flex flex-col flex-1 relative hover-effect
+         ${isMobile? 'w-[117px] rounded-[8px] overflow-hidden flex flex-col flex-none relative hover-effect': 'rounded-[8px] overflow-hidden flex flex-col flex-1 relative hover-effect'}
         `}
       onClick={onProductSelect}
     >

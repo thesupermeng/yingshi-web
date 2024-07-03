@@ -343,6 +343,11 @@ body {
   margin: 1.5rem 0rem;
 }
 
+.margin-banner2
+{
+  margin: 1rem 0rem  0rem  0rem !important;
+}
+
 /* mobile */
 @media (max-width: 768px) {
   .margin-banner
