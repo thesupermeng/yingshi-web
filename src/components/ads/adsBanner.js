@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback, useState, useLayoutEffect } from 'react';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { YingshiApi, YingshiApi2 } from '@/util/YingshiApi';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
@@ -11,12 +11,13 @@ export const AdsBanner = ({
   imgUrl = '',
   // navId = '1-13',
   // ads = null,
-  adsList = [],
+  // adsList = [],
   pathName = '/',
 }) => {
   let navId = '1-13';
   const { isVip, userInfo } = useYingshiUser();
 
+  const adsList = JSON.parse(sessionStorage.getItem('adsList'));
   const [ads, setAds] = useState(null);
   const allSameProperty = (arr, prop) =>
     arr.every((item) => item[prop] === arr[0][prop]);
@@ -75,6 +76,8 @@ export const AdsBanner = ({
     if (pathName.startsWith('/vod/show')) {
       navId = '12-15';
     }
+
+    
 
     if (navId && navId != 0) {
       const parts = navId?.split('-').map(Number);

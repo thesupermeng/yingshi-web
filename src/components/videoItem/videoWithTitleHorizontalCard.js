@@ -1,12 +1,14 @@
-'use client'
+'use client';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
-import VodListViewMore from "../vodListViewMore";
-import { VideoHorizontalCard } from "./videoHorizontalCard";
-import { useEffect, useRef, useState } from "react";
-import { Spinner } from "../spinner";
-import { getTypePage } from "@/app/actions";
+import VodListViewMore from '../vodListViewMore';
+import { VideoHorizontalCard } from './videoHorizontalCard';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Spinner } from '../spinner';
+import { getTypePage } from '@/app/actions';
+import { usePathname } from 'next/navigation';
+import { AdsBanner } from '../ads/adsBanner';
 
 export const VideoWithTitleHorizontalCard = ({
   data,
@@ -18,8 +20,35 @@ export const VideoWithTitleHorizontalCard = ({
   const [categories, setCategories] = useState(data);
   const [nextPage, setNextPage] = useState(serverNextPage);
   const [stillCanLoad, setStillCanLoad] = useState(isStillCanLoad);
+  const pathName = usePathname();
 
   const targetRef = useRef(null);
+
+  //banner ads
+  const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
+  const [adsList, setAdsList] = useState([]);
+  const getAllAds = async () => {
+    return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
+  };
+  const initAds = async () => {
+    let allAds = await getAllAds();
+    sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
+
+    setAdsList(allAds.data);
+  };
+  useLayoutEffect(() => {
+    let adsList = initAdsList;
+    if (!adsList) {
+      adsList = JSON.parse(sessionStorage.getItem('adsList'));
+    }
+
+    if (adsList && adsList !== 'undefined') {
+      setAdsList(adsList);
+    } else {
+      initAds();
+    }
+  }, []);
+  //end banner ads
 
   useEffect(() => {
     if (stillCanLoad) {
@@ -55,12 +84,12 @@ export const VideoWithTitleHorizontalCard = ({
       }
 
       if (data?.categories !== undefined) {
-        setCategories(prev => [...prev, ...data.categories])
+        setCategories((prev) => [...prev, ...data.categories]);
       }
 
-      setNextPage(currentPage + 1)
+      setNextPage(currentPage + 1);
     });
-  }
+  };
 
   return (
     <>
@@ -85,10 +114,7 @@ export const VideoWithTitleHorizontalCard = ({
                     {category.type_name}
                   </span>
                   <div className='flex w-fit items-center cursor-pointer hover-yellow'>
-                    <VodListViewMore
-                      type={'xcategory'}
-                      data={category}
-                    />
+                    <VodListViewMore type={'xcategory'} data={category} />
                     <FontAwesomeIcon
                       style={{
                         fontSize: '14px',
@@ -110,17 +136,22 @@ export const VideoWithTitleHorizontalCard = ({
                       />
                     );
                   })}
+                  {(idx + 1) % 3 === 0 && (
+                    <div className='col-span-3 md:col-span-6 lg:col-span-6'>
+                      <AdsBanner
+                        adsList={adsList}
+                        pathName={pathName}
+                        height='500px'
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             );
           }
 
           return (
-            <div
-              id={category.type_id}
-              key={idx}
-              style={{ paddingTop: '3rem' }}
-            >
+            <div id={category.type_id} key={idx} style={{ paddingTop: '3rem' }}>
               <div className='flex justify-between'>
                 <span
                   style={{
@@ -133,10 +164,7 @@ export const VideoWithTitleHorizontalCard = ({
                   {category.type_name}
                 </span>
                 <div className='flex w-fit items-center cursor-pointer hover-yellow'>
-                  <VodListViewMore
-                    type={'xcategory'}
-                    data={category}
-                  />
+                  <VodListViewMore type={'xcategory'} data={category} />
                   <FontAwesomeIcon
                     style={{
                       fontSize: '14px',
@@ -158,6 +186,15 @@ export const VideoWithTitleHorizontalCard = ({
                     />
                   );
                 })}
+                {(idx + 1) % 3 === 0 && (
+                  <div className='col-span-3 md:col-span-6 lg:col-span-6'>
+                    <AdsBanner
+                      adsList={adsList}
+                      pathName={pathName}
+                      height='500px'
+                    />
+                  </div>
+                )}
               </div>
             </div>
           );
@@ -167,4 +204,4 @@ export const VideoWithTitleHorizontalCard = ({
       </div>
     </>
   );
-}
+};
