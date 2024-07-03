@@ -390,7 +390,7 @@ export default function Home(params) {
               <div className='desktop flex flex-col w-full'>
                 {/* 午夜场 class  desktop */}
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  <div className='row col-12 container px-0'>
+                  <div className='row col-12 container pt-4 mt-5 px-0'>
                     {
                       // Assuming xClassList is defined and is an array
                       [
