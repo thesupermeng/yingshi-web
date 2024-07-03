@@ -6,7 +6,7 @@ import styles from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import 'react-spring-bottom-sheet/dist/style.css'
-import { ArrowRightIcon } from "@/asset/icons";
+import { ArrowRightIcon } from '@/asset/icons';
 
 export const 
 VodEpisodeList = ({
@@ -54,7 +54,7 @@ VodEpisodeList = ({
     onSelectEpisode(episode);
   }
 
-  return <div className="flex flex-col space-y-4" style={style}>
+  return <div className="flex flex-col space-y-4 pl-4" style={style}>
     
     {/* PC */}
     <div className='lg:flex hidden relative'>
