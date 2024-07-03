@@ -100,11 +100,9 @@ export default function WebPage({ subMenus }) {
   // }, [token])
 
   return (
-    <div className={'grid grid-cols-5 xl:grid-cols-4 px-[110px]'}>
+    <div className={'grid grid-cols-7 xl:grid-cols-6 container'}>
       <div
-        className={
-          'col-span-2 xl:col-span-1 w-full flex flex-col gap-[15px] min-w-[300px]'
-        }
+        className={'col-span-3 xl:col-span-2 w-full flex flex-col gap-[15px]'}
       >
         <div
           className={
@@ -135,7 +133,7 @@ export default function WebPage({ subMenus }) {
       </div>
       <div
         className={
-          'col-span-3 xl:col-span-3 w-full flex flex-col gap-[15px] items-center px-[60px]'
+          'col-span-4 xl:col-span-4 w-full flex flex-col gap-[15px] items-center px-[60px]'
         }
       >
         {subMenus}

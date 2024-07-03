@@ -45,16 +45,26 @@ export const Carousel = ({
       </div>
     ),
   };
-
+  const allSameProperty = (arr, prop) =>
+    arr.every((item) => item[prop] === arr[0][prop]);
   const findAdBySlotId = (ads, slotId) => {
     if (!ads) {
       return;
     }
-
     let result = ads.filter(
       (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(slotId)
     );
-    return result[0];
+    result = result.sort((a, b) => b.ads_sort - a.ads_sort);
+
+    const sameSortFlag = allSameProperty(result, 'ads_sort');
+
+    if (result.length > 0 && sameSortFlag) {
+      const randomIndex = Math.floor(Math.random() * result.length);
+
+      return result[randomIndex];
+    } else {
+      return result[0];
+    }
   };
 
   const initCarousel = () => {
@@ -188,7 +198,7 @@ export const Carousel = ({
             style={{
               position: 'relative',
               width: '100%',
-              aspectRatio: '2/1',
+              aspectRatio: '1.9/1',
               overflow: 'hidden',
             }}
           >

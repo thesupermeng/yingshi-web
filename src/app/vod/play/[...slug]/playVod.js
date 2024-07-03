@@ -61,17 +61,42 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
   const getAllAds = async () => {
     return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
   };
-
+  const allSameProperty = (arr, prop) =>
+    arr.every((item) => item[prop] === arr[0][prop]);
   const getAds = async () => {
     console.log('play screen init');
     let allAds = await getAllAds();
     sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
 
+    // let result = allAds.data.filter(
+    //   (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(144)
+    // );
+
+    // if (result.length > 0) {
+    //   const randomIndex = Math.floor(Math.random() * result.length);
+    //   setAds(result[randomIndex]);
+    // } else {
+    //   setAds(result[0]);
+    // }
+
     let result = allAds.data.filter(
       (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(144)
     );
+    result = result.sort((a, b) => b.ads_sort - a.ads_sort);
+
+    console.log('result');
+    console.log(result);
+    const sameSortFlag = allSameProperty(result, 'ads_sort');
+
+    if (result.length > 0 && sameSortFlag) {
+      const randomIndex = Math.floor(Math.random() * result.length);
+
+      setAds(result[randomIndex]);
+    } else {
+      setAds(result[0]);
+    }
+
     setShowAds(true);
-    setAds(result[0]);
   };
 
   useLayoutEffect(() => {
@@ -88,9 +113,19 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
         let result = adsList.filter(
           (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(144)
         );
+        result = result.sort((a, b) => b.ads_sort - a.ads_sort);
+
+        const sameSortFlag = allSameProperty(result, 'ads_sort');
+
+        if (result.length > 0 && sameSortFlag) {
+          const randomIndex = Math.floor(Math.random() * result.length);
+
+          setAds(result[randomIndex]);
+        } else {
+          setAds(result[0]);
+        }
 
         setShowAds(true);
-        setAds(result[0]);
       } else {
         getAds();
       }
@@ -247,6 +282,14 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
         }
       });
     }
+  }, [vod]);
+
+  useEffect(() => {
+    const randomAds = async () => {
+      await getAds();
+    };
+
+    randomAds();
   }, [vod]);
 
   useEffect(() => {
@@ -541,15 +584,16 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                   ></div>
                 </div>
                 <div
+                  className='bg-theme'
                   style={{
                     padding: '0.3rem 1.2rem',
-                    background: '#FAC33D',
+
                     borderRadius: '12px',
-                    margin: '0.5rem 0.5rem 0rem 0.5rem',
+                    margin: '0.5rem',
                   }}
                   onClick={copyContentToClipboard}
                 >
-                  <span className='text-sm cursor-pointer text-[#000000]'>一键复制</span>
+                  <span className='text-sm cursor-pointer'>一键复制</span>
                 </div>
               </div>
             </div>
@@ -621,9 +665,10 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
               ></div>
             </div>
             <div
+              className='bg-theme'
               style={{
                 padding: '0.5rem 1.2rem',
-                background: '#FAC33D',
+
                 borderRadius: '12px',
                 margin: '0.5rem',
               }}
@@ -680,7 +725,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
               {showAds && !isVip ? ( //  && ads
                 <AdsPlayer
                   className='aspect-[16/9]'
-                  adsInfo={'ads'}
+                  adsInfo={ads}
                   handleAdsPlayerEndPlay={handleAdsPlayerEndPlay}
                 />
               ) : (
@@ -721,8 +766,8 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
               />
             </div>
 
-<div className='desktop'>  
-            <ExtraDesc vod={vod} episodeSelected={episodeSelected} />
+            <div className='desktop'>
+              <ExtraDesc vod={vod} episodeSelected={episodeSelected} />
             </div>
             <VodContent
               vodContent={vod.vod_blurb}
@@ -747,7 +792,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                     vodEpisodeInfo={vod.vod_episode_info}
                     vod={vod}
                     setShowShareBox={toggleShowShareBox}
-                    episodeSelected={episodeSelected} 
+                    episodeSelected={episodeSelected}
                   />
 
                   <VodSourceList
@@ -767,21 +812,12 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                       maxHeight: 300,
                     }}
                   />
-
-
                 </div>
 
-
-                <div className={`mobile`}>  
-            <ExtraDesc vod={vod} episodeSelected={episodeSelected} />
-            </div>
-                
+                <div className={`mobile`}>
+                  <ExtraDesc vod={vod} episodeSelected={episodeSelected} />
+                </div>
               </div>
-            
-
-
-
-
             </div>
             <div className='flex justify-center'>
               <div className='lg:w-[100%] w-[90%]'>
@@ -821,7 +857,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                     vod={vod}
                     openJianJie={openJianJie}
                     setShowShareBox={toggleShowShareBox}
-                    episodeSelected={episodeSelected} 
+                    episodeSelected={episodeSelected}
                   />
 
                   <VodSourceList

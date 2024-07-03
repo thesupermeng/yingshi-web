@@ -60,10 +60,10 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
   };
 
   const handleHrefLink = () => {
-    if (isPlaying) {
+    if (isPlaying&&adsInfo) {
       //  pauseVideo();
       // 1111111
-      window.open('https://aha888.vip/home?channelCode=100006', '_blank');
+      window.open(adsInfo.ads_url, '_blank');
     }
   };
 
@@ -114,8 +114,8 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
       >
         <source
           src={
-            'https://oss.yingshi.tv/videos/vod/vi/yingshi-ads.mp4'  //11111
-            //   adsInfo.ads_pic
+            // 'https://oss.yingshi.tv/videos/vod/vi/yingshi-ads.mp4'  //11111
+              adsInfo.ads_pic
           }
           type='video/mp4'
         />
@@ -124,20 +124,23 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
         className={`absolute bg-[#00000099] py-1 px-2 rounded-full items-center top-2 right-2 ${remaining !== null ? 'flex' : 'hidden'
           }`}
       >
-        <span className='text-sm nowrap'>{remaining}秒&nbsp;|&nbsp;</span>
+  {typeof remaining === 'number' && !isNaN(remaining) && (
+  <span className='text-sm nowrap'>{remaining}秒&nbsp;|&nbsp;</span>
+)}
         <span
           onClick={() => {
             handleOnSkipAd();
           }}
-          className='text-[#FAC33D] text-sm nowrap cursor-pointer'
+          className='text-theme text-sm nowrap cursor-pointer'
         >
           VIP跳广告
         </span>
         <FontAwesomeIcon
+        className='text-theme'
           style={{
             fontSize: '12px',
             paddingLeft: '5px',
-            color: '#FAC33D',
+          
           }}
           icon={faAngleRight}
         />
@@ -163,12 +166,14 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
         className={`absolute bg-[#00000099] py-1 px-2 rounded-full items-center top-2 right-2 ${remaining !== null ? 'flex' : 'hidden'
           }`}
       >
-        <span className='text-sm nowrap'>{remaining}秒&nbsp;|&nbsp;</span>
+      {typeof remaining === 'number' && !isNaN(remaining) && (
+  <span className='text-sm nowrap'>{remaining}秒&nbsp;|&nbsp;</span>
+)}
         <span
           onClick={() => {
             handleOnStopCount();
           }}
-          className='text-[#FAC33D] text-sm nowrap cursor-pointer'
+          className='text-theme text-sm nowrap cursor-pointer'
         >
           VIP跳广告
         </span>
@@ -176,8 +181,8 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
           style={{
             fontSize: '12px',
             paddingLeft: '5px',
-            color: '#FAC33D',
           }}
+            className='text-theme'
           icon={faAngleRight}
         />
       </div>
