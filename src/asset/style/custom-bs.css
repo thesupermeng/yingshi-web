@@ -2432,13 +2432,14 @@ a:not([href]):not([class]):hover {
 .btn-dark-catagory
 {
   padding: 10px 24px ;
-  margin-right: 15px;
+  margin-right: 10px;
   font-size: 14px;
   font-weight: 400;
   margin-top: 18px !important;
     margin-bottom: 18px !important;
-    border: none !important;
 }
+
+
 
 /* mobile */
 @media (max-width: 768px) {
@@ -2447,4 +2448,95 @@ a:not([href]):not([class]):hover {
     margin-top: 0px !important;
     margin-bottom: 0px !important;
   }
+
+  
+}
+
+
+/* mobile */
+@media (max-width: 1200px) {
+  .btn-dark-catagory-x
+  {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+}
+
+
+.collapse {
+  display: none;
+
+}
+.collapse.show {
+  display: block;
+  visibility: visible;
+}
+tr.collapse.show {
+  display: table-row;
+}
+tbody.collapse.show {
+  display: table-row-group;
+}
+.collapsing {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  transition: height 0.35s ease;
+}
+
+.navbar-collapse {
+  -ms-flex-preferred-size: 100%;
+  flex-basis: 100%;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.navbar-expand-sm .navbar-collapse {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -ms-flex-preferred-size: auto;
+  flex-basis: auto;
+}
+
+.navbar-expand-md .navbar-collapse {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -ms-flex-preferred-size: auto;
+  flex-basis: auto;
+}
+
+.navbar-expand-lg .navbar-collapse {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -ms-flex-preferred-size: auto;
+  flex-basis: auto;
+}
+
+.navbar-expand-xl .navbar-collapse {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -ms-flex-preferred-size: auto;
+  flex-basis: auto;
+}
+
+.navbar-expand .navbar-collapse {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -ms-flex-preferred-size: auto;
+  flex-basis: auto;
+}
+
+.table {
+  border-collapse: collapse !important;
+}
+table {
+  border-collapse: collapse;
 }
