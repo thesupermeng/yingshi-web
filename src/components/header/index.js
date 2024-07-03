@@ -66,6 +66,7 @@ const Header = () => {
   const pathname = usePathname();
   const [selectedId, setSelectedId] = useState(0);
   const [searchInput, setSearchInput] = useState('');
+  const [isComposing, setIsComposing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [openMore, setOpenMore] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
@@ -428,10 +429,17 @@ const Header = () => {
               className='border-0 border-gray-300 text-white rounded-full pl-10 md:pl-4 md:pr-10 pr-4 py-2 focus:outline-none w-full md:w-60 header-search-input-desktop text-[14px]'
               onClick={handleOpenSearch}
               onKeyDown={(e) => {
-                if (e.key === 'Enter') {
+                if (e.key === 'Enter' && !isComposing) {
                   e.target.blur();
-                  // handleSearch();
+                  handleSearch();
                 }
+              }}
+              onCompositionStart={() => {
+                setIsComposing(true)
+              }}
+              onCompositionEnd={(e) => {
+                setIsComposing(false);
+                handleChange(e);
               }}
             />
             <div className='absolute inset-y-0 left-3 flex items-center justify-center md:hidden'>
