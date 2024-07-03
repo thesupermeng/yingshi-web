@@ -26,6 +26,7 @@ import useYingshiUser from '@/hook/yingshiUser/useYingshiUser.js';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 import { YingshiApi2 } from '@/util/YingshiApi';
 import { Config } from '@/util/config';
+import { AdsBanner } from '@/components/ads/adsBanner.js';
 
 export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
   const router = useRouter();
@@ -49,9 +50,8 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
   const [episodeGroupSelected, setEpisodeGroupSelected] = useState({});
   const [desc, setDesc] = useState('');
   const [toggleJianJie, setToggleJianJie] = useState(false);
-  const [toggleShowShareBoxStatus, setToggleShowShareBoxStatus] = useState(
-    false
-  );
+  const [toggleShowShareBoxStatus, setToggleShowShareBoxStatus] =
+    useState(false);
   const [vodShareContent, setVodShareContent] = useState('');
   const [showToastMessage, setShowToastMessage] = useState(false);
   const [ads, setAds] = useState(null);
@@ -768,6 +768,10 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
               />
             </div>
 
+            <div className='lg:flex hidden'>
+              <AdsBanner pathName={path} height='500px' />
+            </div>
+
             <div className='desktop'>
               <ExtraDesc vod={vod} episodeSelected={episodeSelected} />
             </div>
@@ -823,6 +827,9 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
             </div>
             <div className='flex justify-center'>
               <div className='lg:w-[100%] w-[90%]'>
+                <div className='lg:hidden flex'>
+                  <AdsBanner pathName={path} height='500px' />
+                </div>
                 <div style={{ marginTop: '30px', marginBottom: '10px' }}>
                   <span className='text-xl' style={{ fontWeight: '500' }}>
                     {t('相关推荐')}
@@ -925,7 +932,9 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
               <VodPopularList />
             </div>
 
-            {/* <AdsBanner height='500px' /> */}
+            <div className='lg:flex hidden'>
+              <AdsBanner pathName={path} height='500px' />
+            </div>
           </div>
         </div>
       )}

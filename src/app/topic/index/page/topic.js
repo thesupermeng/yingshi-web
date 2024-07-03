@@ -55,14 +55,6 @@ export const Topic = () => {
   }, []);
   //end banner ads
 
-  // const getTopicListApi = async () => {
-  //   return YingshiApi(
-  //     URL_YINGSHI_VOD.topicListing + '?limit=18&page=' + nextPage,
-  //     {},
-  //     { method: 'GET' }
-  //   );
-  // };
-
   const getTopicList = async () => {
     let currentPage = nextPage;
     const topicListing = await getTopicListApi(nextPage);
@@ -135,7 +127,7 @@ export const Topic = () => {
           </div>
 
           {/* topic list  */}
-          <div className='d-flex container pb-6'>
+          <div className='d-flex container pb-6 pt-6'>
             <div className='flex grid 2xl:grid-cols-3 grid-cols-2 gap-4'>
               {topicList.map((topic, idx) => (
                 <Fragment key={topic.topic_id}>

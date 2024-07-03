@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState, useRef } from 'react';
 import Artplayer from './player.js';
@@ -13,19 +13,21 @@ import styles from './style.module.css';
 import { VideoHorizontalCard } from '@/components/videoItem/videoHorizontalCard';
 import { ArrowLeftIcon, ArrowRightIcon } from '@/asset/icons';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { convertTimeStampToDateTime } from '@/util/date';
 import { FullPageContent } from '@/componentsH5/FullPageContent';
 import { LottieAnimation } from '@/components/lottie';
 import { IrrLoading } from '@/asset/lottie';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser.js';
-import {YingshiApi} from '@/util/YingshiApi';
-import {URL_YINGSHI_VOD} from '@/config/yingshiUrl';
-import {Config} from '@/util/config';
+import { YingshiApi, YingshiApi2 } from '@/util/YingshiApi';
+import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
+import { Config } from '@/util/config';
+import { AdsBanner } from '@/components/ads/adsBanner.js';
 
-export const PlayXVod = ({ vodId, tId, nId  }) => {
+export const PlayXVod = ({ vodId, tId, nId }) => {
   const router = useRouter();
   const { t } = useTranslation();
+  const path = usePathname();
 
   const shareContentRef = useRef(null);
   const domElementRef = useRef(null);
@@ -42,10 +44,37 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
 
   const [toggleJianJie, setToggleJianJie] = useState(false);
   const [desc, setDesc] = useState('');
-  const [toggleShowShareBoxStatus, setToggleShowShareBoxStatus] = useState(false);
+  const [toggleShowShareBoxStatus, setToggleShowShareBoxStatus] =
+    useState(false);
   const [vodShareContent, setVodShareContent] = useState('');
   const [showToastMessage, setShowToastMessage] = useState(false);
   const { isVip, userInfo } = useYingshiUser();
+
+  //banner ads
+  const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
+  const [adsList, setAdsList] = useState([]);
+  const getAllAds = async () => {
+    return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
+  };
+  const initAds = async () => {
+    let allAds = await getAllAds();
+    sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
+
+    setAdsList(allAds.data);
+  };
+  useLayoutEffect(() => {
+    let adsList = initAdsList;
+    if (!adsList) {
+      adsList = JSON.parse(sessionStorage.getItem('adsList'));
+    }
+
+    if (adsList && adsList !== 'undefined') {
+      setAdsList(adsList);
+    } else {
+      initAds();
+    }
+  }, []);
+  //end banner ads
 
   const getXVod = async () => {
     if (tId == 0) {
@@ -91,8 +120,9 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
       {},
       {
         method: 'GET',
-      });
-  }
+      }
+    );
+  };
 
   useEffect(() => {
     let content = '';
@@ -329,9 +359,10 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
   const copyContentToClipboard = () => {
     let content = vodShareContent.replaceAll('</br>', ' ');
     console.log(content);
-  
+
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(content)
+      navigator.clipboard
+        .writeText(content)
         .then(() => {
           setShowToastMessage(true);
           setToggleShowShareBoxStatus(false);
@@ -344,11 +375,11 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
       // Fallback method for unsupported browsers
       const textarea = document.createElement('textarea');
       textarea.value = content;
-      textarea.style.position = 'fixed';  // Prevent scrolling to bottom of page in MS Edge.
+      textarea.style.position = 'fixed'; // Prevent scrolling to bottom of page in MS Edge.
       document.body.appendChild(textarea);
       textarea.focus();
       textarea.select();
-      
+
       try {
         document.execCommand('copy');
         setShowToastMessage(true);
@@ -357,7 +388,7 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
       } catch (err) {
         console.error('Fallback: Oops, unable to copy', err);
       }
-      
+
       document.body.removeChild(textarea);
     }
   };
@@ -621,6 +652,9 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
                 }}
               />
             </div>
+            <div className='lg:flex hidden'>
+              <AdsBanner pathName={path} height='500px' />
+            </div>
             <VodContent
               vodContent={vod.vod_blurb}
               vodEpisodeSelected={episodeSelected}
@@ -668,6 +702,9 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
             </div>
             <div className='flex justify-center'>
               <div className='lg:w-[100%] w-[90%]'>
+                <div className='lg:hidden flex'>
+                  <AdsBanner pathName={path} height='500px' />
+                </div>
                 <div style={{ marginTop: '30px', marginBottom: '10px' }}>
                   <span className='text-xl' style={{ fontWeight: '500' }}>
                     {t('相关推荐')}
@@ -742,7 +779,10 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
                     <div>{vod.vod_name}</div>
                   </div>
                   <div></div>
-                  <div className='pb-6 allow-select' style={{ color: '#9C9C9C' }}>
+                  <div
+                    className='pb-6 allow-select'
+                    style={{ color: '#9C9C9C' }}
+                  >
                     <div className='text-sm pt-1'>{desc}</div>
                     <div className='text-sm pt-1'>
                       更新: {convertTimeStampToDateTime(vod.vod_time).year}-
@@ -768,6 +808,10 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
 
             <div className={styles.vodMetaContainer}>
               <VodPopularList />
+            </div>
+
+            <div className='lg:flex hidden'>
+              <AdsBanner pathName={path} height='500px' />
             </div>
 
             {/* <AdsBanner height='500px' /> */}

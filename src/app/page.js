@@ -431,6 +431,13 @@ export default function Home(params) {
                   </div>
                 </div>
                 {/* end 午夜场 class desktop */}
+                <div className='container w-full'>
+                  <AdsBanner
+                    adsList={adsList}
+                    pathName={pathName}
+                    height='500px'
+                  />
+                </div>
 
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                   <div className=' container  w-[100%]'>
@@ -440,13 +447,19 @@ export default function Home(params) {
                       isStillCanLoad={still99CanLoad}
                       platform='web'
                     />
+                    <div className='container w-full'>
+                      <AdsBanner
+                        adsList={adsList}
+                        pathName={pathName}
+                        height='500px'
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
               {/* 午夜场 mobile   111111 */}
               <div className='mobile flex flex-col w-full'>
                 {/* 午夜场 class  mobile */}
-
                 <div
                   className='hide-scrollbar'
                   style={{
@@ -496,10 +509,18 @@ export default function Home(params) {
                     })
                   }
                 </div>
+                
+                <div className='container w-full'>
+                  <AdsBanner
+                    adsList={adsList}
+                    pathName={pathName}
+                    height='500px'
+                  />
+                </div>
 
                 {/* end 午夜场 class mobile */}
 
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <div className='flex flex-col' style={{ justifyContent: 'center' }}>
                   {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
                   <div className='pt-1 container  w-[100%]'>
                     <VideoWithTitleHorizontalCard
@@ -509,6 +530,13 @@ export default function Home(params) {
                       platform='mobile'
                     />
                   </div>
+                  <div className='container w-full'>
+                  <AdsBanner
+                    adsList={adsList}
+                    pathName={pathName}
+                    height='500px'
+                  />
+                </div>
                 </div>
               </div>
             </>

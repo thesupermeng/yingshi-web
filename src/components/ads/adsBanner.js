@@ -77,6 +77,8 @@ export const AdsBanner = ({
       navId = '12-15';
     }
 
+    
+
     if (navId && navId != 0) {
       const parts = navId?.split('-').map(Number);
 
