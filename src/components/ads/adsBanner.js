@@ -80,7 +80,7 @@ export const AdsBanner = ({
     }
 
     if (isPlayVertival == true) {
-      navId = '1-13';
+      navId = '3-20';
     }
 
     if (navId && navId != 0) {

@@ -298,7 +298,7 @@ export const FilmLibrary = () => {
   return (
     <>
       <div className='flex flex-1 justify-start flex-col'>
-        <div className=' w-[100%]'>
+        <div className=' w-[100%] container'>
           <AdsBanner adsList={adsList} pathName={path} height='500px' />
         </div>
 
