@@ -324,13 +324,13 @@ export default function Home(params) {
                     categories?.map((category, idx) => {
                       return (
                         <div key={idx} className={'pt-3'}>
-                          {idx % 2 !== 0 && (
+                          {/* {idx % 2 !== 0 && (
                             <AdsBanner
                               pathName={pathName}
                               navId={'1-13'}
                               height='500px'
                             />
-                          )}
+                          )} */}
                           <div id={category.type_id} key={idx}>
                             <div className='flex justify-between'>
                               <span
