@@ -400,7 +400,7 @@ const Header = () => {
     };
   }, []);
 
-  if (loading && !pathname.startsWith('/download')) {
+  if (loading && !pathname.startsWith('/download') && !pathname.startsWith('/invite')) {
     return <LoadingPage full={true} />;
   }
 
@@ -1223,7 +1223,7 @@ const Header = () => {
     return null;
   }
 
-  if (pathname.startsWith('/purchase-redirect')) {
+  if (pathname.startsWith('/purchase-redirect') || pathname.startsWith('/invite')) {
     return <></>;
   }
 
