@@ -110,6 +110,14 @@ export const Topic = () => {
           <div className={styles.containerHeader}>
             <div className='d-flex' style={{ width: '100%' }}>
               <div className='overlay' style={{ width: '100%' }}>
+
+                   {/* topic list  */}
+
+    
+            <div className='container'>
+              <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
+            </div>
+      
                 <div className=' container px-0 d-flex flex-col'>
                   <div className='w-fit'>
                     <div className='topic-header-text w-fit'>播单</div>
@@ -119,13 +127,7 @@ export const Topic = () => {
             </div>
           </div>
 
-          {/* topic list  */}
-
-          {topicList.length > 0 && (
-            <div className='container'>
-              <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
-            </div>
-          )}
+       
 
           <div className='d-flex container pb-6 pt-6'>
             <div className='flex grid 2xl:grid-cols-3 grid-cols-2 gap-4'>

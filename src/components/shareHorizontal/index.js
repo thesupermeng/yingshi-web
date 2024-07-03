@@ -65,9 +65,9 @@ export const ShareHorizontal = ({ className = '', setShowShareBox }) => {
         {sharingMethod.map((item, index) => (
           <div
             key={index}
-            className={`rounded-full border-2	border-[#1D2023] ${index >= 5 && !showDropDown ? 'hidden' : ''}`}
+            className={` ${index >= 5 && !showDropDown ? 'hidden' : ''}`}
           >
-            <Image src={item} alt='Icon' className=' w-14' />
+            <Image src={item} alt='Icon' className='rounded-full share-icn' />
           </div>
         ))}
       </div>
@@ -76,8 +76,8 @@ export const ShareHorizontal = ({ className = '', setShowShareBox }) => {
         onClick={share}
       >
         {sharingMethod.map((item, index) => (
-          <div key={index} className={`rounded-full border-2	border-[#171717]`}>
-            <Image src={item} alt='Icon' className='w-20' />
+          <div key={index}>
+            <Image src={item} alt='Icon' className='rounded-full share-icn' />
           </div>
         ))}
       </div>

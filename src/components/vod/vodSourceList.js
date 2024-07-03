@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { ArrowLeftIcon, ArrowRightIcon, PlaySourceActive, PlaySourceIcon } from '@/asset/icons';
+import { ArrowLeftIcon, ArrowRightIcon, PlaySourceIcon } from '@/asset/icons';
 
 import styles from './style.module.css';
 import { useState, useRef, useEffect } from 'react';
@@ -24,6 +24,7 @@ export const VodSourceList = ({
 
   useEffect(() => {
     if (selectedItemRef.current) {
+
       selectedItemRef.current.scrollIntoView({
         behavior: 'smooth',
         block: 'nearest',
@@ -73,21 +74,11 @@ export const VodSourceList = ({
               <div className='w-6 h-6 flex justify-center items-center'>
                 <Image
                   style={{ paddingRight: '2px' }}
-                  src={
-                    vodSourceSelected.source_id === source.source_id
-                      ? PlaySourceActive
-                      : PlaySourceIcon
-                  }
+                  src={PlaySourceIcon}
                   alt='Icon'
                 />
               </div>
-              <span
-                className={`whitespace-nowrap text-sm ${
-                  vodSourceSelected.source_id === source.source_id
-                    ? 'text-[#000000]'
-                    : ''
-                }`}
-              >
+              <span className='whitespace-nowrap text-sm'>
                 {source.source_name}
               </span>
             </div>

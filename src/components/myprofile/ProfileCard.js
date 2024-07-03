@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import {editIcon, MemberUser, profileIcon, vipProfileIcon, VipUser} from '@/asset/icons';
+import {editIcon, guestUser, MemberUser, profileIcon, vipProfileIcon, VipUser} from '@/asset/icons';
 import {formatDateCN} from '@/util/date';
 import {logout} from '@/services/yingshiUser';
 import {setYingshiUserInfo} from '@/store/yingshiUser';
@@ -11,10 +11,10 @@ export default function ProfileCard({userInfo, isVip, isH5, onSignin}) {
   const dispatch = useDispatch()
   const router = useRouter()
 
-  const iconProfile = isVip ? VipUser : userInfo ? MemberUser : profileIcon
+  const iconProfile = isVip ? VipUser : userInfo ? MemberUser : guestUser
 
   return (
-    <div className={'flex gap-[12px] items-center'}>
+    <div className={'flex gap-[15px] items-center'}>
       <div className="flex justify-center">
         <Image
           src={iconProfile}
