@@ -58,7 +58,7 @@ export const Topic = () => {
   const getTopicList = async () => {
     let currentPage = nextPage;
     const topicListing = await getTopicListApi(nextPage);
-    console.log(topicListing)
+    console.log(topicListing);
 
     if (nextPage > 1) {
       setTopicList((prev) => [...prev, ...topicListing.List]);
@@ -111,12 +111,9 @@ export const Topic = () => {
             <div className='d-flex' style={{ width: '100%' }}>
               <div className='overlay' style={{ width: '100%' }}>
                 <div className=' container px-0 d-flex flex-col'>
-                
                   <div className='w-fit'>
                     <div className='topic-header-text w-fit'>播单</div>
                   </div>
-
-
                 </div>
               </div>
             </div>
@@ -124,22 +121,14 @@ export const Topic = () => {
 
           {/* topic list  */}
 
-
-          {topicList.length > 0 &&
-                  <div className='container'>
-                    <AdsBanner
-                      adsList={adsList}
-                      pathName={pathName}
-                      height='500px'
-                    />
-                  </div>
-}
-
+          {topicList.length > 0 && (
+            <div className='container'>
+              <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
+            </div>
+          )}
 
           <div className='d-flex container pb-6 pt-6'>
             <div className='flex grid 2xl:grid-cols-3 grid-cols-2 gap-4'>
-
-  
               {topicList.map((topic, idx) => (
                 <Fragment key={topic.topic_id}>
                   <div className='pt-0.5'>
@@ -202,7 +191,7 @@ export const Topic = () => {
         <div className='mobile'>
           <div className='w-screen px-[10px]'>
             {/* <div className=' w-full'> */}
-              <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
+            <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
             {/* </div> */}
             {topicList.map((topic, idx) => (
               <div className='w-full' key={topic.topic_id}>
@@ -266,18 +255,29 @@ export const Topic = () => {
             ))}
           </div>
         </div>
-        {topicList.length > 0 &&
 
-        <div className=' w-full container'>
-          <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
-        </div>
-}
         {/* loading spinner  */}
-        <div ref={targetRef}>{stillCanLoad && <Spinner></Spinner>}</div>
+        <div ref={targetRef}>
+          {stillCanLoad && <Spinner></Spinner>}
+          {topicList.length > 0 && (
+            <div className=' w-full container'>
+              <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
+            </div>
+          )}
+        </div>
 
         {!stillCanLoad && (
           <div className='flex items-center justify-center flex-col py-2'>
             <span className='test-xs text-muted'>没有更多了</span>
+            {topicList.length > 0 && (
+              <div className=' w-full container'>
+                <AdsBanner
+                  adsList={adsList}
+                  pathName={pathName}
+                  height='500px'
+                />
+              </div>
+            )}
           </div>
         )}
       </div>
