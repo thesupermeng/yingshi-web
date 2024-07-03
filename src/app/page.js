@@ -249,7 +249,7 @@ export default function Home(params) {
                 headerMenuState &&
                 classList && (
                   <div
-                    className='container w-full overflow-x-auto max-w-full no-scrollbar'
+                    className='container w-full overflow-x-auto max-w-full'
                     style={{
                       display: 'flex',
                       overflowX: 'auto',
@@ -343,7 +343,7 @@ export default function Home(params) {
                               >
                                 {category.type_name}
                               </span>
-                              <div className='flex w-fit items-center cursor-pointer hover-yellow'>
+                              <div className='flex w-fit items-center cursor-pointer hover-blue'>
                                 <VodListViewMore
                                   type={'category'}
                                   data={category}
@@ -392,105 +392,52 @@ export default function Home(params) {
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                   <div className='row col-12 container pt-4 mt-5 px-0'>
                     {
-                      xClassList &&
-                        xClassList.slice(0, 33).map((cItem, cIndex) => {
-                          return (
-                            <Link
-                              href={`/xvod/${cItem.mappedValue}/${cItem.item}`}
-                              key={cIndex + 30 + '-xclass'}
-                              className='btn btn-dark hover-effect text-white btn-dark-catagory btn-dark-catagory-x text-nowrap col-lg-1 col-md-1 col-sm-2'
-                              style={{ borderRadius: '6px' }}
-                            >
-                              {cItem.item}
-                            </Link>
-                          );
-                        }) // classList map for index 0-29
+                      // Assuming xClassList is defined and is an array
+                      [
+                        ...Array(
+                          Math.ceil(Math.min(xClassList.length, 40) / 10)
+                        ),
+                      ].map((_, rowIndex) => {
+                        const start = rowIndex * 10;
+                        const end = Math.min(
+                          start + 10,
+                          Math.min(xClassList.length, 40)
+                        );
+
+                        return (
+                          <div
+                            className='d-flex flex-wrap justify-content-between w-100'
+                            key={rowIndex}
+                          >
+                            {xClassList
+                              .slice(start, end)
+                              .map((cItem, cIndex) => (
+                                <Link
+                                  href={`/xvod/${cItem.mappedValue}/${cItem.item}`}
+                                  key={`${start}-${end}-${cIndex}-xclass`}
+                                  className='btn btn-dark hover-effect text-white btn-dark-catagory btn-dark-catagory-x text-nowrap mb-2 px-4'
+                                  style={{
+                                    borderRadius: '6px',
+                                    width: 'calc(10% - 10px)',
+                                  }} // Adjust width as needed
+                                >
+                                  {cItem.item}
+                                </Link>
+                              ))}
+                          </div>
+                        );
+                      })
                     }
-
-                    <>
-                      <div className='collapse px-0' id='collapseDesktop'>
-                        {xClassList &&
-                          xClassList.slice(33).map((cItem, cIndex) => (
-                            <Link
-                              href={`/xvod/${cItem.mappedValue}/${cItem.item}`}
-                              key={cIndex + 30 + '-xclass'}
-                              className='btn btn-dark hover-effect text-white btn-dark-catagory btn-dark-catagory-x text-nowrap col-lg-1 col-md-1 col-sm-2'
-                              style={{ borderRadius: '6px' }}
-                            >
-                              {cItem.item}
-                            </Link>
-                          ))}
-                      </div>
-
-                      <div
-                        className='pr-2'
-                        style={{
-                          borderRadius: '6px',
-                          display: 'flex',
-                          justifyContent: 'flex-start',
-                          paddingLeft:'0px'
-                        }}
-                      >
-                        {isCollapsed ? (
-                          <button
-                            className='btn btn-theme px-3 mr-1'
-                            type='button'
-                            data-toggle='collapse'
-                            data-target='#collapseDesktop'
-                            aria-expanded='false'
-                            aria-controls='collapseDesktop'
-                            onClick={handleToggle}
-                          >
-                            展开{' '}
-                            <a
-                              data-toggle='collapse'
-                              href='#collapseDesktop'
-                              role='button'
-                              aria-expanded='false'
-                              aria-controls='collapseDesktop'
-                            >
-                              <FontAwesomeIcon
-                                style={{
-                                  fontStyle: 'normal',
-                                  fontFamily: 'PingFang SC',
-                                }}
-                                icon={faChevronDown}
-                              />
-                            </a>
-                          </button>
-                        ) : (
-                          <button
-                            className='btn  btn-theme'
-                            type='button'
-                            data-toggle='collapse'
-                            data-target='#collapseDesktop'
-                            aria-expanded='false'
-                            aria-controls='collapseDesktop'
-                            onClick={handleToggle}
-                          >
-                            收起
-                            <a
-                              data-toggle='collapse'
-                              href='#collapseDesktop'
-                              role='button'
-                              aria-expanded='false'
-                              aria-controls='collapseDesktop'
-                            >
-                              <FontAwesomeIcon
-                                style={{
-                                  fontStyle: 'normal',
-                                  fontFamily: 'PingFang SC',
-                                }}
-                                icon={faChevronUp}
-                              />
-                            </a>
-                          </button>
-                        )}
-                      </div>
-                    </>
                   </div>
                 </div>
                 {/* end 午夜场 class desktop */}
+                <div className='container w-full'>
+                  <AdsBanner
+                    adsList={adsList}
+                    pathName={pathName}
+                    height='500px'
+                  />
+                </div>
 
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                   <div className=' container  w-[100%]'>
@@ -500,6 +447,13 @@ export default function Home(params) {
                       isStillCanLoad={still99CanLoad}
                       platform='web'
                     />
+                    <div className='container w-full'>
+                      <AdsBanner
+                        adsList={adsList}
+                        pathName={pathName}
+                        height='500px'
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -507,40 +461,66 @@ export default function Home(params) {
               <div className='mobile flex flex-col w-full'>
                 {/* 午夜场 class  mobile */}
                 <div
+                  className='hide-scrollbar'
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '5px',
+                    gap: '15px',
                     justifyContent: 'center',
+                    marginTop: '5px',
+                    overflowX: 'auto', // Enable horizontal scrolling on the parent container
+                    width: '100%', // Ensure the container takes full width
+                    padding: '5px 0px 15px 10px',
                   }}
                 >
-                  {xClassList2.map((chunk, chunkIndex) => (
-                    <div
-                      key={chunkIndex + 'parnt'}
-                      className='container px-2 pt-2 mt-1 custom-scroll'
-                      style={{ display: 'flex', overflowX: 'auto', gap: '8px' }}
-                    >
-                      {chunk.map((cItem, cIndex) => (
-                        <Link
-                          href={`/xvod/${cItem.mappedValue}/${cItem.item}`}
-                          key={chunkIndex + cItem.item + '-xmobile-class'}
-                          className='btn btn-dark hover-effect text-white btn-dark-catagory btn-dark-catagory-x text-nowrap'
-                          style={{
-                            borderRadius: '7px',
-                            minWidth: '100px',
-                            flexShrink: 0,
-                          }}
+                  {
+                    // Assuming xClassList is defined and is an array
+                    [
+                      ...Array(Math.ceil(Math.min(xClassList.length, 40) / 10)),
+                    ].map((_, rowIndex) => {
+                      const start = rowIndex * 10;
+                      const end = Math.min(
+                        start + 10,
+                        Math.min(xClassList.length, 40)
+                      );
+
+                      return (
+                        <div
+                          className='d-flex flex-wrap justify-content-start w-auto' // Adjust width to content width
+                          key={rowIndex}
+                          style={{ minWidth: '1190px', overflowX: 'auto' }} // Ensure each row can scroll horizontally independently
                         >
-                          {cItem.item}
-                        </Link>
-                      ))}
-                    </div>
-                  ))}
+                          {xClassList.slice(start, end).map((cItem, cIndex) => (
+                            <Link
+                              href={`/xvod/${cItem.mappedValue}/${cItem.item}`}
+                              key={`${start}-${end}-${cIndex}-xclass`}
+                              className='btn btn-dark hover-effect text-white btn-dark-catagory btn-dark-catagory-x text-nowrap mb-2'
+                              style={{
+                                minWidth: '108px',
+                                flexShrink: 0,
+                                borderRadius: '6px',
+                              }} // Adjust width as needed
+                            >
+                              {cItem.item}
+                            </Link>
+                          ))}
+                        </div>
+                      );
+                    })
+                  }
+                </div>
+                
+                <div className='container w-full'>
+                  <AdsBanner
+                    adsList={adsList}
+                    pathName={pathName}
+                    height='500px'
+                  />
                 </div>
 
                 {/* end 午夜场 class mobile */}
 
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <div className='flex flex-col' style={{ justifyContent: 'center' }}>
                   {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
                   <div className='pt-1 container  w-[100%]'>
                     <VideoWithTitleHorizontalCard
@@ -550,6 +530,13 @@ export default function Home(params) {
                       platform='mobile'
                     />
                   </div>
+                  <div className='container w-full'>
+                  <AdsBanner
+                    adsList={adsList}
+                    pathName={pathName}
+                    height='500px'
+                  />
+                </div>
                 </div>
               </div>
             </>
