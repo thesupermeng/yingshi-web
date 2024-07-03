@@ -17,6 +17,7 @@
 
 .selectedOptionCard {
   background-color: #FAC33D !important;
+  color: #000000;
 }
 
 .unselectedOptionCard {
