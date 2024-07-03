@@ -1,5 +1,11 @@
 'use client';
-import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useLayoutEffect,
+  Fragment,
+} from 'react';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { YingshiApi, YingshiApi2 } from '@/util/YingshiApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -49,17 +55,10 @@ export const Topic = () => {
   }, []);
   //end banner ads
 
-  // const getTopicListApi = async () => {
-  //   return YingshiApi(
-  //     URL_YINGSHI_VOD.topicListing + '?limit=18&page=' + nextPage,
-  //     {},
-  //     { method: 'GET' }
-  //   );
-  // };
-
   const getTopicList = async () => {
     let currentPage = nextPage;
     const topicListing = await getTopicListApi(nextPage);
+    console.log(topicListing)
 
     if (nextPage > 1) {
       setTopicList((prev) => [...prev, ...topicListing.List]);
@@ -111,66 +110,89 @@ export const Topic = () => {
           <div className={styles.containerHeader}>
             <div className='d-flex' style={{ width: '100%' }}>
               <div className='overlay' style={{ width: '100%' }}>
-                <div className='topic-container-header container px-0 d-flex  flex-column'>
-                  <div className='topic-header-text'>播单</div>
+                <div className=' container px-0 d-flex flex-col'>
+                
+                  <div className='w-fit'>
+                    <div className='topic-header-text w-fit'>播单</div>
+                  </div>
+
+
                 </div>
               </div>
             </div>
           </div>
-          {adsList && (
-            <div className=' w-[100%]'>
-              <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
-            </div>
-          )}
+
           {/* topic list  */}
-          <div className='d-flex container pb-6'>
-            <div className='row '>
-              {topicList.map((topic) => (
-                <div className='col-lg-4 col-md-6' key={topic.topic_id}>
-                  {/* Render topic details here */}
-                  <Link
-                    className='row topic-wrap'
-                    href={`/topic/detail/id/${topic.topic_id}`}
-                  >
-                    <div className='col-12 mx-0 px-0'>
-                      <div className='d-flex topic-card'>
-                        <div
-                          style={{
-                            padding: '10px',
-                            width: '123px',
-                            borderRadius: '10px',
-                          }}
-                        >
-                          <img
-                            alt='topic items'
-                            className={`object-cover`}
-                            src={topic?.vod_list[0].vod_pic}
+
+
+          {topicList.length > 0 &&
+                  <div className='container'>
+                    <AdsBanner
+                      adsList={adsList}
+                      pathName={pathName}
+                      height='500px'
+                    />
+                  </div>
+}
+
+
+          <div className='d-flex container pb-6 pt-6'>
+            <div className='flex grid 2xl:grid-cols-3 grid-cols-2 gap-4'>
+
+  
+              {topicList.map((topic, idx) => (
+                <Fragment key={topic.topic_id}>
+                  <div className='pt-0.5'>
+                    <Link href={`/topic/detail/id/${topic.topic_id}`}>
+                      <div className='w-full'>
+                        <div className='d-flex topic-card'>
+                          <div
                             style={{
-                              borderRadius: '10px',
+                              padding: '10px',
                               width: '123px',
-                              height: '170px',
+                              borderRadius: '10px',
                             }}
-                          />
-                        </div>
-                        <div className='col d-flex flex-column justify-content-between'>
-                          <div>
-                            <div className='text-base font-bold pb-2'>
-                              {topic.topic_name}
-                            </div>
-                            <div className='text-xs topic-blurb'>
-                              {topic.topic_blurb.length > 105
-                                ? `${topic.topic_blurb.substring(0, 105)}...`
-                                : topic.topic_blurb}
-                            </div>
-                            <div className='text-primary pt-4 text-xs'>
-                              查看更多 <FontAwesomeIcon icon={faAngleRight} />
+                          >
+                            <img
+                              alt='topic items'
+                              className={`object-cover`}
+                              src={topic?.vod_list[0].vod_pic}
+                              style={{
+                                borderRadius: '10px',
+                                width: '123px',
+                                height: '170px',
+                              }}
+                            />
+                          </div>
+                          <div className='col d-flex flex-column justify-content-between'>
+                            <div>
+                              <div className='text-base font-bold pb-2'>
+                                {topic.topic_name}
+                              </div>
+                              <div className='text-xs topic-blurb'>
+                                {topic.topic_blurb.length > 105
+                                  ? `${topic.topic_blurb.substring(0, 105)}...`
+                                  : topic.topic_blurb}
+                              </div>
+                              <div className='text-primary pt-4 text-xs'>
+                                查看更多 <FontAwesomeIcon icon={faAngleRight} />
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
+                    </Link>
+                  </div>
+                  {/* {(idx + 1) % 12 === 0 && (
+                    <div className='2xl:col-span-3  col-span-2'>
+                      <AdsBanner
+                        adsList={adsList}
+                        pathName={pathName}
+                        height='500px'
+                      />
                     </div>
-                  </Link>
-                </div>
+                  )} */}
+                </Fragment>
               ))}
             </div>
           </div>
@@ -178,70 +200,78 @@ export const Topic = () => {
 
         {/* mobile  view  */}
         <div className='mobile'>
-          <div className='row w-screen'>
-            {adsList && (
-              <div className=' w-[100%]'>
-                <AdsBanner
-                  adsList={adsList}
-                  pathName={pathName}
-                  height='500px'
-                />
-              </div>
-            )}
-            {topicList.map((topic) => (
-              <Link
-                className='mb-2 cursor-pointer'
-                key={topic.topic_id}
-                href={`/topic/detail/id/${topic.topic_id}`}
-              >
-                <div className='col-12 pt-2 d-flex justify-content-between align-items-center pb-1 font-semibold'>
-                  <span>{topic.topic_name}</span>
-                  <span className='mr-2'>
-                    {' '}
-                    <FontAwesomeIcon icon={faAngleRight} />
-                  </span>
-                </div>
-
-                <div className='col-12 mobile-topic-desc'>
-                  {topic.topic_blurb.length > 52
-                    ? `${topic.topic_blurb.slice(0, 52)}...`
-                    : topic.topic_blurb}
-                </div>
-
-                <div className='col-12' key={topic.topic_id}>
-                  <div className='row g-2'>
-                    {topic?.vod_list?.slice(0, 3).map((vod) => (
-                      <div
-                        className='col-4 cursor-pointer'
-                        key={vod.vod_id}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          router.push(
-                            `/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`
-                          );
-                        }}
-                      >
-                        {' '}
-                        {/* Add px-1 class for horizontal padding */}
-                        <img
-                          alt='topic items'
-                          className={`object-cover w-100`}
-                          src={vod?.vod_pic}
-                          style={{
-                            borderRadius: '10px',
-                            aspectRatio: '5/7',
-                            width: '100%',
-                          }}
-                        />
-                      </div>
-                    ))}
+          <div className='w-screen px-[10px]'>
+            {/* <div className=' w-full'> */}
+              <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
+            {/* </div> */}
+            {topicList.map((topic, idx) => (
+              <div className='w-full' key={topic.topic_id}>
+                {(idx + 1) % 5 == 0 && (
+                  <AdsBanner
+                    pathName={pathName}
+                    navId={'1-13'}
+                    height='500px'
+                  />
+                )}
+                <Link
+                  className='mb-2 cursor-pointer'
+                  // key={topic.topic_id}
+                  href={`/topic/detail/id/${topic.topic_id}`}
+                >
+                  <div className='col-12 pt-2 d-flex justify-content-between align-items-center pb-1 font-semibold'>
+                    <span>{topic.topic_name}</span>
+                    <span className='mr-2'>
+                      {' '}
+                      <FontAwesomeIcon icon={faAngleRight} />
+                    </span>
                   </div>
-                </div>
-              </Link>
+
+                  <div className='col-12 mobile-topic-desc'>
+                    {topic.topic_blurb.length > 52
+                      ? `${topic.topic_blurb.slice(0, 52)}...`
+                      : topic.topic_blurb}
+                  </div>
+
+                  <div className='col-12' key={topic.topic_id}>
+                    <div className='row g-2'>
+                      {topic?.vod_list?.slice(0, 3).map((vod) => (
+                        <div
+                          className='col-4 cursor-pointer'
+                          key={vod.vod_id}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            router.push(
+                              `/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`
+                            );
+                          }}
+                        >
+                          {' '}
+                          {/* Add px-1 class for horizontal padding */}
+                          <img
+                            alt='topic items'
+                            className={`object-cover w-100`}
+                            src={vod?.vod_pic}
+                            style={{
+                              borderRadius: '10px',
+                              aspectRatio: '5/7',
+                              width: '100%',
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </Link>
+              </div>
             ))}
           </div>
         </div>
+        {topicList.length > 0 &&
 
+        <div className=' w-full container'>
+          <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
+        </div>
+}
         {/* loading spinner  */}
         <div ref={targetRef}>{stillCanLoad && <Spinner></Spinner>}</div>
 
@@ -250,14 +280,6 @@ export const Topic = () => {
             <span className='test-xs text-muted'>没有更多了</span>
           </div>
         )}
-
-        {/* <div className=' w-[100%]'>
-              <AdsBanner
-                adsList={adsList}
-                pathName={pathName}
-                height='500px'
-              />
-            </div> */}
       </div>
     </>
   );

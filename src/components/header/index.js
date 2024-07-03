@@ -66,6 +66,7 @@ const Header = () => {
   const pathname = usePathname();
   const [selectedId, setSelectedId] = useState(0);
   const [searchInput, setSearchInput] = useState('');
+  const [isComposing, setIsComposing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [openMore, setOpenMore] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
@@ -154,7 +155,6 @@ const Header = () => {
 
   const handleChange = (event) => {
     const newValue = event.target.value;
-
     // Check if the first character is a space
     if (newValue.trim().length === 0) {
       setSearchInput('');
@@ -376,18 +376,16 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    // init ip 
-     initIp()
-   }, []);
- 
-   const initIp = async() => {
-     let ipObj = await getIPAddress2();
-     if(ipObj && ipObj.IPv4 &&ipObj.country_code)
-     sessionStorage.setItem('ipAddress' ,ipObj.IPv4)
-     dispatch(setIsUserChina(ipObj))
+    // init ip
+    initIp();
+  }, []);
 
-   }
-
+  const initIp = async () => {
+    let ipObj = await getIPAddress2();
+    if (ipObj && ipObj.IPv4 && ipObj.country_code)
+      sessionStorage.setItem('ipAddress', ipObj.IPv4);
+    dispatch(setIsUserChina(ipObj));
+  };
 
   useEffect(() => {
     const metaTag = document.querySelector('meta[name="viewport"]');
@@ -400,7 +398,7 @@ const Header = () => {
     };
   }, []);
 
-  if (loading && !pathname.startsWith('/download')) {
+  if (loading && !pathname.startsWith('/download') && !pathname.startsWith('/invite')) {
     return <LoadingPage full={true} />;
   }
 
@@ -427,14 +425,21 @@ const Header = () => {
               type='text'
               placeholder='输入搜索关键词'
               value={searchInput}
-              onChange={handleChange}
+              onInput={(e) => handleChange(e)}
               className='border-0 border-gray-300 text-white rounded-full pl-10 md:pl-4 md:pr-10 pr-4 py-2 focus:outline-none w-full md:w-60 header-search-input-desktop text-[14px]'
               onClick={handleOpenSearch}
               onKeyDown={(e) => {
-                if (e.key === 'Enter') {
+                if (e.key === 'Enter' && !isComposing) {
                   e.target.blur();
                   handleSearch();
                 }
+              }}
+              onCompositionStart={() => {
+                setIsComposing(true)
+              }}
+              onCompositionEnd={(e) => {
+                setIsComposing(false);
+                handleChange(e);
               }}
             />
             <div className='absolute inset-y-0 left-3 flex items-center justify-center md:hidden'>
@@ -1223,7 +1228,7 @@ const Header = () => {
     return null;
   }
 
-  if (pathname.startsWith('/purchase-redirect')) {
+  if (pathname.startsWith('/purchase-redirect') || pathname.startsWith('/invite')) {
     return <></>;
   }
 

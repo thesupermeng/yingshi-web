@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback, useState, useLayoutEffect } from 'react';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { YingshiApi, YingshiApi2 } from '@/util/YingshiApi';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
@@ -11,12 +11,15 @@ export const AdsBanner = ({
   imgUrl = '',
   // navId = '1-13',
   // ads = null,
-  adsList = [],
+  // adsList = [],
+  useMargin2 = false,
+  isPlayVertival = 'false',
   pathName = '/',
 }) => {
   let navId = '1-13';
   const { isVip, userInfo } = useYingshiUser();
 
+  const adsList = JSON.parse(sessionStorage.getItem('adsList'));
   const [ads, setAds] = useState(null);
   const allSameProperty = (arr, prop) =>
     arr.every((item) => item[prop] === arr[0][prop]);
@@ -76,6 +79,10 @@ export const AdsBanner = ({
       navId = '12-15';
     }
 
+    if (isPlayVertival == true) {
+      navId = '1-13';
+    }
+
     if (navId && navId != 0) {
       const parts = navId?.split('-').map(Number);
 
@@ -102,7 +109,9 @@ export const AdsBanner = ({
         <div
           className={
             ads[0] !== undefined || ads[1] !== undefined
-              ? 'margin-banner'
+              ? useMargin2
+                ? 'margin-banner margin-banner2'
+                : 'margin-banner'
               : null
           }
           style={{

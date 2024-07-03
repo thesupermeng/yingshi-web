@@ -311,9 +311,8 @@ export const FilmLibrary = () => {
                 {filterTypeList && paramsFilter && (
                   <div className={`bg-[#1D2023] pt-2`}>
                     <div className='flex md:flex-wrap gap-x-4 gap-y-2 pl-4 py-2 container'>
-                      {/* 111111111 filter 短剧 */}
+                      {/* 1111 filter 短剧              .filter((item) => item.type_id !== 46) */}
                       {filterTypeList
-                        .filter((item) => item.type_id !== 46)
                         .map((item, index) => {
                           return (
                             <div

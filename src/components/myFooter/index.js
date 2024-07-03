@@ -72,7 +72,7 @@ const MyFooter = () => {
     pathname.startsWith('/sport/user/transaction') ||
     pathname.startsWith('/sport/user/history') ||
     pathname.startsWith('/purchase-redirect') ||
-    pathname.startsWith('/download')
+    pathname.startsWith('/invite')
   ) {
     return <></>;
   }

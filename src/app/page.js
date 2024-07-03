@@ -8,7 +8,7 @@ export const RightBetCartWidth = 'w-[32rem]';
 import { useSelector, useDispatch } from 'react-redux';
 import { Carousel } from '@/components/carousel/carousel';
 import { Suspense, useEffect, useLayoutEffect, useState } from 'react';
-import { YingshiApi2  , getIPAddress2} from '@/util/YingshiApi';
+import { YingshiApi2, getIPAddress2 } from '@/util/YingshiApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
@@ -21,15 +21,27 @@ import Link from 'next/link';
 import { VideoWithTitleHorizontalCard } from '@/components/videoItem/videoWithTitleHorizontalCard';
 import { setIsUserChina } from '@/store/yingshiScreen';
 
+import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+
+const splitArrayIntoChunks = (array, chunkSize) => {
+  let results = [];
+  for (let i = 0; i < array.length; i += chunkSize) {
+    results.push(array.slice(i, i + chunkSize));
+  }
+  return results;
+};
+
 const getHeaderMenu = (state) => state.headerMenu;
 export default function Home(params) {
-
   const dispatch = useDispatch();
 
   let paramsInput = params.category == undefined ? 0 : params.category;
   const pathName = usePathname();
   const [isLoading, setIsLoading] = useState(false);
   const [classList, setClassList] = useState([]);
+  const [xClassList, setXClassList] = useState([]);
+  const [xClassList2, setXClassList2] = useState([]);
+
   const [categories, setCategories] = useState([]);
   const [yunying, setYunying] = useState([]);
   const [carousel, setCarousel] = useState([]);
@@ -38,7 +50,6 @@ export default function Home(params) {
 
   const getIsUserChina = (state) => state.yingshiScreen.isUserChina;
   const isUserChina = useSelector(getIsUserChina);
-
 
   const headerMenu = useSelector(getHeaderMenu);
 
@@ -49,6 +60,12 @@ export default function Home(params) {
   const [still99CanLoad, setStill99CanLoad] = useState(
     paramsInput == 99 ? true : false
   );
+
+  const [isCollapsed, setIsCollapsed] = useState(true);
+
+  const handleToggle = () => {
+    setIsCollapsed(!isCollapsed);
+  };
 
   //banner ads
   const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
@@ -82,27 +99,77 @@ export default function Home(params) {
     setHeaderMenuState(headerMenu.headerMenu);
   }, [headerMenu]);
 
-
-
   useEffect(() => {
-   // init ip 
-    initIp()
+    if (paramsInput == 99 && classList != []) {
+      const mapList = {
+        自拍偷拍: 'senlin',
+        制服丝袜: 'senlin',
+        cosplay: 'senlin',
+        剧情介绍: 'senlin',
+        瑜伽裤: 'senlin',
+        风情旗袍: 'senlin',
+        可爱学生: 'senlin',
+        恋腿狂魔: 'senlin',
+        闷骚护士: 'senlin',
+        古装扮演: 'senlin',
+        兽耳系列: 'senlin',
+        野外露出: 'senlin',
+        萝莉少女: 'senlin',
+        台湾辣妹: 'senlin',
+        唯美港姐: 'senlin',
+        韩国御姐: 'senlin',
+        换脸明星: 'naixx',
+        抖阴短片: 'naixx',
+        强奸乱伦: 'senlin',
+        欺辱凌辱: 'senlin',
+        口交颜射: 'senlin',
+        多人多P: 'senlin',
+        巨乳美乳: 'senlin',
+        女同性恋: 'senlin',
+        男同性恋: 'senlin',
+        网红头条: 'aosika',
+        网红流出: 'senlin',
+        人妻熟女: 'senlin',
+        女优系列: 'senlin',
+        日韩主播: 'naixx',
+        重口激情: 'naixx',
+      };
+
+      let tempList = [];
+
+      for (let i = 0; i < classList.length; i++) {
+        const item = classList[i];
+        const mappedValue = mapList[item] || 'huanggua';
+        tempList.push({ item, mappedValue });
+      }
+
+      console.log(tempList); // For debugging: logs the array with mapped values
+      setXClassList(tempList);
+
+      const chunkSize = Math.ceil(tempList.length / 4);
+      const chunkedArray = splitArrayIntoChunks(tempList, chunkSize);
+      setXClassList2(chunkedArray);
+      console.log('chunkedArray');
+      console.log(chunkedArray);
+    }
+  }, [paramsInput, classList]);
+
+  useLayoutEffect(() => {
+    // init ip
+    initIp();
   }, []);
 
-  const initIp = async() => {
+  const initIp = async () => {
     let ipObj = await getIPAddress2();
-    if(ipObj && ipObj.IPv4 &&ipObj.country_code)
-    sessionStorage.setItem('ipAddress' ,ipObj.IPv4)
-    dispatch(setIsUserChina(ipObj))
-
-
-  }
+    if (ipObj && ipObj.IPv4 && ipObj.country_code)
+      sessionStorage.setItem('ipAddress', ipObj.IPv4);
+    dispatch(setIsUserChina(ipObj));
+  };
 
   // useEffect(() => {
   //   console.log('isUserChina')
   //   console.log(isUserChina)
   // }, [isUserChina]);
-
 
   useEffect(() => {
     setIsLoading(true);
@@ -122,7 +189,7 @@ export default function Home(params) {
 
         setCarousel(typePageData.carousel);
       } else if (paramsInput == 99 && typePageData === undefined) {
-        setStill99CanLoad(false)
+        setStill99CanLoad(false);
       }
 
       if (topicListData) {
@@ -182,16 +249,14 @@ export default function Home(params) {
                 headerMenuState &&
                 classList && (
                   <div
-                    className='container w-full overflow-x-auto max-w-full no-scrollbar'
+                    className='container w-full overflow-x-auto max-w-full'
                     style={{
                       display: 'flex',
-                      gap: '12px',
                       overflowX: 'auto',
                       scrollbarWidth: 'none',
                       padding: '10px 8px 10px 8px',
                     }}
                   >
-
                     <>
                       <Link
                         href={`/vod/show/by/time/id/${paramsInput}`}
@@ -208,27 +273,25 @@ export default function Home(params) {
                       </Link>
                     </>
 
-
-                    {classList != [] &&
-                      paramsInput != 99 &&
-                      classList &&
-                      classList?.map((cItem, cIndex) => {
-                        return (
-                          <Link
-                            href={`/vod/show/by/time/class/${cItem}/id/${paramsInput}`}
-                            key={cIndex + '-class'}
-                            className='btn btn-dark hover-effect text-white btn-dark-catagory'
-                            style={{ flex: '0 0 auto', borderRadius: '10px' }}
-                          >
-                            {cItem}
-                          </Link>
-                        );
-                      }) //class list map
+                    {
+                      classList != [] &&
+                        paramsInput != 99 &&
+                        classList &&
+                        classList?.map((cItem, cIndex) => {
+                          return (
+                            <Link
+                              href={`/vod/show/by/time/class/${cItem}/id/${paramsInput}`}
+                              key={cIndex + '-class'}
+                              className='btn btn-dark hover-effect text-white btn-dark-catagory text-nowrap'
+                              style={{ borderRadius: '10px' }}
+                            >
+                              {cItem}
+                            </Link>
+                          );
+                        }) //class list map
                     }
                   </div>
                 )}
-
-
 
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
@@ -261,7 +324,7 @@ export default function Home(params) {
                     categories?.map((category, idx) => {
                       return (
                         <div key={idx} className={'pt-3'}>
-                          {(idx % 2 !== 0) && (
+                          {idx % 2 !== 0 && (
                             <AdsBanner
                               pathName={pathName}
                               navId={'1-13'}
@@ -292,7 +355,7 @@ export default function Home(params) {
                                     fontStyle: 'normal',
                                     fontFamily: 'PingFang SC',
                                   }}
-                                  icon={faAngleRight}
+                                  icon={faChevronDown}
                                 />
                               </div>
                             </div>
@@ -323,21 +386,141 @@ export default function Home(params) {
             </div>
           ) : (
             <>
+              {/* 午夜场 desktop   111111 */}
               <div className='desktop flex flex-col w-full'>
+                {/* 午夜场 class  desktop */}
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
-                  <div className='pt-4 container  w-[100%]'>
+                  <div className='row col-12 container pt-4 mt-5 px-0'>
+                    {
+                      // Assuming xClassList is defined and is an array
+                      [
+                        ...Array(
+                          Math.ceil(Math.min(xClassList.length, 40) / 10)
+                        ),
+                      ].map((_, rowIndex) => {
+                        const start = rowIndex * 10;
+                        const end = Math.min(
+                          start + 10,
+                          Math.min(xClassList.length, 40)
+                        );
+
+                        return (
+                          <div
+                            className='d-flex flex-wrap justify-content-between w-100'
+                            key={rowIndex}
+                          >
+                            {xClassList
+                              .slice(start, end)
+                              .map((cItem, cIndex) => (
+                                <Link
+                                  href={`/xvod/${cItem.mappedValue}/${cItem.item}`}
+                                  key={`${start}-${end}-${cIndex}-xclass`}
+                                  className='btn btn-dark hover-effect text-white btn-dark-catagory btn-dark-catagory-x text-nowrap mb-2 px-4'
+                                  style={{
+                                    borderRadius: '6px',
+                                    width: 'calc(10% - 10px)',
+                                  }} // Adjust width as needed
+                                >
+                                  {cItem.item}
+                                </Link>
+                              ))}
+                          </div>
+                        );
+                      })
+                    }
+                  </div>
+                </div>
+                {/* end 午夜场 class desktop */}
+                <div className='container w-full'>
+                  <AdsBanner
+                    adsList={adsList}
+                    pathName={pathName}
+                    height='500px'
+                  />
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <div className=' container  w-[100%]'>
                     <VideoWithTitleHorizontalCard
                       data={categories}
                       navId={paramsInput}
                       isStillCanLoad={still99CanLoad}
                       platform='web'
                     />
+                    <div className='container w-full'>
+                      <AdsBanner
+                        adsList={adsList}
+                        pathName={pathName}
+                        height='500px'
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
+              {/* 午夜场 mobile   111111 */}
               <div className='mobile flex flex-col w-full'>
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                {/* 午夜场 class  mobile */}
+                <div
+                  className='hide-scrollbar'
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '15px',
+                    justifyContent: 'center',
+                    marginTop: '5px',
+                    overflowX: 'auto', // Enable horizontal scrolling on the parent container
+                    width: '100%', // Ensure the container takes full width
+                    padding: '5px 0px 15px 10px',
+                  }}
+                >
+                  {
+                    // Assuming xClassList is defined and is an array
+                    [
+                      ...Array(Math.ceil(Math.min(xClassList.length, 40) / 10)),
+                    ].map((_, rowIndex) => {
+                      const start = rowIndex * 10;
+                      const end = Math.min(
+                        start + 10,
+                        Math.min(xClassList.length, 40)
+                      );
+
+                      return (
+                        <div
+                          className='d-flex flex-wrap justify-content-start w-auto' // Adjust width to content width
+                          key={rowIndex}
+                          style={{ minWidth: '1190px', overflowX: 'auto' }} // Ensure each row can scroll horizontally independently
+                        >
+                          {xClassList.slice(start, end).map((cItem, cIndex) => (
+                            <Link
+                              href={`/xvod/${cItem.mappedValue}/${cItem.item}`}
+                              key={`${start}-${end}-${cIndex}-xclass`}
+                              className='btn btn-dark hover-effect text-white btn-dark-catagory btn-dark-catagory-x text-nowrap mb-2'
+                              style={{
+                                minWidth: '108px',
+                                flexShrink: 0,
+                                borderRadius: '6px',
+                              }} // Adjust width as needed
+                            >
+                              {cItem.item}
+                            </Link>
+                          ))}
+                        </div>
+                      );
+                    })
+                  }
+                </div>
+                
+                <div className='container w-full'>
+                  <AdsBanner
+                    adsList={adsList}
+                    pathName={pathName}
+                    height='500px'
+                  />
+                </div>
+
+                {/* end 午夜场 class mobile */}
+
+                <div className='flex flex-col' style={{ justifyContent: 'center' }}>
                   {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
                   <div className='pt-1 container  w-[100%]'>
                     <VideoWithTitleHorizontalCard
@@ -347,6 +530,13 @@ export default function Home(params) {
                       platform='mobile'
                     />
                   </div>
+                  <div className='container w-full'>
+                  <AdsBanner
+                    adsList={adsList}
+                    pathName={pathName}
+                    height='500px'
+                  />
+                </div>
                 </div>
               </div>
             </>

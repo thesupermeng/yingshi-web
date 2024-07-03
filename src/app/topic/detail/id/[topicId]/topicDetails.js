@@ -1,16 +1,18 @@
 'use client';
 import styles from './../../../style.module.css';
 import TopicHeader from '@/components/topicHeader';
-import VodItemDesktop from '@/components/vodItemDesktop'
-import VodItemMobile from '@/components/vodItemMobile'
-import { YingshiApi } from '@/util/YingshiApi';
+import VodItemDesktop from '@/components/vodItemDesktop';
+import VodItemMobile from '@/components/vodItemMobile';
+import { YingshiApi, YingshiApi2 } from '@/util/YingshiApi';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
-import {useEffect, useState} from 'react';
-import {useParams} from 'next/navigation';
+import { useEffect, useLayoutEffect, useState } from 'react';
+import { useParams, usePathname } from 'next/navigation';
+import { AdsBanner } from '@/components/ads/adsBanner';
 
 export default function TopicDetails() {
   const { topicId } = useParams();
   const [topicObj, setTopicObj] = useState(null);
+  const pathName = usePathname();
 
   const getTopicDetailsApi = async () => {
     return YingshiApi(
@@ -34,6 +36,35 @@ export default function TopicDetails() {
     getTopicDetails();
   }, []);
 
+  //banner ads
+  const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
+  const [adsList, setAdsList] = useState([]);
+  const getAllAds = async () => {
+    return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
+  };
+  const initAds = async () => {
+    let allAds = await getAllAds();
+    sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
+
+    setAdsList(allAds.data);
+  };
+
+  useLayoutEffect(() => {
+    let adsList = initAdsList;
+    if (!adsList) {
+      adsList = JSON.parse(sessionStorage.getItem('adsList'));
+    }
+
+    if (adsList && adsList !== 'undefined') {
+      console.log('adsList 111');
+      console.log(adsList);
+      setAdsList(adsList);
+    } else {
+      initAds();
+    }
+  }, []);
+  //end banner ads
+
   return (
     <>
       {topicObj && (
@@ -43,11 +74,21 @@ export default function TopicDetails() {
             <div className={styles.containerHeader}>
               <div className='d-flex' style={{ width: '100%' }}>
                 <div className='overlay' style={{ width: '100%' }}>
-                  <div className='px-0 d-flex flex-column w-screen'>
-                    <div className='topic-container-header container content-end'>
+                  <div className='container px-0 d-flex flex-col'>
+                    <div className=' w-full container'>
+                      <AdsBanner
+                        adsList={adsList}
+                        pathName={pathName}
+                        height='500px'
+                      />
+                    </div>
+                    <div className='w-fit'>
                       <div className='topic-header-text'>
                         {topicObj.topic_name}
                       </div>
+                    </div>
+
+                    <div className='w-fit'>
                       <div className='topic-header-text-sub'>
                         {topicObj.topic_blurb}
                       </div>
@@ -70,15 +111,26 @@ export default function TopicDetails() {
                 ))}
               </div>
             </div>
+            <div className=' w-full container'>
+              <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
+            </div>
           </div>
 
           {/* mobile view */}
           <div className='mobile pb-6'>
             <TopicHeader topicName={topicObj.topic_name} />
-            <div  className='px-2.5'>
+            <div className='px-2.5'>
               {/* mobile content */}
               <div className='topic-header-text-sub mt-3'>
                 {topicObj.topic_blurb}
+              </div>
+
+              <div className=' w-full container'>
+                <AdsBanner
+                  adsList={adsList}
+                  pathName={pathName}
+                  height='500px'
+                />
               </div>
 
               <div className='topic-header-text-sub mt-3'>
@@ -90,6 +142,9 @@ export default function TopicDetails() {
                   <VodItemMobile vod={vod} key={index} />
                 ))}
               </div>
+            </div>
+            <div className=' w-full container'>
+              <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
             </div>
           </div>
         </>

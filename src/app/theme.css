@@ -43,15 +43,18 @@ a:hover {
 .bg-theme
 {
   background-color: #FAC33D !important;
- background: #FAC33D !important;
+  background: #FAC33D !important;
+  color: black !important;
 }
+
 
 .btn-theme
 {
-  background-color: #FAC33D !important;
+  background-color: #FAC33D  !important;
+  color: black !important;
 }
 
 .text-theme
 {
-  color: #FAC33D !important;
+  color: #FAC33D  !important;
 }
