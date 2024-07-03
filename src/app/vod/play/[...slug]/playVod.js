@@ -672,11 +672,6 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
               className='bg-theme'
               style={{
                 padding: '0.5rem 1.2rem',
-<<<<<<< HEAD
-          
-=======
-
->>>>>>> dev-ads-ops-sort
                 borderRadius: '12px',
                 margin: '0.5rem',
               }}
