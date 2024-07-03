@@ -19,7 +19,7 @@ export const URL_YINGSHI_VOD = {
   searchingList: 'vod/v1/vod/list',
   searchVod: 'vod/v1/search',
   searchingListSlim: 'vod/v1/vod/similar',
-  filteringTypeList: 'type/v2/type',
+  filteringTypeList: 'type/v3/type',
   getXVodDetails: 'svod/v2/vod',
   getAdsSlot: 'ads/v1/slot',
   getAdsVideoSlot: 'ads/v2/slot',
