@@ -324,13 +324,13 @@ export default function Home(params) {
                     categories?.map((category, idx) => {
                       return (
                         <div key={idx} className={'pt-3'}>
-                          {idx % 2 !== 0 && (
+                          {/* {idx % 2 !== 0 && (
                             <AdsBanner
                               pathName={pathName}
                               navId={'1-13'}
                               height='500px'
                             />
-                          )}
+                          )} */}
                           <div id={category.type_id} key={idx}>
                             <div className='flex justify-between'>
                               <span
@@ -390,7 +390,7 @@ export default function Home(params) {
               <div className='desktop flex flex-col w-full'>
                 {/* 午夜场 class  desktop */}
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  <div className='row col-12 container pt-4 mt-5 px-0'>
+                  <div className='row col-12 container px-0'>
                     {
                       // Assuming xClassList is defined and is an array
                       [
