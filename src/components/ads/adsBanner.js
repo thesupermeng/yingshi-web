@@ -12,6 +12,7 @@ export const AdsBanner = ({
   // navId = '1-13',
   // ads = null,
   // adsList = [],
+  useMargin2 = false,
   isPlayVertival = 'false',
   pathName = '/',
 }) => {
@@ -79,9 +80,8 @@ export const AdsBanner = ({
     }
 
     if (isPlayVertival == true) {
-      navId = '3-20';
+      navId = '1-13';
     }
-
 
     if (navId && navId != 0) {
       const parts = navId?.split('-').map(Number);
@@ -109,7 +109,9 @@ export const AdsBanner = ({
         <div
           className={
             ads[0] !== undefined || ads[1] !== undefined
-              ? 'margin-banner'
+              ? useMargin2
+                ? 'margin-banner margin-banner2'
+                : 'margin-banner'
               : null
           }
           style={{
