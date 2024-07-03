@@ -1,5 +1,11 @@
 'use client';
-import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useLayoutEffect,
+  Fragment,
+} from 'react';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { YingshiApi, YingshiApi2 } from '@/util/YingshiApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -60,6 +66,7 @@ export const Topic = () => {
   const getTopicList = async () => {
     let currentPage = nextPage;
     const topicListing = await getTopicListApi(nextPage);
+    console.log(topicListing)
 
     if (nextPage > 1) {
       setTopicList((prev) => [...prev, ...topicListing.List]);
@@ -112,15 +119,13 @@ export const Topic = () => {
             <div className='d-flex' style={{ width: '100%' }}>
               <div className='overlay' style={{ width: '100%' }}>
                 <div className=' container px-0 d-flex flex-col'>
-                  {adsList && (
-                    <div className=' w-full container'>
-                      <AdsBanner
-                        adsList={adsList}
-                        pathName={pathName}
-                        height='500px'
-                      />
-                    </div>
-                  )}
+                  <div className=' w-full container'>
+                    <AdsBanner
+                      adsList={adsList}
+                      pathName={pathName}
+                      height='500px'
+                    />
+                  </div>
                   <div className='w-fit'>
                     <div className='topic-header-text w-fit'>播单</div>
                   </div>
@@ -131,53 +136,60 @@ export const Topic = () => {
 
           {/* topic list  */}
           <div className='d-flex container pb-6'>
-            <div className='row'>
+            <div className='flex grid 2xl:grid-cols-3 grid-cols-2 gap-4'>
               {topicList.map((topic, idx) => (
-                <div className='col-lg-4 col-md-6' key={topic.topic_id}>
-                  {/* Render topic details here */}
-                  <Link
-                    className='row topic-wrap'
-                    href={`/topic/detail/id/${topic.topic_id}`}
-                  >
-                    <div className='col-12 mx-0 px-0'>
-                      <div className='d-flex topic-card'>
-                        <div
-                          style={{
-                            padding: '10px',
-                            width: '123px',
-                            borderRadius: '10px',
-                          }}
-                        >
-                          <img
-                            alt='topic items'
-                            className={`object-cover`}
-                            src={topic?.vod_list[0].vod_pic}
+                <Fragment key={topic.topic_id}>
+                  <div className='pt-0.5'>
+                    <Link href={`/topic/detail/id/${topic.topic_id}`}>
+                      <div className='w-full'>
+                        <div className='d-flex topic-card'>
+                          <div
                             style={{
-                              borderRadius: '10px',
+                              padding: '10px',
                               width: '123px',
-                              height: '170px',
+                              borderRadius: '10px',
                             }}
-                          />
-                        </div>
-                        <div className='col d-flex flex-column justify-content-between'>
-                          <div>
-                            <div className='text-base font-bold pb-2'>
-                              {topic.topic_name}
-                            </div>
-                            <div className='text-xs topic-blurb'>
-                              {topic.topic_blurb.length > 105
-                                ? `${topic.topic_blurb.substring(0, 105)}...`
-                                : topic.topic_blurb}
-                            </div>
-                            <div className='text-primary pt-4 text-xs'>
-                              查看更多 <FontAwesomeIcon icon={faAngleRight} />
+                          >
+                            <img
+                              alt='topic items'
+                              className={`object-cover`}
+                              src={topic?.vod_list[0].vod_pic}
+                              style={{
+                                borderRadius: '10px',
+                                width: '123px',
+                                height: '170px',
+                              }}
+                            />
+                          </div>
+                          <div className='col d-flex flex-column justify-content-between'>
+                            <div>
+                              <div className='text-base font-bold pb-2'>
+                                {topic.topic_name}
+                              </div>
+                              <div className='text-xs topic-blurb'>
+                                {topic.topic_blurb.length > 105
+                                  ? `${topic.topic_blurb.substring(0, 105)}...`
+                                  : topic.topic_blurb}
+                              </div>
+                              <div className='text-primary pt-4 text-xs'>
+                                查看更多 <FontAwesomeIcon icon={faAngleRight} />
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
+                    </Link>
+                  </div>
+                  {/* {(idx + 1) % 12 === 0 && (
+                    <div className='2xl:col-span-3  col-span-2'>
+                      <AdsBanner
+                        adsList={adsList}
+                        pathName={pathName}
+                        height='500px'
+                      />
                     </div>
-                  </Link>
-                </div>
+                  )} */}
+                </Fragment>
               ))}
             </div>
           </div>
@@ -252,6 +264,10 @@ export const Topic = () => {
           </div>
         </div>
 
+        <div className=' w-full container'>
+          <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
+        </div>
+
         {/* loading spinner  */}
         <div ref={targetRef}>{stillCanLoad && <Spinner></Spinner>}</div>
 
@@ -260,14 +276,6 @@ export const Topic = () => {
             <span className='test-xs text-muted'>没有更多了</span>
           </div>
         )}
-
-        {/* <div className=' w-[100%]'>
-              <AdsBanner
-                adsList={adsList}
-                pathName={pathName}
-                height='500px'
-              />
-            </div> */}
       </div>
     </>
   );
