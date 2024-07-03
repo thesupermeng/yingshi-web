@@ -196,8 +196,10 @@ export const PlayXVod = ({ vodId, tId, nId  }) => {
           data.length <= 0 ||
           data.List === undefined ||
           data.List?.length <= 0
-        )
+        ) {
+          router.push('/404');
           return;
+        }
 
         let res = data.List[0];
         if (res?.vod_play_list?.url_count > 0) {

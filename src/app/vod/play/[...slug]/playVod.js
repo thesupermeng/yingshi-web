@@ -16,7 +16,7 @@ import styles from './style.module.css';
 import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
 import { ArrowLeftIcon } from '@/asset/icons';
 import Image from 'next/image';
-import { useParams, usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { convertTimeStampToDateTime } from '@/util/date';
 import { FullPageContent } from '@/componentsH5/FullPageContent';
 import { LottieAnimation } from '@/components/lottie';
@@ -61,24 +61,41 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
   const getAllAds = async () => {
     return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
   };
-
+  const allSameProperty = (arr, prop) =>
+    arr.every((item) => item[prop] === arr[0][prop]);
   const getAds = async () => {
     console.log('play screen init');
     let allAds = await getAllAds();
     sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
 
+    // let result = allAds.data.filter(
+    //   (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(144)
+    // );
+
+    // if (result.length > 0) {
+    //   const randomIndex = Math.floor(Math.random() * result.length);
+    //   setAds(result[randomIndex]);
+    // } else {
+    //   setAds(result[0]);
+    // }
+
     let result = allAds.data.filter(
       (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(144)
     );
+    result = result.sort((a, b) => b.ads_sort - a.ads_sort);
 
-    if (result.length > 0) {
-      // Generate a random index between 0 and the length of the result array
+    console.log('result');
+    console.log(result);
+    const sameSortFlag = allSameProperty(result, 'ads_sort');
+
+    if (result.length > 0 && sameSortFlag) {
       const randomIndex = Math.floor(Math.random() * result.length);
-      // Set the ad to a randomly selected element from the result array
+
       setAds(result[randomIndex]);
     } else {
       setAds(result[0]);
     }
+
     setShowAds(true);
   };
 
@@ -96,8 +113,13 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
         let result = adsList.filter(
           (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(144)
         );
-        if (result.length > 0) {
+        result = result.sort((a, b) => b.ads_sort - a.ads_sort);
+
+        const sameSortFlag = allSameProperty(result, 'ads_sort');
+
+        if (result.length > 0 && sameSortFlag) {
           const randomIndex = Math.floor(Math.random() * result.length);
+
           setAds(result[randomIndex]);
         } else {
           setAds(result[0]);
@@ -175,7 +197,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
 
       content += '《' + vod.vod_name + '》高清播放';
       content += '</br>' + window.location.href;
-      content += '</br>鲨鱼TV-海量高清视频在线观看';
+      content += '</br>鲨鱼影视-海量高清视频在线观看';
 
       setVodShareContent(content);
     }
@@ -191,8 +213,10 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
           data.List === undefined ||
           data.List === null ||
           data.List?.length <= 0
-        )
+        ) {
+          router.push('/404');
           return;
+        }
 
         let res = data.List[0];
         setVod(res);
@@ -263,13 +287,12 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
   }, [vod]);
 
   useEffect(() => {
-    const randomAds = async() =>{
-await getAds();
-    }
+    const randomAds = async () => {
+      await getAds();
+    };
 
     randomAds();
   }, [vod]);
-  
 
   useEffect(() => {
     if (episodeSelected !== null) {
@@ -563,10 +586,10 @@ await getAds();
                   ></div>
                 </div>
                 <div
-                className='bg-theme'
+                  className='bg-theme'
                   style={{
                     padding: '0.3rem 1.2rem',
-             
+
                     borderRadius: '12px',
                     margin: '0.5rem',
                   }}
@@ -644,10 +667,10 @@ await getAds();
               ></div>
             </div>
             <div
-                className='bg-theme'
+              className='bg-theme'
               style={{
                 padding: '0.5rem 1.2rem',
-          
+
                 borderRadius: '12px',
                 margin: '0.5rem',
               }}
