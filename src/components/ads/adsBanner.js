@@ -12,6 +12,7 @@ export const AdsBanner = ({
   // navId = '1-13',
   // ads = null,
   // adsList = [],
+  isPlayVertival = 'false',
   pathName = '/',
 }) => {
   let navId = '1-13';
@@ -77,7 +78,10 @@ export const AdsBanner = ({
       navId = '12-15';
     }
 
-    
+    if (isPlayVertival == true) {
+      navId = '3-20';
+    }
+
 
     if (navId && navId != 0) {
       const parts = navId?.split('-').map(Number);

@@ -111,24 +111,35 @@ export const Topic = () => {
             <div className='d-flex' style={{ width: '100%' }}>
               <div className='overlay' style={{ width: '100%' }}>
                 <div className=' container px-0 d-flex flex-col'>
-                  <div className=' w-full container'>
-                    <AdsBanner
-                      adsList={adsList}
-                      pathName={pathName}
-                      height='500px'
-                    />
-                  </div>
+                
                   <div className='w-fit'>
                     <div className='topic-header-text w-fit'>播单</div>
                   </div>
+
+
                 </div>
               </div>
             </div>
           </div>
 
           {/* topic list  */}
+
+
+          {topicList.length > 0 &&
+                  <div className='container'>
+                    <AdsBanner
+                      adsList={adsList}
+                      pathName={pathName}
+                      height='500px'
+                    />
+                  </div>
+}
+
+
           <div className='d-flex container pb-6 pt-6'>
             <div className='flex grid 2xl:grid-cols-3 grid-cols-2 gap-4'>
+
+  
               {topicList.map((topic, idx) => (
                 <Fragment key={topic.topic_id}>
                   <div className='pt-0.5'>
@@ -255,11 +266,12 @@ export const Topic = () => {
             ))}
           </div>
         </div>
+        {topicList.length > 0 &&
 
         <div className=' w-full container'>
           <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
         </div>
-
+}
         {/* loading spinner  */}
         <div ref={targetRef}>{stillCanLoad && <Spinner></Spinner>}</div>
 
