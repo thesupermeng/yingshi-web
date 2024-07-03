@@ -10,7 +10,7 @@ import {
   CopyIcon,
   DownloadIcon,
   GreenTickIcon,
-  Logo
+  Logo, MobileAppImage
 } from '@/asset/icons';
 import QRCode from 'qrcode.react';
 import Image from 'next/image';
@@ -169,7 +169,7 @@ export default function Invite() {
               </div>
               <QRCode
                 className="rounded-md"
-                value="https://apps.apple.com/cn/app/id6474402534"
+                value={iosLink}
                 renderAs="canvas"
                 size={200}
                 includeMargin={true}
@@ -194,25 +194,23 @@ export default function Invite() {
         <Image src={AppImage} alt="App Image" width={330} height={730}/>
       </div>
 
-      <div className={`${styles.mobile} flex-1 bg-cover bg-center justify-center items-center flex-col`}
+      <div className={`${styles.mobile} flex-1 bg-cover bg-center items-center flex-col`}
            style={{backgroundImage: `url('/img/invite_mobile_bg.svg')`}}>
-        <div className="pt-6 pl-6 pr-6 mt-px-50">
+        <div className="pt-12 pl-6 pr-6 mt-px-50">
           <div className="flex flex-col justify-center items-center">
             <Image width={160} height={95} alt="logo" src={Logo}/>
-            <p className="text-[20px] font-medium pt-3">
+            <p className="text-xl font-medium pt-4 pb-12">
               <span style={{color: 'rgba(250, 195, 61, 1)'}}>{username}</span> 邀请你一起领取观影VIP
             </p>
-            <Image className="absolute" style={{top: '115px'}} width={282} height={560} src={AppImage} alt="App Image"/>
+            <Image className="absolute" style={{top: '185px'}} width={360} height={543} src={MobileAppImage} alt="App Image"/>
           </div>
         </div>
         <div
-          className="z-10 mt-44 py-12 w-full text-center bottom-0"
-          style={{background: 'linear-gradient(180deg, rgba(20, 22, 26, 0.00) 0%, rgba(20, 22, 26, 0.88) 14.01%, #14161A 57.32%)'}}>
-          <div className="w-4/5 mx-auto pt-4 pb-8">
-            <p className="text-base text-[#FFBE16]">海量视频内容 随时随地 想看就看</p>
-            <p className="text-xs font-light pt-2 pb-1.5 px-0">注册影视TV会员即可获得 30日 VIP会员</p>
-            <p className="text-xs font-light pt-1 pr-1 pb-0 pl-1">您也可以一起推荐其他好友下载注册影视 APP</p>
-            <p className="text-xs font-light pt-0 pr-1 pb-1 pl-1">推荐越多获得的VIP天数越多</p>
+          className="z-10 mt-44 grow pt-12 w-full text-center bottom-0"
+          style={{background: 'linear-gradient(180deg, rgba(20, 22, 26, 0.00) 0%, rgba(20, 22, 26, 0.88) 14.01%, #14161A 50.32%)'}}>
+          <div className="w-5/6 mx-auto pt-4 pb-8">
+            <p className="text-xl font-bold text-[#FFBE16]">注册影视TV会员即享 15天VIP 会员</p>
+            <p className="text-sm font-light pt-1 pr-1 pb-0 pl-1">您也可以推荐好友注册下载影视APP，推荐越多的好友获得更多VIP天数</p>
             <div style={{padding: '18px 0px 16px 0px', width: '100%'}}>
               <div onClick={copyToClipboard} style={{
                 cursor: 'pointer',
@@ -247,38 +245,21 @@ export default function Invite() {
             </div>
             <div className="pt-6">
               <p className="pb-3 text-sm">下载并安装APP后，输入邀请码可获得VIP会员</p>
-              <div onClick={navigateDownload} className="flex bg-[#FAC33D] rounded-lg p-3 justify-center items-center">
-                <Image className="pr-2" width={30} src={DownloadIcon} alt="download"/>
-                <span className="text-black text-base font-semibold">立即下载 影视TV APK</span>
-              </div>
-              <div className="flex pt-2" style={{height: '60px'}} onClick={navigateStoreDownload}>
-                <div className="flex-1 h-full">
-                  <div className="p-3 h-full flex rounded-lg bg-white justify-center items-center">
-                    <Image className="pr-1" src={AppStoreIcon} alt="app_store"/>
-                    <div className="flex flex-row">
-                      <span className="text-black text-base font-semibold">App Store 下载</span>
-                      <span className="text-black text-xs self-center ml-2"></span>
-                    </div>
+              <div className='flex flex-row gap-4 items-center '>
+                <div onClick={navigateDownload}
+                     className="flex flex-1 gap-2 bg-[#FAC33D] rounded-lg py-3 px-2 justify-center items-center">
+                  <Image width={20} src={DownloadIcon} alt="download"/>
+                  <span className="text-black text-base font-medium">影视TV APK</span>
+                </div>
+                <div onClick={navigateStoreDownload}
+                     className="flex flex-1 gap-2 bg-white rounded-lg py-3 px-2 justify-center items-center">
+                  <Image width={20} src={AppStoreIcon} alt="app_store"/>
+                  <div className="flex flex-row">
+                    <span className="text-black text-base font-medium">App Store 下载</span>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="bg-[#1D2023] w-full text-xs font-normal py-2 px-1 absolute">
-            <p style={{color: 'rgba(255, 255, 255, 0.51)'}}>版权声明：影视TV内容均来自互联网，不提供存储/录制/上传。</p>
-            <Script
-              src="https://old.yingshi.tv/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
-              data-cfasync="false"
-            />
-            <p style={{color: 'rgba(255, 255, 255, 0.51)'}}>如果影视TV提供内容侵犯了您的版权，请发送电子邮件至 <a
-              href="https://old.yingshi.tv/cdn-cgi/l/email-protection" className="__cf_email__"
-              data-cfemail="36555958425755424345764f5f5851455e5f184240">[email&#160;protected]</a>
-            </p>
-            <p style={{color: 'rgba(255, 255, 255, 0.51)'}}>进行说明，我们将立即删除内容，保护版权所有者的权益。</p>
-            <p><a className="text-gray-500 text-xs" target="_blank" href="/privacy/">隐私协议</a><span
-              className="text-gray-500"> | </span><a className="text-gray-500 text-xs" target="_blank"
-                                                     href="/service/">用户服务协议</a></p>
-            <p className="text-gray-500">Copyright © 2023 yingshi.tv All Rights Reserved</p>
           </div>
         </div>
       </div>

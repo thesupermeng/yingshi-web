@@ -74,6 +74,7 @@ export { default as backtoTopIcon } from './backtoTopIcon.svg';
 export { default as GoogleIcon } from './googleIcon.png';
 export { default as AppIcon } from './appIcon.svg';
 export { default as AppImage } from './appImage.png';
+export { default as MobileAppImage } from './mobileAppImage.png';
 
 export { default as HistoryIconBlue } from './history_icon_blue.svg';
 export { default as FeedbackIconBlue } from './feedback_icon_blue.svg';
