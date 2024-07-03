@@ -189,10 +189,10 @@ export const Topic = () => {
 
         {/* mobile  view  */}
         <div className='mobile'>
-          <div className='row w-screen'>
-            <div className=' w-full'>
+          <div className='w-screen px-[10px]'>
+            {/* <div className=' w-full'> */}
               <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
-            </div>
+            {/* </div> */}
             {topicList.map((topic, idx) => (
               <div className='w-full' key={topic.topic_id}>
                 {(idx + 1) % 5 == 0 && (
