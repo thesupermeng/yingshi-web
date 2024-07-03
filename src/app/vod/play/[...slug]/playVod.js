@@ -65,8 +65,25 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
     arr.every((item) => item[prop] === arr[0][prop]);
   const getAds = async () => {
     console.log('play screen init');
-    let allAds = await getAllAds();
-    sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
+
+  
+    let allAds = {};
+    let adsList = initAdsList;
+    if (!adsList) {
+      adsList = JSON.parse(sessionStorage.getItem('adsList'));
+    }
+    if (adsList && adsList !== 'undefined') {
+    
+
+      allAds.data =  adsList;
+    } 
+    else
+    {  console.log('why')
+      allAds = await getAllAds();
+      sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
+ 
+    }
+    
 
     // let result = allAds.data.filter(
     //   (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(144)
