@@ -365,7 +365,8 @@
   position: relative;
   width: 100vw !important;
   max-width: 100% !important;
-  height: 255px; /* Adjust the height as needed */
+    /* height: 255px; Adjust the height as needed */
+    padding-top: 97px;
   background-image: url("./../../asset/image/topic-bg.png");
   background-size: cover;
   background-position: center;
