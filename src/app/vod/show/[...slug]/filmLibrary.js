@@ -58,18 +58,16 @@ export const FilmLibrary = () => {
   //banner ads
   const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
   const [adsList, setAdsList] = useState(null);
-  
+
   const getAllAds = async () => {
     return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
   };
-
 
   const initAds = async () => {
     let allAds = await getAllAds();
     sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
     setAdsList(allAds.data);
   };
-
 
   useLayoutEffect(() => {
     console.log('test');
@@ -301,54 +299,52 @@ export const FilmLibrary = () => {
   return (
     <>
       <div className='flex flex-1 justify-start flex-col'>
-      {(adsList && !isVip )&&
-        <div className=' w-[100%]'>
-          <div className='container'>
-       
-          <AdsBanner adsList={adsList} pathName={path} height='500px' />
-       
-          </div>
-        </div>
-    
-  }
         <div className='flex w-screen flex-col items-center'>
           {initialLoading || adsList == null ? (
             <LoadingPage full={true} />
           ) : (
             <>
               <div className={` w-screen p-1 z-10 top-[48px] md:static sticky`}>
+                <div className=' w-[100%] md:h-[165px] h-[80px]'>
+                  <div className='container'>
+                    <AdsBanner
+                      adsList={adsList}
+                      pathName={path}
+                      height='500px'
+                    />
+                  </div>
+                </div>
                 {filterTypeList && paramsFilter && (
                   <div className={`bg-[#1D2023] pt-2`}>
                     <div className='flex md:flex-wrap gap-x-4 gap-y-2 pl-4 py-2 container'>
                       {/* 1111 filter 短剧              .filter((item) => item.type_id !== 46) */}
-                      {filterTypeList
-                        .map((item, index) => {
-                          return (
-                            <div
-                              className='flex flex-col items-center cursor-pointer'
-                              id={item.type_id}
-                              key={index}
-                              onClick={() => {
-                                router.push(
-                                  `/vod/show/by/${advanceFilterItem[0].value}/id/${item.type_id}`
-                                );
-                              }}
+                      {filterTypeList.map((item, index) => {
+                        return (
+                          <div
+                            className='flex flex-col items-center cursor-pointer'
+                            id={item.type_id}
+                            key={index}
+                            onClick={() => {
+                              router.push(
+                                `/vod/show/by/${advanceFilterItem[0].value}/id/${item.type_id}`
+                              );
+                            }}
+                          >
+                            <span
+                              className={`hover:text-blue-500 transition-colors duration-300 truncate ${
+                                paramsFilter.typeId === item.type_id
+                                  ? 'text-blue-500'
+                                  : 'text-white'
+                              }`}
                             >
-                              <span
-                                className={`hover:text-blue-500 transition-colors duration-300 truncate ${
-                                  paramsFilter.typeId === item.type_id
-                                    ? 'text-blue-500'
-                                    : 'text-white'
-                                }`}
-                              >
-                                {item.type_name}
-                              </span>
-                              {paramsFilter.typeId === item.type_id ? (
-                                <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
-                              ) : null}
-                            </div>
-                          );
-                        })}
+                              {item.type_name}
+                            </span>
+                            {paramsFilter.typeId === item.type_id ? (
+                              <div className='border-2 border-blue-500 w-5 h-0.5 rounded-lg'></div>
+                            ) : null}
+                          </div>
+                        );
+                      })}
                     </div>
                     <div
                       className={`transition-all duration-500 md:h-fit md:visible md:py-2
