@@ -27,6 +27,16 @@ export const VodSourceList = ({
           ? maxScrollLeft
           : containerRef.current.scrollLeft + scrollOffset;
 
+      if (newScrollLeft <= 0) {
+        setDisableLeftButton(true);
+        setDisableRightButton(false);
+      } else if (newScrollLeft == maxScrollLeft) {
+        setDisableRightButton(true);
+        setDisableLeftButton(false);
+      } else {
+        setDisableLeftButton(false);
+        setDisableRightButton(false);
+      }
       containerRef.current.scrollTo({
         left: newScrollLeft,
         behavior: 'smooth',
@@ -34,7 +44,6 @@ export const VodSourceList = ({
     }
   };
 
-  
   useEffect(() => {
     const container = containerRef.current;
 
