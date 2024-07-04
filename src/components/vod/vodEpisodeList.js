@@ -52,30 +52,7 @@ export const VodEpisodeList = ({
     ]);
   }
 
-  console.log('episodeGroups');
-  console.log(episodeGroups);
-
-  console.log('episodeGroup');
-  console.log(episodeGroup);
-
-  console.log('episodeSource');
-  console.log(episodeSource);
-
-  console.log('vodSource');
-  console.log(vodSource);
-
   useLayoutEffect(() => {
-    console.log('episodeGroups');
-    console.log(episodeGroups);
-
-    console.log('episodeGroup');
-    console.log(episodeGroup);
-
-    console.log('episodeSource');
-    console.log(episodeSource);
-
-    console.log('vodSource');
-    console.log(vodSource);
 
     if (episodeGroup == undefined || episodeSource == undefined) {
       onSelectEpisodeGroup(episodeGroups[episodeGroups.length - 1]);
