@@ -55,16 +55,19 @@ export const FilmLibrary = () => {
 
   //banner ads
   const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
-  const [adsList, setAdsList] = useState([]);
+  const [adsList, setAdsList] = useState(null);
+  
   const getAllAds = async () => {
     return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
   };
+
+
   const initAds = async () => {
     let allAds = await getAllAds();
     sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
-
     setAdsList(allAds.data);
   };
+
 
   useLayoutEffect(() => {
     console.log('test');
@@ -74,8 +77,6 @@ export const FilmLibrary = () => {
     }
 
     if (adsList && adsList !== 'undefined') {
-      console.log('adsList 111');
-      console.log(adsList);
       setAdsList(adsList);
     } else {
       initAds();
@@ -298,14 +299,18 @@ export const FilmLibrary = () => {
   return (
     <>
       <div className='flex flex-1 justify-start flex-col'>
-        <div className=' w-[100%] '>
+      {adsList &&
+        <div className=' w-[100%] ' style={{height:'165px'}}>
           <div className='container'>
+       
           <AdsBanner adsList={adsList} pathName={path} height='500px' />
+       
           </div>
         </div>
-
+    
+  }
         <div className='flex w-screen flex-col items-center'>
-          {initialLoading ? (
+          {initialLoading || adsList == null ? (
             <LoadingPage full={true} />
           ) : (
             <>
