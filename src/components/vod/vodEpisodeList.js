@@ -60,7 +60,7 @@ export const VodEpisodeList = ({
         vodSource.vod_play_list.url_count - 1
       ]);
     }
-  }, [episodeGroups, episodeGroup, vodSource, episodeSource, , ,]);
+  }, [episodeGroups, episodeGroup, vodSource, episodeSource,]);
 
   useEffect(() => {
     if (selectedEpisodeGroupRef.current) {
