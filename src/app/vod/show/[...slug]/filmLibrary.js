@@ -302,7 +302,7 @@ export const FilmLibrary = () => {
     <>
       <div className='flex flex-1 justify-start flex-col'>
       {(adsList && !isVip )&&
-        <div className=' w-[100%] ' style={{height:'165px'}}>
+        <div className=' w-[100%]'>
           <div className='container'>
        
           <AdsBanner adsList={adsList} pathName={path} height='500px' />
