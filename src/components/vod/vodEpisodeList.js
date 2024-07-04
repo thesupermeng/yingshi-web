@@ -82,7 +82,7 @@ export const VodEpisodeList = ({
     if (selectedEpisodeRef1.current) {
       selectedEpisodeRef1.current.scrollIntoView({
         // behavior: 'smooth',
-        block: 'start',
+        block: 'nearest',
         inline: 'nearest',
       });
     }
