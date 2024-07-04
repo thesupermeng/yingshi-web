@@ -28,7 +28,7 @@ export const Topic = () => {
 
   //banner ads
   const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
-  const [adsList, setAdsList] = useState([]);
+  const [adsList, setAdsList] = useState(null);
   const getAllAds = async () => {
     return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
   };
@@ -113,10 +113,12 @@ export const Topic = () => {
 
                    {/* topic list  */}
 
-    
+                   {(adsList  )&&
             <div className='container'>
               <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
             </div>
+}
+
       
                 <div className=' container px-0 d-flex flex-col'>
                   <div className='w-fit'>
