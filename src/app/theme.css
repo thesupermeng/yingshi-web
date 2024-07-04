@@ -1,4 +1,7 @@
-/* FAC33D // 0085E0 */
+a {
+  text-decoration: none !important;
+}
+
 
 .text-yellow-500
 {
@@ -57,4 +60,10 @@ a:hover {
 .text-theme
 {
   color: #FAC33D  !important;
+}
+
+.bg-theme-transparent
+{
+  background-color: #FAC33D1f !important;
+  background: #FAC33D1f !important;
 }
