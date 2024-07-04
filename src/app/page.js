@@ -415,7 +415,7 @@ export default function Home(params) {
                                 <Link
                                   href={`/xvod/${cItem.mappedValue}/${cItem.item}`}
                                   key={`${start}-${end}-${cIndex}-xclass`}
-                                  className='btn btn-dark hover-effect text-white btn-dark-catagory btn-dark-catagory-x text-nowrap mb-2 px-4'
+                                  className='btn btn-dark hover-effect text-white btn-dark-catagory btn-dark-catagory-x text-nowrap mb-2'
                                   style={{
                                     borderRadius: '6px',
                                     width: 'calc(10% - 10px)',
