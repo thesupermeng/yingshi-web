@@ -14,6 +14,7 @@ import { useParams, usePathname, useRouter } from 'next/navigation';
 import { AdsBanner } from '@/components/ads/adsBanner.js';
 import { useFilterTypeList, useSearchingListApi } from '@/util/swr';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
+import { isMobile } from 'react-device-detect';
 
 const getIsScroll = (state) => state.isScroll;
 const getIsTop = (state) => state.isTop;
@@ -58,16 +59,18 @@ export const FilmLibrary = () => {
   //banner ads
   const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
   const [adsList, setAdsList] = useState(null);
-
+  
   const getAllAds = async () => {
     return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
   };
+
 
   const initAds = async () => {
     let allAds = await getAllAds();
     sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
     setAdsList(allAds.data);
   };
+
 
   useLayoutEffect(() => {
     console.log('test');
@@ -130,17 +133,23 @@ export const FilmLibrary = () => {
 
   useEffect(() => {
     if (!isAtTop.res) {
-      setCollapse(true);
+      if (isMobile) {
+        setCollapse(true);
+      }
     } else {
-      setCollapse(false);
+      if (isMobile) {
+        setCollapse(false);
+      }
     }
   }, [isAtTop]);
 
   useEffect(() => {
     if (isScrolling.res) {
-      if (buttonUncollapse) {
-        setCollapse(true);
-        setButtonUncollapse(false);
+      if (isMobile) {
+        if (buttonUncollapse) {
+          setCollapse(true);
+          setButtonUncollapse(false);
+        }
       }
     }
   }, [isScrolling]);
@@ -299,21 +308,22 @@ export const FilmLibrary = () => {
   return (
     <>
       <div className='flex flex-1 justify-start flex-col'>
+      {(adsList && !isVip )&&
+        <div className=' w-[100%] ' style={{height:'156px'}}>
+          <div className='container'>
+       
+          <AdsBanner adsList={adsList} pathName={path} height='500px' />
+       
+          </div>
+        </div>
+    
+  }
         <div className='flex w-screen flex-col items-center'>
           {initialLoading || adsList == null ? (
             <LoadingPage full={true} />
           ) : (
             <>
-              <div className={` w-screen p-1 z-10 top-[48px] md:static sticky bg-[#000000]`}>
-                <div className=' w-[100%] md:h-[165px] h-[80px]'>
-                  <div className='container'>
-                    <AdsBanner
-                      adsList={adsList}
-                      pathName={path}
-                      height='500px'
-                    />
-                  </div>
-                </div>
+              <div className={` w-screen p-1 z-10 top-[48px] md:static sticky bg-black`}>
                 {filterTypeList && paramsFilter && (
                   <div className={`bg-[#1D2023] pt-2`}>
                     <div className='flex md:flex-wrap gap-x-4 gap-y-2 pl-4 py-2 container'>
@@ -567,10 +577,12 @@ export const FilmLibrary = () => {
                       <div
                         className='cursor-pointer'
                         onClick={() => {
-                          setCollapse(false);
-                          setTimeout(() => {
-                            setButtonUncollapse(true);
-                          }, 300);
+                          if (isMobile) {
+                            setCollapse(false);
+                            setTimeout(() => {
+                              setButtonUncollapse(true);
+                            }, 300);
+                          }
                         }}
                       >
                         <FontAwesomeIcon
