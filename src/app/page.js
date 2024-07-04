@@ -3,7 +3,7 @@ import './i18n';
 import { LoadingPage } from '@/components/loading';
 import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
 import { VideoHorizontalCard } from '@/components/videoItem/videoHorizontalCard';
-import { AdsBanner } from '@/components/ads/adsBanner.js';
+// import { AdsBanner } from '@/components/ads/adsBanner.js';
 export const RightBetCartWidth = 'w-[32rem]';
 import { useSelector, useDispatch } from 'react-redux';
 import { Carousel } from '@/components/carousel/carousel';
@@ -22,6 +22,7 @@ import { VideoWithTitleHorizontalCard } from '@/components/videoItem/videoWithTi
 import { setIsUserChina } from '@/store/yingshiScreen';
 
 import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import SingletonAdsBanner from '@/components/ads/singletonAdsBanner';
 
 const splitArrayIntoChunks = (array, chunkSize) => {
   let results = [];
@@ -67,30 +68,30 @@ export default function Home(params) {
     setIsCollapsed(!isCollapsed);
   };
 
-  //banner ads
-  const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
-  const [adsList, setAdsList] = useState([]);
-  const getAllAds = async () => {
-    return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
-  };
-  const initAds = async () => {
-    let allAds = await getAllAds();
-    sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
+  // //banner ads
+  // const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
+  // const [adsList, setAdsList] = useState([]);
+  // const getAllAds = async () => {
+  //   return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
+  // };
+  // const initAds = async () => {
+  //   let allAds = await getAllAds();
+  //   sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
 
-    setAdsList(allAds.data);
-  };
-  useLayoutEffect(() => {
-    let adsList = initAdsList;
-    if (!adsList) {
-      adsList = JSON.parse(sessionStorage.getItem('adsList'));
-    }
+  //   setAdsList(allAds.data);
+  // };
+  // useLayoutEffect(() => {
+  //   let adsList = initAdsList;
+  //   if (!adsList) {
+  //     adsList = JSON.parse(sessionStorage.getItem('adsList'));
+  //   }
 
-    if (adsList && adsList !== 'undefined') {
-      setAdsList(adsList);
-    } else {
-      initAds();
-    }
-  }, []);
+  //   if (adsList && adsList !== 'undefined') {
+  //     setAdsList(adsList);
+  //   } else {
+  //     initAds();
+  //   }
+  // }, []);
   //end banner ads
 
   useEffect(() => {
@@ -233,16 +234,17 @@ export default function Home(params) {
           {paramsInput != 99 ? (
             <div className='flex flex-col w-full'>
               <Carousel
-                adsList={adsList}
+                // adsList={adsList}
                 carouselItemsProps={carousel}
                 pathName={pathName}
               />
               <div className='container w-[100%]'>
-                <AdsBanner
+              <SingletonAdsBanner />
+                {/* <AdsBanner
                   adsList={adsList}
                   pathName={pathName}
                   height='500px'
-                />
+                /> */}
               </div>
               {classList != [] &&
                 paramsInput != 99 &&
@@ -377,11 +379,12 @@ export default function Home(params) {
                 </div>
               </div>
               <div className='container w-[100%]'>
-                <AdsBanner
+              <SingletonAdsBanner />
+                {/* <AdsBanner
                   adsList={adsList}
                   pathName={pathName}
                   height='500px'
-                />
+                /> */}
               </div>
             </div>
           ) : (
@@ -432,11 +435,11 @@ export default function Home(params) {
                 </div>
                 {/* end 午夜场 class desktop */}
                 <div className='container w-full'>
-                  <AdsBanner
+                  {/* <AdsBanner
                     adsList={adsList}
                     pathName={pathName}
                     height='500px'
-                  />
+                  /> */}
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -448,11 +451,11 @@ export default function Home(params) {
                       platform='web'
                     />
                     <div className='container w-full'>
-                      <AdsBanner
+                      {/* <AdsBanner
                         adsList={adsList}
                         pathName={pathName}
                         height='500px'
-                      />
+                      /> */}
                     </div>
                   </div>
                 </div>
@@ -511,11 +514,11 @@ export default function Home(params) {
                 </div>
                 
                 <div className='container w-full'>
-                  <AdsBanner
+                  {/* <AdsBanner
                     adsList={adsList}
                     pathName={pathName}
                     height='500px'
-                  />
+                  /> */}
                 </div>
 
                 {/* end 午夜场 class mobile */}
@@ -531,11 +534,11 @@ export default function Home(params) {
                     />
                   </div>
                   <div className='container w-full'>
-                  <AdsBanner
+                  {/* <AdsBanner
                     adsList={adsList}
                     pathName={pathName}
                     height='500px'
-                  />
+                  /> */}
                 </div>
                 </div>
               </div>
