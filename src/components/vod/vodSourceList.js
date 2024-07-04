@@ -12,9 +12,21 @@ export const VodSourceList = ({
   const containerRef = useRef(null);
   const selectedItemRef = useRef(null);
 
+  const [disableLeftButton, setDisableLeftButton] = useState()
+
   const handleScroll = (scrollOffset) => {
     if (containerRef.current) {
-      const newScrollLeft = containerRef.current.scrollLeft + scrollOffset;
+      const container = containerRef.current;
+      const maxScrollLeft = container.scrollWidth - container.clientWidth;
+
+      const newScrollLeft =
+        containerRef.current.scrollLeft + scrollOffset < 0
+          ? 0
+          : containerRef.current.scrollLeft + scrollOffset > maxScrollLeft
+          ? maxScrollLeft
+          : containerRef.current.scrollLeft + scrollOffset;
+
+      console.log(newScrollLeft, maxScrollLeft);
       containerRef.current.scrollTo({
         left: newScrollLeft,
         behavior: 'smooth',
@@ -24,7 +36,6 @@ export const VodSourceList = ({
 
   useEffect(() => {
     if (selectedItemRef.current) {
-
       selectedItemRef.current.scrollIntoView({
         // behavior: 'smooth',
         block: 'nearest',
