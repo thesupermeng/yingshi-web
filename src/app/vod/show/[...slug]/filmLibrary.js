@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { AdsBanner } from '@/components/ads/adsBanner.js';
 import { useFilterTypeList, useSearchingListApi } from '@/util/swr';
+import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 
 const getIsScroll = (state) => state.isScroll;
 const getIsTop = (state) => state.isTop;
@@ -32,6 +33,7 @@ export const FilmLibrary = () => {
   const router = useRouter();
 
   const { data, size, setSize } = useSearchingListApi(paramsFilter);
+  const { isVip } = useYingshiUser();
 
   const videoList = data ? [].concat(...data) : [];
   const stillCanLoad = data && !(size > data[0].TotalPageCount - 1);
@@ -55,16 +57,19 @@ export const FilmLibrary = () => {
 
   //banner ads
   const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
-  const [adsList, setAdsList] = useState([]);
+  const [adsList, setAdsList] = useState(null);
+  
   const getAllAds = async () => {
     return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
   };
+
+
   const initAds = async () => {
     let allAds = await getAllAds();
     sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
-
     setAdsList(allAds.data);
   };
+
 
   useLayoutEffect(() => {
     console.log('test');
@@ -74,8 +79,6 @@ export const FilmLibrary = () => {
     }
 
     if (adsList && adsList !== 'undefined') {
-      console.log('adsList 111');
-      console.log(adsList);
       setAdsList(adsList);
     } else {
       initAds();
@@ -298,12 +301,18 @@ export const FilmLibrary = () => {
   return (
     <>
       <div className='flex flex-1 justify-start flex-col'>
-        <div className=' w-[100%]'>
+      {(adsList && !isVip )&&
+        <div className=' w-[100%] ' style={{height:'165px'}}>
+          <div className='container'>
+       
           <AdsBanner adsList={adsList} pathName={path} height='500px' />
+       
+          </div>
         </div>
-
+    
+  }
         <div className='flex w-screen flex-col items-center'>
-          {initialLoading ? (
+          {initialLoading || adsList == null ? (
             <LoadingPage full={true} />
           ) : (
             <>
@@ -311,9 +320,8 @@ export const FilmLibrary = () => {
                 {filterTypeList && paramsFilter && (
                   <div className={`bg-[#1D2023] pt-2`}>
                     <div className='flex md:flex-wrap gap-x-4 gap-y-2 pl-4 py-2 container'>
-                      {/* 111111111 filter 短剧 */}
+                      {/* 1111 filter 短剧              .filter((item) => item.type_id !== 46) */}
                       {filterTypeList
-                        .filter((item) => item.type_id !== 46)
                         .map((item, index) => {
                           return (
                             <div
@@ -357,7 +365,7 @@ export const FilmLibrary = () => {
                             <div
                               className={`flex flex-col items-center cursor-pointer ${
                                 paramsFilter.by === item.value
-                                  ? 'bg-[#33a2f41F]'
+                                  ? 'bg-theme-transparent'
                                   : ''
                               } p-2 rounded-md`}
                               id={item.value}
@@ -390,7 +398,7 @@ export const FilmLibrary = () => {
                               <div
                                 className={`flex flex-col items-center cursor-pointer ${
                                   paramsFilter.class === item
-                                    ? 'bg-[#33a2f41F]'
+                                    ? 'bg-theme-transparent'
                                     : ''
                                 } p-2 rounded-md`}
                                 id={item}
@@ -430,7 +438,7 @@ export const FilmLibrary = () => {
                               <div
                                 className={`flex flex-col items-center cursor-pointer ${
                                   paramsFilter.area === item
-                                    ? 'bg-[#33a2f41F]'
+                                    ? 'bg-theme-transparent'
                                     : ''
                                 } p-2 rounded-md`}
                                 id={item}
@@ -470,7 +478,7 @@ export const FilmLibrary = () => {
                               <div
                                 className={`flex flex-col items-center cursor-pointer ${
                                   paramsFilter.lang === item
-                                    ? 'bg-[#33a2f41F]'
+                                    ? 'bg-theme-transparent'
                                     : ''
                                 } p-2 rounded-md`}
                                 id={item}
@@ -510,7 +518,7 @@ export const FilmLibrary = () => {
                               <div
                                 className={`flex flex-col items-center cursor-pointer ${
                                   paramsFilter.year === item
-                                    ? 'bg-[#33a2f41F]'
+                                    ? 'bg-theme-transparent'
                                     : ''
                                 } p-2 rounded-md`}
                                 id={item}

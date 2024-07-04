@@ -2,11 +2,10 @@ a {
   text-decoration: none !important;
 }
 
-/* FAC33D // 0085E0 */
 
 .text-yellow-500
 {
-  color: #FAC33D !important;
+  color: #33a2f4 !important;
 }
 
 
@@ -17,18 +16,18 @@ a {
 
 .text-yellow-hover:hover
 {
-  color: #FAC33D !important;
+  color: #33a2f4 !important;
 }
 
 
 .border-yellow-500 {
-  border-color: rgb(250, 198, 69) !important;
+  border-color:  rgb(51, 162, 244) !important;
 }
 
 
 .hover-yellow:hover{
-  /* color: rgb(250, 198, 69) !important; */
-  color: rgb(250, 198, 69) !important;
+  /* color:  rgb(51, 162, 244) !important; */
+  color:  rgb(51, 162, 244) !important;
   cursor: pointer;
 }
 
@@ -46,16 +45,25 @@ a:hover {
 
 .bg-theme
 {
-  background-color:rgb(51, 162, 244) !important;
-  background: rgb(51, 162, 244) !important;
+  background-color: #33a2f4 !important;
+  background: #33a2f4 !important;
+  color: black !important;
 }
+
 
 .btn-theme
 {
-  background-color: rgb(51, 162, 244) !important;
+  background-color: #33a2f4  !important;
+  color: black !important;
 }
 
 .text-theme
 {
-  color:  rgb(51, 162, 244) !important;
+  color: #33a2f4  !important;
+}
+
+.bg-theme-transparent
+{
+  background-color: #33a2f41f !important;
+  background: #33a2f41f !important;
 }
