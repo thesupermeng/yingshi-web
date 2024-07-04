@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { AdsBanner } from '@/components/ads/adsBanner.js';
 import { useFilterTypeList, useSearchingListApi } from '@/util/swr';
+import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 
 const getIsScroll = (state) => state.isScroll;
 const getIsTop = (state) => state.isTop;
@@ -32,6 +33,7 @@ export const FilmLibrary = () => {
   const router = useRouter();
 
   const { data, size, setSize } = useSearchingListApi(paramsFilter);
+  const { isVip } = useYingshiUser();
 
   const videoList = data ? [].concat(...data) : [];
   const stillCanLoad = data && !(size > data[0].TotalPageCount - 1);
@@ -299,7 +301,7 @@ export const FilmLibrary = () => {
   return (
     <>
       <div className='flex flex-1 justify-start flex-col'>
-      {adsList &&
+      {(adsList && !isVip )&&
         <div className=' w-[100%] ' style={{height:'165px'}}>
           <div className='container'>
        
@@ -363,7 +365,7 @@ export const FilmLibrary = () => {
                             <div
                               className={`flex flex-col items-center cursor-pointer ${
                                 paramsFilter.by === item.value
-                                  ? 'bg-[#FAC33D1F]'
+                                  ? 'bg-theme-transparent'
                                   : ''
                               } p-2 rounded-md`}
                               id={item.value}
@@ -396,7 +398,7 @@ export const FilmLibrary = () => {
                               <div
                                 className={`flex flex-col items-center cursor-pointer ${
                                   paramsFilter.class === item
-                                    ? 'bg-[#FAC33D1F]'
+                                    ? 'bg-theme-transparent'
                                     : ''
                                 } p-2 rounded-md`}
                                 id={item}
@@ -436,7 +438,7 @@ export const FilmLibrary = () => {
                               <div
                                 className={`flex flex-col items-center cursor-pointer ${
                                   paramsFilter.area === item
-                                    ? 'bg-[#FAC33D1F]'
+                                    ? 'bg-theme-transparent'
                                     : ''
                                 } p-2 rounded-md`}
                                 id={item}
@@ -476,7 +478,7 @@ export const FilmLibrary = () => {
                               <div
                                 className={`flex flex-col items-center cursor-pointer ${
                                   paramsFilter.lang === item
-                                    ? 'bg-[#FAC33D1F]'
+                                    ? 'bg-theme-transparent'
                                     : ''
                                 } p-2 rounded-md`}
                                 id={item}
@@ -516,7 +518,7 @@ export const FilmLibrary = () => {
                               <div
                                 className={`flex flex-col items-center cursor-pointer ${
                                   paramsFilter.year === item
-                                    ? 'bg-[#FAC33D1F]'
+                                    ? 'bg-theme-transparent'
                                     : ''
                                 } p-2 rounded-md`}
                                 id={item}
