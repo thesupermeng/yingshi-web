@@ -376,3 +376,10 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
 .custom-scroll::-webkit-scrollbar { 
   display: none;  /* Safari and Chrome */
 }
+
+
+
+.transparent
+{
+  opacity: 0.35 !important;
+}
