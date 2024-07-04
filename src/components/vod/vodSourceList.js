@@ -12,7 +12,8 @@ export const VodSourceList = ({
   const containerRef = useRef(null);
   const selectedItemRef = useRef(null);
 
-  const [disableLeftButton, setDisableLeftButton] = useState()
+  const [disableLeftButton, setDisableLeftButton] = useState(true);
+  const [disableRightButton, setDisableRightButton] = useState(true);
 
   const handleScroll = (scrollOffset) => {
     if (containerRef.current) {
@@ -26,13 +27,44 @@ export const VodSourceList = ({
           ? maxScrollLeft
           : containerRef.current.scrollLeft + scrollOffset;
 
-      console.log(newScrollLeft, maxScrollLeft);
       containerRef.current.scrollTo({
         left: newScrollLeft,
         behavior: 'smooth',
       });
     }
   };
+
+  
+  useEffect(() => {
+    const container = containerRef.current;
+
+    const onWheel = () => {
+      if (container) {
+        console.log('Current Scroll Position:', container.scrollLeft);
+
+        const maxScrollLeft = container.scrollWidth - container.clientWidth;
+        if (container.scrollLeft <= 0) {
+          setDisableLeftButton(true);
+          setDisableRightButton(false);
+        } else if (container.scrollLeft == maxScrollLeft) {
+          setDisableRightButton(true);
+          setDisableLeftButton(false);
+        } else {
+          setDisableLeftButton(false);
+          setDisableRightButton(false);
+        }
+      }
+    };
+
+    container.addEventListener('wheel', onWheel);
+
+    // Initial check on mount
+    onWheel();
+
+    return () => {
+      container.removeEventListener('wheel', onWheel);
+    };
+  }, []);
 
   useEffect(() => {
     if (selectedItemRef.current) {
@@ -54,7 +86,11 @@ export const VodSourceList = ({
             className={styles.arrowCard}
             onClick={() => handleScroll(-100)} // Adjust scroll offset as needed
           >
-            <Image src={ArrowLeftIcon} alt='Icon' />
+            <Image
+              src={ArrowLeftIcon}
+              alt='Icon'
+              className={`${disableLeftButton ? 'transparent' : ''}`}
+            />
           </div>
         </div>
       )}
@@ -104,7 +140,11 @@ export const VodSourceList = ({
             className={styles.arrowCard}
             onClick={() => handleScroll(100)} // Adjust scroll offset as needed
           >
-            <Image src={ArrowRightIcon} alt='Icon' />
+            <Image
+              src={ArrowRightIcon}
+              alt='Icon'
+              className={`${disableRightButton ? 'transparent' : ''}`}
+            />
           </div>
         </div>
       )}
