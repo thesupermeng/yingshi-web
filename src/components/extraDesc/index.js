@@ -12,7 +12,7 @@ function extractNumbers(input) {
   const numberPattern = /\d+/g;
   
   // Use match to find all digits in the input string
-  const matches = input.match(numberPattern);
+  const matches = input?.match(numberPattern);
   
   // If there are no matches, return an empty string
   if (!matches) {
