@@ -21,7 +21,7 @@ import Link from 'next/link';
 import { VideoWithTitleHorizontalCard } from '@/components/videoItem/videoWithTitleHorizontalCard';
 import { setIsUserChina } from '@/store/yingshiScreen';
 
-import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { faChevronUp, faChevronDown , faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 const splitArrayIntoChunks = (array, chunkSize) => {
   let results = [];
@@ -355,7 +355,7 @@ export default function Home(params) {
                                     fontStyle: 'normal',
                                     fontFamily: 'PingFang SC',
                                   }}
-                                  icon={faChevronDown}
+                                  icon={faChevronRight}
                                 />
                               </div>
                             </div>

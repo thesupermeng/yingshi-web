@@ -14,6 +14,7 @@ import { useParams, usePathname, useRouter } from 'next/navigation';
 import { AdsBanner } from '@/components/ads/adsBanner.js';
 import { useFilterTypeList, useSearchingListApi } from '@/util/swr';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
+import { isMobile } from 'react-device-detect';
 
 const getIsScroll = (state) => state.isScroll;
 const getIsTop = (state) => state.isTop;
@@ -132,17 +133,23 @@ export const FilmLibrary = () => {
 
   useEffect(() => {
     if (!isAtTop.res) {
-      setCollapse(true);
+      if (isMobile) {
+        setCollapse(true);
+      }
     } else {
-      setCollapse(false);
+      if (isMobile) {
+        setCollapse(false);
+      }
     }
   }, [isAtTop]);
 
   useEffect(() => {
     if (isScrolling.res) {
-      if (buttonUncollapse) {
-        setCollapse(true);
-        setButtonUncollapse(false);
+      if (isMobile) {
+        if (buttonUncollapse) {
+          setCollapse(true);
+          setButtonUncollapse(false);
+        }
       }
     }
   }, [isScrolling]);
@@ -302,7 +309,7 @@ export const FilmLibrary = () => {
     <>
       <div className='flex flex-1 justify-start flex-col'>
       {(adsList && !isVip )&&
-        <div className=' w-[100%] ' style={{height:'165px'}}>
+        <div className=' w-[100%] ' style={{height:'156px'}}>
           <div className='container'>
        
           <AdsBanner adsList={adsList} pathName={path} height='500px' />
@@ -316,39 +323,38 @@ export const FilmLibrary = () => {
             <LoadingPage full={true} />
           ) : (
             <>
-              <div className={` w-screen p-1 z-10 top-[48px] md:static sticky`}>
+              <div className={` w-screen p-1 z-10 top-[48px] md:static sticky bg-black`}>
                 {filterTypeList && paramsFilter && (
                   <div className={`bg-[#1D2023] pt-2`}>
                     <div className='flex md:flex-wrap gap-x-4 gap-y-2 pl-4 py-2 container'>
                       {/* 1111 filter 短剧              .filter((item) => item.type_id !== 46) */}
-                      {filterTypeList
-                        .map((item, index) => {
-                          return (
-                            <div
-                              className='flex flex-col items-center cursor-pointer'
-                              id={item.type_id}
-                              key={index}
-                              onClick={() => {
-                                router.push(
-                                  `/vod/show/by/${advanceFilterItem[0].value}/id/${item.type_id}`
-                                );
-                              }}
+                      {filterTypeList.map((item, index) => {
+                        return (
+                          <div
+                            className='flex flex-col items-center cursor-pointer'
+                            id={item.type_id}
+                            key={index}
+                            onClick={() => {
+                              router.push(
+                                `/vod/show/by/${advanceFilterItem[0].value}/id/${item.type_id}`
+                              );
+                            }}
+                          >
+                            <span
+                              className={`hover:text-yellow-500 transition-colors duration-300 truncate ${
+                                paramsFilter.typeId === item.type_id
+                                  ? 'text-yellow-500'
+                                  : 'text-white'
+                              }`}
                             >
-                              <span
-                                className={`hover:text-yellow-500 transition-colors duration-300 truncate ${
-                                  paramsFilter.typeId === item.type_id
-                                    ? 'text-yellow-500'
-                                    : 'text-white'
-                                }`}
-                              >
-                                {item.type_name}
-                              </span>
-                              {paramsFilter.typeId === item.type_id ? (
-                                <div className='border-2 border-yellow-500 w-5 h-0.5 rounded-lg'></div>
-                              ) : null}
-                            </div>
-                          );
-                        })}
+                              {item.type_name}
+                            </span>
+                            {paramsFilter.typeId === item.type_id ? (
+                              <div className='border-2 border-yellow-500 w-5 h-0.5 rounded-lg'></div>
+                            ) : null}
+                          </div>
+                        );
+                      })}
                     </div>
                     <div
                       className={`transition-all duration-500 md:h-fit md:visible md:py-2
@@ -571,10 +577,12 @@ export const FilmLibrary = () => {
                       <div
                         className='cursor-pointer'
                         onClick={() => {
-                          setCollapse(false);
-                          setTimeout(() => {
-                            setButtonUncollapse(true);
-                          }, 300);
+                          if (isMobile) {
+                            setCollapse(false);
+                            setTimeout(() => {
+                              setButtonUncollapse(true);
+                            }, 300);
+                          }
                         }}
                       >
                         <FontAwesomeIcon

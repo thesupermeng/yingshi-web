@@ -194,28 +194,25 @@ export default function Invite() {
         <Image src={AppImage} alt="App Image" width={330} height={730}/>
       </div>
 
-      <div className={`${styles.mobile} flex-1 bg-cover bg-center items-center flex-col`}
+      <div className={`${styles.mobile} flex-1 bg-cover bg-center items-center flex-col pb-3`}
            style={{backgroundImage: `url('/img/invite_mobile_bg.svg')`}}>
-        <div className="pt-12 pl-6 pr-6 mt-px-50">
+        <div className="pt-8 pl-6 pr-6 mt-px-50">
           <div className="flex flex-col justify-center items-center">
             <Image width={160} height={95} alt="logo" src={Logo}/>
-            <p className="text-xl font-medium pt-4 pb-12">
+            <p className="text-lg text-center font-medium pt-4">
               <span style={{color: 'rgba(250, 195, 61, 1)'}}>{username}</span> 邀请你一起领取观影VIP
             </p>
-            <Image className="absolute" style={{top: '185px'}} width={360} height={543} src={MobileAppImage} alt="App Image"/>
           </div>
         </div>
-        <div
-          className="z-10 mt-44 grow pt-12 w-full text-center bottom-0"
-          style={{background: 'linear-gradient(180deg, rgba(20, 22, 26, 0.00) 0%, rgba(20, 22, 26, 0.88) 14.01%, #14161A 50.32%)'}}>
-          <div className="w-5/6 mx-auto pt-4 pb-8">
-            <p className="text-xl font-bold text-[#FFBE16]">注册影视TV会员即享 15天VIP 会员</p>
-            <p className="text-sm font-light pt-1 pr-1 pb-0 pl-1">您也可以推荐好友注册下载影视APP，推荐越多的好友获得更多VIP天数</p>
+        <div className="w-full text-center">
+          <div className="w-5/6 mx-auto pt-3 pb-8">
+            <p className="text-lg font-bold text-[#FFBE16]">注册影视TV会员即享 30天VIP 会员</p>
+            <p className="text-xs font-light pt-1 pr-1 pb-0 pl-1">您也可以推荐好友注册下载影视APP，推荐越多的好友获得更多VIP天数</p>
             <div style={{padding: '18px 0px 16px 0px', width: '100%'}}>
               <div onClick={copyToClipboard} style={{
                 cursor: 'pointer',
                 borderRadius: '16px',
-                backgroundColor: 'rgba(255, 255, 255, 0.10)',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
                 display: 'flex',
                 justifyContent: 'space-between',
                 padding: '13px 22px'
@@ -243,25 +240,27 @@ export default function Invite() {
                 </div>
               </div>
             </div>
-            <div className="pt-6">
-              <p className="pb-3 text-sm">下载并安装APP后，输入邀请码可获得VIP会员</p>
-              <div className='flex flex-row gap-4 items-center '>
-                <div onClick={navigateDownload}
-                     className="flex flex-1 gap-2 bg-[#FAC33D] rounded-lg py-3 px-2 justify-center items-center">
-                  <Image width={20} src={DownloadIcon} alt="download"/>
-                  <span className="text-black text-base font-medium">影视TV APK</span>
-                </div>
-                <div onClick={navigateStoreDownload}
-                     className="flex flex-1 gap-2 bg-white rounded-lg py-3 px-2 justify-center items-center">
-                  <Image width={20} src={AppStoreIcon} alt="app_store"/>
-                  <div className="flex flex-row">
-                    <span className="text-black text-base font-medium">App Store 下载</span>
+            <div className="pt-3">
+              <p className="pb-3 text-xs">下载并安装APP后，输入邀请码可获得VIP会员</p>
+              <div onClick={navigateDownload}
+                   className="flex bg-[#FAC33D] gap-2 rounded-lg p-3 justify-center items-center">
+                <Image width={20} src={DownloadIcon} alt="download"/>
+                <span className="text-black text-base font-semibold">影视TV APK</span>
+              </div>
+              <div className="flex pt-2" style={{height: '60px'}} onClick={navigateStoreDownload}>
+                <div className="flex-1 h-full">
+                  <div className="p-3 h-full flex gap-2 rounded-lg bg-white justify-center items-center">
+                    <Image width={20} src={AppStoreIcon} alt="app_store"/>
+                    <div className="flex flex-row">
+                      <span className="text-black text-base font-semibold">App Store 下载</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <Image width={330} height={343} src={MobileAppImage} alt="App Image"/>
       </div>
     </>
   );
