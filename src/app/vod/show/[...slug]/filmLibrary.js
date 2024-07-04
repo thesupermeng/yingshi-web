@@ -357,7 +357,7 @@ export const FilmLibrary = () => {
                             <div
                               className={`flex flex-col items-center cursor-pointer ${
                                 paramsFilter.by === item.value
-                                  ? 'bg-[#FAC33D1F]'
+                                  ? 'bg-[#33a2f41F]'
                                   : ''
                               } p-2 rounded-md`}
                               id={item.value}
@@ -390,7 +390,7 @@ export const FilmLibrary = () => {
                               <div
                                 className={`flex flex-col items-center cursor-pointer ${
                                   paramsFilter.class === item
-                                    ? 'bg-[#FAC33D1F]'
+                                    ? 'bg-[#33a2f41F]'
                                     : ''
                                 } p-2 rounded-md`}
                                 id={item}
@@ -430,7 +430,7 @@ export const FilmLibrary = () => {
                               <div
                                 className={`flex flex-col items-center cursor-pointer ${
                                   paramsFilter.area === item
-                                    ? 'bg-[#FAC33D1F]'
+                                    ? 'bg-[#33a2f41F]'
                                     : ''
                                 } p-2 rounded-md`}
                                 id={item}
@@ -470,7 +470,7 @@ export const FilmLibrary = () => {
                               <div
                                 className={`flex flex-col items-center cursor-pointer ${
                                   paramsFilter.lang === item
-                                    ? 'bg-[#FAC33D1F]'
+                                    ? 'bg-[#33a2f41F]'
                                     : ''
                                 } p-2 rounded-md`}
                                 id={item}
@@ -510,7 +510,7 @@ export const FilmLibrary = () => {
                               <div
                                 className={`flex flex-col items-center cursor-pointer ${
                                   paramsFilter.year === item
-                                    ? 'bg-[#FAC33D1F]'
+                                    ? 'bg-[#33a2f41F]'
                                     : ''
                                 } p-2 rounded-md`}
                                 id={item}
