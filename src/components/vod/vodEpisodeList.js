@@ -45,12 +45,12 @@ export const VodEpisodeList = ({
     setShowDropdown(false);
   };
 
-  if (episodeGroup == undefined || episodeSource == undefined) {
-    onSelectEpisodeGroup(episodeGroups[episodeGroups.length - 1]);
-    onSelectEpisode(vodSource.vod_play_list.urls[
-      vodSource.vod_play_list.url_count - 1
-    ]);
-  }
+  // if (episodeGroup == undefined || episodeSource == undefined) {
+  //   onSelectEpisodeGroup(episodeGroups[episodeGroups.length - 1]);
+  //   onSelectEpisode(vodSource.vod_play_list.urls[
+  //     vodSource.vod_play_list.url_count - 1
+  //   ]);
+  // }
 
   useLayoutEffect(() => {
 
