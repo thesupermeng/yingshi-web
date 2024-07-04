@@ -26,7 +26,7 @@ export const VodSourceList = ({
     if (selectedItemRef.current) {
 
       selectedItemRef.current.scrollIntoView({
-        behavior: 'smooth',
+        // behavior: 'smooth',
         block: 'nearest',
         inline: 'start',
       });
