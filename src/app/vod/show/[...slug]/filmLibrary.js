@@ -304,7 +304,7 @@ export const FilmLibrary = () => {
             <LoadingPage full={true} />
           ) : (
             <>
-              <div className={` w-screen p-1 z-10 top-[48px] md:static sticky`}>
+              <div className={` w-screen p-1 z-10 top-[48px] md:static sticky bg-[#000000]`}>
                 <div className=' w-[100%] md:h-[165px] h-[80px]'>
                   <div className='container'>
                     <AdsBanner
