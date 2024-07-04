@@ -24,11 +24,11 @@ export const VodEpisodeList = ({
   style,
 }) => {
   const selectedEpisodeGroupRef = useRef(null);
+  const selectedEpisodeRef1 = useRef(null);
+  const selectedEpisodeRef2 = useRef(null);
   const episodeContainerRef = useRef(null);
-  const [
-    selectedEpisodeGroupDivWidth,
-    setSelectedEpisodeGroupDivWidth,
-  ] = useState(0);
+  const [selectedEpisodeGroupDivWidth, setSelectedEpisodeGroupDivWidth] =
+    useState(0);
   const [episodeContainerHeight, setEpisodeContainerHeight] = useState(0);
 
   const { t } = useTranslation();
@@ -53,14 +53,13 @@ export const VodEpisodeList = ({
   // }
 
   useLayoutEffect(() => {
-
     if (episodeGroup == undefined || episodeSource == undefined) {
       onSelectEpisodeGroup(episodeGroups[episodeGroups.length - 1]);
-      onSelectEpisode(vodSource.vod_play_list.urls[
-        vodSource.vod_play_list.url_count - 1
-      ]);
+      onSelectEpisode(
+        vodSource.vod_play_list.urls[vodSource.vod_play_list.url_count - 1]
+      );
     }
-  }, [episodeGroups, episodeGroup, vodSource, episodeSource,]);
+  }, [episodeGroups, episodeGroup, vodSource, episodeSource]);
 
   useEffect(() => {
     if (selectedEpisodeGroupRef.current) {
@@ -74,6 +73,28 @@ export const VodEpisodeList = ({
       setEpisodeContainerHeight(episodeContainerRef.current.offsetHeight);
     }
   }, [open]);
+
+  useEffect(() => {
+    scrollEpisode();
+  }, []);
+
+  const scrollEpisode = () => {
+    if (selectedEpisodeRef1.current) {
+      selectedEpisodeRef1.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'nearest',
+      });
+    }
+
+    if (selectedEpisodeRef2.current) {
+      selectedEpisodeRef2.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'nearest',
+      });
+    }
+  };
 
   const selectEpisode = (episode) => {
     setOpen(false);
@@ -159,6 +180,7 @@ export const VodEpisodeList = ({
               .map((episode) => {
                 return (
                   <li
+                    ref={selectedEpisodeRef1}
                     style={{
                       padding: '10px',
                       margin: '4px',
@@ -310,6 +332,7 @@ export const VodEpisodeList = ({
               .map((episode) => {
                 return (
                   <div
+                    ref={selectedEpisodeRef2}
                     style={{ margin: '0.2rem 0.4rem' }}
                     key={`key-episode-${episode.nid}`}
                   >
