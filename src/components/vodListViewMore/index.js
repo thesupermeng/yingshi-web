@@ -1,46 +1,43 @@
 'use client'
 
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const VodListViewMore = ({ type, data }) => {
-  const router = useRouter();
+  let href;
 
-  const handleClick = (item) => {
-    switch (type) {
-      case 'category': {
-        localStorage.setItem('videoTypeId', item.type_id);
-        localStorage.setItem('videoClass', item.type_name);
-        // router.push(`/film-library`);
-        router.push(`/vod/show/by/time/class/${item.type_name}/id/${item.type_id}`);
-        break;
-      }
-      case 'topic': {
-       //  router.push('/topic/' + item.topic_id);
-         router.push('/topic/detail/id/' + item.topic_id);
-        break;
-      }
-      case 'xcategory': {
-        router.push(
-          `/xvod/${item.vod_source_name}/${item.type_name}`
-        );
-        break;
-      }
+  switch (type) {
+    case 'category': {
+      localStorage.setItem('videoTypeId', data.type_id);
+      localStorage.setItem('videoClass', data.type_name);
+      href = `/vod/show/by/time/class/${data.type_name}/id/${data.type_id}`;
+      break;
     }
-  };
+    case 'topic': {
+      href = `/topic/detail/id/${data.topic_id}`;
+      break;
+    }
+    case 'xcategory': {
+      href = `/xvod/${data.vod_source_name}/${data.type_name}`;
+      break;
+    }
+    default:
+      href = '#'; // Default href if type does not match any case
+  }
 
   return (
-    <span
-      className='mr-1'
-      style={{
-        fontSize: '12px',
-        fontWeight: '400',
-        fontStyle: 'normal',
-        fontFamily: 'PingFang SC',
-      }}
-      onClick={() => handleClick(data)}
-    >
-      更多
-    </span>
+    <Link href={href}>
+      <span
+        className='mr-1'
+        style={{
+          fontSize: '12px',
+          fontWeight: '400',
+          fontStyle: 'normal',
+          fontFamily: 'PingFang SC',
+        }}
+      >
+        更多
+      </span>
+    </Link>
   );
 }
 
