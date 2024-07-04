@@ -81,17 +81,17 @@ export const VodEpisodeList = ({
   const scrollEpisode = () => {
     if (selectedEpisodeRef1.current) {
       selectedEpisodeRef1.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
+        // behavior: 'smooth',
+        block: 'start',
         inline: 'nearest',
       });
     }
 
     if (selectedEpisodeRef2.current) {
       selectedEpisodeRef2.current.scrollIntoView({
-        behavior: 'smooth',
+        // behavior: 'smooth',
         block: 'nearest',
-        inline: 'nearest',
+        inline: 'start',
       });
     }
   };
@@ -180,7 +180,11 @@ export const VodEpisodeList = ({
               .map((episode) => {
                 return (
                   <li
-                    ref={selectedEpisodeRef1}
+                    ref={
+                      episodeSource.nid === episode.nid
+                        ? selectedEpisodeRef1
+                        : null
+                    }
                     style={{
                       padding: '10px',
                       margin: '4px',
@@ -332,7 +336,11 @@ export const VodEpisodeList = ({
               .map((episode) => {
                 return (
                   <div
-                    ref={selectedEpisodeRef2}
+                    ref={
+                      episodeSource.nid === episode.nid
+                        ? selectedEpisodeRef2
+                        : null
+                    }
                     style={{ margin: '0.2rem 0.4rem' }}
                     key={`key-episode-${episode.nid}`}
                   >
