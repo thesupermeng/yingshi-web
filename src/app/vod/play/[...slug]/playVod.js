@@ -101,8 +101,6 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
     );
     result = result.sort((a, b) => b.ads_sort - a.ads_sort);
 
-    console.log('result');
-    console.log(result);
     const sameSortFlag = allSameProperty(result, 'ads_sort');
 
     if (result.length > 0 && sameSortFlag) {

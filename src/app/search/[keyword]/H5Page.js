@@ -47,8 +47,6 @@ export default function Page() {
     console.log(searchingVodList);
     if (searchingVodList?.Total == 0) {
       let res2 = await getTypePageApi();
-      // console.log('result 2  is ');
-      // console.log(res2);
       setYunying(res2.yunying);
     }
     if (nextPage > 1) {
