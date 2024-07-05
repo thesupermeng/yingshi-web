@@ -26,7 +26,8 @@ import useYingshiUser from '@/hook/yingshiUser/useYingshiUser.js';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 import { YingshiApi2 } from '@/util/YingshiApi';
 import { Config } from '@/util/config';
-import { AdsBanner } from '@/components/ads/adsBanner.js';
+import SingletonAdsBanner from '@/components/ads/singletonAdsBanner.js';
+// import { AdsBanner } from '@/components/ads/adsBanner.js';
 
 export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
   const router = useRouter();
@@ -63,27 +64,22 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
   };
   const allSameProperty = (arr, prop) =>
     arr.every((item) => item[prop] === arr[0][prop]);
+  
   const getAds = async () => {
     console.log('play screen init');
 
-  
     let allAds = {};
     let adsList = initAdsList;
     if (!adsList) {
       adsList = JSON.parse(sessionStorage.getItem('adsList'));
     }
     if (adsList && adsList !== 'undefined') {
-    
-
-      allAds.data =  adsList;
-    } 
-    else
-    {  console.log('why')
+      allAds.data = adsList;
+    } else {
+      console.log('why');
       allAds = await getAllAds();
       sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
- 
     }
-    
 
     // let result = allAds.data.filter(
     //   (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(144)
@@ -784,7 +780,8 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
             </div>
 
             <div className='lg:flex hidden'>
-              <AdsBanner pathName={path} useMargin2={true} height='500px' />
+              {/* <AdsBanner pathName={path} useMargin2={true} height='500px' /> */}
+              <SingletonAdsBanner />
             </div>
 
             <div className='desktop'>
@@ -843,7 +840,8 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
             <div className='flex justify-center'>
               <div className='lg:w-[100%] w-[90%]'>
                 <div className='lg:hidden flex'>
-                  <AdsBanner useMargin2={true}  pathName={path} height='500px' />
+                  <SingletonAdsBanner />
+                  {/* <AdsBanner useMargin2={true} pathName={path} height='500px' /> */}
                 </div>
                 <div style={{ marginTop: '30px', marginBottom: '10px' }}>
                   <span className='text-xl' style={{ fontWeight: '500' }}>
@@ -947,8 +945,14 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
               <VodPopularList />
             </div>
 
-            <div className='lg:flex hidden '>
-              <AdsBanner useMargin2={true} pathName={path} height='500px' isPlayVertival={true} />
+            <div className='lg:flex hidden'>
+            <SingletonAdsBanner  useMargin2={true} verticalAds={true}/>
+              {/* <AdsBanner
+                useMargin2={true}
+                pathName={path}
+                height='500px'
+                isPlayVertival={true}
+              /> */}
             </div>
           </div>
         </div>

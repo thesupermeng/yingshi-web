@@ -21,7 +21,11 @@ import Link from 'next/link';
 import { VideoWithTitleHorizontalCard } from '@/components/videoItem/videoWithTitleHorizontalCard';
 import { setIsUserChina } from '@/store/yingshiScreen';
 
-import { faChevronUp, faChevronDown , faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronUp,
+  faChevronDown,
+  faChevronRight,
+} from '@fortawesome/free-solid-svg-icons';
 import SingletonAdsBanner from '@/components/ads/singletonAdsBanner';
 
 const splitArrayIntoChunks = (array, chunkSize) => {
@@ -144,14 +148,14 @@ export default function Home(params) {
         tempList.push({ item, mappedValue });
       }
 
-      console.log(tempList); // For debugging: logs the array with mapped values
+      // console.log(tempList); // For debugging: logs the array with mapped values
       setXClassList(tempList);
 
       const chunkSize = Math.ceil(tempList.length / 4);
       const chunkedArray = splitArrayIntoChunks(tempList, chunkSize);
       setXClassList2(chunkedArray);
-      console.log('chunkedArray');
-      console.log(chunkedArray);
+      // console.log('chunkedArray');
+      // console.log(chunkedArray);
     }
   }, [paramsInput, classList]);
 
@@ -239,7 +243,7 @@ export default function Home(params) {
                 pathName={pathName}
               />
               <div className='container w-[100%]'>
-              <SingletonAdsBanner />
+                <SingletonAdsBanner />
                 {/* <AdsBanner
                   adsList={adsList}
                   pathName={pathName}
@@ -327,11 +331,12 @@ export default function Home(params) {
                       return (
                         <div key={idx} className={'pt-3'}>
                           {/* {idx % 2 !== 0 && (
-                            <AdsBanner
-                              pathName={pathName}
-                              navId={'1-13'}
-                              height='500px'
-                            />
+                            <SingletonAdsBanner />
+                            // <AdsBanner
+                            //   pathName={pathName}
+                            //   navId={'1-13'}
+                            //   height='500px'
+                            // />
                           )} */}
                           <div id={category.type_id} key={idx}>
                             <div className='flex justify-between'>
@@ -379,7 +384,7 @@ export default function Home(params) {
                 </div>
               </div>
               <div className='container w-[100%]'>
-              <SingletonAdsBanner />
+                <SingletonAdsBanner />
                 {/* <AdsBanner
                   adsList={adsList}
                   pathName={pathName}
@@ -435,6 +440,7 @@ export default function Home(params) {
                 </div>
                 {/* end 午夜场 class desktop */}
                 <div className='container w-full'>
+                  <SingletonAdsBanner />
                   {/* <AdsBanner
                     adsList={adsList}
                     pathName={pathName}
@@ -451,6 +457,7 @@ export default function Home(params) {
                       platform='web'
                     />
                     <div className='container w-full'>
+                      <SingletonAdsBanner />
                       {/* <AdsBanner
                         adsList={adsList}
                         pathName={pathName}
@@ -512,8 +519,9 @@ export default function Home(params) {
                     })
                   }
                 </div>
-                
+
                 <div className='container w-full'>
+                  <SingletonAdsBanner />
                   {/* <AdsBanner
                     adsList={adsList}
                     pathName={pathName}
@@ -523,7 +531,10 @@ export default function Home(params) {
 
                 {/* end 午夜场 class mobile */}
 
-                <div className='flex flex-col' style={{ justifyContent: 'center' }}>
+                <div
+                  className='flex flex-col'
+                  style={{ justifyContent: 'center' }}
+                >
                   {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
                   <div className='pt-1 container  w-[100%]'>
                     <VideoWithTitleHorizontalCard
@@ -534,12 +545,13 @@ export default function Home(params) {
                     />
                   </div>
                   <div className='container w-full'>
-                  {/* <AdsBanner
+                    <SingletonAdsBanner />
+                    {/* <AdsBanner
                     adsList={adsList}
                     pathName={pathName}
                     height='500px'
                   /> */}
-                </div>
+                  </div>
                 </div>
               </div>
             </>

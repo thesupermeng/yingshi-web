@@ -12,11 +12,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
 import { Spinner } from '@/components/spinner';
-import { AdsBanner } from '@/components/ads/adsBanner.js';
+// import { AdsBanner } from '@/components/ads/adsBanner.js';
 import styles from '../../style.module.css';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { getTopicListApi } from '@/app/actions';
+import SingletonAdsBanner from '@/components/ads/singletonAdsBanner';
 
 export const Topic = () => {
   const [topicList, setTopicList] = useState([]);
@@ -27,32 +28,32 @@ export const Topic = () => {
   const router = useRouter();
 
   //banner ads
-  const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
-  const [adsList, setAdsList] = useState(null);
-  const getAllAds = async () => {
-    return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
-  };
-  const initAds = async () => {
-    let allAds = await getAllAds();
-    sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
+  // const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
+  // const [adsList, setAdsList] = useState(null);
+  // const getAllAds = async () => {
+  //   return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
+  // };
+  // const initAds = async () => {
+  //   let allAds = await getAllAds();
+  //   sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
 
-    setAdsList(allAds.data);
-  };
+  //   setAdsList(allAds.data);
+  // };
 
-  useLayoutEffect(() => {
-    let adsList = initAdsList;
-    if (!adsList) {
-      adsList = JSON.parse(sessionStorage.getItem('adsList'));
-    }
+  // useLayoutEffect(() => {
+  //   let adsList = initAdsList;
+  //   if (!adsList) {
+  //     adsList = JSON.parse(sessionStorage.getItem('adsList'));
+  //   }
 
-    if (adsList && adsList !== 'undefined') {
-      console.log('adsList 111');
-      console.log(adsList);
-      setAdsList(adsList);
-    } else {
-      initAds();
-    }
-  }, []);
+  //   if (adsList && adsList !== 'undefined') {
+  //     console.log('adsList 111');
+  //     console.log(adsList);
+  //     setAdsList(adsList);
+  //   } else {
+  //     initAds();
+  //   }
+  // }, []);
   //end banner ads
 
   const getTopicList = async () => {
@@ -110,16 +111,15 @@ export const Topic = () => {
           <div className={styles.containerHeader}>
             <div className='d-flex' style={{ width: '100%' }}>
               <div className='overlay' style={{ width: '100%' }}>
+                {/* topic list  */}
 
-                   {/* topic list  */}
+                {/* {(adsList  )&& */}
+                <div className='container'>
+                  <SingletonAdsBanner />
+                  {/* <AdsBanner adsList={adsList} pathName={pathName} height='500px' /> */}
+                </div>
+                {/* } */}
 
-                   {(adsList  )&&
-            <div className='container'>
-              <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
-            </div>
-}
-
-      
                 <div className=' container px-0 d-flex flex-col'>
                   <div className='w-fit'>
                     <div className='topic-header-text w-fit'>播单</div>
@@ -128,8 +128,6 @@ export const Topic = () => {
               </div>
             </div>
           </div>
-
-       
 
           <div className='d-flex container pb-6 pt-6'>
             <div className='flex grid 2xl:grid-cols-3 grid-cols-2 gap-4'>
@@ -178,6 +176,7 @@ export const Topic = () => {
                   </div>
                   {/* {(idx + 1) % 12 === 0 && (
                     <div className='2xl:col-span-3  col-span-2'>
+                      <SingletonAdsBanner />
                       <AdsBanner
                         adsList={adsList}
                         pathName={pathName}
@@ -195,16 +194,18 @@ export const Topic = () => {
         <div className='mobile'>
           <div className='w-screen px-[10px]'>
             {/* <div className=' w-full'> */}
-            <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
+            <SingletonAdsBanner />
+            {/* <AdsBanner adsList={adsList} pathName={pathName} height='500px' /> */}
             {/* </div> */}
             {topicList.map((topic, idx) => (
               <div className='w-full' key={topic.topic_id}>
                 {(idx + 1) % 5 == 0 && (
-                  <AdsBanner
-                    pathName={pathName}
-                    navId={'1-13'}
-                    height='500px'
-                  />
+                  <SingletonAdsBanner />
+                  // <AdsBanner
+                  //   pathName={pathName}
+                  //   navId={'1-13'}
+                  //   height='500px'
+                  // />
                 )}
                 <Link
                   className='mb-2 cursor-pointer'
@@ -260,30 +261,20 @@ export const Topic = () => {
           </div>
         </div>
 
-        {/* loading spinner  */}
-        <div ref={targetRef}>
-          {stillCanLoad && <Spinner></Spinner>}
-          {topicList.length > 0 && (
-            <div className=' w-full container'>
-              <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
-            </div>
-          )}
-        </div>
-
         {!stillCanLoad && (
           <div className='flex items-center justify-center flex-col py-2'>
             <span className='test-xs text-muted'>没有更多了</span>
-            {topicList.length > 0 && (
-              <div className=' w-full container'>
-                <AdsBanner
-                  adsList={adsList}
-                  pathName={pathName}
-                  height='500px'
-                />
-              </div>
-            )}
           </div>
         )}
+
+        {/* loading spinner  */}
+        <div ref={targetRef}>
+          {stillCanLoad && <Spinner></Spinner>}
+          <div className=' w-full container'>
+            <SingletonAdsBanner />
+            {/* <AdsBanner adsList={adsList} pathName={pathName} height='500px' /> */}
+          </div>
+        </div>
       </div>
     </>
   );

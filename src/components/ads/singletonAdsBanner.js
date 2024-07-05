@@ -37,14 +37,14 @@ const SingletonAdsBanner = (useMargin2 = false, verticalAds = false) => {
     const fetchAds = async () => {
       const adsData = await initAds();
       let navId = '1-13';
-
       //home
       if (pathName == '/') {
         navId = '1-13';
       } else {
         //home categories
         if (pathName.startsWith('/index/type')) {
-          var pathFlag = pathName.slice(-1);
+          var pathFlag = pathName.lastIndexOf('/');
+          console.log(pathFlag);
           //综合
           if (
             pathFlag == '1' ||
@@ -78,7 +78,7 @@ const SingletonAdsBanner = (useMargin2 = false, verticalAds = false) => {
             navId = '2-19';
           }
         } else {
-          navId = '1-13'
+          navId = '1-13';
         }
       }
 
@@ -91,6 +91,9 @@ const SingletonAdsBanner = (useMargin2 = false, verticalAds = false) => {
         filteredAdsList.push(result);
       });
 
+      console.log(adsData);
+
+      console.log(filteredAdsList);
       setAds(filteredAdsList);
     };
 

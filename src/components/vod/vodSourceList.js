@@ -27,7 +27,7 @@ export const VodSourceList = ({
           ? maxScrollLeft
           : containerRef.current.scrollLeft + scrollOffset;
 
-      console.log(newScrollLeft);
+      // console.log(newScrollLeft);
       if (newScrollLeft <= 0) {
         setDisableLeftButton(true);
         setDisableRightButton(false);
@@ -53,7 +53,7 @@ export const VodSourceList = ({
         // console.log('Current Scroll Position:', container.scrollLeft);
 
         const maxScrollLeft = container.scrollWidth - container.clientWidth - 1;
-        console.log(maxScrollLeft, container.scrollLeft);
+        // console.log(maxScrollLeft, container.scrollLeft);
         if (container.scrollLeft <= 0) {
           setDisableLeftButton(true);
           setDisableRightButton(false);
