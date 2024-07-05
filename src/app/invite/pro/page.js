@@ -88,7 +88,7 @@ export default function Invite() {
   const navigateDownload = () => {
     const os = getOperatingSystem();
     if (os === 'Android') {
-      window.open('https://oss.yingshi.tv/assets/yingshi.apk', '_blank');
+      window.open('https://oss.yingshi.tv/assets/yingshi-1.8.2-LB.apk', '_blank');
     } else {
       window.location.href = 'https://yingshi.tv';
     }
@@ -182,7 +182,7 @@ export default function Invite() {
               </div>
               <QRCode
                 className="rounded-md"
-                value="https://oss.yingshi.tv/assets/yingshi.apk"
+                value="https://oss.yingshi.tv/assets/yingshi-1.8.2-LB.apk"
                 renderAs="canvas"
                 size={200}
                 includeMargin={true}
