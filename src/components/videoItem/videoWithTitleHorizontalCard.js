@@ -8,7 +8,8 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Spinner } from '../spinner';
 import { getTypePage } from '@/app/actions';
 import { usePathname } from 'next/navigation';
-import { AdsBanner } from '../ads/adsBanner';
+import SingletonAdsBanner from '../ads/singletonAdsBanner';
+// import { AdsBanner } from '../ads/adsBanner';
 
 export const VideoWithTitleHorizontalCard = ({
   data,
@@ -25,29 +26,29 @@ export const VideoWithTitleHorizontalCard = ({
   const targetRef = useRef(null);
 
   //banner ads
-  const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
-  const [adsList, setAdsList] = useState([]);
-  const getAllAds = async () => {
-    return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
-  };
-  const initAds = async () => {
-    let allAds = await getAllAds();
-    sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
+  // const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
+  // const [adsList, setAdsList] = useState([]);
+  // const getAllAds = async () => {
+  //   return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
+  // };
+  // const initAds = async () => {
+  //   let allAds = await getAllAds();
+  //   sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
 
-    setAdsList(allAds.data);
-  };
-  useLayoutEffect(() => {
-    let adsList = initAdsList;
-    if (!adsList) {
-      adsList = JSON.parse(sessionStorage.getItem('adsList'));
-    }
+  //   setAdsList(allAds.data);
+  // };
+  // useLayoutEffect(() => {
+  //   let adsList = initAdsList;
+  //   if (!adsList) {
+  //     adsList = JSON.parse(sessionStorage.getItem('adsList'));
+  //   }
 
-    if (adsList && adsList !== 'undefined') {
-      setAdsList(adsList);
-    } else {
-      initAds();
-    }
-  }, []);
+  //   if (adsList && adsList !== 'undefined') {
+  //     setAdsList(adsList);
+  //   } else {
+  //     initAds();
+  //   }
+  // }, []);
   //end banner ads
 
   useEffect(() => {
@@ -138,11 +139,12 @@ export const VideoWithTitleHorizontalCard = ({
                   })}
                   {(idx + 1) % 3 === 0 && (
                     <div className='col-span-3 md:col-span-6 lg:col-span-6'>
-                      <AdsBanner
+                      <SingletonAdsBanner />
+                      {/* <AdsBanner
                         adsList={adsList}
                         pathName={pathName}
                         height='500px'
-                      />
+                      /> */}
                     </div>
                   )}
                 </div>
@@ -188,11 +190,12 @@ export const VideoWithTitleHorizontalCard = ({
                 })}
                 {(idx + 1) % 3 === 0 && (
                   <div className='col-span-3 md:col-span-6 lg:col-span-6'>
-                    <AdsBanner
+                    <SingletonAdsBanner />
+                    {/* <AdsBanner
                       adsList={adsList}
                       pathName={pathName}
                       height='500px'
-                    />
+                    /> */}
                   </div>
                 )}
               </div>

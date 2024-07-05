@@ -7,7 +7,8 @@ import { YingshiApi, YingshiApi2 } from '@/util/YingshiApi';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { useParams, usePathname } from 'next/navigation';
-import { AdsBanner } from '@/components/ads/adsBanner';
+import SingletonAdsBanner from '@/components/ads/singletonAdsBanner';
+// import { AdsBanner } from '@/components/ads/adsBanner';
 
 export default function TopicDetails() {
   const { topicId } = useParams();
@@ -37,32 +38,32 @@ export default function TopicDetails() {
   }, []);
 
   //banner ads
-  const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
-  const [adsList, setAdsList] = useState([]);
-  const getAllAds = async () => {
-    return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
-  };
-  const initAds = async () => {
-    let allAds = await getAllAds();
-    sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
+  // const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
+  // const [adsList, setAdsList] = useState([]);
+  // const getAllAds = async () => {
+  //   return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
+  // };
+  // const initAds = async () => {
+  //   let allAds = await getAllAds();
+  //   sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
 
-    setAdsList(allAds.data);
-  };
+  //   setAdsList(allAds.data);
+  // };
 
-  useLayoutEffect(() => {
-    let adsList = initAdsList;
-    if (!adsList) {
-      adsList = JSON.parse(sessionStorage.getItem('adsList'));
-    }
+  // useLayoutEffect(() => {
+  //   let adsList = initAdsList;
+  //   if (!adsList) {
+  //     adsList = JSON.parse(sessionStorage.getItem('adsList'));
+  //   }
 
-    if (adsList && adsList !== 'undefined') {
-      console.log('adsList 111');
-      console.log(adsList);
-      setAdsList(adsList);
-    } else {
-      initAds();
-    }
-  }, []);
+  //   if (adsList && adsList !== 'undefined') {
+  //     console.log('adsList 111');
+  //     console.log(adsList);
+  //     setAdsList(adsList);
+  //   } else {
+  //     initAds();
+  //   }
+  // }, []);
   //end banner ads
 
   return (
@@ -76,11 +77,12 @@ export default function TopicDetails() {
                 <div className='overlay' style={{ width: '100%' }}>
                   <div className='container px-0 d-flex flex-col'>
                     <div className=' w-full container'>
-                      <AdsBanner
+                      <SingletonAdsBanner />
+                      {/* <AdsBanner
                         adsList={adsList}
                         pathName={pathName}
                         height='500px'
-                      />
+                      /> */}
                     </div>
                     <div className='w-fit'>
                       <div className='topic-header-text'>
@@ -112,25 +114,27 @@ export default function TopicDetails() {
               </div>
             </div>
             <div className=' w-full container'>
-              <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
+              <SingletonAdsBanner />
+              {/* <AdsBanner adsList={adsList} pathName={pathName} height='500px' /> */}
             </div>
           </div>
 
           {/* mobile view */}
           <div className='mobile pb-6'>
             <TopicHeader topicName={topicObj.topic_name} />
-            <div className='px-2.5'>
+            <div className='container'>
               {/* mobile content */}
               <div className='topic-header-text-sub mt-3'>
                 {topicObj.topic_blurb}
               </div>
 
-              <div className=' w-full container'>
-                <AdsBanner
+              <div className=' w-full'>
+                <SingletonAdsBanner />
+                {/* <AdsBanner
                   adsList={adsList}
                   pathName={pathName}
                   height='500px'
-                />
+                /> */}
               </div>
 
               <div className='topic-header-text-sub mt-3'>
@@ -144,7 +148,8 @@ export default function TopicDetails() {
               </div>
             </div>
             <div className=' w-full container'>
-              <AdsBanner adsList={adsList} pathName={pathName} height='500px' />
+              <SingletonAdsBanner />
+              {/* <AdsBanner adsList={adsList} pathName={pathName} height='500px' /> */}
             </div>
           </div>
         </>
