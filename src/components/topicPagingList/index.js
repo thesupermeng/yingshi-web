@@ -16,29 +16,29 @@ const TopicPagingList = ({ data, navId, serverNextPage, isStillCanLoad }) => {
 
   const targetRef = useRef(null);
 
-  //banner ads
-  const [adsList, setAdsList] = useState([]);
-  const getAllAds = async () => {
-    return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
-  };
-  const initAds = async () => {
-    let allAds = await getAllAds();
-    sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
-    console.log('init')
-    console.log(allAds.data)
-    setAdsList(allAds.data);
-  };
-  useEffect(() => {
-    let adsList = sessionStorage.getItem('adsList');
-    adsList = JSON.parse(adsList);
-    if (adsList && adsList !== 'undefined') {
-      setAdsList(adsList);
+  // //banner ads
+  // const [adsList, setAdsList] = useState([]);
+  // const getAllAds = async () => {
+  //   return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
+  // };
+  // const initAds = async () => {
+  //   let allAds = await getAllAds();
+  //   sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
+  //   console.log('init')
+  //   console.log(allAds.data)
+  //   setAdsList(allAds.data);
+  // };
+  // useEffect(() => {
+  //   let adsList = sessionStorage.getItem('adsList');
+  //   adsList = JSON.parse(adsList);
+  //   if (adsList && adsList !== 'undefined') {
+  //     setAdsList(adsList);
       
-    } else {
-      initAds();
-    }
-  }, []);
-  //end banner ads
+  //   } else {
+  //     initAds();
+  //   }
+  // }, []);
+  // //end banner ads
 
   useEffect(() => {
     if (stillCanLoad) {
