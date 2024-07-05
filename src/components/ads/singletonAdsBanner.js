@@ -3,7 +3,7 @@ import initAds from './initAds';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import { usePathname } from 'next/navigation';
 
-const SingletonAdsBanner = (useMargin2 = false, verticalAds = false) => {
+const SingletonAdsBanner = ({ useMargin2 = false, verticalAds = false }) => {
   const { isVip, userInfo } = useYingshiUser();
   const pathName = usePathname();
 
@@ -72,8 +72,10 @@ const SingletonAdsBanner = (useMargin2 = false, verticalAds = false) => {
         } else if (pathName.startsWith('/vod/show')) {
           navId = '12-15';
         } else if ('/vod/play') {
+          console.log(verticalAds)
           if (verticalAds) {
-            navId = '3-20';
+            // navId = '3-20';
+            navId = '1-13';
           } else {
             navId = '2-19';
           }
