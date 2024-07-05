@@ -44,7 +44,7 @@ const SingletonAdsBanner = ({ useMargin2 = false, verticalAds = false }) => {
         //home categories
         if (pathName.startsWith('/index/type')) {
           var pathFlag = pathName.lastIndexOf('/');
-          console.log(pathFlag);
+          // console.log(pathFlag);
           //综合
           if (
             pathFlag == '1' ||
@@ -72,7 +72,7 @@ const SingletonAdsBanner = ({ useMargin2 = false, verticalAds = false }) => {
         } else if (pathName.startsWith('/vod/show')) {
           navId = '12-15';
         } else if ('/vod/play') {
-          console.log(verticalAds)
+          // console.log(verticalAds)
           if (verticalAds) {
             // navId = '3-20';
             navId = '1-13';
@@ -93,9 +93,9 @@ const SingletonAdsBanner = ({ useMargin2 = false, verticalAds = false }) => {
         filteredAdsList.push(result);
       });
 
-      console.log(adsData);
+      // console.log(adsData);
 
-      console.log(filteredAdsList);
+      // console.log(filteredAdsList);
       setAds(filteredAdsList);
     };
 
