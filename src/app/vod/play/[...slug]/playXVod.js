@@ -22,7 +22,8 @@ import useYingshiUser from '@/hook/yingshiUser/useYingshiUser.js';
 import { YingshiApi, YingshiApi2 } from '@/util/YingshiApi';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { Config } from '@/util/config';
-import { AdsBanner } from '@/components/ads/adsBanner.js';
+import SingletonAdsBanner from '@/components/ads/singletonAdsBanner.js';
+// import { AdsBanner } from '@/components/ads/adsBanner.js';
 
 export const PlayXVod = ({ vodId, tId, nId }) => {
   const router = useRouter();
@@ -51,29 +52,29 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
   const { isVip, userInfo } = useYingshiUser();
 
   //banner ads
-  const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
-  const [adsList, setAdsList] = useState([]);
-  const getAllAds = async () => {
-    return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
-  };
-  const initAds = async () => {
-    let allAds = await getAllAds();
-    sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
+  // const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
+  // const [adsList, setAdsList] = useState([]);
+  // const getAllAds = async () => {
+  //   return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
+  // };
+  // const initAds = async () => {
+  //   let allAds = await getAllAds();
+  //   sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
 
-    setAdsList(allAds.data);
-  };
-  useLayoutEffect(() => {
-    let adsList = initAdsList;
-    if (!adsList) {
-      adsList = JSON.parse(sessionStorage.getItem('adsList'));
-    }
+  //   setAdsList(allAds.data);
+  // };
+  // useLayoutEffect(() => {
+  //   let adsList = initAdsList;
+  //   if (!adsList) {
+  //     adsList = JSON.parse(sessionStorage.getItem('adsList'));
+  //   }
 
-    if (adsList && adsList !== 'undefined') {
-      setAdsList(adsList);
-    } else {
-      initAds();
-    }
-  }, []);
+  //   if (adsList && adsList !== 'undefined') {
+  //     setAdsList(adsList);
+  //   } else {
+  //     initAds();
+  //   }
+  // }, []);
   //end banner ads
 
   const getXVod = async () => {
@@ -653,7 +654,8 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
               />
             </div>
             <div className='lg:flex hidden'>
-              <AdsBanner pathName={path} height='500px' />
+              <SingletonAdsBanner />
+              {/* <AdsBanner pathName={path} height='500px' /> */}
             </div>
             <VodContent
               vodContent={vod.vod_blurb}
@@ -703,7 +705,8 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
             <div className='flex justify-center'>
               <div className='lg:w-[100%] w-[90%]'>
                 <div className='lg:hidden flex'>
-                  <AdsBanner pathName={path} height='500px' />
+                  <SingletonAdsBanner />
+                  {/* <AdsBanner pathName={path} height='500px' /> */}
                 </div>
                 <div style={{ marginTop: '30px', marginBottom: '10px' }}>
                   <span className='text-xl' style={{ fontWeight: '500' }}>
@@ -811,10 +814,9 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
             </div>
 
             <div className='lg:flex hidden'>
-              <AdsBanner pathName={path} height='500px' />
+              <SingletonAdsBanner />
+              {/* <AdsBanner pathName={path} height='500px' /> */}
             </div>
-
-            {/* <AdsBanner height='500px' /> */}
           </div>
         </div>
       )}

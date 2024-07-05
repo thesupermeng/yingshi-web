@@ -3,7 +3,7 @@ import './i18n';
 import { LoadingPage } from '@/components/loading';
 import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
 import { VideoHorizontalCard } from '@/components/videoItem/videoHorizontalCard';
-import { AdsBanner } from '@/components/ads/adsBanner.js';
+// import { AdsBanner } from '@/components/ads/adsBanner.js';
 export const RightBetCartWidth = 'w-[32rem]';
 import { useSelector, useDispatch } from 'react-redux';
 import { Carousel } from '@/components/carousel/carousel';
@@ -21,7 +21,12 @@ import Link from 'next/link';
 import { VideoWithTitleHorizontalCard } from '@/components/videoItem/videoWithTitleHorizontalCard';
 import { setIsUserChina } from '@/store/yingshiScreen';
 
-import { faChevronUp, faChevronDown , faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronUp,
+  faChevronDown,
+  faChevronRight,
+} from '@fortawesome/free-solid-svg-icons';
+import SingletonAdsBanner from '@/components/ads/singletonAdsBanner';
 
 const splitArrayIntoChunks = (array, chunkSize) => {
   let results = [];
@@ -67,30 +72,30 @@ export default function Home(params) {
     setIsCollapsed(!isCollapsed);
   };
 
-  //banner ads
-  const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
-  const [adsList, setAdsList] = useState([]);
-  const getAllAds = async () => {
-    return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
-  };
-  const initAds = async () => {
-    let allAds = await getAllAds();
-    sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
+  // //banner ads
+  // const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
+  // const [adsList, setAdsList] = useState([]);
+  // const getAllAds = async () => {
+  //   return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
+  // };
+  // const initAds = async () => {
+  //   let allAds = await getAllAds();
+  //   sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
 
-    setAdsList(allAds.data);
-  };
-  useLayoutEffect(() => {
-    let adsList = initAdsList;
-    if (!adsList) {
-      adsList = JSON.parse(sessionStorage.getItem('adsList'));
-    }
+  //   setAdsList(allAds.data);
+  // };
+  // useLayoutEffect(() => {
+  //   let adsList = initAdsList;
+  //   if (!adsList) {
+  //     adsList = JSON.parse(sessionStorage.getItem('adsList'));
+  //   }
 
-    if (adsList && adsList !== 'undefined') {
-      setAdsList(adsList);
-    } else {
-      initAds();
-    }
-  }, []);
+  //   if (adsList && adsList !== 'undefined') {
+  //     setAdsList(adsList);
+  //   } else {
+  //     initAds();
+  //   }
+  // }, []);
   //end banner ads
 
   useEffect(() => {
@@ -143,14 +148,14 @@ export default function Home(params) {
         tempList.push({ item, mappedValue });
       }
 
-      console.log(tempList); // For debugging: logs the array with mapped values
+      // console.log(tempList); // For debugging: logs the array with mapped values
       setXClassList(tempList);
 
       const chunkSize = Math.ceil(tempList.length / 4);
       const chunkedArray = splitArrayIntoChunks(tempList, chunkSize);
       setXClassList2(chunkedArray);
-      console.log('chunkedArray');
-      console.log(chunkedArray);
+      // console.log('chunkedArray');
+      // console.log(chunkedArray);
     }
   }, [paramsInput, classList]);
 
@@ -233,16 +238,17 @@ export default function Home(params) {
           {paramsInput != 99 ? (
             <div className='flex flex-col w-full'>
               <Carousel
-                adsList={adsList}
+                // adsList={adsList}
                 carouselItemsProps={carousel}
                 pathName={pathName}
               />
               <div className='container w-[100%]'>
-                <AdsBanner
+                <SingletonAdsBanner />
+                {/* <AdsBanner
                   adsList={adsList}
                   pathName={pathName}
                   height='500px'
-                />
+                /> */}
               </div>
               {classList != [] &&
                 paramsInput != 99 &&
@@ -325,11 +331,12 @@ export default function Home(params) {
                       return (
                         <div key={idx} className={'pt-3'}>
                           {/* {idx % 2 !== 0 && (
-                            <AdsBanner
-                              pathName={pathName}
-                              navId={'1-13'}
-                              height='500px'
-                            />
+                            <SingletonAdsBanner />
+                            // <AdsBanner
+                            //   pathName={pathName}
+                            //   navId={'1-13'}
+                            //   height='500px'
+                            // />
                           )} */}
                           <div id={category.type_id} key={idx}>
                             <div className='flex justify-between'>
@@ -377,11 +384,12 @@ export default function Home(params) {
                 </div>
               </div>
               <div className='container w-[100%]'>
-                <AdsBanner
+                <SingletonAdsBanner />
+                {/* <AdsBanner
                   adsList={adsList}
                   pathName={pathName}
                   height='500px'
-                />
+                /> */}
               </div>
             </div>
           ) : (
@@ -415,7 +423,7 @@ export default function Home(params) {
                                 <Link
                                   href={`/xvod/${cItem.mappedValue}/${cItem.item}`}
                                   key={`${start}-${end}-${cIndex}-xclass`}
-                                  className='btn btn-dark hover-effect text-white btn-dark-catagory btn-dark-catagory-x text-nowrap mb-2 px-4'
+                                  className='btn btn-dark hover-effect text-white btn-dark-catagory btn-dark-catagory-x text-nowrap mb-2'
                                   style={{
                                     borderRadius: '6px',
                                     width: 'calc(10% - 10px)',
@@ -432,11 +440,12 @@ export default function Home(params) {
                 </div>
                 {/* end 午夜场 class desktop */}
                 <div className='container w-full'>
-                  <AdsBanner
+                  <SingletonAdsBanner />
+                  {/* <AdsBanner
                     adsList={adsList}
                     pathName={pathName}
                     height='500px'
-                  />
+                  /> */}
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -448,11 +457,12 @@ export default function Home(params) {
                       platform='web'
                     />
                     <div className='container w-full'>
-                      <AdsBanner
+                      <SingletonAdsBanner />
+                      {/* <AdsBanner
                         adsList={adsList}
                         pathName={pathName}
                         height='500px'
-                      />
+                      /> */}
                     </div>
                   </div>
                 </div>
@@ -509,18 +519,22 @@ export default function Home(params) {
                     })
                   }
                 </div>
-                
+
                 <div className='container w-full'>
-                  <AdsBanner
+                  <SingletonAdsBanner />
+                  {/* <AdsBanner
                     adsList={adsList}
                     pathName={pathName}
                     height='500px'
-                  />
+                  /> */}
                 </div>
 
                 {/* end 午夜场 class mobile */}
 
-                <div className='flex flex-col' style={{ justifyContent: 'center' }}>
+                <div
+                  className='flex flex-col'
+                  style={{ justifyContent: 'center' }}
+                >
                   {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
                   <div className='pt-1 container  w-[100%]'>
                     <VideoWithTitleHorizontalCard
@@ -531,12 +545,13 @@ export default function Home(params) {
                     />
                   </div>
                   <div className='container w-full'>
-                  <AdsBanner
+                    <SingletonAdsBanner />
+                    {/* <AdsBanner
                     adsList={adsList}
                     pathName={pathName}
                     height='500px'
-                  />
-                </div>
+                  /> */}
+                  </div>
                 </div>
               </div>
             </>
