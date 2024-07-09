@@ -2433,6 +2433,13 @@ a:not([href]):not([class]):hover {
 }
 /*  desktop */
 @media (min-width: 769px) {
+
+  .desktop-hover-effect:hover
+  {
+    opacity: 0.85;
+    cursor: pointer !important;
+  }
+
   .mobile {
     display: none !important;
   }
@@ -2472,6 +2479,8 @@ a:not([href]):not([class]):hover {
     margin-top: 0px !important;
     margin-bottom: 0px !important;
   }
+
+
 
   
 }
