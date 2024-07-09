@@ -80,7 +80,7 @@ export default async function fetcher(url, body = {}, options = {}) {
 
   let getParams = '';
   let resData;
-  url = 'https://api.yingshi.tv/' + url
+  url = 'https://testapi.yingshi.tv/' + url
 
   if (method !== 'GET') {
     url = url + await getQuery(url);

@@ -25,7 +25,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'https://api.yingshi.tv/:path*',
+        destination: 'https://testapi.yingshi.tv/:path*',
       },
     ];
   },
