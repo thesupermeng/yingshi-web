@@ -23,6 +23,7 @@ export const Topic = () => {
   const [topicList, setTopicList] = useState([]);
   const [stillCanLoad, setStillCanLoad] = useState(true);
   const [nextPage, setNextPage] = useState(1);
+  const [totalPageCount, setTotalPageCount] = useState(0);
   const pathName = usePathname();
   const targetRef = useRef(null);
   const router = useRouter();
@@ -65,6 +66,7 @@ export const Topic = () => {
       setTopicList((prev) => [...prev, ...topicListing.List]);
     } else {
       setTopicList(topicListing.List);
+      setTotalPageCount(topicListing.TotalPageCount)
     }
 
     if (nextPage > topicListing.TotalPageCount - 1) {
@@ -174,16 +176,16 @@ export const Topic = () => {
                       </div>
                     </Link>
                   </div>
-                  {/* {(idx + 1) % 12 === 0 && (
+                  {(idx + 1) % 12 === 0 && (
                     <div className='2xl:col-span-3  col-span-2'>
                       <SingletonAdsBanner />
-                      <AdsBanner
+                      {/* <AdsBanner
                         adsList={adsList}
                         pathName={pathName}
                         height='500px'
-                      />
+                      /> */}
                     </div>
-                  )} */}
+                  )}
                 </Fragment>
               ))}
             </div>
@@ -261,19 +263,20 @@ export const Topic = () => {
           </div>
         </div>
 
-        {!stillCanLoad && (
-          <div className='flex items-center justify-center flex-col py-2'>
-            <span className='test-xs text-muted'>没有更多了</span>
-          </div>
-        )}
-
         {/* loading spinner  */}
         <div ref={targetRef}>
+          {!stillCanLoad && (
+            <div className='flex items-center justify-center flex-col py-2'>
+              <span className='test-xs text-muted'>没有更多了</span>
+            </div>
+          )}
           {stillCanLoad && <Spinner></Spinner>}
-          <div className=' w-full container'>
-            <SingletonAdsBanner />
-            {/* <AdsBanner adsList={adsList} pathName={pathName} height='500px' /> */}
-          </div>
+          {topicList.length % 12 != 0 && nextPage == totalPageCount && (
+            <div className=' w-full container'>
+              <SingletonAdsBanner />
+              {/* <AdsBanner adsList={adsList} pathName={pathName} height='500px' /> */}
+            </div>
+          )}
         </div>
       </div>
     </>
