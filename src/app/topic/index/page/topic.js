@@ -267,7 +267,7 @@ export const Topic = () => {
                       <span className='test-xs text-muted'>没有更多了</span>
                     </div>
                   )}
-                {((idx + 1) % 5 == 0 ||
+                {((idx + 1) % 3 == 0 ||
                   (topicList.length === idx + 1 && !stillCanLoad)) && (
                   <SingletonAdsBanner />
                   // <AdsBanner
