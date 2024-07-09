@@ -23,6 +23,7 @@ export const Topic = () => {
   const [topicList, setTopicList] = useState([]);
   const [stillCanLoad, setStillCanLoad] = useState(true);
   const [nextPage, setNextPage] = useState(1);
+  const [totalPageCount, setTotalPageCount] = useState(0);
   const pathName = usePathname();
   const targetRef = useRef(null);
   const router = useRouter();
@@ -59,12 +60,13 @@ export const Topic = () => {
   const getTopicList = async () => {
     let currentPage = nextPage;
     const topicListing = await getTopicListApi(nextPage);
-    console.log(topicListing);
+    // console.log(topicListing);
 
     if (nextPage > 1) {
       setTopicList((prev) => [...prev, ...topicListing.List]);
     } else {
       setTopicList(topicListing.List);
+      setTotalPageCount(topicListing.TotalPageCount);
     }
 
     if (nextPage > topicListing.TotalPageCount - 1) {
@@ -174,16 +176,24 @@ export const Topic = () => {
                       </div>
                     </Link>
                   </div>
-                  {/* {(idx + 1) % 12 === 0 && (
-                    <div className='2xl:col-span-3  col-span-2'>
+                  {topicList.length === idx + 1 &&
+                    !stillCanLoad &&
+                    nextPage == totalPageCount && (
+                      <div className='2xl:col-span-3 col-span-2 justify-center flex'>
+                        <span className='test-xs text-muted'>没有更多了</span>
+                      </div>
+                    )}
+                  {((idx + 1) % 12 === 0 ||
+                    (topicList.length === idx + 1 && !stillCanLoad)) && (
+                    <div className='2xl:col-span-3 col-span-2'>
                       <SingletonAdsBanner />
-                      <AdsBanner
+                      {/* <AdsBanner
                         adsList={adsList}
                         pathName={pathName}
                         height='500px'
-                      />
+                      /> */}
                     </div>
-                  )} */}
+                  )}
                 </Fragment>
               ))}
             </div>
@@ -198,8 +208,67 @@ export const Topic = () => {
             {/* <AdsBanner adsList={adsList} pathName={pathName} height='500px' /> */}
             {/* </div> */}
             {topicList.map((topic, idx) => (
-              <div className='w-full' key={topic.topic_id}>
-                {(idx + 1) % 5 == 0 && (
+              <>
+                <div className='w-full' key={topic.topic_id}>
+                  <Link
+                    className='mb-2 cursor-pointer'
+                    // key={topic.topic_id}
+                    href={`/topic/detail/id/${topic.topic_id}`}
+                  >
+                    <div className='col-12 pt-2 d-flex justify-content-between align-items-center pb-1 font-semibold'>
+                      <span>{topic.topic_name}</span>
+                      <span className='mr-2'>
+                        {' '}
+                        <FontAwesomeIcon icon={faAngleRight} />
+                      </span>
+                    </div>
+
+                    <div className='col-12 mobile-topic-desc'>
+                      {topic.topic_blurb.length > 52
+                        ? `${topic.topic_blurb.slice(0, 52)}...`
+                        : topic.topic_blurb}
+                    </div>
+
+                    <div className='col-12' key={topic.topic_id}>
+                      <div className='row g-2'>
+                        {topic?.vod_list?.slice(0, 3).map((vod) => (
+                          <div
+                            className='col-4 cursor-pointer'
+                            key={vod.vod_id}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              router.push(
+                                `/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`
+                              );
+                            }}
+                          >
+                            {' '}
+                            {/* Add px-1 class for horizontal padding */}
+                            <img
+                              alt='topic items'
+                              className={`object-cover w-100`}
+                              src={vod?.vod_pic}
+                              style={{
+                                borderRadius: '10px',
+                                aspectRatio: '5/7',
+                                width: '100%',
+                              }}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+                {topicList.length === idx + 1 &&
+                  !stillCanLoad &&
+                  nextPage == totalPageCount && (
+                    <div className='2xl:col-span-3 col-span-2 justify-center flex'>
+                      <span className='test-xs text-muted'>没有更多了</span>
+                    </div>
+                  )}
+                {((idx + 1) % 3 == 0 ||
+                  (topicList.length === idx + 1 && !stillCanLoad)) && (
                   <SingletonAdsBanner />
                   // <AdsBanner
                   //   pathName={pathName}
@@ -207,74 +276,13 @@ export const Topic = () => {
                   //   height='500px'
                   // />
                 )}
-                <Link
-                  className='mb-2 cursor-pointer'
-                  // key={topic.topic_id}
-                  href={`/topic/detail/id/${topic.topic_id}`}
-                >
-                  <div className='col-12 pt-2 d-flex justify-content-between align-items-center pb-1 font-semibold'>
-                    <span>{topic.topic_name}</span>
-                    <span className='mr-2'>
-                      {' '}
-                      <FontAwesomeIcon icon={faAngleRight} />
-                    </span>
-                  </div>
-
-                  <div className='col-12 mobile-topic-desc'>
-                    {topic.topic_blurb.length > 52
-                      ? `${topic.topic_blurb.slice(0, 52)}...`
-                      : topic.topic_blurb}
-                  </div>
-
-                  <div className='col-12' key={topic.topic_id}>
-                    <div className='row g-2'>
-                      {topic?.vod_list?.slice(0, 3).map((vod) => (
-                        <div
-                          className='col-4 cursor-pointer'
-                          key={vod.vod_id}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            router.push(
-                              `/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`
-                            );
-                          }}
-                        >
-                          {' '}
-                          {/* Add px-1 class for horizontal padding */}
-                          <img
-                            alt='topic items'
-                            className={`object-cover w-100`}
-                            src={vod?.vod_pic}
-                            style={{
-                              borderRadius: '10px',
-                              aspectRatio: '5/7',
-                              width: '100%',
-                            }}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </Link>
-              </div>
+              </>
             ))}
           </div>
         </div>
 
-        {!stillCanLoad && (
-          <div className='flex items-center justify-center flex-col py-2'>
-            <span className='test-xs text-muted'>没有更多了</span>
-          </div>
-        )}
-
         {/* loading spinner  */}
-        <div ref={targetRef}>
-          {stillCanLoad && <Spinner></Spinner>}
-          <div className=' w-full container'>
-            <SingletonAdsBanner />
-            {/* <AdsBanner adsList={adsList} pathName={pathName} height='500px' /> */}
-          </div>
-        </div>
+        <div ref={targetRef}>{stillCanLoad && <Spinner></Spinner>}</div>
       </div>
     </>
   );
