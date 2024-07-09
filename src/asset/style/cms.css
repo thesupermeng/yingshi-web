@@ -105,8 +105,10 @@
   padding: 0px 3px;
 }
 
+@media (min-width: 769px) {
 .header-tab:hover .text-white {
   color:  rgb(250, 198, 69) !important;
+}
 }
 
 .mobile-topic-desc {

@@ -16,6 +16,12 @@ export const VodSourceList = ({
   const [disableRightButton, setDisableRightButton] = useState(true);
 
   const handleScroll = (scrollOffset) => {
+    if (vodSources?.length == 1) {
+      setDisableLeftButton(true);
+      setDisableRightButton(true);
+      return;
+    }
+
     if (containerRef.current) {
       const container = containerRef.current;
       const maxScrollLeft = container.scrollWidth - container.clientWidth - 1;
@@ -78,6 +84,13 @@ export const VodSourceList = ({
   }, []);
 
   useEffect(() => {
+    if (vodSources?.length == 1) {
+      setDisableLeftButton(true);
+      setDisableRightButton(true);
+    }
+  }, [vodSources]);
+
+  useEffect(() => {
     if (selectedItemRef.current) {
       selectedItemRef.current.scrollIntoView({
         // behavior: 'smooth',
@@ -89,22 +102,23 @@ export const VodSourceList = ({
 
   return (
     <div className='w-full flex flex-row'>
-      {vodSources?.length > 1 && (
-        <div className='lg:flex hidden'>
-          <div
-            id='control-left'
-            name='control'
-            className={styles.arrowCard}
-            onClick={() => handleScroll(-100)} // Adjust scroll offset as needed
-          >
-            <Image
-              src={ArrowLeftIcon}
-              alt='Icon'
-              className={`${disableLeftButton ? 'transparent' : ''}`}
-            />
-          </div>
+      <div className='lg:flex hidden'>
+        <div
+          id='control-left'
+          name='control'
+          className={`${styles.arrowCard} ${
+            vodSources.length > 1 ? 'transparent' : ''
+          }`}
+          onClick={() => handleScroll(-100)} // Adjust scroll offset as needed
+        >
+          <Image
+            src={ArrowLeftIcon}
+            alt='Icon'
+            className={`${disableLeftButton ? 'transparent' : ''}`}
+          />
         </div>
-      )}
+      </div>
+
       <div
         ref={containerRef} // Use ref to access the container
         className='flex flex-1 gap-2 overflow-x-scroll hide-scrollbar overscroll-none'
@@ -143,22 +157,23 @@ export const VodSourceList = ({
           </div>
         ))}
       </div>
-      {vodSources?.length > 1 && (
-        <div className='lg:flex hidden'>
-          <div
-            id='control-right'
-            name='control'
-            className={styles.arrowCard}
-            onClick={() => handleScroll(100)} // Adjust scroll offset as needed
-          >
-            <Image
-              src={ArrowRightIcon}
-              alt='Icon'
-              className={`${disableRightButton ? 'transparent' : ''}`}
-            />
-          </div>
+
+      <div className='lg:flex hidden'>
+        <div
+          id='control-right'
+          name='control'
+          className={`${styles.arrowCard} ${
+            vodSources.length > 1 ? 'transparent' : ''
+          }`}
+          onClick={() => handleScroll(100)} // Adjust scroll offset as needed
+        >
+          <Image
+            src={ArrowRightIcon}
+            alt='Icon'
+            className={`${disableRightButton ? 'transparent' : ''}`}
+          />
         </div>
-      )}
+      </div>
     </div>
   );
 };
