@@ -31,29 +31,35 @@ export default function LoginFlow(props) {
 
   return (
     <>
-      <LoginModal
-        open={openLogin}
-        handler={handleOpenLogin}
-        onRegsiter={() => {
-          setOpenLogin(false)
-          setOpenOTP(true)
-        }}
-      />
-      <OtpModal
-        open={openOTP}
-        handler={handleOpenOTP}
-        onLogin={() => {
-          setOpenOTP(false);
-          setOpenLoginSuccess(true);
-          setTimeout(() => {
-            setOpenLoginSuccess(false);
-          }, 2000);
-        }}
-        onRegister={() => {
-          setOpenOTP(false);
-          setOpenNickname(true);
-        }}
-      />
+      {openLogin &&
+        <LoginModal
+          open={openLogin}
+          handler={handleOpenLogin}
+          onRegsiter={() => {
+            setOpenLogin(false)
+            setOpenOTP(true)
+          }}
+        />
+      }
+
+      {openOTP &&
+        <OtpModal
+          open={openOTP}
+          handler={handleOpenOTP}
+          onLogin={() => {
+            setOpenOTP(false);
+            setOpenLoginSuccess(true);
+            setTimeout(() => {
+              setOpenLoginSuccess(false);
+            }, 2000);
+          }}
+          onRegister={() => {
+            setOpenOTP(false);
+            setOpenNickname(true);
+          }}
+        />
+      }
+
       {/*<NicknameModal*/}
       {/*  open={openNickname}*/}
       {/*  handler={handleOpenNickname}*/}
