@@ -8,6 +8,7 @@ import styles from './style.module.css';
 import { VideoHorizontalCard } from '@/components/videoItem/videoHorizontalCard';
 import { Spinner } from '@/components/spinner';
 import TopicHeader from './../../../../components/topicHeader';
+import SingletonAdsBanner from '@/components/ads/singletonAdsBanner';
 export default function Page() {
   const params = useParams();
   const xvodId = params.xvodId;
@@ -90,6 +91,9 @@ export default function Page() {
         </div>
 
         <div>
+          <div className='container'>
+            <SingletonAdsBanner />
+          </div>
           {/* <div className={`${styles.containerHeader} desktop`}></div> */}
 
           <div
@@ -99,11 +103,32 @@ export default function Page() {
             <div className='text-xl desktop'>
               {decodeURIComponent(xvodClass)}
             </div>
-            <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-2'>
+            <div className='grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 '>
               {vods != [] &&
                 vods?.map((vod, idx) => {
                   return (
-                    <VideoHorizontalCard vod={vod} key={idx} typepage_id={99} />
+                    <>
+                      <VideoHorizontalCard
+                        vod={vod}
+                        key={idx}
+                        typepage_id={99}
+                      />
+                      {vods.length === idx + 1 && !stillCanLoad && (
+                        <div className='col-span-3 md:col-span-5 lg:col-span-6 flex justify-center'>
+                          <span className='test-xs text-muted'>没有更多了</span>
+                        </div>
+                      )}
+                      {/* {((idx + 1) % 30 === 0 || vods.length === idx + 1 && !stillCanLoad) && (
+                        <div className='col-span-3 md:col-span-5 lg:col-span-6'>
+                          <SingletonAdsBanner />
+                        </div>
+                      )} */}
+                      {(vods.length === idx + 1 && !stillCanLoad) && (
+                        <div className='col-span-3 md:col-span-5 lg:col-span-6'>
+                          <SingletonAdsBanner />
+                        </div>
+                      )} 
+                    </>
                   );
                 })}
             </div>
@@ -118,12 +143,6 @@ export default function Page() {
             </div>
           )}
         </div>
-
-        {!stillCanLoad && (
-          <div className='flex items-center justify-center flex-col my-6 py-6'>
-            <span className='test-xs text-muted'>没有更多了</span>
-          </div>
-        )}
       </div>
     </>
   );

@@ -94,6 +94,7 @@ export const VideoWithTitleHorizontalCard = ({
 
   return (
     <>
+      {console.log(categories)}
       {categories != [] &&
         categories?.map((category, idx) => {
           if (platform === 'mobile') {
@@ -150,57 +151,67 @@ export const VideoWithTitleHorizontalCard = ({
                 </div>
               </div>
             );
-          }
-
-          return (
-            <div id={category.type_id} key={idx} style={{ paddingTop: '3rem' }}>
-              <div className='flex justify-between'>
-                <span
-                  style={{
-                    fontSize: '20px',
-                    fontWeight: '600',
-                    fontStyle: 'normal',
-                    fontFamily: 'PingFang SC',
-                  }}
-                >
-                  {category.type_name}
-                </span>
-                <div className='flex w-fit items-center cursor-pointer hover-blue'>
-                  <VodListViewMore type={'xcategory'} data={category} />
-                  <FontAwesomeIcon
+          } else {
+            return (
+              <div
+                id={category.type_id}
+                key={idx}
+                style={{ paddingTop: '3rem' }}
+              >
+                <div className='flex justify-between'>
+                  <span
                     style={{
-                      fontSize: '14px',
-                      fontWeight: '400',
+                      fontSize: '20px',
+                      fontWeight: '600',
                       fontStyle: 'normal',
                       fontFamily: 'PingFang SC',
                     }}
-                    icon={faAngleRight}
-                  />
+                  >
+                    {category.type_name}
+                  </span>
+                  <div className='flex w-fit items-center cursor-pointer hover-blue'>
+                    <VodListViewMore type={'xcategory'} data={category} />
+                    <FontAwesomeIcon
+                      style={{
+                        fontSize: '14px',
+                        fontWeight: '400',
+                        fontStyle: 'normal',
+                        fontFamily: 'PingFang SC',
+                      }}
+                      icon={faAngleRight}
+                    />
+                  </div>
+                </div>
+                <div className='grid grid-cols-3 md:grid-cols-6 lg:grid-cols-6 gap-5 py-2'>
+                  {category.vod_list?.slice(0, 6).map((vod, i) => {
+                    return (
+                      <VideoHorizontalCard
+                        vod={vod}
+                        key={i}
+                        typepage_id={navId}
+                      />
+                    );
+                  })}
+                  {categories?.length === idx + 1 && !stillCanLoad && (
+                    <div className='col-span-3 md:col-span-6 lg:col-span-6 flex justify-center'>
+                      <span className='test-xs text-muted'>没有更多了</span>
+                    </div>
+                  )}
+                  {((idx + 1) % 3 === 0 ||
+                    (categories.length === idx + 1 && !stillCanLoad)) && (
+                    <div className='col-span-3 md:col-span-6 lg:col-span-6'>
+                      <SingletonAdsBanner />
+                      {/* <AdsBanner
+                        adsList={adsList}
+                        pathName={pathName}
+                        height='500px'
+                      /> */}
+                    </div>
+                  )}
                 </div>
               </div>
-              <div className='grid grid-cols-3 md:grid-cols-6 lg:grid-cols-6 gap-5 py-2'>
-                {category.vod_list?.slice(0, 6).map((vod, i) => {
-                  return (
-                    <VideoHorizontalCard
-                      vod={vod}
-                      key={i}
-                      typepage_id={navId}
-                    />
-                  );
-                })}
-                {(idx + 1) % 3 === 0 && (
-                  <div className='col-span-3 md:col-span-6 lg:col-span-6'>
-                    <SingletonAdsBanner />
-                    {/* <AdsBanner
-                      adsList={adsList}
-                      pathName={pathName}
-                      height='500px'
-                    /> */}
-                  </div>
-                )}
-              </div>
-            </div>
-          );
+            );
+          }
         })}
       <div ref={targetRef}>
         {stillCanLoad && navId == 99 && <Spinner></Spinner>}

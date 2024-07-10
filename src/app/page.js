@@ -456,14 +456,6 @@ export default function Home(params) {
                       isStillCanLoad={still99CanLoad}
                       platform='web'
                     />
-                    <div className='container w-full'>
-                      <SingletonAdsBanner />
-                      {/* <AdsBanner
-                        adsList={adsList}
-                        pathName={pathName}
-                        height='500px'
-                      /> */}
-                    </div>
                   </div>
                 </div>
               </div>
@@ -543,14 +535,6 @@ export default function Home(params) {
                       isStillCanLoad={still99CanLoad}
                       platform='mobile'
                     />
-                  </div>
-                  <div className='container w-full'>
-                    <SingletonAdsBanner />
-                    {/* <AdsBanner
-                    adsList={adsList}
-                    pathName={pathName}
-                    height='500px'
-                  /> */}
                   </div>
                 </div>
               </div>
