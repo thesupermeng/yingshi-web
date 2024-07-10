@@ -70,7 +70,8 @@ export const Carousel = ({
 
   const initCarousel = async () => {
     const adsData = await initAds();
-    var pathFlag = pathName.lastIndexOf('/');
+    let getIndex = pathName.lastIndexOf('/');
+    let pathFlag = pathName.slice(getIndex + 1, pathName.length)
 
     if (pathFlag == '/') {
       navId = '126-135';

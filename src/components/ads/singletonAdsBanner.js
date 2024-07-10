@@ -43,8 +43,9 @@ const SingletonAdsBanner = ({ useMargin2 = false, verticalAds = false }) => {
       } else {
         //home categories
         if (pathName.startsWith('/index/type')) {
-          var pathFlag = pathName.lastIndexOf('/');
-          // console.log(pathFlag);
+          let getIndex = pathName.lastIndexOf('/');
+          let pathFlag = pathName.slice(getIndex + 1, pathName.length)
+          // console.log(pathName,pathFlag);
           //综合
           if (
             pathFlag == '1' ||
@@ -63,7 +64,8 @@ const SingletonAdsBanner = ({ useMargin2 = false, verticalAds = false }) => {
           else if (pathFlag == '7') {
             navId = '10-18';
           } else if (pathFlag == '99') {
-            navId = '23-24';
+            navId = '1-13';
+            // navId = '23-24';
           } else {
             navId = '1-13';
           }
