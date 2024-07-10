@@ -11,10 +11,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
 import { useParams, usePathname, useRouter } from 'next/navigation';
-import { AdsBanner } from '@/components/ads/adsBanner.js';
+// import { AdsBanner } from '@/components/ads/adsBanner.js';
 import { useFilterTypeList, useSearchingListApi } from '@/util/swr';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import { isMobile } from 'react-device-detect';
+import SingletonAdsBanner from '@/components/ads/singletonAdsBanner';
 
 const getIsScroll = (state) => state.isScroll;
 const getIsTop = (state) => state.isTop;
@@ -57,34 +58,32 @@ export const FilmLibrary = () => {
   ];
 
   //banner ads
-  const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
-  const [adsList, setAdsList] = useState(null);
-  
-  const getAllAds = async () => {
-    return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
-  };
+  // const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
+  // const [adsList, setAdsList] = useState(null);
 
+  // const getAllAds = async () => {
+  //   return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
+  // };
 
-  const initAds = async () => {
-    let allAds = await getAllAds();
-    sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
-    setAdsList(allAds.data);
-  };
+  // const initAds = async () => {
+  //   let allAds = await getAllAds();
+  //   sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
+  //   setAdsList(allAds.data);
+  // };
 
+  // useLayoutEffect(() => {
+  //   console.log('test');
+  //   let adsList = initAdsList;
+  //   if (!adsList) {
+  //     adsList = JSON.parse(sessionStorage.getItem('adsList'));
+  //   }
 
-  useLayoutEffect(() => {
-    console.log('test');
-    let adsList = initAdsList;
-    if (!adsList) {
-      adsList = JSON.parse(sessionStorage.getItem('adsList'));
-    }
-
-    if (adsList && adsList !== 'undefined') {
-      setAdsList(adsList);
-    } else {
-      initAds();
-    }
-  }, []);
+  //   if (adsList && adsList !== 'undefined') {
+  //     setAdsList(adsList);
+  //   } else {
+  //     initAds();
+  //   }
+  // }, []);
   //end banner ads
 
   const getFilterParams = (path, filterTypeList) => {
@@ -308,22 +307,26 @@ export const FilmLibrary = () => {
   return (
     <>
       <div className='flex flex-1 justify-start flex-col'>
-      {(adsList && !isVip )&&
-        <div className=' w-[100%] ' style={{height:'156px'}}>
-          <div className='container'>
-       
-          <AdsBanner adsList={adsList} pathName={path} height='500px' />
-       
+        {/* {!isVip && (
+          <div className=' w-[100%] ' style={{ height: '156px' }}>
+            <div className='container'>
+              <AdsBanner adsList={adsList} pathName={path} height='500px' />
+            </div>
           </div>
-        </div>
-    
-  }
+        )} */}
         <div className='flex w-screen flex-col items-center'>
-          {initialLoading || adsList == null ? (
+          {initialLoading ? (
             <LoadingPage full={true} />
           ) : (
             <>
-              <div className={` w-screen p-1 z-10 top-[48px] md:static sticky bg-black`}>
+              <div
+                className={` w-screen p-1 z-10 top-[48px] md:static sticky bg-black`}
+              >
+                {!isVip && (
+                <div className='container mb-4'>
+                  <SingletonAdsBanner />
+                </div>
+                )}
                 {filterTypeList && paramsFilter && (
                   <div className={`bg-[#1D2023] pt-2`}>
                     <div className='flex md:flex-wrap gap-x-4 gap-y-2 pl-4 py-2 container'>
@@ -626,13 +629,13 @@ export const FilmLibrary = () => {
         </div>
         <div ref={targetRef}>
           {(stillCanLoad || isLoadingMore) && (
-            <div
-              className='w-screen flex flex-1 flex-col'
-              style={{ minHeight: '300px' }}
-            >
+            <div className='w-screen flex flex-1 flex-col'>
               <Spinner></Spinner>
             </div>
           )}
+          <div className='container'>
+            <SingletonAdsBanner />
+          </div>
         </div>
       </div>
     </>

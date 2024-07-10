@@ -42,7 +42,7 @@ export default function H5Page() {
 
   useEffect(() => {
     if (token !== null && token !== 'null' && token !== '' && token !== undefined) {
-      console.log('native product in payment h5page, check null is string null or null', token)
+      // console.log('native product in payment h5page, check null is string null or null', token)
       getYingshiProducts().then((res) => {
         if (res) setProductList(res['4_fang_items'])
       })

@@ -4,11 +4,12 @@ import VodListViewMore from '../vodListViewMore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { VideoVerticalCard } from '../videoItem/videoVerticalCard';
-import { AdsBanner } from '../ads/adsBanner';
+// import { AdsBanner } from '../ads/adsBanner';
 import { Spinner } from '../spinner';
 import { getTopicListApi } from '@/app/actions';
 import { YingshiApi2 } from '@/util/YingshiApi';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
+import SingletonAdsBanner from '../ads/singletonAdsBanner';
 const TopicPagingList = ({ data, navId, serverNextPage, isStillCanLoad }) => {
   const [topicList, setTopicList] = useState(data);
   const [nextPage, setNextPage] = useState(serverNextPage);
@@ -16,29 +17,29 @@ const TopicPagingList = ({ data, navId, serverNextPage, isStillCanLoad }) => {
 
   const targetRef = useRef(null);
 
-  //banner ads
-  const [adsList, setAdsList] = useState([]);
-  const getAllAds = async () => {
-    return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
-  };
-  const initAds = async () => {
-    let allAds = await getAllAds();
-    sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
-    console.log('init')
-    console.log(allAds.data)
-    setAdsList(allAds.data);
-  };
-  useEffect(() => {
-    let adsList = sessionStorage.getItem('adsList');
-    adsList = JSON.parse(adsList);
-    if (adsList && adsList !== 'undefined') {
-      setAdsList(adsList);
-      
-    } else {
-      initAds();
-    }
-  }, []);
-  //end banner ads
+  // //banner ads
+  // const [adsList, setAdsList] = useState([]);
+  // const getAllAds = async () => {
+  //   return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
+  // };
+  // const initAds = async () => {
+  //   let allAds = await getAllAds();
+  //   sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
+  //   console.log('init')
+  //   console.log(allAds.data)
+  //   setAdsList(allAds.data);
+  // };
+  // useEffect(() => {
+  //   let adsList = sessionStorage.getItem('adsList');
+  //   adsList = JSON.parse(adsList);
+  //   if (adsList && adsList !== 'undefined') {
+  //     setAdsList(adsList);
+
+  //   } else {
+  //     initAds();
+  //   }
+  // }, []);
+  // //end banner ads
 
   useEffect(() => {
     if (stillCanLoad) {
@@ -97,12 +98,15 @@ const TopicPagingList = ({ data, navId, serverNextPage, isStillCanLoad }) => {
           return (
             <div key={idx}>
               {/*{idx % 2 ? (*/}
-              {/*  <AdsBanner adsList={adsList} navId={'1-13'} height='500px' />*/}
+              {/*  
+                <SingletonAdsBanner />
+                // <AdsBanner adsList={adsList} navId={'1-13'} height='500px' />*/}
               {/*) : (*/}
               {/*  <div style={{ paddingTop: '20px' }}></div>*/}
               {/*)}*/}
               {/* {(idx % 2 !== 0) && (
-                <AdsBanner adsList={adsList} navId={'1-13'} height='500px' />
+                <SingletonAdsBanner />
+                // <AdsBanner adsList={adsList} navId={'1-13'} height='500px' />
               )} */}
               <div id={topic.topic_id} key={idx} className={'pt-3'}>
                 <div className='flex justify-between'>

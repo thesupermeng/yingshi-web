@@ -26,7 +26,8 @@ import useYingshiUser from '@/hook/yingshiUser/useYingshiUser.js';
 import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 import { YingshiApi2 } from '@/util/YingshiApi';
 import { Config } from '@/util/config';
-import { AdsBanner } from '@/components/ads/adsBanner.js';
+import SingletonAdsBanner from '@/components/ads/singletonAdsBanner.js';
+// import { AdsBanner } from '@/components/ads/adsBanner.js';
 
 export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
   const router = useRouter();
@@ -63,27 +64,22 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
   };
   const allSameProperty = (arr, prop) =>
     arr.every((item) => item[prop] === arr[0][prop]);
+
   const getAds = async () => {
     console.log('play screen init');
 
-  
     let allAds = {};
     let adsList = initAdsList;
     if (!adsList) {
       adsList = JSON.parse(sessionStorage.getItem('adsList'));
     }
     if (adsList && adsList !== 'undefined') {
-    
-
-      allAds.data =  adsList;
-    } 
-    else
-    {  console.log('why')
+      allAds.data = adsList;
+    } else {
+      console.log('why');
       allAds = await getAllAds();
       sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
- 
     }
-    
 
     // let result = allAds.data.filter(
     //   (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(144)
@@ -316,11 +312,6 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
       }
       if (isVip) {
         setShowAds(false);
-      } else {
-        // getAds().then((res) => {
-        //   setShowAds(true);
-        //   setAds(res);
-        // });
       }
 
       let watchHistory = {
@@ -345,7 +336,14 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
       if (watchHistoryData == null) {
         watchHistoryData = [watchHistory];
       } else {
-        watchHistoryData.push(watchHistory);
+        
+        if (
+          watchHistoryData.find((item) => item.vodurl == watchHistory.vodurl)
+        ) {
+        } else {
+          console.log('rere');
+          watchHistoryData.push(watchHistory);
+        }
       }
 
       const lastItemMap = {};
@@ -378,18 +376,21 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
 
       localStorage.setItem('watchHistoryList', JSON.stringify(listWithoutId));
 
-      if (artPlayerData !== null && artPlayerData !== undefined) {
-        duplicateList.forEach((item) => {
-          if (artPlayerData.times[item.vodurl]) {
-            // Remove target URL from the object
-            delete artPlayerData.times[item.vodurl];
-          }
-        });
+      if (artPlayerData != null && artPlayerData != undefined) {
+        if (duplicateList.length !== 0) {
+          duplicateList.forEach((item) => {
+            if (artPlayerData.times[item.vodurl]) {
+              // Remove target URL from the object
+              delete artPlayerData.times[item.vodurl];
+            }
+          });
 
-        localStorage.setItem(
-          'artplayer_settings',
-          JSON.stringify(artPlayerData)
-        );
+
+          localStorage.setItem(
+            'artplayer_settings',
+            JSON.stringify(artPlayerData)
+          );
+        }
       }
     }
   }, [episodeSelected]);
@@ -737,6 +738,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                   <Image src={ArrowLeftIcon} alt='Icon' />
                 </div>
               </div>
+
               {showAds && !isVip ? ( //  && ads
                 <AdsPlayer
                   className='aspect-[16/9]'
@@ -782,7 +784,8 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
             </div>
 
             <div className='lg:flex hidden'>
-              <AdsBanner pathName={path} useMargin2={true} height='500px' />
+              {/* <AdsBanner pathName={path} useMargin2={true} height='500px' /> */}
+              <SingletonAdsBanner />
             </div>
 
             <div className='desktop'>
@@ -841,7 +844,8 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
             <div className='flex justify-center'>
               <div className='lg:w-[100%] w-[90%]'>
                 <div className='lg:hidden flex'>
-                  <AdsBanner useMargin2={true}  pathName={path} height='500px' />
+                  <SingletonAdsBanner />
+                  {/* <AdsBanner useMargin2={true} pathName={path} height='500px' /> */}
                 </div>
                 <div style={{ marginTop: '30px', marginBottom: '10px' }}>
                   <span className='text-xl' style={{ fontWeight: '500' }}>
@@ -945,8 +949,14 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
               <VodPopularList />
             </div>
 
-            <div className='lg:flex hidden '>
-              <AdsBanner useMargin2={true} pathName={path} height='500px' isPlayVertival={true} />
+            <div className='lg:flex hidden'>
+              <SingletonAdsBanner useMargin2={true} verticalAds={true} />
+              {/* <AdsBanner
+                useMargin2={true}
+                pathName={path}
+                height='500px'
+                isPlayVertival={true}
+              /> */}
             </div>
           </div>
         </div>

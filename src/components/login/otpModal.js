@@ -42,11 +42,11 @@ export default function OtpModal({ open, handler, onLogin, onRegister , onCloseO
 
   }, [open])
 
-  useEffect(() => {
-    if (inputRefs.current.length !== 0) {
-      inputRefs.current[0].focus()
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (inputRefs.current.length !== 0) {
+  //     inputRefs.current[0].focus()
+  //   }
+  // }, [])
 
   const handleBackspace = (e, index) => {
     if (e.key === 'Backspace' && !e.target.value && index > 0) {

@@ -19,8 +19,8 @@ export const VideoVerticalCard = ({ vod }) => {
   };
 
   return (
-    <div className='flex flex-col items-center md-hover-effect'>
-      <div className='relative w-full aspect-[530/726] group mx-4 my-2 rounded-lg md-hover-effect'>
+    <div className='flex flex-col items-center desktop-hover-effect'>
+      <div className='relative w-full aspect-[530/726] group mx-4 my-2 rounded-lg desktop-hover-effect'>
         <Link
           href={`/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`}
           className='absolute inset-0 flex rounded-lg lg:group-hover:improve-text-unblurry lg:transition lg:group-hover:scale-150 lg:group-hover:duration-500 lg:group-hover:cursor-pointer group-hover:rounded-lg lg:group-hover:z-10 lg:group-hover:rounded-lg'

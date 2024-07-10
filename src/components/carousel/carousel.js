@@ -8,11 +8,12 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
+import initAds from '../ads/initAds';
 
 export const Carousel = ({
   carouselItemsProps,
   pathName = '/',
-  adsList = [],
+  // adsList = [],
 }) => {
   const router = useRouter();
   const { isVip, userInfo } = useYingshiUser();
@@ -67,8 +68,10 @@ export const Carousel = ({
     }
   };
 
-  const initCarousel = () => {
-    var pathFlag = pathName.substr(pathName.length - 1);
+  const initCarousel = async () => {
+    const adsData = await initAds();
+    let getIndex = pathName.lastIndexOf('/');
+    let pathFlag = pathName.slice(getIndex + 1, pathName.length)
 
     if (pathFlag == '/') {
       navId = '126-135';
@@ -107,7 +110,7 @@ export const Carousel = ({
     let result = [];
     const parts = navId?.split('-').map(Number);
     parts.forEach((item, index) => {
-      let temp = findAdBySlotId(adsList, item);
+      let temp = findAdBySlotId(adsData, item);
       result.push(temp);
     });
     let tempCarou;

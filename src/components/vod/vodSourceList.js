@@ -12,9 +12,38 @@ export const VodSourceList = ({
   const containerRef = useRef(null);
   const selectedItemRef = useRef(null);
 
+  const [disableLeftButton, setDisableLeftButton] = useState(true);
+  const [disableRightButton, setDisableRightButton] = useState(true);
+
   const handleScroll = (scrollOffset) => {
+    if (vodSources?.length == 1) {
+      setDisableLeftButton(true);
+      setDisableRightButton(true);
+      return;
+    }
+
     if (containerRef.current) {
-      const newScrollLeft = containerRef.current.scrollLeft + scrollOffset;
+      const container = containerRef.current;
+      const maxScrollLeft = container.scrollWidth - container.clientWidth - 1;
+
+      const newScrollLeft =
+        containerRef.current.scrollLeft + scrollOffset < 0
+          ? 0
+          : containerRef.current.scrollLeft + scrollOffset > maxScrollLeft
+          ? maxScrollLeft
+          : containerRef.current.scrollLeft + scrollOffset;
+
+      // console.log(newScrollLeft);
+      if (newScrollLeft <= 0) {
+        setDisableLeftButton(true);
+        setDisableRightButton(false);
+      } else if (newScrollLeft >= maxScrollLeft) {
+        setDisableRightButton(true);
+        setDisableLeftButton(false);
+      } else {
+        setDisableLeftButton(false);
+        setDisableRightButton(false);
+      }
       containerRef.current.scrollTo({
         left: newScrollLeft,
         behavior: 'smooth',
@@ -23,8 +52,46 @@ export const VodSourceList = ({
   };
 
   useEffect(() => {
-    if (selectedItemRef.current) {
+    const container = containerRef.current;
 
+    const onWheel = () => {
+      if (container) {
+        // console.log('Current Scroll Position:', container.scrollLeft);
+
+        const maxScrollLeft = container.scrollWidth - container.clientWidth - 1;
+        // console.log(maxScrollLeft, container.scrollLeft);
+        if (container.scrollLeft <= 0) {
+          setDisableLeftButton(true);
+          setDisableRightButton(false);
+        } else if (container.scrollLeft >= maxScrollLeft) {
+          setDisableRightButton(true);
+          setDisableLeftButton(false);
+        } else {
+          setDisableLeftButton(false);
+          setDisableRightButton(false);
+        }
+      }
+    };
+
+    container.addEventListener('wheel', onWheel);
+
+    // Initial check on mount
+    onWheel();
+
+    return () => {
+      container.removeEventListener('wheel', onWheel);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (vodSources?.length == 1) {
+      setDisableLeftButton(true);
+      setDisableRightButton(true);
+    }
+  }, [vodSources]);
+
+  useEffect(() => {
+    if (selectedItemRef.current) {
       selectedItemRef.current.scrollIntoView({
         // behavior: 'smooth',
         block: 'nearest',
@@ -35,18 +102,23 @@ export const VodSourceList = ({
 
   return (
     <div className='w-full flex flex-row'>
-      {vodSources?.length > 1 && (
-        <div className='lg:flex hidden'>
-          <div
-            id='control-left'
-            name='control'
-            className={styles.arrowCard}
-            onClick={() => handleScroll(-100)} // Adjust scroll offset as needed
-          >
-            <Image src={ArrowLeftIcon} alt='Icon' />
-          </div>
+      <div className='lg:flex hidden'>
+        <div
+          id='control-left'
+          name='control'
+          className={`${styles.arrowCard} ${
+            vodSources.length > 1 ? 'transparent' : ''
+          }`}
+          onClick={() => handleScroll(-100)} // Adjust scroll offset as needed
+        >
+          <Image
+            src={ArrowLeftIcon}
+            alt='Icon'
+            className={`${disableLeftButton ? 'transparent' : ''}`}
+          />
         </div>
-      )}
+      </div>
+
       <div
         ref={containerRef} // Use ref to access the container
         className='flex flex-1 gap-2 overflow-x-scroll hide-scrollbar overscroll-none'
@@ -85,18 +157,23 @@ export const VodSourceList = ({
           </div>
         ))}
       </div>
-      {vodSources?.length > 1 && (
-        <div className='lg:flex hidden'>
-          <div
-            id='control-right'
-            name='control'
-            className={styles.arrowCard}
-            onClick={() => handleScroll(100)} // Adjust scroll offset as needed
-          >
-            <Image src={ArrowRightIcon} alt='Icon' />
-          </div>
+
+      <div className='lg:flex hidden'>
+        <div
+          id='control-right'
+          name='control'
+          className={`${styles.arrowCard} ${
+            vodSources.length > 1 ? 'transparent' : ''
+          }`}
+          onClick={() => handleScroll(100)} // Adjust scroll offset as needed
+        >
+          <Image
+            src={ArrowRightIcon}
+            alt='Icon'
+            className={`${disableRightButton ? 'transparent' : ''}`}
+          />
         </div>
-      )}
+      </div>
     </div>
   );
 };

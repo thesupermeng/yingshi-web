@@ -423,6 +423,7 @@ const Header = () => {
             <input
               type='text'
               placeholder='输入搜索关键词'
+              maxLength={20}
               value={searchInput}
               onInput={(e) => handleChange(e)}
               className='border-0 border-gray-300 text-white rounded-full pl-10 md:pl-4 md:pr-10 pr-4 py-2 focus:outline-none w-full md:w-60 header-search-input-desktop text-[14px]'
@@ -496,7 +497,11 @@ const Header = () => {
                                   goToSeachResult(item);
                                 }}
                               >
-                                {item}
+                                {item.length > 20 ? (
+                                  <span>{item.slice(0, 20)}...</span>
+                                ) : (
+                                  <span>{item}</span>
+                                )}
                               </div>
                             );
                           })}
