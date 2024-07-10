@@ -497,8 +497,8 @@ const Header = () => {
                                   goToSeachResult(item);
                                 }}
                               >
-                                {item.length > 20 ? (
-                                  <span>{item.slice(0, 20)}...</span>
+                                {item.length > 10 ? (
+                                  <span>{item.slice(0, 10)}...</span>
                                 ) : (
                                   <span>{item}</span>
                                 )}
