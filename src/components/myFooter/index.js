@@ -116,7 +116,7 @@ const MyFooter = () => {
   ];
 
   return (
-    <div className='w-full mobile' style={{ paddingBottom: '100px' }}>
+    <div className='w-full mobile' style={{ paddingBottom: '70px' }}>
       <div className='fixed bottom-0 w-full' >
         <div
           className='w-full bg-[#161616eb] pt-2 pb-2'

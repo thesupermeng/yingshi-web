@@ -46,6 +46,7 @@ const MyFooter2 = () => {
     pathname.startsWith('/myprofile/watchHistory') ||
     pathname.startsWith('/myprofile/userCenter') ||
     pathname.startsWith('/myprofile/feedback') ||
+    pathname.startsWith('/vod/show') ||
     //aha
     pathname.startsWith('/sport/user/deposit') ||
     pathname.startsWith('/sport/user/withdraw') ||
