@@ -323,7 +323,7 @@ export const FilmLibrary = () => {
                 className={` w-screen p-1 z-10 top-[48px] md:static sticky bg-black`}
               >
                 {!isVip && (
-                <div className='container mb-4'>
+                <div className='container'>
                   <SingletonAdsBanner />
                 </div>
                 )}
