@@ -17,6 +17,7 @@ import {
   setYingshiUserInfo
 } from '@/store/yingshiUser';
 import { useLoginSuccessOpen } from '@/hook/yingshiScreenState/useLoginSuccessOpen';
+import {trackLoginSignUp} from '@/util/universalEvent';
 
 const totalCountdownTime = 60; // seconds
 
@@ -109,7 +110,8 @@ export default function OTP() {
               dispatch(setYingshiUserInfo(res.data.user))
               dispatch(setYingshiUserToken(res.data.access_token));
               dispatch(setAhaToken(res.data.aha_token));
-              localStorage.setItem('AuthToken', res.data.aha_token)
+              localStorage.setItem('AuthToken', res.data.aha_token);
+              trackLoginSignUp(res.data.user);
               
               ;
               if (res.code === 0) {
@@ -143,6 +145,8 @@ export default function OTP() {
               dispatch(setYingshiUserToken(res.data.access_token));
               dispatch(setAhaToken(res.data.aha_token));
               localStorage.setItem('AuthToken', res.data.aha_token);
+              trackLoginSignUp(res.data.user);
+
               if (res.code === 0) {
                 router.back();
                 setOpenLoginSuccess(true);

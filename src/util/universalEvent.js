@@ -34,3 +34,31 @@ export function handleCompletePaymentAha(res) {
     );
   }
 }
+
+export function trackLoginSignUp(res) {
+  const userData = {
+    email: res.user_email,
+    phone: res.user_phone,
+    userId: res.user_id,
+    status: 'success'
+  };
+
+  if (typeof window.fbq === 'undefined') {
+    console.error('Facebook Pixel is not loaded');
+    return;
+  }
+
+  // Track the LoginSignUp event
+  console.log('Tracking LoginSignup with:', {
+    userData,
+  }); // Debug log
+
+  // Ensure the Facebook pixel library is loaded
+  if (window.fbq && typeof window.fbq === 'function') {
+    window.fbq('trackCustom', 'LoginSignUp', userData);
+  } else {
+    console.error(
+      'Facebook pixel is not initialized or fbq.track is not a function.'
+    );
+  }
+}
