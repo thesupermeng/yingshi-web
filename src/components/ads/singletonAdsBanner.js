@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import initAds from './initAds';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import { usePathname } from 'next/navigation';
@@ -33,7 +33,7 @@ const SingletonAdsBanner = ({ useMargin2 = false, verticalAds = false }) => {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const fetchAds = async () => {
       const adsData = await initAds();
       let navId = '1-13';
