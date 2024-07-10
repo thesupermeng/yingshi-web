@@ -92,9 +92,9 @@ export default function Page() {
             if (entry.intersectionRatio >= 0.5) {
               console.log('test');
               getSearchResult();
-              console.log('Element is at least 50% visible.');
+              // console.log('Element is at least 50% visible.');
             } else {
-              console.log('Element is not yet 50% visible.');
+              // console.log('Element is not yet 50% visible.');
             }
           },
           {
