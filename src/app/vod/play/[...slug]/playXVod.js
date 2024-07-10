@@ -143,7 +143,7 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
 
       content += '《' + vod.vod_name + '》高清播放';
       content += '</br>' + window.location.href;
-      content += '</br>影视Tv-海量高清视频在线观看';
+      content += '</br> 影视TV-海量高清视频在线观看';
 
       setVodShareContent(content);
     }
