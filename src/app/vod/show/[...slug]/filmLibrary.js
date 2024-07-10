@@ -5,7 +5,7 @@ import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
 import { URL_YINGSHI_VOD } from '@/config/yingshiUrl';
 import { YingshiApi, YingshiApi2 } from '@/util/YingshiApi';
 import Image from 'next/image';
-import { useEffect, useState, useRef, useLayoutEffect } from 'react';
+import { useEffect, useState, useRef, useLayoutEffect, Fragment } from 'react';
 import { Spinner } from '@/components/spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
@@ -172,7 +172,7 @@ export const FilmLibrary = () => {
         ([entry]) => {
           if (entry.intersectionRatio >= 0.5) {
             setSize(size + 1);
-            console.log('Element is atx least 50% visible.');
+            console.log('Element is at least 50% visible.');
           } else {
             console.log('Element is not yet 50% visible.');
           }
@@ -597,13 +597,30 @@ export const FilmLibrary = () => {
                   </div>
                 )}
               </div>
-
               <div className='w-screen flex flex-1 flex-col'>
                 {videoList.length > 0 && videoList[0].List !== null ? (
                   <div className='container grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 py-4'>
                     {videoList.map((page, i) => {
-                      return page.List.map((vod, i) => (
-                        <VideoVerticalCard vod={vod} key={i} />
+                      return page.List.map((vod, idx) => (
+                        <Fragment key={idx}>
+                          <VideoVerticalCard vod={vod} key={idx} />
+                          {page.List.length === idx + 1 &&
+                            !stillCanLoad &&
+                            page.Page == page?.TotalPageCount && (
+                              <div className='md:col-span-5 lg:col-span-6 col-span-3 justify-center flex'>
+                                <span className='test-xs text-muted'>
+                                  没有更多了
+                                </span>
+                              </div>
+                            )}
+                          {page.List.length === idx + 1 &&
+                            !stillCanLoad &&
+                            page.Page == page?.TotalPageCount && (
+                              <div className='md:col-span-5 lg:col-span-6 col-span-3 justify-center flex'>
+                                <SingletonAdsBanner />
+                              </div>
+                            )}
+                        </Fragment>
                       ));
                     })}
                   </div>
@@ -633,9 +650,6 @@ export const FilmLibrary = () => {
               <Spinner></Spinner>
             </div>
           )}
-          <div className='container'>
-            <SingletonAdsBanner />
-          </div>
         </div>
       </div>
     </>
