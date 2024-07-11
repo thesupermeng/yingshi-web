@@ -711,8 +711,8 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
       ) : (
         <div className='flex flex-row space-x-4'>
           <div
-            className='flex-1 space-y-4 no-scrollbar'
-            style={{ width: '78%' }}
+            className='flex-1 space-y-4 no-scrollbar col'
+            
           >
             <div
               ref={playerDivRef}
@@ -870,7 +870,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
 
           <div
             className='lg:flex hidden flex-col space-y-4'
-            style={{ width: '22%' }}
+            style={{ width: '300px' }}
           >
             <div className=''>
               {!toggleJianJie ? (

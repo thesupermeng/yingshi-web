@@ -106,9 +106,7 @@ export const VodSourceList = ({
         <div
           id='control-left'
           name='control'
-          className={`${styles.arrowCard} ${
-            vodSources.length > 1 ? 'transparent' : ''
-          }`}
+          className={`${styles.arrowCard}`}
           onClick={() => handleScroll(-100)} // Adjust scroll offset as needed
         >
           <Image
@@ -162,9 +160,10 @@ export const VodSourceList = ({
         <div
           id='control-right'
           name='control'
-          className={`${styles.arrowCard} ${
-            vodSources.length > 1 ? 'transparent' : ''
-          }`}
+          className={`${styles.arrowCard}`}
+          // className={`${styles.arrowCard} ${
+          //   vodSources.length > 1 ? 'transparent' : ''
+          // }`}
           onClick={() => handleScroll(100)} // Adjust scroll offset as needed
         >
           <Image
