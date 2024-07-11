@@ -148,7 +148,7 @@ export const VodCard = ({
 
             <div className='flex flex-col lg:w-3/3 pt-3'>
               <div className='flex flex-row'>
-                <span className='text-lg pr-5 line-clamp-2'>{vodName}</span>
+                <span className='text-lg pr-5 line-clamp-2' dangerouslySetInnerHTML={{ __html: vodName }}></span>
                 <div
                   className='lg:hidden flex flex-row space-x-2 py-1'
                   onClick={() => setOpenIntroBottomSheet(true)}
@@ -206,7 +206,7 @@ export const VodCard = ({
 
           <div className='flex flex-col lg:w-2/3 allow-select'>
             <div className='flex flex-row'>
-              <span className='text-lg pr-5 line-clamp-2'>{vodName}</span>
+              <span className='text-lg pr-5 line-clamp-2' dangerouslySetInnerHTML={{ __html: vodName }}></span>
               <div
                 className='lg:hidden flex flex-row space-x-2 py-1'
                 onClick={() => setOpenIntroBottomSheet(true)}
