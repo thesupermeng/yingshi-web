@@ -119,7 +119,7 @@ const TopicPagingList = ({ list, navId }) => {
                   </span>
 
                   {item.type != 'yunying' && (
-                    <div className='flex w-fit items-center cursor-pointer hover-blue'>
+                    <div className='flex w-fit items-center cursor-pointer hover-yellow'>
                       <VodListViewMore type={item.type} data={item} />
                     </div>
                   )}
