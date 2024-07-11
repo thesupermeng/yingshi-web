@@ -391,7 +391,7 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
 @media (max-width: 1200px) {
   .video-player
 {
- width: 78%;
+ width: 100%;
  flex: none ;
 }
 }
