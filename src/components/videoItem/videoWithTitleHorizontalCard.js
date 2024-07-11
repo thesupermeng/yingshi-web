@@ -12,15 +12,12 @@ import SingletonAdsBanner from '../ads/singletonAdsBanner';
 // import { AdsBanner } from '../ads/adsBanner';
 
 export const VideoWithTitleHorizontalCard = ({
-  data,
   navId,
-  serverNextPage = 2,
-  isStillCanLoad,
   platform = 'web',
 }) => {
-  const [categories, setCategories] = useState(data);
-  const [nextPage, setNextPage] = useState(serverNextPage);
-  const [stillCanLoad, setStillCanLoad] = useState(isStillCanLoad);
+  const [categories, setCategories] = useState(null);
+  const [nextPage, setNextPage] = useState(1);
+  const [stillCanLoad, setStillCanLoad] = useState(true);
   const pathName = usePathname();
 
   const targetRef = useRef(null);
@@ -85,7 +82,11 @@ export const VideoWithTitleHorizontalCard = ({
       }
 
       if (data?.categories !== undefined) {
-        setCategories((prev) => [...prev, ...data.categories]);
+        if (nextPage > 1) {
+          setCategories((prev) => [...prev, ...data.categories]);
+        }else{
+          setCategories(data.categories);
+        }
       }
 
       setNextPage(currentPage + 1);
@@ -94,7 +95,6 @@ export const VideoWithTitleHorizontalCard = ({
 
   return (
     <>
-      {console.log(categories)}
       {categories != [] &&
         categories?.map((category, idx) => {
           if (platform === 'mobile') {
@@ -117,7 +117,7 @@ export const VideoWithTitleHorizontalCard = ({
                   </span>
                   <div className='flex w-fit items-center cursor-pointer hover-blue'>
                     <VodListViewMore type={'xcategory'} data={category} />
-                    <FontAwesomeIcon
+                    {/* <FontAwesomeIcon
                       style={{
                         fontSize: '14px',
                         fontWeight: '400',
@@ -125,7 +125,7 @@ export const VideoWithTitleHorizontalCard = ({
                         fontFamily: 'PingFang SC',
                       }}
                       icon={faAngleRight}
-                    />
+                    /> */}
                   </div>
                 </div>
                 <div className='grid grid-cols-3 md:grid-cols-6 lg:grid-cols-6 gap-5 py-2'>
@@ -171,7 +171,7 @@ export const VideoWithTitleHorizontalCard = ({
                   </span>
                   <div className='flex w-fit items-center cursor-pointer hover-blue'>
                     <VodListViewMore type={'xcategory'} data={category} />
-                    <FontAwesomeIcon
+                    {/* <FontAwesomeIcon
                       style={{
                         fontSize: '14px',
                         fontWeight: '400',
@@ -179,7 +179,7 @@ export const VideoWithTitleHorizontalCard = ({
                         fontFamily: 'PingFang SC',
                       }}
                       icon={faAngleRight}
-                    />
+                    /> */}
                   </div>
                 </div>
                 <div className='grid grid-cols-3 md:grid-cols-6 lg:grid-cols-6 gap-5 py-2'>

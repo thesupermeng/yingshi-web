@@ -92,9 +92,9 @@ export default function Page() {
             if (entry.intersectionRatio >= 0.5) {
               console.log('test');
               getSearchResult();
-              console.log('Element is at least 50% visible.');
+              // console.log('Element is at least 50% visible.');
             } else {
-              console.log('Element is not yet 50% visible.');
+              // console.log('Element is not yet 50% visible.');
             }
           },
           {
@@ -185,8 +185,7 @@ export default function Page() {
 
                             <div className='col'>
                               <div className='topic-details-title'>
-                                {' '}
-                                {vod.vod_name}{' '}
+                                <span  dangerouslySetInnerHTML={{ __html: vod.vod_name }}></span>
                               </div>
                               <div className='topic-details-title-sub text-secondary '>
                                 {' '}

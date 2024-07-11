@@ -236,8 +236,8 @@ const Header = () => {
     if (value == 998) {
       router.push('/topic/index/page');
     } else if (value == 999) {
-      localStorage.removeItem('videoTypeId');
-      localStorage.removeItem('videoClass');
+      // localStorage.removeItem('videoTypeId');
+      // localStorage.removeItem('videoClass');
       router.push('/vod/show/by/time/id/1');
     } else if (value === 0) {
       router.push(`/`);
