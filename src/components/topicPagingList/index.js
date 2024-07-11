@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import VodListViewMore from '../vodListViewMore';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
@@ -104,8 +104,8 @@ const TopicPagingList = ({ list, navId }) => {
       {combineList != null &&
         combineList?.map((item, idx) => {
           return (
-            <>
-              <div id={item.id} key={idx} className={'pt-3'}>
+            <Fragment key={idx}>
+              <div id={item.id}  className={'pt-3'}>
                 <div className='flex justify-between'>
                   <span
                     style={{
@@ -146,7 +146,7 @@ const TopicPagingList = ({ list, navId }) => {
                 /> */}
                 </div>
               )}
-            </>
+            </Fragment>
           );
         })}
       <div ref={targetRef}>
