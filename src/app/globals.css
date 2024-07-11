@@ -381,3 +381,17 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
 {
   opacity: 0.35 !important;
 }
+
+.video-player
+{
+ flex:1;
+}
+
+/* mobile */
+@media (max-width: 1200px) {
+  .video-player
+{
+ width: 78%;
+ flex: none ;
+}
+}
