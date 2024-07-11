@@ -46,7 +46,7 @@ export default function Home(params) {
   const [classList, setClassList] = useState([]);
   const [xClassList, setXClassList] = useState([]);
   const [xClassList2, setXClassList2] = useState([]);
-
+  const [combineList, setCombineList] = useState([]);
   const [categories, setCategories] = useState([]);
   const [yunying, setYunying] = useState([]);
   const [carousel, setCarousel] = useState([]);
@@ -192,6 +192,30 @@ export default function Home(params) {
         setCategories(typePageData.categories);
         setYunying(typePageData.yunying);
 
+        let newList = [];
+        if (typePageData.yunying?.length > 0) {
+          typePageData.yunying.map((item, index) => {
+            newList.push({
+              type: 'yunying',
+              id: -1,
+              type_name: item.type_name,
+              vod_list: item.vod_list,
+            });
+          });
+        }
+        if (typePageData.categories?.length > 0) {
+          typePageData.categories.map((item, index) => {
+            newList.push({
+              type: 'category',
+              id: item.type_id,
+              type_name: item.type_name,
+              vod_list: item.vod_list,
+            });
+          });
+        }
+
+        setCombineList(newList)
+
         setCarousel(typePageData.carousel);
       } else if (paramsInput == 99 && typePageData === undefined) {
         setStill99CanLoad(false);
@@ -226,7 +250,7 @@ export default function Home(params) {
 
   return (
     <div
-      className='flex flex-1 justify-center flex-col'
+      className='flex flex-1 justify-start flex-col'
       style={{ width: '100%' }}
     >
       {isLoading ? (
@@ -302,7 +326,7 @@ export default function Home(params) {
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
                 <div className='container w-[100%]'>
-                  {yunying != [] &&
+                  {/* {yunying != [] &&
                     yunying?.map((yy, idx) => {
                       return (
                         <div key={idx} className='lg:pt-3'>
@@ -337,7 +361,7 @@ export default function Home(params) {
                             //   navId={'1-13'}
                             //   height='500px'
                             // />
-                          )} */}
+                          )} 
                           <div id={category.type_id} key={idx}>
                             <div className='flex justify-between'>
                               <span
@@ -374,23 +398,21 @@ export default function Home(params) {
                           </div>
                         </div>
                       );
-                    })}
+                    })} */}
                   <TopicPagingList
-                    data={topicList}
+                    list={combineList}
                     navId={paramsInput}
-                    serverNextPage={nextPage}
-                    isStillCanLoad={stillCanLoad}
                   />
                 </div>
               </div>
-              <div className='container w-[100%]'>
+              {/* <div className='container w-[100%]'>
                 <SingletonAdsBanner />
-                {/* <AdsBanner
+                <AdsBanner
                   adsList={adsList}
                   pathName={pathName}
                   height='500px'
-                /> */}
-              </div>
+                />
+              </div> */}
             </div>
           ) : (
             <>
@@ -451,9 +473,7 @@ export default function Home(params) {
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                   <div className=' container  w-[100%]'>
                     <VideoWithTitleHorizontalCard
-                      data={categories}
                       navId={paramsInput}
-                      isStillCanLoad={still99CanLoad}
                       platform='web'
                     />
                   </div>
@@ -530,9 +550,7 @@ export default function Home(params) {
                   {/* md:mx-20 mx-2.5  lg:w-[80%]*/}
                   <div className='pt-1 container  w-[100%]'>
                     <VideoWithTitleHorizontalCard
-                      data={categories}
                       navId={paramsInput}
-                      isStillCanLoad={still99CanLoad}
                       platform='mobile'
                     />
                   </div>

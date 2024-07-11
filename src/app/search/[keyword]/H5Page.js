@@ -185,8 +185,7 @@ export default function Page() {
 
                             <div className='col'>
                               <div className='topic-details-title'>
-                                {' '}
-                                {vod.vod_name}{' '}
+                                <span  dangerouslySetInnerHTML={{ __html: vod.vod_name }}></span>
                               </div>
                               <div className='topic-details-title-sub text-secondary '>
                                 {' '}
