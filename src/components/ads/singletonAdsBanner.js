@@ -64,8 +64,8 @@ const SingletonAdsBanner = ({ useMargin2 = false, verticalAds = false }) => {
           else if (pathFlag == '7') {
             navId = '10-18';
           } else if (pathFlag == '99') {
-            navId = '1-13';
-            // navId = '23-24';
+            // navId = '1-13';
+            navId = '23-24';
           } else {
             navId = '1-13';
           }
@@ -76,8 +76,8 @@ const SingletonAdsBanner = ({ useMargin2 = false, verticalAds = false }) => {
         } else if ('/vod/play') {
           // console.log(verticalAds)
           if (verticalAds) {
-            // navId = '3-20';
-            navId = '1-13';
+            navId = '3-20';
+            // navId = '1-13';
           } else {
             navId = '2-19';
           }
@@ -109,7 +109,7 @@ const SingletonAdsBanner = ({ useMargin2 = false, verticalAds = false }) => {
       {ads && !isVip ? (
         <div
           className={
-            ads[0] !== undefined || ads[1] !== undefined
+            ads[0] !== undefined && ads[1] !== undefined
               ? useMargin2
                 ? 'margin-banner margin-banner2'
                 : 'margin-banner'
