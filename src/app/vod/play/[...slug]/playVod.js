@@ -709,8 +709,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
       ) : (
         <div className='flex flex-row space-x-4'>
           <div
-            className='flex-1 space-y-4 no-scrollbar col'
-            
+            className='flex-1 space-y-4 no-scrollbar video-player'
           >
             <div
               ref={playerDivRef}
