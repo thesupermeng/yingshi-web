@@ -197,8 +197,8 @@ export const VodCard = ({
         </>
       ) : (
         <>
-          <div className='relative hidden lg:w-1/3 lg:flex rounded-xl'>
-            <img className='rounded-xl' src={imgSource} />
+          <div className='relative hidden lg:flex rounded-xl'>
+            <img className='rounded-xl' src={imgSource} style={{width:'120px' , height:'auto'}} />
             <span className='absolute bottom-2 left-0 text-xs bg-black/50 rounded-r py-0.5 pr-0.5'>
               {vodRemark}
             </span>
