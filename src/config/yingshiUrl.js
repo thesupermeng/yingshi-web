@@ -11,7 +11,7 @@ export const URL_YINGSHI_USER = {
 export const URL_YINGSHI_VOD = {
   homeGetNav: 'nav/v1/navItems?channelId=WEB',
   homeGetPages: 'page/v4.5/typepage',
-  getVodDetails: 'vod/v3/vod',
+  getVodDetails: 'vod/v1/info',
   playlistGetTopic: 'topic/v1/topic',
   topicListing: 'topic/v1/list',
   playlistGetTopicDetail: 'topic/v2/topic/detail',

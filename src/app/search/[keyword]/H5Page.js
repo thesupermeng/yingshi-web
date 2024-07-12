@@ -13,7 +13,9 @@ import VodItemMobile from './../../../components/vodItemMobile';
 import { Spinner } from './../../../components/spinner';
 import Image from 'next/image';
 import { VideoVerticalCard } from '@/components/videoItem/videoVerticalCard';
-import { searchEmptyIcon } from '@/asset/icons';
+import { ImagePlaceholder, searchEmptyIcon } from '@/asset/icons';
+import base64PlaceholderString from '@/app/placeholder';
+import VodItemDesktop from '@/components/vodItemDesktop';
 
 export default function Page() {
   const { keyword } = useParams();
@@ -151,73 +153,73 @@ export default function Page() {
             <div className='d-flex container pt-3 ' style={{ width: '100%' }}>
               <div className='row w-screen'>
                 {searchResults?.map((vod) => (
-                  <div className='col-md-6 mt-2 mb-2' key={vod.vod_id}>
-                    <div
-                      className='topic-details-card'
-                      onClick={(e) => {
-                        e.preventDefault();
-                        router.push(
-                          `/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`
-                        );
-                      }}
-                    >
-                      <div className='row '>
-                        <div className='col-12'>
-                          <div className='row flex-nowrap'>
-                            <div
-                              style={{
-                                width: '132px',
-                                paddingLeft: '0px',
-                                paddingRight: '0px',
-                              }}
-                            >
-                              <img
-                                alt='vod'
-                                className={`object-cover`}
-                                src={vod?.vod_pic}
-                                style={{
-                                  borderRadius: '10px',
-                                  width: '132px',
-                                  height: '206px',
-                                }}
-                              />
-                            </div>
+                  <VodItemDesktop vod={vod} key={vod.vod_id} />
+                  // <div className='col-md-6 mt-2 mb-2' key={vod.vod_id}>
+                  //   <div
+                  //     className='topic-details-card'
+                  //     onClick={(e) => {
+                  //       e.preventDefault();
+                  //       router.push(
+                  //         `/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`
+                  //       );
+                  //     }}
+                  //   >
+                  //     <div className='row '>
+                  //       <div className='col-12'>
+                  //         <div className='row flex-nowrap'>
+                  //           <div
+                  //             style={{
+                  //               width: '132px',
+                  //               paddingLeft: '0px',
+                  //               paddingRight: '0px',
+                  //             }}
+                  //           >
+                  //             {/* <img
+                  //               alt='vod'
+                  //               className={`object-cover`}
+                  //               src={vod?.vod_pic}
+                  //               style={{
+                  //                 borderRadius: '10px',
+                  //                 width: '132px',
+                  //                 height: '206px',
+                  //               }}
+                  //             /> */}
+                  //           </div>
 
-                            <div className='col'>
-                              <div className='topic-details-title'>
-                                <span  dangerouslySetInnerHTML={{ __html: vod.vod_name }}></span>
-                              </div>
-                              <div className='topic-details-title-sub text-secondary '>
-                                {' '}
-                                {vod.vod_year} {vod.vod_class}
-                              </div>
-                              <div className='topic-details-title-sub text-secondary '>
-                                {' '}
-                                主演:
-                                {vod.vod_actor?.length > 38
-                                  ? vod.vod_actor?.substring(0, 35) + '...'
-                                  : vod.vod_actor}
-                              </div>
-                              <div className='topic-details-title-sub text-secondary text-break'>
-                                {vod?.vod_blurb?.length > 75
-                                  ? vod.vod_blurb.substring(0, 73) + '...'
-                                  : vod.vod_blurb}
-                              </div>
-                              <button className='btn btn-topic-play'>
-                                <FontAwesomeIcon
-                                  icon={faPlay}
-                                />{' '}
-                                <span className='ml-2 '>
-                                  {' '}
-                                  立即播放{' '}
-                                </span>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  //           <div className='col'>
+                  //             <div className='topic-details-title'>
+                  //               <span
+                  //                 dangerouslySetInnerHTML={{
+                  //                   __html: vod.vod_name,
+                  //                 }}
+                  //               ></span>
+                  //             </div>
+                  //             <div className='topic-details-title-sub text-secondary '>
+                  //               {' '}
+                  //               {vod.vod_year} {vod.vod_class}
+                  //             </div>
+                  //             <div className='topic-details-title-sub text-secondary '>
+                  //               {' '}
+                  //               主演:
+                  //               {vod.vod_actor?.length > 38
+                  //                 ? vod.vod_actor?.substring(0, 35) + '...'
+                  //                 : vod.vod_actor}
+                  //             </div>
+                  //             <div className='topic-details-title-sub text-secondary text-break'>
+                  //               {vod?.vod_blurb?.length > 75
+                  //                 ? vod.vod_blurb.substring(0, 73) + '...'
+                  //                 : vod.vod_blurb}
+                  //             </div>
+                  //             <button className='btn btn-topic-play'>
+                  //               <FontAwesomeIcon icon={faPlay} />{' '}
+                  //               <span className='ml-2 '> 立即播放 </span>
+                  //             </button>
+                  //           </div>
+                  //         </div>
+                  //       </div>
+                  //     </div>
+                  //   </div>
+                  // </div>
                 ))}
               </div>
             </div>

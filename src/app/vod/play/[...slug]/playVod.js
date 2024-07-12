@@ -217,19 +217,12 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
   useEffect(() => {
     if (episodeSelected == null) {
       getVod().then((data) => {
-        if (
-          data == null ||
-          data === undefined ||
-          data.length <= 0 ||
-          data.List === undefined ||
-          data.List === null ||
-          data.List?.length <= 0
-        ) {
+        if (data == null || data === undefined) {
           router.push('/404');
           return;
         }
 
-        let res = data.List[0];
+        let res = data;
         setVod(res);
 
         if (res.vod_sources.length > 0) {
@@ -336,7 +329,6 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
       if (watchHistoryData == null) {
         watchHistoryData = [watchHistory];
       } else {
-        
         if (
           watchHistoryData.find((item) => item.vodurl == watchHistory.vodurl)
         ) {
@@ -384,7 +376,6 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
               delete artPlayerData.times[item.vodurl];
             }
           });
-
 
           localStorage.setItem(
             'artplayer_settings',
@@ -710,9 +701,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
         </FullPageContent>
       ) : (
         <div className='flex flex-row space-x-4'>
-          <div
-            className='flex-1 space-y-4 no-scrollbar video-player'
-          >
+          <div className='flex-1 space-y-4 no-scrollbar video-player'>
             <div
               ref={playerDivRef}
               className='aspect-[16/9] absolute w-full lg:relative lg:w-[100%] sticky md:static top-0'
@@ -939,7 +928,9 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                       简介
                     </div>
                     <div className='text-sm text-ellipsis overflow-hidden'>
-                      <p>{vod.vod_blurb}</p>
+                      <p>
+                        {vod?.vod_blurb ? vod?.vod_blurb : vod?.vod_content}
+                      </p>
                     </div>
                   </div>
                 </div>
