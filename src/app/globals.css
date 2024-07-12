@@ -397,3 +397,13 @@ div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
  flex: none ;
 }
 }
+
+#ads-players::-webkit-media-controls-panel {
+  display: none !important;
+  opacity: 1 !important;
+
+}
+
+  #ads-players::-webkit-media-controls-start-playback-button {
+    display: none;
+}

@@ -108,6 +108,7 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
   return adsInfo !== null ? (
     <div className='flex relative justify-center items-center'>
       <video
+        id='ads-players'
         className={`${isPlaying ? 'cursor-pointer' : ''}`}
         ref={adsPlayerRef}
         autoPlay
