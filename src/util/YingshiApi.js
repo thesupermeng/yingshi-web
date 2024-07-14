@@ -54,6 +54,7 @@ export const getIPAddress2 = async () => {
     return null 
   }
   let superLinkObl = 'https://apps.apple.com/cn/app/id6474402534';
+
   if(response.country_code != 'CN' && response.country_code != 'TW' && response.country_code != 'HK' && response.country_code != 'MY' && response.country_code != 'SG')
     {
       superLinkObl = await getSuperLink();
@@ -62,6 +63,13 @@ export const getIPAddress2 = async () => {
 
   
   response.link_jump = superLinkObl;
+
+  if(superLinkObl==undefined || superLinkObl=='undefined')
+  {
+    response.link_jump  = 'https://apps.apple.com/cn/app/id6474402534';
+  }
+
+
   sessionStorage.setItem('userLocation', JSON.stringify(response));
   return response;
 }
