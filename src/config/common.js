@@ -1,5 +1,7 @@
 export const LocalStorageKeys = {
+  AuthTokenHeader: 'AuthTokenHeader',
   AuthToken: 'AuthToken',
+  AhaToken: 'AhaToken',
   CurrencyId: 'CurrencyId',
   FBAPIUrl: 'FBApiServerAddr',
   FbCurrency: 'FbCurrency',

@@ -57,7 +57,7 @@ export default function BetCartInput({ id, sos }) {
         type='text'
         key='stakeInput'
         placeholder={`${sos?.mi} - ${sos?.mx}`}
-        className='w-full text-sm py-[2px] px-[10px] border border-[#313131] rounded-lg bg-[#0E0F11] text-white text-end focus:outline-none focus:border-blue-500 placeholder:text-xs'
+        className='w-full text-sm py-[2px] px-[10px] border border-[#313131] rounded-lg bg-[#0E0F11] text-white text-end focus:outline-none focus:border-yellow-500 placeholder:text-xs'
         value={stakeValues || ''}
         onChange={(e) => {
           const inputValue = parseInt(e.target.value);

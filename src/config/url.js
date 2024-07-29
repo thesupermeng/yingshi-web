@@ -1,3 +1,5 @@
+export const BASE_URL = 'https://api.yingshi.tv/';
+
 export const URL_FB_APP = {
   matchList: '/v1/match/getList',
   merchantDetail: '/v1/merchant/detail',

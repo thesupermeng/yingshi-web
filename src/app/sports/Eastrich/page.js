@@ -38,7 +38,7 @@ export default function Page() {
       </WEBOnly>
 
       <H5Only>
-        <div className='flex flex-col flex-1 overflow-hidden text-white bg-transparent z-10'>
+        <div className='flex flex-col flex-1 overflow-hidden text-white bg-transparent z-10 h-full'>
           <div
             style={{ top: `${checkOffset(6)}rem` }}
             className={`fixed flex flex-col z-10 w-full px-4 bg-black`}

@@ -61,7 +61,7 @@ const getHeader = (
   const Timestamp = Math.floor(
     (new Date().getTime() + ServerTimeOffset.value) / 1000
   );
-  const authToken = localStorage.getItem(LocalStorageKeys.AuthToken);
+  const authToken = localStorage.getItem(LocalStorageKeys.AuthTokenHeader);
 
   const obj = {
     Brand: Brand,
@@ -81,7 +81,7 @@ const getHeader = (
 
   if (authToken) {
     obj.Authorization =
-      'bearer ' + localStorage.getItem(LocalStorageKeys.AuthToken);
+      'bearer ' + localStorage.getItem(LocalStorageKeys.AuthTokenHeader);
   }
   if (excludeInSignature) {
     obj['Content-Type'] = 'application/json';
@@ -158,19 +158,19 @@ export const UserApi = async (url, body = {}, options = {}) => {
   if (resData.code === 401) {
     // token invalid
     // todo show invalid info
-    updateLocalstorage(LocalStorageKeys.AuthToken, undefined);
+    updateLocalstorage(LocalStorageKeys.AuthTokenHeader, undefined);
     updateLocalstorage(LocalStorageKeys.TayaToken, undefined, true);
     updateLocalstorage(LocalStorageKeys.FBToken, undefined, true);
     window.dispatchEvent(new Event('sessionTimeOut'));
   } else if (resData.code === 0 || resData.code === 40003) {
     // handle token
     if (removeToken) {
-      updateLocalstorage(LocalStorageKeys.AuthToken, undefined);
+      updateLocalstorage(LocalStorageKeys.AuthTokenHeader, undefined);
       updateLocalstorage(LocalStorageKeys.TayaToken, undefined, true);
       updateLocalstorage(LocalStorageKeys.FBToken, undefined, true);
     }
     if (saveUserToken) {
-      updateLocalstorage(LocalStorageKeys.AuthToken, resData?.data?.token);
+      updateLocalstorage(LocalStorageKeys.AuthTokenHeader, resData?.data?.token);
     }
     if (saveFBToken) {
       updateLocalstorage(LocalStorageKeys.FBToken, resData?.data?.token, true);

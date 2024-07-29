@@ -23,6 +23,7 @@ module.exports = withMT({
         won: '#46C853',
         darkGrey: '#0E0F11',
         yellowGuide: '#FFD621',
+        shayuBlue: '#FAC33D'
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

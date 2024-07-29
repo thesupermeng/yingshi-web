@@ -1,7 +1,7 @@
 export const Config = {
   DeviceType: process.env.NEXT_PUBLIC_ENV === 'WEB' ? 3 : 4,
   MetaTitle:
-    '鲨鱼影视',
+    '影视TV',
   channel: '',
   platform: '',
   userId: '',
