@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { CaretDown, CNFlag } from '@/asset/icons';
-import TextInput from '@/components/login/input';
+import TextInput from '@/components/textInputBox/input';
 import { useEffect, useState } from 'react';
 import { getCountryList } from '@/services/yingshiUser';
 import { BottomSheet } from 'react-spring-bottom-sheet';

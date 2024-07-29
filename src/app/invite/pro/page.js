@@ -1,7 +1,7 @@
 'use client';
 
 import {useSearchParams} from 'next/navigation';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import {
   AndroidIcon,
   AppImage,
@@ -21,17 +21,45 @@ import {useSelector} from 'react-redux';
 export default function Invite() {
   const query = useSearchParams();
   const secretString = query.get('invite');
-  const decodedNameAndCode = decodeURIComponent(escape(atob(secretString)));
-  const username = decodedNameAndCode.substring(6, secretString.length);
-  const code = decodedNameAndCode.substring(0, 6);
 
+  const [username, setUsername] = useState('贝贝');
+  const [code, setCode] = useState('YINGSHI01');
   const getIsUserChina = (state) => state.yingshiScreen.isUserChina;
   const isUserChina = useSelector(getIsUserChina);
 
   const [showToastMessage, setShowToastMessage] = useState(false);
   const [iosLink, setIosLink] = useState('https://apps.apple.com/cn/app/id6474402534');
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+
+    try {
+      // Decode base64
+      // decodedString = atob(secretString);
+      
+      // Handle URL encoding issues
+      // decodedNameAndCode = decodeURIComponent(escape(decodedString));
+
+       let decodedNameAndCode = decodeURIComponent(escape(atob(secretString.replaceAll(' ', '+'))));
+      
+      // Extract code and username
+      // document.getElementById('username').textContent = decodedNameAndCode.substring(6, secretString.length);
+      // document.getElementById('yanzhengma').textContent = decodedNameAndCode.substring(0, 6);
+
+       setCode(decodedNameAndCode.substring(0, 6))
+       setUsername(decodedNameAndCode.substring(6, secretString.length))
+      
+  
+    } catch (error) {
+
+
+      //  code = 'YINGSHI01';
+      //  username = '贝贝';
+
+      console.error('Error decoding secret string:', error);
+      
+    }
+
+
     try {
       setIosLink(isUserChina.link_jump);
     } catch (e) {
@@ -88,7 +116,7 @@ export default function Invite() {
   const navigateDownload = () => {
     const os = getOperatingSystem();
     if (os === 'Android') {
-      window.open('https://oss.yingshi.tv/assets/yingshi-1.8.2-LB.apk', '_blank');
+      window.open('https://oss.yingshi.tv/assets/yingshi-LB.apk', '_blank');
     } else {
       window.location.href = 'https://yingshi.tv';
     }
@@ -182,7 +210,7 @@ export default function Invite() {
               </div>
               <QRCode
                 className="rounded-md"
-                value="https://oss.yingshi.tv/assets/yingshi-1.8.2-LB.apk"
+                value="https://oss.yingshi.tv/assets/yingshi-LB.apk"
                 renderAs="canvas"
                 size={200}
                 includeMargin={true}

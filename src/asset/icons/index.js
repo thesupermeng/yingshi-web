@@ -71,6 +71,7 @@ export { default as PersonIconGrey } from './personGrey.svg';
 export { default as LogoutGrey } from './logoutGrey.svg';
 export { default as ImagePlaceholder } from './../../app/placeholder.png';
 export { default as backtoTopIcon } from './backtoTopIcon.svg';
+export { default as requestVideo } from './requestVideo.svg';
 export { default as GoogleIcon } from './googleIcon.png';
 export { default as AppIcon } from './appIcon.svg';
 export { default as AppImage } from './appImage.png';
@@ -338,3 +339,4 @@ export { default as DownloadIcon } from './download/download_apk_pro.svg';
 export { default as AppStoreIcon } from './download/app_store.svg';
 export { default as GreenTickIcon } from './download/green-tick.svg';
 export { default as CopyIcon } from './download/copy_code.svg';
+

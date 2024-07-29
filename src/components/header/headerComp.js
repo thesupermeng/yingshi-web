@@ -12,7 +12,7 @@ import {
   searchEmptyIcon,
   leftArrow,
   clear,
-  userIcon,
+  // userIcon,
   vipIcon,
   vipLightIcon,
   glyph,
@@ -902,12 +902,12 @@ const HeaderComponent = ({ headerMenu, topTenList }) => {
             }
           }}
         >
-          <Image
+          {/* <Image
             className='cursor-pointer'
             src={userInfo ? ProfileBlue : userIcon}
             alt='user'
             width={30}
-          />
+          /> */}
         </div>
       </div>
     </div>

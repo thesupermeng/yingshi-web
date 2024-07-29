@@ -69,7 +69,8 @@ const MyFooter = () => {
     //   active: pathname.startsWith('/sport'),
     //   icon: AhaLogo,
     //   iconActive: AhaLogoActive,
-    //   title: 'aha体育',
+    //   // title: 'aha体育',
+    //   title: '体育',
     // },
     {
       onClick: () => {

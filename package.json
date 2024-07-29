@@ -1,12 +1,11 @@
 {
-  "name": "eastrich",
+  "name": "yingshi",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "devH5": "cross-env NEXT_PUBLIC_ENV=H5 yarn dev",
     "dev": "next dev -p 3001",
     "build": "next build",
-
     "build:h5": "cross-env NEXT_PUBLIC_ENV=H5 yarn build",
     "start": "next start",
     "lint": "next lint",

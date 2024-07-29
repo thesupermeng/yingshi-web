@@ -255,7 +255,7 @@ export default function Home(params) {
     >
       {isLoading ? (
         <div>
-          <LoadingPage full={false} />
+          <LoadingPage full={true} />
         </div>
       ) : (
         <>
@@ -308,14 +308,22 @@ export default function Home(params) {
                         paramsInput != 99 &&
                         classList &&
                         classList?.map((cItem, cIndex) => {
+
+                            let href = `/vod/show/by/time/class/${cItem}/id/${paramsInput}`
+
+                            if(cItem == '短剧')
+                            {
+                              href = '/vod/show/by/time/id/46'
+                            }
+
                           return (
                             <Link
-                              href={`/vod/show/by/time/class/${cItem}/id/${paramsInput}`}
+                              href={href}
                               key={cIndex + '-class'}
                               className='btn btn-dark hover-effect text-white btn-dark-catagory text-nowrap'
                               style={{ borderRadius: '10px' }}
                             >
-                              {cItem}
+                              {cItem} 
                             </Link>
                           );
                         }) //class list map

@@ -34,10 +34,13 @@ export const VodSourceList = ({
           : containerRef.current.scrollLeft + scrollOffset;
 
       // console.log(newScrollLeft);
-      if (newScrollLeft <= 0) {
+      if (newScrollLeft > 0 && newScrollLeft < maxScrollLeft) {
+        setDisableLeftButton(false);
+        setDisableRightButton(false);
+      } else if (newScrollLeft == 0) {
         setDisableLeftButton(true);
         setDisableRightButton(false);
-      } else if (newScrollLeft >= maxScrollLeft) {
+      } else if (newScrollLeft == maxScrollLeft) {
         setDisableRightButton(true);
         setDisableLeftButton(false);
       } else {
@@ -60,10 +63,13 @@ export const VodSourceList = ({
 
         const maxScrollLeft = container.scrollWidth - container.clientWidth - 1;
         // console.log(maxScrollLeft, container.scrollLeft);
-        if (container.scrollLeft <= 0) {
+        if (container.scrollLeft > 0 && container.scrollLeft < maxScrollLeft) {
+          setDisableLeftButton(false);
+          setDisableRightButton(false);
+        } else if (container.scrollLeft == 0) {
           setDisableLeftButton(true);
           setDisableRightButton(false);
-        } else if (container.scrollLeft >= maxScrollLeft) {
+        } else if (container.scrollLeft == maxScrollLeft) {
           setDisableRightButton(true);
           setDisableLeftButton(false);
         } else {
@@ -73,13 +79,25 @@ export const VodSourceList = ({
       }
     };
 
-    container.addEventListener('wheel', onWheel);
+    if (container) {
+      container.addEventListener('wheel', onWheel);
+    }
+
+    if (selectedItemRef.current) {
+      selectedItemRef.current.scrollIntoView({
+        // behavior: 'smooth',
+        block: 'nearest',
+        inline: 'start',
+      });
+    }
 
     // Initial check on mount
     onWheel();
 
     return () => {
-      container.removeEventListener('wheel', onWheel);
+      if (container) {
+        container.removeEventListener('wheel', onWheel);
+      }
     };
   }, []);
 
@@ -90,89 +108,85 @@ export const VodSourceList = ({
     }
   }, [vodSources]);
 
-  useEffect(() => {
-    if (selectedItemRef.current) {
-      selectedItemRef.current.scrollIntoView({
-        // behavior: 'smooth',
-        block: 'nearest',
-        inline: 'start',
-      });
-    }
-  }, []);
-
   return (
-    <div className='w-full flex flex-row'>
-      <div className='lg:flex hidden'>
-        <div
-          id='control-left'
-          name='control'
-          className={`${styles.arrowCard}`}
-          onClick={() => handleScroll(-100)} // Adjust scroll offset as needed
-        >
-          <Image
-            src={ArrowLeftIcon}
-            alt='Icon'
-            className={`${disableLeftButton ? 'transparent' : ''}`}
-          />
-        </div>
-      </div>
-
-      <div
-        ref={containerRef} // Use ref to access the container
-        className='flex flex-1 gap-2 overflow-x-scroll hide-scrollbar overscroll-none'
-      >
-        {vodSources?.map((source) => (
-          <div
-            key={`key-vodSource-${source.source_id}`}
-            id={`vodSource-${source.source_id}`}
-            ref={
-              source.source_id === vodSourceSelected.source_id
-                ? selectedItemRef
-                : null
-            }
-            className={`hover-effect cursor-pointer ${styles.radioOptionCard} ${
-              vodSourceSelected.source_id === source.source_id
-                ? styles.selectedOptionCard
-                : styles.unselectedOptionCard
-            }`}
-            onClick={() => onSelectSource(source)}
-          >
+    <>
+      {vodSources?.length > 0 && (
+        <div className='w-full flex flex-row'>
+          <div className='lg:flex hidden'>
             <div
-              htmlFor={`vodSource-${source.source_id}`}
-              className='flex flex-row gap-1 items-center'
+              id='control-left'
+              name='control'
+              className={`${styles.arrowCard}`}
+              onClick={() => handleScroll(-100)} // Adjust scroll offset as needed
             >
-              <div className='w-6 h-6 flex justify-center items-center'>
-                <Image
-                  style={{ paddingRight: '2px' }}
-                  src={PlaySourceIcon}
-                  alt='Icon'
-                />
-              </div>
-              <span className='whitespace-nowrap text-sm'>
-                {source.source_name}
-              </span>
+              <Image
+                src={ArrowLeftIcon}
+                alt='Icon'
+                className={`${disableLeftButton ? 'transparent' : ''}`}
+              />
             </div>
           </div>
-        ))}
-      </div>
 
-      <div className='lg:flex hidden'>
-        <div
-          id='control-right'
-          name='control'
-          className={`${styles.arrowCard}`}
-          // className={`${styles.arrowCard} ${
-          //   vodSources.length > 1 ? 'transparent' : ''
-          // }`}
-          onClick={() => handleScroll(100)} // Adjust scroll offset as needed
-        >
-          <Image
-            src={ArrowRightIcon}
-            alt='Icon'
-            className={`${disableRightButton ? 'transparent' : ''}`}
-          />
+          <div
+            ref={containerRef} // Use ref to access the container
+            className='flex flex-1 gap-2 overflow-x-scroll hide-scrollbar overscroll-none'
+          >
+            {vodSources?.map((source) => (
+              <div
+                key={`key-vodSource-${source.source_id}`}
+                id={`vodSource-${source.source_id}`}
+                ref={
+                  source.source_id === vodSourceSelected.source_id
+                    ? selectedItemRef
+                    : null
+                }
+                className={`hover-effect cursor-pointer ${
+                  styles.radioOptionCard
+                } ${
+                  vodSourceSelected.source_id === source.source_id
+                    ? styles.selectedOptionCard
+                    : styles.unselectedOptionCard
+                }`}
+                onClick={() => onSelectSource(source)}
+              >
+                <div
+                  htmlFor={`vodSource-${source.source_id}`}
+                  className='flex flex-row gap-1 items-center'
+                >
+                  <div className='w-6 h-6 flex justify-center items-center'>
+                    <Image
+                      style={{ paddingRight: '2px' }}
+                      src={PlaySourceIcon}
+                      alt='Icon'
+                    />
+                  </div>
+                  <span className='whitespace-nowrap text-sm'>
+                    {source.source_name}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className='lg:flex hidden'>
+            <div
+              id='control-right'
+              name='control'
+              className={`${styles.arrowCard}`}
+              // className={`${styles.arrowCard} ${
+              //   vodSources.length > 1 ? 'transparent' : ''
+              // }`}
+              onClick={() => handleScroll(100)} // Adjust scroll offset as needed
+            >
+              <Image
+                src={ArrowRightIcon}
+                alt='Icon'
+                className={`${disableRightButton ? 'transparent' : ''}`}
+              />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };

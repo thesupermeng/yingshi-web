@@ -72,3 +72,20 @@ a:hover {
 {
   color: #000 !important;
 }
+
+.text-hot-1
+{
+  color: rgb(244 67 54 );/* rgba(250, 181, 5, 1) */ 
+}
+.text-hot-2
+{
+  color: rgb(255 152 0 );  /* rgba(251, 195, 55 , 1) */
+}
+.text-hot-3
+{
+  color: #FAC33D; /* rgba(252, 217, 131, 1) */
+}
+.text-hot-4
+{
+  color:rgba(156, 156, 156, 1)
+}

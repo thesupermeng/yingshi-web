@@ -110,9 +110,16 @@ export default function WebPage({ subMenus }) {
           className={
             'h-[80px] rounded-[12px] bg-[#1A1F24] flex items-center px-[21px] py-[12px]'
           }
+          onClick={() => {
+              if (!userInfo) {
+                // router.push('/myprofile?login=true');
+                setOpenLogin(true);
+              } 
+          }}
         >
           <ProfileCard userInfo={userInfo} isVip={isVip} isH5={false} />
         </div>
+
         <VipCard onClick={hanldeVipClick} />
         {navs
           .filter((x) => {

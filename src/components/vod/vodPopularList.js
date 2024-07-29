@@ -35,12 +35,12 @@ export const VodPopularList = () => {
         className="flex flex-row space-x-4 items-center cursor-pointer hover-effect"
       >
         <span className={index === 0
-          ? 'text-red-500'
+          ? 'text-hot-1'
           : index === 1
-            ? 'text-orange-500'
+            ? 'text-hot-2'
             : index === 2
-              ? 'text-yellow-500'
-              : 'text-inherit'
+              ? 'text-hot-3'
+              : 'text-hot-4'
         }>{index + 1}</span>
         <span className="text-sm flex-1">{vod.vod_name}</span>
         <span className="text-xs text-white/75">{vod.type_name}</span>

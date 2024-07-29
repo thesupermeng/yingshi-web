@@ -16,6 +16,7 @@ import {
   ImagePlaceholder,
 } from '@/asset/icons';
 import base64PlaceholderString from '@/app/placeholder';
+import { encodeVSN } from '@/util/vsn';
 
 export const VideoHorizontalHistoryCard = ({
   vod,
@@ -51,8 +52,19 @@ export const VideoHorizontalHistoryCard = ({
       }  hover:text-[#FAC33D] gap-x-2 cursor-pointer`}
       onClick={() => {
         const url = vod.sourceId
-          ? `/vod/play/id/${vod.vodid}/sid/${vod.tid}/nid/${vod.nid}/source/${vod.sourceId}`
-          : `/vod/play/id/${vod.vodid}/sid/${vod.tid}/nid/${vod.nid}`;
+          ? `/vod/play/id/${vod.vodid}/sid/${vod.tid}/nid/${vod.nid}/source/${
+              vod.sourceId
+            }${
+              [46, 120].includes(Number(vod.tid))
+                ? `${vod?.sourceName? `/vsn/${encodeVSN(vod?.sourceName)}`:''}`
+                : ''
+            }`
+          : `/vod/play/id/${vod.vodid}/sid/${vod.tid}/nid/${vod.nid}${
+              [46, 120].includes(Number(vod.tid))
+                ? `${vod?.sourceName? `/vsn/${encodeVSN(vod?.sourceName)}`:''}`
+                : ''
+            }`;
+
         router.push(url);
         if (setOpenHistory) {
           setOpenHistory(false);

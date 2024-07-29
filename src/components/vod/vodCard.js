@@ -6,9 +6,10 @@ import { ShareHorizontal } from '@/components/shareHorizontal';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import 'react-spring-bottom-sheet/dist/style.css';
 import styles from './style.module.css';
-import { CloseX } from '@/asset/icons';
+import { CloseX, ImagePlaceholder } from '@/asset/icons';
 import { ArrowLeftIcon, ArrowRightIcon } from '@/asset/icons';
 import { ExtraDesc } from '../extraDesc';
+import base64PlaceholderString from '@/app/placeholder';
 
 export const VodCard = ({
   imgSource,
@@ -34,6 +35,7 @@ export const VodCard = ({
   const [openIntroBottomSheet, setOpenIntroBottomSheet] = useState(false);
   const [episodeInfo, setEpisodeInfo] = useState(null);
   const [desc, setDesc] = useState('');
+  const [imageError, setImageError] = useState(false);
 
   const selectIntro = () => {
     setOpenIntroBottomSheet(true);
@@ -115,7 +117,9 @@ export const VodCard = ({
               <div className='text-sm pt-1'>导演: {vod.vod_director}</div>
               <div className='text-sm pt-1'>主演: {vod.vod_actor}</div>
               <div className='text-sm pt-3'>
-                <p>{vod.vod_blurb}</p>
+                <p>
+                  {vod?.vod_blurb == null ? vod.vod_content : vod.vod_blurb}
+                </p>
               </div>
             </div>
 
@@ -138,17 +142,39 @@ export const VodCard = ({
       </BottomSheet>
       {xMode ? (
         <>
-          <div className='flex' style={{ flexDirection: 'column' }}>
-            <div className='relative hidden lg:w-3/3 lg:flex rounded-xl'>
-              <img className='rounded-xl' src={imgSource} />
-              <span className='absolute bottom-2 left-0 text-xs bg-black/50 rounded-r py-0.5 pr-0.5'>
+          <div className='flex w-full' style={{ flexDirection: 'column' }}>
+            <div className={`relative hidden lg:w-3/3 lg:flex rounded-xl ${imageError? 'h-[171px]': ''}`}>
+              {/* <img
+                className='rounded-xl'
+                onError={(e) => setImageError(true)}
+                src={imageError ? ImagePlaceholder : imgSource}
+              /> */}
+              <Image
+                placeholder='blur'
+                blurDataURL={'data:image/png;base64,' + base64PlaceholderString}
+                alt='video'
+                src={imageError ? ImagePlaceholder : imgSource}
+                style={{
+                  objectFit: imageError? 'cover': 'fill',
+                }}
+                layout={imageError ? 'none' : 'intrinsic'}
+                width={304} // Set the intrinsic width of the image
+                height={171} // Set the intrinsic height of the image to maintain aspect ratio
+                // sizes='100%'
+                className='rounded-xl'
+                onError={(e) => setImageError(true)}
+              />
+              {/* <span className='absolute bottom-2 left-0 text-xs bg-black/50 rounded-r py-0.5 pr-0.5'>
                 {vodRemark}
-              </span>
+              </span> */}
             </div>
 
             <div className='flex flex-col lg:w-3/3 pt-3'>
               <div className='flex flex-row'>
-                <span className='text-lg pr-5 line-clamp-2' dangerouslySetInnerHTML={{ __html: vodName }}></span>
+                <span
+                  className='text-lg pr-5 line-clamp-2'
+                  dangerouslySetInnerHTML={{ __html: vodName }}
+                ></span>
                 <div
                   className='lg:hidden flex flex-row space-x-2 py-1'
                   onClick={() => setOpenIntroBottomSheet(true)}
@@ -198,15 +224,33 @@ export const VodCard = ({
       ) : (
         <>
           <div className='relative hidden lg:flex rounded-xl'>
-            <img className='rounded-xl' src={imgSource} style={{width:'120px' , height:'auto'}} />
-            <span className='absolute bottom-2 left-0 text-xs bg-black/50 rounded-r py-0.5 pr-0.5'>
+            {/* <img
+              className='rounded-xl'
+              src={imgSource}
+              style={{ width: '120px', height: 'auto' }}
+            /> */}
+            <Image
+              placeholder='blur'
+              blurDataURL={'data:image/png;base64,' + base64PlaceholderString}
+              alt='video'
+              src={imageError ? ImagePlaceholder : imgSource}
+              layout='intrinsic'
+              width={117} // Set the intrinsic width of the image
+              height={208} // Set the intrinsic height of the image to maintain aspect ratio
+              className='rounded-xl'
+              onError={(e) => setImageError(true)}
+            />
+            {/* <span className='absolute bottom-2 left-0 text-xs bg-black/50 rounded-r py-0.5 pr-0.5'>
               {vodRemark}
-            </span>
+            </span> */}
           </div>
 
           <div className='flex flex-col lg:w-2/3 allow-select'>
             <div className='flex flex-row'>
-              <span className='text-lg pr-5 line-clamp-2' dangerouslySetInnerHTML={{ __html: vodName }}></span>
+              <span
+                className='text-lg pr-5 line-clamp-2'
+                dangerouslySetInnerHTML={{ __html: vodName }}
+              ></span>
               <div
                 className='lg:hidden flex flex-row space-x-2 py-1'
                 onClick={() => setOpenIntroBottomSheet(true)}

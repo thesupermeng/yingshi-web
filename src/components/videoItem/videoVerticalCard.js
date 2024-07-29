@@ -7,6 +7,7 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import base64PlaceholderString from '@/app/placeholder';
 import Link from 'next/link';
 import { useState } from 'react';
+import { encodeVSN } from '@/util/vsn';
 
 export const VideoVerticalCard = ({ vod }) => {
   const router = useRouter();
@@ -22,7 +23,11 @@ export const VideoVerticalCard = ({ vod }) => {
     <div className='flex flex-col items-center desktop-hover-effect'>
       <div className='relative w-full aspect-[530/726] group mx-4 my-2 rounded-lg desktop-hover-effect'>
         <Link
-          href={`/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1`}
+          href={`/vod/play/id/${vod.vod_id}/sid/${vod.type_id}/nid/1/${
+            [46, 120].includes(vod.type_id)
+              ? `${vod?.vod_source_name ? `/vsn/${encodeVSN(vod?.vod_source_name)}` :''}`
+              : ''
+          }`}
           className='absolute inset-0 flex rounded-lg lg:group-hover:improve-text-unblurry lg:transition lg:group-hover:scale-150 lg:group-hover:duration-500 lg:group-hover:cursor-pointer group-hover:rounded-lg lg:group-hover:z-10 lg:group-hover:rounded-lg'
         >
           <Image

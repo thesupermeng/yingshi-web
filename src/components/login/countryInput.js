@@ -3,7 +3,7 @@ import { CaretDown, CNFlag } from '@/asset/icons';
 import { useEffect, useState } from 'react';
 import { getCountryList } from '@/services/yingshiUser';
 import { Popover, PopoverContent, PopoverHandler } from '@material-tailwind/react';
-import TextInput from '@/components/login/input';
+import TextInput from '../textInputBox/input';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 

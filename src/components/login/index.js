@@ -1,7 +1,7 @@
 import { Button, Checkbox, Dialog, DialogBody } from '@material-tailwind/react';
 import React, { useEffect, useState } from 'react';
 import CountryInput from '@/components/login/countryInput';
-import TextInput from '@/components/login/input';
+import TextInput from '../textInputBox/input';
 import { GoogleIcon } from '@/asset/icons';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';

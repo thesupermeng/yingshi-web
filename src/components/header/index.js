@@ -40,6 +40,8 @@ import { isMobile } from 'react-device-detect';
 import { usePaymentOpen } from '@/hook/yingshiScreenState/usePaymentOpen';
 import { VideoHorizontalHistoryCard } from '../videoItem/videoHorizontalHistoryCard';
 import { setIsUserChina } from '@/store/yingshiScreen';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 const getHeaderMenu = (state) => state.headerMenu;
 const getCurrentScrollPosition = (state) => state.currentScrollPosition;
@@ -160,7 +162,6 @@ const Header = () => {
       return; // Exit early if the first character is a space
     }
     setSearchInput(newValue);
-    return;
   };
 
   const handleSearch = () => {
@@ -194,7 +195,11 @@ const Header = () => {
     setSearchHistoryList(JSON.parse(localStorage.getItem('searchHistoryList')));
     setOpenSearch(false);
     // setSearchInput('');
-    router.push('/search/' + encodeURIComponent(searchInput));
+    if (searchInput === '.') {
+      router.push('/search/' + encodeURIComponent(searchInput + ' '));
+    } else {
+      router.push('/search/' + encodeURIComponent(searchInput));
+    }
   };
 
   const handleClearSearchHistory = () => {
@@ -251,7 +256,11 @@ const Header = () => {
   const goToSeachResult = (query) => {
     setOpenSearch(false);
     setSearchInput(query);
-    router.push('/search/' + encodeURIComponent(query));
+    if (query === '.') {
+      router.push('/search/' + encodeURIComponent(query + ' '));
+    } else {
+      router.push('/search/' + encodeURIComponent(query));
+    }
   };
 
   const calculateItemsVisibility = () => {
@@ -291,16 +300,25 @@ const Header = () => {
       let menuItem = await getTopNav();
       const topTenItem = await getTopTenList();
       setTopTenList(topTenItem);
-      menuItem.push({
-        id: 998,
-        name: '播单',
-      });
-      menuItem.push({
-        id: 999,
-        name: '片库',
-      });
+      let newMenuItem = menuItem;
+      if (menuItem?.length > 5) {
+        menuItem.push({
+          id: 998,
+          name: '播单',
+        });
 
-      dispatch(setHeaderMenu(menuItem));
+        let index = 4;
+        newMenuItem = [
+          ...menuItem.slice(0, index),
+          {
+            id: 999,
+            name: '片库',
+          },
+          ...menuItem.slice(index),
+        ];
+      }
+
+      dispatch(setHeaderMenu(newMenuItem));
 
       setLoading(false);
     };
@@ -397,8 +415,12 @@ const Header = () => {
     };
   }, []);
 
-  if (loading && !pathname.startsWith('/download') && !pathname.startsWith('/invite')) {
-    return <LoadingPage full={true} />;
+  if (loading) {
+    return (
+      <div className='bg-[#ffccff] w-full h-full z-50'>
+        <LoadingPage full={true} />
+      </div>
+    );
   }
 
   let searchContainer = (
@@ -429,7 +451,10 @@ const Header = () => {
               className='border-0 border-gray-300 text-white rounded-full pl-10 md:pl-4 md:pr-10 pr-4 py-2 focus:outline-none w-full md:w-60 header-search-input-desktop text-[14px]'
               onClick={handleOpenSearch}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' && !(e.nativeEvent.isComposing || e.keyCode === 229)) {
+                if (
+                  e.key === 'Enter' &&
+                  !(e.nativeEvent.isComposing || e.keyCode === 229)
+                ) {
                   e.target.blur();
                   handleSearch();
                 }
@@ -526,17 +551,15 @@ const Header = () => {
                         >
                           <div className='flex flex-row'>
                             <div
-                              className='text-sm w-8 text-center font-bold'
-                              style={{
-                                color:
-                                  index == 0
-                                    ? 'rgba(250, 181, 5, 1)'
-                                    : index == 1
-                                    ? 'rgba(251, 195, 55 , 1)'
-                                    : index == 2
-                                    ? 'rgba(252, 217, 131, 1)'
-                                    : 'rgba(156, 156, 156, 1)',
-                              }}
+                              className={`text-sm w-8 text-center font-bold ${
+                                index === 0
+                                  ? 'text-hot-1'
+                                  : index === 1
+                                  ? 'text-hot-2'
+                                  : index === 2
+                                  ? 'text-hot-3'
+                                  : 'text-hot-4'
+                              }`}
                             >
                               {index + 1}
                             </div>
@@ -683,6 +706,11 @@ const Header = () => {
           className='h-full flex justify-center'
           onClick={() => {
             handleOpenHistory(false);
+            if (!userInfo) {
+              setOpenLogin(true);
+              return;
+            }
+
             router.push('/myprofile/watchHistory');
           }}
         >
@@ -785,10 +813,12 @@ const Header = () => {
           handleOpenApp(false);
         }}
       >
-        <div className='h-full flex flex-row cursor-pointer'>
+
+        <Link href='/download' className='h-full flex flex-row cursor-pointer'>
           <Image className='mx-2' src={PhoneIcon} alt='app' width={14} />
+
           <div className='flex items-center md:flex hidden'>APP</div>
-        </div>
+        </Link>
         {openApp ? (
           <div className='absolute flex flex-col items-end pt-1 z-10 right-2'>
             <div
@@ -801,54 +831,50 @@ const Header = () => {
                 borderBottom: '10px solid #18191f5',
               }}
             />
-            <Link href='/download'>
-              <div
-                className='p-2 flex flex-row rounded-md rounded-tr-none cursor-pointer hover-download'
-                style={{ backgroundColor: '#18191ef5' }}
-              >
-                <div className='flex-none w-[200px]'>
-                  <Image src={AppImage} alt='AppImage' width={200} />
-                </div>
-                <div className='flex-1 flex flex-col justify-center items-center pr-2 gap-y-2'>
-                  <Image alt='影视TV' src={Logo} width={120} />
-                  <span className='text-sm'>您每一天的影视平台</span>
-                  <div className='flex flex-row gap-x-5 pt-2'>
-                    <div className='flex flex-col items-center gap-2'>
-                      <div className='flex flex-row  items-center'>
-                        <Image
-                          alt='appleStore'
-                          src={AppleStoreIcon}
-                          width={25}
-                        />
-                        <span className='text-xs'>iOS App 下载</span>
-                      </div>
-                      <QRCode
-                        className='rounded-md'
-                        value={iosLink}
-                        renderAs='canvas'
-                        size={120}
-                        includeMargin={true}
-                      />
-                    </div>
-                    <div className='flex flex-col items-center gap-2'>
-                      <div className='flex flex-row items-center'>
-                        <Image alt='playStore' src={AndroidIcon} width={25} />
-                        <span className='text-xs'>安卓 App 下载</span>
-                      </div>
 
-                      <QRCode
-                        className='rounded-md'
-                        value='https://oss.yingshi.tv/assets/yingshi.apk'
-                        renderAs='canvas'
-                        size={120}
-                        includeMargin={true}
-                      />
+<Link href='/download' 
+              className='p-2 flex flex-row rounded-md rounded-tr-none'
+              style={{ backgroundColor: '#18191ef5' }}
+            >
+              <div className='flex-none w-[200px]'>
+                <Image src={AppImage} alt='AppImage' width={200} />
+              </div>
+              <div className='flex-1 flex flex-col justify-center items-center pr-2 gap-y-2'>
+                <Image alt='影视TV' src={Logo} width={120} />
+                <span className='text-sm'>您每一天的影视平台</span>
+                <div className='flex flex-row gap-x-5 pt-2'>
+                  <div className='flex flex-col items-center gap-2'>
+                    <div className='flex flex-row  items-center'>
+                      <Image alt='appleStore' src={AppleStoreIcon} width={25} />
+                      <span className='text-xs'>iOS App 下载</span>
                     </div>
+                    <QRCode
+                      className='rounded-md'
+                      value={iosLink}
+                      renderAs='canvas'
+                      size={120}
+                      includeMargin={true}
+                    />
                   </div>
-                  <span className='text-sm'>扫码即可下载手机APP</span>
+                  <div className='flex flex-col items-center gap-2'>
+                    <div className='flex flex-row items-center'>
+                      <Image alt='playStore' src={AndroidIcon} width={25} />
+                      <span className='text-xs'>安卓 App 下载</span>
+                    </div>
+
+                    <QRCode
+                      className='rounded-md'
+                      value='https://oss.yingshi.tv/assets/yingshi.apk'
+                      renderAs='canvas'
+                      size={120}
+                      includeMargin={true}
+                    />
+                  </div>
                 </div>
+                <span className='text-sm'>扫码即可下载手机APP</span>
               </div>
             </Link>
+
           </div>
         ) : null}
       </div>
@@ -871,12 +897,12 @@ const Header = () => {
         }}
       >
         {/* md:flex */}
-        <div>
+        <div className='relative'>
           <Image
-            className='cursor-pointer'
+            className={`cursor-pointer ${isVip}`}
             src={isVip ? VipUser : userInfo ? MemberUser : guestUser}
             alt='user'
-            width={isVip ? 34 : 30}
+            width={36}
           />
         </div>
       </Link>
@@ -932,9 +958,7 @@ const Header = () => {
                 >
                   <span
                     className={`truncate ${
-                      selectedId === navItem.id
-                        ? 'text-yellow-500'
-                        : 'text-white'
+                      selectedId === navItem.id ? 'text-yellow-500' : 'text-white'
                     }`}
                   >
                     {navItem.name}
@@ -961,9 +985,7 @@ const Header = () => {
                 >
                   <span
                     className={`text-yellow-hover transition-colors duration-300 truncate ${
-                      selectedId === navItem.id
-                        ? 'text-yellow-500'
-                        : 'text-white'
+                      selectedId === navItem.id ? 'text-yellow-500' : 'text-white'
                     }`}
                   >
                     {navItem.name}
@@ -974,7 +996,7 @@ const Header = () => {
                 </Link>
               );
             })}
-            {hiddenItems.length > 0 && (
+            {hiddenItems?.length > 0 && (
               <div className='w-14 flex flex-col items-center cursor-pointer'>
                 <div className='relative' ref={dropdownMoreRef}>
                   <button
@@ -982,11 +1004,17 @@ const Header = () => {
                     className='flex flex-row items-center text-yellow-hover'
                   >
                     <span>更多</span>
-                    <Image
+                    {/* <Image
                       className='mx-1'
                       alt='more'
                       src={moreIcon}
                       width={14}
+                    /> */}
+
+                    <FontAwesomeIcon
+                      style={{ width: '14px' }}
+                      icon={faChevronDown}
+                      className={`mx-1`}
                     />
                   </button>
                   {openMore ? (
@@ -1041,11 +1069,7 @@ const Header = () => {
     </div>
   );
 
-  if (
-    pathname.startsWith('/topic/detail/') ||
-    pathname.startsWith('/xvod') ||
-    pathname.startsWith('/download')
-  ) {
+  if (pathname.startsWith('/topic/detail/') || pathname.startsWith('/xvod')) {
     return (
       <div className={'desktop z-50 sticky top-0 w-screen'}>
         {defaultHeader}
@@ -1225,7 +1249,7 @@ const Header = () => {
     return null;
   }
 
-  if (pathname.startsWith('/purchase-redirect') || pathname.startsWith('/invite')) {
+  if (pathname.startsWith('/purchase-redirect')) {
     return <></>;
   }
 

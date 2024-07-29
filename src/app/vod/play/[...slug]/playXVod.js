@@ -129,7 +129,7 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
     let content = '';
 
     if (vod) {
-      let desc = vod.vod_year + ' ' + vod.vod_area;
+      let desc = vod.vod_year + (vod.vod_area == undefined?'':  ' ' + vod.vod_area);
       let vodClass = [];
       if (vod.vod_class != null) {
         vodClass = vod.vod_class.split(',');

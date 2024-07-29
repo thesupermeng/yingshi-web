@@ -54,6 +54,11 @@ export function useSearchingListApi(params) {
   const getKey = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.List.length) return null;
 
+    if(params && params?.typeId == 46)
+    {
+      // 短剧拓展 API 【黑木耳、量子、华为吧】
+      return inputParams ? generateKey(URL_YINGSHI_VOD.searchingList2, {...inputParams, page: pageIndex + 1}) : null;
+    }
     return inputParams ? generateKey(URL_YINGSHI_VOD.searchingList, {...inputParams, page: pageIndex + 1}) : null;
   };
 
@@ -84,3 +89,4 @@ export function generateKey(url, body) {
 
   return url;
 }
+

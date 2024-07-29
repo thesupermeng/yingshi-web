@@ -1,5 +1,5 @@
 'use client';
-import { backtoTopIcon } from '@/asset/icons';
+import { backtoTopIcon, requestVideo as requestVideoIcon } from '@/asset/icons';
 import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,16 +8,20 @@ import {
   setIsTop,
   setCurrentScrollPosition,
 } from '@/store/scrollView';
+import { RequestVideo } from '@/components/requestVideo';
+import { usePathname } from 'next/navigation';
 
 const getIsTop = (state) => state.isTop;
 const getIsScroll = (state) => state.isScroll;
 
 export const ScrollView = ({ children }) => {
   const dispatch = useDispatch();
+  const pathname = usePathname();
   const scrollableDivRef = useRef(null);
   const [showScrollUpButton, setShowScrollUpButton] = useState(false);
   const [lastScrollPosition, setLastScrollPosition] = useState(0);
   const [timerId, setTimerId] = useState(null);
+  const [isRequestVideoOpen, setIsRequestVideoOpen] = useState(false); // State to handle request video dialog
 
   const isAtTop = useSelector(getIsTop);
   const isScrolling = useSelector(getIsScroll);
@@ -91,6 +95,10 @@ export const ScrollView = ({ children }) => {
     }, 15);
   };
 
+  const handleRequestVideoDialog = () => {
+    setIsRequestVideoOpen(!isRequestVideoOpen);
+  };
+
   return (
     <div
       className='relative w-full h-full flex flex-col overflow-y-auto overflow-x-hidden overscroll-none no-scrollbar scroll-pt-[6px]'
@@ -100,14 +108,32 @@ export const ScrollView = ({ children }) => {
     >
       {/* Render the passed container */}
       {children}
-      {showScrollUpButton && (
+
+      {/* {!pathname.startsWith('/vod/play/') && (
         <button
-          className='fixed bottom-16 right-16 rounded-md z-20 bg-[#2c313ae6] desktop'
-          onClick={scrollToTop}
+          className={`pointer-cursor fixed ${
+            showScrollUpButton ? 'bottom-32' : 'bottom-16'
+          } right-16 rounded-md z-30 bg-[#2c313ae6] desktop transition-all duration-300`}
+          onClick={handleRequestVideoDialog}
         >
-          <Image src={backtoTopIcon} alt='arrowUp' width={50} />
+          <Image src={requestVideoIcon} alt='requestVideo' width={50} />
         </button>
-      )}
+      )} */}
+
+      <button
+        disabled={!showScrollUpButton}
+        className={`pointer-cursor fixed bottom-16 right-16 rounded-md z-20 bg-[#2c313ae6] desktop transition-opacity duration-500 ${
+          showScrollUpButton ? 'opacity-100' : 'opacity-0'
+        }`}
+        onClick={scrollToTop}
+      >
+        <Image src={backtoTopIcon} alt='arrowUp' width={50} />
+      </button>
+
+      {/* <RequestVideo
+          open={isRequestVideoOpen}
+          handler={handleRequestVideoDialog}
+        /> */}
     </div>
   );
 };

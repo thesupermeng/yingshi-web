@@ -71,8 +71,7 @@ const MyFooter = () => {
     pathname.startsWith('/sport/user/withdraw') ||
     pathname.startsWith('/sport/user/transaction') ||
     pathname.startsWith('/sport/user/history') ||
-    pathname.startsWith('/purchase-redirect') ||
-    pathname.startsWith('/invite')
+    pathname.startsWith('/purchase-redirect') 
   ) {
     return <></>;
   }
@@ -94,7 +93,8 @@ const MyFooter = () => {
     //   active: pathname.startsWith('/sport'),
     //   icon: AhaLogo,
     //   iconActive: AhaLogoActive,
-    //   title: 'aha体育',
+    //   //title: 'aha体育',
+    //   title: '体育',
     // },
     {
       onClick: () => {
