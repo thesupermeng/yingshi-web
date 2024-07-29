@@ -57,35 +57,6 @@ export const FilmLibrary = () => {
     },
   ];
 
-  //banner ads
-  // const initAdsList = JSON.parse(sessionStorage.getItem('adsList'));
-  // const [adsList, setAdsList] = useState(null);
-
-  // const getAllAds = async () => {
-  //   return YingshiApi2(URL_YINGSHI_VOD.getAllAds, {}, { method: 'GET' });
-  // };
-
-  // const initAds = async () => {
-  //   let allAds = await getAllAds();
-  //   sessionStorage.setItem('adsList', JSON.stringify(allAds.data));
-  //   setAdsList(allAds.data);
-  // };
-
-  // useLayoutEffect(() => {
-  //   console.log('test');
-  //   let adsList = initAdsList;
-  //   if (!adsList) {
-  //     adsList = JSON.parse(sessionStorage.getItem('adsList'));
-  //   }
-
-  //   if (adsList && adsList !== 'undefined') {
-  //     setAdsList(adsList);
-  //   } else {
-  //     initAds();
-  //   }
-  // }, []);
-  //end banner ads
-
   const getFilterParams = (path, filterTypeList) => {
     const filterParams = {};
     for (let i = 0; i < path.length; i += 2) {
@@ -274,7 +245,9 @@ export const FilmLibrary = () => {
       num += 1;
     }
 
-    return num * 56;
+    let calculateHeight = num * 56;
+
+    return calculateHeight + 'px';
   };
 
   const generatePath = (value, type) => {
@@ -323,9 +296,9 @@ export const FilmLibrary = () => {
                 className={` w-screen p-1 z-10 top-[48px] md:static sticky bg-black`}
               >
                 {!isVip && (
-                <div className='container'>
-                  <SingletonAdsBanner />
-                </div>
+                  <div className='container'>
+                    <SingletonAdsBanner />
+                  </div>
                 )}
                 {filterTypeList && paramsFilter && (
                   <div className={`bg-[#1D2023] pt-2`}>
@@ -361,206 +334,212 @@ export const FilmLibrary = () => {
                     </div>
                     <div
                       className={`transition-all duration-500 md:h-fit md:visible md:py-2
-              ease-out ${
-                collapse
-                  ? 'opacity-0 h-0 collapse'
-                  : `h-[${heightFilter()}px] py-2 `
-              }
-              flex flex-col divide-y divide-gray-800 container md:flex md:opacity-100`}
+                        ease-out ${
+                          collapse
+                            ? 'opacity-0 h-0 collapse'
+                            : `h-[${heightFilter()}] py-2 `
+                        }
+                        flex flex-col divide-y divide-gray-800 container md:flex md:opacity-100`}
                     >
-                      <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar'>
-                        {advanceFilterItem.map((item, index) => {
-                          return (
-                            <div
-                              className={`flex flex-col items-center cursor-pointer ${
-                                paramsFilter.by === item.value
-                                  ? 'bg-theme-transparent'
-                                  : ''
-                              } p-2 rounded-md`}
-                              id={item.value}
-                              key={index}
-                              onClick={() => {
-                                router.replace(generatePath(item.value, 'by'));
-                              }}
-                            >
-                              <span
-                                className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                      <div className='h-[280px] md:h-fit w-full'>
+                        <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-1 overflow-scroll no-scrollbar'>
+                          {advanceFilterItem.map((item, index) => {
+                            return (
+                              <div
+                                className={`flex flex-col items-center cursor-pointer ${
                                   paramsFilter.by === item.value
-                                    ? 'text-blue-500'
-                                    : 'text-white'
-                                }`}
-                              >
-                                {item.text}
-                              </span>
-                            </div>
-                          );
-                        })}
-                      </div>
-                      {filterTypeList[
-                        filterTypeList.findIndex(
-                          (item) => item.type_id === paramsFilter.typeId
-                        )
-                      ].type_extend_obj.class != '' && (
-                        <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar'>
-                          {listConverter('class').map((item, index) => {
-                            return (
-                              <div
-                                className={`flex flex-col items-center cursor-pointer ${
-                                  paramsFilter.class === item
                                     ? 'bg-theme-transparent'
                                     : ''
                                 } p-2 rounded-md`}
-                                id={item}
+                                id={item.value}
                                 key={index}
                                 onClick={() => {
-                                  item === '全部类型'
-                                    ? router.replace(
-                                        path.replace(/\/class\/[^/]+/, '')
-                                      )
-                                    : router.replace(
-                                        generatePath(item, 'class')
-                                      );
+                                  router.replace(
+                                    generatePath(item.value, 'by')
+                                  );
                                 }}
                               >
                                 <span
                                   className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                                    paramsFilter.by === item.value
+                                      ? 'text-blue-500'
+                                      : 'text-white'
+                                  }`}
+                                >
+                                  {item.text}
+                                </span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                        {filterTypeList[
+                          filterTypeList.findIndex(
+                            (item) => item.type_id === paramsFilter.typeId
+                          )
+                        ].type_extend_obj.class != '' && (
+                          <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar'>
+                            {listConverter('class').map((item, index) => {
+                              return (
+                                <div
+                                  className={`flex flex-col items-center cursor-pointer ${
                                     paramsFilter.class === item
-                                      ? 'text-blue-500'
-                                      : 'text-white'
-                                  }`}
+                                      ? 'bg-theme-transparent'
+                                      : ''
+                                  } p-2 rounded-md`}
+                                  id={item}
+                                  key={index}
+                                  onClick={() => {
+                                    item === '全部类型'
+                                      ? router.replace(
+                                          path.replace(/\/class\/[^/]+/, '')
+                                        )
+                                      : router.replace(
+                                          generatePath(item, 'class')
+                                        );
+                                  }}
                                 >
-                                  {item}
-                                </span>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      )}
-                      {filterTypeList[
-                        filterTypeList.findIndex(
-                          (item) => item.type_id === paramsFilter.typeId
-                        )
-                      ].type_extend_obj.area != '' && (
-                        <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar'>
-                          {listConverter('area').map((item, index) => {
-                            return (
-                              <div
-                                className={`flex flex-col items-center cursor-pointer ${
-                                  paramsFilter.area === item
-                                    ? 'bg-theme-transparent'
-                                    : ''
-                                } p-2 rounded-md`}
-                                id={item}
-                                key={index}
-                                onClick={() => {
-                                  item === '全部地区'
-                                    ? router.replace(
-                                        path.replace(/\/area\/[^/]+/, '')
-                                      )
-                                    : router.replace(
-                                        generatePath(item, 'area')
-                                      );
-                                }}
-                              >
-                                <span
-                                  className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                                  <span
+                                    className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                                      paramsFilter.class === item
+                                        ? 'text-blue-500'
+                                        : 'text-white'
+                                    }`}
+                                  >
+                                    {item}
+                                  </span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                        {filterTypeList[
+                          filterTypeList.findIndex(
+                            (item) => item.type_id === paramsFilter.typeId
+                          )
+                        ].type_extend_obj.area != '' && (
+                          <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar'>
+                            {listConverter('area').map((item, index) => {
+                              return (
+                                <div
+                                  className={`flex flex-col items-center cursor-pointer ${
                                     paramsFilter.area === item
-                                      ? 'text-blue-500'
-                                      : 'text-white'
-                                  }`}
+                                      ? 'bg-theme-transparent'
+                                      : ''
+                                  } p-2 rounded-md`}
+                                  id={item}
+                                  key={index}
+                                  onClick={() => {
+                                    item === '全部地区'
+                                      ? router.replace(
+                                          path.replace(/\/area\/[^/]+/, '')
+                                        )
+                                      : router.replace(
+                                          generatePath(item, 'area')
+                                        );
+                                  }}
                                 >
-                                  {item}
-                                </span>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      )}
-                      {filterTypeList[
-                        filterTypeList.findIndex(
-                          (item) => item.type_id === paramsFilter.typeId
-                        )
-                      ].type_extend_obj.lang != '' && (
-                        <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar'>
-                          {listConverter('lang').map((item, index) => {
-                            return (
-                              <div
-                                className={`flex flex-col items-center cursor-pointer ${
-                                  paramsFilter.lang === item
-                                    ? 'bg-theme-transparent'
-                                    : ''
-                                } p-2 rounded-md`}
-                                id={item}
-                                key={index}
-                                onClick={() => {
-                                  item === '全部语言'
-                                    ? router.replace(
-                                        path.replace(/\/lang\/[^/]+/, '')
-                                      )
-                                    : router.replace(
-                                        generatePath(item, 'lang')
-                                      );
-                                }}
-                              >
-                                <span
-                                  className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                                  <span
+                                    className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                                      paramsFilter.area === item
+                                        ? 'text-blue-500'
+                                        : 'text-white'
+                                    }`}
+                                  >
+                                    {item}
+                                  </span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                        {filterTypeList[
+                          filterTypeList.findIndex(
+                            (item) => item.type_id === paramsFilter.typeId
+                          )
+                        ].type_extend_obj.lang != '' && (
+                          <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar'>
+                            {listConverter('lang').map((item, index) => {
+                              return (
+                                <div
+                                  className={`flex flex-col items-center cursor-pointer ${
                                     paramsFilter.lang === item
-                                      ? 'text-blue-500'
-                                      : 'text-white'
-                                  }`}
+                                      ? 'bg-theme-transparent'
+                                      : ''
+                                  } p-2 rounded-md`}
+                                  id={item}
+                                  key={index}
+                                  onClick={() => {
+                                    item === '全部语言'
+                                      ? router.replace(
+                                          path.replace(/\/lang\/[^/]+/, '')
+                                        )
+                                      : router.replace(
+                                          generatePath(item, 'lang')
+                                        );
+                                  }}
                                 >
-                                  {item}
-                                </span>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      )}
-                      {filterTypeList[
-                        filterTypeList.findIndex(
-                          (item) => item.type_id === paramsFilter.typeId
-                        )
-                      ].type_extend_obj.year != '' && (
-                        <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar'>
-                          {listConverter('year').map((item, index) => {
-                            return (
-                              <div
-                                className={`flex flex-col items-center cursor-pointer ${
-                                  paramsFilter.year === item
-                                    ? 'bg-theme-transparent'
-                                    : ''
-                                } p-2 rounded-md`}
-                                id={item}
-                                key={index}
-                                onClick={() => {
-                                  item === '全部时间'
-                                    ? router.replace(
-                                        path.replace(/\/year\/[^/]+/, '')
-                                      )
-                                    : router.replace(
-                                        generatePath(item, 'year')
-                                      );
-                                }}
-                              >
-                                <span
-                                  className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                                  <span
+                                    className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                                      paramsFilter.lang === item
+                                        ? 'text-blue-500'
+                                        : 'text-white'
+                                    }`}
+                                  >
+                                    {item}
+                                  </span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                        {filterTypeList[
+                          filterTypeList.findIndex(
+                            (item) => item.type_id === paramsFilter.typeId
+                          )
+                        ].type_extend_obj.year != '' && (
+                          <div className='flex md:flex-wrap gap-x-4 gap-y-2 py-2 overflow-scroll no-scrollbar'>
+                            {listConverter('year').map((item, index) => {
+                              return (
+                                <div
+                                  className={`flex flex-col items-center cursor-pointer ${
                                     paramsFilter.year === item
-                                      ? 'text-blue-500'
-                                      : 'text-white'
-                                  }`}
+                                      ? 'bg-theme-transparent'
+                                      : ''
+                                  } p-2 rounded-md`}
+                                  id={item}
+                                  key={index}
+                                  onClick={() => {
+                                    item === '全部时间'
+                                      ? router.replace(
+                                          path.replace(/\/year\/[^/]+/, '')
+                                        )
+                                      : router.replace(
+                                          generatePath(item, 'year')
+                                        );
+                                  }}
                                 >
-                                  {item}
-                                </span>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      )}
+                                  <span
+                                    className={`text-sm hover:text-blue-500 transition-colors duration-300 truncate ${
+                                      paramsFilter.year === item
+                                        ? 'text-blue-500'
+                                        : 'text-white'
+                                    }`}
+                                  >
+                                    {item}
+                                  </span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
                     </div>
                     <div
                       className={`transition-all duration-500 md:h-fit
-              ease-out ${!collapse ? 'opacity-0 h-0 z-10' : 'h-[36px] py-2'}
-              flex justify-between items-center px-4 container text-sm md:hidden`}
+                      ease-out ${
+                        !collapse ? 'opacity-0 h-0 z-10' : 'h-[36px] py-2'
+                      }
+                      flex justify-between items-center px-4 container text-sm md:hidden`}
                     >
                       <div>
                         {

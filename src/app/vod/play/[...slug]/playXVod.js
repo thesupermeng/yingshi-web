@@ -129,7 +129,8 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
     let content = '';
 
     if (vod) {
-      let desc = vod.vod_year + (vod.vod_area == undefined?'':  ' ' + vod.vod_area);
+      let desc =
+        vod.vod_year + (vod.vod_area == undefined ? '' : ' ' + vod.vod_area);
       let vodClass = [];
       if (vod.vod_class != null) {
         vodClass = vod.vod_class.split(',');
@@ -594,17 +595,14 @@ export const PlayXVod = ({ vodId, tId, nId }) => {
         </FullPageContent>
       ) : (
         <div className='flex flex-row space-x-4'>
-          <div
-            className='flex-1 space-y-4 no-scrollbar'
-            style={{ width: '78%' }}
-          >
+          <div className='flex-1 space-y-4 no-scrollbar video-player'>
             <div
               ref={playerDivRef}
-              className='aspect-[16/9] absolute w-screen lg:relative lg:w-[100%] sticky md:static top-0'
+              className='aspect-[16/9] absolute w-full lg:relative lg:w-[100%] sticky md:static top-0'
               style={{ zIndex: '1' }}
             >
               <div
-                className='p-3 lg:hidden block'
+                className='p-3 mobile'
                 onClick={() => router.back()}
                 style={{
                   background: 'black',

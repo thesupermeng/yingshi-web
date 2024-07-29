@@ -164,9 +164,9 @@ export const VodCard = ({
                 className='rounded-xl'
                 onError={(e) => setImageError(true)}
               />
-              <span className='absolute bottom-2 left-0 text-xs bg-black/50 rounded-r py-0.5 pr-0.5'>
+              {/* <span className='absolute bottom-2 left-0 text-xs bg-black/50 rounded-r py-0.5 pr-0.5'>
                 {vodRemark}
-              </span>
+              </span> */}
             </div>
 
             <div className='flex flex-col lg:w-3/3 pt-3'>
@@ -240,9 +240,9 @@ export const VodCard = ({
               className='rounded-xl'
               onError={(e) => setImageError(true)}
             />
-            <span className='absolute bottom-2 left-0 text-xs bg-black/50 rounded-r py-0.5 pr-0.5'>
+            {/* <span className='absolute bottom-2 left-0 text-xs bg-black/50 rounded-r py-0.5 pr-0.5'>
               {vodRemark}
-            </span>
+            </span> */}
           </div>
 
           <div className='flex flex-col lg:w-2/3 allow-select'>

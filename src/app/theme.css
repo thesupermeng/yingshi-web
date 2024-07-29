@@ -3,29 +3,29 @@ a {
 }
 
 
-.text-yellow-500
+.text-blue-500
 {
   color: #33a2f4 !important;
 }
 
 
-.text-yellow-hover
+.text-blue-hover
 {
   color: inherit;
 }
 
-.text-yellow-hover:hover
+.text-blue-hover:hover
 {
   color: #33a2f4 !important;
 }
 
 
-.border-yellow-500 {
+.border-blue-500 {
   border-color:  rgb(51, 162, 244) !important;
 }
 
 
-.hover-yellow:hover{
+.hover-blue:hover{
   /* color:  rgb(51, 162, 244) !important; */
   color:  rgb(51, 162, 244) !important;
   cursor: pointer;
@@ -66,4 +66,22 @@ a:hover {
 {
   background-color: #33a2f41f !important;
   background: #33a2f41f !important;
+}
+
+
+.text-hot-1
+{
+  color:rgba(0, 106, 178, 1)
+}
+.text-hot-2
+{
+  color:rgba(0, 133, 224, 1)
+}
+.text-hot-3
+{
+  color:rgba(96, 191, 255, 1)
+}
+.text-hot-4
+{
+  color:rgba(156, 156, 156, 1)
 }

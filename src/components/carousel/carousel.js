@@ -9,6 +9,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import initAds from '../ads/initAds';
+import { CarouselListing } from './carouselListing';
 
 export const Carousel = ({
   carouselItemsProps,
@@ -71,7 +72,7 @@ export const Carousel = ({
   const initCarousel = async () => {
     const adsData = await initAds();
     let getIndex = pathName.lastIndexOf('/');
-    let pathFlag = pathName.slice(getIndex + 1, pathName.length)
+    let pathFlag = pathName.slice(getIndex + 1, pathName.length);
 
     if (pathFlag == '/') {
       navId = '126-135';
@@ -280,15 +281,6 @@ export const Carousel = ({
                 }}
               >
                 {carouselItems.map((item, index) => {
-                  let desc = ' | ' + item.carousel_vod_area;
-                  let vodClass = [];
-                  if (item.carousel_vod_class != null) {
-                    vodClass = item.carousel_vod_class.split(',');
-                  }
-                  vodClass = vodClass.slice(0, 2);
-                  vodClass.forEach((item, i) => {
-                    desc += ' | ' + item;
-                  });
                   return (
                     <div
                       key={index + '-btn'}
@@ -337,153 +329,15 @@ export const Carousel = ({
                           );
                         }}
                       />
-
-                      <div
-                        className='desktop  d-flex'
-                        style={{
-                          position: 'absolute',
-                          bottom: '40px',
-                          left: '10px',
-                          color: '#fff',
-                          zIndex: 1,
-                          width: '100%',
-                        }}
-                      >
-                        <div className='flex container'>
-                          <div className='col pt-3'>
-                            <p className='text-lg'>{item.carousel_name}</p>
-                            <p
-                              className='text-sm pt-1'
-                              style={{ fontWeight: '200' }}
-                            >
-                              {item.carousel_vod_year}
-                              {desc}
-                            </p>
-                            <p
-                              className='text-sm pt-1'
-                              style={{ fontWeight: '200' }}
-                            >
-                              {item.carousel_vod_remarks}
-                            </p>
-                            {item?.carousel_id != 0 && (
-                              <div
-                                style={{
-                                  cursor: 'pointer',
-                                  background: '#FFFFFF2E',
-                                  width: 'fit-content',
-                                  padding: '0.5rem 1rem',
-                                  borderRadius: '100px',
-                                  marginTop: '0.5rem',
-                                }}
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  if (
-                                    carouselItems[carouselIndex]
-                                      .carousel_content_id == 0
-                                  ) {
-                                    window.open(
-                                      carouselItems[carouselIndex].ads_url,
-                                      '_blank'
-                                    );
-                                    return;
-                                  } else {
-                                    router.push(
-                                      `/vod/play/id/${carouselItems[carouselIndex].carousel_content_id}/sid/${carouselItems[carouselIndex].carousel_vod_type_id}/nid/1`
-                                    );
-                                  }
-                                }}
-                                className='flex flex-row flex-wrap hover-effect'
-                              >
-                                <Image
-                                  style={{ paddingRight: '0.5rem' }}
-                                  src={PlayRightIcon}
-                                  alt='Icon'
-                                />
-
-                                <div className='text-sm'>看正片</div>
-                              </div>
-                            )}
-                          </div>
-
-                          <div
-                            style={{
-                              display: 'flex',
-                              flexDirection: 'row',
-                              zIndex: '10',
-                              width: '80%',
-                              justifyContent: 'flex-end',
-                            }}
-                          >
-                            {carouselItems.map((previewItem, previewIndex) => (
-                              <div
-                                key={previewItem.carousel_content_id + '-key'}
-                                className='hidden xl:flex'
-                                style={{
-                                  flexDirection: 'column',
-                                  justifyContent: 'center',
-                                  alignItems: 'center',
-                                  justifySelf: 'center',
-                                  height: '100%',
-                                  width: '6rem',
-                                  marginRight: '1rem',
-                                  cursor: 'pointer',
-                                }}
-                                onMouseEnter={() => onHover(previewIndex)}
-                                onMouseLeave={() => onUnhover(previewIndex)}
-                              >
-                                <div
-                                  style={{ width: '100%', textAlign: 'center' }}
-                                >
-                                  <img
-                                    className={styles.carousel_item_card}
-                                    src={previewItem.carousel_vod_pic}
-                                    alt={`Slide ${previewIndex}`}
-                                    style={{
-                                      width: '100%',
-                                      aspectRatio: '5/7',
-                                      objectFit: 'cover',
-                                      borderRadius: '12px',
-                                    }}
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      if (
-                                        previewItem.carousel_content_id == 0
-                                      ) {
-                                        window.open(
-                                          previewItem.ads_url,
-                                          '_blank'
-                                        );
-                                        return;
-                                      }
-                                      router.push(
-                                        `/vod/play/id/${previewItem.carousel_content_id}/sid/${previewItem.carousel_vod_type_id}/nid/1`
-                                      );
-                                    }}
-                                  />
-                                </div>
-                                <div
-                                  key={previewIndex + '-3'}
-                                  style={{
-                                    paddingRight: '10px',
-                                    paddingLeft: '10px',
-                                    textAlign: 'center',
-                                    fontSize: '12px',
-                                    paddingTop: '6px',
-                                  }}
-                                >
-                                  {/* {renderShortString(previewItem.carousel_name)} */}
-                                  <p className='line-clamp-1'>
-                                    {previewItem.carousel_name}
-                                  </p>
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   );
                 })}
+                <CarouselListing
+                  carouselIndex={carouselIndex}
+                  carouselItems={carouselItems}
+                  onHover={onHover}
+                  onUnhover={onUnhover}
+                />
               </div>
             )}
           </div>

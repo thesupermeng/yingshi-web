@@ -27,9 +27,10 @@ import { useLoginOpen } from '@/hook/yingshiScreenState/useLoginOpen';
 import { YingshiApi2 } from '@/util/YingshiApi';
 import { Config } from '@/util/config';
 import SingletonAdsBanner from '@/components/ads/singletonAdsBanner.js';
+import { decodeVSN } from '@/util/vsn.js';
 // import { AdsBanner } from '@/components/ads/adsBanner.js';
 
-export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
+export const PlayVod = ({ vodId, tId, nId, sourceId, vsn }) => {
   const router = useRouter();
   const path = usePathname();
   const { t } = useTranslation();
@@ -93,8 +94,11 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
     // }
 
     let result = allAds.data.filter(
-      (ad) => ad.slot_id_list_array && ad.slot_id_list_array.includes(144)
+      (ad) =>
+        (ad.slot_id_list_array && ad.slot_id_list_array.includes(144)) ||
+        ad.slot_id_list_array.includes(146)
     );
+
     result = result.sort((a, b) => b.ads_sort - a.ads_sort);
 
     const sameSortFlag = allSameProperty(result, 'ads_sort');
@@ -109,6 +113,17 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
 
     setShowAds(true);
   };
+
+
+
+  useLayoutEffect(() => {
+  if(vodId == '102157' && window.location.host.includes('shayutv.com'))// 庆余年
+  {
+     window.location.href = '/404'
+  }
+
+}, []);
+
 
   useLayoutEffect(() => {
     if (isVip) {
@@ -144,28 +159,36 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
   }, [isVip]);
 
   const getVod = async () => {
-    if (tId == 0) {
-      return YingshiApi(
-        URL_YINGSHI_VOD.getVodDetails,
-        {
-          id: vodId,
-        },
-        {
-          method: 'GET',
-        }
-      );
-    } else {
-      return YingshiApi(
-        URL_YINGSHI_VOD.getVodDetails,
-        {
-          id: vodId,
-          tid: tId,
-        },
-        {
-          method: 'GET',
-        }
-      );
-    }
+    const params = {
+      id: vodId,
+      ...(tId !== 0 && { tid: tId }),
+      ...(vsn !== undefined && { vod_source_name: decodeVSN(vsn) }),
+    };
+    return await YingshiApi(URL_YINGSHI_VOD.getVodDetails, params, {
+      method: 'GET',
+    });
+    // if (tId == 0) {
+    //   return YingshiApi(
+    //     URL_YINGSHI_VOD.getVodDetails,
+    //     {
+    //       id: vodId,
+    //     },
+    //     {
+    //       method: 'GET',
+    //     }
+    //   );
+    // } else {
+    //   return YingshiApi(
+    //     URL_YINGSHI_VOD.getVodDetails,
+    //     {
+    //       id: vodId,
+    //       tid: tId,
+    //     },
+    //     {
+    //       method: 'GET',
+    //     }
+    //   );
+    // }
   };
 
   const getSuggestedVodType = async () => {
@@ -316,6 +339,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
         vodurl: episodeSelected?.url,
         watchtimes: 0,
         sourceId: sourceId,
+        sourceName: decodeVSN(vsn),
       };
 
       let watchHistoryData = JSON.parse(
@@ -333,7 +357,6 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
           watchHistoryData.find((item) => item.vodurl == watchHistory.vodurl)
         ) {
         } else {
-          console.log('rere');
           watchHistoryData.push(watchHistory);
         }
       }
@@ -596,7 +619,6 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                   className='bg-theme'
                   style={{
                     padding: '0.3rem 1.2rem',
-
                     borderRadius: '12px',
                     margin: '0.5rem',
                   }}
@@ -677,7 +699,6 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
               className='bg-theme'
               style={{
                 padding: '0.5rem 1.2rem',
-
                 borderRadius: '12px',
                 margin: '0.5rem',
               }}
@@ -729,7 +750,7 @@ export const PlayVod = ({ vodId, tId, nId, sourceId }) => {
                 </div>
               </div>
 
-              {showAds && !isVip ? ( //  && ads
+              {showAds && !isVip && ads ? ( //  && ads
                 <AdsPlayer
                   className='aspect-[16/9]'
                   adsInfo={ads}

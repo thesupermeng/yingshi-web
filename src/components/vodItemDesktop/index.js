@@ -28,6 +28,10 @@ const VodItemDesktop = ({ vod }) => {
                   style={{
                     padding: '0px',
                     width: '132px',
+                    height: '206px',
+                    position: 'relative', // Add this to make the container relative for the image to fill
+                    overflow: 'hidden', // Hide overflow to ensure image doesn't exceed container
+                    borderRadius: '10px', // Apply border-radius here for consistent effect
                   }}
                 >
                   {/* <img
@@ -47,9 +51,9 @@ const VodItemDesktop = ({ vod }) => {
                     }
                     alt='vod'
                     src={imageError ? ImagePlaceholder : vod?.vod_pic}
-                    height={206}
-                    width={132}
-                    className='rounded-xl object-cover'
+                    layout='fill' // This makes the image cover the entire container
+                    objectFit='cover' // Ensures the image covers the container
+                    className='rounded-xl'
                     onError={(e) => setImageError(true)}
                   />
                 </div>

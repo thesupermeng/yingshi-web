@@ -180,6 +180,7 @@ export const VodEpisodeList = ({
               overflowX: 'auto',
               position: 'relative',
               right: '4px',
+              fontFamily:'monospace'
             }}
           >
             {vodSource?.vod_play_list?.urls

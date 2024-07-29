@@ -40,6 +40,8 @@ import { isMobile } from 'react-device-detect';
 import { usePaymentOpen } from '@/hook/yingshiScreenState/usePaymentOpen';
 import { VideoHorizontalHistoryCard } from '../videoItem/videoHorizontalHistoryCard';
 import { setIsUserChina } from '@/store/yingshiScreen';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 const getHeaderMenu = (state) => state.headerMenu;
 const getCurrentScrollPosition = (state) => state.currentScrollPosition;
@@ -160,7 +162,6 @@ const Header = () => {
       return; // Exit early if the first character is a space
     }
     setSearchInput(newValue);
-    return;
   };
 
   const handleSearch = () => {
@@ -194,7 +195,11 @@ const Header = () => {
     setSearchHistoryList(JSON.parse(localStorage.getItem('searchHistoryList')));
     setOpenSearch(false);
     // setSearchInput('');
-    router.push('/search/' + encodeURIComponent(searchInput));
+    if (searchInput === '.') {
+      router.push('/search/' + encodeURIComponent(searchInput + ' '));
+    } else {
+      router.push('/search/' + encodeURIComponent(searchInput));
+    }
   };
 
   const handleClearSearchHistory = () => {
@@ -251,7 +256,11 @@ const Header = () => {
   const goToSeachResult = (query) => {
     setOpenSearch(false);
     setSearchInput(query);
-    router.push('/search/' + encodeURIComponent(query));
+    if (query === '.') {
+      router.push('/search/' + encodeURIComponent(query + ' '));
+    } else {
+      router.push('/search/' + encodeURIComponent(query));
+    }
   };
 
   const calculateItemsVisibility = () => {
@@ -291,16 +300,25 @@ const Header = () => {
       let menuItem = await getTopNav();
       const topTenItem = await getTopTenList();
       setTopTenList(topTenItem);
-      menuItem.push({
-        id: 998,
-        name: '播单',
-      });
-      menuItem.push({
-        id: 999,
-        name: '片库',
-      });
+      let newMenuItem = menuItem;
+      if (menuItem?.length > 5) {
+        menuItem.push({
+          id: 998,
+          name: '播单',
+        });
 
-      dispatch(setHeaderMenu(menuItem));
+        let index = 4;
+        newMenuItem = [
+          ...menuItem.slice(0, index),
+          {
+            id: 999,
+            name: '片库',
+          },
+          ...menuItem.slice(index),
+        ];
+      }
+
+      dispatch(setHeaderMenu(newMenuItem));
 
       setLoading(false);
     };
@@ -398,7 +416,11 @@ const Header = () => {
   }, []);
 
   if (loading) {
-    return <LoadingPage full={true} />;
+    return (
+      <div className='bg-[#ffccff] w-full h-full z-50'>
+        <LoadingPage full={true} />
+      </div>
+    );
   }
 
   let searchContainer = (
@@ -429,7 +451,10 @@ const Header = () => {
               className='border-0 border-gray-300 text-white rounded-full pl-10 md:pl-4 md:pr-10 pr-4 py-2 focus:outline-none w-full md:w-60 header-search-input-desktop text-[14px]'
               onClick={handleOpenSearch}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' && !(e.nativeEvent.isComposing || e.keyCode === 229)) {
+                if (
+                  e.key === 'Enter' &&
+                  !(e.nativeEvent.isComposing || e.keyCode === 229)
+                ) {
                   e.target.blur();
                   handleSearch();
                 }
@@ -526,17 +551,15 @@ const Header = () => {
                         >
                           <div className='flex flex-row'>
                             <div
-                              className='text-sm w-8 text-center font-bold'
-                              style={{
-                                color:
-                                  index == 0
-                                    ? 'rgba(0, 106, 178, 1)'
-                                    : index == 1
-                                    ? 'rgba(0, 133, 224, 1)'
-                                    : index == 2
-                                    ? 'rgba(96, 191, 255, 1)'
-                                    : 'rgba(156, 156, 156, 1)',
-                              }}
+                              className={`text-sm w-8 text-center font-bold ${
+                                index === 0
+                                  ? 'text-hot-1'
+                                  : index === 1
+                                  ? 'text-hot-2'
+                                  : index === 2
+                                  ? 'text-hot-3'
+                                  : 'text-hot-4'
+                              }`}
                             >
                               {index + 1}
                             </div>
@@ -683,6 +706,11 @@ const Header = () => {
           className='h-full flex justify-center'
           onClick={() => {
             handleOpenHistory(false);
+            if (!userInfo) {
+              setOpenLogin(true);
+              return;
+            }
+
             router.push('/myprofile/watchHistory');
           }}
         >
@@ -787,6 +815,7 @@ const Header = () => {
       >
         <div className='h-full flex flex-row cursor-pointer'>
           <Image className='mx-2' src={PhoneIcon} alt='app' width={14} />
+
           <div className='flex items-center md:flex hidden'>APP</div>
         </div>
         {openApp ? (
@@ -801,6 +830,7 @@ const Header = () => {
                 borderBottom: '10px solid #18191f5',
               }}
             />
+
             <div
               className='p-2 flex flex-row rounded-md rounded-tr-none'
               style={{ backgroundColor: '#18191ef5' }}
@@ -833,7 +863,7 @@ const Header = () => {
 
                     <QRCode
                       className='rounded-md'
-                      value='https://yingshi.tv/static/assets/yingshi.apk'
+                      value='https://oss.yingshi.tv/assets/yingshi.apk'
                       renderAs='canvas'
                       size={120}
                       includeMargin={true}
@@ -964,7 +994,7 @@ const Header = () => {
                 </Link>
               );
             })}
-            {hiddenItems.length > 0 && (
+            {hiddenItems?.length > 0 && (
               <div className='w-14 flex flex-col items-center cursor-pointer'>
                 <div className='relative' ref={dropdownMoreRef}>
                   <button
@@ -972,11 +1002,17 @@ const Header = () => {
                     className='flex flex-row items-center text-blue-hover'
                   >
                     <span>更多</span>
-                    <Image
+                    {/* <Image
                       className='mx-1'
                       alt='more'
                       src={moreIcon}
                       width={14}
+                    /> */}
+
+                    <FontAwesomeIcon
+                      style={{ width: '14px' }}
+                      icon={faChevronDown}
+                      className={`mx-1`}
                     />
                   </button>
                   {openMore ? (

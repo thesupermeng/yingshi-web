@@ -18,4 +18,4 @@ RUN npm run build
 
 EXPOSE 3000
 
-ENTRYPOINT [ "npm", "run", "start" ]
+ENTRYPOINT ["node", "--max-old-space-size=4096", "node_modules/.bin/next", "start"]

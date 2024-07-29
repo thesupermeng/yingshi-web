@@ -1,7 +1,7 @@
 import { Button, Checkbox, Dialog, DialogBody } from '@material-tailwind/react';
 import React, { useEffect, useState } from 'react';
 import CountryInput from '@/components/login/countryInput';
-import TextInput from '@/components/login/input';
+import TextInput from '../textInputBox/input';
 import { GoogleIcon } from '@/asset/icons';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -144,13 +144,13 @@ const handleClickService = () => {
                 />
               </>
             }
-            <span className={'text-[15px] text-[#9C9C9C]'}>请输入邀请码</span>
+            {/* <span className={'text-[15px] text-[#9C9C9C]'}>请输入邀请码</span>
             <TextInput
               name="referralCode"
               placeholder={'邀请码（选填）'}
               onChange={handleInput}
               isShowIcon={false}
-            />
+            /> */}
           </div>
           {/* button */}
           <Button className={'w-full rounded-[10px] h-auto bg-shayuBlue py-2 text-[17px] font-semibold'}

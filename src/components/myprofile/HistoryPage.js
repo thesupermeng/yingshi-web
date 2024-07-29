@@ -322,7 +322,7 @@ function ConfirmClearHistoryModal({ open, handler, onConfirm, onCancel }) {
               清除提示
             </span>
             <span className={'text-[17px] text-white text-center'}>
-              您确定要清空播放历史吗？？
+              您确定要清空播放历史吗？
             </span>
             <div className={'flex flex-col py-[10px]'}>
               <Button
@@ -346,7 +346,7 @@ function ConfirmClearHistoryModal({ open, handler, onConfirm, onCancel }) {
               清除提示
             </span>
             <span className={'text-[13px] text-white text-center'}>
-              您确定要清空播放历史吗？？
+              您确定要清空播放历史吗？
             </span>
             <div className={'flex gap-3 pt-2'}>
               <Button

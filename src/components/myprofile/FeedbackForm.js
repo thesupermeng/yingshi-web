@@ -1,6 +1,6 @@
 import {Alert, Button} from '@material-tailwind/react';
 import React, {useRef, useState} from 'react';
-import TextInput from '@/components/login/input';
+import TextInput from '../textInputBox/input';
 import useYingshiUser from '@/hook/yingshiUser/useYingshiUser';
 import {submitFeedback} from '@/services/yingshiUser';
 import Image from 'next/image';

@@ -24,8 +24,15 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
 
   const intervalIdRef = useRef(null); // Ref for storing interval ID
 
+  // useEffect(() => {
+  //   if (adsPlayerRef.current) {
+  //     adsPlayerRef.current.volume = 0.15; // Set volume to 50%
+  //   }
+  // }, [adsPlayerRef]);
+
   const playVideo = () => {
     adsPlayerRef.current.play();
+
   };
 
   const pauseVideo = () => {
@@ -125,7 +132,6 @@ export const AdsPlayer = ({ adsInfo, handleAdsPlayerEndPlay }) => {
       >
         <source
           src={
-            // 'https://oss.yingshi.tv/videos/vod/vi/yingshi-ads.mp4'  //11111
               adsInfo.ads_pic
           }
           type='video/mp4'

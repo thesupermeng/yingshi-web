@@ -74,7 +74,7 @@ export const TermsAndCondition = ({ onAgree }) => {
       </style>
 
       <div
-        className={`flex flex-col bg-yellow ${
+        className={`flex flex-col bg-blue ${
           isWeb() ? 'px-9 flex-[1_0_0] overflow-y-auto' : 'px-0 h-[85vh] flex-1'
         }`}
       >

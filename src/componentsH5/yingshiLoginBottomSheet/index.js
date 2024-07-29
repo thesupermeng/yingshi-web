@@ -2,7 +2,7 @@
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import React, { useEffect, useState } from 'react';
 import { loginRequestEmailOtp, loginRequestSmsOtp } from '@/services/yingshiUser';
-import TextInput from '@/components/login/input';
+import TextInput from '@/components/textInputBox/input';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import { setYingshiUserLoginParam } from '@/store/yingshiUser';
@@ -132,12 +132,12 @@ export default function YingshiLoginBottomSheet({ visible, onDismiss }) {
                                 setCountryPrefix={setCountryPrefix}
                             />
                         }
-                        <TextInput
+                        {/* <TextInput
                             name="referralCode"
                             placeholder={'邀请码（选填）'}
                             onChange={handleInput}
                             isShowIcon={false}
-                        />
+                        /> */}
                         <Button className={'h-12 w-full rounded-[10px] disabled:bg-[#1D2023] enabled:bg-[#0085E0] disabled:text-[#9C9C9C] enabled:text-white text-[17px]'} onClick={handleRegister} disabled={isInputError || isInputEmpty || !isAgreementChecked}>下一步</Button>
                         <div className={'flex items-center justify-center mt-[20px]'}>
                             <Checkbox

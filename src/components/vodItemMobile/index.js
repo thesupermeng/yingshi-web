@@ -32,16 +32,29 @@ const VodItemMobile = ({ vod }) => {
                   aspectRatio: '5/7',
                 }}
               /> */}
-              <Image
-                placeholder='blur'
-                blurDataURL={'data:image/png;base64,' + base64PlaceholderString}
-                alt='vod'
-                src={imageError ? ImagePlaceholder : vod?.vod_pic}
-                height={206}
-                width={132}
-                className='rounded-xl object-cover'
-                onError={(e) => setImageError(true)}
-              />
+              <div
+                style={{
+                  padding: '0px',
+                  width: '104px',
+                  height: '180px',
+                  position: 'relative', // Add this to make the container relative for the image to fill
+                  overflow: 'hidden', // Hide overflow to ensure image doesn't exceed container
+                  borderRadius: '10px', // Apply border-radius here for consistent effect
+                }}
+              >
+                <Image
+                  placeholder='blur'
+                  blurDataURL={
+                    'data:image/png;base64,' + base64PlaceholderString
+                  }
+                  alt='vod'
+                  src={imageError ? ImagePlaceholder : vod?.vod_pic}
+                  layout='fill' // This makes the image cover the entire container
+                  objectFit='cover' // Ensures the image covers the container
+                  className='rounded-xl object-cover'
+                  onError={(e) => setImageError(true)}
+                />
+              </div>
             </div>
 
             <div className='col pl-0'>
