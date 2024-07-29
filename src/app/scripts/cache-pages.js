@@ -1,18 +1,7 @@
 const fetch = require('node-fetch');
 
 const pages = [
-  '/',          // Add your pages here
-  '/index/type/id/1',
-  '/index/type/id/2',
-  '/index/type/id/3',
-  '/index/type/id/4',
-  '/index/type/id/5',
-  '/index/type/id/6',
-  '/index/type/id/7',
-  '/index/type/id/99',
-  '/topic/index/page',
-  '/vod/show/by/time/id/1'
-  // Add more pages as needed
+
 ];
 
 async function cachePages() {
